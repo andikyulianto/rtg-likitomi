@@ -3,7 +3,7 @@ define("HOST", "localhost", TRUE);
 define("PORT", 3306, TRUE);
 define("USER", "root", TRUE);
 define("PASS", "", TRUE);
-define("DB", "likitomidb_v6", TRUE);
+define("DB", "likitomiv7", TRUE);
 define("CHARSET","SET NAMES TIS620",TRUE);
 //define("REMOTEHOST", "http://im.ait.ac.th/aptana/likitomi/index.php/", TRUE);
 

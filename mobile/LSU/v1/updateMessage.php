@@ -8,11 +8,12 @@ include("db.php");
 remotedb_connect();
 
 $conn1 = remotedb_connect ();
-$sql1 ="select product_code from planning where mo='".$mo."'";
+$sql1 ="select product_code,amount from planning where mo='".$mo."'";
 $rs1 = mysql_query($sql1,$conn1);
 while($row1 = mysql_fetch_array($rs1))
 {
 	$pCode = $row1[0];
+        $oldAmount = $row1[1];
 }
 
 $conn2 = remotedb_connect ();
@@ -21,6 +22,14 @@ $rs2 = mysql_query($sql2,$conn2);
 while($row2 = mysql_fetch_array($rs2))
 {
 	$name = $row2[0];
+}
+
+$conn3 = remotedb_connect ();
+$sql3 ="select amount from status where mo='".$mo."'";
+$rs3 = mysql_query($sql3,$conn3);
+while($row3 = mysql_fetch_array($rs3))
+{
+        $oldAmount = $row3[0];
 }
 
 $conn = remotedb_connect ();
@@ -33,9 +42,8 @@ VALUES ('".$mo."','".$pCode."',".$amount.")
 }
 if($eTask == 'CV')
 {
-$sql ="INSERT INTO status (mo,product_code,CV)
-VALUES ('".$mo."','".$pCode."',".$amount.")
-";
+$sql ="INSERT INTO status (mo,product_code,CV,CR)
+VALUES ('".$mo."','".$pCode."',".$amount."',".0-int($amount).")";
 }
 if($eTask == 'PT')
 {
@@ -49,8 +57,7 @@ $sql ="INSERT INTO status (mo,product_code,WH)
 VALUES ('".$mo."','".$pCode."',".$amount.")
 ";
 }
-$rs = mysql_query($sql,$conn);
-?>
+$rs = mysql_query($sql,$conn);?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
