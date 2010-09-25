@@ -8,7 +8,7 @@ include("db.php");
 remotedb_connect();
 
 $conn1 = remotedb_connect ();
-$sql1 ="select product_code,amount from planning where mo='".$mo."'";
+$sql1 ="select product_code from planning where mo='".$mo."'";
 $rs1 = mysql_query($sql1,$conn1);
 while($row1 = mysql_fetch_array($rs1))
 {
@@ -42,20 +42,22 @@ VALUES ('".$mo."','".$pCode."',".$amount.")
 }
 if($eTask == 'CV')
 {
-$sql ="INSERT INTO status (mo,product_code,CV,CR)
-VALUES ('".$mo."','".$pCode."',".$amount."',".0-int($amount).")";
+$remove_CR = 0-$amount;
+$sql ="INSERT INTO status (mo,product_code,CR,CV)
+VALUES ('".$mo."','".$pCode."',".$remove_CR.",".$amount.")";
+echo $sql;
 }
 if($eTask == 'PT')
 {
-$sql ="INSERT INTO status (mo,product_code,PT)
-VALUES ('".$mo."','".$pCode."',".$amount.")
-";
+$remove_CV = 0-$amount;
+$sql ="INSERT INTO status (mo,product_code,CV,PT)
+VALUES ('".$mo."','".$pCode."',".$remove_CR.",".$amount.")";
 }
 if($eTask == 'WH')
 {
-$sql ="INSERT INTO status (mo,product_code,WH)
-VALUES ('".$mo."','".$pCode."',".$amount.")
-";
+$remove_PT = 0-$amount;
+$sql ="INSERT INTO status (mo,product_code,PT,WH)
+VALUES ('".$mo."','".$pCode."',".$remove_CR.",".$amount.")";
 }
 $rs = mysql_query($sql,$conn);?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
