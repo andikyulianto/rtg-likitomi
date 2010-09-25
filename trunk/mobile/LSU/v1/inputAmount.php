@@ -1,7 +1,24 @@
 <?php
-$mo = $_GET[mo];
-$eID = $_GET[eID];
+
 $eTask = $_GET[eTask];
+$eID = $_GET[eID];
+$mo = $_GET[mo];
+
+include("db.php");
+remotedb_connect();
+$conn = remotedb_connect ();
+//retrive list of SO
+if($eTask == 'CV')
+$sql ="select *
+FROM status
+WHERE mo= '".$mo."'";
+$rs = mysql_query($sql,$conn);
+
+while($row = mysql_fetch_array($rs))
+{
+	$amount = $row[8];
+
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -53,7 +70,7 @@ function setFocus()
 			</li></ul>
    
     <span class="graytitle">Amount</span> 
-	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text" /></li>
+	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="<?php print $amount; ?>"  /></li>
    
     </ul>
             

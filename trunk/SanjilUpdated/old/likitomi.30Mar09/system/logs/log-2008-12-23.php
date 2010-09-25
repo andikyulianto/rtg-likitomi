@@ -1,0 +1,31 @@
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed'); ?>
+
+ERROR - 2008-12-23 09:14:20 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
+ERROR - 2008-12-23 09:14:20 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
+ERROR - 2008-12-23 09:14:36 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatorclamplift.php 56
+ERROR - 2008-12-23 09:14:36 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatorclamplift.php 57
+ERROR - 2008-12-23 09:14:36 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatorclamplift.php 56
+ERROR - 2008-12-23 09:14:36 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatorclamplift.php 57
+ERROR - 2008-12-23 09:14:38 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 54
+ERROR - 2008-12-23 09:14:38 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 55
+ERROR - 2008-12-23 09:14:39 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 54
+ERROR - 2008-12-23 09:14:39 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 55
+ERROR - 2008-12-23 09:14:40 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\keyin.php 50
+ERROR - 2008-12-23 09:14:40 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\keyin.php 52
+ERROR - 2008-12-23 09:14:40 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\keyin.php 50
+ERROR - 2008-12-23 09:14:40 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\keyin.php 52
+ERROR - 2008-12-23 09:14:44 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\deliverydaily.php 33
+ERROR - 2008-12-23 09:14:44 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\deliverydaily.php 33
+ERROR - 2008-12-23 09:14:51 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\deliverydaily.php 33
+ERROR - 2008-12-23 09:14:54 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 54
+ERROR - 2008-12-23 09:14:54 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 55
+ERROR - 2008-12-23 15:01:46 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
+ERROR - 2008-12-23 15:02:04 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatorclamplift.php 56
+ERROR - 2008-12-23 15:02:04 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatorclamplift.php 57
+ERROR - 2008-12-23 15:02:08 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 54
+ERROR - 2008-12-23 15:02:08 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\corrugatordaily.php 55
+ERROR - 2008-12-23 15:03:41 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
+ERROR - 2008-12-23 15:03:41 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
+ERROR - 2008-12-23 15:03:41 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
+ERROR - 2008-12-23 15:03:41 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
+ERROR - 2008-12-23 15:03:41 --> Severity: Warning  --> Division by zero C:\wamp\www\likitomi\system\application\views\planning\totalproductionplan.php 48
