@@ -23,15 +23,14 @@ $process["WH"] = (int)$row[3];
 
 //retrive list of SO
 $sql ="SELECT
-delivery_date,delivery_amount,amount
+delivery_date,amount_1
 FROM
 delivery de,sales_order so
 WHERE 
-de.sales_order_id =  so.sales_order_id
+de.sales_order =  so.sales_order_id
 AND
-de.sales_order_id ='".$SOID."'";
+de.sales_order ='".$SOID."'";
 $rs = mysql_query($sql,$conn);
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -140,10 +139,11 @@ $rs = mysql_query($sql,$conn);
 				if (strlen($dateTime[minutes])<2)
 				$dateTime[minutes] = "0".$dateTime[minutes];
 				$need = (int)$amount;
+
 					
 					if($process["WH"]>=0 && $need>=0)
 					{
-						if($process["WH"]>$need)
+						if($process["WH"]>=$need)
 						{
 							$process["WH"]-=$need;
 							$output["WH"] ="<img alt='list' src='images/office/Package-Accept32.png' />";
