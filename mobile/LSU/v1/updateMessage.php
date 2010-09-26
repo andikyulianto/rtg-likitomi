@@ -46,7 +46,7 @@ if($eTask == 'CV')
 $remove_CR = 0-$amount;
 $sql ="INSERT INTO status (mo,product_code,CR,CV)
 VALUES ('".$mo."','".$pCode."',".$remove_CR.",".$amount.")";
-echo $sql;
+
 }
 if($eTask == 'PT')
 {
