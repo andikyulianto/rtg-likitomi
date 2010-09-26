@@ -1,5 +1,5 @@
 <?php
-$PCode = $_GET[PCode];
+$PCode = $_GET['PCode'];
 $SOID =$_GET['SOID'];
 
 
@@ -136,8 +136,8 @@ $rs = mysql_query($sql,$conn);
 				//extract date time
 				$amount = $row[1];
 				$dateTime = getdate(strtotime($row[0]));
-				if (strlen($dateTime[minutes])<2)
-				$dateTime[minutes] = "0".$dateTime[minutes];
+				if (strlen($dateTime['minutes'])<2)
+				$dateTime['minutes'] = "0".$dateTime['minutes'];
 				$need = (int)$amount;
 
 					
@@ -207,13 +207,13 @@ $rs = mysql_query($sql,$conn);
 		if($row[0]!=NULL)
 		print "<table width='100%' height='46' border='0' cellpadding='2'  cellspacing='0'  >
             <tr >
-              <th height='15' align='center' valign='bottom' >".substr($dateTime[month],0,3)."</th>
+              <th height='15' align='center' valign='bottom' >".substr($dateTime['month'],0,3)."</th>
             </tr>
             <tr>
-              <td width='100%' height='15' align='center' valign='top'>".$dateTime[mday]."</td>
+              <td width='100%' height='15' align='center' valign='top'>".$dateTime['mday']."</td>
             </tr>
           </table></div></td>
-        <td>".$dateTime[hours]."h".$dateTime[minutes]."</td>";
+        <td>".$dateTime['hours']."h".$dateTime['minutes']."</td>";
 		 else
 		 print "<table width='100%' height='46' border='0' cellpadding='2'  cellspacing='0'  >
             <tr >
@@ -240,6 +240,5 @@ $rs = mysql_query($sql,$conn);
     <br />
   </ul>
 </div>
-<?php include("footer.html"); ?>
 </body>
 </html>

@@ -55,8 +55,6 @@ $rs = mysql_query($sql,$conn);
 				{
 					 $stock = (int)$newRow[3];
 				}
-                                echo "stock =".$stock;
-                                echo "need =".$need;
 				if($need<=$stock)
 				print "<li class='menu'><a href='getSOFromDate.php?PCode=".$row[0]."&SOID=".$row[1]."'> 
 		<img alt='list' src='images/office/Package-Accept64.png' /><span class='name'>".$row[0]."</span><span class='arrow'></span></a></li>";
@@ -68,6 +66,5 @@ $rs = mysql_query($sql,$conn);
   	</ul> 
     </div>
 
-<?php include("footer.html"); ?>
 </body>
 </html>

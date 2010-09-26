@@ -1,14 +1,13 @@
 <?php
 
-$eTask = $_GET[eTask];
-$eID = $_GET[eID];
-$mo = $_GET[mo];
+$eTask = $_GET["eTask"];
+$eID = $_GET["eID"];
+$mo = $_GET["mo"];
 
 include("db.php");
 remotedb_connect();
 $conn = remotedb_connect ();
-//retrive list of SO
-if($eTask == 'CV')
+
 $sql ="select *
 FROM status
 WHERE mo= '".$mo."'";
@@ -16,7 +15,12 @@ $rs = mysql_query($sql,$conn);
 
 while($row = mysql_fetch_array($rs))
 {
+    if($eTask == 'CR')
 	$amount = $row[8];
+    elseif($eTask == 'CV')
+        $amount = $row[3];
+    elseif($eTask == 'PT')
+        $amount = $row[4];
 
 }
 ?>

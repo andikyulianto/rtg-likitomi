@@ -1,8 +1,9 @@
 <?php
-$mo = $_GET[mo];
-$eID = $_GET[eID];
-$eTask = $_GET[eTask];
-$amount = $_GET[amount];
+error_reporting(E_ALL & ~E_NOTICE);
+$mo = $_GET["mo"];
+$eID = $_GET["eID"];
+$eTask = $_GET["eTask"];
+$amount = $_GET["amount"];
 
 include("db.php");
 remotedb_connect();
