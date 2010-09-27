@@ -14,6 +14,7 @@ WHERE eID = '".$eID."'";
 $rs = mysql_query($sql,$conn);
 while($row = mysql_fetch_array($rs))
 {
+        $name = $row[1];
 	$eTask = $row[3];
 
 }
@@ -44,13 +45,12 @@ function setFocus()
 
 <body onload="setFocus()">
 
-  <div id="topbar"> 
-	<div id="leftnav"> 
-		</div> 
-	<div id="rightnav"> 
-		<a onClick="updateForm.submit();">Manufacturing Number</a></div> 
+<div id="topbar">
+        <div id="title"> Login As <?php print $name." (".$eTask.")"; ?></div>
+	<div id="rightbutton"> 
+		<a href="index.php" class="noeffect">Logout</a> </div> 
 </div>
-</div>
+
 <div id="content">
   <ul class="pageitem">
     <li class="textbox"><span class="header">Enter </span>In order to specify the user, please scan the barcode of your employee card.</li>
@@ -67,6 +67,7 @@ function setFocus()
           <input name="eID" type="hidden" maxlength="4" value="<?php print $eID; ?>" />
           
           <input name="eTask" type="hidden" maxlength="4" value="<?php print $eTask; ?>" />
+          <input name="name" type="hidden" maxlength="20" value="<?php print $name; ?>" />
         </li>
       </ul>
       <!-- input amount -->
@@ -78,6 +79,10 @@ function setFocus()
       </ul>
     </ul>
   </form>
+<div id="topbar"> 
+	<div id="leftnav"> </div> 
+	<div id="rightnav"> <a onClick="updateForm.submit();">Manufacturing Number</a></div> 
+</div>
 </div>
 <div id="footer">
 
