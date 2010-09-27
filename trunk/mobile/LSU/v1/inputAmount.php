@@ -3,6 +3,7 @@
 $eTask = $_GET["eTask"];
 $eID = $_GET["eID"];
 $mo = $_GET["mo"];
+$name = $_GET["name"];
 
 include("db.php");
 remotedb_connect();
@@ -50,14 +51,12 @@ function setFocus()
 
 <body onload="setFocus()">
 
-  <div id="topbar"> 
-	<div id="leftnav"> 
-    <a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Manufacturing number</a>
-		</div> 
-	<div id="rightnav"> 
-    <a onclick="updateForm.submit();">Amount</a></div> 
+<div id="topbar">
+        <div id="title"> Login As <?php print $name." (".$eTask.")"; ?></div>
+	<div id="rightbutton"> 
+		<a href="index.php" class="noeffect">Logout</a> </div> 
 </div>
-</div>
+
 <div id="content">
 <ul class="pageitem">
 		<li class="textbox"><span class="header">Enter no. of finished products</span><p>Please count and fill in the number into this form.</p></li>
@@ -69,7 +68,7 @@ function setFocus()
         <span class="graytitle">Manufacturing number</span><ul class="pageitem">
 			<li class="bigfield">
              <input name="eID" type="hidden" maxlength="4" value="<?php print $eID; ?>" />
-             <input name="mo" value="<?php print $mo; ?>" />
+             <input name="mo" disabled value="<?php print $mo; ?>" />
     <input name="eTask" type="hidden" maxlength="4" value="<?php print $eTask; ?>" />
 			</li></ul>
    
@@ -81,6 +80,13 @@ function setFocus()
 		</ul>
         
 		</fieldset></form>
+</div>
+  <div id="topbar"> 
+	<div id="leftnav"> 
+    <a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Manufacturing number</a>
+		</div> 
+	<div id="rightnav"> 
+    <a onclick="updateForm.submit();">Amount</a></div> 
 </div>
 <div id="footer">
 

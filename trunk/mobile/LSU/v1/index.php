@@ -22,10 +22,8 @@ function setFocus()
 
 <body onload="setFocus()">
 
-<div id="topbar">
-	<div id="leftnav">
-		<span class="header"><font color="#FFFFFF">Login </font></span></div>
-</div>
+
+ 
 <div id="content">
 	<ul class="pageitem">
 		<li class="textbox"><span class="header">Login</span><p>In order to specify the user, please scan the barcode of your employee card.</p></li>

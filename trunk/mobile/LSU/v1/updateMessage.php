@@ -72,6 +72,11 @@ $rs = mysql_query($sql,$conn);?>
 </head>
 
 <body>
+<div id="topbar">
+        <div id="title"> Login As <?php echo $name." (".$eTask.")"; ?></div>
+	<div id="rightbutton"> 
+		<a href="index.php" class="noeffect">Logout</a> </div> 
+</div>
 <div id="content">
 <ul class="pageitem">
 <font color="#FFFFFF">a</font><br />
