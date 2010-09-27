@@ -24,6 +24,17 @@ while($row = mysql_fetch_array($rs))
         $amount = $row[4];
 
 }
+
+$sql1 ="select pc.product_code,pc.product_name
+FROM planning pl, product_catalog pc
+WHERE mo= '".$mo."' AND pl.product_code=pc.product_code";
+$rs1 = mysql_query($sql1,$conn);
+echo $sql1;
+while($row1 = mysql_fetch_array($rs1))
+{
+    $product_code = $row1[0];
+    $product_name = $row1[1];
+}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -59,7 +70,7 @@ function setFocus()
 
 <div id="content">
 <ul class="pageitem">
-		<li class="textbox"><span class="header">Enter no. of finished products</span><p>Please count and fill in the number into this form.</p></li>
+		<li class="textbox"><span class="header">Enter amount of<?php echo " ".$product_code; ?> </span><p><?php echo $product_name."</br>";?>Please count and fill in the number into this form.</p></li>
   </ul>
 <form action="updateMessage.php" method="get" name="updateForm">
 		
