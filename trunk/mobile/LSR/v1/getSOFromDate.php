@@ -22,6 +22,7 @@ $process["WH"] = (int)$row[3];
 }
 
 //retrive list of SO
+/*
 $sql ="SELECT
 delivery_date,amount_1
 FROM
@@ -30,6 +31,19 @@ WHERE
 de.sales_order =  so.sales_order_id
 AND
 de.sales_order ='".$SOID."'";
+*/
+$sql="SELECT
+delivery.delivery_date,
+delivery.delivery_time,
+delivery.qty
+FROM
+delivery ,
+total_planning
+WHERE
+delivery.delivery_id =  total_planning.delivery_id
+AND
+delivery.product_code ='".$PCode."'";
+//echo $sql;
 $rs = mysql_query($sql,$conn);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -134,8 +148,8 @@ $rs = mysql_query($sql,$conn);
 				$output["PT"] = 0;
 				$output["WH"] = 0;
 				//extract date time
-				$amount = $row[1];
-				$dateTime = getdate(strtotime($row[0]));
+				$amount = $row[2];
+				$dateTime = getdate(strtotime($row[0].' '.$row[1]));
 				if (strlen($dateTime['minutes'])<2)
 				$dateTime['minutes'] = "0".$dateTime['minutes'];
 				$need = (int)$amount;
@@ -224,7 +238,7 @@ $rs = mysql_query($sql,$conn);
             </tr>
           </table></div></td>
         <td>CM</td>";
-		 print "<td>".$row[1]."</td>
+		 print "<td>".$row[2]."</td>
         <td>".$output["CR"]."</td>
         <td>".$output["CV"]."</td>
         <td>".$output["PT"]."</td>
