@@ -102,7 +102,7 @@ function setFocus()
   </form>
 <div id="topbar"> 
 	<div id="leftnav"> </div> 
-	<div id="rightnav"> <a onClick="updateForm.submit();">Manufacturing Number</a></div> 
+	<div id="rightnav"> <a onClick="updateForm.submit();">Submit MO</a></div> 
 </div>
 </div>
 <div id="footer">

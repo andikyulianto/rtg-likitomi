@@ -22,7 +22,7 @@ while($row = mysql_fetch_array($rs))
         $expect = $row[3];
     elseif($eTask == 'PT')
         $expect = $row[4];
-
+    $modified_date = $row[9];
 }
 
 $sql1 ="select pc.product_code,pc.product_name
@@ -105,21 +105,23 @@ function setFocus()
       {?>
       <span class="graytitle">Amount from WH</span>     <?php } ?>
       
-	<ul class="pageitem"><li class="bigfield"><input name="expectedAmount" type="text"  value="<?php print $expect; ?>" disabled="disabled" /></li>
+	<ul class="pageitem"><li class="bigfield"><input name="expectedAmount" type="text"  value="<?php     if(!is_null($modified_date))
+            print 0; else print $expect; ?>" disabled="disabled" /></li>
     </ul>
 
           <span class="graytitle">Amount of finished product</span> 
-	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="<?php print $expect; ?>"  /></li>
+	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="<?php     if(!is_null($modified_date))
+            print 0; else print $expect.'" disabled="disabled"'; ?>   /></li>
     </ul></ul>
         
 		</form>
 </div>
   <div id="topbar"> 
 	<div id="leftnav"> 
-    <a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Manufacturing number</a>
+    <a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Change MO</a>
 		</div> 
 	<div id="rightnav"> 
-    <a onclick="updateForm.submit();">Amount</a></div> 
+    <a onclick="updateForm.submit();">submit Amount</a></div> 
 </div>
 <div id="footer">
 

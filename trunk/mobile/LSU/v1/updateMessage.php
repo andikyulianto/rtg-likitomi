@@ -31,37 +31,40 @@ $sql3 ="select amount from status where mo='".$mo."'";
 $rs3 = mysql_query($sql3,$conn3);
 while($row3 = mysql_fetch_array($rs3))
 {
-        $oldAmount = $row3[0];
+        $expect= $row3[0];
 }
 
 $conn = remotedb_connect ();
 //retrive list of SO
 if($eTask == 'CR')
 {
-$sql ="INSERT INTO status (mo,product_code,CR)
-VALUES ('".$mo."','".$pCode."',".$oldAmount.")
-";
+$sql ="UPDATE status SET mo='".$mo."',CR=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
 }
 if($eTask == 'CV')
 {
-$remove_CR = 0-$amount;
-$sql ="INSERT INTO status (mo,product_code,CR,CV)
-VALUES ('".$mo."','".$pCode."',".$remove_CR.",".$oldAmount.")";
+$remain = $expect-$amount;
+if($remain <0)
+$remain = 0;
 
+$sql ="UPDATE status SET mo='".$mo."',CR=".$remain.",CV=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
 }
 if($eTask == 'PT')
 {
-$remove_CV = 0-$amount;
-$sql ="INSERT INTO status (mo,product_code,CV,PT)
-VALUES ('".$mo."','".$pCode."',".$remove_CR.",".$oldAmount.")";
+$remain = $expect-$amount;
+if($remain <0)
+$remain = 0;
+$sql ="UPDATE status SET mo='".$mo."',CV=".$remain.",PT=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
 }
 if($eTask == 'WH')
 {
-$remove_PT = 0-$amount;
-$sql ="INSERT INTO status (mo,product_code,PT,WH)
-VALUES ('".$mo."','".$pCode."',".$remove_CR.",".$oldAmount.")";
+$remain = $expect-$amount;
+if($remain <0)
+$remain = 0;
+$sql ="UPDATE status SET mo='".$mo."',PT=".$remain.",WH=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
+
 }
-$rs = mysql_query($sql,$conn);?>
+$rs = mysql_query($sql,$conn);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -87,7 +90,7 @@ $rs = mysql_query($sql,$conn);?>
             <?php
 $DateOfRequest = date("Y-m-d H:i:s", time());             
 	echo $name." has finished ".$product_name."(".$product_code.")"." at station ".$eTask." successfully with ".$amount." items on ".$DateOfRequest; 
-	//header("Refresh: 3; url=\"scanMO.php?eID=".$eID."&eTask=".$eTask."\"");
+	header("Refresh: 3; url=\"scanMO.php?eID=".$eID."&eTask=".$eTask."\"");
 ?>
           </p></center>
         </ul>
