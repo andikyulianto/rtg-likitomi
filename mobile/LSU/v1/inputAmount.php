@@ -17,11 +17,11 @@ $rs = mysql_query($sql,$conn);
 while($row = mysql_fetch_array($rs))
 {
     if($eTask == 'CR')
-	$amount = $row[8];
+	$expect = $row[8];
     elseif($eTask == 'CV')
-        $amount = $row[3];
+        $expect = $row[3];
     elseif($eTask == 'PT')
-        $amount = $row[4];
+        $expect = $row[4];
 
 }
 
@@ -69,27 +69,50 @@ function setFocus()
 
 <div id="content">
 <ul class="pageitem">
-		<li class="textbox"><span class="header">Enter amount of<?php echo " ".$product_code ." (".$product_name.")";?></span><p>Please count and fill in the number into this form.</p></li>
+		<li class="textbox"><span class="header">Enter amount of finished product</span><p>Please count and fill in the number into this form.</p></li>
   </ul>
 <form action="updateMessage.php" method="get" name="updateForm">
 		
         <ul class="pageitem">
         <font color="#FFFFFF">a</font><br />
-        <span class="graytitle">Manufacturing number</span><ul class="pageitem">
-			<li class="bigfield">
+        <span class="graytitle">Manufacturing number</span>
+        <ul class="pageitem"><li class="bigfield">
              <input name="eID" type="hidden" maxlength="4" value="<?php print $eID; ?>" />
-             <input name="mo" disabled value="<?php print $mo; ?>" />
-    <input name="eTask" type="hidden" maxlength="4" value="<?php print $eTask; ?>" />
-			</li></ul>
-   
-    <span class="graytitle">Amount</span> 
-	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="<?php print $amount; ?>"  /></li>
-   
-    </ul>
-            
-		</ul>
+             <input name="moT" disabled="disable" value="<?php print $mo; ?>" />
+             <input name="mo" type="hidden" value="<?php print $mo; ?>" />
+             <input name="eTask" type="hidden" maxlength="4" value="<?php print $eTask; ?>" />
+        </li></ul>
+        <span class="graytitle">Product Name</span> 
+	<ul class="pageitem"><li class="bigfield"><input name="product_nameT" type="text"  value='<?php echo $product_name ." [".$product_code."]";?>' disabled="disabled" />
+        <input name="productName" type="hidden"  value='<?php echo $product_name;?>' />
+        <input name="productCode" type="hidden" value='<?php echo $product_code;?>' />
+        </li></ul>
         
-		</fieldset></form>
+    <!-- input amount -->
+      <?php if($eTask =='CR')
+      {?>
+      <span class="graytitle">Amount from sale order</span> 
+        <?php }
+    if($eTask =='CV')
+      {?>
+      <span class="graytitle">Amount from CR</span> 
+    <?php } 
+    if($eTask =='PT')
+      {?>
+      <span class="graytitle">Amount from CV</span> 
+    <?php } 
+    if($eTask =='WH')
+      {?>
+      <span class="graytitle">Amount from WH</span>     <?php } ?>
+      
+	<ul class="pageitem"><li class="bigfield"><input name="expectedAmount" type="text"  value="<?php print $expect; ?>" disabled="disabled" /></li>
+    </ul>
+
+          <span class="graytitle">Amount of finished product</span> 
+	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="<?php print $expect; ?>"  /></li>
+    </ul></ul>
+        
+		</form>
 </div>
   <div id="topbar"> 
 	<div id="leftnav"> 
