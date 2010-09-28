@@ -29,7 +29,6 @@ $sql1 ="select pc.product_code,pc.product_name
 FROM planning pl, product_catalog pc
 WHERE mo= '".$mo."' AND pl.product_code=pc.product_code";
 $rs1 = mysql_query($sql1,$conn);
-echo $sql1;
 while($row1 = mysql_fetch_array($rs1))
 {
     $product_code = $row1[0];
@@ -42,7 +41,7 @@ while($row1 = mysql_fetch_array($rs1))
 <head>
 <meta content="yes" name="apple-mobile-web-app-capable" />
 <meta content="index,follow" name="robots" />
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=tis-620" http-equiv="Content-Type" />
 <link href="pics/homescreen.gif" rel="apple-touch-icon" />
 <meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
 <link href="css/style.css" rel="stylesheet" media="screen" type="text/css" />
@@ -70,7 +69,7 @@ function setFocus()
 
 <div id="content">
 <ul class="pageitem">
-		<li class="textbox"><span class="header">Enter amount of<?php echo " ".$product_code; ?> </span><p><?php echo $product_name."</br>";?>Please count and fill in the number into this form.</p></li>
+		<li class="textbox"><span class="header">Enter amount of<?php echo " ".$product_code ." (".$product_name.")";?></span><p>Please count and fill in the number into this form.</p></li>
   </ul>
 <form action="updateMessage.php" method="get" name="updateForm">
 		
