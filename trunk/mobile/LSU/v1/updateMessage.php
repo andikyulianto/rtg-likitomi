@@ -38,7 +38,7 @@ $conn = remotedb_connect ();
 //retrive list of SO
 if($eTask == 'CR')
 {
-$sql ="UPDATE status SET mo='".$mo."',CR=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
+$sql ="UPDATE status SET mo='".$mo."',CR=".$amount.",amount=".$expect.",modified_by='".$eID."'  WHERE product_code ='".$pCode."'";
 }
 if($eTask == 'CV')
 {
@@ -46,21 +46,21 @@ $remain = $expect-$amount;
 if($remain <0)
 $remain = 0;
 
-$sql ="UPDATE status SET mo='".$mo."',CR=".$remain.",CV=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
+$sql ="UPDATE status SET mo='".$mo."',CR=".$remain.",CV=".$amount.",amount=".$expect.",modified_by='".$eID."'  WHERE product_code ='".$pCode."'";
 }
 if($eTask == 'PT')
 {
 $remain = $expect-$amount;
 if($remain <0)
 $remain = 0;
-$sql ="UPDATE status SET mo='".$mo."',CV=".$remain.",PT=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
+$sql ="UPDATE status SET mo='".$mo."',CV=".$remain.",PT=".$amount.",amount=".$expect.",modified_by='".$eID."'  WHERE product_code ='".$pCode."'";
 }
 if($eTask == 'WH')
 {
 $remain = $expect-$amount;
 if($remain <0)
 $remain = 0;
-$sql ="UPDATE status SET mo='".$mo."',PT=".$remain.",WH=".$amount.",amount=".$expect." WHERE product_code ='".$pCode."'";
+$sql ="UPDATE status SET mo='".$mo."',PT=".$remain.",WH=".$amount.",amount=".$expect.",modified_by='".$eID."'  WHERE product_code ='".$pCode."'";
 
 }
 $rs = mysql_query($sql,$conn);
