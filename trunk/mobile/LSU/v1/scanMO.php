@@ -70,14 +70,35 @@ function setFocus()
           <input name="name" type="hidden" maxlength="20" value="<?php print $name; ?>" />
         </li>
       </ul>
-      <!-- input amount -->
-      <span class="graytitle">Amount</span>
-      <ul class="pageitem">
-        <li class="bigfield">
-          <input name="amount" type="text" disabled="disabled"/>
-        </li>
-      </ul>
+      <!-- product name -->
+          <span class="graytitle">Product Name</span> 
+	<ul class="pageitem"><li class="bigfield"><input name="product_name" type="text"  value='' disabled="disabled"/></li>
+   
     </ul>
+      <!-- input amount -->
+      <?php if($eTask =='CR')
+      {?>
+      <span class="graytitle">Amount from sale order</span> 
+    
+    <?php }
+    if($eTask =='CV')
+      {?>
+      <span class="graytitle">Amount from CR</span> 
+    <?php } 
+    if($eTask =='PT')
+      {?>
+      <span class="graytitle">Amount from CV</span> 
+    <?php } 
+    if($eTask =='WH')
+      {?>
+      <span class="graytitle">Amount from WH</span>     <?php } ?>
+      
+	<ul class="pageitem"><li class="bigfield"><input name="Expectedamount" type="text"  value="" disabled="disabled" /></li>
+    </ul>
+
+          <span class="graytitle">Amount of finished product</span> 
+	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value=""   disabled="disabled"/></li>
+    </ul></ul>
   </form>
 <div id="topbar"> 
 	<div id="leftnav"> </div> 
