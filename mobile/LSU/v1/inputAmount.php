@@ -103,26 +103,28 @@ function setFocus()
     <?php } 
     if($eTask =='WH')
       {?>
-      <span class="graytitle">Amount from WH</span>     <?php } ?>
-      
-	<ul class="pageitem"><li class="bigfield"><input name="expectedAmount" type="text"  value="<?php     if(!is_null($modified_date))
-            print 0; else print $expect; ?>" disabled="disabled" /></li>
-    </ul>
+      <span class="graytitle">Amount from WH</span>   
+         
+      <?php
+      } 
+         if(!is_null($modified_date))
+         {
+            print '<ul class="pageitem"><li class="bigfield"><input name="Pamount" type="text"  value="0" disabled="disabled"/></li></ul>';
+            print '<span class="graytitle">Amount of finished product</span>';
+            print '<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="0" disabled="disabled"/></li></ul>';
+            print '</ul></form></div><div id="topbar"><div id="leftnav"><a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Change MO</a></div></div>';
+        }
+        else 
+        {
+            print '<ul class="pageitem"><li class="bigfield"><input name="Pamount" type="text"  value="'.$expect.'"/></li></ul>';
+            print '<span class="graytitle">Amount of finished product</span>';
+            print '<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="'.$expect.'"/></li></ul>';
+            print '</ul></form></div><div id="topbar"><div id="leftnav"><a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Change MO</a></div><div id="rightnav"><a onclick="updateForm.submit();">submit Amount</a></div></div>';
+        }
+     ?>
 
-          <span class="graytitle">Amount of finished product</span> 
-	<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="<?php     if(!is_null($modified_date))
-            print 0; else print $expect.'" disabled="disabled"'; ?>   /></li>
-    </ul></ul>
         
-		</form>
-</div>
-  <div id="topbar"> 
-	<div id="leftnav"> 
-    <a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Change MO</a>
-		</div> 
-	<div id="rightnav"> 
-    <a onclick="updateForm.submit();">submit Amount</a></div> 
-</div>
+		
 <div id="footer">
 
 	<a href="http://iwebkit.net">Powered by iWebKit</a></div>
