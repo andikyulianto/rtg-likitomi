@@ -29,6 +29,7 @@ while($row = mysql_fetch_array($rs))
     elseif($eTask == 'WH')
         $expect = $row[5];
     $modified_date = $row[9];
+    $modified_name = $row[10];
 }
 $sql1 ="select pc.product_code,pc.product_name
 FROM planning pl, product_catalog pc
@@ -94,24 +95,17 @@ function setFocus()
         </li></ul>
         
     <!-- input amount -->
-      <?php if($eTask =='CR')
-      {?>
-      <span class="graytitle">Amount from sale order</span> 
-        <?php }
+    <?php 
+    if($eTask =='CR')
+        print '<span class="graytitle">Amount from sale order'; 
     if($eTask =='CV')
-      {?>
-      <span class="graytitle">Amount from CR</span> 
-    <?php } 
+        print '<span class="graytitle">Amount from CR'; 
     if($eTask =='PT')
-      {?>
-      <span class="graytitle">Amount from CV</span> 
-    <?php } 
+        print '<span class="graytitle">Amount from CV'; 
     if($eTask =='WH')
-      {?>
-      <span class="graytitle">Amount from WH</span>   
+        print '<span class="graytitle">Amount from WH'; 
          
-      <?php
-      } 
+         
          if($expect==0)
          {
             print '<ul class="pageitem"><li class="bigfield"><input name="Pamount" type="text"  value="0" disabled="disabled"/></li></ul>';
@@ -121,7 +115,7 @@ function setFocus()
          }
         else 
         {
-            print '<ul class="pageitem"><li class="bigfield"><input name="Pamount" type="text"  value="'.$expect.'"/></li></ul>';
+            print ' by '.$modified_name.' on '.$modified_date.'</span><ul class="pageitem"><li class="bigfield"><input name="Pamount" type="text"  value="'.$expect.'"/></li></ul>';
             print '<span class="graytitle">Amount of finished product</span>';
             print '<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="'.$expect.'"/></li></ul>';
             print '</ul></form></div><div id="topbar"><div id="leftnav"><a href="scanMO.php?mo='.$mo.'&amp;eID='.$eID.'&amp;eTask='.$eTask.'">Change MO</a></div><div id="rightnav"><a onclick="updateForm.submit();">submit Amount</a></div></div>';
