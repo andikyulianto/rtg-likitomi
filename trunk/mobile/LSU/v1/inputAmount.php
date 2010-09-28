@@ -17,14 +17,19 @@ $rs = mysql_query($sql,$conn);
 while($row = mysql_fetch_array($rs))
 {
     if($eTask == 'CR')
-	$expect = $row[8];
+	if($row[3]==$row[8])
+            $expect =0;
+        else
+            $expect =  $row[8];
+        
     elseif($eTask == 'CV')
         $expect = $row[3];
     elseif($eTask == 'PT')
         $expect = $row[4];
+    elseif($eTask == 'WH')
+        $expect = $row[5];
     $modified_date = $row[9];
 }
-
 $sql1 ="select pc.product_code,pc.product_name
 FROM planning pl, product_catalog pc
 WHERE mo= '".$mo."' AND pl.product_code=pc.product_code";
@@ -107,19 +112,19 @@ function setFocus()
          
       <?php
       } 
-         if(!is_null($modified_date))
+         if($expect==0)
          {
             print '<ul class="pageitem"><li class="bigfield"><input name="Pamount" type="text"  value="0" disabled="disabled"/></li></ul>';
             print '<span class="graytitle">Amount of finished product</span>';
             print '<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="0" disabled="disabled"/></li></ul>';
-            print '</ul></form></div><div id="topbar"><div id="leftnav"><a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Change MO</a></div></div>';
-        }
+            print '</ul></form></div><div id="topbar"><div id="leftnav"><a href="scanMO.php?mo='.$mo.'&amp;eID='.$eID.'&amp;eTask='.$eTask.'">Change MO</a></div></div>';
+         }
         else 
         {
             print '<ul class="pageitem"><li class="bigfield"><input name="Pamount" type="text"  value="'.$expect.'"/></li></ul>';
             print '<span class="graytitle">Amount of finished product</span>';
             print '<ul class="pageitem"><li class="bigfield"><input name="amount" type="text"  value="'.$expect.'"/></li></ul>';
-            print '</ul></form></div><div id="topbar"><div id="leftnav"><a href="scanMO.php?mo=<?php print $mo; ?>&amp;eID=<?php print $eID;?>&amp;eTask=<?php print $eTask; ?>">Change MO</a></div><div id="rightnav"><a onclick="updateForm.submit();">submit Amount</a></div></div>';
+            print '</ul></form></div><div id="topbar"><div id="leftnav"><a href="scanMO.php?mo='.$mo.'&amp;eID='.$eID.'&amp;eTask='.$eTask.'">Change MO</a></div><div id="rightnav"><a onclick="updateForm.submit();">submit Amount</a></div></div>';
         }
      ?>
 
