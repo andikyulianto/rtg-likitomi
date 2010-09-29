@@ -1,0 +1,66 @@
+
+.tblcheckbox{
+	width:100%;
+}
+.tblcheckbox td{
+	border-bottom:1px solid #D0D0D0;
+	padding:2px;
+}
+
+.tblBlank{
+	width:15px;
+}
+
+/* Toolbar Images */
+
+.remove {
+	background:transparent url(../images/extjs/delete.gif);
+}
+.add-opt  {	
+	background:transparent url(../images/extjs/add.gif);
+}
+.save {
+	background:transparent url(../images/extjs/save.gif);
+}
+.edit {
+	background:transparent url(../images/extjs/edit.gif);
+}
+.cancel {
+	background:transparent url(../images/extjs/cancel.gif);
+}
+.load{
+	background:transparent url(../images/fam/arrow-down.gif);
+}
+
+
+
+.blankTbl{
+	background-color:#F1F1F1;
+}
+.autogen
+{
+	background-color:#AAAAAA;
+}
+.noborder
+{
+	border-bottom : 1px solid #FFFFFF;
+}
+
+tr.tdLabel td{
+	background-color:#F6F6F6;
+	border:1px solid #C8C8C8;
+	color:#7F7F7F;
+	padding:4px;
+	text-align:center;
+	white-space:nowrap;
+	font-size:90%;
+}
+
+tr.tdView td	{
+	border:1px solid #C8C8C8;
+	color:inherit;
+	padding:4px;
+	text-align:center;
+	font-size:90%;
+}
+

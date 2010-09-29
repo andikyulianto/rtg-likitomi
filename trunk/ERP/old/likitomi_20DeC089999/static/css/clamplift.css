@@ -1,0 +1,121 @@
+/*
+ ** Styles Sheet For Clamplift
+ * author 'Sanjil Shrestha' 
+ */
+
+#headbar-background {
+    background: #F4F5F5 url(../images/gradient.png) repeat-x scroll left top;
+    border-bottom: 1px solid #A5A5A5;
+    height: 37px;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    width: 100%;
+}
+
+#headbar-short {
+    position: fixed;
+    font-size: 85%;
+}
+
+#headbar-short td {
+	padding: 0px;
+	vertical-align: middle;
+	height: 37px !important;
+	border-right:1px solid #A1A5A9;
+	text-align:center;
+	font-weight: bold;
+}
+
+#sidebar-background {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    width: 165px;
+    bottom: 0px;
+    border-left: 1px #B9BDBE solid;
+    background-color: #DFE0E2;
+}
+
+#sidebar {
+    position: fixed;
+    top: 0px;
+    right: 0px; /* leave room for scrollbar */
+    width: 165px;
+    color: rgb( 91, 91, 91 );
+    padding-right: 0px;
+    cursor: default;
+    white-space: nowrap;
+}
+
+
+#clock {
+    text-align: left;
+}
+
+#itemdiv {
+    width: 78px;
+    height: 36px;
+    display: inline-block;
+    border: 1px dashed #FFFFFF;
+    text-align: center;
+    font-size: smaller;
+    line-height: 1;
+    cursor: pointer;
+	margin:3px;
+}
+
+#itemdiv.queue {
+    background-color: #D1E9C5;
+    color: #2C2C2C;
+}
+
+#itemdiv.inmachine {
+    background-color: #F9E5CD;
+    color: #2C2C2C;
+}
+
+#itemdiv.finished {
+    background-color: #E7E7E7;
+    color: #ACACAC;
+}
+
+/* Table */
+.taskTBL tr.even {
+    background: #FEFEFE none repeat scroll 0% 50%;
+}
+
+.taskTBL tr.odd {
+    background: #F6F6F6 none repeat scroll 0% 50%;
+}
+
+.taskTBL tr.highlight {
+    background: #83BBF6 none repeat scroll 0%;
+}
+
+.taskTBL tr.highlight td.firstcell {
+    background: transparent url(../images/pointer.png) no-repeat scroll 10% 50%;
+}
+
+.taskTBL td {
+    border: 1px solid #A1A5A9;
+    padding: 7px 0px;
+    text-align: center;
+    vertical-align: middle;
+}
+td.firstcell {
+    width: 110px; /* Fixed Width */
+    font-weight: bold;
+}
+td.firstcell a, td.firstcell a:hover, td.firstcell a:link{
+	text-decoration:none;
+	color: inherit;
+}  
+
+td.middlecell {
+    width: 200px; /* Fixed Width */
+}
+
+td.lastcell {
+    width: 144px;
+}
