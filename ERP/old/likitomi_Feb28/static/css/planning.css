@@ -1,0 +1,93 @@
+#planningDivContainer{
+	padding: 0px 0px 0px 3px;
+	font-size: 90%;
+}
+
+#headerPlanningSearch{
+	font-size: 80%;
+	width: 100%;
+	display: table-cells;
+	background: white url() no-repeat scroll 0% 0%;
+	text-align:center;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+#divcheckbox {
+    -moz-border-radius-bottomleft: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+    background-color:#DFE0E2;
+    display: block;
+    height: 140px;
+    margin-top: 0px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 2px;
+    width: 130px;
+}
+
+.tblcheckbox{
+	width:100%;
+}
+.tblcheckbox td{
+	border-bottom:1px solid #D0D0D0;
+	padding:2px;
+}
+
+.tblBlank{
+	width:15px;
+}
+
+.spantitle{
+	background-color:#DFE0E2;
+	padding: 0 15px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-topright: 10px;
+}
+
+/*
+ * Table Checkbox
+ */
+.tblCheckBox {
+    cursor: pointer;
+    width: 100%;
+}
+
+.tblCheckBox td {
+    border-bottom:1px solid #D0D0D0;
+    padding: 1px 1px 1px 1px;
+	text-align:center;
+}
+
+.tblCheckBox tr:hover{
+	background: #E8F2FE none repeat scroll 0 0;
+}
+
+.selectedRow {
+    background: #72869F none repeat scroll 0 0;
+    color: #FFFFFF;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+/* Toolbar Images */
+
+.remove {
+	background:transparent url(../images/extjs/delete.gif);
+}
+.add-opt  {	
+	background:transparent url(../images/extjs/add.gif);
+}
+.save {
+	background:transparent url(../images/extjs/save.gif);
+}
+.edit {
+	background:transparent url(../images/extjs/edit.gif);
+}
+.cancel {
+	background:transparent url(../images/extjs/cancel.gif);
+}
+.load{
+	background:transparent url(../images/fam/arrow-down.gif);
+}

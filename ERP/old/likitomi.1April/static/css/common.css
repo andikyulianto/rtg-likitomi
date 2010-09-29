@@ -1,0 +1,385 @@
+/*
+ ** Styles Sheet For Partners, Papers and Products
+ * author 'Sanjil Shrestha' 
+ */
+
+/* Header */
+#topheader {
+    background: transparent url(../images/header-bg.png) repeat-x scroll 0% 0%;
+	height: 43px !important;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+	z-index:9;
+}
+
+#headbar {
+    position: fixed;
+    top: 0px;
+    font-size: 85%;
+    width: 100%;
+	z-index:10;
+}
+
+#headbar td {
+   	padding:0px 5px;
+	vertical-align: middle;
+	height: 43px !important;
+}
+
+/* Links */
+ul.primary-links li {
+    float: left;;
+}
+
+ul.primary-links li a, ul.primary-links li a:link, ul.primary-links li a:visited {
+    color: #A0A0A0;
+    background: transparent;
+    text-decoration: none;
+    padding: 14px 12px;
+}
+
+ul.primary-links li span {
+    background: transparent url(../images/bg-navigation-item.png) no-repeat scroll 50% 100%;
+    color: #DFE0E2;
+    padding:12px;
+}
+
+ul.primary-links li a:hover{
+	background: transparent url(../images/bg-navigation-item.png) no-repeat scroll 50% 100%;
+    color: #FFFFFF;
+    padding: 14px 12px;
+}
+
+/* Search box */
+#searchform input[type="text"] {
+	-moz-border-radius-bottomleft:20px;
+	-moz-border-radius-bottomright:20px;
+	-moz-border-radius-topleft:20px;
+	-moz-border-radius-topright:20px;
+	background-image:url(../images/safari_search.png);
+	background-position:3px center;
+	background-repeat:no-repeat;
+	margin-right:5px;
+	padding-left:25px;
+	padding-right:10px;
+	width:150px;
+}
+
+#searchform input {
+	background:#ffffff none repeat scroll 0% 0%;
+	border:1px solid #333333;
+	color:#3E3E3E;
+	padding:3px;
+}
+
+.ewHighlightSearch{
+	font-weight: bold;
+	background-color: yellow;
+}
+
+/* SideBars 
+#first-background {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 200px;
+    bottom: 0px;
+    border-right: 1px #B9BDBE solid;
+    background-color: #DFE0E2;
+    z-index: -3;
+}*/
+
+#firstbar{
+	font-size:85%;
+	padding-left:0px;
+	padding-top:2px;
+	vertical-align:top;
+	width:199px;
+	height:100%;
+	border-right: 1px #B9BDBE solid;
+    background-color: #DFE0E2;
+	z-index:5;
+}
+/*
+#second-background {
+    position: fixed;
+    top: 0px;
+    left: 201px;
+    width: 280px;
+    bottom: 0px;
+    border-right: 1px #B9BDBE solid;
+    background-color: #F5F5F5;
+    z-index: -3;
+}
+*/
+#listdivcontainer  {
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 280px;
+	height:100%;
+	border-right: 1px #B9BDBE solid;
+    background-color: #F5F5F5;
+}
+
+.details-info {
+    margin: 15px;
+    padding: 15px;
+    border: 1px dotted #999;
+    color: #555;
+    font-size: 90%;
+    background: #f9f9f9;
+}
+
+#detailDivContainer {
+    font-size: 90%;
+	padding: 0 0 0 3px;
+    /*left: 480px;    
+    position: absolute;
+	z-index:-4;*/
+}
+
+/* Sidebar Details */
+#nametitle {
+	font-weight:bold;
+	font-size: 150%;
+}
+#boxcontainer{
+	padding: 8px 25px;
+	-moz-border-radius-bottomleft:20px;
+	-moz-border-radius-bottomright:20px;
+	-moz-border-radius-topleft:20px;
+	-moz-border-radius-topright:20px;
+	background-color: #FAFBFC;
+	border: 1px solid #C8C8C8;
+}
+
+#boxcontainer  td{
+	vertical-align:top;
+}
+
+.paddedDiv{
+	padding: 6px 0px 0px 8px;
+}
+.tblDetailViewLabel {
+    color: #7F7F7F;
+    text-align: right;
+	white-space:nowrap;
+	padding-right:12px;
+	width: 110px; 
+}
+.tblProdViewLabel {
+	color: #7F7F7F;
+    text-align: center;
+	white-space:nowrap;
+	padding:4px;
+	width:50px;
+	background-color: #F6F6F6;
+	border: 1px solid #C8C8C8;
+}
+.tblProdView {
+	color: inherit;
+    text-align: center;
+	white-space:nowrap;
+	padding:4px;
+	border: 1px #C8C8C8 solid;
+}
+.tblDetailView {
+    color: inherit;
+	width: 110px; 
+}
+.tblProdViewWrap {
+	color: inherit;
+    text-align: center;
+	padding:4px;
+	border: 1px #C8C8C8 solid;
+	cursor:pointer;
+}
+.tblFixedBorder{
+	border: 1px solid #C8C8C8;
+}
+/* End Sidebar Details */
+
+/* Table cw */
+.cwTable {
+    width: 100%;
+}
+
+.cwTable td {
+    cursor: pointer;
+    font-size: 90%;
+    vertical-align: middle;
+    height: 18px !important;
+    padding: 0px 1px 0px 10px;
+}
+
+.cwTableRow {
+    color: #393E44;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.cwTableHighlightRow {
+    color: #3875D7;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cwTableSelectRow {
+    background: #72869F;
+    text-decoration: none;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+/* Table Details */
+td.headertop{
+	height: 41px !important;
+}
+td.leftbar {
+	vertical-align:top;
+	width:200px;
+}
+td.rowFirstChar {
+    background: transparent url(../images/title-name.png) repeat-x scroll 0% 0%;
+    font-size: 80%;
+    font-weight: bold;
+    height: 16px !important;
+}
+td.leftbar2 {
+	vertical-align:top;
+	width:280px;
+}
+
+/* Paper, Partners */
+/*  Error  */
+
+#addressErr, #partnerErr{
+	background:#FBE6F2 none repeat scroll 0 0;
+	border:1px solid #D893A1;
+	color:#333333;
+	text-align:center;
+	visibility:hidden;
+}
+
+/* Product */
+img.imglink{
+	cursor:pointer;
+}
+
+.highlightAddress{
+	background: #FFDD77 url('') no-repeat 0 0;
+	color: inherit;
+    text-align: center;
+	padding:4px;
+	border: 1px #C8C8C8 solid;
+	cursor:pointer;
+}
+.highlightDeletedDelivery{
+	background: #FBE6F2 url('') no-repeat 0 0;
+	color: inherit;
+    text-align: center;
+	white-space:nowrap;
+	padding:4px;
+	border: 1px #D893A1 solid;
+}
+
+/*
+ * UNKNOWNS
+ */
+
+/* @group Sidebar */
+#submenubar-background{
+	background-color: #F6F6F6;
+	border-bottom: 1px #B9BDBE solid;
+    height: 24px;
+    position: fixed;
+    left: 482px;
+    top: 42px;
+    width: 100%;
+}
+
+#submenubar{
+    position: fixed;
+    top: 48px;
+	cursor: pointer;
+	font-size:90%;
+}
+
+#submenubar .selected{
+	-moz-appearance: none !important;
+    -moz-border-radius-bottomleft: 8px !important;
+    -moz-border-radius-bottomright: 8px !important;
+    -moz-border-radius-topleft: 8px !important;
+    -moz-border-radius-topright: 8px !important;
+    color: #F6F6F6;
+    padding: 1px 10px;
+    background-color: #868686;
+}
+
+#submenubar td{
+	padding:0px 4px;
+}
+
+#submenubar .unselected{
+    padding: 1px 10px;
+}
+
+/*
+ * Papers 
+ */
+#paperlistdiv  {
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 281px;
+	height:100%;
+	z-index: -2;
+}
+
+#detailpapers{
+	padding: 10px 0px 0px 15px;
+	font-size: 90%;
+}
+
+/*
+ * Menu List
+ */
+#menus ul{
+	background:transparent url(../images/menu1.png) repeat-x scroll 0% 0%;
+	padding:0px;
+	margin:0px;
+}
+
+#menus ul li{
+	background:transparent url(../images/menu1.png) repeat-x scroll 0% 0%;
+	display:inline;
+	line-height:32px;
+	margin:0pt;
+	padding:0px 20px;
+}
+/**/
+input.inputUpdated{
+	background: #FFDD77 url('') no-repeat 0 0;
+}
+
+.alreadyDeleted{
+	background: #DD0000 url('') no-repeat 0 0;
+	color: #FFFFFF;
+	text-align:right;
+}
+
+.fullCenter{
+	width:100%;
+	text-align:center;
+}
+
+.required{
+	background: #DD0000;
+}
+
+#flashMessage {
+    background-color: #FFDD77;
+    border: 1px solid #999966;
+    padding: 0.5em;
+    position: absolute;
+    right: 10px;
+}
