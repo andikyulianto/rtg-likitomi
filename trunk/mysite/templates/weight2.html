@@ -1,106 +1,134 @@
 ﻿<html>
 <head>
-	<meta http-equiv="refresh" content="2"; url="http://127.0.0.1:8000/weight/">
+	<!--<meta http-equiv="refresh" content="5"; url="http://127.0.0.1:8000/weight/">-->
     <title>Likitomi: @Scale</title>
 	<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
+	<script type="text/javascript" src="js/clamplift.js"></script>
+	<script type="text/javascript">
+	function loadXMLDoc()
+	{
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+		document.getElementById("weight").innerHTML=xmlhttp.responseText;
+		}
+	  }
+	xmlhttp.open("GET","/weight/",true);
+	xmlhttp.send();
+	
+	setTimeout("loadXMLDoc()",1000);
+
+	}
+	</script>
 </head>
-<body>
+<body onload="javascript:loadXMLDoc()">
+<div id="weight">
 	<div>
-		{% ifequal digit1 "0" %}<img width="6%" src="image/0.png">{% endifequal %}
-		{% ifequal digit1 "1" %}<img width="6%" src="image/1.png">{% endifequal %}
-		{% ifequal digit1 "2" %}<img width="6%" src="image/2.png">{% endifequal %}
-		{% ifequal digit1 "3" %}<img width="6%" src="image/3.png">{% endifequal %}
-		{% ifequal digit1 "4" %}<img width="6%" src="image/4.png">{% endifequal %}
-		{% ifequal digit1 "5" %}<img width="6%" src="image/5.png">{% endifequal %}
-		{% ifequal digit1 "6" %}<img width="6%" src="image/6.png">{% endifequal %}
-		{% ifequal digit1 "7" %}<img width="6%" src="image/7.png">{% endifequal %}
-		{% ifequal digit1 "8" %}<img width="6%" src="image/8.png">{% endifequal %}
-		{% ifequal digit1 "9" %}<img width="6%" src="image/9.png">{% endifequal %}
-		<img width="1%" src="image/space.png">
-		{% ifequal digit2 "0" %}<img width="6%" src="image/0.png">{% endifequal %}
-		{% ifequal digit2 "1" %}<img width="6%" src="image/1.png">{% endifequal %}
-		{% ifequal digit2 "2" %}<img width="6%" src="image/2.png">{% endifequal %}
-		{% ifequal digit2 "3" %}<img width="6%" src="image/3.png">{% endifequal %}
-		{% ifequal digit2 "4" %}<img width="6%" src="image/4.png">{% endifequal %}
-		{% ifequal digit2 "5" %}<img width="6%" src="image/5.png">{% endifequal %}
-		{% ifequal digit2 "6" %}<img width="6%" src="image/6.png">{% endifequal %}
-		{% ifequal digit2 "7" %}<img width="6%" src="image/7.png">{% endifequal %}
-		{% ifequal digit2 "8" %}<img width="6%" src="image/8.png">{% endifequal %}
-		{% ifequal digit2 "9" %}<img width="6%" src="image/9.png">{% endifequal %}
-		<img width="1%" src="image/space.png">
-		{% ifequal digit3 "0" %}<img width="6%" src="image/0.png">{% endifequal %}
-		{% ifequal digit3 "1" %}<img width="6%" src="image/1.png">{% endifequal %}
-		{% ifequal digit3 "2" %}<img width="6%" src="image/2.png">{% endifequal %}
-		{% ifequal digit3 "3" %}<img width="6%" src="image/3.png">{% endifequal %}
-		{% ifequal digit3 "4" %}<img width="6%" src="image/4.png">{% endifequal %}
-		{% ifequal digit3 "5" %}<img width="6%" src="image/5.png">{% endifequal %}
-		{% ifequal digit3 "6" %}<img width="6%" src="image/6.png">{% endifequal %}
-		{% ifequal digit3 "7" %}<img width="6%" src="image/7.png">{% endifequal %}
-		{% ifequal digit3 "8" %}<img width="6%" src="image/8.png">{% endifequal %}
-		{% ifequal digit3 "9" %}<img width="6%" src="image/9.png">{% endifequal %}
-		<img width="1%" src="image/space.png">
-		{% ifequal digit4 "0" %}<img width="6%" src="image/0.png">{% endifequal %}
-		{% ifequal digit4 "1" %}<img width="6%" src="image/1.png">{% endifequal %}
-		{% ifequal digit4 "2" %}<img width="6%" src="image/2.png">{% endifequal %}
-		{% ifequal digit4 "3" %}<img width="6%" src="image/3.png">{% endifequal %}
-		{% ifequal digit4 "4" %}<img width="6%" src="image/4.png">{% endifequal %}
-		{% ifequal digit4 "5" %}<img width="6%" src="image/5.png">{% endifequal %}
-		{% ifequal digit4 "6" %}<img width="6%" src="image/6.png">{% endifequal %}
-		{% ifequal digit4 "7" %}<img width="6%" src="image/7.png">{% endifequal %}
-		{% ifequal digit4 "8" %}<img width="6%" src="image/8.png">{% endifequal %}
-		{% ifequal digit4 "9" %}<img width="6%" src="image/9.png">{% endifequal %}
-		<img width="1%" src="image/space.png">
-		{% ifequal digit5 "0" %}<img width="6%" src="image/0.png">{% endifequal %}
-		{% ifequal digit5 "1" %}<img width="6%" src="image/1.png">{% endifequal %}
-		{% ifequal digit5 "2" %}<img width="6%" src="image/2.png">{% endifequal %}
-		{% ifequal digit5 "3" %}<img width="6%" src="image/3.png">{% endifequal %}
-		{% ifequal digit5 "4" %}<img width="6%" src="image/4.png">{% endifequal %}
-		{% ifequal digit5 "5" %}<img width="6%" src="image/5.png">{% endifequal %}
-		{% ifequal digit5 "6" %}<img width="6%" src="image/6.png">{% endifequal %}
-		{% ifequal digit5 "7" %}<img width="6%" src="image/7.png">{% endifequal %}
-		{% ifequal digit5 "8" %}<img width="6%" src="image/8.png">{% endifequal %}
-		{% ifequal digit5 "9" %}<img width="6%" src="image/9.png">{% endifequal %}
-		{% ifequal digit6 "." %}<img width="1%" src="image/dot.png">{% else %}{% endifequal %}
-		{% ifequal digit7 "0" %}<img width="6%" src="image/0.png">{% endifequal %}
-		{% ifequal digit7 "1" %}<img width="6%" src="image/1.png">{% endifequal %}
-		{% ifequal digit7 "2" %}<img width="6%" src="image/2.png">{% endifequal %}
-		{% ifequal digit7 "3" %}<img width="6%" src="image/3.png">{% endifequal %}
-		{% ifequal digit7 "4" %}<img width="6%" src="image/4.png">{% endifequal %}
-		{% ifequal digit7 "5" %}<img width="6%" src="image/5.png">{% endifequal %}
-		{% ifequal digit7 "6" %}<img width="6%" src="image/6.png">{% endifequal %}
-		{% ifequal digit7 "7" %}<img width="6%" src="image/7.png">{% endifequal %}
-		{% ifequal digit7 "8" %}<img width="6%" src="image/8.png">{% endifequal %}
-		{% ifequal digit7 "9" %}<img width="6%" src="image/9.png">{% endifequal %}
+	{% ifequal digit1 "0" %}<img width="8%" src="image/0.png">{% endifequal %}
+	{% ifequal digit1 "1" %}<img width="8%" src="image/1.png">{% endifequal %}
+	{% ifequal digit1 "2" %}<img width="8%" src="image/2.png">{% endifequal %}
+	{% ifequal digit1 "3" %}<img width="8%" src="image/3.png">{% endifequal %}
+	{% ifequal digit1 "4" %}<img width="8%" src="image/4.png">{% endifequal %}
+	{% ifequal digit1 "5" %}<img width="8%" src="image/5.png">{% endifequal %}
+	{% ifequal digit1 "6" %}<img width="8%" src="image/6.png">{% endifequal %}
+	{% ifequal digit1 "7" %}<img width="8%" src="image/7.png">{% endifequal %}
+	{% ifequal digit1 "8" %}<img width="8%" src="image/8.png">{% endifequal %}
+	{% ifequal digit1 "9" %}<img width="8%" src="image/9.png">{% endifequal %}
+	<img width="1%" src="image/space.png">
+	{% ifequal digit2 "0" %}<img width="8%" src="image/0.png">{% endifequal %}
+	{% ifequal digit2 "1" %}<img width="8%" src="image/1.png">{% endifequal %}
+	{% ifequal digit2 "2" %}<img width="8%" src="image/2.png">{% endifequal %}
+	{% ifequal digit2 "3" %}<img width="8%" src="image/3.png">{% endifequal %}
+	{% ifequal digit2 "4" %}<img width="8%" src="image/4.png">{% endifequal %}
+	{% ifequal digit2 "5" %}<img width="8%" src="image/5.png">{% endifequal %}
+	{% ifequal digit2 "6" %}<img width="8%" src="image/6.png">{% endifequal %}
+	{% ifequal digit2 "7" %}<img width="8%" src="image/7.png">{% endifequal %}
+	{% ifequal digit2 "8" %}<img width="8%" src="image/8.png">{% endifequal %}
+	{% ifequal digit2 "9" %}<img width="8%" src="image/9.png">{% endifequal %}
+	<img width="1%" src="image/space.png">
+	{% ifequal digit3 "0" %}<img width="8%" src="image/0.png">{% endifequal %}
+	{% ifequal digit3 "1" %}<img width="8%" src="image/1.png">{% endifequal %}
+	{% ifequal digit3 "2" %}<img width="8%" src="image/2.png">{% endifequal %}
+	{% ifequal digit3 "3" %}<img width="8%" src="image/3.png">{% endifequal %}
+	{% ifequal digit3 "4" %}<img width="8%" src="image/4.png">{% endifequal %}
+	{% ifequal digit3 "5" %}<img width="8%" src="image/5.png">{% endifequal %}
+	{% ifequal digit3 "6" %}<img width="8%" src="image/6.png">{% endifequal %}
+	{% ifequal digit3 "7" %}<img width="8%" src="image/7.png">{% endifequal %}
+	{% ifequal digit3 "8" %}<img width="8%" src="image/8.png">{% endifequal %}
+	{% ifequal digit3 "9" %}<img width="8%" src="image/9.png">{% endifequal %}
+	<img width="1%" src="image/space.png">
+	{% ifequal digit4 "0" %}<img width="8%" src="image/0.png">{% endifequal %}
+	{% ifequal digit4 "1" %}<img width="8%" src="image/1.png">{% endifequal %}
+	{% ifequal digit4 "2" %}<img width="8%" src="image/2.png">{% endifequal %}
+	{% ifequal digit4 "3" %}<img width="8%" src="image/3.png">{% endifequal %}
+	{% ifequal digit4 "4" %}<img width="8%" src="image/4.png">{% endifequal %}
+	{% ifequal digit4 "5" %}<img width="8%" src="image/5.png">{% endifequal %}
+	{% ifequal digit4 "6" %}<img width="8%" src="image/6.png">{% endifequal %}
+	{% ifequal digit4 "7" %}<img width="8%" src="image/7.png">{% endifequal %}
+	{% ifequal digit4 "8" %}<img width="8%" src="image/8.png">{% endifequal %}
+	{% ifequal digit4 "9" %}<img width="8%" src="image/9.png">{% endifequal %}
+	<img width="1%" src="image/space.png">
+	{% ifequal digit5 "0" %}<img width="8%" src="image/0.png">{% endifequal %}
+	{% ifequal digit5 "1" %}<img width="8%" src="image/1.png">{% endifequal %}
+	{% ifequal digit5 "2" %}<img width="8%" src="image/2.png">{% endifequal %}
+	{% ifequal digit5 "3" %}<img width="8%" src="image/3.png">{% endifequal %}
+	{% ifequal digit5 "4" %}<img width="8%" src="image/4.png">{% endifequal %}
+	{% ifequal digit5 "5" %}<img width="8%" src="image/5.png">{% endifequal %}
+	{% ifequal digit5 "6" %}<img width="8%" src="image/6.png">{% endifequal %}
+	{% ifequal digit5 "7" %}<img width="8%" src="image/7.png">{% endifequal %}
+	{% ifequal digit5 "8" %}<img width="8%" src="image/8.png">{% endifequal %}
+	{% ifequal digit5 "9" %}<img width="8%" src="image/9.png">{% endifequal %}
+	{% ifequal digit6 "." %}<img width="2%" src="image/dot.png">{% else %}<b id="dash">-</b>{% endifequal %}
+	{% ifequal digit7 "0" %}<img width="8%" src="image/0.png">{% endifequal %}
+	{% ifequal digit7 "1" %}<img width="8%" src="image/1.png">{% endifequal %}
+	{% ifequal digit7 "2" %}<img width="8%" src="image/2.png">{% endifequal %}
+	{% ifequal digit7 "3" %}<img width="8%" src="image/3.png">{% endifequal %}
+	{% ifequal digit7 "4" %}<img width="8%" src="image/4.png">{% endifequal %}
+	{% ifequal digit7 "5" %}<img width="8%" src="image/5.png">{% endifequal %}
+	{% ifequal digit7 "6" %}<img width="8%" src="image/6.png">{% endifequal %}
+	{% ifequal digit7 "7" %}<img width="8%" src="image/7.png">{% endifequal %}
+	{% ifequal digit7 "8" %}<img width="8%" src="image/8.png">{% endifequal %}
+	{% ifequal digit7 "9" %}<img width="8%" src="image/9.png">{% endifequal %}
 	</div>
 	<!--<div><a href="/weight/"><img width="180px" src="image/refresh2.png"></a><br /></div>-->
 	<p>{{ error1 }}</p>
 	<p>{{ error2 }}</p>
 	<p>{{ error3 }}</p>
-	<form id="frm1" action="/weight/update/" method="get" align="center">
-        <input id="wt" type="hidden" name="weight">
-		<input type="hidden" value="{{ realtag }}" name="paper_roll_id"></input>
-        <input type="hidden" value="Update Weight" onclick="javascript:dialogBox()">
-    </form>
 	
 	<table align="center">
 	<tr>
-		<td><h2>Tag ID: </h2></td>
+		<td><h2>Paper Roll ID: </h2></td>
 		<td>{%ifnotequal realtag "" %}<h1>{{ realtag }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
 	</tr>
 	<tr>
 		<td><h2>Paper Code: </h2></td>
-		<td>{%ifnotequal realtag "" %}<h1>{{ paper_code }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
+		<td>{%ifnotequal paper_code "" %}<h1 id="big">{{ paper_code }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
+	</tr>
+	<tr>
+		<td><h2>Size: </h2></td>
+		<td>{%ifnotequal size "" %}<h1>{{ size }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
+		<td>{%ifnotequal uom "" %}<h2>{{ uom }}</h2>{% else %}{% endifnotequal %}</td>
 	</tr>
 	<tr>
 		<td><h2>Previous Weight: </h2></td>
-		<td>{%ifnotequal realtag "" %}<h1>{{ to_weight }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
+		<td>{%ifnotequal actual_wt "" %}<h1>{{ actual_wt }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
 		<td><h2>kgs</h2></td>
 	</tr>
 	<tr>
 		<td><h2>Used Weight: </h2></td>
-		<td>{%ifnotequal realtag "" %}<h1>{{ used_weight }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
+		<td>{%ifnotequal used_weight "" %}<h1>{{ used_weight }}</h1>{% else %}<h2>-</h2>{% endifnotequal %}</td>
 		<td><h2>kgs</h2></td>
 	</tr>
 	</table>
+</div>
 </body>
 </html>
