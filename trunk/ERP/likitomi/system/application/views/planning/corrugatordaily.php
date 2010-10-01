@@ -55,6 +55,7 @@
 		$S3 = $key->scoreline_f2;
 		
 		$case 	= $key->qty;
+                if(($key->slit)!=0)
 		$cut2 	= $case/$key->slit;
 		$used_df = ($key->t_length*$cut2)/1000;
 		$used_bl = ($key->BL=="")?"":($key->t_length*$cut2)/1000;
