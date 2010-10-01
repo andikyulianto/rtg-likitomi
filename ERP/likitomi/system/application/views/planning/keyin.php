@@ -47,8 +47,10 @@
 	{
 		$cnt++;
 		//FORMULA
+                if(($key->cut*$key->slit*1000000)!=0)
 		$m2 = ($key->p_width_inch*25.4*$key->t_length)/($key->cut*$key->slit*1000000);
 		$total = $m2*$key->qty; 
+                if(($key->cut*$key->slit)!=0)
 		$cut2 = $key->qty/($key->cut*$key->slit);
 		
 		$metre	= ($key->t_length*$cut2)/1000;

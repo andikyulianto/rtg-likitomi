@@ -30,6 +30,7 @@
 	{
 		$cnt++;
 		//FORMULA
+                if(($key->cut)!=0)
 		$sqm = ($key->p_width_inch*25.4*$key->t_length)/($key->cut*1000000);
 		$sqm = round($sqm,3);
 	?>
