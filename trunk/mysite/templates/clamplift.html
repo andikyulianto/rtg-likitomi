@@ -39,14 +39,14 @@
 	}
 	</script>
 </head>
-<body onload="javascript:loadXMLDoc()">
-<div id="clamplift">
+<body onload="javascriptloadXMLDoc()">
+<div id="clamplif">
 	<p>{{ error1 }}</p>
 	<p>{{ error2 }}</p>
 	<p>{{ error3 }}</p>
 	<table id="white" width="100%" align="center">
 	<tr>
-		<td align="left"><a href="/test/"><img height="100px" src="image/back.png"></a></td>
+		<td align="left"><a href="/index/"><img height="100px" src="image/back.png"></a></td>
 		<td></td>
 		<td></td>
 		<td></td>
@@ -58,10 +58,10 @@
 	<table width="100%" align="center">
 	<tr>
 		<td><h2>Roll ID: </h2></td>
-		<td id="idinput">{% ifnotequal realtag "" %}<h1 class="center">{{ realtag }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
+		<td>{% ifnotequal realtag "" %}<h1 class="center">{{ realtag }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 		<td><h2>Paper Code: </h2></td>
 		<td>{% ifnotequal paper_code "" %}<h1 id="big" class="center">{{ paper_code }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
-		<td rowspan="2" width="10%"></td>
+		<td align="center" rowspan="2" width="10%"></td>
 		<!--<td align="center" rowspan="2" width="10%"><a href="javascript:idInput()"><img height="100px" src="image/manual.png"></a></td>-->
 	</tr>
 	<tr>
@@ -85,7 +85,7 @@
 		<td><h2>Weight: </h2></td>
 		<td>{% ifnotequal actual_wt "" %}<h1 class="center">{{ actual_wt }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 		<td align="center"><img width="30px" src="image/arrow2.png"></td>
-		<td align="center">
+		<td align="center" width="300px">
 		{% ifequal digit1 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
 		{% ifequal digit1 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
 		{% ifequal digit1 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
@@ -175,6 +175,11 @@
 	<form id="frm2" action="/clamplift/undo/" method="get" align="center">
 		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
 		<input type="hidden" value="undo" name="undo">
+	</form>
+	
+	<form id="frm3" action="/clamplift/manid/" method="get" align="center">
+		<input id="manid" type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input type="hidden" value="manid" name="manid">
 	</form>
 </div>
 </body>

@@ -37,30 +37,30 @@ def weight(request):
 ##
 ##    output = ser.read(16)
 ##
-##    output = "US,NT,+00234.5Kg"
-##
-##    a = output.rsplit(",")
-##
-##    if len(a) == 3:
-##        b = a[2]
-##    elif len(a) == 2:
-##        b = a[1]
-##    else:
-##        b = "+00000.0Kg"
-##
-##    if len(b) == 10:
-##        c = b[-9:]
-##    else:
-##        c = "00000.0Kg"
-##
-##    if len(c) == 9:
-##        d = c[:-2]
-##    else:
-##        d = "00000.0"
-##
-##    weight = float(d)
+    output = "US,NT,+00325.5Kg"
 
-    weight = round(random.uniform(1,2000),0)
+    a = output.rsplit(",")
+
+    if len(a) == 3:
+        b = a[2]
+    elif len(a) == 2:
+        b = a[1]
+    else:
+        b = "+00000.0Kg"
+
+    if len(b) == 10:
+        c = b[-9:]
+    else:
+        c = "00000.0Kg"
+
+    if len(c) == 9:
+        d = c[:-2]
+    else:
+        d = "00000.0"
+
+    weight = float(d)
+
+##    weight = round(random.uniform(1,2000),0)
 
     if weight != 0.0:
         digital = str(weight)
@@ -187,7 +187,7 @@ def weight(request):
 ##
 ##    soc.close()
 
-    realtag = 69
+    realtag = 67
 
 # Query database #
     conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
@@ -350,10 +350,10 @@ def clamplift(request):
 ##
 ##    soc.close()
 
-    realtag = 69
+    realtag = 67
     lane = 1
-    position = 11
-    location = 'Scale'
+    position = 12
+    location = 'Stock'
 
 # Query database #
     conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
@@ -366,7 +366,8 @@ def clamplift(request):
     initial_weight = query1[4]
     size = query1[7]
     uom = query1[8]
-    temp_weight = query1[17]
+##    temp_weight = query1[17]
+    temp_weight = ""
 
     digital = str(temp_weight)
 
@@ -641,8 +642,32 @@ def digit(request):
 #-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#
 #-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#
 
-def test(request):
-    digital = 12345
-    return render_to_response('test.html', locals())
+def manid(request):
+    if 'realtag' in request.GET and request.GET['realtag']:
+        realtag = request.GET['realtag']
+    else:
+        return HttpResponseRedirect('/clamplift/')
+
+    conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
+    cur = conn.cursor()
+
+    cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
+    query1 = cur.fetchone()
+    paper_roll_id = query1[0]
+    paper_code = query1[1]
+    initial_weight = query1[4]
+    size = query1[7]
+    uom = query1[8]
+    temp_weight = query1[17]
+
+    return HttpResponseRedirect('/clamplift/')
+
+#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#
+#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#
+#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#-##--###--##-#
+
+def index(request):
+
+    return render_to_response('index.html', locals())
 
 # Comments #

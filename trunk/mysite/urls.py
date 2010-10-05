@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
-from mysite.scale.views import weight, update, clamplift, undo, test, digit
+from mysite.scale.views import weight, update, clamplift, undo, index, digit, manid
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -12,8 +12,10 @@ urlpatterns = patterns('',
 	(r'^clamplift/$', clamplift),
 	(r'^clamplift/update/$', update),
 	(r'^clamplift/undo/$', undo),
+	(r'^clamplift/manid/$', manid),
 	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^test/$', test),
+	(r'^index/$', index),
+	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^digit/$', digit),
 	(r'^digit/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
