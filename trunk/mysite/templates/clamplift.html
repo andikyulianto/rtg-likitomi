@@ -8,8 +8,8 @@
 	
 	<script type="text/javascript">
 	$(document).ready(function(){
-	  $("button").click(function(){
-		$(this).hide();
+	  $("#submit").click(function(){
+		$("#undo").show();
 	  });
 	});
 	</script>
@@ -39,19 +39,19 @@
 	}
 	</script>
 </head>
-<body onload="javascriptloadXMLDoc()">
+<body onload="javascripthideUndo()">
 <div id="clamplif">
 	<p>{{ error1 }}</p>
 	<p>{{ error2 }}</p>
 	<p>{{ error3 }}</p>
 	<table id="white" width="100%" align="center">
 	<tr>
-		<td align="left"><a href="/index/"><img height="100px" src="image/back.png"></a></td>
+		<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td align="right"><a href="/clamplift/"><img height="100px" src="image/refresh2.png"></a></td>
+		<td align="right"><a href="/clamplift/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
 	</tr>
 	<tr height="20px"><td></td></tr>
 	<table>
@@ -66,7 +66,7 @@
 	</tr>
 	<tr>
 		<td><h2>Size: </h2></td>
-		<td>{% ifnotequal size "" %}<h1 class="center">{{ size}}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
+		<td>{% ifnotequal size "" %}<h1 class="center">{{ size }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 		<td><h2>Location: </h2></td>
 		<td>{% ifnotequal location "" %}<h1 class="center">{{ location }}: {{ lane }}/{{ position }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 	</tr>
@@ -79,7 +79,7 @@
 		<td></td>
 		<td><h3 class="center">New</h3></td>
 		<td></td>
-		<td align="center" rowspan="2" width="10%"><a href="javascript:weightInput()"><img height="100px" src="image/manual.png"></a></td>
+		<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="100px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>
 	</tr>
 	<tr>
 		<td><h2>Weight: </h2></td>
@@ -158,12 +158,12 @@
 	<table id="white" width="100%" align="center">
 	<tr height="20px"><td></td></tr>
 	<tr>
-		<td align="left"><a href="javascript:undoSubmit()"><img height="100px" src="image/undo2.png"></a></td>
+		<td align="left">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img id="undo" border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
 		<td></td>
 		<td></td>
 		<td></td>
 		<td></td>
-		<td align="right"><a align="right" href="javascript:submit()"><img height="100px" src="image/update.png"></a></td>
+		<td align="right">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
 	</tr>
 	</table>
 	
@@ -181,6 +181,7 @@
 		<input id="manid" type="hidden" value="{{ realtag }}" name="realtag"></input>
 		<input type="hidden" value="manid" name="manid">
 	</form>
+
 </div>
 </body>
 </html>
