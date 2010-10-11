@@ -1,23 +1,27 @@
 from django.conf.urls.defaults import *
-from mysite.scale.views import weight, update, clamplift, undo, index, digit, manid
+from mysite.weight.views import index
+from mysite.weight.scale_views import scale
+from mysite.weight.clamplift_views import clamplift, update, undo, changeloc
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-	(r'^weight/$', weight),
-	(r'^weight/update/$', update),
-	(r'^weight/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^clamplift/$', clamplift),
-	(r'^clamplift/update/$', update),
-	(r'^clamplift/undo/$', undo),
-	(r'^clamplift/manid/$', manid),
-	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^index/$', index),
 	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^digit/$', digit),
-	(r'^digit/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	
+	(r'^scale/$', scale),
+	(r'^scale/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	
+	(r'^clamplift/$', clamplift),
+	(r'^clamplift/update/$', update),
+	(r'^clamplift/update/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^clamplift/undo/$', undo),
+	(r'^clamplift/changeloc/$', changeloc),
+	(r'^clamplift/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^clamplift/manual/$', manual),
+	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	# (r'^another-time-page/$', current_datetime),
 
