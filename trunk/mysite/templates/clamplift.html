@@ -40,17 +40,12 @@
 	</script>
 </head>
 <body onload="javascripthideUndo()">
-<div id="clamplif">
-	<p>{{ error1 }}</p>
-	<p>{{ error2 }}</p>
-	<p>{{ error3 }}</p>
-	<table id="white" width="100%" align="center">
+
+	<table id="white" width="100%"  height="100px" align="center" border="0">
 	<tr>
-		<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
+		<td align="center"><h3>You are now at:</h3>
+		{% ifnotequal atlocation "" %}<h1>{{ atlocation }}: {{ atlane }}/{{ atposition }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 		<td align="right"><a href="/clamplift/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
 	</tr>
 	<tr height="20px"><td></td></tr>
@@ -62,13 +57,13 @@
 		<td><h2>Paper Code: </h2></td>
 		<td>{% ifnotequal paper_code "" %}<h1 id="big" class="center">{{ paper_code }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 		<td align="center" rowspan="2" width="10%"></td>
-		<!--<td align="center" rowspan="2" width="10%"><a href="javascript:idInput()"><img height="100px" src="image/manual.png"></a></td>-->
+		<td align="center" rowspan="2" width="10%"><a href="javascript:changeLoc()"><img border="0" height="100px" src="image/changeloc.png"></a></td>
 	</tr>
 	<tr>
 		<td><h2>Size: </h2></td>
 		<td>{% ifnotequal size "" %}<h1 class="center">{{ size }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 		<td><h2>Location: </h2></td>
-		<td>{% ifnotequal location "" %}<h1 class="center">{{ location }}: {{ lane }}/{{ position }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
+		<td>{% ifnotequal lane "" %}<h1 class="center">{{ lane }}-{{ position }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
 	</tr>
 	</table>
 	<br />
@@ -159,17 +154,14 @@
 	<tr height="20px"><td></td></tr>
 	<tr>
 		<td align="left">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img id="undo" border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td></td>
+		<td><p>{{ error1 }}</p><p>{{ error2 }}</p><p>{{ error3 }}</p></td>
 		<td align="right">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
 	</tr>
 	</table>
 	
 	<form id="frm1" action="/clamplift/update/" method="get" align="center">
-        <input id="manin" type="hidden" value="{{ temp_weight }}" name="weight">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
+        <input type="hidden" value="{{ realtag }}" name="realtag"></input>
+        <input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight">		
     </form>
 	
 	<form id="frm2" action="/clamplift/undo/" method="get" align="center">
@@ -177,11 +169,15 @@
 		<input type="hidden" value="undo" name="undo">
 	</form>
 	
-	<form id="frm3" action="/clamplift/manid/" method="get" align="center">
+	<form id="frm3" action="/clamplift/changeloc/" method="get" align="center">
+		<input id="manid" type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input id="lane" type="hidden" value="{{ lane }}" name="lane">
+		<input id="pos" type="hidden" value="{{ pos }}" name="pos">
+	</form>
+	
+	<form id="frm4" action="/clamplift/manid/" method="get" align="center">
 		<input id="manid" type="hidden" value="{{ realtag }}" name="realtag"></input>
 		<input type="hidden" value="manid" name="manid">
 	</form>
-
-</div>
 </body>
 </html>
