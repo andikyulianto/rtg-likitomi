@@ -172,7 +172,26 @@ def clamplift(request):
     temp_weight = query1[17]
     lane = query1[18]
     position = query1[19]
-#    temp_weight = ""
+    
+    if lane == 'A':
+    	opplane = 'B'
+    if lane == 'B':
+    	opplane = 'A' 
+    if lane == 'C':
+    	opplane = 'D' 
+    if lane == 'D':
+    	opplane = 'C' 
+    if lane == 'E':
+    	opplane = 'F' 
+    if lane == 'F':
+    	opplane = 'E' 
+    if lane == 'G':
+    	opplane = 'H'
+    if lane == 'H':
+    	opplane = 'G' 
+    	
+    uppos = int(position)+1
+    downpos = int(position)-1 
 
     digital = str(temp_weight)
     
@@ -224,8 +243,6 @@ def clamplift(request):
 
     cur.close()
     conn.close()
-    
-    err = False
 
     return render_to_response('clamplift.html', locals())
 
@@ -268,15 +285,15 @@ def update(request):
     	error = "Your submitted weight is not a number."
     	return render_to_response('submit_error.html', locals())
 	
-    if actual_wt >= f_weight:
+    if actual_wt > f_weight:
     	rightnow = datetime.datetime.now()
     	dt = rightnow.strftime("%Y-%m-%d %H:%M:%S")
-    	cur.execute("INSERT INTO `likitomi_v6`.`paper_movement` (roll_id, before_wt, actual_wt, created_on) VALUES (%s, %s, %s, %s)", (realtag, actual_wt, weight, dt))
+    	cur.execute("INSERT INTO `likitomi_v6`.`paper_movement` (roll_id, before_wt, actual_wt, created_on) VALUES (%s, %s, %s, %s)", (realtag, actual_wt, f_weight, dt))
     	conn.commit()
  	
     else:
     	err = "w"
-    	error = "Your submitted weight is greater than previous weight."
+    	error = "Your submitted weight is not less than previous weight."
     	return render_to_response('submit_error.html', locals())
 
     cur.close()
@@ -332,7 +349,7 @@ def changeloc(request):
     else:
         return HttpResponseRedirect('/clamplift/')
 
-    if ipos <= 43:
+    if int(ipos) <= 43:
     	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
     	cur = conn.cursor()
     
