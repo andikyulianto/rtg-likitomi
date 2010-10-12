@@ -37,147 +37,500 @@
 
 	setTimeout("loadXMLDoc()",1000);
 	}
+	
+	function changeLocDown()
+	{
+		document.getElementById("lane").value = '{{lane}}';
+		document.getElementById("pos").value = '{{downpos}}';
+		document.getElementById("frm3").submit();
+	}
+	
+	function changeLocUp()
+	{
+		document.getElementById("lane").value = '{{lane}}';
+		document.getElementById("pos").value = '{{uppos}}';
+		document.getElementById("frm3").submit();
+	}
+	
+	function changeLocOpp()
+	{
+		document.getElementById("lane").value = '{{opplane}}';
+		document.getElementById("pos").value = '{{position}}';
+		document.getElementById("frm3").submit();
+	}
+	
+	function changeLocOppDown()
+	{
+		document.getElementById("lane").value = '{{opplane}}';
+		document.getElementById("pos").value = '{{downpos}}';
+		document.getElementById("frm3").submit();
+	}
+	
+	function changeLocOppUp()
+	{
+		document.getElementById("lane").value = '{{opplane}}';
+		document.getElementById("pos").value = '{{uppos}}';
+		document.getElementById("frm3").submit();
+	}
+	
+	function otherLoc()
+	{
+		var width = document.documentElement.clientWidth + document.documentElement.scrollLeft;
+
+		var layer = document.createElement('div');
+		layer.style.zIndex = 2;
+		layer.id = 'layer';
+		layer.style.position = 'absolute';
+		layer.style.top = '0px';
+		layer.style.left = '0px';
+		layer.style.height = document.documentElement.scrollHeight + 'px';
+		layer.style.width = width + 'px';
+		layer.style.backgroundColor = 'black';
+		layer.style.opacity = '.6';
+		layer.style.filter += ("progid:DXImageTransform.Microsoft.Alpha(opacity=60)");
+		document.body.appendChild(layer);
+
+		var div = document.createElement('div');
+		div.style.zIndex = 3;
+		div.id = 'box';
+		div.style.position = (navigator.userAgent.indexOf('MSIE 6') > -1) ? 'absolute' : 'fixed';
+		div.style.top = '20px'; 
+		div.style.left = (width / 2) - (400 / 2) + 'px'; 
+		div.style.height = '480px';
+		div.style.width = '420px';
+		div.style.backgroundColor = 'lightgray';
+		div.style.opacity = '1';
+		div.style.border = '2px solid silver';
+		div.style.padding = '20px';
+		document.body.appendChild(div);
+
+		var mes = document.createElement('b');
+		mes.innerHTML = "<center>Please enter lane and position.</center><br />".fontsize(4);
+		div.appendChild(mes);
+
+		var l = document.createElement('b');
+		l.innerHTML = 'Lane >> '.fontsize(4);
+		div.appendChild(l);
+
+		var ilane = document.createElement('input');
+		ilane.style.fontSize = '200%';
+		ilane.style.color = 'tomato';
+		ilane.style.textAlign = 'center';
+		ilane.maxlength = 4;
+		ilane.size = 1;
+		ilane.type = 'text';
+		ilane.id = 'ilane';
+		ilane.value = '{{lane}}';
+		div.appendChild(ilane);
+	
+		var d = document.createElement('b');
+		d.innerHTML = '-'.fontsize(4);
+		div.appendChild(d);
+	
+		var iposition = document.createElement('input');
+		iposition.style.fontSize = '200%';
+		iposition.style.color = 'tomato';
+		iposition.style.textAlign = 'center';
+		iposition.maxlength = '4';
+		iposition.size = '1';
+		iposition.type = 'text';
+		iposition.id = 'iposition';
+		iposition.value = '{{position}}';
+		div.appendChild(iposition);
+	
+		var p = document.createElement('b');
+		p.innerHTML = ' << Position'.fontsize(4);
+		div.appendChild(p);
+	
+		var a = document.createElement('a');
+		a.id = 'lanebutton';
+		a.style.top = '120px';
+		a.style.left = '50px'; 
+		a.innerHTML = "<table height='100%'><tr><td align='center'>"+"A".fontsize(4).bold()+"</td></tr></table>";
+		a.onclick = function()
+		{
+			document.getElementById('ilane').value = 'A';
+		}
+		div.appendChild(a);
+	
+		var b = document.createElement('a');
+		b.id = 'lanebutton';
+		b.style.top = '170px';
+		b.style.left = '50px'; 
+		b.innerHTML = "<table height='100%'><tr><td align='center'>"+"B".fontsize(4).bold()+"</td></tr></table>";
+		b.onclick = function()
+		{
+			document.getElementById('ilane').value = 'B';
+		}
+		div.appendChild(b);
+	
+		var c = document.createElement('a');
+		c.id = 'lanebutton';
+		c.style.top = '195px';
+		c.style.left = '50px'; 
+		c.innerHTML = "<table height='100%'><tr><td align='center'>"+"C".fontsize(4).bold()+"</td></tr></table>";
+		c.onclick = function()
+		{
+			document.getElementById('ilane').value = 'C';
+		}
+		div.appendChild(c);
+	
+		var d = document.createElement('a');
+		d.id = 'lanebutton';
+		d.style.top = '245px';
+		d.style.left = '50px'; 
+		d.innerHTML = "<table height='100%'><tr><td align='center'>"+"D".fontsize(4).bold()+"</td></tr></table>";
+		d.onclick = function()
+		{
+			document.getElementById('ilane').value = 'D';
+		}
+		div.appendChild(d);
+	
+		var e = document.createElement('a');
+		e.id = 'lanebutton';
+		e.style.top = '270px';
+		e.style.left = '50px'; 
+		e.innerHTML = "<table height='100%'><tr><td align='center'>"+"E".fontsize(4).bold()+"</td></tr></table>";
+		e.onclick = function()
+		{
+			document.getElementById('ilane').value = 'E';
+		}
+		div.appendChild(e);
+	
+		var f = document.createElement('a');
+		f.id = 'lanebutton';
+		f.style.top = '320px';
+		f.style.left = '50px'; 
+		f.innerHTML = "<table height='100%'><tr><td align='center'>"+"F".fontsize(4).bold()+"</td></tr></table>";
+		f.onclick = function()
+		{
+			document.getElementById('ilane').value = 'F';
+		}
+		div.appendChild(f);
+	
+		var g = document.createElement('a');
+		g.id = 'lanebutton';
+		g.style.top = '345px';
+		g.style.left = '50px'; 
+		g.innerHTML = "<table height='100%'><tr><td align='center'>"+"G".fontsize(4).bold()+"</td></tr></table>";
+		g.onclick = function()
+		{
+			document.getElementById('ilane').value = 'G';
+		}
+		div.appendChild(g);
+	
+		var h = document.createElement('a');
+		h.id = 'lanebutton';
+		h.style.top = '395px';
+		h.style.left = '50px'; 
+		h.innerHTML = "<table height='100%'><tr><td align='center'>"+"H".fontsize(4).bold()+"</td></tr></table>";
+		h.onclick = function()
+		{
+			document.getElementById('ilane').value = 'H';
+		}
+		div.appendChild(h);
+
+		var one = document.createElement('a');
+		one.id = 'posbutton';
+		one.style.top = '120px';
+		one.style.left = '200px'; 
+		one.innerHTML = "<table height='100%'><tr><td align='center'>"+"1".fontsize(6).bold()+"</td></tr></table>";
+		one.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '1';
+		}
+		div.appendChild(one);
+
+		var two = document.createElement('a');
+		two.id = 'posbutton';
+		two.style.top = '120px';
+		two.style.left = '280px'; 
+		two.innerHTML = "<table height='100%'><tr><td align='center'>"+"2".fontsize(6).bold()+"</td></tr></table>";
+		two.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '2';
+		}
+		div.appendChild(two);
+
+		var three = document.createElement('a');
+		three.id = 'posbutton';
+		three.style.top = '120px';
+		three.style.left = '360px'; 
+		three.innerHTML = "<table height='100%'><tr><td align='center'>"+"3".fontsize(6).bold()+"</td></tr></table>";
+		three.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '3';
+		}
+		div.appendChild(three);
+
+		var four = document.createElement('a');
+		four.id = 'posbutton';
+		four.style.top = '200px';
+		four.style.left = '200px'; 
+		four.innerHTML = "<table height='100%'><tr><td align='center'>"+"4".fontsize(6).bold()+"</td></tr></table>";
+		four.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '4';
+		}
+		div.appendChild(four);
+
+		var five = document.createElement('a');
+		five.id = 'posbutton';
+		five.style.top = '200px';
+		five.style.left = '280px'; 
+		five.innerHTML = "<table height='100%'><tr><td align='center'>"+"5".fontsize(6).bold()+"</td></tr></table>";
+		five.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '5';
+		}
+		div.appendChild(five);
+
+		var six = document.createElement('a');
+		six.id = 'posbutton';
+		six.style.top = '200px';
+		six.style.left = '360px'; 
+		six.innerHTML = "<table height='100%'><tr><td align='center'>"+"6".fontsize(6).bold()+"</td></tr></table>";
+		six.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '6';
+		}
+		div.appendChild(six);
+
+		var seven = document.createElement('a');
+		seven.id = 'posbutton';
+		seven.style.top = '280px';
+		seven.style.left = '200px'; 
+		seven.innerHTML = "<table height='100%'><tr><td align='center'>"+"7".fontsize(6).bold()+"</td></tr></table>";
+		seven.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '7';
+		}
+		div.appendChild(seven);
+
+		var eight = document.createElement('a');
+		eight.id = 'posbutton';
+		eight.style.top = '280px';
+		eight.style.left = '280px'; 
+		eight.innerHTML = "<table height='100%'><tr><td align='center'>"+"8".fontsize(6).bold()+"</td></tr></table>";
+		eight.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '8';
+		}
+		div.appendChild(eight);
+
+		var nine = document.createElement('a');
+		nine.id = 'posbutton';
+		nine.style.top = '280px';
+		nine.style.left = '360px'; 
+		nine.innerHTML = "<table height='100%'><tr><td align='center'>"+"9".fontsize(6).bold()+"</td></tr></table>";
+		nine.onclick = function()
+		{
+			if (document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '9';
+		}
+		div.appendChild(nine);
+
+		var clr = document.createElement('a');
+		clr.id = 'posbutton';
+		clr.style.top = '360px';
+		clr.style.left = '200px'; 
+		clr.innerHTML = "<table height='100%'><tr><td align='center'>"+"clr".fontsize(5).bold()+"</td></tr></table>";
+		clr.onclick = function()
+		{
+			document.getElementById('iposition').value = '';
+		}
+		div.appendChild(clr);
+
+		var zero = document.createElement('a');
+		zero.id = 'posbutton';
+		zero.style.top = '360px';
+		zero.style.left = '280px'; 
+		zero.innerHTML = "<table height='100%'><tr><td align='center'>"+"0".fontsize(6).bold()+"</td></tr></table>";
+		zero.onclick = function()
+		{
+			if (document.getElementById('iposition').value != '' && document.getElementById('iposition').value.length < 2)
+			document.getElementById('iposition').value += '0';
+		}
+		div.appendChild(zero);
+
+		var ok = document.createElement('a');
+		ok.id = 'confirm';
+		ok.style.left = '70px'; 
+		ok.innerHTML = "<table height='100%'><tr><td align='center'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
+		//ok.href = 'javascript:void(0)';
+		ok.onclick = function() 
+		{
+			var lanebox = document.getElementById('ilane').value;
+			var posbox = document.getElementById('iposition').value;
+			document.getElementById("lane").value = lanebox;
+			document.getElementById("pos").value = posbox;
+			document.getElementById("frm3").submit();
+			document.body.removeChild(document.getElementById('layer'));
+			document.body.removeChild(document.getElementById('box'));
+		}
+		div.appendChild(ok);
+
+		var cancel = document.createElement('a');
+		cancel.id = 'confirm';
+		cancel.style.right = '80px'; 
+		cancel.innerHTML = "<table height='100%'><tr><td align='center'>"+"Cancel".fontsize(4).bold()+"</td></tr></table>";
+		//cancel.href = 'javascript:void(0)';
+		cancel.onclick = function() 
+		{
+			document.body.removeChild(document.getElementById('layer'));
+			document.body.removeChild(document.getElementById('box'));
+		}
+		div.appendChild(cancel);
+	}
 	</script>
 </head>
-<body onload="javascripthideUndo()">
+<body>
 
-	<table id="white" width="100%"  height="100px" align="center" border="0">
-	<tr>
-		<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
-		<td align="center"><h3>You are now at:</h3>
-		{% ifnotequal atlocation "" %}<h1>{{ atlocation }}: {{ atlane }}/{{ atposition }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
-		<td align="right"><a href="/clamplift/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
-	</tr>
-	<tr height="20px"><td></td></tr>
 	<table>
-	<table width="100%" align="center">
-	<tr>
-		<td><h2>Roll ID: </h2></td>
-		<td>{% ifnotequal realtag "" %}<h1 class="center">{{ realtag }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
-		<td><h2>Paper Code: </h2></td>
-		<td>{% ifnotequal paper_code "" %}<h1 id="big" class="center">{{ paper_code }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
-		<td align="center" rowspan="2" width="10%"></td>
-		<td align="center" rowspan="2" width="10%"><a href="javascript:changeLoc()"><img border="0" height="100px" src="image/changeloc.png"></a></td>
-	</tr>
-	<tr>
-		<td><h2>Size: </h2></td>
-		<td>{% ifnotequal size "" %}<h1 class="center">{{ size }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
-		<td><h2>Location: </h2></td>
-		<td>{% ifnotequal lane "" %}<h1 class="center">{{ lane }}-{{ position }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
-	</tr>
-	</table>
-	<br />
-	<table id="blush" width="100%" align="center">
-	<tr height="1px">
-		<td></td>
-		<td><h3 class="center">Old</h3></td>
-		<td></td>
-		<td><h3 class="center">New</h3></td>
-		<td></td>
-		<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="100px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>
-	</tr>
-	<tr>
-		<td><h2>Weight: </h2></td>
-		<td>{% ifnotequal actual_wt "" %}<h1 class="center">{{ actual_wt }}</h1>{% else %}<h4>-</h4>{% endifnotequal %}</td>
-		<td align="center"><img width="30px" src="image/arrow2.png"></td>
-		<td align="center" width="300px">
-		{% ifequal digit1 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
-		{% ifequal digit1 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
-		{% ifequal digit1 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
-		{% ifequal digit1 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
-		{% ifequal digit1 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
-		{% ifequal digit1 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
-		{% ifequal digit1 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
-		{% ifequal digit1 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
-		{% ifequal digit1 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
-		{% ifequal digit1 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
-		<img width="5px" src="image/space.png">
-		{% ifequal digit2 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
-		{% ifequal digit2 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
-		{% ifequal digit2 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
-		{% ifequal digit2 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
-		{% ifequal digit2 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
-		{% ifequal digit2 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
-		{% ifequal digit2 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
-		{% ifequal digit2 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
-		{% ifequal digit2 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
-		{% ifequal digit2 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
-		<img width="5px" src="image/space.png">
-		{% ifequal digit3 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
-		{% ifequal digit3 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
-		{% ifequal digit3 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
-		{% ifequal digit3 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
-		{% ifequal digit3 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
-		{% ifequal digit3 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
-		{% ifequal digit3 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
-		{% ifequal digit3 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
-		{% ifequal digit3 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
-		{% ifequal digit3 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
-		<img width="5px" src="image/space.png">
-		{% ifequal digit4 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
-		{% ifequal digit4 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
-		{% ifequal digit4 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
-		{% ifequal digit4 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
-		{% ifequal digit4 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
-		{% ifequal digit4 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
-		{% ifequal digit4 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
-		{% ifequal digit4 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
-		{% ifequal digit4 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
-		{% ifequal digit4 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
-		<img width="5px" src="image/space.png">
-		{% ifequal digit5 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
-		{% ifequal digit5 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
-		{% ifequal digit5 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
-		{% ifequal digit5 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
-		{% ifequal digit5 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
-		{% ifequal digit5 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
-		{% ifequal digit5 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
-		{% ifequal digit5 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
-		{% ifequal digit5 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
-		{% ifequal digit5 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
-		{% ifequal digit6 "." %}<img width="8px" src="image/dot.png">{% else %}<b id="dash">-</b>{% endifequal %}
-		{% ifequal digit7 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
-		{% ifequal digit7 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
-		{% ifequal digit7 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
-		{% ifequal digit7 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
-		{% ifequal digit7 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
-		{% ifequal digit7 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
-		{% ifequal digit7 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
-		{% ifequal digit7 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
-		{% ifequal digit7 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
-		{% ifequal digit7 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
-		</td>
-		<td><h2 class="left">kilograms</h2></td>
-	</tr>
-	</table>
-	<table id="white" width="100%" align="center">
-	<tr height="20px"><td></td></tr>
-	<tr>
-		<td align="left">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img id="undo" border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
-		<td><p>{{ error1 }}</p><p>{{ error2 }}</p><p>{{ error3 }}</p></td>
-		<td align="right">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
-	</tr>
+		<tr>
+			<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
+			<td align="center"><b>You are now at:</b>
+			{% ifnotequal atlocation "" %}<p class="var">{{ atlocation }}: {{ atlane }}/{{ atposition }}</p>{% else %}<p class="label">-</p>{% endifnotequal %}</td>
+			<td align="right"><a href="/clamplift/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
+		</tr>
 	</table>
 	
-	<form id="frm1" action="/clamplift/update/" method="get" align="center">
+	<table id="lavender">
+		<tr>
+			<td><p class="label">Roll ID: </p></td>
+			<td>{% ifnotequal realtag "" %}<p class="var">{{ realtag }}</p>{% else %}<p class="label">-</p>{% endifnotequal %}</td>
+			<td><p class="label">Paper Code: </p></td>
+			<td>{% ifnotequal paper_code "" %}<p class="var" id="big">{{ paper_code }}</p>{% else %}<p class="label">-</p>{% endifnotequal %}</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><p class="label">Size: </p></td>
+			<td>{% ifnotequal size "" %}<p class="var">{{ size }}</p>{% else %}<p class="label">-</p>{% endifnotequal %}</td>
+			<td align="center" colspan="2">
+				<table>
+					<tr><td></td><td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td><td></td><td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td></tr>
+					<tr><td><p class="label">Location:</p></td><td id="lavender" class="locbutton"><p>{{lane}}-{{position}}</p></td><td></td><td class="locbutton" onclick="javascript:changeLocOpp()"><p>{{opplane}}-{{position}}</p></td></tr>
+					<tr><td></td><td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td><td></td><td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td></tr>				
+				</table>
+			</td>
+			<td align="center" rowspan="2" width="10%"><a href="javascript:otherLoc()"><img border="0" height="100px" src="image/changeloc.png"></a></td>
+		</tr>
+	</table>
+
+	<table id="blush">
+		<tr>
+			<td></td>
+			<td align="center"><b>Old</b></td>
+			<td></td>
+			<td align="center"><b>New</b></td>
+			<td></td>
+			<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="100px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>
+		</tr>
+		<tr>
+			<td><p class="label">Weight: </p></td>
+			<td>{% ifnotequal actual_wt "" %}<p class="var">{{ actual_wt }}</p>{% else %}<p class="label">-</p>{% endifnotequal %}</td>
+			<td align="center"><img width="30px" src="image/arrow2.png"></td>
+			<td align="center" width="300px">
+			{% ifequal digit1 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
+			{% ifequal digit1 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
+			{% ifequal digit1 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
+			{% ifequal digit1 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
+			{% ifequal digit1 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
+			{% ifequal digit1 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
+			{% ifequal digit1 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
+			{% ifequal digit1 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
+			{% ifequal digit1 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
+			{% ifequal digit1 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
+			<img width="5px" src="image/space.png">
+			{% ifequal digit2 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
+			{% ifequal digit2 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
+			{% ifequal digit2 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
+			{% ifequal digit2 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
+			{% ifequal digit2 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
+			{% ifequal digit2 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
+			{% ifequal digit2 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
+			{% ifequal digit2 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
+			{% ifequal digit2 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
+			{% ifequal digit2 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
+			<img width="5px" src="image/space.png">
+			{% ifequal digit3 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
+			{% ifequal digit3 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
+			{% ifequal digit3 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
+			{% ifequal digit3 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
+			{% ifequal digit3 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
+			{% ifequal digit3 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
+			{% ifequal digit3 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
+			{% ifequal digit3 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
+			{% ifequal digit3 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
+			{% ifequal digit3 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
+			<img width="5px" src="image/space.png">
+			{% ifequal digit4 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
+			{% ifequal digit4 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
+			{% ifequal digit4 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
+			{% ifequal digit4 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
+			{% ifequal digit4 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
+			{% ifequal digit4 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
+			{% ifequal digit4 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
+			{% ifequal digit4 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
+			{% ifequal digit4 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
+			{% ifequal digit4 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
+			<img width="5px" src="image/space.png">
+			{% ifequal digit5 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
+			{% ifequal digit5 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
+			{% ifequal digit5 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
+			{% ifequal digit5 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
+			{% ifequal digit5 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
+			{% ifequal digit5 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
+			{% ifequal digit5 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
+			{% ifequal digit5 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
+			{% ifequal digit5 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
+			{% ifequal digit5 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
+			{% ifequal digit6 "." %}<img width="8px" src="image/dot.png">{% else %}<p class="label">-</p>{% endifequal %}
+			{% ifequal digit7 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
+			{% ifequal digit7 "1" %}<img width="30px" src="image/1.png">{% endifequal %}
+			{% ifequal digit7 "2" %}<img width="30px" src="image/2.png">{% endifequal %}
+			{% ifequal digit7 "3" %}<img width="30px" src="image/3.png">{% endifequal %}
+			{% ifequal digit7 "4" %}<img width="30px" src="image/4.png">{% endifequal %}
+			{% ifequal digit7 "5" %}<img width="30px" src="image/5.png">{% endifequal %}
+			{% ifequal digit7 "6" %}<img width="30px" src="image/6.png">{% endifequal %}
+			{% ifequal digit7 "7" %}<img width="30px" src="image/7.png">{% endifequal %}
+			{% ifequal digit7 "8" %}<img width="30px" src="image/8.png">{% endifequal %}
+			{% ifequal digit7 "9" %}<img width="30px" src="image/9.png">{% endifequal %}
+			</td>
+			<td><p class="unit">kgs.</p></td>
+		</tr>
+	</table>
+	
+	<table>
+		<tr>
+			<td align="left">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
+			<td><p>{{ error1 }}</p><p>{{ error2 }}</p><p>{{ error3 }}</p></td>
+			<td align="right">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
+		</tr>
+	</table>
+	
+	<form id="frm1" action="/clamplift/update/" method="get">
         <input type="hidden" value="{{ realtag }}" name="realtag"></input>
         <input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight">		
     </form>
 	
-	<form id="frm2" action="/clamplift/undo/" method="get" align="center">
+	<form id="frm2" action="/clamplift/undo/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input type="hidden" value="undo" name="undo">
 	</form>
 	
-	<form id="frm3" action="/clamplift/changeloc/" method="get" align="center">
-		<input id="manid" type="hidden" value="{{ realtag }}" name="realtag"></input>
+	<form id="frm3" action="/clamplift/changeloc/" method="get">
+		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
 		<input id="lane" type="hidden" value="{{ lane }}" name="lane">
 		<input id="pos" type="hidden" value="{{ pos }}" name="pos">
 	</form>
-	
-	<form id="frm4" action="/clamplift/manid/" method="get" align="center">
-		<input id="manid" type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input type="hidden" value="manid" name="manid">
-	</form>
+
 </body>
 </html>
