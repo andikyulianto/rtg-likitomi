@@ -16,65 +16,77 @@ import random
 
 def scale(request):
 # Connect serial port #
-#    try:
-#        ser = serial.Serial()
-#        ser.port = '/dev/ttyUSB0'
-#        ser.baudrate = 2400
-#        ser.bytesize = 7
-#        ser.parity = 'E'
-#        ser.stopbits = 1
-#        ser.timeout = 1
-#        ser.open()
-#        output = ser.readline()
-#    except serial.SerialException:
-#        realtag = ""
-#        paper_code = ""
-#        size = ""
-#        uom = ""
-#        actual_wt = ""
-#        used_weight = ""
-#        error1 = "Serial port communication error!"
-#        return render_to_response('scale.html', locals())
-#    except OSError:
-#    	realtag = ""
-#        paper_code = ""
-#        size = ""
-#        uom = ""
-#        actual_wt = ""
-#        used_weight = ""
-#        error1 = "OS error!"
-#        return render_to_response('scale.html', locals())
+    try:
+        ser = serial.Serial()
+        ser.port = '/dev/ttyUSB0'
+        ser.baudrate = 2400
+        ser.bytesize = 7
+        ser.parity = 'E'
+        ser.stopbits = 1
+        ser.timeout = 2
+        ser.open()
+        ser.flushInput()
+        output = ser.readline()
+        ser.close()
+    except serial.SerialException:
+        realtag = ""
+        paper_code = ""
+        size = ""
+        uom = ""
+        actual_wt = ""
+        used_weight = ""
+        error1 = "[Serial port communication error!]"
+        return render_to_response('scale.html', locals())
+    except OSError:
+    	realtag = ""
+        paper_code = ""
+        size = ""
+        uom = ""
+        actual_wt = ""
+        used_weight = ""
+        error1 = "[OS error!]"
+        return render_to_response('scale.html', locals())
 
-##    output = "US,NT,+00325.5Kg\r\n"
+#    output = "US,NT,+00325.5Kg\r\n"
 
-#    a = output.rsplit(",")
+    a = output.rsplit(",")
+    
+    if a[0] == 'OL':
+        realtag = ""
+        paper_code = ""
+        size = ""
+        uom = ""
+        actual_wt = ""
+        used_weight = ""
+        error2 = "[The weight is overloaded!]"
+        return render_to_response('scale.html', locals())
 
-#    if len(a) == 3:
-#        b = a[2]
-#    elif len(a) == 2:
-#        b = a[1]
-#    else:
-#        b = "+00000.0Kg"
+    if len(a) == 3:
+        b = a[2]
+    elif len(a) == 2:
+        b = a[1]
+    else:
+        b = "+00000.0Kg"
 
-#    if len(b) == 12:
-#        c = b[-11:]
-#    else:
-#        c = "00000.0Kg"
+    if len(b) == 12:
+        c = b[-11:]
+    else:
+        c = "00000.0Kg"
 
-#    if len(c) == 11:
-#        d = c[:-4]
-#    else:
-#        d = "00000.0"
+    if len(c) == 11:
+        d = c[:-4]
+    else:
+        d = "00000.0"
 
-#    weight = float(d)
+    weight = float(d)
 
-    weight = round(random.uniform(1,2000),0)
+#    weight = round(random.uniform(1,2000),0)
 
     if weight != 0.0:
         digital = str(weight)
     else:
         digital = ""
-        error2 = "No sense from weighing indicator."
+        error2 = "[Data sent is not complete.]"
 
     if len(digital) == 7:
         digit1 = digital[0:1]
@@ -107,95 +119,113 @@ def scale(request):
         digit6 = digital[1:2]
         digit7 = digital[2:3]
 
-#    ser.close()
-
 # Connect RFID reader #
-#    HOST = '192.41.170.55' # CSIM network
-#    PORT = 50007
-#    soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#    soc.connect((HOST, PORT))
-#    # soc.send('setup.operating_mode = standby\r\n')
-#    soc.send('tag.db.scan_tags(1000)\r\n')
-#    datum = soc.recv(128)
-#    if datum.find("ok") > -1:
-#        soc.send('tag.read_id()\r\n')
-#        data = soc.recv(8192)
-#        tagdata = data.split("\r\n")
+    try:   
+		HOST = '192.41.170.55' # CSIM network
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		## soc.send('setup.operating_mode = standby\r\n')
+		soc.send('tag.db.scan_tags(1000)\r\n')
+		datum = soc.recv(128)
+    except:
+    	realtag = ""
+        paper_code = ""
+        size = ""
+        lane = ""
+        position = ""
+        atlane = ""
+        atposition = ""
+        atlocation = ""
+        actual_wt = ""
+        used_weight = ""
+        wgth_dis = ""
+        man_btn = ""
+        undo_btn = ""
+        submit_btn = ""
+        error3 = "[Socket communication error!]"
+        return render_to_response('scale.html', locals())
+        
+    if datum.find("ok") > -1:
+        soc.send('tag.read_id()\r\n')
+        data = soc.recv(8192)
+        tagdata = data.split("\r\n")
 
-#        idlist = list()
-#        loclist = list()
+        idlist = list()
+        loclist = list()
 
-#        for tag in tagdata:
-#                if "AAAA" in tag:
-#                    idlist.append(tag)
-#                if "BBBB" in tag:
-#                    loclist.append(tag)
+        for tag in tagdata:
+                if "AAAA" in tag:
+                    idlist.append(tag)
+                if "BBBB" in tag:
+                    loclist.append(tag)
 
-#        cnt = 0
-#        error = cStringIO.StringIO()
+        cnt = 0
+        error = cStringIO.StringIO()
 
-#        tagid_A = list()
-#        type_A = list()
-#        antenna_A = list()
-#        repeat_A = list()
+        tagid_A = list()
+        type_A = list()
+        antenna_A = list()
+        repeat_A = list()
 
-#        for id1 in idlist:
-#            id2 = id1.replace("(","")
-#            id2 = id2.replace(")","")
-#            id3 = id2.split(", ")
-#            for id4 in id3:
-#                try:
-#    				id5 = id4.split("=")
-#    				if id5[0]=="tag_id":tagid_A.append(id5[1])
-#    				elif id5[0]=="type":type_A.append(id5[1])
-#    				elif id5[0]=="antenna": antenna_A.append(id5[1])
-#    				elif id5[0]=="repeat": repeat_A.append(id5[1])
-#    				cnt= cnt+1
-#                except IndexError:
-#    				error.write('%d, ' % cnt)
+        for id1 in idlist:
+            id2 = id1.replace("(","")
+            id2 = id2.replace(")","")
+            id3 = id2.split(", ")
+            for id4 in id3:
+                try:
+    				id5 = id4.split("=")
+    				if id5[0]=="tag_id":tagid_A.append(id5[1])
+    				elif id5[0]=="type":type_A.append(id5[1])
+    				elif id5[0]=="antenna": antenna_A.append(id5[1])
+    				elif id5[0]=="repeat": repeat_A.append(id5[1])
+    				cnt= cnt+1
+                except IndexError:
+    				error.write('%d, ' % cnt)
 
-#        tagid_B = list()
-#        type_B = list()
-#        antenna_B = list()
-#        repeat_B = list()
+        tagid_B = list()
+        type_B = list()
+        antenna_B = list()
+        repeat_B = list()
 
-#        for loc1 in loclist:
-#            loc2 = loc1.replace("(","")
-#            loc2 = loc2.replace(")","")
-#            loc3 = loc2.split(", ")
-#            for loc4 in loc3 :
-#                try:
-#    				loc5 = loc4.split("=")
-#    				if loc5[0]=="tag_id": tagid_B.append(loc5[1])
-#    				elif loc5[0]=="type": type_B.append(loc5[1])
-#    				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
-#    				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
-#    				cnt= cnt+1
-#                except IndexError:
-#    				error.write('%d, ' % cnt)
+        for loc1 in loclist:
+            loc2 = loc1.replace("(","")
+            loc2 = loc2.replace(")","")
+            loc3 = loc2.split(", ")
+            for loc4 in loc3 :
+                try:
+    				loc5 = loc4.split("=")
+    				if loc5[0]=="tag_id": tagid_B.append(loc5[1])
+    				elif loc5[0]=="type": type_B.append(loc5[1])
+    				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
+    				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
+    				cnt= cnt+1
+                except IndexError:
+    				error.write('%d, ' % cnt)
 
-#        repeat_AA = list()
-#        for rep_A in repeat_A:
-#            repeat_AA.append(int(rep_A))
+        repeat_AA = list()
+        for rep_A in repeat_A:
+            repeat_AA.append(int(rep_A))
 
-#        try:
-#            if max(repeat_AA) in repeat_AA:
-#                n = repeat_AA.index(max(repeat_AA))
-#            tagsplt = tagid_A[n].split("AAAA")
-#            realtag = int(tagsplt[1][0:4])
-#        except ValueError:
-#            realtag = ""
-#            paper_code = ""
-#            size = ""
-#            uom = ""
-#            actual_wt = ""
-#            used_weight = ""
-#            error3 = "No ID tag in field."
-#            return render_to_response('scale.html', locals())
+        try:
+            if max(repeat_AA) in repeat_AA:
+                n = repeat_AA.index(max(repeat_AA))
+            tagsplt = tagid_A[n].split("AAAA")
+            realtag = int(tagsplt[1][0:4])
+        except ValueError:
+            realtag = ""
+            paper_code = ""
+            size = ""
+            uom = ""
+            actual_wt = ""
+            used_weight = ""
+            error4 = "[No ID tag in field.]"
+            return render_to_response('scale.html', locals())
 
-#    soc.close()
+    soc.close()
 
-    realtag = 68
+#    realtag = 68
 
 # Query database #
     conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
