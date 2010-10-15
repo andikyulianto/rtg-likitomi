@@ -2,30 +2,31 @@
 <head>
 <!--	<meta http-equiv="refresh" content="2"; url="http://127.0.0.1:8000/scale/">-->
 	<meta http-equiv="cache-control" content="no-cache"/>
-    <title>Likitomi: @Scale</title>
+	<title>Likitomi: @Scale</title>
 	<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 	<script type="text/javascript" src="js/clamplift.js"></script>
 	<script type="text/javascript">
 	function loadXMLDoc()
 	{
 	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	xmlhttp.onreadystatechange=function()
-	  {
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-		document.getElementById("scale").innerHTML=xmlhttp.responseText;
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
 		}
-	  }
+	else
+		{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	xmlhttp.onreadystatechange=function()
+		{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+			document.getElementById("scale").innerHTML=xmlhttp.responseText;
+			}
+		}
 	xmlhttp.open("GET", "/scale/", true);
 	xmlhttp.send();
-	setTimeout("loadXMLDoc()", 1000);
+
+	setTimeout("loadXMLDoc()", 3000);
 	}
 	</script>
 </head>
@@ -89,7 +90,7 @@
 			{% ifequal digit5 "7" %}<img width="80px" src="image/7.png">{% endifequal %}
 			{% ifequal digit5 "8" %}<img width="80px" src="image/8.png">{% endifequal %}
 			{% ifequal digit5 "9" %}<img width="80px" src="image/9.png">{% endifequal %}
-			{% ifequal digit6 "." %}<img width="10px" src="image/dot.png">{% else %}<p id="inblack" align="center">{{error1}}{{error2}}</p>{% endifequal %}
+			{% ifequal digit6 "." %}<img width="10px" src="image/dot.png">{% else %}<p id="inblack" align="center">{{ serror }}</p>{% endifequal %}
 			{% ifequal digit7 "0" %}<img width="80px" src="image/0.png">{% endifequal %}
 			{% ifequal digit7 "1" %}<img width="80px" src="image/1.png">{% endifequal %}
 			{% ifequal digit7 "2" %}<img width="80px" src="image/2.png">{% endifequal %}
@@ -104,9 +105,9 @@
 			<td></td>
 		</tr>
 	</table>
-	
+
 	<br />
-	
+
 	<table id="lavender">
 		<tr>
 			<td><p class="label">Paper Roll ID: </p></td>
@@ -133,9 +134,9 @@
 			<td width="20%"></td>
 		</tr>
 	</table>
-	
-	<p align="center">{{ error3 }}{{ error4 }}</p>
-	
+
+	<p align="center">{{ socror }}</p>
+
 </div>
 </body>
 </html>
