@@ -1,78 +1,82 @@
 ﻿<html>
 <head>
 	<!--<meta http-equiv="refresh" content="2"; url="http://127.0.0.1:8000/clamplift/">-->
-    <title>Likitomi: @Clamplift</title>
+	<title>Likitomi: @Clamplift</title>
 	<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 	<script type="text/javascript" src="js/clamplift.js"></script>
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	
-	<script type="text/javascript">
-	$(document).ready(function(){
-	  $("#submit").click(function(){
-		$("#undo").show();
-	  });
-	});
-	</script>
-	
 	<script type="text/javascript">
 	function loadXMLDoc()
 	{
 	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	xmlhttp.onreadystatechange=function()
-	  {
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-		{
-		document.getElementById("clamplift").innerHTML=xmlhttp.responseText;
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
 		}
-	  }
+	else
+		{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	xmlhttp.onreadystatechange=function()
+		{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+			document.getElementById("clamplift").innerHTML=xmlhttp.responseText;
+			}
+		}
 	xmlhttp.open("GET","/clamplift/",true);
 	xmlhttp.send();
 
-	setTimeout("loadXMLDoc()", 1000);
+	setTimeout("loadXMLDoc()", 3000);
 	}
-	
+
 	function changeLocDown()
 	{
 		document.getElementById("lane").value = '{{lane}}';
 		document.getElementById("pos").value = '{{downpos}}';
 		document.getElementById("frm3").submit();
 	}
-	
+
 	function changeLocUp()
 	{
 		document.getElementById("lane").value = '{{lane}}';
 		document.getElementById("pos").value = '{{uppos}}';
 		document.getElementById("frm3").submit();
 	}
-	
+
 	function changeLocOpp()
 	{
 		document.getElementById("lane").value = '{{opplane}}';
 		document.getElementById("pos").value = '{{position}}';
 		document.getElementById("frm3").submit();
 	}
-	
+
 	function changeLocOppDown()
 	{
 		document.getElementById("lane").value = '{{opplane}}';
 		document.getElementById("pos").value = '{{downpos}}';
 		document.getElementById("frm3").submit();
 	}
-	
+
 	function changeLocOppUp()
 	{
 		document.getElementById("lane").value = '{{opplane}}';
 		document.getElementById("pos").value = '{{uppos}}';
 		document.getElementById("frm3").submit();
 	}
-	
+
+	function changeLocLeft()
+	{
+		document.getElementById("lane").value = '{{leftlane}}';
+		document.getElementById("pos").value = '{{atposition}}';
+		document.getElementById("frm3").submit();
+	}
+
+	function changeLocRight()
+	{
+		document.getElementById("lane").value = '{{rightlane}}';
+		document.getElementById("pos").value = '{{atposition}}';
+		document.getElementById("frm3").submit();
+	}
+
 	function otherLoc()
 	{
 		var width = document.documentElement.clientWidth + document.documentElement.scrollLeft;
@@ -122,11 +126,11 @@
 		ilane.id = 'ilane';
 		ilane.value = '{{lane}}';
 		div.appendChild(ilane);
-	
+
 		var d = document.createElement('b');
 		d.innerHTML = '-'.fontsize(4);
 		div.appendChild(d);
-	
+
 		var iposition = document.createElement('input');
 		iposition.style.fontSize = '200%';
 		iposition.style.color = 'tomato';
@@ -137,11 +141,11 @@
 		iposition.id = 'iposition';
 		iposition.value = '{{position}}';
 		div.appendChild(iposition);
-	
+
 		var p = document.createElement('b');
 		p.innerHTML = ' << Position'.fontsize(4);
 		div.appendChild(p);
-	
+
 		var a = document.createElement('a');
 		a.id = 'lanebutton';
 		a.style.top = '120px';
@@ -152,7 +156,7 @@
 			document.getElementById('ilane').value = 'A';
 		}
 		div.appendChild(a);
-	
+
 		var b = document.createElement('a');
 		b.id = 'lanebutton';
 		b.style.top = '170px';
@@ -163,7 +167,7 @@
 			document.getElementById('ilane').value = 'B';
 		}
 		div.appendChild(b);
-	
+
 		var c = document.createElement('a');
 		c.id = 'lanebutton';
 		c.style.top = '195px';
@@ -174,7 +178,7 @@
 			document.getElementById('ilane').value = 'C';
 		}
 		div.appendChild(c);
-	
+
 		var d = document.createElement('a');
 		d.id = 'lanebutton';
 		d.style.top = '245px';
@@ -185,7 +189,7 @@
 			document.getElementById('ilane').value = 'D';
 		}
 		div.appendChild(d);
-	
+
 		var e = document.createElement('a');
 		e.id = 'lanebutton';
 		e.style.top = '270px';
@@ -196,7 +200,7 @@
 			document.getElementById('ilane').value = 'E';
 		}
 		div.appendChild(e);
-	
+
 		var f = document.createElement('a');
 		f.id = 'lanebutton';
 		f.style.top = '320px';
@@ -207,7 +211,7 @@
 			document.getElementById('ilane').value = 'F';
 		}
 		div.appendChild(f);
-	
+
 		var g = document.createElement('a');
 		g.id = 'lanebutton';
 		g.style.top = '345px';
@@ -218,7 +222,7 @@
 			document.getElementById('ilane').value = 'G';
 		}
 		div.appendChild(g);
-	
+
 		var h = document.createElement('a');
 		h.id = 'lanebutton';
 		h.style.top = '395px';
@@ -398,11 +402,11 @@
 		<tr>
 			<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
 			<td align="center"><b>You are now at:</b>
-			{% ifnotequal atlocation "" %}<p class="var">{{ atlocation }}: {{ atlane }}/{{ atposition }}</p>{% else %}<p align="center">{{ error5 }}</p>{% endifnotequal %}</td>
+			{% ifnotequal atlocation "" %}<p class="var">{{ atlocation }}: {{ atlane }}/{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>
 			<td align="right"><a href="/clamplift/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
 		</tr>
 	</table>
-	
+
 	<table id="lavender">
 		<tr>
 			<td><p class="label">Roll ID: </p></td>
@@ -416,9 +420,34 @@
 			<td>{% ifnotequal size "" %}<p class="var">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 			<td align="center" colspan="2">
 				<table>
-					<tr><td></td>{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}<td></td>{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}</tr>
-					<tr><td><p class="label">Location:</p></td><td id="lavender" class="locbutton"><p>{{lane}}-{{position}}</p></td><td></td><td class="locbutton" onclick="javascript:changeLocOpp()"><p>{{opplane}}-{{position}}</p></td></tr>
-					<tr><td></td>{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}<td></td>{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}</tr>				
+					<tr>
+						<td></td>
+						<td colspan="3" align="center"><b>Near previous</b></td>
+						<td width="5%"></td>
+						<td colspan="3" align="center" width="50%"><b>From current</b></td>
+					</tr>
+					<tr>
+						<td></td>
+						{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}
+						<td></td>
+						{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}
+						<td></td>
+						<td class="locbutton" onclick="javascript:changeLocLeft()" rowspan="3"><p>{{leftlane}}</p></td>
+						<td></td>
+						<td class="locbutton" onclick="javascript:changeLocRight()" style="cursor:pointer" rowspan="3"><p>{{rightlane}}</p></td>
+					</tr>
+					<tr>
+						<td><p class="label">Location:</p></td>
+						<td id="lavender">{% ifnotequal lane "" %}<p class="var">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+						<td></td>
+						<td class="locbutton" onclick="javascript:changeLocOpp()"><p>{{opplane}}-{{position}}</p></td>
+					</tr>
+					<tr>
+						<td></td>
+						{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}
+						<td></td>
+						{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}
+					</tr>
 				</table>
 			</td>
 			<td align="center" rowspan="2" width="10%"><a href="javascript:otherLoc()"><img border="0" height="100px" src="image/changeloc.png"></a></td>
@@ -508,30 +537,30 @@
 			<td><p class="unit">kgs.</p></td>
 		</tr>
 	</table>
-	
+
 	<table>
 		<tr>
 			<td align="left">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
-			<td><p align="center">{{error3}}{{ error4 }}</p></td>
+			<td><p align="center">{{ bottomerror }}</p></td>
 			<td align="right">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
 		</tr>
 	</table>
-	
+
 	<form id="frm1" action="/clamplift/update/" method="get">
-        <input type="hidden" value="{{ realtag }}" name="realtag"></input>
-        <input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight">		
-    </form>
-	
+		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight">		
+	</form>
+
 	<form id="frm2" action="/clamplift/undo/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
 	</form>
-	
+
 	<form id="frm3" action="/clamplift/changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
 		<input id="lane" type="hidden" value="{{ lane }}" name="lane">
 		<input id="pos" type="hidden" value="{{ pos }}" name="pos">
 	</form>
-	
+
 </div>
 </body>
 </html>
