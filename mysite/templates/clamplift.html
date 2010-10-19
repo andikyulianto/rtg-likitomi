@@ -7,6 +7,7 @@
 	<script type="text/javascript">
 	function loadXMLDoc()
 	{
+	//alert('This is just a trigger message!');
 	if (window.XMLHttpRequest)
 		{// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
@@ -65,16 +66,12 @@
 
 	function changeLocLeft()
 	{
-		document.getElementById("lane").value = '{{leftlane}}';
-		document.getElementById("pos").value = '{{atposition}}';
-		document.getElementById("frm3").submit();
+		document.getElementById("frm4").submit();
 	}
 
 	function changeLocRight()
 	{
-		document.getElementById("lane").value = '{{rightlane}}';
-		document.getElementById("pos").value = '{{atposition}}';
-		document.getElementById("frm3").submit();
+		document.getElementById("frm5").submit();
 	}
 
 	function otherLoc()
@@ -87,7 +84,8 @@
 		layer.style.position = 'absolute';
 		layer.style.top = '0px';
 		layer.style.left = '0px';
-		layer.style.height = document.documentElement.scrollHeight + 'px';
+		//layer.style.height = document.documentElement.scrollHeight + 'px';
+		layer.style.height = screen.height + 'px';
 		layer.style.width = width + 'px';
 		layer.style.backgroundColor = 'black';
 		layer.style.opacity = '.6';
@@ -149,8 +147,8 @@
 		var a = document.createElement('a');
 		a.id = 'lanebutton';
 		a.style.top = '120px';
-		a.style.left = '50px'; 
-		a.innerHTML = "<table height='100%'><tr><td align='center'>"+"A".fontsize(4).bold()+"</td></tr></table>";
+		a.style.left = '50px';
+		a.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"A".fontsize(4).bold()+"</td></tr></table>";
 		a.onclick = function()
 		{
 			document.getElementById('ilane').value = 'A';
@@ -161,7 +159,7 @@
 		b.id = 'lanebutton';
 		b.style.top = '170px';
 		b.style.left = '50px'; 
-		b.innerHTML = "<table height='100%'><tr><td align='center'>"+"B".fontsize(4).bold()+"</td></tr></table>";
+		b.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"B".fontsize(4).bold()+"</td></tr></table>";
 		b.onclick = function()
 		{
 			document.getElementById('ilane').value = 'B';
@@ -172,7 +170,7 @@
 		c.id = 'lanebutton';
 		c.style.top = '195px';
 		c.style.left = '50px'; 
-		c.innerHTML = "<table height='100%'><tr><td align='center'>"+"C".fontsize(4).bold()+"</td></tr></table>";
+		c.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"C".fontsize(4).bold()+"</td></tr></table>";
 		c.onclick = function()
 		{
 			document.getElementById('ilane').value = 'C';
@@ -183,7 +181,7 @@
 		d.id = 'lanebutton';
 		d.style.top = '245px';
 		d.style.left = '50px'; 
-		d.innerHTML = "<table height='100%'><tr><td align='center'>"+"D".fontsize(4).bold()+"</td></tr></table>";
+		d.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"D".fontsize(4).bold()+"</td></tr></table>";
 		d.onclick = function()
 		{
 			document.getElementById('ilane').value = 'D';
@@ -194,7 +192,7 @@
 		e.id = 'lanebutton';
 		e.style.top = '270px';
 		e.style.left = '50px'; 
-		e.innerHTML = "<table height='100%'><tr><td align='center'>"+"E".fontsize(4).bold()+"</td></tr></table>";
+		e.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"E".fontsize(4).bold()+"</td></tr></table>";
 		e.onclick = function()
 		{
 			document.getElementById('ilane').value = 'E';
@@ -205,7 +203,7 @@
 		f.id = 'lanebutton';
 		f.style.top = '320px';
 		f.style.left = '50px'; 
-		f.innerHTML = "<table height='100%'><tr><td align='center'>"+"F".fontsize(4).bold()+"</td></tr></table>";
+		f.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"F".fontsize(4).bold()+"</td></tr></table>";
 		f.onclick = function()
 		{
 			document.getElementById('ilane').value = 'F';
@@ -216,7 +214,7 @@
 		g.id = 'lanebutton';
 		g.style.top = '345px';
 		g.style.left = '50px'; 
-		g.innerHTML = "<table height='100%'><tr><td align='center'>"+"G".fontsize(4).bold()+"</td></tr></table>";
+		g.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"G".fontsize(4).bold()+"</td></tr></table>";
 		g.onclick = function()
 		{
 			document.getElementById('ilane').value = 'G';
@@ -227,21 +225,28 @@
 		h.id = 'lanebutton';
 		h.style.top = '395px';
 		h.style.left = '50px'; 
-		h.innerHTML = "<table height='100%'><tr><td align='center'>"+"H".fontsize(4).bold()+"</td></tr></table>";
+		h.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"H".fontsize(4).bold()+"</td></tr></table>";
 		h.onclick = function()
 		{
 			document.getElementById('ilane').value = 'H';
 		}
 		div.appendChild(h);
 
+		var trig = 0;
+
 		var one = document.createElement('a');
 		one.id = 'posbutton';
 		one.style.top = '120px';
 		one.style.left = '200px'; 
-		one.innerHTML = "<table height='100%'><tr><td align='center'>"+"1".fontsize(6).bold()+"</td></tr></table>";
+		one.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"1".fontsize(6).bold()+"</td></tr></table>";
 		one.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '1';
 		}
 		div.appendChild(one);
@@ -250,10 +255,15 @@
 		two.id = 'posbutton';
 		two.style.top = '120px';
 		two.style.left = '280px'; 
-		two.innerHTML = "<table height='100%'><tr><td align='center'>"+"2".fontsize(6).bold()+"</td></tr></table>";
+		two.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"2".fontsize(6).bold()+"</td></tr></table>";
 		two.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '2';
 		}
 		div.appendChild(two);
@@ -262,10 +272,15 @@
 		three.id = 'posbutton';
 		three.style.top = '120px';
 		three.style.left = '360px'; 
-		three.innerHTML = "<table height='100%'><tr><td align='center'>"+"3".fontsize(6).bold()+"</td></tr></table>";
+		three.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"3".fontsize(6).bold()+"</td></tr></table>";
 		three.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '3';
 		}
 		div.appendChild(three);
@@ -274,10 +289,15 @@
 		four.id = 'posbutton';
 		four.style.top = '200px';
 		four.style.left = '200px'; 
-		four.innerHTML = "<table height='100%'><tr><td align='center'>"+"4".fontsize(6).bold()+"</td></tr></table>";
+		four.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"4".fontsize(6).bold()+"</td></tr></table>";
 		four.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '4';
 		}
 		div.appendChild(four);
@@ -286,10 +306,15 @@
 		five.id = 'posbutton';
 		five.style.top = '200px';
 		five.style.left = '280px'; 
-		five.innerHTML = "<table height='100%'><tr><td align='center'>"+"5".fontsize(6).bold()+"</td></tr></table>";
+		five.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"5".fontsize(6).bold()+"</td></tr></table>";
 		five.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '5';
 		}
 		div.appendChild(five);
@@ -298,10 +323,15 @@
 		six.id = 'posbutton';
 		six.style.top = '200px';
 		six.style.left = '360px'; 
-		six.innerHTML = "<table height='100%'><tr><td align='center'>"+"6".fontsize(6).bold()+"</td></tr></table>";
+		six.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"6".fontsize(6).bold()+"</td></tr></table>";
 		six.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '6';
 		}
 		div.appendChild(six);
@@ -310,10 +340,15 @@
 		seven.id = 'posbutton';
 		seven.style.top = '280px';
 		seven.style.left = '200px'; 
-		seven.innerHTML = "<table height='100%'><tr><td align='center'>"+"7".fontsize(6).bold()+"</td></tr></table>";
+		seven.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"7".fontsize(6).bold()+"</td></tr></table>";
 		seven.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '7';
 		}
 		div.appendChild(seven);
@@ -322,10 +357,15 @@
 		eight.id = 'posbutton';
 		eight.style.top = '280px';
 		eight.style.left = '280px'; 
-		eight.innerHTML = "<table height='100%'><tr><td align='center'>"+"8".fontsize(6).bold()+"</td></tr></table>";
+		eight.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"8".fontsize(6).bold()+"</td></tr></table>";
 		eight.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '8';
 		}
 		div.appendChild(eight);
@@ -334,10 +374,15 @@
 		nine.id = 'posbutton';
 		nine.style.top = '280px';
 		nine.style.left = '360px'; 
-		nine.innerHTML = "<table height='100%'><tr><td align='center'>"+"9".fontsize(6).bold()+"</td></tr></table>";
+		nine.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"9".fontsize(6).bold()+"</td></tr></table>";
 		nine.onclick = function()
 		{
-			if (document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '9';
 		}
 		div.appendChild(nine);
@@ -346,7 +391,7 @@
 		clr.id = 'posbutton';
 		clr.style.top = '360px';
 		clr.style.left = '200px'; 
-		clr.innerHTML = "<table height='100%'><tr><td align='center'>"+"clr".fontsize(5).bold()+"</td></tr></table>";
+		clr.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"clr".fontsize(5).bold()+"</td></tr></table>";
 		clr.onclick = function()
 		{
 			document.getElementById('iposition').value = '';
@@ -357,10 +402,15 @@
 		zero.id = 'posbutton';
 		zero.style.top = '360px';
 		zero.style.left = '280px'; 
-		zero.innerHTML = "<table height='100%'><tr><td align='center'>"+"0".fontsize(6).bold()+"</td></tr></table>";
+		zero.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"0".fontsize(6).bold()+"</td></tr></table>";
 		zero.onclick = function()
 		{
-			if (document.getElementById('iposition').value != '' && document.getElementById('iposition').value.length < 2)
+			if (trig == 0)
+			{
+				document.getElementById('iposition').value = '';
+				trig = 1;
+			}
+			if (document.getElementById('iposition').value != '' && document.getElementById('iposition').value.length < 2 && trig == 1)
 			document.getElementById('iposition').value += '0';
 		}
 		div.appendChild(zero);
@@ -368,7 +418,7 @@
 		var ok = document.createElement('a');
 		ok.id = 'confirm';
 		ok.style.left = '70px'; 
-		ok.innerHTML = "<table height='100%'><tr><td align='center'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
+		ok.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
 		//ok.href = 'javascript:void(0)';
 		ok.onclick = function() 
 		{
@@ -385,7 +435,7 @@
 		var cancel = document.createElement('a');
 		cancel.id = 'confirm';
 		cancel.style.right = '80px'; 
-		cancel.innerHTML = "<table height='100%'><tr><td align='center'>"+"Cancel".fontsize(4).bold()+"</td></tr></table>";
+		cancel.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"Cancel".fontsize(4).bold()+"</td></tr></table>";
 		//cancel.href = 'javascript:void(0)';
 		cancel.onclick = function() 
 		{
@@ -422,35 +472,35 @@
 				<table>
 					<tr>
 						<td></td>
-						<td colspan="3" align="center"><b>Near previous</b></td>
+						{% ifequal atlocation "Stock" %}<td colspan="3" align="center"><b>Near previous</b></td>{% else %}{% endifequal %}
 						<td width="5%"></td>
-						<td colspan="3" align="center" width="50%"><b>From current</b></td>
+						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b>From current</b></td>{% else %}{% endifequal %}
 					</tr>
 					<tr>
 						<td></td>
-						{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
 						<td></td>
-						{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
 						<td></td>
-						<td class="locbutton" onclick="javascript:changeLocLeft()" rowspan="3"><p>{{leftlane}}</p></td>
+						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocLeft()" rowspan="3"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}
 						<td></td>
-						<td class="locbutton" onclick="javascript:changeLocRight()" style="cursor:pointer" rowspan="3"><p>{{rightlane}}</p></td>
+						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocRight()" rowspan="3"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}
 					</tr>
 					<tr>
-						<td><p class="label">Location:</p></td>
+						<td width="46%"><p class="label">Location:</p></td>
 						<td id="lavender">{% ifnotequal lane "" %}<p class="var">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 						<td></td>
-						<td class="locbutton" onclick="javascript:changeLocOpp()"><p>{{opplane}}-{{position}}</p></td>
+						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocOpp()"><p>{{opplane}}-{{position}}</p></td>{% else %}{% endifequal %}
 					</tr>
 					<tr>
 						<td></td>
-						{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
 						<td></td>
-						{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
 					</tr>
 				</table>
 			</td>
-			<td align="center" rowspan="2" width="10%"><a href="javascript:otherLoc()"><img border="0" height="100px" src="image/changeloc.png"></a></td>
+			<td align="center" rowspan="2" width="10%">{% ifequal atlocation "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="100px" src="image/changeloc.png"></a>{% else %}{% endifequal %}</td>
 		</tr>
 	</table>
 
@@ -538,6 +588,8 @@
 		</tr>
 	</table>
 
+	<br />
+
 	<table>
 		<tr>
 			<td align="left">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
@@ -548,7 +600,7 @@
 
 	<form id="frm1" action="/clamplift/update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight">		
+		<input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight">
 	</form>
 
 	<form id="frm2" action="/clamplift/undo/" method="get">
@@ -558,7 +610,19 @@
 	<form id="frm3" action="/clamplift/changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
 		<input id="lane" type="hidden" value="{{ lane }}" name="lane">
-		<input id="pos" type="hidden" value="{{ pos }}" name="pos">
+		<input id="pos" type="hidden" value="{{ position }}" name="pos">
+	</form>
+
+	<form id="frm4" action="/clamplift/changeloc/" method="get">
+		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input type="hidden" value="{{ leftlane }}" name="lane">
+		<input type="hidden" value="{{ atposition }}" name="pos">
+	</form>
+
+	<form id="frm5" action="/clamplift/changeloc/" method="get">
+		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input type="hidden" value="{{ rightlane }}" name="lane">
+		<input type="hidden" value="{{ atposition }}" name="pos">
 	</form>
 
 </div>
