@@ -17,6 +17,8 @@ import random
 def scale(request):
 # Connect serial port #
 	try:
+		weight = 'None'
+
 		ser = serial.Serial()
 		ser.port = '/dev/ttyUSB0'
 		ser.baudrate = 2400
@@ -30,71 +32,51 @@ def scale(request):
 		ser.close()
 		a = output.rsplit(",")
 
-		if a[0] == 'OL':
-			realtag = ""
-			paper_code = ""
-			size = ""
-			uom = ""
-			actual_wt = ""
-			used_weight = ""
-			serror = "[The weight is overloaded.]"
-
 		if len(a) == 3:
-			b = a[2]
-		elif len(a) == 2:
-			b = a[1]
+			if a[0] == 'US':
+				b = a[2]
+				c = b[-11:]
+				d = c[:-4]
+				weight = float(d)
+				digital = str(weight)
+				if len(digital) == 7:
+					digit1 = digital[0:1]
+					digit2 = digital[1:2]
+					digit3 = digital[2:3]
+					digit4 = digital[3:4]
+					digit5 = digital[4:5]
+					digit6 = digital[5:6]
+					digit7 = digital[6:7]
+				if len(digital) == 6:
+					digit2 = digital[0:1]
+					digit3 = digital[1:2]
+					digit4 = digital[2:3]
+					digit5 = digital[3:4]
+					digit6 = digital[4:5]
+					digit7 = digital[5:6]
+				if len(digital) == 5:
+					digit3 = digital[0:1]
+					digit4 = digital[1:2]
+					digit5 = digital[2:3]
+					digit6 = digital[3:4]
+					digit7 = digital[4:5]
+				if len(digital) == 4:
+					digit4 = digital[0:1]
+					digit5 = digital[1:2]
+					digit6 = digital[2:3]
+					digit7 = digital[3:4]
+				if len(digital) == 3:
+					digit5 = digital[0:1]
+					digit6 = digital[1:2]
+					digit7 = digital[2:3]
+			else:
+				serror = "[The weight is overloaded.]"
 		else:
-			b = "+00000.0Kg"
-		if len(b) == 12:
-			c = b[-11:]
-		else:
-			c = "00000.0Kg"
-		if len(c) == 11:
-			d = c[:-4]
-		else:
-			d = "00000.0"
-
-		weight = float(d)
-#		weight = round(random.uniform(1,2000),0)
-
-		if weight != 0.0:
-			digital = str(weight)
-		else:
-			digital = ""
 			serror = "[Data sent is not complete.]"
 
-		if len(digital) == 7:
-			digit1 = digital[0:1]
-			digit2 = digital[1:2]
-			digit3 = digital[2:3]
-			digit4 = digital[3:4]
-			digit5 = digital[4:5]
-			digit6 = digital[5:6]
-			digit7 = digital[6:7]
-		if len(digital) == 6:
-			digit2 = digital[0:1]
-			digit3 = digital[1:2]
-			digit4 = digital[2:3]
-			digit5 = digital[3:4]
-			digit6 = digital[4:5]
-			digit7 = digital[5:6]
-		if len(digital) == 5:
-			digit3 = digital[0:1]
-			digit4 = digital[1:2]
-			digit5 = digital[2:3]
-			digit6 = digital[3:4]
-			digit7 = digital[4:5]
-		if len(digital) == 4:
-			digit4 = digital[0:1]
-			digit5 = digital[1:2]
-			digit6 = digital[2:3]
-			digit7 = digital[3:4]
-		if len(digital) == 3:
-			digit5 = digital[0:1]
-			digit6 = digital[1:2]
-			digit7 = digital[2:3]
-
 # Connect RFID reader #
+		realtag = 'None'
+
 		HOST = '192.41.170.55' # CSIM network
 		PORT = 50007
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -171,32 +153,36 @@ def scale(request):
 #		realtag = 68
 
 # Query database #
-		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
-		cur = conn.cursor()
-		cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
-		query1 = cur.fetchone()
-		paper_roll_id = query1[0]
-		paper_code = query1[1]
-		initial_weight = query1[4]
-		size = query1[7]
-		uom = query1[8]
+		if realtag != 'None':
+			conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
+			cur = conn.cursor()
+			cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
+			query1 = cur.fetchone()
+			paper_roll_id = query1[0]
+			paper_code = query1[1]
+			initial_weight = query1[4]
+			size = query1[7]
+			uom = query1[8]
 
-		cur.execute("SELECT * FROM `paper_movement` WHERE `paper_movement`.`roll_id` = %s ORDER BY `paper_movement`.`created_on` DESC", realtag)
-		query2 = cur.fetchall()
+			cur.execute("SELECT * FROM `paper_movement` WHERE `paper_movement`.`roll_id` = %s ORDER BY `paper_movement`.`created_on` DESC", realtag)
+			query2 = cur.fetchall()
 
-		if len(query2)>0:
-			actual_wt = query2[0][3]
-		else:
-			actual_wt = initial_weight
+			if len(query2)>0:
+				actual_wt = query2[0][3]
+			else:
+				actual_wt = initial_weight
 
-		used_weight = actual_wt - weight
+			if weight != 'None':
+				used_weight = actual_wt - weight
 
 # Update temp_weight to database #
-		cur.execute("UPDATE `likitomi_v6`.`paper_rolldetails` SET `temp_weight` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (weight, realtag))
-		conn.commit()
+				cur.execute("UPDATE `likitomi_v6`.`paper_rolldetails` SET `temp_weight` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (weight, realtag))
+				conn.commit()
 
-		cur.close()
-		conn.close()
+				cur.close()
+				conn.close()
+			else:
+				used_weight = ""
 
 # Exceptions #
 	except serial.SerialException:

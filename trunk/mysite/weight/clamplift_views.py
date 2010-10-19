@@ -108,7 +108,7 @@ def clamplift(request):
 			atlocation = 'CR'
 		if L == 5 and P == 5:
 			atlocation = 'Scale'
-		if L == 1:
+		if L in range(1, 5):
 			atlocation = 'Stock'
 
 		if L == 0 and P == 0:
