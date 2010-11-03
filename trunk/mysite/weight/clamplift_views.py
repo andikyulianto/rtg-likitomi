@@ -250,7 +250,7 @@ def clamplift(request):
 		man_btn = ""
 		undo_btn = ""
 		submit_btn = ""
-		bottomerror = "[Please change operating mode of RFID reader to 'Standby'.]"
+		bottomerror = "[Please change operating mode to 'standby'.]"
 		return render_to_response('clamplift.html', locals())
 
 	except ValueError:
@@ -427,3 +427,9 @@ def changeloc(request):
 
 	return HttpResponseRedirect('/clamplift/')
 
+
+################################################################## ORIENTATION #################################################################
+
+def orient(request):
+	
+	return render_to_response('index2.html', locals())
