@@ -81,6 +81,7 @@ def inventory(request):
 		for match in maplist:
 			lanelist.append(match[0])
 			poslist.append(match[1])
+		strlist = str(maplist)
 
 		cur.close()
 		conn.close()

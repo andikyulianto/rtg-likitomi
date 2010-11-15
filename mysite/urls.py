@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from mysite.weight.views import index
 from mysite.weight.scale_views import scale
-from mysite.weight.clamplift_views import clamplift, update, undo, changeloc, orient
+from mysite.weight.clamplift_views import clamplift, update, undo, changeloc, orient, minclamp, minupdate, minundo, minchangeloc
 from mysite.weight.plan_views import plan
 from mysite.weight.now import now
 from mysite.weight.showplan import showplan
@@ -28,6 +28,14 @@ urlpatterns = patterns('',
 	(r'^clamplift/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 #	(r'^clamplift/manual/$', manual),
 	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+
+	(r'^minclamp/$', minclamp),
+	(r'^minclamp/update/$', minupdate),
+	(r'^minclamp/update/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^minclamp/undo/$', minundo),
+	(r'^minclamp/changeloc/$', minchangeloc),
+	(r'^minclamp/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^minclamp/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^orient/$', orient),
 	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),

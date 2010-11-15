@@ -30,27 +30,27 @@
 <!--{{poslist}}-->
 
 <table>
-	<tr><td></td>{% for pos in position %}<td width='1%'>{{ pos }}</td>{% endfor %}</tr>
+	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 	{% for lan in lane %}
 		{% if lan %}
 			<tr>
-				<td width='1%'>{{ lan }}</td>
+				<td class="map" width='1%'>{{ lan }}</td>
 				{% for pos in position %}
 					
-					{% if lan in lanelist and pos in poslist %}
-						<td class="yellow"></td>
+					{% if "('"|add:lan|add:"', '"|add:pos|add:"')" in strlist %}
+						<td class="gold"></td>
 					{% else %}
 						<td class="gray"></td>
 					{% endif %}
 					
 				{% endfor %}
-				<td width='1%'>{{ lan }}</td>
+				<td class="map" width='1%'>{{ lan }}</td>
 			</tr>
 		{% else %}
-			<tr><td><br /></td>{% for pos in position %}<td><br /></td>{% endfor %}<td><br /></td></tr>
+			<tr><td class="map"></td>{% for pos in position %}<td class="map"></td></td>{% endfor %}<td class="map"><br /></td></tr>
 		{% endif %}
 	{% endfor %}
-	<tr><td></td>{% for pos in position %}<td width='1%'>{{ pos }}</td>{% endfor %}</tr>
+	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 </table>
 
 </body>
