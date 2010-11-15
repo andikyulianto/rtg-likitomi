@@ -1,0 +1,38 @@
+﻿<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/plan.css" />
+
+</head>
+
+<body>
+
+<table>
+	<tr>
+		<th rowspan='2'>TIME</th>
+		<th rowspan='2'>SHEET CODE</th>
+		<th class='df' rowspan='2'>DF</th>
+		<th>BL</th>
+		<th>BM</th>
+	</tr>
+	<tr>
+		<th>CL</th>
+		<th>CM</th>
+	</tr>
+	{% for start_time, product_code, DF, BL, BM, CL, CM, used_df_mkg, used_bl_mkg, used_bm_mkg, used_cl_mkg, used_cm_mkg in query %}
+	<tr>
+		<td rowspan='2'>{{ start_time|cut:":00" }}</td>
+		<td rowspan='2'>{{ product_code }}</td>
+		<td class='df' rowspan='2'>{{ DF }}<br />({{ used_df_mkg }})</td>
+		<td>{{ BL }}<br />({{ used_bl_mkg }})</td>
+		<td>{{ BM }}<br />({{ used_bm_mkg }})</td>
+	</tr>
+	<tr>
+		<td>{{ CL }}<br />({{ used_cl_mkg }})</td>
+		<td>{{ CM }}<br />({{ used_cm_mkg }})</td>
+	</tr>
+	{% endfor %}
+</table>
+
+</body>
+</html>

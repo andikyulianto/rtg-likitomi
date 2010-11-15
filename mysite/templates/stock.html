@@ -1,0 +1,94 @@
+﻿<html>
+<head>
+<title>Likitomi: Clamplift Plan</title>
+<link rel="stylesheet" type="text/css" href="css/plan.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+	function showInventory(str)
+	{
+	//alert(str);
+	if (str=="")
+		{
+		document.getElementById("invHint").innerHTML="";
+		return;
+		}
+	if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+		}
+	else
+		{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	xmlhttp.onreadystatechange=function()
+		{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+			document.getElementById("invHint").innerHTML=xmlhttp.responseText;
+			}
+		}
+	xmlhttp.open("GET", "/inventory/?pcode="+str ,true);
+	xmlhttp.send();
+
+	//showMap(str);
+	}
+
+	function showMap(str)
+	{
+	//alert(str);
+	if (str=="")
+		{
+		document.getElementById("mapHint").innerHTML="";
+		return;
+		}
+	if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+		}
+	else
+		{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	xmlhttp.onreadystatechange=function()
+		{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+			document.getElementById("mapHint").innerHTML=xmlhttp.responseText;
+			}
+		}
+	xmlhttp.open("GET", "/map/?pcode="+str ,true);
+	xmlhttp.send();
+	}
+</script>
+
+</head>
+
+<body>
+
+<table><tr><td><div class='lft'>Navigator</div></td></tr><table>
+
+<form>
+	<select name="pcode" onchange="showInventory(this.value)">
+	<option value="">Select paper code:</option>
+	{% for pcode in pcodelist %}
+	<option value="{{ pcode }}">{{ pcode }}</option>
+	{% endfor %}
+	</select>
+</form>
+<!--<form>-->
+<!--	<select name="pcode" onchange="showMap(this.value)">-->
+<!--	<option value="">Select paper code to show inventory:</option>-->
+<!--	{% for pcode in pcodelist %}-->
+<!--	<option value="{{ pcode }}">{{ pcode }}</option>-->
+<!--	{% endfor %}-->
+<!--	</select>-->
+<!--</form>-->
+<!--<button onclick="showInventory()">Inventory</button>-->
+<!--<button onclick="showMap()">Map</button>-->
+<div id="invHint"><b>Inventory will be shown here.</b></div>
+<!--<div id="mapHint"><b>Map will be shown here.</b></div>-->
+
+</body>
+</html>

@@ -18,6 +18,7 @@ def clamplift(request):
 # Connect RFID reader #
 	try:
 		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
 		PORT = 50007
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -137,7 +138,7 @@ def clamplift(request):
 #		realtag = 68
 
 # Query database #
-		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
+		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
 		cur = conn.cursor()
 
 		cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", realtag)
@@ -321,7 +322,7 @@ def update(request):
 	else:
 		return HttpResponseRedirect('/clamplift/')
 
-	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
+	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
 	cur = conn.cursor()
 
 	cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
@@ -349,7 +350,7 @@ def update(request):
 	if actual_wt > f_weight:
 		rightnow = datetime.datetime.now()
 		dt = rightnow.strftime("%Y-%m-%d %H:%M:%S")
-		cur.execute("INSERT INTO `likitomi_v6`.`paper_movement` (roll_id, before_wt, actual_wt, created_on) VALUES (%s, %s, %s, %s)", (realtag, actual_wt, f_weight, dt))
+		cur.execute("INSERT INTO `likitomi_v8`.`paper_movement` (roll_id, before_wt, actual_wt, created_on) VALUES (%s, %s, %s, %s)", (realtag, actual_wt, f_weight, dt))
 		conn.commit()
 
 	else:
@@ -370,7 +371,7 @@ def undo(request):
 	else:
 		return HttpResponseRedirect('/clamplift/')
 
-	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
+	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
 	cur = conn.cursor()
 
 	cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
@@ -382,11 +383,11 @@ def undo(request):
 	uom = query1[8]
 	temp_weight = query1[17]
 
-	cur.execute("SELECT MAX(created_on) FROM `likitomi_v6`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s", realtag)
+	cur.execute("SELECT MAX(created_on) FROM `likitomi_v8`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s", realtag)
 	query2 = cur.fetchone()
 	max_datetime = query2[0]
 
-	cur.execute("DELETE FROM `likitomi_v6`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s AND `paper_movement`.`created_on` = %s", (realtag, max_datetime))
+	cur.execute("DELETE FROM `likitomi_v8`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s AND `paper_movement`.`created_on` = %s", (realtag, max_datetime))
 	conn.commit()
 
 	return HttpResponseRedirect('/clamplift/')
@@ -410,12 +411,12 @@ def changeloc(request):
 		return HttpResponseRedirect('/clamplift/')
 
 	if int(ipos) <= 43:
-		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
+		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
 		cur = conn.cursor()
 
-		cur.execute("UPDATE `likitomi_v6`.`paper_rolldetails` SET `lane` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (ilane, realtag))
+		cur.execute("UPDATE `likitomi_v8`.`paper_rolldetails` SET `lane` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (ilane, realtag))
 		conn.commit()
-		cur.execute("UPDATE `likitomi_v6`.`paper_rolldetails` SET `position` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (ipos, realtag))
+		cur.execute("UPDATE `likitomi_v8`.`paper_rolldetails` SET `position` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (ipos, realtag))
 		conn.commit()
 
 		cur.close()

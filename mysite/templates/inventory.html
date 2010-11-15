@@ -1,0 +1,57 @@
+﻿<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/plan.css" />
+
+</head>
+
+<body>
+
+<table>
+	<tr>
+		<th>PAPER CODE</th>
+		<th>SIZE</th>
+		<th>ROLL(s)</th>
+		<th>WEIGHT(kgs.)</th>
+	</tr>
+	{% for paper_code, size, rolls, weight in delist %}
+	<tr>
+		<td>{{ paper_code }}</td>
+		<td>{{ size }}</td>
+		<td>{{ rolls }}</td>
+		<td>{{ weight }}</td>
+	</tr>
+	{% endfor %}
+</table>
+
+<!--{{qidlist}}<br />-->
+<!--{{maplist}}<br />-->
+<!--{{lanelist}}<br />-->
+<!--{{poslist}}-->
+
+<table>
+	<tr><td></td>{% for pos in position %}<td width='1%'>{{ pos }}</td>{% endfor %}</tr>
+	{% for lan in lane %}
+		{% if lan %}
+			<tr>
+				<td width='1%'>{{ lan }}</td>
+				{% for pos in position %}
+					
+					{% if lan in lanelist and pos in poslist %}
+						<td class="yellow"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+					
+				{% endfor %}
+				<td width='1%'>{{ lan }}</td>
+			</tr>
+		{% else %}
+			<tr><td><br /></td>{% for pos in position %}<td><br /></td>{% endfor %}<td><br /></td></tr>
+		{% endif %}
+	{% endfor %}
+	<tr><td></td>{% for pos in position %}<td width='1%'>{{ pos }}</td>{% endfor %}</tr>
+</table>
+
+</body>
+</html>
