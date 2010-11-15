@@ -1,18 +1,31 @@
 ﻿<html>
 <head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 </head>
 </head>
 <body>
-<table align="center" width="100%" height="100%">
-	<tr>
-		<td align="center"><a href=""><img src="image/plan_btn.png"></a></td>
-		<td align="center"><a href="/clamplift/"><img src="image/scan_btn.png"></a></td>
-	</tr>
-	<tr>
-		<td align="center"><a href=""><img src="image/search_btn.png"></a></td>
-		<td align="center"><a href=""><img src="image/tag_btn.png"></a></td>
-	</tr>
-</table>
+<!--<table align="center" width="100%" height="100%">-->
+<!--	<tr>-->
+<!--		<td align="center"><a href=""><img src="image/plan_btn.png"></a></td>-->
+<!--		<td align="center"><a href="/clamplift/"><img src="image/scan_btn.png"></a></td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td align="center"><a href=""><img src="image/search_btn.png"></a></td>-->
+<!--		<td align="center"><a href=""><img src="image/tag_btn.png"></a></td>-->
+<!--	</tr>-->
+<!--</table>-->
+
+<frameset rows="50%,50%">
+	<frame src="http://localhost:8000/plan/" />
+	<frameset cols="25%,75%">
+		<frame src="http://localhost:8000/stock/" />
+		<frame src="http://localhost:8000/clamplift/" />
+	</frameset>
+</frameset>
+
+<iframe src="/plan/" frameborder="0" width="28%" height="100%"></iframe>
+<iframe src="/stock/" frameborder="0" width="71%" height="100%"></iframe>
+<iframe src="/clamplift/" frameborder="0" width="71%" height="100%"></iframe>
+
 </body>
 </html>

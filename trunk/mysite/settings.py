@@ -27,7 +27,8 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+#TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Asia/Bangkok'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -82,7 +83,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATE_DIRS = (
-    '/home/protocole/djcode/rtg-likitomi/mysite/templates',
+    '/home/patipol/rtg-likitomi/mysite/templates',
     # 'C:/Program Files/BitNami DjangoStack/djcode/mysite/static',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.

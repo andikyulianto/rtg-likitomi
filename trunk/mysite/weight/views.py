@@ -16,5 +16,5 @@ import random
 
 def index(request):
 
-    return render_to_response('index.html', locals())
+	return render_to_response('index.html', locals())
 

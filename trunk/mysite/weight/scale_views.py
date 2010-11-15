@@ -82,6 +82,7 @@ def scale(request):
 		realtag = 'None'
 
 		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
 		PORT = 50007
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -158,7 +159,7 @@ def scale(request):
 
 # Query database #
 		if realtag != 'None':
-			conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v6")
+			conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
 			cur = conn.cursor()
 			cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
 			query1 = cur.fetchone()
@@ -180,7 +181,7 @@ def scale(request):
 				used_weight = actual_wt - weight
 
 # Update temp_weight to database #
-				cur.execute("UPDATE `likitomi_v6`.`paper_rolldetails` SET `temp_weight` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (weight, realtag))
+				cur.execute("UPDATE `likitomi_v8`.`paper_rolldetails` SET `temp_weight` = %s WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", (weight, realtag))
 				conn.commit()
 
 				cur.close()

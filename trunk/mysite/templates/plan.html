@@ -1,0 +1,92 @@
+﻿<html>
+<head>
+<title>Likitomi: Clamplift Plan</title>
+<link rel="stylesheet" type="text/css" href="css/plan.css" />
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+
+<script type="text/javascript">
+	function loadXMLDoc()
+	{
+	//alert('This is just a trigger message!');
+	if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+		}
+	else
+		{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	xmlhttp.onreadystatechange=function()
+		{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+			document.getElementById("now").innerHTML=xmlhttp.responseText;
+			}
+		}
+	xmlhttp.open("GET","/now/",true);
+	xmlhttp.send();
+
+	setTimeout("loadXMLDoc()", 1000);
+	}
+
+	function showPlan(str)
+	{
+	//alert(str);
+	if (str=="")
+		{
+		document.getElementById("txtHint").innerHTML="";
+		return;
+		}
+	if (window.XMLHttpRequest)
+		{// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp=new XMLHttpRequest();
+		}
+	else
+		{// code for IE6, IE5
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+		}
+	xmlhttp.onreadystatechange=function()
+		{
+		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+			{
+			document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+			}
+		}
+	xmlhttp.open("GET", "/showplan/?opdate="+str ,true);
+	xmlhttp.send();
+	}
+
+</script>
+
+</head>
+
+<body onload='javascript:loadXMLDoc()'>
+
+<table><tr><td><div class='lft'>{{ today }}</div></td><td><div id='now'></div></td></tr><table>
+
+<form>
+	<select name="opdate" onchange="showPlan(this.value)">
+	<option value="">Select date to show plan:</option>
+	{% for date in datelist %}
+	<option value="{{ date }}">{{ date }}</option>
+	{% endfor %}
+	<!--<option value="{{ date1 }}">{{ date1 }}</option>-->
+	<!--<option value="{{ date2 }}">{{ date2 }}</option>-->
+	<!--<option value="{{ date3 }}">{{ date3 }}</option>-->
+	<!--<option value="{{ date4 }}">{{ date4 }}</option>-->
+	<!--<option value="{{ date5 }}">{{ date5 }}</option>-->
+	<!--<option value="{{ date6 }}">{{ date6 }}</option>-->
+	<!--<option value="1">{{ date1 }}</option>-->
+	<!--<option value="2">{{ date2 }}</option>-->
+	<!--<option value="3">{{ date3 }}</option>-->
+	<!--<option value="4">{{ date4 }}</option>-->
+	<!--<option value="5">{{ date5 }}</option>-->
+	<!--<option value="6">{{ date6 }}</option>-->
+	</select>
+</form>
+
+<div id="txtHint"><b>Clamplift plan will be shown here.</b></div>
+
+</body>
+</html>
