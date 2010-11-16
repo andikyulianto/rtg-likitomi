@@ -71,7 +71,7 @@
 
 <form>
 	<select name="pcode" onchange="showInventory(this.value)">
-	<option value="">Select paper code:</option>
+<!--	<option value="">Select paper code:</option>-->
 	{% for pcode in pcodelist %}
 	<option value="{{ pcode }}">{{ pcode }}</option>
 	{% endfor %}

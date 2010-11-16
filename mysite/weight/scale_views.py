@@ -19,18 +19,18 @@ def scale(request):
 	try:
 		weight = 'None'
 
-		ser = serial.Serial()
-		ser.port = '/dev/ttyUSB0'
-		ser.baudrate = 2400
-		ser.bytesize = 7
-		ser.parity = 'E'
-		ser.stopbits = 1
-		ser.timeout = 2
-		ser.open()
-		ser.flushInput()
-		output = ser.readline()
-#		output = "US,NT,+00325.5Kg\r\n"
-		ser.close()
+#		ser = serial.Serial()
+#		ser.port = '/dev/ttyUSB0'
+#		ser.baudrate = 2400
+#		ser.bytesize = 7
+#		ser.parity = 'E'
+#		ser.stopbits = 1
+#		ser.timeout = 2
+#		ser.open()
+#		ser.flushInput()
+#		output = ser.readline()
+		output = "US,NT,+00325.5Kg\r\n"
+#		ser.close()
 		a = output.rsplit(",")
 		if len(a) == 3:
 			if a[0] == 'US':
