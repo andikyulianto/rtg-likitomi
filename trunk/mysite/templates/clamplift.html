@@ -116,7 +116,7 @@
 
 		var ilane = document.createElement('input');
 		ilane.style.fontSize = '200%';
-		ilane.style.color = 'tomato';
+		ilane.style.color = 'black';
 		ilane.style.textAlign = 'center';
 		ilane.maxlength = 4;
 		ilane.size = 1;
@@ -131,7 +131,7 @@
 
 		var iposition = document.createElement('input');
 		iposition.style.fontSize = '200%';
-		iposition.style.color = 'tomato';
+		iposition.style.color = 'black';
 		iposition.style.textAlign = 'center';
 		iposition.maxlength = '4';
 		iposition.size = '1';
@@ -450,14 +450,14 @@
 <div id="clamplift">
 	<table>
 		<tr>
-<!--			<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	-->
-<!--			<td align="center"><b>You are now at:</b>-->
+			<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
+			<td align="center"><b class="topping">You are now at:</b>
 			{% ifnotequal atlocation "" %}<p class="var">{{ atlocation }}: {{ atlane }}/{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>
-<!--			<td align="right"><a href="/clamplift/"><img border="0" height="100px" src="image/refresh2.png"></a></td>-->
+			<td align="right"><a href="/clamplift/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
 		</tr>
 	</table>
 
-	<table>
+	<table id="whitesmoke">
 		<tr>
 			<td><p class="label">Roll ID: </p></td>
 			<td>{% ifnotequal realtag "" %}<p class="var">{{ realtag }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
@@ -472,9 +472,9 @@
 				<table>
 					<tr>
 						<td></td>
-						{% ifequal atlocation "Stock" %}<td colspan="3" align="center"><b>Near previous</b></td>{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}<td colspan="3" align="center"><b class="topping">Near previous</b></td>{% else %}{% endifequal %}
 						<td width="5%"></td>
-						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b>From current</b></td>{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b class="topping">From current</b></td>{% else %}{% endifequal %}
 					</tr>
 					<tr>
 						<td></td>
@@ -504,12 +504,12 @@
 		</tr>
 	</table>
 
-	<table>
+	<table id="whitesmoke">
 		<tr>
 			<td></td>
-			<td align="center"><b>Old</b></td>
+			<td align="center"><b class="topping">Old</b></td>
 			<td></td>
-			<td align="center"><b>New</b></td>
+			<td align="center"><b class="topping">New</b></td>
 			<td></td>
 			<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="100px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>
 		</tr>

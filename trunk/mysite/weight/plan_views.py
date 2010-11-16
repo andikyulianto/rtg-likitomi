@@ -16,8 +16,8 @@ import random
 
 def plan(request):
 	try:
-		now = datetime.datetime.now()
-		today = now.strftime("%Y-%m-%d")
+#		now = datetime.datetime.now()
+#		today = now.strftime("%Y-%m-%d")
 
 		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
 		cur = conn.cursor()

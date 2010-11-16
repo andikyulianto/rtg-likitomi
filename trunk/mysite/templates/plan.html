@@ -63,11 +63,11 @@
 
 <body onload='javascript:loadXMLDoc()'>
 
-<table><tr><td><div class='lft'>{{ today }}</div></td><td><div id='now'></div></td></tr><table>
+<table><tr><td><div class='lft'>{% now "Y-m-d" %}</div></td><td><div id='now'></div></td></tr><table>
 
 <form>
 	<select name="opdate" onchange="showPlan(this.value)">
-	<option value="">Select date to show plan:</option>
+<!--	<option value="">Select date to show plan:</option>-->
 	{% for date in datelist %}
 	<option value="{{ date }}">{{ date }}</option>
 	{% endfor %}
