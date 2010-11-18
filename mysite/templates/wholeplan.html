@@ -53,7 +53,7 @@
 			document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
 			}
 		}
-	xmlhttp.open("GET", "/showplan/?opdate="+str ,true);
+	xmlhttp.open("GET", "/showwhole/?opdate="+str ,true);
 	xmlhttp.send();
 	}
 </script>
@@ -61,7 +61,13 @@
 </head>
 
 <body onload='javascript:loadXMLDoc()'>
-
+	<table>
+		<tr>
+			<td class="lft"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
+			<td class="rght"><a href="/wholeplan/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
+		</tr>
+	</table>
+	
 <table><tr><td><div class='lft'>{% now "Y-m-d" %}</div></td><td><div id='now'></div></td></tr><table>
 
 <table>
@@ -73,22 +79,9 @@
 				{% for date in datelist %}
 				<option value="{{ date }}">{{ date }}</option>
 				{% endfor %}
-				<!--<option value="{{ date1 }}">{{ date1 }}</option>-->
-				<!--<option value="{{ date2 }}">{{ date2 }}</option>-->
-				<!--<option value="{{ date3 }}">{{ date3 }}</option>-->
-				<!--<option value="{{ date4 }}">{{ date4 }}</option>-->
-				<!--<option value="{{ date5 }}">{{ date5 }}</option>-->
-				<!--<option value="{{ date6 }}">{{ date6 }}</option>-->
-				<!--<option value="1">{{ date1 }}</option>-->
-				<!--<option value="2">{{ date2 }}</option>-->
-				<!--<option value="3">{{ date3 }}</option>-->
-				<!--<option value="4">{{ date4 }}</option>-->
-				<!--<option value="5">{{ date5 }}</option>-->
-				<!--<option value="6">{{ date6 }}</option>-->
 				</select>
 			</form>
 		</td>
-		<td class="rght"><a href="/wholeplan/" target="_top"><button>More</botton></a></td>
 	</tr>
 </table>
 
