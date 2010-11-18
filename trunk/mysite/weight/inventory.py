@@ -30,12 +30,14 @@ def inventory(request):
 		delist = list()
 		qidlist = list()
 		maplist = list()
+		sizelist = list()
 
 		for item in query:
 			totem = list(item)
 			delist.append(totem)
 			paper_code = totem[0]
 			size = totem[1]
+			sizelist.append(size)
 #			paper_code = 'HAC155'
 #			size = 64
 
@@ -74,6 +76,7 @@ def inventory(request):
 #		num = range(1,44)
 		num = range(1,16)
 		position = list()
+
 		for n in num:
 			position.append(str(n))
 		lanelist = list()

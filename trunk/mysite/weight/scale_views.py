@@ -81,8 +81,9 @@ def scale(request):
 # Connect RFID reader #
 		realtag = 'None'
 
-		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.41.170.55' # CSIM network
 #		HOST = '192.168.101.55' # Likitomi network
+		HOST = '192.168.1.55' # My own local network: Linksys
 		PORT = 50007
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)

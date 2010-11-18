@@ -17,8 +17,9 @@ import random
 def clamplift(request):
 # Connect RFID reader #
 	try:
-		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.41.170.55' # CSIM network
 #		HOST = '192.168.101.55' # Likitomi network
+		HOST = '192.168.1.55' # My own local network: Linksys
 		PORT = 50007
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -440,8 +441,9 @@ def orient(request):
 def minclamp(request):
 # Connect RFID reader #
 	try:
-		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.41.170.55' # CSIM network
 #		HOST = '192.168.101.55' # Likitomi network
+		HOST = '192.168.1.55' # My own local network: Linksys
 		PORT = 50007
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -501,7 +503,6 @@ def minclamp(request):
 				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
 				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
 				cnt= cnt+1
-
 
 		lan = 0
 		pos = 0
@@ -635,7 +636,6 @@ def minclamp(request):
 		if len(digital) == 5:
 			digit3 = digital[0:1]
 			digit4 = digital[1:2]
-
 			digit5 = digital[2:3]
 			digit6 = digital[3:4]
 			digit7 = digital[4:5]
@@ -678,6 +678,7 @@ def minclamp(request):
 		undo_btn = ""
 		submit_btn = ""
 		bottomerror = "[Please change operating mode to 'standby'.]"
+		digital = ""
 		return render_to_response('minclamp.html', locals())
 
 	except ValueError:
@@ -695,6 +696,7 @@ def minclamp(request):
 		undo_btn = ""
 		submit_btn = ""
 		bottomerror = "[No ID tag in field.]"
+		digital = ""
 		return render_to_response('minclamp.html', locals())
 
 	except TypeError:
@@ -712,6 +714,7 @@ def minclamp(request):
 		undo_btn = ""
 		submit_btn = ""
 		bottomerror = "[No ID tag in field.]"
+		digital = ""
 		return render_to_response('minclamp.html', locals())
 
 	except: # Timeout #

@@ -40,3 +40,25 @@ def plan(request):
 
 	return render_to_response('plan.html', locals())
 
+def wholeplan(request):
+	try:
+		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
+		cur = conn.cursor()
+
+		cur.execute("SELECT DISTINCT `opdate` FROM `tbl_clamplift` ORDER BY `opdate` DESC")
+		query = cur.fetchall()
+		qlen = len(query)
+		qstr = str(query)[16:][:-4]
+		qsplt = qstr.split('),), (datetime.date(')
+		datelist = list()
+		for date in qsplt:
+			datefrm = date.replace(", ","-")
+			datelist.append(datefrm)
+
+		cur.close()
+		conn.close()
+
+	except:
+		pass
+
+	return render_to_response('wholeplan.html', locals())

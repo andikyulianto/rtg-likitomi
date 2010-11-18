@@ -7,6 +7,42 @@
 
 <body>
 
+<!--{{qidlist}}<br />-->
+<!--{{maplist}}<br />-->
+<!--{{lanelist}}<br />-->
+<!--{{poslist}}-->
+
+<!--Map List: {{ maplist }}<br />-->
+<!--String List: {{ strlist }}<br />-->
+<!--Size List: {{ sizelist }}<br />-->
+
+<table>
+	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
+	{% for lan in lane %}
+		{% if lan %}
+			<tr>
+				<td class="map" width='1%'>{{ lan }}</td>
+				{% for pos in position %}
+					
+					{% if "('"|add:lan|add:"', '"|add:pos|add:"')" in strlist %}
+<!--						<td class="gold">{% for size in sizelist %}{{ sizelist|slice:"minus:sizelist|length"|first }}{% endfor %}</td>-->
+						<td class="gold">{{ lan }}-{{ pos }}</td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+					
+				{% endfor %}
+				<td class="map" width='1%'>{{ lan }}</td>
+			</tr>
+		{% else %}
+			<tr><td class="map"></td>{% for pos in position %}<td class="map"></td></td>{% endfor %}<td class="map"><br /></td></tr>
+		{% endif %}
+	{% endfor %}
+	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
+</table>
+
+<br />
+
 <table>
 	<tr>
 		<th>PAPER CODE</th>
@@ -22,35 +58,6 @@
 		<td>{{ weight }}</td>
 	</tr>
 	{% endfor %}
-</table>
-
-<!--{{qidlist}}<br />-->
-<!--{{maplist}}<br />-->
-<!--{{lanelist}}<br />-->
-<!--{{poslist}}-->
-
-<table>
-	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
-	{% for lan in lane %}
-		{% if lan %}
-			<tr>
-				<td class="map" width='1%'>{{ lan }}</td>
-				{% for pos in position %}
-					
-					{% if "('"|add:lan|add:"', '"|add:pos|add:"')" in strlist %}
-						<td class="gold"></td>
-					{% else %}
-						<td class="gray"></td>
-					{% endif %}
-					
-				{% endfor %}
-				<td class="map" width='1%'>{{ lan }}</td>
-			</tr>
-		{% else %}
-			<tr><td class="map"></td>{% for pos in position %}<td class="map"></td></td>{% endfor %}<td class="map"><br /></td></tr>
-		{% endif %}
-	{% endfor %}
-	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 </table>
 
 </body>
