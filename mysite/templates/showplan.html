@@ -3,7 +3,8 @@
 <head>
 
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
-
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery_reapply.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -24,7 +25,8 @@
 	<tr>
 		<td rowspan='2'>{{ start_time|stringformat:"s"|add:"a"|cut:":00a" }}</td>
 		<td rowspan='2'>{{ product_code }}</td>
-		<td class='bt' rowspan='2'>{{ DF }}<br />({{ used_df_mkg }})</td>
+<!--		<td class='bt' rowspan='2'><a href="#" onclick="linkShowPage('#test2', '/stock/?pcode={{ DF }}');">{{ DF }}<br />({{ used_df_mkg }})</a></td>-->
+		<td class='bt' rowspan='2'><a href="/inventory/?pcode={{ DF }}" target="topright">{{ DF }}<br />({{ used_df_mkg }})</a></td>
 		<td>{{ BL }}<br />({{ used_bl_mkg }})</td>
 		<td>{{ BM }}<br />({{ used_bm_mkg }})</td>
 	</tr>

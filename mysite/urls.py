@@ -8,6 +8,7 @@ from mysite.weight.showplan import showplan, showwhole
 from mysite.weight.stock_views import stock
 from mysite.weight.inventory import inventory
 from mysite.weight.map import stockmap
+from mysite.weight.longtry import longtry
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -56,6 +57,8 @@ urlpatterns = patterns('',
 	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^map/$', stockmap),
 	(r'^map/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+
+	(r'^longtry/$', longtry),
 
 	# (r'^another-time-page/$', current_datetime),
 
