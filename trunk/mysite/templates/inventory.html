@@ -2,7 +2,8 @@
 <head>
 
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
-
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery_reapply.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -15,7 +16,6 @@
 <!--Map List: {{ maplist }}<br />-->
 <!--String List: {{ strlist }}<br />-->
 <!--Size List: {{ sizelist }}<br />-->
-
 <table>
 	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 	{% for lan in lane %}
