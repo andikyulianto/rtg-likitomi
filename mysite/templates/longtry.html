@@ -1,0 +1,22 @@
+﻿<html>
+
+<head>
+	<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+</head>
+
+<body>
+
+P: {{ p }}<br />
+
+<table border="1">
+	{% for start_time, end_time, sheet_code in p %}
+	<tr>
+		<td>{{ start_time|time:"H:i" }}</td>
+		<td>{{ end_time }}</td>
+		<td>{{ sheet_code }}</td>
+	</tr>
+	{% endfor %}
+</table>
+</body>
+
+</html>

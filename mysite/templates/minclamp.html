@@ -91,46 +91,37 @@
 		<tr>
 			<td><p class="label" id="min">Roll ID: </p></td>
 			<td>{% ifnotequal realtag "" %}<p class="var" id="min">{% ifchanged %}{{ realtag }}{% endifchanged %}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td></td>
 			<td><p class="label" id="min">Paper-Code: </p></td>
 			<td>{% ifnotequal paper_code "" %}<p class="var" id="minbig">{{ paper_code }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td></td>
 			<td><p class="label" id="min">Size: </p></td>
 			<td>{% ifnotequal size "" %}<p class="var" id="min">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td><a href="/clamplift/" target="_parent"><button>More</botton></a></td>
-		</tr>
-		<br />
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td align="center" rowspan="2">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
-			<td></td>
-			<td class="topping" id="mintop" align="center">Old</td>
-			<td></td>
-			<td class="topping" id="mintop" align="center">New</td>
-			<td></td>
+
+
+<!--			<td class="topping" id="mintop" align="center">Old</td>-->
+<!--			<td class="topping" id="mintop" align="center">New</td>-->
 <!--			<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="100px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>-->
-			<td align="center" rowspan="2">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
-		</tr>
-		<tr>
+
+
 			<td align="center" colspan="2">
 				<table>
-<!--					<tr>-->
-<!--						<td></td>-->
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
 <!--						{% ifequal atlocation "Stock" %}<td colspan="3" align="center"><b>Near previous</b></td>{% else %}{% endifequal %}-->
 <!--						<td width="5%"></td>-->
 <!--						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b>From current</b></td>{% else %}{% endifequal %}-->
-<!--					</tr>-->
+						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocLeft()" rowspan="1"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}
+					</tr>
 					<tr>
 						<td></td>
 <!--						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
 						<td></td>
 <!--						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
-						{% ifequal atlocation "Stock" %}<td rowspan="3">>>></td>{% else %}{% endifequal %}
-						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocLeft()" rowspan="3"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}
-						{% ifequal atlocation "Stock" %}<td rowspan="3">{% ifnotequal atlocation "" %}<p class="var" id="min">{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>{% else %}{% endifequal %}
-						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocRight()" rowspan="3"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}<td rowspan="2">>>></td>{% else %}{% endifequal %}
+
+						{% ifequal atlocation "Stock" %}<td rowspan="2">{% ifnotequal atlocation "" %}<p class="var" id="min">{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>{% else %}{% endifequal %}
+
 					</tr>
 					<tr>
 						<td width="46%"><p class="label" id="min">Location:</p></td>
@@ -140,15 +131,17 @@
 					</tr>
 					<tr>
 						<td></td>
+						<td></td>
 <!--						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
 						<td></td>
 <!--						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
+						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocRight()" rowspan="1"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}
 					</tr>
 				</table>
 			</td>
 				<td></td>
 <!--			<td align="center" rowspan="2" width="10%">{% ifequal atlocation "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="100px" src="image/changeloc.png"></a>{% else %}{% endifequal %}</td>-->
-
+			<td align="center" rowspan="1">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
 			<td><p class="label" id="min">Weight: </p></td>
 			<td>{% ifnotequal actual_wt "" %}<p class="var" id="min">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 			<td align="center" id="min">>>></td>
@@ -221,6 +214,8 @@
 <!--			{% ifequal digit7 "9" %}<img width="30px" src="image/9.png">{% endifequal %}-->
 <!--			</td>-->
 			<td><p class="unit" id="min">kgs.</p></td>
+			<td align="center" rowspan="2">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
+			<td style="text-align:center"><a href="/clamplift/" target="_parent"><button>More</botton></a></td>
 		</tr>
 	</table>
 

@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.db import connection, transaction
+from weight.models import ClampliftPlan
 
 import datetime
 import serial
@@ -19,21 +20,38 @@ def plan(request):
 #		now = datetime.datetime.now()
 #		today = now.strftime("%Y-%m-%d")
 
-		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
-		cur = conn.cursor()
+#		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
+#		cur = conn.cursor()
 
-		cur.execute("SELECT DISTINCT `opdate` FROM `tbl_clamplift` ORDER BY `opdate` DESC")
-		query = cur.fetchall()
+#		cur.execute("SELECT DISTINCT `opdate` FROM `tbl_clamplift` ORDER BY `opdate` DESC")
+#		query = cur.fetchall()
+#		qlen = len(query)
+#		qstr = str(query)[16:][:-4]
+#		qsplt = qstr.split('),), (datetime.date(')
+#		datelist = list()
+#		for date in qsplt:
+#			datefrm = date.replace(", ","-")
+#			datelist.append(datefrm)
+
+#		cur.close()
+#		conn.close()
+		cursor = connection.cursor()
+		cursor.execute("""
+			SELECT DISTINCT date
+			FROM weight_clampliftplan""")
+		query = cursor.fetchall()
+
+#		query = ClampliftPlan.objects.distinct().values_list('date')
 		qlen = len(query)
-		qstr = str(query)[16:][:-4]
+		if len(query) == 1:
+			qstr = str(query)[16:][:-5]
+		else:
+			qstr = str(query)[16:][:-4]
 		qsplt = qstr.split('),), (datetime.date(')
 		datelist = list()
 		for date in qsplt:
 			datefrm = date.replace(", ","-")
 			datelist.append(datefrm)
-
-		cur.close()
-		conn.close()
 
 	except:
 		pass
@@ -42,21 +60,22 @@ def plan(request):
 
 def wholeplan(request):
 	try:
-		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
-		cur = conn.cursor()
+		cursor = connection.cursor()
+		cursor.execute("""
+			SELECT DISTINCT date
+			FROM weight_clampliftplan""")
+		query = cursor.fetchall()
 
-		cur.execute("SELECT DISTINCT `opdate` FROM `tbl_clamplift` ORDER BY `opdate` DESC")
-		query = cur.fetchall()
 		qlen = len(query)
-		qstr = str(query)[16:][:-4]
+		if len(query) == 1:
+			qstr = str(query)[16:][:-5]
+		else:
+			qstr = str(query)[16:][:-4]
 		qsplt = qstr.split('),), (datetime.date(')
 		datelist = list()
 		for date in qsplt:
 			datefrm = date.replace(", ","-")
 			datelist.append(datefrm)
-
-		cur.close()
-		conn.close()
 
 	except:
 		pass

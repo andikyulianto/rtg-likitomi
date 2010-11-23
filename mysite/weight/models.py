@@ -71,5 +71,23 @@ class ClampliftPlan(models.Model):
 	class Admin:
 		list_display = ('case', 'cut')
 
+class PaperRoll(models.Model):
+	paper_code = models.CharField(max_length=6)
+	width = models.PositiveIntegerField()
+	wunit = models.CharField(max_length=4)
+	initial_weight = models.PositiveIntegerField()
+	temp_weight = models.PositiveIntegerField()
+	lane = models.CharField(max_length=1)
+	position = models.PositiveIntegerField()
 
+	def __unicode__(self):
+		return self.paper_code
 
+class PaperHistory(models.Model):
+	roll_id = models.PositiveIntegerField()
+	before_wt = models.PositiveIntegerField()
+	last_wt = models.PositiveIntegerField()
+	timestamp = models.DateTimeField()
+
+	def __unicode__(self):
+		return self.roll_id

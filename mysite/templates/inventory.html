@@ -7,58 +7,237 @@
 </head>
 
 <body>
-
+{{ pcode }} >>> {{ width }}"<br />
 <!--{{qidlist}}<br />-->
 <!--{{maplist}}<br />-->
 <!--{{lanelist}}<br />-->
 <!--{{poslist}}-->
 
+<!--query: {{ query }}<br />-->
+<!--ls: {{ ls }}<br />-->
+<!--ridlist: {{ ridlist }}<br />-->
+<!--elist: {{ elist }}<br />-->
+<!--delist: {{ delist }}<br />-->
+<!--wlist: {{ wlist }}<br />-->
+
 <!--Map List: {{ maplist }}<br />-->
 <!--String List: {{ strlist }}<br />-->
 <!--Size List: {{ sizelist }}<br />-->
+<table style="height:80%">
+<tr>
+<td class="top" style="width:10%">
+
 <table>
-	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
-	{% for lan in lane %}
-		{% if lan %}
-			<tr>
-				<td class="map" width='1%'>{{ lan }}</td>
-				{% for pos in position %}
-					
-					{% if "('"|add:lan|add:"', '"|add:pos|add:"')" in strlist %}
-<!--						<td class="gold">{% for size in sizelist %}{{ sizelist|slice:"minus:sizelist|length"|first }}{% endfor %}</td>-->
-						<td class="gold">{{ lan }}-{{ pos }}</td>
-					{% else %}
-						<td class="gray"></td>
-					{% endif %}
-					
-				{% endfor %}
-				<td class="map" width='1%'>{{ lan }}</td>
-			</tr>
-		{% else %}
-			<tr><td class="map"></td>{% for pos in position %}<td class="map"></td></td>{% endfor %}<td class="map"><br /></td></tr>
-		{% endif %}
+	<tr>
+		<th>ID</th>
+		<th>kgs</th>
+	</tr>
+	{% for id, w in delist %}
+	<tr>
+		<td>{{ id }}</td>
+		<td>{{ w }}</td>
+	</tr>
 	{% endfor %}
-	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 </table>
+
+</td>
+<td style="width:90%">
+<!--Map list: {{ mstr }}<br />-->
+<!--Weight list: {{ wlist }}<br />-->
+<!--Initial weight: {{ initial_weight }}<br />-->
+<!--+Loss weight: {{ loss }}<br />-->
+<!--mquery: {{ mquery }}<br />-->
+<!--posb: {{ posb }}<br />-->
+<!--index: {{ ind }}<br />-->
+
+{% load listfortag %}
+{#{% for pos in posb %}{% if pos %}{% if "'B', "|add:pos in mstr %}{{ wlist|listfortag:ridlist|stringformat:"s"|cut:"]"|add:", '"|add:'B'|add:pos|add:"']" }}{% endif %}{% endif %}{% endfor %}#}
+<table>
+	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
+
+	<tr><td class="map">A</td>
+		{% for pos in posa %}
+			{% if pos %}
+				{% if "'A', "|add:pos in mstr %}
+						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+							<td class="green">{{ pos }}</td>
+						{% endif %}
+						{% if 400 <= pos and pos < 700 %}
+							<td class="blue">{{ pos }}</td>
+						{% endif %}
+						{% if 100 <= pos and pos < 400 %}
+							<td class="yellow">{{ pos }}</td>
+						{% endif %}
+						{% if pos < 100 %}
+							<td class="red">{{ pos }}</td>
+						{% endif %}
+				{% else %}
+					<td class="gray"></td>
+				{% endif %}
+			{% else %}
+				<td></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">A</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in posb %}<td></td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">B</td>
+		{% for pos in posb %}
+			{% if pos %}
+				{% if "'B', "|add:pos in mstr %}
+						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+							<td class="green">{{ pos }}</td>
+						{% endif %}
+						{% if 400 <= pos and pos < 700 %}
+							<td class="blue">{{ pos }}</td>
+						{% endif %}
+						{% if 100 <= pos and pos < 400 %}
+							<td class="yellow">{{ pos }}</td>
+						{% endif %}
+						{% if pos < 100 %}
+							<td class="red">{{ pos }}</td>
+						{% endif %}
+				{% else %}
+					<td class="gray"></td>
+				{% endif %}
+			{% else %}
+				<td></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">B</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in posc %}<td></td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">C</td>
+		{% for pos in posc %}
+			{% if pos %}
+				{% if "'C', "|add:pos in mstr %}
+						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+							<td class="green">{{ pos }}</td>
+						{% endif %}
+						{% if 400 <= pos and pos < 700 %}
+							<td class="blue">{{ pos }}</td>
+						{% endif %}
+						{% if 100 <= pos and pos < 400 %}
+							<td class="yellow">{{ pos }}</td>
+						{% endif %}
+						{% if pos < 100 %}
+							<td class="red">{{ pos }}</td>
+						{% endif %}
+				{% else %}
+					<td class="gray"></td>
+				{% endif %}
+			{% else %}
+				<td></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">C</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in posd %}<td></td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">D</td>
+		{% for pos in posd %}
+			{% if pos %}
+				{% if "'D', "|add:pos in mstr %}
+						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+							<td class="green">{{ pos }}</td>
+						{% endif %}
+						{% if 400 <= pos and pos < 700 %}
+							<td class="blue">{{ pos }}</td>
+						{% endif %}
+						{% if 100 <= pos and pos < 400 %}
+							<td class="yellow">{{ pos }}</td>
+						{% endif %}
+						{% if pos < 100 %}
+							<td class="red">{{ pos }}</td>
+						{% endif %}
+				{% else %}
+					<td class="gray"></td>
+				{% endif %}
+			{% else %}
+				<td></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">D</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in pose %}<td></td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">E</td>
+		{% for pos in pose %}
+			{% if pos %}
+				{% if "'E', "|add:pos in mstr %}
+						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+							<td class="green">{{ pos }}</td>
+						{% endif %}
+						{% if 400 <= pos and pos < 700 %}
+							<td class="blue">{{ pos }}</td>
+						{% endif %}
+						{% if 100 <= pos and pos < 400 %}
+							<td class="yellow">{{ pos }}</td>
+						{% endif %}
+						{% if pos < 100 %}
+							<td class="red">{{ pos }}</td>
+						{% endif %}
+				{% else %}
+					<td class="gray"></td>
+				{% endif %}
+			{% else %}
+				<td></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">E</td></tr>
+
+	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
+</table>
+
+<!--<table border="1">-->
+<!--	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>-->
+<!--	{% for lan in lane %}-->
+<!--		{% if lan %}-->
+<!--			<tr>-->
+<!--				<td class="map" width='1%'>{{ lan }}</td>-->
+<!--				{% for pos in position %}-->
+<!--					-->
+<!--					{% if "('"|add:lan|add:"', '"|add:pos|add:"')" in strlist %}-->
+<!--<!--						<td class="gold">{% for size in sizelist %}{{ sizelist|slice:"minus:sizelist|length"|first }}{% endfor %}</td>-->-->
+<!--						<td class="gold">{{ lan }}-{{ pos }}</td>-->
+<!--					{% else %}-->
+<!--						<td class="gray"></td>-->
+<!--					{% endif %}-->
+<!--					-->
+<!--				{% endfor %}-->
+<!--				<td class="map" width='1%'>{{ lan }}</td>-->
+<!--			</tr>-->
+<!--		{% else %}-->
+<!--			<tr><td class="map"></td>{% for pos in position %}<td class="map"></td></td>{% endfor %}<td class="map"><br /></td></tr>-->
+<!--		{% endif %}-->
+<!--	{% endfor %}-->
+<!--	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>-->
+<!--</table>-->
+
+</td>
+</tr>
+<table>
 
 <br />
 
-<table>
-	<tr>
-		<th>PAPER CODE</th>
-		<th>SIZE</th>
-		<th>ROLL(s)</th>
-		<th>WEIGHT(kgs.)</th>
-	</tr>
-	{% for paper_code, size, rolls, weight in delist %}
-	<tr>
-		<td>{{ paper_code }}</td>
-		<td>{{ size }}</td>
-		<td>{{ rolls }}</td>
-		<td>{{ weight }}</td>
-	</tr>
-	{% endfor %}
-</table>
+<!--<table>-->
+<!--	<tr>-->
+<!--		<th>PAPER CODE</th>-->
+<!--		<th>SIZE</th>-->
+<!--		<th>ROLL(s)</th>-->
+<!--		<th>WEIGHT(kgs.)</th>-->
+<!--	</tr>-->
+<!--	{% for paper_code, size, rolls, weight in delist %}-->
+<!--	<tr>-->
+<!--		<td>{{ paper_code }}</td>-->
+<!--		<td>{{ size }}</td>-->
+<!--		<td>{{ rolls }}</td>-->
+<!--		<td>{{ weight }}</td>-->
+<!--	</tr>-->
+<!--	{% endfor %}-->
+<!--</table>-->
 
 </body>
 </html>
