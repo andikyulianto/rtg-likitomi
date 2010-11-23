@@ -27,14 +27,14 @@
 		<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
 		<td rowspan='2'>{{ sheet_code }}</td>
 		<td>{{ paper_width_inch }}</td>
-		<td>{{ bl }}<br />({{ loss_bl }})</td>
-		<td>{{ bm }}<br />({{ loss_bm }})</td>
+		<td><a href="/inventory/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a></td>
+		<td><a href="/inventory/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a></td>
 	</tr>
 	<tr>
 <!--		<td class='bt'><a href="#" onclick="linkShowPage('#test2', '/inventory/?pcode={{ df }}')">{{ df }}<br />({{ loss_df }})</a></td>-->
 		<td class='bt'><a href="/inventory/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}" target="stock">{{ df }}<br />({{ loss_df }})</a></td>
-		<td>{{ cl }}<br />({{ loss_cl }})</td>
-		<td>{{ cm }}<br />({{ loss_cm }})</td>
+		<td><a href="/inventory/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}" target="stock">{{ cl }}<br />({{ loss_cl }})</a></td>
+		<td><a href="/inventory/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}" target="stock">{{ cm }}<br />({{ loss_cm }})</a></td>
 	</tr>
 	{% endfor %}
 </table>
