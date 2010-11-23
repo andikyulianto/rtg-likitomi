@@ -1,9 +1,18 @@
 ﻿<html>
 <head>
+
 <title>Likitomi: Clamplift Plan</title>
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+<!--<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>-->
+<!--<script type="text/javascript">-->
+<!--$(document).ready(function(){-->
+<!--  $("button").click(function(){-->
+<!--    htmlobj=$.ajax({url:"/wholeplan/",async:false});-->
+<!--    $("div").html(htmlobj.responseText);-->
+<!--  });-->
+<!--});-->
+<!--</script>-->
 
 <script type="text/javascript">
 	function loadXMLDoc()
@@ -32,7 +41,7 @@
 
 	function showPlan(str)
 	{
-	//alert(str);
+	//alert('This is just a trigger message!');
 	if (str=="")
 		{
 		document.getElementById("txtHint").innerHTML="";
@@ -63,28 +72,16 @@
 <body onload='javascript:loadXMLDoc()'>
 
 <table><tr><td><div class='lft'>{% now "Y-m-d" %}</div></td><td><div id='now'></div></td></tr><table>
-
+<!--{{ query }}-->
 <table>
 	<tr>
 		<td class="lft">
 			<form>
 				<select name="opdate" onchange="showPlan(this.value)">
-			<!--	<option value="">Select date to show plan:</option>-->
+				<option value="">Select date to show plan:</option>
 				{% for date in datelist %}
 				<option value="{{ date }}">{{ date }}</option>
 				{% endfor %}
-				<!--<option value="{{ date1 }}">{{ date1 }}</option>-->
-				<!--<option value="{{ date2 }}">{{ date2 }}</option>-->
-				<!--<option value="{{ date3 }}">{{ date3 }}</option>-->
-				<!--<option value="{{ date4 }}">{{ date4 }}</option>-->
-				<!--<option value="{{ date5 }}">{{ date5 }}</option>-->
-				<!--<option value="{{ date6 }}">{{ date6 }}</option>-->
-				<!--<option value="1">{{ date1 }}</option>-->
-				<!--<option value="2">{{ date2 }}</option>-->
-				<!--<option value="3">{{ date3 }}</option>-->
-				<!--<option value="4">{{ date4 }}</option>-->
-				<!--<option value="5">{{ date5 }}</option>-->
-				<!--<option value="6">{{ date6 }}</option>-->
 				</select>
 			</form>
 		</td>

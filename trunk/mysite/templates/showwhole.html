@@ -1,69 +1,67 @@
-﻿<html>
-
+<html>
 <head>
 
-<link rel="stylesheet" type="text/css" href="css/plan.css" />
-
 </head>
-
 <body>
+<table><tr>
 
-<table class="resize">
+<td>
+<table>
 	<tr>
 		<th rowspan='2'>TIME</th>
 		<th rowspan='2'>SHEET CODE</th>
-		<th rowspan='2' class="kl">CUSTOMER NAME<br />PRODUCT</th>
+<!--		<th rowspan='2' class="kl">CUSTOMER NAME<br />PRODUCT</th>-->
 		<th rowspan='2' class="kr">S.O.NO.<br />ORD NO.</th>
-		<th rowspan='2'>F</th>
-		<th rowspan='2'>PAPER<br />D-F</th>
-		<th>B-L</th>
-		<th>B-M</th>
-		<th rowspan='2'>PAPER<br />WIDTH</th>
-		<th rowspan='2'>USED(L)<br />D-F</th>
-		<th>B-L</th>
-		<th>B-M</th>
-		<th rowspan='2'>USED(KGS)<br />D-F</th>
-		<th>B-L</th>
-		<th>B-M</th>
-		<th rowspan='2'>USED(KGS)<br />D-F</th>
-		<th>B-L</th>
-		<th>B-M</th>
-		<th rowspan='2'>SHEET<br />LENGTH</th>
-		<th>CASE</th>
+<!--		<th rowspan='2'>F</th>-->
+<!--		<th rowspan='2'>PAPER<br />D-F</th>-->
+<!--		<th>B-L</th>-->
+<!--		<th>B-M</th>-->
+<!--		<th rowspan='2'>PAPER<br />WIDTH</th>-->
+<!--		<th rowspan='2'>USED(L)<br />D-F</th>-->
+<!--		<th>B-L</th>-->
+<!--		<th>B-M</th>-->
+<!--		<th rowspan='2'>USED(KGS)<br />D-F</th>-->
+<!--		<th>B-L</th>-->
+<!--		<th>B-M</th>-->
+<!--		<th rowspan='2'>USED(KGS)<br />D-F</th>-->
+<!--		<th>B-L</th>-->
+<!--		<th>B-M</th>-->
+<!--		<th rowspan='2'>SHEET<br />LENGTH</th>-->
+<!--		<th>CASE</th>-->
 	</tr>
 	<tr>
-		<th>C-L</th>
-		<th>C-M</th>
-		<th>C-L</th>
-		<th>C-M</th>
-		<th>C-L</th>
-		<th>C-M</th>
-		<th>C-L</th>
-		<th>C-M</th>
-		<th>CUT</th>
+<!--		<th>C-L</th>-->
+<!--		<th>C-M</th>-->
+<!--		<th>C-L</th>-->
+<!--		<th>C-M</th>-->
+<!--		<th>C-L</th>-->
+<!--		<th>C-M</th>-->
+<!--		<th>C-L</th>-->
+<!--		<th>C-M</th>-->
+<!--		<th>CUT</th>-->
 	</tr>
-	{% for start_time, stop_time, product_code, partner_name, product_name, sales_order, autoid, flute, DF, BL, BM, CL, CM, p_width_inch, p_width_mm, used_df, used_bl, used_bm, used_cl, used_cm, used_df_lkg, used_bl_lkg, used_bm_lkg, used_cl_lkg, used_cm_lkg, used_df_mkg, used_bl_mkg, used_bm_mkg, used_cl_mkg, used_cm_mkg, t_length, case, cut in query %}
+	{% for start_time, sheet_code, sono, ordno in always %}
 	<tr>
-		<td rowspan='2'>{{ start_time|stringformat:"s"|add:"a"|cut:":00a" }} {{ stop_time|stringformat:"s"|add:"a"|cut:":00a" }}</td>
-		<td rowspan='2'>{{ product_code }}</td>
-		<td rowspan='2' class="kl">{{ partner_name }}<br />{{ product_name }}</td>
-		<td rowspan='2' class="kr">{{ sales_order }}<br />{{ autoid }}</td>
-		<td rowspan='2'>{{ flute }}</td>
-		<td class='df' rowspan='2'><br />{{ DF }}</td>
-		<td>{{ BL }}</td>
-		<td>{{ BM }}</td>
-		<td rowspan='2' class="kr">{{ p_width_mm }}<br />{{ p_width_inch }}</td>
-		<td class='df' rowspan='2'><br />{{ used_df }}</td>
-		<td>{{ used_bl }}</td>
-		<td>{{ used_bm }}</td>
-		<td class='df' rowspan='2'><center>ACTUAL</center><br />{{ used_df_lkg }}</td>
-		<td>{{ used_bl_lkg }}</td>
-		<td>{{ used_bm_lkg }}</td>
-		<td class='df' rowspan='2'><center>+LOSS</center><br />{{ used_df_mkg }}</td>
-		<td>{{ used_cl_mkg }}</td>
-		<td>{{ used_cm_mkg }}</td>
-		<td rowspan='2' class="df"><br />{{ t_length }}</td>
-		<td>{{ case }}</td>
+		<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
+		<td rowspan='2'>{{ sheet_code }}</td>
+<!--		<td rowspan='2' class="kl">{{ partner_name }}<br />{{ product_name }}</td>-->
+		<td rowspan='2' class="kr">{{ sono }}<br />{{ ordno }}</td>
+<!--		<td rowspan='2'>{{ flute }}</td>-->
+<!--		<td class='df' rowspan='2'><br />{{ DF }}</td>-->
+<!--		<td>{{ BL }}</td>-->
+<!--		<td>{{ BM }}</td>-->
+<!--		<td rowspan='2' class="kr">{{ p_width_mm }}<br />{{ p_width_inch }}</td>-->
+<!--		<td class='df' rowspan='2'><br />{{ used_df }}</td>-->
+<!--		<td>{{ used_bl }}</td>-->
+<!--		<td>{{ used_bm }}</td>-->
+<!--		<td class='df' rowspan='2'><center>ACTUAL</center><br />{{ used_df_lkg }}</td>-->
+<!--		<td>{{ used_bl_lkg }}</td>-->
+<!--		<td>{{ used_bm_lkg }}</td>-->
+<!--		<td class='df' rowspan='2'><center>+LOSS</center><br />{{ used_df_mkg }}</td>-->
+<!--		<td>{{ used_cl_mkg }}</td>-->
+<!--		<td>{{ used_cm_mkg }}</td>-->
+<!--		<td rowspan='2' class="df"><br />{{ t_length }}</td>-->
+<!--		<td>{{ case }}</td>-->
 	</tr>
 	<tr>
 		<td>{{ CL }}</td>
@@ -78,6 +76,16 @@
 	</tr>
 	{% endfor %}
 </table>
+</td>
 
+<td id="required">
+
+</td>
+
+<td id="detail">
+
+</td>
+
+</tr></table>
 </body>
 </html>
