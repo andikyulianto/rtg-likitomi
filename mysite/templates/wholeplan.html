@@ -1,10 +1,38 @@
 ﻿<html>
 <head>
-<title>Likitomi: Clamplift Plan</title>
-<link rel="stylesheet" type="text/css" href="css/plan.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+	$(window).load(function(){
+		$("#req").hide();
+		$("#det").hide();
+	});
 
+	$("#sel").change(function(){
+		$("#req").show();
+		$("#det").show();
+		$("#req").css("background-color", "lightgray");
+		$("[id=detail]").hide();
+	});
+
+	$("#req").click(function(){
+		$("[id=detail]").hide();
+		$("[id=required]").show();
+		$("#det").css("background-color", "white");
+		$(this).css("background-color", "lightgray");
+	});
+
+	$("#det").click(function(){
+		$("[id=required]").hide();
+		$("[id=detail]").show();
+		$("#req").css("background-color", "white");
+		$(this).css("background-color", "lightgray");
+	});
+
+});
+
+</script>
 <script type="text/javascript">
 	function loadXMLDoc()
 	{
@@ -56,11 +84,13 @@
 	xmlhttp.open("GET", "/showwhole/?opdate="+str ,true);
 	xmlhttp.send();
 	}
+
 </script>
 
 </head>
 
 <body onload='javascript:loadXMLDoc()'>
+
 	<table>
 		<tr>
 			<td class="lft"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
@@ -74,7 +104,7 @@
 	<tr>
 		<td class="lft">
 			<form>
-				<select name="opdate" onchange="showPlan(this.value)">
+				<select id="sel" name="opdate" onchange="showPlan(this.value)">
 				<option value="">Select date to show plan:</option>
 				{% for date in datelist %}
 				<option value="{{ date }}">{{ date }}</option>
@@ -82,6 +112,9 @@
 				</select>
 			</form>
 		</td>
+		<td></td>
+		<td id="req" style="cursor:pointer;">Required</td>
+		<td id="det" style="cursor:pointer;">Detail</td>
 	</tr>
 </table>
 

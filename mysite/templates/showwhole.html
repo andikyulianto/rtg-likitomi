@@ -2,88 +2,118 @@
 <head>
 
 </head>
+
 <body>
+
+<!--<table><tr><td style="width:30%"></td><td id="req" style="width:20%; cursor:pointer;">Required</td><td id="det" style="width:20%; cursor:pointer;">Detail</td><td style="width:30%"></tr></table>-->
+
 <table><tr>
 
-<td>
-<table>
-	<tr>
-		<th rowspan='2'>TIME</th>
-		<th rowspan='2'>SHEET CODE</th>
-<!--		<th rowspan='2' class="kl">CUSTOMER NAME<br />PRODUCT</th>-->
-		<th rowspan='2' class="kr">S.O.NO.<br />ORD NO.</th>
-<!--		<th rowspan='2'>F</th>-->
-<!--		<th rowspan='2'>PAPER<br />D-F</th>-->
-<!--		<th>B-L</th>-->
-<!--		<th>B-M</th>-->
-<!--		<th rowspan='2'>PAPER<br />WIDTH</th>-->
-<!--		<th rowspan='2'>USED(L)<br />D-F</th>-->
-<!--		<th>B-L</th>-->
-<!--		<th>B-M</th>-->
-<!--		<th rowspan='2'>USED(KGS)<br />D-F</th>-->
-<!--		<th>B-L</th>-->
-<!--		<th>B-M</th>-->
-<!--		<th rowspan='2'>USED(KGS)<br />D-F</th>-->
-<!--		<th>B-L</th>-->
-<!--		<th>B-M</th>-->
-<!--		<th rowspan='2'>SHEET<br />LENGTH</th>-->
-<!--		<th>CASE</th>-->
-	</tr>
-	<tr>
-<!--		<th>C-L</th>-->
-<!--		<th>C-M</th>-->
-<!--		<th>C-L</th>-->
-<!--		<th>C-M</th>-->
-<!--		<th>C-L</th>-->
-<!--		<th>C-M</th>-->
-<!--		<th>C-L</th>-->
-<!--		<th>C-M</th>-->
-<!--		<th>CUT</th>-->
-	</tr>
-	{% for start_time, sheet_code, sono, ordno in always %}
-	<tr>
-		<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
-		<td rowspan='2'>{{ sheet_code }}</td>
-<!--		<td rowspan='2' class="kl">{{ partner_name }}<br />{{ product_name }}</td>-->
-		<td rowspan='2' class="kr">{{ sono }}<br />{{ ordno }}</td>
-<!--		<td rowspan='2'>{{ flute }}</td>-->
-<!--		<td class='df' rowspan='2'><br />{{ DF }}</td>-->
-<!--		<td>{{ BL }}</td>-->
-<!--		<td>{{ BM }}</td>-->
-<!--		<td rowspan='2' class="kr">{{ p_width_mm }}<br />{{ p_width_inch }}</td>-->
-<!--		<td class='df' rowspan='2'><br />{{ used_df }}</td>-->
-<!--		<td>{{ used_bl }}</td>-->
-<!--		<td>{{ used_bm }}</td>-->
-<!--		<td class='df' rowspan='2'><center>ACTUAL</center><br />{{ used_df_lkg }}</td>-->
-<!--		<td>{{ used_bl_lkg }}</td>-->
-<!--		<td>{{ used_bm_lkg }}</td>-->
-<!--		<td class='df' rowspan='2'><center>+LOSS</center><br />{{ used_df_mkg }}</td>-->
-<!--		<td>{{ used_cl_mkg }}</td>-->
-<!--		<td>{{ used_cm_mkg }}</td>-->
-<!--		<td rowspan='2' class="df"><br />{{ t_length }}</td>-->
-<!--		<td>{{ case }}</td>-->
-	</tr>
-	<tr>
-		<td>{{ CL }}</td>
-		<td>{{ CM }}</td>
-		<td>{{ used_cl }}</td>
-		<td>{{ used_cm }}</td>
-		<td>{{ used_cl_lkg }}</td>
-		<td>{{ used_cm_lkg }}</td>
-		<td>{{ used_cl_mkg }}</td>
-		<td>{{ used_cm_mkg }}</td>
-		<td>{{ cut }}</td>
-	</tr>
-	{% endfor %}
-</table>
+<td id="always" style="border:0px;">
+	<table>
+		<tr>
+			<th rowspan='2'>TIME</th>
+			<th rowspan='2'>SHEET CODE</th>
+			<th rowspan='2' class="kr">S.O.NO.<br />ORD NO.</th>
+			<th style="visibility:hidden; width:0px;">|</th>
+		</tr>
+		<tr>
+			<th style="visibility:hidden; width:0px;">|</th>
+		</tr>
+		{% for start_time, sheet_code, sono, ordno in always %}
+		<tr>
+			<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
+			<td rowspan='2'>{{ sheet_code }}</td>
+			<td rowspan='2' class="kr">{{ sono }}<br />{{ ordno }}</td>
+			<td style="visibility:hidden; width:0px;">|</td>
+		</tr>
+		<tr>
+			<td style="visibility:hidden; width:0px;">|</td>
+		</tr>
+		{% endfor %}
+	</table>
 </td>
 
-<td id="required">
-
+<td id="required" style="border:0px;">
+	<table>
+		<tr>
+			<th rowspan='2'>F</th>
+			<th rowspan='2'>PAPER<br />D-F</th>
+			<th>B-L</th>
+			<th>B-M</th>
+			<th rowspan='2'>PAPER<br />WIDTH</th>
+			<th rowspan='2'>USED(KGS)<br />D-F</th>
+			<th>B-L</th>
+			<th>B-M</th>
+		</tr>
+		<tr>
+			<th>C-L</th>
+			<th>C-M</th>
+			<th>C-L</th>
+			<th>C-M</th>
+		</tr>
+		{% for flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in required %}
+		<tr>
+			<td rowspan='2'>{{ flute }}</td>
+			<td class='df' rowspan='2'><br />{{ df }}</td>
+			<td>{{ bl }}</td>
+			<td>{{ bm }}</td>
+			<td rowspan='2' class="kr">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
+			<td class='df' rowspan='2'><center>+LOSS</center>{{ loss_df }}</td>
+			<td>{{ loss_bl }}</td>
+			<td>{{ loss_bm }}</td>
+		</tr>
+		<tr>
+			<td>{{ cl }}</td>
+			<td>{{ cm }}</td>
+			<td>{{ loss_cl }}</td>
+			<td>{{ loss_cm }}</td>
+		</tr>
+		{% endfor %}
+	</table>
 </td>
 
-<td id="detail">
-
+<td id="detail" style="border:0px;">
+	<table>
+		<tr>
+			<th rowspan='2' class="kl">CUSTOMER NAME<br />PRODUCT</th>
+			<th rowspan='2'>USED(L)<br />D-F</th>
+			<th>B-L</th>
+			<th>B-M</th>
+			<th rowspan='2'>USED(KGS)<br />D-F</th>
+			<th>B-L</th>
+			<th>B-M</th>
+			<th rowspan='2'>SHEET<br />LENGTH</th>
+			<th>CASE</th>
+		</tr>
+		<tr>
+			<th>C-L</th>
+			<th>C-M</th>
+			<th>C-L</th>
+			<th>C-M</th>
+			<th>CUT</th>
+		</tr>
+		{% for customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut in detail %}
+		<tr>
+			<td rowspan='2' class="kl">{{ customer_name }}<br />{{ product }}</td>
+			<td class='df' rowspan='2'><br />{{ length_df }}</td>
+			<td>{{ length_bl }}</td>
+			<td>{{ length_bm }}</td>
+			<td class='df' rowspan='2'><center>ACTUAL</center>{{ actual_df }}</td>
+			<td>{{ actual_bl }}</td>
+			<td>{{ actual_bm }}</td>
+			<td rowspan="2">{{ sheet_length }}</td>
+			<td>{{ case }}</td>
+		</tr>
+		<tr>
+			<td>{{ length_cl }}</td>
+			<td>{{ length_cm }}</td>
+			<td>{{ actual_cl }}</td>
+			<td>{{ actual_cm }}</td>
+			<td>{{ cut }}</td>
+		</tr>
+		{% endfor %}
+	</table>
 </td>
 
 </tr></table>

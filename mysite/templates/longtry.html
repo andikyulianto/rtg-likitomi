@@ -1,11 +1,19 @@
 ﻿<html>
 
 <head>
-	<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("button").click(function(){
+    $("p").hide();
+  });
+});
+</script>
 </head>
 
 <body>
-
+<button>Button</button>
+<p>Hide me</p>
 P: {{ p }}<br />
 
 <table border="1">
