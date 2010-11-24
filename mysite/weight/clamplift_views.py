@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.db import connection, transaction
+from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 
 import datetime
 import serial
@@ -568,19 +569,22 @@ def minclamp(request):
 		realtag = 64
 
 # Query database #
-		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
-		cur = conn.cursor()
+#		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
+#		cur = conn.cursor()
 
-		cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", realtag)
-		query1 = cur.fetchone()
+#		cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s", realtag)
+#		query1 = cur.fetchone()
+
+		query = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'width', 'initial_weight','temp_weight', 'lane', 'position')[0]
+		query1 = list(query)
+
 		paper_roll_id = query1[0]
 		paper_code = query1[1]
-		initial_weight = query1[4]
-		size = query1[7]
-		uom = query1[8]
-		temp_weight = query1[17]
-		lane = query1[18]
-		position = query1[19]
+		size = query1[2]
+		initial_weight = query1[3]
+		temp_weight = query1[4]
+		lane = query1[5]
+		position = query1[6]
 		uppos = int(position)+1
 		downpos = int(position)-1
 		digital = str(temp_weight)
@@ -590,17 +594,17 @@ def minclamp(request):
 		if lane == 'B':
 			opplane = 'A' 
 		if lane == 'C':
-			opplane = 'D' 
+			opplane = 'D'
 		if lane == 'D':
-			opplane = 'C' 
+			opplane = 'C'
 		if lane == 'E':
-			opplane = 'F' 
+			opplane = 'F'
 		if lane == 'F':
-			opplane = 'E' 
+			opplane = 'E'
 		if lane == 'G':
 			opplane = 'H'
 		if lane == 'H':
-			opplane = 'G' 
+			opplane = 'G'
 
 		if atlane == '1':
 			leftlane = 'A'
@@ -653,17 +657,21 @@ def minclamp(request):
 			digit6 = digital[1:2]
 			digit7 = digital[2:3]
 
-		cur.execute("SELECT * FROM `paper_movement` WHERE `paper_movement`.`roll_id` = %s ORDER BY `paper_movement`.`created_on` DESC", realtag)
-		query2 = cur.fetchall()
+#		cur.execute("SELECT * FROM `paper_movement` WHERE `paper_movement`.`roll_id` = %s ORDER BY `paper_movement`.`created_on` DESC", realtag)
+#		query2 = cur.fetchall()
 
-		if len(query2)>0:
-			actual_wt = query2[0][3]
+		query222 = PaperHistory.objects.filter(roll_id=realtag).exists()
+
+		if query222 == True:
+			query22 = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp').values_list('last_wt')[0]
+			query2 = list(query22)
+			actual_wt = query2[0]
 		else:
 			actual_wt = initial_weight
 			undo_btn = ""
 
-		cur.close()
-		conn.close()
+#		cur.close()
+#		conn.close()
 
 # Exceptions #
 	except UnboundLocalError:
@@ -756,24 +764,36 @@ def minupdate(request):
 	else:
 		return HttpResponseRedirect('/minclamp/')
 
-	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
-	cur = conn.cursor()
+#	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
+#	cur = conn.cursor()
 
-	cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
-	query1 = cur.fetchone()
+#	cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
+#	query1 = cur.fetchone()
+
+	query11 = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'initial_weight', 'width', 'wunit', 'temp_weight')[0]
+	query1 = list(query11)
+
 	paper_roll_id = query1[0]
 	paper_code = query1[1]
-	initial_weight = query1[4]
-	size = query1[7]
-	uom = query1[8]
-	temp_weight = query1[17]
+	initial_weight = query1[2]
+	size = query1[3]
+	uom = query1[4]
+	temp_weight = query1[5]
 
-	cur.execute("SELECT * FROM `paper_movement` WHERE `paper_movement`.`roll_id` = %s ORDER BY `paper_movement`.`created_on` DESC", realtag)
-	query2 = cur.fetchall()
-	if len(query2)>0:
-		actual_wt = query2[0][3]
+#	cur.execute("SELECT * FROM `paper_movement` WHERE `paper_movement`.`roll_id` = %s ORDER BY `paper_movement`.`created_on` DESC", realtag)
+#	query2 = cur.fetchall()
+
+	query222 = PaperHistory.objects.filter(roll_id=realtag).exists()
+
+	if query222 == True:
+		query22 = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp').values_list('last_wt')[0]
+		query2 = list(query22)
+		actual_wt = query2[0]
 	else:
 		actual_wt = initial_weight
+		undo_btn = ""
+
+	int_weight = int(weight)
 
 	try:
 		f_weight = float(weight)
@@ -784,45 +804,65 @@ def minupdate(request):
 	if actual_wt > f_weight:
 		rightnow = datetime.datetime.now()
 		dt = rightnow.strftime("%Y-%m-%d %H:%M:%S")
-		cur.execute("INSERT INTO `likitomi_v8`.`paper_movement` (roll_id, before_wt, actual_wt, created_on) VALUES (%s, %s, %s, %s)", (realtag, actual_wt, f_weight, dt))
-		conn.commit()
+#		cur.execute("INSERT INTO `likitomi_v8`.`paper_movement` (roll_id, before_wt, actual_wt, created_on) VALUES (%s, %s, %s, %s)", (realtag, actual_wt, f_weight, dt))
+#		conn.commit()
+		p = PaperHistory(roll_id=realtag, before_wt=actual_wt, last_wt=int_weight)
+		p.save()
+		transaction.commit()
 
 	else:
 		err = "w"
 		error = "Your submitted weight is not less than previous weight."
 		return render_to_response('submit_error.html', locals())
 
-	cur.close()
-	conn.close()
+#	cur.close()
+#	conn.close()
 
 	return HttpResponseRedirect('/minclamp/')
 
 ###################################################################### UNDO ######################################################################
 
+@transaction.commit_manually
 def minundo(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 	else:
 		return HttpResponseRedirect('/minclamp/')
 
-	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
-	cur = conn.cursor()
+#	conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
+#	cur = conn.cursor()
 
-	cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
-	query1 = cur.fetchone()
+#	cur.execute("SELECT * FROM `paper_rolldetails` WHERE `paper_rolldetails`.`paper_roll_detail_id` = %s LIMIT 1", realtag)
+#	query1 = cur.fetchone()
+#	paper_roll_id = query1[0]
+#	paper_code = query1[1]
+#	initial_weight = query1[4]
+#	size = query1[7]
+#	uom = query1[8]
+#	temp_weight = query1[17]
+
+#	cur.execute("SELECT MAX(created_on) FROM `likitomi_v8`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s", realtag)
+#	query2 = cur.fetchone()
+#	max_datetime = query2[0]
+
+#	cur.execute("DELETE FROM `likitomi_v8`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s AND `paper_movement`.`created_on` = %s", (realtag, max_datetime))
+#	conn.commit()
+
+	query11 = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'initial_weight', 'width', 'wunit', 'temp_weight')[0]
+	query1 = list(query11)
+
 	paper_roll_id = query1[0]
 	paper_code = query1[1]
-	initial_weight = query1[4]
-	size = query1[7]
-	uom = query1[8]
-	temp_weight = query1[17]
+	initial_weight = query1[2]
+	size = query1[3]
+	uom = query1[4]
+	temp_weight = query1[5]
 
-	cur.execute("SELECT MAX(created_on) FROM `likitomi_v8`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s", realtag)
-	query2 = cur.fetchone()
-	max_datetime = query2[0]
+	p = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0]
+	p.delete()
+	transaction.commit()
 
-	cur.execute("DELETE FROM `likitomi_v8`.`paper_movement` WHERE `paper_movement`.`roll_id` = %s AND `paper_movement`.`created_on` = %s", (realtag, max_datetime))
-	conn.commit()
+#	transaction.rollback()
 
 	return HttpResponseRedirect('/minclamp/')
 

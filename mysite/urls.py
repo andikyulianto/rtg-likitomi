@@ -4,7 +4,7 @@ from mysite.weight.scale_views import scale
 from mysite.weight.clamplift_views import clamplift, update, undo, changeloc, orient, minclamp, minupdate, minundo, minchangeloc
 from mysite.weight.plan_views import plan, wholeplan
 from mysite.weight.now import now
-from mysite.weight.showplan import showplan, showwhole
+from mysite.weight.showplan import showplan, showwhole, detail
 from mysite.weight.stock_views import stock
 from mysite.weight.inventory import inventory
 from mysite.weight.map import stockmap
@@ -50,6 +50,8 @@ urlpatterns = patterns('',
 	(r'^wholeplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^showwhole/$', showwhole),
 	(r'^showwhole/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^detail/$', detail),
+	(r'^detail/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^stock/$', stock),
 	(r'^stock/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
