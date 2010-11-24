@@ -1,89 +1,111 @@
 ﻿<html>
 <head>
+<title>Likitomi: Whole Clamplift Plan</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
 	$(window).load(function(){
+		$("#now").load("/now/");
 		$("#req").hide();
 		$("#det").hide();
 	});
+	$("#now").ajaxSuccess(function(){
+		setTimeout("$('#now').load('/now/')", 1000);
+	});
 
 	$("#sel").change(function(){
-		$("#req").show();
-		$("#det").show();
-		$("#req").css("background-color", "lightgray");
-		$("[id=detail]").hide();
+		var opd = $("#sel").val();
+		if (opd == "") {
+			$("[id=always]").hide();
+			$("[id=required]").hide();
+			$("[id=detail]").hide();
+			$("#req").hide();
+			$("#det").hide();
+		}
+		else {
+			$("#plan").load("/showwhole/?opdate="+opd);
+			$("#req").show();
+			$("#det").show();
+			$("#req").css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
+			$("#det").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
+		}
 	});
 
 	$("#req").click(function(){
+		$("#plan").show();
+		$("#detail").show();
 		$("[id=detail]").hide();
 		$("[id=required]").show();
-		$("#det").css("background-color", "white");
-		$(this).css("background-color", "lightgray");
+		$("#det").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
+		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 	});
 
 	$("#det").click(function(){
+		$("#plan").show();
+		$("#detail").show();
 		$("[id=required]").hide();
 		$("[id=detail]").show();
-		$("#req").css("background-color", "white");
-		$(this).css("background-color", "lightgray");
+		$("#req").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
+		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
+		var opd = $("#sel").val();
+		$("#detail").load("/detail/?opdate="+opd);
 	});
 
 });
-
 </script>
+
 <script type="text/javascript">
-	function loadXMLDoc()
-	{
-	//alert('This is just a trigger message!');
-	if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-		}
-	else
-		{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	xmlhttp.onreadystatechange=function()
-		{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			{
-			document.getElementById("now").innerHTML=xmlhttp.responseText;
-			}
-		}
-	xmlhttp.open("GET","/now/",true);
-	xmlhttp.send();
+//	function loadXMLDoc()
+//	{
+//	//alert('This is just a trigger message!');
+//	if (window.XMLHttpRequest)
+//		{// code for IE7+, Firefox, Chrome, Opera, Safari
+//		xmlhttp=new XMLHttpRequest();
+//		}
+//	else
+//		{// code for IE6, IE5
+//		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+//		}
+//	xmlhttp.onreadystatechange=function()
+//		{
+//		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+//			{
+//			document.getElementById("now").innerHTML=xmlhttp.responseText;
+//			}
+//		}
+//	xmlhttp.open("GET","/now/",true);
+//	xmlhttp.send();
 
-	setTimeout("loadXMLDoc()", 1000);
-	}
+//	setTimeout("loadXMLDoc()", 1000);
+//	}
 
-	function showPlan(str)
-	{
-	//alert(str);
-	if (str=="")
-		{
-		document.getElementById("txtHint").innerHTML="";
-		return;
-		}
-	if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-		}
-	else
-		{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	xmlhttp.onreadystatechange=function()
-		{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			{
-			document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-			}
-		}
-	xmlhttp.open("GET", "/showwhole/?opdate="+str ,true);
-	xmlhttp.send();
-	}
+//	function showPlan(str)
+//	{
+//	//alert(str);
+//	if (str=="")
+//		{
+//		document.getElementById("txtHint").innerHTML="";
+//		return;
+//		}
+//	if (window.XMLHttpRequest)
+//		{// code for IE7+, Firefox, Chrome, Opera, Safari
+//		xmlhttp=new XMLHttpRequest();
+//		}
+//	else
+//		{// code for IE6, IE5
+//		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+//		}
+//	xmlhttp.onreadystatechange=function()
+//		{
+//		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+//			{
+//			document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
+//			}
+//		}
+//	xmlhttp.open("GET", "/showwhole/?opdate="+str ,true);
+//	xmlhttp.send();
+//	}
 
 </script>
 
@@ -98,13 +120,13 @@ $(document).ready(function(){
 		</tr>
 	</table>
 	
-<table><tr><td><div class='lft'>{% now "Y-m-d" %}</div></td><td><div id='now'></div></td></tr><table>
+<table><tr><td style="border:0px"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px"><div id='now'></div></td></tr><table>
 
 <table>
 	<tr>
 		<td class="lft">
 			<form>
-				<select id="sel" name="opdate" onchange="showPlan(this.value)">
+				<select id="sel" name="opdate">
 				<option value="">Select date to show plan:</option>
 				{% for date in datelist %}
 				<option value="{{ date }}">{{ date }}</option>
@@ -113,12 +135,19 @@ $(document).ready(function(){
 			</form>
 		</td>
 		<td></td>
-		<td id="req" style="cursor:pointer;">Required</td>
-		<td id="det" style="cursor:pointer;">Detail</td>
+		<td id="req" style="cursor:pointer; width:20%;">Required</td>
+		<td id="det" style="cursor:pointer; width:20%;">Detail</td>
 	</tr>
 </table>
 
-<div id="txtHint"><b>Clamplift plan will be shown here.</b></div>
+<table><tr>
+	<td style="border:0px">
+		<div id="plan"><b>Clamplift plan will be shown here.</b></div>
+	</td>
+	<td style="border:0px">
+		<div id="detail"></div>
+	</td>
+</tr><table>
 
 </body>
 </html>
