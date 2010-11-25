@@ -1,7 +1,7 @@
 ﻿<html>
 <head>
 <title>Likitomi: Whole Clamplift Plan</title>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -25,6 +25,7 @@ $(document).ready(function(){
 		}
 		else {
 			$("#plan").load("/showwhole/?opdate="+opd);
+			$("[id=detail]").hide();
 			$("#req").show();
 			$("#det").show();
 			$("#req").css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
@@ -125,6 +126,7 @@ $(document).ready(function(){
 <table>
 	<tr>
 		<td class="lft">
+		AS PRODUCTION OF:
 			<form>
 				<select id="sel" name="opdate">
 				<option value="">Select date to show plan:</option>
