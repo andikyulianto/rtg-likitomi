@@ -9,7 +9,7 @@
 
 <body>
 
-<table>
+<table id="splan">
 	<tr>
 		<th rowspan='2'>TIME</th>
 		<th rowspan='2'>SHEET CODE</th>
@@ -27,14 +27,14 @@
 		<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
 		<td rowspan='2'>{{ sheet_code }}</td>
 		<td>{{ paper_width_inch }}</td>
-		<td><a href="/inventory/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a></td>
-		<td><a href="/inventory/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a></td>
+		<td>{% if bl %}<a href="/inventory/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a>{% else  %}<br /><br />{% endif %}</td>
+		<td>{% if bm %}<a href="/inventory/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>{% else  %}<br /><br />{% endif %}</td>
 	</tr>
 	<tr>
 <!--		<td class='bt'><a href="#" onclick="linkShowPage('#test2', '/inventory/?pcode={{ df }}')">{{ df }}<br />({{ loss_df }})</a></td>-->
-		<td class='bt'><a href="/inventory/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}" target="stock">{{ df }}<br />({{ loss_df }})</a></td>
-		<td><a href="/inventory/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}" target="stock">{{ cl }}<br />({{ loss_cl }})</a></td>
-		<td><a href="/inventory/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}" target="stock">{{ cm }}<br />({{ loss_cm }})</a></td>
+		<td class='bt'>{% if df %}<a href="/inventory/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}" target="stock">{{ df }}<br />({{ loss_df }})</a>{% else  %}<br /><br />{% endif %}</td>
+		<td>{% if cl %}<a href="/inventory/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}" target="stock">{{ cl }}<br />({{ loss_cl }})</a>{% else  %}<br /><br />{% endif %}</td>
+		<td>{% if cm %}<a href="/inventory/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}" target="stock">{{ cm }}<br />({{ loss_cm }})</a>{% else  %}<br /><br />{% endif %}</td>
 	</tr>
 	{% endfor %}
 </table>
