@@ -177,6 +177,26 @@ def inventory(request):
 #		cur.close()
 #		conn.close()
 
+#		codewidth = PaperRoll.objects.values_list('paper_code', 'width')
+
+		cursor = connection.cursor()
+		cursor.execute("""
+			SELECT DISTINCT paper_code
+			FROM weight_paperroll
+			ORDER BY paper_code""")
+		qscode = cursor.fetchall()
+		scode = list()
+		for sc in qscode:
+			scode.append(sc[0])
+		cursor.execute("""
+			SELECT DISTINCT width
+			FROM weight_paperroll
+			ORDER BY width""")
+		qswidth = cursor.fetchall()
+		swidth = list()
+		for sw in qswidth:
+			swidth.append(sw[0])
+
 	except:
 		pass
 
