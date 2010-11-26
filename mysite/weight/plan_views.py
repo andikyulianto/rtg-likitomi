@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.db import connection, transaction
-from weight.models import ClampliftPlan
+from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 
 import datetime
 import serial
@@ -38,7 +38,8 @@ def plan(request):
 		cursor = connection.cursor()
 		cursor.execute("""
 			SELECT DISTINCT date
-			FROM weight_clampliftplan""")
+			FROM weight_clampliftplan
+			ORDER BY date DESC""")
 		query = cursor.fetchall()
 
 #		query = ClampliftPlan.objects.distinct().values_list('date')
@@ -63,7 +64,8 @@ def wholeplan(request):
 		cursor = connection.cursor()
 		cursor.execute("""
 			SELECT DISTINCT date
-			FROM weight_clampliftplan""")
+			FROM weight_clampliftplan
+			ORDER BY date DESC""")
 		query = cursor.fetchall()
 
 		qlen = len(query)
