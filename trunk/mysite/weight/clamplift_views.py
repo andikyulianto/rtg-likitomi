@@ -133,13 +133,13 @@ def clamplift(request):
 
 #		soc.close()
 
-		atlane = '5'
-		atposition = '5'
-		atlocation = 'Scale'
+#		atlane = '5'
+#		atposition = '5'
+#		atlocation = 'Scale'
 
-#		atlane = '1'
-#		atposition = '13'
-#		atlocation = 'Stock'
+		atlane = '1'
+		atposition = '13'
+		atlocation = 'Stock'
 
 		realtag = 64
 
@@ -634,13 +634,13 @@ def minclamp(request):
 
 #		soc.close()
 
-		atlane = 5
-		atposition = 5
-		atlocation = 'Scale'
+#		atlane = 5
+#		atposition = 5
+#		atlocation = 'Scale'
 
-#		atlane = '1'
-#		atposition = 13
-#		atlocation = 'Stock'
+		atlane = '1'
+		atposition = '4'
+		atlocation = 'Stock'
 
 		realtag = 64
 
@@ -960,6 +960,21 @@ def minchangeloc(request):
 	else:
 		return HttpResponseRedirect('/minclamp/')
 
+	if 'pcode' in request.GET and request.GET['pcode']:
+		ipcode = request.GET['pcode']
+	else:
+		return HttpResponseRedirect('/minclamp/')
+
+	if 'width' in request.GET and request.GET['width']:
+		iwidth = request.GET['width']
+	else:
+		return HttpResponseRedirect('/minclamp/')
+
+	if 'loss' in request.GET and request.GET['loss']:
+		iloss = request.GET['loss']
+	else:
+		return HttpResponseRedirect('/minclamp/')
+
 	if int(ipos) <= 43:
 #		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")
 #		cur = conn.cursor()
@@ -985,6 +1000,8 @@ def minchangeloc(request):
 		p.position = ipos
 		p.save()
 
+		response = "/stock/?pcode="+str(ipcode)+"&width="+str(iwidth)+"&loss="+str(iloss)
+
 #		cur.close()
 #		conn.close()
 	else:
@@ -992,4 +1009,4 @@ def minchangeloc(request):
 		error = "Your submitted position is not between 1 and 43."
 		return render_to_response('submit_error.html', locals())
 
-	return HttpResponseRedirect('/minclamp/')
+	return HttpResponseRedirect(response)
