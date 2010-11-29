@@ -7,11 +7,31 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	$("#search").click(function(){
-		var scode = $("#scode").val();
-		var swidth = $("#swidth").val();
-		var loss = $("#loss").val();
-		$("#invent").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
+//	$(window).load(function clamplift(){
+//		alert("alert");
+//		$("#invent").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss);
+//		$("#invent").load("/inventory/?pcode="+"HKS231"+"&width="+"56"+"&loss="+"529");
+//		setTimeout(clamplift, 2000);
+//	});
+
+//	$("#search").click(function(){
+//		var scode = $("#scode").val();
+//		var swidth = $("#swidth").val();
+//		var loss = $("#loss").val();
+//		$("#invent").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
+//	});
+
+//	$("#invent").ajaxSuccess(function(){
+//		alert("invetn");
+//	});
+
+	$("#locup").click(function(){
+		var realtag = $("#realtag").val();
+		var lane = $("#leftlane").val();
+		var pos = $("#atposition").val();
+//		alert('before');
+		$("span").load("/minclamp/changeloc/?realtag="+realtag+"lane="+lane+"pos="+pos);
+//		alert('after');
 	});
 
 });
@@ -20,34 +40,44 @@ $(document).ready(function(){
 </head>
 
 <body>
+<!--{{lane1}}<br />-->
+<!--{{pcode}}--{{width}}--{{loss}}-->
+
+<!--<table><tr>-->
+<!--	<td style="text-align:left; border:0px;">{{ pcode }} >>> {{ width }}"</td>-->
+<!--	<td style="text-align:right; border:0px; width:0px;" valign="middle">-->
+<!--		<form>-->
+<!--			<select id="scode">-->
+<!--			<option value="">Select paper code:</option>-->
+<!--			{% for paper_code in scode %}-->
+<!--			<option value="{{ paper_code }}">{{ paper_code }}</option>-->
+<!--			{% endfor %}-->
+<!--			</select>-->
+<!--		</form>-->
+<!--	</td>-->
+<!--	<td style="text-align:left; border:0px; width:0px; vertical-align:middle;">-->
+<!--		<form valign="middle" style="verical-align:middle;">-->
+<!--			<select id="swidth">-->
+<!--			<option value="">Select paper width:</option>-->
+<!--			{% for width in swidth %}-->
+<!--			<option value="{{ width }}">{{ width }}</option>-->
+<!--			{% endfor %}-->
+<!--			</select>-->
+<!--		</form>-->
+<!--	</td>-->
+<!--	<td valign="top" style="width:0px; border:0px;">-->
+<!--		<button id="search">Search</button>-->
+<!--	</td>-->
+<!--</tr></table>-->
+
 <div id="invent">
 <input id="loss" value="{{ loss }}" type="hidden" />
-<table><tr>
-	<td style="text-align:left; border:0px;">{{ pcode }} >>> {{ width }}"</td>
-	<td style="text-align:right; border:0px; width:0px;" valign="middle">
-		<form>
-			<select id="scode">
-			<option value="">Select paper code:</option>
-			{% for paper_code in scode %}
-			<option value="{{ paper_code }}">{{ paper_code }}</option>
-			{% endfor %}
-			</select>
-		</form>
-	</td>
-	<td style="text-align:left; border:0px; width:0px; vertical-align:middle;">
-		<form valign="middle" style="verical-align:middle;">
-			<select id="swidth">
-			<option value="">Select paper width:</option>
-			{% for width in swidth %}
-			<option value="{{ width }}">{{ width }}</option>
-			{% endfor %}
-			</select>
-		</form>
-	</td>
-	<td valign="top" style="width:0px; border:0px;">
-		<button id="search">Search</button>
-	</td>
-</tr></table>
+
+<input id="realtag" value="{{ realtag }}" type="hidden" />
+<input id="atposition" value="{{ atposition }}" type="hidden" />
+<input id="leftlane" value="{{ leftlane }}" type="hidden" />
+<input id="rightlane" value="{{ rightlane }}" type="hidden" />
+{% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %}
 
 <!--{{qidlist}}<br />-->
 <!--{{maplist}}<br />-->
@@ -101,28 +131,28 @@ $(document).ready(function(){
 		{% for pos in posa %}
 			{% if pos %}
 				{% if "'A', "|add:pos in mstr %}
-						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
-							<td class="green">{{ pos }}</td>
-						{% endif %}
-						{% if 400 <= pos and pos < 700 %}
-							<td class="blue">{{ pos }}</td>
-						{% endif %}
-						{% if 100 <= pos and pos < 400 %}
-							<td class="yellow">{{ pos }}</td>
-						{% endif %}
-						{% if pos < 100 %}
-							<td class="red">{{ pos }}</td>
-						{% endif %}
+					{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+						{% if atlane == '1' and atposition == pos|listfortag %}<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm4').submit()">{{ pos|floatformat:0 }}</td>{% else %}<td class="green">{{ pos|floatformat:0 }}</td>{% endif %}
+					{% endif %}
+					{% if 400 <= pos and pos < 700 %}
+						{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="blue">{{ pos }}</td>{% else %}<td class="blue">{{ pos }}</td>{% endif %}
+					{% endif %}
+					{% if 100 <= pos and pos < 400 %}
+						{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="yellow">{{ pos }}</td>{% else %}<td class="yellow">{{ pos }}</td>{% endif %}
+					{% endif %}
+					{% if pos < 100 %}
+						{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="red">{{ pos }}</td>{% else %}<td class="red">{{ pos }}</td>{% endif %}
+					{% endif %}
 				{% else %}
-					<td class="gray"></td>
+					{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="gray"></td>{% else %}<td class="gray"></td>{% endif %}
 				{% endif %}
 			{% else %}
-				<td></td>
+				<td class="map"></td>
 			{% endif %}
 		{% endfor %}
 	<td class="map">A</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in posb %}<td></td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in lane1 %}<td class="map">{% if pos == '*' %}<img src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">B</td>
 		{% for pos in posb %}
@@ -144,12 +174,12 @@ $(document).ready(function(){
 					<td class="gray"></td>
 				{% endif %}
 			{% else %}
-				<td></td>
+				<td class="map"></td>
 			{% endif %}
 		{% endfor %}
 	<td class="map">B</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in posc %}<td></td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in posc %}<td class="map"></td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">C</td>
 		{% for pos in posc %}
@@ -171,12 +201,12 @@ $(document).ready(function(){
 					<td class="gray"></td>
 				{% endif %}
 			{% else %}
-				<td></td>
+				<td class="map"></td>
 			{% endif %}
 		{% endfor %}
 	<td class="map">C</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in posd %}<td></td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in posd %}<td class="map"></td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">D</td>
 		{% for pos in posd %}
@@ -198,12 +228,12 @@ $(document).ready(function(){
 					<td class="gray"></td>
 				{% endif %}
 			{% else %}
-				<td></td>
+				<td class="map"></td>
 			{% endif %}
 		{% endfor %}
 	<td class="map">D</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in pose %}<td></td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in pose %}<td class="map"></td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">E</td>
 		{% for pos in pose %}
@@ -225,7 +255,7 @@ $(document).ready(function(){
 					<td class="gray"></td>
 				{% endif %}
 			{% else %}
-				<td></td>
+				<td class="map"></td>
 			{% endif %}
 		{% endfor %}
 	<td class="map">E</td></tr>
@@ -276,10 +306,28 @@ $(document).ready(function(){
 <!--		<td>{{ paper_code }}</td>-->
 <!--		<td>{{ size }}</td>-->
 <!--		<td>{{ rolls }}</td>-->
+
 <!--		<td>{{ weight }}</td>-->
 <!--	</tr>-->
 <!--	{% endfor %}-->
 <!--</table>-->
+
+	<form id="frm4" action="/minclamp/changeloc/" method="get">
+		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input type="hidden" value="{{ leftlane }}" name="lane">
+		<input type="hidden" value="{{ atposition }}" name="pos">
+		<input type="hidden" value="{{ pcode }}" name="pcode">
+		<input type="hidden" value="{{ width }}" name="width">
+		<input type="hidden" value="{{ loss }}" name="loss">
+	</form>
+
+	<form id="frm5" action="/minclamp/changeloc/" method="get">
+		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input type="hidden" value="{{ rightlane }}" name="lane">
+		<input type="hidden" value="{{ atposition }}" name="pos">
+	</form>
+
+
 </div>
 </body>
 </html>

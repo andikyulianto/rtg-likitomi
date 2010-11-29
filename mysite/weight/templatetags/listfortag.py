@@ -6,8 +6,10 @@ register = template.Library()
 
 @register.filter
 #@stringfilter
-def listfortag(value, arg):
-	
-	return arg
+def listfortag(value):
+	vstr = str(value)
+	split = vstr.split(".")
+	result = split[1]
+	return result
 
 #register.filter('listfortag', listfortag)

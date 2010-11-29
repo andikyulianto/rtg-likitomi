@@ -8,13 +8,15 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	$(window).load(function(){
+	$(window).load(function now(){
 		$("#now").load("/now/");
 //		setTimeout("$('#now').load('/now/')", 1000);
+		setTimeout(now, 1000);
 	});
-	$("#now").ajaxSuccess(function(){
+/*	$("#now").ajaxSuccess(function(){
+		$("#now").load("/now/");
 		setTimeout("$('#now').load('/now/')", 1000);
-	});
+	});*/
 
 	$("#sel").change(function(){
 		var opd = $("#sel").val();

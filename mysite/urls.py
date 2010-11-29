@@ -15,6 +15,8 @@ from mysite.weight.longtry import longtry
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+	(r'^$', index),
+
 	(r'^index/$', index),
 	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 

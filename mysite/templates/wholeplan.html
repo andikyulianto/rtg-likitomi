@@ -5,13 +5,14 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	$(window).load(function(){
+	$(window).load(function now(){
 		$("#now").load("/now/");
+		setTimeout(now, 1000);
+	});
+
+	$(window).load(function(){
 		$("#req").hide();
 		$("#det").hide();
-	});
-	$("#now").ajaxSuccess(function(){
-		setTimeout("$('#now').load('/now/')", 1000);
 	});
 
 	$("#sel").change(function(){
