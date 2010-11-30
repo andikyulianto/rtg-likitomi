@@ -506,12 +506,6 @@ def changeloc(request):
 
 	return HttpResponseRedirect('/clamplift/')
 
-################################################################## ORIENTATION #################################################################
-
-def orient(request):
-
-	return render_to_response('index2.html', locals())
-
 ################################################################## REPEAT #################################################################
 ################################################################## REPEAT #################################################################
 
@@ -642,7 +636,7 @@ def minclamp(request):
 		atposition = '4'
 		atlocation = 'Stock'
 
-		realtag = 64
+		realtag = 67
 
 # Query database #
 #		conn = MySQLdb.Connect(host="localhost", user="root", passwd="", db="likitomi_v8")

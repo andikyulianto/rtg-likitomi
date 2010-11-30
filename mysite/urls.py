@@ -1,14 +1,14 @@
 from django.conf.urls.defaults import *
 from mysite.weight.views import index
 from mysite.weight.scale_views import scale
-from mysite.weight.clamplift_views import clamplift, update, undo, changeloc, orient, minclamp, minupdate, minundo, minchangeloc
+from mysite.weight.clamplift_views import clamplift, update, undo, changeloc, minclamp, minupdate, minundo, minchangeloc
 from mysite.weight.plan_views import plan, wholeplan
 from mysite.weight.now import now
 from mysite.weight.showplan import showplan, showwhole, detail
 from mysite.weight.stock_views import stock
 from mysite.weight.inventory import inventory
 from mysite.weight.map import stockmap
-from mysite.weight.longtry import longtry
+from mysite.weight.longtry import orient, longtry
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -40,9 +40,6 @@ urlpatterns = patterns('',
 	(r'^minclamp/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^minclamp/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-	(r'^orient/$', orient),
-	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-
 	(r'^now/$', now),
 	(r'^plan/$', plan),
 	(r'^plan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
@@ -61,6 +58,9 @@ urlpatterns = patterns('',
 	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^map/$', stockmap),
 	(r'^map/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+
+	(r'^orient/$', orient),
+	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^longtry/$', longtry),
 
