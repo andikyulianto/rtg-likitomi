@@ -141,25 +141,25 @@ def inventory(request):
 			if pair[0] == u'B':
 				ind1 = mlist.index(pair)
 				posb.remove(str(pair[1]))
-				posb.insert(pair[1]-1, wlist[ind1])
+				posb.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
 
 		for pair in mlist:
 			if pair[0] == u'C':
 				ind1 = mlist.index(pair)
 				posc.remove(str(pair[1]))
-				posc.insert(pair[1]-1, wlist[ind1])
+				posc.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
 
 		for pair in mlist:
 			if pair[0] == u'D':
 				ind1 = mlist.index(pair)
 				posd.remove(str(pair[1]))
-				posd.insert(pair[1]-1, wlist[ind1])
+				posd.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
 
 		for pair in mlist:
 			if pair[0] == u'E':
 				ind1 = mlist.index(pair)
 				pose.remove(str(pair[1]))
-				pose.insert(pair[1]-1, wlist[ind1])
+				pose.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
 
 #		num = range(1,44)
 #		num = range(1,16)
@@ -316,35 +316,54 @@ def inventory(request):
 #		atposition = '5'
 #		atlocation = 'Scale'
 
-		atlane = '1'
-		atposition = '4'
+		atlane = '3'
+		atposition = '1'
 		atlocation = 'Stock'
 
 		realtag = 64
 
+		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 		lane1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 		lane2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 		lane3 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 		lane4 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
-		for p in lane1:
+		for p in vlane:
 			if p == atposition:
-				ind1 = lane1.index(p)
-				lane1.remove(p)
-				lane1.insert(ind1, '*')
+				ind = vlane.index(p)
+				vlane.remove(p)
+				vlane.insert(ind, '*')
+
+		for p in lane2:
+			if p == atposition:
+				ind1 = lane2.index(p)
+				lane2.remove(p)
+				lane2.insert(ind1, '*')
+
+		for p in lane3:
+			if p == atposition:
+				ind1 = lane3.index(p)
+				lane3.remove(p)
+				lane3.insert(ind1, '*')
+
+		for p in lane4:
+			if p == atposition:
+				ind1 = lane4.index(p)
+				lane4.remove(p)
+				lane4.insert(ind1, '*')
 
 		if atlane == '1':
 			leftlane = 'A'
 			rightlane = 'B'
 		if atlane == '2':
+			leftlane = 'B'
+			rightlane = 'C'
+		if atlane == '3':
 			leftlane = 'C'
 			rightlane = 'D'
-		if atlane == '3':
-			leftlane = 'E'
-			rightlane = 'F'
 		if atlane == '4':
-			leftlane = 'G'
-			rightlane = 'H'
+			leftlane = 'D'
+			rightlane = 'E'
 
 	except:
 		pass
