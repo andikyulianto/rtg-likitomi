@@ -40,36 +40,8 @@ $(document).ready(function(){
 </head>
 
 <body>
-<!--{{lane1}}<br />-->
-<!--{{pcode}}--{{width}}--{{loss}}-->
-
-<!--<table><tr>-->
-<!--	<td style="text-align:left; border:0px;">{{ pcode }} >>> {{ width }}"</td>-->
-<!--	<td style="text-align:right; border:0px; width:0px;" valign="middle">-->
-<!--		<form>-->
-<!--			<select id="scode">-->
-<!--			<option value="">Select paper code:</option>-->
-<!--			{% for paper_code in scode %}-->
-<!--			<option value="{{ paper_code }}">{{ paper_code }}</option>-->
-<!--			{% endfor %}-->
-<!--			</select>-->
-<!--		</form>-->
-<!--	</td>-->
-<!--	<td style="text-align:left; border:0px; width:0px; vertical-align:middle;">-->
-<!--		<form valign="middle" style="verical-align:middle;">-->
-<!--			<select id="swidth">-->
-<!--			<option value="">Select paper width:</option>-->
-<!--			{% for width in swidth %}-->
-<!--			<option value="{{ width }}">{{ width }}</option>-->
-<!--			{% endfor %}-->
-<!--			</select>-->
-<!--		</form>-->
-<!--	</td>-->
-<!--	<td valign="top" style="width:0px; border:0px;">-->
-<!--		<button id="search">Search</button>-->
-<!--	</td>-->
-<!--</tr></table>-->
-
+{% load listfortag %}
+{% load floor %}
 <div id="invent">
 <input id="loss" value="{{ loss }}" type="hidden" />
 
@@ -79,22 +51,6 @@ $(document).ready(function(){
 <input id="rightlane" value="{{ rightlane }}" type="hidden" />
 {% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %}
 
-<!--{{qidlist}}<br />-->
-<!--{{maplist}}<br />-->
-<!--{{lanelist}}<br />-->
-<!--{{poslist}}-->
-
-<!--query: {{ query }}<br />-->
-<!--ls: {{ ls }}<br />-->
-<!--ridlist: {{ ridlist }}<br />-->
-<!--elist: {{ elist }}<br />-->
-<!--delist: {{ delist }}<br />-->
-<!--wlist: {{ wlist }}<br />
--->
-
-<!--Map List: {{ maplist }}<br />-->
-<!--String List: {{ strlist }}<br />-->
-<!--Size List: {{ sizelist }}<br />-->
 <table style="height:80%">
 <tr>
 <td class="top" style="width:10%; border:0px; vertical-align:middle;">
@@ -114,37 +70,47 @@ $(document).ready(function(){
 
 </td>
 <td style="width:90%; border:0px;">
-<!--Map list: {{ mstr }}<br />-->
-<!--Weight list: {{ wlist }}<br />-->
-<!--Initial weight: {{ initial_weight }}<br />-->
-<!--+Loss weight: {{ loss }}<br />-->
-<!--mquery: {{ mquery }}<br />-->
-<!--posb: {{ posb }}<br />-->
-<!--index: {{ ind }}<br />-->
 
-{% load listfortag %}
-{#{% for pos in posb %}{% if pos %}{% if "'B', "|add:pos in mstr %}{{ wlist|listfortag:ridlist|stringformat:"s"|cut:"]"|add:", '"|add:'B'|add:pos|add:"']" }}{% endif %}{% endif %}{% endfor %}#}
 <table>
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
-
 	<tr><td class="map">A</td>
 		{% for pos in posa %}
 			{% if pos %}
 				{% if "'A', "|add:pos in mstr %}
 					{% if pos == initial_weight or pos >= loss or pos >= 700 %}
-						{% if atlane == '1' and atposition == pos|listfortag %}<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm4').submit()">{{ pos|floatformat:0 }}</td>{% else %}<td class="green">{{ pos|floatformat:0 }}</td>{% endif %}
+						{% if atlane == '1' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="green">{{ pos|floor }}</td>
+						{% endif %}
 					{% endif %}
 					{% if 400 <= pos and pos < 700 %}
-						{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="blue">{{ pos }}</td>{% else %}<td class="blue">{{ pos }}</td>{% endif %}
+						{% if atlane == '1' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="blue">{{ pos|floor }}</td>
+						{% endif %}
 					{% endif %}
 					{% if 100 <= pos and pos < 400 %}
-						{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="yellow">{{ pos }}</td>{% else %}<td class="yellow">{{ pos }}</td>{% endif %}
+						{% if atlane == '1' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="yellow">{{ pos|floor }}</td>
+						{% endif %}
 					{% endif %}
 					{% if pos < 100 %}
-						{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="red">{{ pos }}</td>{% else %}<td class="red">{{ pos }}</td>{% endif %}
+						{% if atlane == '1' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="red">{{ pos|floor }}</td>
+						{% endif %}
 					{% endif %}
 				{% else %}
-					{% if atlane == '1' and pos == atposition %}<td style="cursor:pointer;" onclick="alert('alert')" class="gray"></td>{% else %}<td class="gray"></td>{% endif %}
+					{% if atlane == '1' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
 				{% endif %}
 			{% else %}
 				<td class="map"></td>
@@ -152,26 +118,66 @@ $(document).ready(function(){
 		{% endfor %}
 	<td class="map">A</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in lane1 %}<td class="map">{% if pos == '*' %}<img src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '1' and pos == '*' %}<img src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">B</td>
 		{% for pos in posb %}
 			{% if pos %}
 				{% if "'B', "|add:pos in mstr %}
-						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
-							<td class="green">{{ pos }}</td>
+					{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+						{% if atlane == '1' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '2' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if 400 <= pos and pos < 700 %}
-							<td class="blue">{{ pos }}</td>
+					{% endif %}
+					{% if 400 <= pos and pos < 700 %}
+						{% if atlane == '1' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '2' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if 100 <= pos and pos < 400 %}
-							<td class="yellow">{{ pos }}</td>
+					{% endif %}
+					{% if 100 <= pos and pos < 400 %}
+						{% if atlane == '1' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '2' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if pos < 100 %}
-							<td class="red">{{ pos }}</td>
+					{% endif %}
+					{% if pos < 100 %}
+						{% if atlane == '1' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '2' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
+					{% endif %}
 				{% else %}
-					<td class="gray"></td>
+					{% if atlane == '1' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+					{% else %}
+						{% if atlane == '2' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+						{% else %}
+							<td class="gray"></td>
+						{% endif %}
+					{% endif %}
 				{% endif %}
 			{% else %}
 				<td class="map"></td>
@@ -179,26 +185,66 @@ $(document).ready(function(){
 		{% endfor %}
 	<td class="map">B</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in posc %}<td class="map"></td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '2' and pos == '*' %}<img src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">C</td>
 		{% for pos in posc %}
 			{% if pos %}
 				{% if "'C', "|add:pos in mstr %}
-						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
-							<td class="green">{{ pos }}</td>
+					{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+						{% if atlane == '2' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '3' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if 400 <= pos and pos < 700 %}
-							<td class="blue">{{ pos }}</td>
+					{% endif %}
+					{% if 400 <= pos and pos < 700 %}
+						{% if atlane == '2' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '3' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if 100 <= pos and pos < 400 %}
-							<td class="yellow">{{ pos }}</td>
+					{% endif %}
+					{% if 100 <= pos and pos < 400 %}
+						{% if atlane == '2' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '3' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if pos < 100 %}
-							<td class="red">{{ pos }}</td>
+					{% endif %}
+					{% if pos < 100 %}
+						{% if atlane == '2' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '3' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
+					{% endif %}
 				{% else %}
-					<td class="gray"></td>
+					{% if atlane == '2' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+					{% else %}
+						{% if atlane == '3' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+						{% else %}
+							<td class="gray"></td>
+						{% endif %}
+					{% endif %}
 				{% endif %}
 			{% else %}
 				<td class="map"></td>
@@ -206,26 +252,66 @@ $(document).ready(function(){
 		{% endfor %}
 	<td class="map">C</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in posd %}<td class="map"></td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '3' and pos == '*' %}<img src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">D</td>
 		{% for pos in posd %}
 			{% if pos %}
 				{% if "'D', "|add:pos in mstr %}
-						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
-							<td class="green">{{ pos }}</td>
+					{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+						{% if atlane == '3' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '4' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if 400 <= pos and pos < 700 %}
-							<td class="blue">{{ pos }}</td>
+					{% endif %}
+					{% if 400 <= pos and pos < 700 %}
+						{% if atlane == '3' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '4' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if 100 <= pos and pos < 400 %}
-							<td class="yellow">{{ pos }}</td>
+					{% endif %}
+					{% if 100 <= pos and pos < 400 %}
+						{% if atlane == '3' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '4' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
-						{% if pos < 100 %}
-							<td class="red">{{ pos }}</td>
+					{% endif %}
+					{% if pos < 100 %}
+						{% if atlane == '3' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						{% else %}
+							{% if atlane == '4' and atposition == pos %}
+								<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+							{% else %}
+								<td class="gray"></td>
+							{% endif %}
 						{% endif %}
+					{% endif %}
 				{% else %}
-					<td class="gray"></td>
+					{% if atlane == '3' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+					{% else %}
+						{% if atlane == '4' and atposition == pos %}
+							<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+						{% else %}
+							<td class="gray"></td>
+						{% endif %}
+					{% endif %}
 				{% endif %}
 			{% else %}
 				<td class="map"></td>
@@ -233,26 +319,46 @@ $(document).ready(function(){
 		{% endfor %}
 	<td class="map">D</td></tr>
 
-	<tr><td class="map">|</td>{% for pos in pose %}<td class="map"></td>{% endfor %}<td class="map">|</td></tr>
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '4' and pos == '*' %}<img src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
 
 	<tr><td class="map">E</td>
 		{% for pos in pose %}
 			{% if pos %}
 				{% if "'E', "|add:pos in mstr %}
-						{% if pos == initial_weight or pos >= loss or pos >= 700 %}
-							<td class="green">{{ pos }}</td>
+					{% if pos == initial_weight or pos >= loss or pos >= 700 %}
+						{% if atlane == '4' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="green">{{ pos|floor }}</td>
 						{% endif %}
-						{% if 400 <= pos and pos < 700 %}
-							<td class="blue">{{ pos }}</td>
+					{% endif %}
+					{% if 400 <= pos and pos < 700 %}
+						{% if atlane == '4' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="blue">{{ pos|floor }}</td>
 						{% endif %}
-						{% if 100 <= pos and pos < 400 %}
-							<td class="yellow">{{ pos }}</td>
+					{% endif %}
+					{% if 100 <= pos and pos < 400 %}
+						{% if atlane == '4' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="yellow">{{ pos|floor }}</td>
 						{% endif %}
-						{% if pos < 100 %}
-							<td class="red">{{ pos }}</td>
+					{% endif %}
+					{% if pos < 100 %}
+						{% if atlane == '4' and atposition == pos|listfortag %}
+							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>
+						{% else %}
+							<td class="red">{{ pos|floor }}</td>
 						{% endif %}
+					{% endif %}
 				{% else %}
-					<td class="gray"></td>
+					{% if atlane == '4' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
 				{% endif %}
 			{% else %}
 				<td class="map"></td>
@@ -262,31 +368,6 @@ $(document).ready(function(){
 
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 </table>
-
-<!--<table border="1">-->
-<!--	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>-->
-<!--	{% for lan in lane %}-->
-<!--		{% if lan %}-->
-<!--			<tr>-->
-<!--				<td class="map" width='1%'>{{ lan }}</td>-->
-<!--				{% for pos in position %}-->
-<!--					-->
-<!--					{% if "('"|add:lan|add:"', '"|add:pos|add:"')" in strlist %}-->
-<!--<!--						<td class="gold">{% for size in sizelist %}{{ sizelist|slice:"minus:sizelist|length"|first }}{% endfor %}</td>-->-->
-<!--						<td class="gold">{{ lan }}-{{ pos }}</td>-->
-<!--					{% else %}-->
-<!--						<td class="gray"></td>-->
-<!--					{% endif %}-->
-<!--					-->
-<!--				{% endfor %}-->
-<!--				<td class="map" width='1%'>{{ lan }}</td>-->
-<!--			</tr>-->
-<!--		{% else %}-->
-<!--			<tr><td class="map"></td>{% for pos in position %}<td class="map"></td></td>{% endfor %}<td class="map"><br /></td></tr>-->
-<!--		{% endif %}-->
-<!--	{% endfor %}-->
-<!--	<tr><td class="map"></td>{% for pos in position %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>-->
-<!--</table>-->
 
 </td>
 </tr>
@@ -313,18 +394,21 @@ $(document).ready(function(){
 <!--</table>-->
 
 	<form id="frm4" action="/minclamp/changeloc/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input type="hidden" value="{{ leftlane }}" name="lane">
-		<input type="hidden" value="{{ atposition }}" name="pos">
-		<input type="hidden" value="{{ pcode }}" name="pcode">
-		<input type="hidden" value="{{ width }}" name="width">
-		<input type="hidden" value="{{ loss }}" name="loss">
+		<input type="hidden" value="{{ realtag }}" name="realtag" />
+		<input type="hidden" value="{{ leftlane }}" name="lane" />
+		<input type="hidden" value="{{ atposition }}" name="pos" />
+		<input type="hidden" value="{{ pcode }}" name="pcode" />
+		<input type="hidden" value="{{ width }}" name="width" />
+		<input type="hidden" value="{{ loss }}" name="loss" />
 	</form>
 
 	<form id="frm5" action="/minclamp/changeloc/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input type="hidden" value="{{ rightlane }}" name="lane">
-		<input type="hidden" value="{{ atposition }}" name="pos">
+		<input type="hidden" value="{{ realtag }}" name="realtag" />
+		<input type="hidden" value="{{ rightlane }}" name="lane" />
+		<input type="hidden" value="{{ atposition }}" name="pos" />
+		<input type="hidden" value="{{ pcode }}" name="pcode" />
+		<input type="hidden" value="{{ width }}" name="width" />
+		<input type="hidden" value="{{ loss }}" name="loss" />
 	</form>
 
 

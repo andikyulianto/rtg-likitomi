@@ -91,7 +91,7 @@
 		<tr>
 			<td><p class="label" id="min">Roll ID: </p></td>
 			<td>{% ifnotequal realtag "" %}<p class="var" id="min">{% ifchanged %}{{ realtag }}{% endifchanged %}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td><p class="label" id="min">Paper-Code: </p></td>
+			<td><p class="label" id="min">Paper Code: </p></td>
 			<td>{% ifnotequal paper_code "" %}<p class="var" id="minbig">{{ paper_code }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 			<td><p class="label" id="min">Size: </p></td>
 			<td>{% ifnotequal size "" %}<p class="var" id="min">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
@@ -111,16 +111,16 @@
 <!--						{% ifequal atlocation "Stock" %}<td colspan="3" align="center"><b>Near previous</b></td>{% else %}{% endifequal %}-->
 <!--						<td width="5%"></td>-->
 <!--						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b>From current</b></td>{% else %}{% endifequal %}-->
-						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocLeft()" rowspan="1"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}
+<!--						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocLeft()" rowspan="1"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}-->
 					</tr>
 					<tr>
 						<td></td>
 <!--						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
 						<td></td>
 <!--						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
-						{% ifequal atlocation "Stock" %}<td rowspan="2">>>></td>{% else %}{% endifequal %}
+<!--						{% ifequal atlocation "Stock" %}<td rowspan="2">>>></td>{% else %}{% endifequal %}-->
 
-						{% ifequal atlocation "Stock" %}<td rowspan="2">{% ifnotequal atlocation "" %}<p class="var" id="min">{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>{% else %}{% endifequal %}
+<!--						{% ifequal atlocation "Stock" %}<td rowspan="2">{% ifnotequal atlocation "" %}<p class="var" id="min">{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>{% else %}{% endifequal %}-->
 
 					</tr>
 					<tr>
@@ -135,7 +135,7 @@
 <!--						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
 						<td></td>
 <!--						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
-						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocRight()" rowspan="1"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}
+<!--						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocRight()" rowspan="1"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}-->
 					</tr>
 				</table>
 			</td>
@@ -144,7 +144,7 @@
 			<td align="center" rowspan="1">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
 			<td><p class="label" id="min">Weight: </p></td>
 			<td>{% ifnotequal actual_wt "" %}<p class="var" id="min">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td align="center" id="min">>>></td>
+<!--			<td align="center" id="min">>>></td>-->
 			<td>{% ifnotequal digital "" %}<p class="var" id="minbig">{{ digital }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 <!--			<td align="center" width="300px">-->
 <!--			{% ifequal digit1 "0" %}<img width="30px" src="image/0.png">{% endifequal %}-->
