@@ -1,30 +1,54 @@
 ﻿<html>
-
 <head>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+
 <script type="text/javascript">
-$(document).ready(function(){
-  $("button").click(function(){
-    $("p").hide();
-  });
-});
+	window.addEventListener("MozOrientation", handleOrientation, true);
+	function handleOrientation(orientData)
+	{
+	var x = orientData.x;
+	var y = orientData.y;
+	var z = orientData.z;
+	//Do stuff with the new orientation data
+	alert(x);
+	alert(y);
+	alert(z);
+	}
 </script>
+
+<script type="text/javascript">
+	window.addEventListener("deviceorientation", handleOrientation2(orientData)
+	{
+	{alpha: 90,
+	beta: 0,
+	gamma: 0};
+	}, true);
+
+	window.addEventListener("devicemotion", function(event)
+	{
+	{x: 0,
+	y: 0,
+	z: 9.81};
+	}, true);
+
+	function handleOrientation2(orientData)
+	{
+	var x = orientData.x;
+	var y = orientData.y;
+	var z = orientData.z;
+	//Do stuff with the new orientation data
+	alert(x);
+	alert(y);
+	alert(z);
+	}
+</script>
+
 </head>
 
 <body>
-<button>Button</button>
-<p>Hide me</p>
-P: {{ p }}<br />
 
-<table border="1">
-	{% for start_time, end_time, sheet_code in p %}
-	<tr>
-		<td>{{ start_time|time:"H:i" }}</td>
-		<td>{{ end_time }}</td>
-		<td>{{ sheet_code }}</td>
-	</tr>
-	{% endfor %}
-</table>
+Long try...
+
 </body>
-
 </html>
