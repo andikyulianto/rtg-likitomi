@@ -7,7 +7,6 @@ from mysite.weight.now import now
 from mysite.weight.showplan import showplan, showwhole, detail
 from mysite.weight.stock_views import stock
 from mysite.weight.inventory import inventory
-from mysite.weight.map import stockmap
 from mysite.weight.longtry import orient, longtry
 
 # Uncomment the next two lines to enable the admin:
@@ -29,7 +28,6 @@ urlpatterns = patterns('',
 	(r'^clamplift/undo/$', undo),
 	(r'^clamplift/changeloc/$', changeloc),
 	(r'^clamplift/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^clamplift/manual/$', manual),
 	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^minclamp/$', minclamp),
@@ -56,8 +54,6 @@ urlpatterns = patterns('',
 	(r'^stock/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^inventory/$', inventory),
 	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^map/$', stockmap),
-	(r'^map/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^orient/$', orient),
 	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),

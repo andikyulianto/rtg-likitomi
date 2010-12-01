@@ -10,13 +10,8 @@ $(document).ready(function(){
 
 	$(window).load(function now(){
 		$("#now").load("/now/");
-//		setTimeout("$('#now').load('/now/')", 1000);
 		setTimeout(now, 1000);
 	});
-/*	$("#now").ajaxSuccess(function(){
-		$("#now").load("/now/");
-		setTimeout("$('#now').load('/now/')", 1000);
-	});*/
 
 	$("#sel").change(function(){
 		var opd = $("#sel").val();
@@ -31,65 +26,12 @@ $(document).ready(function(){
 });
 </script>
 
-<!--<script type="text/javascript">
-//	function loadXMLDoc()
-//	{
-//	//alert('This is just a trigger message!');
-//	if (window.XMLHttpRequest)
-//		{// code for IE7+, Firefox, Chrome, Opera, Safari
-//		xmlhttp=new XMLHttpRequest();
-//		}
-//	else
-//		{// code for IE6, IE5
-//		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//		}
-//	xmlhttp.onreadystatechange=function()
-//		{
-//		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-//			{
-//			document.getElementById("now").innerHTML=xmlhttp.responseText;
-//			}
-//		}
-//	xmlhttp.open("GET","/now/",true);
-//	xmlhttp.send();
-
-//	setTimeout("loadXMLDoc()", 1000);
-//	}
-
-//	function showPlan(str)
-//	{
-//	//alert('This is just a trigger message!');
-//	if (str=="")
-//		{
-//		document.getElementById("txtHint").innerHTML="";
-//		return;
-//		}
-//	if (window.XMLHttpRequest)
-//		{// code for IE7+, Firefox, Chrome, Opera, Safari
-//		xmlhttp=new XMLHttpRequest();
-//		}
-//	else
-//		{// code for IE6, IE5
-//		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//		}
-//	xmlhttp.onreadystatechange=function()
-//		{
-//		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-//			{
-//			document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-//			}
-//		}
-//	xmlhttp.open("GET", "/showplan/?opdate="+str ,true);
-//	xmlhttp.send();
-//	}
-</script>-->
-
 </head>
 
-<body onload='javascript:loadXMLDoc()'>
+<body>
 
 <table><tr><td style="border:0px"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px"><div id='now'></div></td></tr><table>
-<!--{{ query }}-->
+
 <table>
 	<tr>
 		<td class="lft">

@@ -12,9 +12,7 @@ $(document).ready(function(){
 			var pcode = $("#pcode").val();
 			var width = $("#width").val();
 			var loss = $("#loss").val();
-//			alert("alert");
 			$("#invHint").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss);
-//			$("#invHint").load("/inventory/?pcode="+"HKS231"+"&width="+"56"+"&loss="+"529");
 			setTimeout(clamplift, 2000);
 		}
 	});
@@ -30,65 +28,6 @@ $(document).ready(function(){
 
 });
 </script>
-
-<script type="text/javascript">
-	function showInventory(str)
-	{
-	//alert(str);
-	if (str=="")
-		{
-		document.getElementById("invHint").innerHTML="";
-		return;
-		}
-	if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-		}
-	else
-		{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	xmlhttp.onreadystatechange=function()
-		{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			{
-			document.getElementById("invHint").innerHTML=xmlhttp.responseText;
-			}
-		}
-	xmlhttp.open("GET", "/inventory/?pcode="+str ,true);
-	xmlhttp.send();
-
-	//showMap(str);
-	}
-
-	function showMap(str)
-	{
-	//alert(str);
-	if (str=="")
-		{
-		document.getElementById("mapHint").innerHTML="";
-		return;
-		}
-	if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-		}
-	else
-		{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	xmlhttp.onreadystatechange=function()
-		{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			{
-			document.getElementById("mapHint").innerHTML=xmlhttp.responseText;
-			}
-		}
-	xmlhttp.open("GET", "/map/?pcode="+str ,true);
-	xmlhttp.send();
-	}
-</script>
-
 </head>
 
 <body>
@@ -97,8 +36,9 @@ $(document).ready(function(){
 <input id="width" value="{{ width }}" type="hidden" />
 <input id="loss" value="{{ loss }}" type="hidden" />
 
+{% if pcode %}
 <table><tr>
-	<td style="text-align:left; border:1px;">{#{% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %}#}</td>
+	<td style="text-align:left; border:1px;"></td>
 	<td valign="middle" style="width:1px; border:1px;">
 		<form>
 			<select id="scode">
@@ -123,29 +63,9 @@ $(document).ready(function(){
 		<button id="search">Search</button>
 	</td>
 </tr></table>
-<!--<div id="test2">I'm here!</div>-->
-<!--<table><tr><td><div class='lft'>Navigator</div></td></tr><table>-->
+{% endif %}
 
-<!--<form>-->
-<!--	<select name="pcode" onchange="showInventory(this.value)">-->
-<!--	<option value="">Select paper code:</option>-->
-<!--	{% for pcode in pcodelist %}-->
-<!--	<option value="{{ pcode }}">{{ pcode }}</option>-->
-<!--	{% endfor %}-->
-<!--	</select>-->
-<!--</form>-->
-<!--<form>-->
-<!--	<select name="pcode" onchange="showMap(this.value)">-->
-<!--	<option value="">Select paper code to show inventory:</option>-->
-<!--	{% for pcode in pcodelist %}-->
-<!--	<option value="{{ pcode }}">{{ pcode }}</option>-->
-<!--	{% endfor %}-->
-<!--	</select>-->
-<!--</form>-->
-<!--<button onclick="showInventory()">Inventory</button>-->
-<!--<button onclick="showMap()">Map</button>-->
 <div id="invHint"><b>Paper roll inventory will be shown here.</b></div>
-<!--<div id="mapHint"><b>Map will be shown here.</b></div>-->
 
 </body>
 </html>

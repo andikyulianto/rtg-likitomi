@@ -1,34 +1,18 @@
 ﻿<html>
 <head>
-	<!--<meta http-equiv="refresh" content="2"; url="http://127.0.0.1:8000/minclamp/">-->
 	<title>Likitomi: @Clamplift</title>
 	<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 	<script type="text/javascript" src="js/clamplift.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript">
-	function loadXMLDoc()
-	{
-	//alert('This is just a trigger message!');
-	if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-		}
-	else
-		{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	xmlhttp.onreadystatechange=function()
-		{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			{
-			document.getElementById("clamplift").innerHTML=xmlhttp.responseText;
-			}
-		}
-	xmlhttp.open("GET","/minclamp/",true);
-	xmlhttp.send();
-
-	setTimeout("loadXMLDoc()", 3000);
-	}
-
+	$(document).ready(function(){
+		$(window).load(function minclamp(){
+			$("#minclamp").load("/minclamp/");
+			setTimeout(minclamp, 2000);
+		});
+	});
+	</script>
+	<script type="text/javascript">
 	function changeLocDown()
 	{
 		document.getElementById("lane").value = '{{lane}}';
@@ -76,17 +60,8 @@
 
 	</script>
 </head>
-<body onload="javascript:loadXMLDoc()">
-<div id="clamplift">
-<!--	<table>-->
-<!--		<tr>-->
-<!--			<td align="left"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	-->
-<!--			<td align="center"><b>You are now at:</b>-->
-<!--			{% ifnotequal atlocation "" %}<p class="var">{{ atlocation }}: {{ atlane }}/{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>-->
-<!--			<td align="right"><a href="/minclamp/"><img border="0" height="100px" src="image/refresh2.png"></a></td>-->
-<!--		</tr>-->
-<!--	</table>-->
-
+<body>
+<div id="minclamp">
 	<table>
 		<tr>
 			<td><p class="label" id="min">Roll ID: </p></td>
@@ -96,164 +71,45 @@
 			<td><p class="label" id="min">Size: </p></td>
 			<td>{% ifnotequal size "" %}<p class="var" id="min">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 
+			<td><p class="label" id="min">Location:</p></td>
+			<td>{% ifnotequal lane "" %}<p class="var" id="min">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 
-<!--			<td class="topping" id="mintop" align="center">Old</td>-->
-<!--			<td class="topping" id="mintop" align="center">New</td>-->
-<!--			<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="100px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>-->
-
-
-			<td align="center" colspan="2">
-				<table>
-					<tr>
-						<td></td>
-						<td></td>
-						<td></td>
-<!--						{% ifequal atlocation "Stock" %}<td colspan="3" align="center"><b>Near previous</b></td>{% else %}{% endifequal %}-->
-<!--						<td width="5%"></td>-->
-<!--						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b>From current</b></td>{% else %}{% endifequal %}-->
-<!--						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocLeft()" rowspan="1"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}-->
-					</tr>
-					<tr>
-						<td></td>
-<!--						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
-						<td></td>
-<!--						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
-<!--						{% ifequal atlocation "Stock" %}<td rowspan="2">>>></td>{% else %}{% endifequal %}-->
-
-<!--						{% ifequal atlocation "Stock" %}<td rowspan="2">{% ifnotequal atlocation "" %}<p class="var" id="min">{{ atposition }}</p>{% else %}<p align="center">{{ toperror }}</p>{% endifnotequal %}</td>{% else %}{% endifequal %}-->
-
-					</tr>
-					<tr>
-						<td width="46%"><p class="label" id="min">Location:</p></td>
-						<td>{% ifnotequal lane "" %}<p class="var" id="min">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-						<td></td>
-<!--						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocOpp()"><p>{{opplane}}-{{position}}</p></td>{% else %}{% endifequal %}-->
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-<!--						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
-						<td></td>
-<!--						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}-->
-<!--						{% ifequal atlocation "Stock" %}<td class="minloc" onclick="javascript:changeLocRight()" rowspan="1"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}-->
-					</tr>
-				</table>
-			</td>
-				<td></td>
-<!--			<td align="center" rowspan="2" width="10%">{% ifequal atlocation "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="100px" src="image/changeloc.png"></a>{% else %}{% endifequal %}</td>-->
-			<td align="center" rowspan="1">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>
+			<td align="center" rowspan="1">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo.png"></a>{% else %}{% endifnotequal %}</td>
 			<td><p class="label" id="min">Weight: </p></td>
 			<td>{% ifnotequal actual_wt "" %}<p class="var" id="min">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-<!--			<td align="center" id="min">>>></td>-->
-			<td>{% ifnotequal digital "" %}<p class="var" id="minbig">{{ digital }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-<!--			<td align="center" width="300px">-->
-<!--			{% ifequal digit1 "0" %}<img width="30px" src="image/0.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "1" %}<img width="30px" src="image/1.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "2" %}<img width="30px" src="image/2.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "3" %}<img width="30px" src="image/3.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "4" %}<img width="30px" src="image/4.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "5" %}<img width="30px" src="image/5.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "6" %}<img width="30px" src="image/6.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "7" %}<img width="30px" src="image/7.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "8" %}<img width="30px" src="image/8.png">{% endifequal %}-->
-<!--			{% ifequal digit1 "9" %}<img width="30px" src="image/9.png">{% endifequal %}-->
-<!--			<img width="5px" src="image/space.png">-->
-<!--			{% ifequal digit2 "0" %}<img width="30px" src="image/0.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "1" %}<img width="30px" src="image/1.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "2" %}<img width="30px" src="image/2.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "3" %}<img width="30px" src="image/3.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "4" %}<img width="30px" src="image/4.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "5" %}<img width="30px" src="image/5.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "6" %}<img width="30px" src="image/6.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "7" %}<img width="30px" src="image/7.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "8" %}<img width="30px" src="image/8.png">{% endifequal %}-->
-<!--			{% ifequal digit2 "9" %}<img width="30px" src="image/9.png">{% endifequal %}-->
-<!--			<img width="5px" src="image/space.png">-->
-<!--			{% ifequal digit3 "0" %}<img width="30px" src="image/0.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "1" %}<img width="30px" src="image/1.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "2" %}<img width="30px" src="image/2.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "3" %}<img width="30px" src="image/3.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "4" %}<img width="30px" src="image/4.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "5" %}<img width="30px" src="image/5.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "6" %}<img width="30px" src="image/6.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "7" %}<img width="30px" src="image/7.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "8" %}<img width="30px" src="image/8.png">{% endifequal %}-->
-<!--			{% ifequal digit3 "9" %}<img width="30px" src="image/9.png">{% endifequal %}-->
-<!--			<img width="5px" src="image/space.png">-->
-<!--			{% ifequal digit4 "0" %}<img width="30px" src="image/0.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "1" %}<img width="30px" src="image/1.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "2" %}<img width="30px" src="image/2.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "3" %}<img width="30px" src="image/3.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "4" %}<img width="30px" src="image/4.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "5" %}<img width="30px" src="image/5.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "6" %}<img width="30px" src="image/6.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "7" %}<img width="30px" src="image/7.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "8" %}<img width="30px" src="image/8.png">{% endifequal %}-->
-<!--			{% ifequal digit4 "9" %}<img width="30px" src="image/9.png">{% endifequal %}-->
-<!--			<img width="5px" src="image/space.png">-->
-<!--			{% ifequal digit5 "0" %}<img width="30px" src="image/0.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "1" %}<img width="30px" src="image/1.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "2" %}<img width="30px" src="image/2.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "3" %}<img width="30px" src="image/3.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "4" %}<img width="30px" src="image/4.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "5" %}<img width="30px" src="image/5.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "6" %}<img width="30px" src="image/6.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "7" %}<img width="30px" src="image/7.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "8" %}<img width="30px" src="image/8.png">{% endifequal %}-->
-<!--			{% ifequal digit5 "9" %}<img width="30px" src="image/9.png">{% endifequal %}-->
-<!--			{% ifequal digit6 "." %}<img width="8px" src="image/dot.png">{% else %}<p align="center">-</p>{% endifequal %}-->
-<!--			{% ifequal digit7 "0" %}<img width="30px" src="image/0.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "1" %}<img width="30px" src="image/1.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "2" %}<img width="30px" src="image/2.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "3" %}<img width="30px" src="image/3.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "4" %}<img width="30px" src="image/4.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "5" %}<img width="30px" src="image/5.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "6" %}<img width="30px" src="image/6.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "7" %}<img width="30px" src="image/7.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "8" %}<img width="30px" src="image/8.png">{% endifequal %}-->
-<!--			{% ifequal digit7 "9" %}<img width="30px" src="image/9.png">{% endifequal %}-->
-<!--			</td>-->
+			<td align="center" id="min">{% ifequal atlocation "Scale" %}>>>{% endifequal %}</td>
+			<td>{% ifnotequal digital "" %}<p class="var" id="minbig">{{ digital }}</p>{% else %}{% endifnotequal %}</td>
 			<td><p class="unit" id="min">kgs.</p></td>
 			<td align="center" rowspan="2">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
 			<td style="text-align:center"><a href="/clamplift/" target="_parent"><button>More</botton></a></td>
 		</tr>
 	</table>
 
-<!--	<br />-->
-
-<!--	<table>-->
-<!--		<tr>-->
-<!--			<td align="left">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="100px" src="image/undo2.png"></a>{% else %}{% endifnotequal %}</td>-->
-<!--			<td><p align="center">{{ bottomerror }}</p></td>-->
-<!--			<td align="right">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="100px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>-->
-<!--		</tr>-->
-<!--	</table>-->
-
 	<form id="frm1" action="/minclamp/update/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight">
+		<input type="hidden" value="{{ realtag }}" name="realtag" />
+		<input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight" />
 	</form>
 
 	<form id="frm2" action="/minclamp/undo/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
+		<input type="hidden" value="{{ realtag }}" name="realtag" />
 	</form>
 
 	<form id="frm3" action="/minclamp/changeloc/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input id="lane" type="hidden" value="{{ lane }}" name="lane">
-		<input id="pos" type="hidden" value="{{ position }}" name="pos">
+		<input type="hidden" value="{{ realtag }}" name="realtag" />
+		<input id="lane" type="hidden" value="{{ lane }}" name="lane" />
+		<input id="pos" type="hidden" value="{{ position }}" name="pos" />
 	</form>
 
 	<form id="frm4" action="/minclamp/changeloc/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input type="hidden" value="{{ leftlane }}" name="lane">
-		<input type="hidden" value="{{ atposition }}" name="pos">
+		<input type="hidden" value="{{ realtag }}" name="realtag" />
+		<input type="hidden" value="{{ leftlane }}" name="lane" />
+		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
 
 	<form id="frm5" action="/minclamp/changeloc/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag"></input>
-		<input type="hidden" value="{{ rightlane }}" name="lane">
-		<input type="hidden" value="{{ atposition }}" name="pos">
+		<input type="hidden" value="{{ realtag }}" name="realtag" />
+		<input type="hidden" value="{{ rightlane }}" name="lane" />
+		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
 
 </div>

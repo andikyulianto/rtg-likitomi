@@ -5,8 +5,6 @@
 
 <body>
 
-<!--<table><tr><td style="width:30%"></td><td id="req" style="width:20%; cursor:pointer;">Required</td><td id="det" style="width:20%; cursor:pointer;">Detail</td><td style="width:30%"></tr></table>-->
-
 <table><tr>
 
 <td id="always" style="border:0px;">
@@ -72,49 +70,6 @@
 		{% endfor %}
 	</table>
 </td>
-
-<!--<td id="detail" style="border:0px;">-->
-<!--	<table>-->
-<!--		<tr>-->
-<!--			<th rowspan='2' class="kl">CUSTOMER NAME<br />PRODUCT</th>-->
-<!--			<th rowspan='2'>USED(L)<br />D-F</th>-->
-<!--			<th>B-L</th>-->
-<!--			<th>B-M</th>-->
-<!--			<th rowspan='2'>USED(KGS)<br />D-F</th>-->
-<!--			<th>B-L</th>-->
-<!--			<th>B-M</th>-->
-<!--			<th rowspan='2'>SHEET<br />LENGTH</th>-->
-<!--			<th>CASE</th>-->
-<!--		</tr>-->
-<!--		<tr>-->
-<!--			<th>C-L</th>-->
-<!--			<th>C-M</th>-->
-<!--			<th>C-L</th>-->
-<!--			<th>C-M</th>-->
-<!--			<th>CUT</th>-->
-<!--		</tr>-->
-<!--		{% for customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut in detail %}-->
-<!--		<tr>-->
-<!--			<td rowspan='2' class="kl">{{ customer_name }}<br />{{ product }}</td>-->
-<!--			<td class='df' rowspan='2'><br />{{ length_df }}</td>-->
-<!--			<td>{{ length_bl }}</td>-->
-<!--			<td>{{ length_bm }}</td>-->
-<!--			<td class='df' rowspan='2'><center>ACTUAL</center>{{ actual_df }}</td>-->
-<!--			<td>{{ actual_bl }}</td>-->
-<!--			<td>{{ actual_bm }}</td>-->
-<!--			<td rowspan="2">{{ sheet_length }}</td>-->
-<!--			<td>{{ case }}</td>-->
-<!--		</tr>-->
-<!--		<tr>-->
-<!--			<td>{{ length_cl }}</td>-->
-<!--			<td>{{ length_cm }}</td>-->
-<!--			<td>{{ actual_cl }}</td>-->
-<!--			<td>{{ actual_cm }}</td>-->
-<!--			<td>{{ cut }}</td>-->
-<!--		</tr>-->
-<!--		{% endfor %}-->
-<!--	</table>-->
-<!--</td>-->
 
 </tr></table>
 </body>

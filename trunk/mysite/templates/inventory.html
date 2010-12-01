@@ -3,52 +3,13 @@
 
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
 
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){
-
-//	$(window).load(function clamplift(){
-//		alert("alert");
-//		$("#invent").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss);
-//		$("#invent").load("/inventory/?pcode="+"HKS231"+"&width="+"56"+"&loss="+"529");
-//		setTimeout(clamplift, 2000);
-//	});
-
-//	$("#search").click(function(){
-//		var scode = $("#scode").val();
-//		var swidth = $("#swidth").val();
-//		var loss = $("#loss").val();
-//		$("#invent").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
-//	});
-
-//	$("#invent").ajaxSuccess(function(){
-//		alert("invetn");
-//	});
-
-	$("#locup").click(function(){
-		var realtag = $("#realtag").val();
-		var lane = $("#leftlane").val();
-		var pos = $("#atposition").val();
-//		alert('before');
-		$("span").load("/minclamp/changeloc/?realtag="+realtag+"lane="+lane+"pos="+pos);
-//		alert('after');
-	});
-
-});
-</script>
-<script src="js/jquery_reapply.js" type="text/javascript"></script>
 </head>
 
 <body>
 {% load getpos %}
 {% load floor %}
 <div id="invent">
-<input id="loss" value="{{ loss }}" type="hidden" />
 
-<input id="realtag" value="{{ realtag }}" type="hidden" />
-<input id="atposition" value="{{ atposition }}" type="hidden" />
-<input id="leftlane" value="{{ leftlane }}" type="hidden" />
-<input id="rightlane" value="{{ rightlane }}" type="hidden" />
 {% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %}
 
 <table style="height:80%">
@@ -70,12 +31,7 @@ $(document).ready(function(){
 
 </td>
 <td style="width:90%; border:0px;">
-<!--@lane:{{atlane}}<br />-->
-<!--@pos:{{atposition}}<br />-->
-<!--A:{{posa}}<br />-->
-<!--B:{{posb}}<br />-->
-<!--mstr:{{mstr}}<br />-->
-<!--vlane:{{vlane}}-->
+
 <table>
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 	<tr><td class="map">A</td>
@@ -378,44 +334,23 @@ $(document).ready(function(){
 </tr>
 <table>
 
-<br />
+<form id="frm4" action="/minclamp/changeloc/" method="get">
+	<input type="hidden" value="{{ realtag }}" name="realtag" />
+	<input type="hidden" value="{{ leftlane }}" name="lane" />
+	<input type="hidden" value="{{ atposition }}" name="pos" />
+	<input type="hidden" value="{{ pcode }}" name="pcode" />
+	<input type="hidden" value="{{ width }}" name="width" />
+	<input type="hidden" value="{{ loss }}" name="loss" />
+</form>
 
-<!--<table>-->
-<!--	<tr>-->
-<!--		<th>PAPER CODE</th>-->
-<!--		<th>SIZE</th>-->
-<!--		<th>ROLL(s)</th>-->
-<!--		<th>WEIGHT(kgs.)</th>-->
-<!--	</tr>-->
-<!--	{% for paper_code, size, rolls, weight in delist %}-->
-<!--	<tr>-->
-<!--		<td>{{ paper_code }}</td>-->
-<!--		<td>{{ size }}</td>-->
-<!--		<td>{{ rolls }}</td>-->
-
-<!--		<td>{{ weight }}</td>-->
-<!--	</tr>-->
-<!--	{% endfor %}-->
-<!--</table>-->
-
-	<form id="frm4" action="/minclamp/changeloc/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag" />
-		<input type="hidden" value="{{ leftlane }}" name="lane" />
-		<input type="hidden" value="{{ atposition }}" name="pos" />
-		<input type="hidden" value="{{ pcode }}" name="pcode" />
-		<input type="hidden" value="{{ width }}" name="width" />
-		<input type="hidden" value="{{ loss }}" name="loss" />
-	</form>
-
-	<form id="frm5" action="/minclamp/changeloc/" method="get">
-		<input type="hidden" value="{{ realtag }}" name="realtag" />
-		<input type="hidden" value="{{ rightlane }}" name="lane" />
-		<input type="hidden" value="{{ atposition }}" name="pos" />
-		<input type="hidden" value="{{ pcode }}" name="pcode" />
-		<input type="hidden" value="{{ width }}" name="width" />
-		<input type="hidden" value="{{ loss }}" name="loss" />
-	</form>
-
+<form id="frm5" action="/minclamp/changeloc/" method="get">
+	<input type="hidden" value="{{ realtag }}" name="realtag" />
+	<input type="hidden" value="{{ rightlane }}" name="lane" />
+	<input type="hidden" value="{{ atposition }}" name="pos" />
+	<input type="hidden" value="{{ pcode }}" name="pcode" />
+	<input type="hidden" value="{{ width }}" name="width" />
+	<input type="hidden" value="{{ loss }}" name="loss" />
+</form>
 
 </div>
 </body>
