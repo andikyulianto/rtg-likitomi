@@ -1,37 +1,18 @@
 ﻿<html>
 <head>
-<!--	<meta http-equiv="refresh" content="2"; url="http://127.0.0.1:8000/scale/">-->
-	<meta http-equiv="cache-control" content="no-cache"/>
 	<title>Likitomi: @Scale</title>
 	<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-	<script type="text/javascript" src="js/clamplift.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript">
-	function loadXMLDoc()
-	{
-	//alert('This is just a trigger message!');
-	if (window.XMLHttpRequest)
-		{// code for IE7+, Firefox, Chrome, Opera, Safari
-		xmlhttp=new XMLHttpRequest();
-		}
-	else
-		{// code for IE6, IE5
-		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-		}
-	xmlhttp.onreadystatechange=function()
-		{
-		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-			{
-			document.getElementById("scale").innerHTML=xmlhttp.responseText;
-			}
-		}
-	xmlhttp.open("GET", "/scale/", true);
-	xmlhttp.send();
-
-	setTimeout("loadXMLDoc()", 3000);
-	}
+	$(document).ready(function(){
+		$(window).load(function scale(){
+			$("#scale").load("/scale/");
+			setTimeout(scale, 1000);
+		});
+	});
 	</script>
 </head>
-<body onload="javascript:loadXMLDoc()">
+<body>
 <div id="scale">
 	<table height="30%">
 		<tr>

@@ -1,10 +1,8 @@
 ﻿<html>
-
 <head>
 
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
 <script src="js/jquery.js" type="text/javascript"></script>
-<script src="js/jquery_reapply.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -31,7 +29,6 @@
 		<td>{% if bm %}<a href="/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>{% else  %}<br /><br />{% endif %}</td>
 	</tr>
 	<tr>
-<!--		<td class='bt'><a href="#" onclick="linkShowPage('#test2', '/inventory/?pcode={{ df }}')">{{ df }}<br />({{ loss_df }})</a></td>-->
 		<td class='bt'>{% if df %}<a href="/stock/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}" target="stock">{{ df }}<br />({{ loss_df }})</a>{% else  %}<br /><br />{% endif %}</td>
 		<td>{% if cl %}<a href="/stock/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}" target="stock">{{ cl }}<br />({{ loss_cl }})</a>{% else  %}<br /><br />{% endif %}</td>
 		<td>{% if cm %}<a href="/stock/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}" target="stock">{{ cm }}<br />({{ loss_cm }})</a>{% else  %}<br /><br />{% endif %}</td>

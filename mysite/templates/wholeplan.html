@@ -57,70 +57,16 @@ $(document).ready(function(){
 });
 </script>
 
-<script type="text/javascript">
-//	function loadXMLDoc()
-//	{
-//	//alert('This is just a trigger message!');
-//	if (window.XMLHttpRequest)
-//		{// code for IE7+, Firefox, Chrome, Opera, Safari
-//		xmlhttp=new XMLHttpRequest();
-//		}
-//	else
-//		{// code for IE6, IE5
-//		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//		}
-//	xmlhttp.onreadystatechange=function()
-//		{
-//		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-//			{
-//			document.getElementById("now").innerHTML=xmlhttp.responseText;
-//			}
-//		}
-//	xmlhttp.open("GET","/now/",true);
-//	xmlhttp.send();
-
-//	setTimeout("loadXMLDoc()", 1000);
-//	}
-
-//	function showPlan(str)
-//	{
-//	//alert(str);
-//	if (str=="")
-//		{
-//		document.getElementById("txtHint").innerHTML="";
-//		return;
-//		}
-//	if (window.XMLHttpRequest)
-//		{// code for IE7+, Firefox, Chrome, Opera, Safari
-//		xmlhttp=new XMLHttpRequest();
-//		}
-//	else
-//		{// code for IE6, IE5
-//		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-//		}
-//	xmlhttp.onreadystatechange=function()
-//		{
-//		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-//			{
-//			document.getElementById("txtHint").innerHTML=xmlhttp.responseText;
-//			}
-//		}
-//	xmlhttp.open("GET", "/showwhole/?opdate="+str ,true);
-//	xmlhttp.send();
-//	}
-
-</script>
-
 </head>
 
-<body onload='javascript:loadXMLDoc()'>
+<body>
 
-	<table>
-		<tr>
-			<td class="lft"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
-			<td class="rght"><a href="/wholeplan/"><img border="0" height="100px" src="image/refresh2.png"></a></td>
-		</tr>
-	</table>
+<table>
+	<tr>
+		<td class="lft"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
+		<td class="rght"><a href="/wholeplan/"><img border="0" height="100px" src="image/refresh.png"></a></td>
+	</tr>
+</table>
 	
 <table><tr><td style="border:0px"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px"><div id='now'></div></td></tr><table>
 
@@ -137,7 +83,6 @@ $(document).ready(function(){
 				</select>
 			</form>
 		</td>
-		<td></td>
 		<td id="req" style="cursor:pointer; width:20%;">Required</td>
 		<td id="det" style="cursor:pointer; width:20%;">Detail</td>
 	</tr>
