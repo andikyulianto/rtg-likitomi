@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
-from weight.models import ClampliftPlan, PaperRoll, PaperHistory
+from mysite.weight.models import ClampliftPlan, PaperRoll, PaperHistory
 
 def plan(request):
 	try:

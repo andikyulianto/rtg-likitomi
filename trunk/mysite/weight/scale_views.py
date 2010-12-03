@@ -1,6 +1,6 @@
 # Create your views here.
 from django.shortcuts import render_to_response
-from weight.models import PaperRoll, PaperHistory
+from mysite.weight.models import PaperRoll, PaperHistory
 
 import serial
 import socket

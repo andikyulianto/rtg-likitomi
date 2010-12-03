@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
-from weight.models import ClampliftPlan
+from mysite.weight.models import ClampliftPlan
 
 def showplan(request):
 	if 'opdate' in request.GET and request.GET['opdate']:
