@@ -150,7 +150,7 @@
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%"> Sch.IN </td><td width="25%"> Sch.OUT </td><td width="40%" rowspan="2"> Product code </td></tr>
 			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
 			<span>
-			{% for start,end,product,actual_start,actual_end in items %}
+			{% for start,end,product,actual_start,actual_end in items_plan_cr %}
 			<tr align=center><td rowspan="2" height="20">  </td><td>{{start|time:"H:i"}}</td><td>{{ end|time:"H:i" }}</td><td rowspan="2">{{product}}</td></tr>
 			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
 			{% endfor %}
