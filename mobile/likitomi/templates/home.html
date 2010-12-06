@@ -151,10 +151,8 @@
 			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
 			<span>
 			{% for start,end,product,actual_start,actual_end in items %}
-			{% if start|date:"Y-m-d" == today %}
 			<tr align=center><td rowspan="2" height="20">  </td><td>{{start|time:"H:i"}}</td><td>{{ end|time:"H:i" }}</td><td rowspan="2">{{product}}</td></tr>
 			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
-			{% endif %}
 			{% endfor %}
 			</table>
 			</ul>
