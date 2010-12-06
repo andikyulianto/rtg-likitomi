@@ -1,0 +1,11 @@
+{% extends "index.html" %}
+{% block content %}
+		<li class="menu">
+		{% if is_enable_link %}<a href="{{item_link}}">
+		<img alt="item_pic_name" src="{{item_pic}}" /><span class="name">{{item_name}}</span>
+		{% if is_enable_comment %}<span class="comment">{{comment_name}}</span>{% endif %}
+		{% if is_enable_arrow %} <span class="arrow"></span>{% endif %}</a>
+		{% else %} <span class="name"> {{item_name}}</span>
+		{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
+		{% endif %}</li>
+{% endblock %}
