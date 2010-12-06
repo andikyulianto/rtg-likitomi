@@ -8,25 +8,25 @@
 <body>
 
 <table id="splan">
-	<tr>
-		<th rowspan='2'>TIME</th>
-		<th rowspan='2'>SHEET CODE</th>
-		<th class='bt'>WIDTH</th>
-		<th>BL</th>
-		<th>BM</th>
-	</tr>
-	<tr>
-		<th>DF</th>
-		<th>CL</th>
-		<th>CM</th>
-	</tr>
+<!--	<tr>-->
+<!--		<th rowspan='2'>TIME</th>-->
+<!--		<th rowspan='2'>SHEET CODE</th>-->
+<!--		<th class='bt'>WIDTH</th>-->
+<!--		<th>BL</th>-->
+<!--		<th>BM</th>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<th>DF</th>-->
+<!--		<th>CL</th>-->
+<!--		<th>CM</th>-->
+<!--	</tr>-->
 	{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in query %}
 	<tr>
-		<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
-		<td rowspan='2'>{{ sheet_code }}</td>
-		<td>{{ paper_width_inch }}</td>
-		<td>{% if bl %}<a href="/stock/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a>{% else  %}<br /><br />{% endif %}</td>
-		<td>{% if bm %}<a href="/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>{% else  %}<br /><br />{% endif %}</td>
+		<td rowspan='2' width="13%">{{ start_time|time:"H:i" }}</td>
+		<td rowspan='2' width="20%">{{ sheet_code }}</td>
+		<td width="21%">{{ paper_width_inch }}</td>
+		<td width="21%">{% if bl %}<a href="/stock/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a>{% else  %}<br /><br />{% endif %}</td>
+		<td width="21%">{% if bm %}<a href="/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>{% else  %}<br /><br />{% endif %}</td>
 	</tr>
 	<tr>
 		<td class='bt'>{% if df %}<a href="/stock/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}" target="stock">{{ df }}<br />({{ loss_df }})</a>{% else  %}<br /><br />{% endif %}</td>
