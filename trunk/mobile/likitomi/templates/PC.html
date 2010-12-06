@@ -1,0 +1,86 @@
+{% extends "home.html" %}
+{% block content}
+{% if is_enable_desktop %}
+			<ul class="pageitem"><li class="textbox"></li>
+			<table align=center width="100%">
+			<tr align = center>
+			<td width="50%">
+			<table align=center width="90%">
+			<tr><td width="50%">{# left #}
+
+			<table border=1 align=center width="100%"><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td></tr>
+			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
+			{% for start,end,product,actual_start,actual_end in items %}
+			<tr align=center><td rowspan="2"  height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			
+			
+			</td><td width="50%"><table border=1 width="100%"> {# right #} Product Detail</table></td></tr>
+			</table>	
+			</td>
+			<td width="50%"> 
+			
+			{# section 2: CV #}
+			<table align=center width="90%">
+			<tr  height="5"><td width="60%">{# left #}
+			
+			<table border=1 align=center width="100%"><span class="header">
+			<tr width="100%" align=center  height="5"><td width="10%" rowspan="2" height="20"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="5%" rowspan="2"> Mac. </td><td rowspan="2">From</td></tr>
+			<tr align=center><td height="20">Act.IN</td><td>Act.OUT</td></tr>
+			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items_plan_cv %}
+			<tr align=center><td rowspan="2" height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2">{{previous_section}}</td><td rowspan="2">{{cv_machine}}</td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			
+			</td><td width="40%"><table border=1 width="100%"> {# right #} Product Detail </table><td></tr>
+			</table>
+
+
+</td></tr>
+			<tr align = center><td width="50%"><table align=center width="90%">
+			{# section 3: PT #}
+			<tr><td width="50%">{# left #}
+
+			<table border=1 align=center width="100%"><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="10%" rowspan="2|time:"H:i""> From </td></tr>
+			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr></span>
+			{% for start,end,product,actual_start,actual_end in items_plan_pt %}
+			<tr align=center><td rowspan="2" height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			
+			</td><td width="50%"><table border=1 width="100%"> {# right #} Product Detail </table>
+
+			</td>
+			</table>
+			</td><td width="50%">
+			{# Section 4: WH #}
+			<table width="90%">
+			<tr align=center>
+			<td width="50%"> {# left #}
+
+			<table border=1 align=center width = 100%><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td><td width="35%" rowspan="2"> Product code </td><td width="30%" rowspan="2">From</td></tr>
+			<tr align=center><td>Act.IN</td></tr>
+			{% for start,product,actual_start in items_plan_wh %}
+			<tr align=center><td rowspan="2"  height="20"> </td><td> {{start|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td  height="20" height="20">{{actual_start|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>			
+			
+			</td>
+			<td width="50%"><table border=1 width="100%"> {# right #} Product Detail </table>
+			</td>
+			</tr>
+			</table>
+
+			</td></tr>			
+			</table>
+			</ul>
+		{% endif %}
+{% endblock %}
