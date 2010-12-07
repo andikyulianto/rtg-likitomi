@@ -50,46 +50,69 @@ def showPC(section_title):
 def showCR(section_title):
 	today = todayDate()
 	#create items for CR
+	contents_text = currentProcess("CR")
 	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
 	return render_to_response('CR.html', locals())
 def showCV(section_title):
 	today = todayDate()
 	#create items for CV
-	#contents_text = currentProcess("CV")
+	contents_text ="3CL:" + currentProcess("3CL")
+	contents_text +=",2CL:"+ currentProcess("2CL")
+	contents_text += ",3CS:"+currentProcess("3CS")
 	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('CV.html', locals())
 def showPT(section_title):
 	#create items for PT
 	today = todayDate()
+	contents_text = currentProcess("PT")
 	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
 	items = list(item_plan)
 	return render_to_response('PT.html', locals())
 def showWH(section_title):
 	today = todayDate()
 	#create items for WH
+	contents_text = currentProcess("WH")
 	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_wh_start", "product_id").order_by('plan_wh_start')
 	items = list(item_plan)
 	return render_to_response('WH.html',locals())
 def currentProcess(machine):
 	today=todayDate()
-	if(machine=="CR")
-		today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year), plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("product_id","actual_cr_end")
-		item_current = today_plan.filter(actual_cr_end = None).values_list("product_id")[0]
-	if(machine=="3CS"):
-		today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("product_id","actual_cv_end")
-		item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
-	if(machine=="3CL")
-		today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("product_id","actual_cv_end")
-		item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
-	if(machine=="2CL")
-		today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("product_id","actual_cv_end")
-		item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+	if(machine=="CR"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id","actual_cr_end")
+			item_current = today_plan.filter(actual_cr_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine == "3CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CS").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="3CL"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CL").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="2CL"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="2CL").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
 	if(machine=="PT"):
-		today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("product_id","actual_pt_end")
-		item_current = today_plan.filter(actual_pt_end = None).values_list("product_id")[0]
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start').values_list("product_id","actual_pt_end")
+			item_current = today_plan.filter(actual_pt_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
 	if(machine=="WH"):
-		today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("product_id","actual_wh_end")
-		item_current = today_plan.filter(actual_wh_end = None).values_list("product_id")[0]
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start').values_list("product_id","actual_wh_end")
+			item_current = today_plan.filter(actual_wh_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
 	return item_current
