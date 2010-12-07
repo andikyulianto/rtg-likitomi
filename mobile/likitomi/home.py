@@ -74,7 +74,16 @@ def showWH(section_title):
 	return render_to_response('WH.html',locals())
 def currentProcess(machine):
 	today=todayDate()
-	if(machine=="CV"):
+	if(machine=="CR")
+		today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year), plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("product_id","actual_cr_end")
+		item_current = today_plan.filter(actual_cr_end = None).values_list("product_id")[0]
+	if(machine=="3CS"):
+		today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("product_id","actual_cv_end")
+		item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+	if(machine=="3CL")
+		today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("product_id","actual_cv_end")
+		item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+	if(machine=="2CL")
 		today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("product_id","actual_cv_end")
 		item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
 	if(machine=="PT"):
