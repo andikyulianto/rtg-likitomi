@@ -52,6 +52,8 @@ def showPC(section_title):
 	cvTwoCL = str(currentProcess("2CL"))[2:8]
 	pt = str(currentProcess("PT"))[2:8]
 	wh = str(currentProcess("WH"))[2:8]
+	contents_text = positionOfCurrentProcess("2CL",cvTwoCL)
+	#contents_text = cvTwoCL
 	return render_to_response('PC.html', locals())
 def showCR(section_title):
 	today = todayDate()
@@ -83,6 +85,63 @@ def showWH(section_title):
 	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_wh_start", "product_id").order_by('plan_wh_start')
 	items = list(item_plan)
 	return render_to_response('WH.html',locals())
+	
+def positionOfCurrentProcess(machine,product):
+	today = todayDate()
+	position = 0
+	#cr
+	if(machine == "CR"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
+	#cv
+	if(machine == "3CL"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
+	if(machine == "3CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
+	if(machine == "2CL"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
+	if(machine == "PT"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
+	if(machine == "WH"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
+	return position
+	
+## get current process for each section ##
 def currentProcess(machine):
 	today=todayDate()
 	if(machine=="CR"):
