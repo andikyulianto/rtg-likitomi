@@ -3,6 +3,19 @@
 
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
 <script src="js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$("a").click(function(){
+		$("td").css("background-color","white");
+		var hicode = $(this).attr("id");
+		var hiwidth = $(this).attr("class");
+//		alert(hicode+", "+hiwidth);
+		$("[id='"+ hicode +"'][class='"+ hiwidth +"']").parent().css("background-color","yellow");
+	});
+
+});
+</script>
 </head>
 
 <body>
@@ -25,13 +38,38 @@
 		<td rowspan='2' width="13%">{{ start_time|time:"H:i" }}</td>
 		<td rowspan='2' width="20%">{{ sheet_code }}</td>
 		<td width="21%">{{ paper_width_inch }}</td>
-		<td width="21%">{% if bl %}<a href="/stock/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a>{% else  %}<br /><br />{% endif %}</td>
-		<td width="21%">{% if bm %}<a href="/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>{% else  %}<br /><br />{% endif %}</td>
+		<td width="21%">
+			{% if bl %}
+				<a id="{{ bl }}" class="{{paper_width_inch}}" href="/stock/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a>
+			{% else  %}
+				<br /><br />
+			{% endif %}
+		</td>
+		<td width="21%">
+			{% if bm %}
+				<a id="{{ bm }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>
+			{% else  %}
+				<br /><br />
+			{% endif %}
+		</td>
 	</tr>
 	<tr>
-		<td class='bt'>{% if df %}<a href="/stock/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}" target="stock">{{ df }}<br />({{ loss_df }})</a>{% else  %}<br /><br />{% endif %}</td>
-		<td>{% if cl %}<a href="/stock/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}" target="stock">{{ cl }}<br />({{ loss_cl }})</a>{% else  %}<br /><br />{% endif %}</td>
-		<td>{% if cm %}<a href="/stock/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}" target="stock">{{ cm }}<br />({{ loss_cm }})</a>{% else  %}<br /><br />{% endif %}</td>
+		<td class='bt'>
+			{% if df %}<a id="{{ df }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}" target="stock">{{ df }}<br />({{ loss_df }})</a>
+			{% else  %}
+				<br /><br />
+			{% endif %}
+		</td>
+		<td>
+			{% if cl %}<a id="{{ cl }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}" target="stock">{{ cl }}<br />({{ loss_cl }})</a>
+			{% else  %}
+				<br /><br />
+			{% endif %}</td>
+		<td>
+			{% if cm %}<a id="{{ cm }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}" target="stock">{{ cm }}<br />({{ loss_cm }})</a>
+			{% else  %}
+				<br /><br />
+			{% endif %}</td>
 	</tr>
 	{% endfor %}
 </table>
