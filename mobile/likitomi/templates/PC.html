@@ -9,6 +9,21 @@
 <meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
 
 <script src="javascript/functions.js" type="text/javascript"></script>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+
+<script type="text/javascript">
+//		function x(address){
+//			$("#yahoo_pat").load(address);
+//		}
+      $(document).ready(function(){
+       $("#test").click(function(){
+         alert("yes");
+//         $("#yahoo_pat").css("color","red");
+         $("#yahoo_pat").load("/likitomi/");
+       });
+     });
+//     
+   </script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>{{ title }}</title>
 <link href="pics/startup.png" rel="apple-touch-startup-image" />
@@ -17,6 +32,11 @@
 </head>
 
 <body>
+<a id="test" href="#">jQuery</a>
+
+<div id="yahoo_pat">
+yahoo PAT na ka
+</div>
 
 <div id="topbar">
 	<div id="title">
