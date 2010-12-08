@@ -3,6 +3,7 @@ from django.conf import settings
 from general import login, index
 from home import section
 from machine import report
+from product import view
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -15,8 +16,12 @@ urlpatterns = patterns('',
     (r'^likitomi/home/$', section),
     (r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     #(r'likitomi/statusTracking/$',test)
-    
     #(r'^likitomi/(.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
+    
+    
+	(r'^likitomi/product/$', view),
+	(r'^likitomi/product/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    
     
     (r'^likitomi/machine/$', report),
     (r'^likitomi/machine/(?P<path>.*)$','django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),

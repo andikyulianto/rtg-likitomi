@@ -12,14 +12,11 @@
 <script type="text/javascript" src="javascript/jquery.js"></script>
 
 <script type="text/javascript">
-//		function x(address){
-//			$("#yahoo_pat").load(address);
-//		}
-      $(document).ready(function(){
-       $("#test").click(function(){
-         alert("yes");
-//         $("#yahoo_pat").css("color","red");
-         $("#yahoo_pat").load("/likitomi/");
+	var p = {{product}}
+	$(document).ready(function(){
+		$("#linkItem").click(function(){
+		alert(p)
+		$("#productDetailPC").load("/likitomi/product/?eID={{eID}}&pCode={{product}}");
        });
      });
 //     
@@ -32,11 +29,8 @@
 </head>
 
 <body>
-<a id="test" href="#">jQuery</a>
 
-<div id="yahoo_pat">
-yahoo PAT na ka
-</div>
+
 
 <div id="topbar">
 	<div id="title">
@@ -84,12 +78,12 @@ yahoo PAT na ka
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td></tr>
 			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
 			{% for start,end,product,actual_start,actual_end in items_plan_cr %}
-			<tr align=center><td rowspan="2"  height="20">{% if cr == product %} > {% endif %}</td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td></tr><tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			<tr align=center><td rowspan="2"  height="20">{% if cr == product %} > {% endif %}</td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2"><a id="linkItem" href="#">{{product}}</a></td></tr><tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
 			{% endfor %}
 			</table>
 			
 			
-			</td><td width="50%"><table border=1 width="100%"> {# right #} Product Detail</table></td></tr>
+			</td><td width="50%"><table border=1 width="100%"> {# right #}</div><div id="productDetailPC"> Product Detail</div></table></td></tr>
 			</table>	
 			</td>
 			<td width="50%"> 
