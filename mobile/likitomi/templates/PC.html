@@ -12,15 +12,24 @@
 <script type="text/javascript" src="javascript/jquery.js"></script>
 
 <script type="text/javascript">
-	var p = {{product}}
+	//var p = {{product}}
 	$(document).ready(function(){
-		$("#linkItem").click(function(){
-		alert(p)
-		$("#productDetailPC").load("/likitomi/product/?eID={{eID}}&pCode={{product}}");
-       });
-     });
-//     
-   </script>
+		$("#linkItemCR").click(function(){
+		var product1 = $("#linkItemCR").attr("class");
+		var eID1 = $("#eID").val();
+		$("#productDetailCR").load("/likitomi/product/?eID="+eID1+"&pCode="+product1);
+
+	});
+			
+		$("#linkItemCV").click(function(){
+		var product2 = $("#linkItemCV").attr("class");
+		var eID2 = $("#eID").val();
+		$("#productDetailCV").load("/likitomi/product/?eID="+eID2+"&pCode="+product2);
+	});
+		
+
+});
+</script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>{{ title }}</title>
 <link href="pics/startup.png" rel="apple-touch-startup-image" />
@@ -30,7 +39,7 @@
 
 <body>
 
-
+<input id="eID" value="{{eID}}" type="hidden" />
 
 <div id="topbar">
 	<div id="title">
@@ -70,7 +79,7 @@
 			<ul class="pageitem"><li class="textbox"></li>
 			<table align=center width="100%">
 			<tr align = center>
-			<td width="50%">
+			<td width="50%"><a href="/likitomi/newHome/?eID={{eID}}&page=CR">CR</a>
 			<table align=center width="90%">
 			<tr><td width="50%">{# left #} 
 
@@ -78,17 +87,26 @@
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td></tr>
 			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
 			{% for start,end,product,actual_start,actual_end in items_plan_cr %}
-			<tr align=center><td rowspan="2"  height="20">{% if cr == product %} > {% endif %}</td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2"><a id="linkItem" href="#">{{product}}</a></td></tr><tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			<tr align=center>
+				<td rowspan="2" height="20">{% if cr == product %} > {% endif %}</td>
+				<td>{{start|time:"H:i"}}</td>
+				<td>{{end|time:"H:i"}}</td>
+				<td rowspan="2"><a href="#" id="linkItemCR" class="{{product}}">{{product}}</a></td>
+			</tr>
+			<tr align=center>
+				<td height="20">{{actual_start|time:"H:i"}}</td>
+				<td>{{actual_end|time:"H:i"}}</td>
+			</tr>
 			{% endfor %}
 			</table>
 			
 			
-			</td><td width="50%"><table border=1 width="100%"> {# right #}</div><div id="productDetailPC"> Product Detail</div></table></td></tr>
+			</td><td width="50%"><table border=1 width="100%"> {# right #}</div><div id="productDetailCR"> Product Detail</div></table></td></tr>
 			</table>	
 			</td>
 			<td width="50%"> 
 			
-			{# section 2: CV #}
+			{# section 2: CV #}<a href="/likitomi/newHome/?eID={{eID}}&page=CV">CV</a>
 			<table align=center width="90%">
 			<tr  height="5"><td width="60%">{# left #}
 			
@@ -96,36 +114,36 @@
 			<tr width="100%" align=center  height="5"><td width="10%" rowspan="2" height="20"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="5%" rowspan="2"> Mac. </td><td rowspan="2">From</td></tr>
 			<tr align=center><td height="20">Act.IN</td><td>Act.OUT</td></tr>
 			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items_plan_cv %}
-			<tr align=center><td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2">{{previous_section}}</td><td rowspan="2">{{cv_machine}}</td></tr>
+			<tr align=center><td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2"><a id="linkItemCV" href="#" class="{{product}}">{{product}}</a></td><td rowspan="2">{{previous_section}}</td><td rowspan="2">{{cv_machine}}</td></tr>
 			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
 			{% endfor %}
 			</table>
 			
-			</td><td width="40%"><table border=1 width="100%"> {# right #} Product Detail </table><td></tr>
+			</td><td width="40%"><table border=1 width="100%"> {# right #} </div><div id="productDetailCV">Product Detail </div> </table></td></tr>
 			</table>
 
 
 </td></tr>
 			<tr align = center><td width="50%"><table align=center width="90%">
-			{# section 3: PT #}
+			{# section 3: PT #}<a href="/likitomi/newHome/?eID={{eID}}&page=PT">PT</a>
 			<tr><td width="50%">{# left #}
 
 			<table border=1 align=center width="100%"><span class="header">
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="10%" rowspan="2|time:"H:i""> From </td></tr>
 			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr></span>
 			{% for start,end,product,actual_start,actual_end in items_plan_pt %}
-			<tr align=center><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2"><a id="linkItemPT" href="#" class="{{product}}">{{product}}</a></td><td rowspan="2"></td></tr>
 			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
 			{% endfor %}
 			</table>
 			
-			</td><td width="50%"><table border=1 width="100%"> {# right #} Product Detail </table>
+			</td><td width="50%"><table border=1 width="100%"> {# right #} </div><div id="productDetailPT">Product Detail </div></table></td>
 
 			</td>
 			</table>
 			</td><td width="50%">
 			{# Section 4: WH #}
-			<table width="90%">
+			<table width="90%"> <a href="/likitomi/newHome/?eID={{eID}}&page=WH">WH</a>
 			<tr align=center>
 			<td width="50%"> {# left #}
 
@@ -133,13 +151,13 @@
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td><td width="35%" rowspan="2"> Product code </td><td width="30%" rowspan="2">From</td></tr>
 			<tr align=center><td>Act.IN</td></tr>
 			{% for start,product,actual_start in items_plan_wh %}
-			<tr align=center><td rowspan="2"  height="20"> {% if wh == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td rowspan="2"  height="20"> {% if wh == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td rowspan="2"><a id="linkItemWH" href="#" class="{{product}}">{{product}}</a></td><td rowspan="2"></td></tr>
 			<tr align=center><td  height="20" height="20">{{actual_start|time:"H:i"}}</td></tr>
 			{% endfor %}
 			</table>			
 			
 			</td>
-			<td width="50%"><table border=1 width="100%"> {# right #} Product Detail </table>
+			<td width="50%"><table border=1 width="100%"> {# right #} </div><div id="productDetailWH">Product Detail </div></table>
 			</td>
 			</tr>
 			</table>

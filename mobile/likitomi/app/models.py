@@ -162,7 +162,7 @@ class FaUserTemp(models.Model):
     #    db_table = u'fa_user_temp'
 
 class FakeStatusTracking(models.Model):
-    plan_id = models.IntegerField()
+    plan_id = models.IntegerField(primary_key=True, db_column='plan_id')
     product_id = models.CharField(max_length=30, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
