@@ -16,16 +16,20 @@ def section(request):
 	is_enable_desktop = True
 
 	employee = Employee.objects.get(eid=eID)
+	page =  employee.task
+	#section_title = employee.lastname
 	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
-	if(employee.task == "PC"):
+	if(page == "PC"):
 		return showPC(eID,section_title)
-	if(employee.task == "CR"):
-		return showCR(eID,section_title)
-	if(employee.task == "CV"):
+	if(page == "MD"):
+		return showMD(eID,section_title)
+	if(page == "CR"):
+		return workCR(eID,section_title)
+	if(page == "CV"):
 		return showCV(eID,section_title)
-	if(employee.task == "PT"):
+	if(page == "PT"):
 		return showPT(eID,section_title)
-	if(employee.task == "WH"):
+	if(page == "WH"):
 		return showWH(eID,section_title)
 	
 	return render_to_response('home.html', locals())
@@ -125,13 +129,15 @@ def showPC(eID,section_title):
 	#str(startList) +","+ str(endList)
 	#contents_text = cvTwoCL
 	return render_to_response('PC.html', locals())
-def showCR(eID,section_title):
+def showMD(eID,section_title):
+	return render_to_response('MD.html',locals())
+def workCR(eID,section_title):
 	today = todayDate()
 	#create items for CR
 	cr = str(currentProcess("CR"))[2:8]
 	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
-	return render_to_response('CR.html', locals())
+	return render_to_response('lineCR.html', locals())
 def showCV(eID,section_title):
 	today = todayDate()
 	#create items for CV
