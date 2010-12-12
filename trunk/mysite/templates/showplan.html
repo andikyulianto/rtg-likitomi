@@ -11,7 +11,7 @@ $(document).ready(function(){
 		var hicode = $(this).attr("id");
 		var hiwidth = $(this).attr("class");
 //		alert(hicode+", "+hiwidth);
-		$("[id='"+ hicode +"'][class='"+ hiwidth +"']").parent().css("background-color","yellow");
+		$("[id="+hicode+"][class="+hiwidth+"]").parent().css("background-color","yellow");
 	});
 
 });

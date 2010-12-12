@@ -12,126 +12,127 @@ def clamplift(request):
 #		HOST = '192.41.170.55' # CSIM network
 #		HOST = '192.168.101.55' # Likitomi network
 #		HOST = '192.168.1.55' # My own local network: Linksys
-#		PORT = 50007
-#		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#		soc.settimeout(2)
-#		soc.connect((HOST, PORT))
-#		## soc.send('setup.operating_mode = standby\r\n')
-#		soc.send('tag.db.scan_tags(1000)\r\n')
-#		datum = soc.recv(128)
+		HOST = '' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		## soc.send('setup.operating_mode = standby\r\n')
+		soc.send('tag.db.scan_tags(1000)\r\n')
+		datum = soc.recv(128)
 
-#		if datum.find("ok") > -1:
-#			soc.send('tag.read_id()\r\n')
-#			data = soc.recv(8192)
-#			tagdata = data.split("\r\n")
+		if datum.find("ok") > -1:
+			soc.send('tag.read_id()\r\n')
+			data = soc.recv(8192)
+			tagdata = data.split("\r\n")
 
-#		idlist = list()
-#		loclist = list()
+		idlist = list()
+		loclist = list()
 
-#		for tag in tagdata:
-#			if "AAAA" in tag:
-#				idlist.append(tag)
-#			if "BBBB" in tag:
-#				loclist.append(tag)
+		for tag in tagdata:
+			if "AAAA" in tag:
+				idlist.append(tag)
+			if "BBBB" in tag:
+				loclist.append(tag)
 
-#		cnt = 0
+		cnt = 0
 
-#		tagid_A = list()
-#		type_A = list()
-#		antenna_A = list()
-#		repeat_A = list()
+		tagid_A = list()
+		type_A = list()
+		antenna_A = list()
+		repeat_A = list()
 
-#		for id1 in idlist:
-#			id2 = id1.replace("(","")
-#			id2 = id2.replace(")","")
-#			id3 = id2.split(", ")
-#			for id4 in id3:
-#				id5 = id4.split("=")
-#				if id5[0]=="tag_id":tagid_A.append(id5[1])
-#				elif id5[0]=="type":type_A.append(id5[1])
-#				elif id5[0]=="antenna": antenna_A.append(id5[1])
-#				elif id5[0]=="repeat": repeat_A.append(id5[1])
-#				cnt= cnt+1
+		for id1 in idlist:
+			id2 = id1.replace("(","")
+			id2 = id2.replace(")","")
+			id3 = id2.split(", ")
+			for id4 in id3:
+				id5 = id4.split("=")
+				if id5[0]=="tag_id":tagid_A.append(id5[1])
+				elif id5[0]=="type":type_A.append(id5[1])
+				elif id5[0]=="antenna": antenna_A.append(id5[1])
+				elif id5[0]=="repeat": repeat_A.append(id5[1])
+				cnt= cnt+1
 
-#		tagid_B = list()
-#		type_B = list()
-#		antenna_B = list()
-#		repeat_B = list()
+		tagid_B = list()
+		type_B = list()
+		antenna_B = list()
+		repeat_B = list()
 
-#		for loc1 in loclist:
-#			loc2 = loc1.replace("(","")
-#			loc2 = loc2.replace(")","")
-#			loc3 = loc2.split(", ")
-#			for loc4 in loc3 :
-#				loc5 = loc4.split("=")
-#				if loc5[0]=="tag_id": tagid_B.append(loc5[1])
-#				elif loc5[0]=="type": type_B.append(loc5[1])
-#				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
-#				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
-#				cnt= cnt+1
+		for loc1 in loclist:
+			loc2 = loc1.replace("(","")
+			loc2 = loc2.replace(")","")
+			loc3 = loc2.split(", ")
+			for loc4 in loc3 :
+				loc5 = loc4.split("=")
+				if loc5[0]=="tag_id": tagid_B.append(loc5[1])
+				elif loc5[0]=="type": type_B.append(loc5[1])
+				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
+				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
+				cnt= cnt+1
 
-#		lan = 0
-#		pos = 0
-#		totalCount = 0
+		lan = 0
+		pos = 0
+		totalCount = 0
 
-#		if len(repeat_B) > 0 :
-#			cnt = 0
-#			for rep in repeat_B:
-#				if type_B[cnt] == "ISOC":
-#					lindex = int(tagid_B[cnt][26:28])
-#					pindex = int(tagid_B[cnt][28:30])
-#					lan += float(lindex)*float(repeat_B[cnt])
-#					pos += float(pindex)*float(repeat_B[cnt])
-#					totalCount += float(repeat_B[cnt])
+		if len(repeat_B) > 0 :
+			cnt = 0
+			for rep in repeat_B:
+				if type_B[cnt] == "ISOC":
+					lindex = int(tagid_B[cnt][26:28])
+					pindex = int(tagid_B[cnt][28:30])
+					lan += float(lindex)*float(repeat_B[cnt])
+					pos += float(pindex)*float(repeat_B[cnt])
+					totalCount += float(repeat_B[cnt])
 
-#				cnt = cnt+1
+				cnt = cnt+1
 
-#		if totalCount > 0:
-#			L = int(round(lan/totalCount,0))
-#			P = int(round(pos/totalCount,0))
-#		else:
-#			L = 0
-#			P = 0
+		if totalCount > 0:
+			L = int(round(lan/totalCount,0))
+			P = int(round(pos/totalCount,0))
+		else:
+			L = 0
+			P = 0
 
-#		atlane = str(L)
-#		atposition = str(P)
-#		atlocation = ''
+		atlane = str(L)
+		atposition = str(P)
+		atlocation = ''
 
-#		if L == 0:
-#			atlocation = 'CR'
-#		if L == 5 and P == 5:
-#			atlocation = 'Scale'
-#		if L in range(1, 5):
-#			atlocation = 'Stock'
+		if L == 0:
+			atlocation = 'CR'
+		if L == 5 and P == 5:
+			atlocation = 'Scale'
+		if L in range(1, 5):
+			atlocation = 'Stock'
 
-#		if L == 0 and P == 0:
-#			atlane = ""
-#			atposition = ""
-#			atlocation = ""
-#			toperror = "[No location tag in field.]"
+		if L == 0 and P == 0:
+			atlane = ""
+			atposition = ""
+			atlocation = ""
+			toperror = "[No location tag in field.]"
 
-#		repeat_AA = list()
+		repeat_AA = list()
 
-#		for rep_A in repeat_A:
-#			repeat_AA.append(int(rep_A))
+		for rep_A in repeat_A:
+			repeat_AA.append(int(rep_A))
 
-#		if max(repeat_AA) in repeat_AA:
-#			n = repeat_AA.index(max(repeat_AA))
+		if max(repeat_AA) in repeat_AA:
+			n = repeat_AA.index(max(repeat_AA))
 
-#		tagsplt = tagid_A[n].split("AAAA")
-#		realtag = int(tagsplt[1][0:4])
+		tagsplt = tagid_A[n].split("AAAA")
+		realtag = int(tagsplt[1][0:4])
 
-#		soc.close()
+		soc.close()
 
-		atlane = '5'
-		atposition = '5'
-		atlocation = 'Scale'
+#		atlane = '5'
+#		atposition = '5'
+#		atlocation = 'Scale'
 
 #		atlane = '1'
 #		atposition = '13'
 #		atlocation = 'Stock'
 
-		realtag = 64
+#		realtag = 64
 
 # Query database #
 		query = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'width', 'initial_weight','temp_weight', 'lane', 'position')[0]
@@ -432,127 +433,128 @@ def minclamp(request):
 #		HOST = '192.41.170.55' # CSIM network
 #		HOST = '192.168.101.55' # Likitomi network
 #		HOST = '192.168.1.55' # My own local network: Linksys
-#		PORT = 50007
-#		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#		soc.settimeout(2)
-#		soc.connect((HOST, PORT))
-#		## soc.send('setup.operating_mode = standby\r\n')
-#		soc.send('tag.db.scan_tags(1000)\r\n')
-#		datum = soc.recv(128)
+		HOST = '' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		## soc.send('setup.operating_mode = standby\r\n')
+		soc.send('tag.db.scan_tags(1000)\r\n')
+		datum = soc.recv(128)
 
-#		if datum.find("ok") > -1:
-#			soc.send('tag.read_id()\r\n')
-#			data = soc.recv(8192)
-#			tagdata = data.split("\r\n")
+		if datum.find("ok") > -1:
+			soc.send('tag.read_id()\r\n')
+			data = soc.recv(8192)
+			tagdata = data.split("\r\n")
 
-#		idlist = list()
-#		loclist = list()
+		idlist = list()
+		loclist = list()
 
-#		for tag in tagdata:
-#			if "AAAA" in tag:
-#				idlist.append(tag)
-#			if "BBBB" in tag:
-#				loclist.append(tag)
+		for tag in tagdata:
+			if "AAAA" in tag:
+				idlist.append(tag)
+			if "BBBB" in tag:
+				loclist.append(tag)
 
-#		cnt = 0
+		cnt = 0
 
-#		tagid_A = list()
-#		type_A = list()
-#		antenna_A = list()
-#		repeat_A = list()
+		tagid_A = list()
+		type_A = list()
+		antenna_A = list()
+		repeat_A = list()
 
-#		for id1 in idlist:
-#			id2 = id1.replace("(","")
-#			id2 = id2.replace(")","")
-#			id3 = id2.split(", ")
-#			for id4 in id3:
-#				id5 = id4.split("=")
-#				if id5[0]=="tag_id":tagid_A.append(id5[1])
-#				elif id5[0]=="type":type_A.append(id5[1])
+		for id1 in idlist:
+			id2 = id1.replace("(","")
+			id2 = id2.replace(")","")
+			id3 = id2.split(", ")
+			for id4 in id3:
+				id5 = id4.split("=")
+				if id5[0]=="tag_id":tagid_A.append(id5[1])
+				elif id5[0]=="type":type_A.append(id5[1])
 
-#				elif id5[0]=="antenna": antenna_A.append(id5[1])
-#				elif id5[0]=="repeat": repeat_A.append(id5[1])
-#				cnt= cnt+1
+				elif id5[0]=="antenna": antenna_A.append(id5[1])
+				elif id5[0]=="repeat": repeat_A.append(id5[1])
+				cnt= cnt+1
 
-#		tagid_B = list()
-#		type_B = list()
-#		antenna_B = list()
-#		repeat_B = list()
+		tagid_B = list()
+		type_B = list()
+		antenna_B = list()
+		repeat_B = list()
 
-#		for loc1 in loclist:
-#			loc2 = loc1.replace("(","")
-#			loc2 = loc2.replace(")","")
-#			loc3 = loc2.split(", ")
-#			for loc4 in loc3 :
-#				loc5 = loc4.split("=")
-#				if loc5[0]=="tag_id": tagid_B.append(loc5[1])
-#				elif loc5[0]=="type": type_B.append(loc5[1])
-#				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
-#				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
-#				cnt= cnt+1
+		for loc1 in loclist:
+			loc2 = loc1.replace("(","")
+			loc2 = loc2.replace(")","")
+			loc3 = loc2.split(", ")
+			for loc4 in loc3 :
+				loc5 = loc4.split("=")
+				if loc5[0]=="tag_id": tagid_B.append(loc5[1])
+				elif loc5[0]=="type": type_B.append(loc5[1])
+				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
+				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
+				cnt= cnt+1
 
-#		lan = 0
-#		pos = 0
-#		totalCount = 0
+		lan = 0
+		pos = 0
+		totalCount = 0
 
-#		if len(repeat_B) > 0 :
-#			cnt = 0
-#			for rep in repeat_B:
-#				if type_B[cnt] == "ISOC":
-#					lindex = int(tagid_B[cnt][26:28])
-#					pindex = int(tagid_B[cnt][28:30])
-#					lan += float(lindex)*float(repeat_B[cnt])
-#					pos += float(pindex)*float(repeat_B[cnt])
-#					totalCount += float(repeat_B[cnt])
+		if len(repeat_B) > 0 :
+			cnt = 0
+			for rep in repeat_B:
+				if type_B[cnt] == "ISOC":
+					lindex = int(tagid_B[cnt][26:28])
+					pindex = int(tagid_B[cnt][28:30])
+					lan += float(lindex)*float(repeat_B[cnt])
+					pos += float(pindex)*float(repeat_B[cnt])
+					totalCount += float(repeat_B[cnt])
 
-#				cnt = cnt+1
+				cnt = cnt+1
 
-#		if totalCount > 0:
-#			L = int(round(lan/totalCount,0))
-#			P = int(round(pos/totalCount,0))
-#		else:
-#			L = 0
-#			P = 0
+		if totalCount > 0:
+			L = int(round(lan/totalCount,0))
+			P = int(round(pos/totalCount,0))
+		else:
+			L = 0
+			P = 0
 
-#		atlane = str(L)
-#		atposition = str(P)
-#		atlocation = ''
+		atlane = str(L)
+		atposition = str(P)
+		atlocation = ''
 
-#		if L == 0:
-#			atlocation = 'CR'
-#		if L == 5 and P == 5:
-#			atlocation = 'Scale'
-#		if L in range(1, 5):
-#			atlocation = 'Stock'
+		if L == 0:
+			atlocation = 'CR'
+		if L == 5 and P == 5:
+			atlocation = 'Scale'
+		if L in range(1, 5):
+			atlocation = 'Stock'
 
-#		if L == 0 and P == 0:
-#			atlane = ""
-#			atposition = ""
-#			atlocation = ""
-#			toperror = "[No location tag in field.]"
+		if L == 0 and P == 0:
+			atlane = ""
+			atposition = ""
+			atlocation = ""
+			toperror = "[No location tag in field.]"
 
-#		repeat_AA = list()
+		repeat_AA = list()
 
-#		for rep_A in repeat_A:
-#			repeat_AA.append(int(rep_A))
+		for rep_A in repeat_A:
+			repeat_AA.append(int(rep_A))
 
-#		if max(repeat_AA) in repeat_AA:
-#			n = repeat_AA.index(max(repeat_AA))
+		if max(repeat_AA) in repeat_AA:
+			n = repeat_AA.index(max(repeat_AA))
 
-#		tagsplt = tagid_A[n].split("AAAA")
-#		realtag = int(tagsplt[1][0:4])
+		tagsplt = tagid_A[n].split("AAAA")
+		realtag = int(tagsplt[1][0:4])
 
-#		soc.close()
+		soc.close()
 
-		atlane = 5
-		atposition = 5
-		atlocation = 'Scale'
+#		atlane = 5
+#		atposition = 5
+#		atlocation = 'Scale'
 
 #		atlane = '1'
 #		atposition = '4'
 #		atlocation = 'Stock'
 
-		realtag = 67
+#		realtag = 67
 
 # Query database #
 		query = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'width', 'initial_weight','temp_weight', 'lane', 'position')[0]
