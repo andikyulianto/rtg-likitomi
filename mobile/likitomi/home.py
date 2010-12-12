@@ -26,11 +26,11 @@ def section(request):
 	if(page == "CR"):
 		return workCR(eID,section_title)
 	if(page == "CV"):
-		return showCV(eID,section_title)
+		return workCV(eID,section_title)
 	if(page == "PT"):
-		return showPT(eID,section_title)
+		return workPT(eID,section_title)
 	if(page == "WH"):
-		return showWH(eID,section_title)
+		return workWH(eID,section_title)
 	
 	return render_to_response('home.html', locals())
 def todayDate():
@@ -132,35 +132,36 @@ def showPC(eID,section_title):
 def showMD(eID,section_title):
 	return render_to_response('MD.html',locals())
 def workCR(eID,section_title):
+	eID = eID
 	today = todayDate()
 	#create items for CR
 	cr = str(currentProcess("CR"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_id","plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
-	return render_to_response('lineCR.html', locals())
-def showCV(eID,section_title):
+	return render_to_response('listCR.html', locals())
+def workCV(eID,section_title):
 	today = todayDate()
 	#create items for CV
 	cvThreeCL = str(currentProcess("3CL"))[2:8]
 	cvTwoCL = str(currentProcess("2CL"))[2:8]
 	cvThreeCS = str(currentProcess("3CS"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	items = list(item_plan)
-	return render_to_response('CV.html', locals())
-def showPT(eID,section_title):
+	return render_to_response('listCV.html', locals())
+def workPT(eID,section_title):
 	#create items for PT
 	today = todayDate()
 	pt = str(currentProcess("PT"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
 	items = list(item_plan)
-	return render_to_response('PT.html', locals())
-def showWH(eID,section_title):
+	return render_to_response('listPT.html', locals())
+def workWH(eID,section_title):
 	today = todayDate()
 	#create items for WH
 	wh = str(currentProcess("WH"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_wh_start", "product_id").order_by('plan_wh_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id").order_by('plan_wh_start')
 	items = list(item_plan)
-	return render_to_response('WH.html',locals())
+	return render_to_response('listWH.html',locals())
 	
 def positionOfCurrentProcess(machine,product):
 	today = todayDate()
