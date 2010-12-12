@@ -5,7 +5,7 @@ from home import section
 from newHome import allSection
 from machine import report
 from product import view
-from line import start
+from line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -19,8 +19,22 @@ urlpatterns = patterns('',
     (r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     (r'^likitomi/newHome/$', allSection),
     (r'^likitomi/newHome/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-    (r'^likitomi/line/$', start),
-    (r'^likitomi/line/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/cr/start/$', startCR),
+    (r'^likitomi/line/cr/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/cr/end/$', endCR),
+    (r'^likitomi/line/cr/end/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/cv/start/$', startCV),
+    (r'^likitomi/line/cv/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/cv/end/$', endCV),
+    (r'^likitomi/line/cv/end/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/pt/start/$', startPT),
+    (r'^likitomi/line/pt/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/pt/end/$', endPT),
+    (r'^likitomi/line/pt/end/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/wh/start/$', startWH),
+    (r'^likitomi/line/wh/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/wh/end/$', endWH),
+    (r'^likitomi/line/wh/end/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     #(r'^likitomi/home/cr/$',section),
     #(r'^likitomi/home/cv/$',section)
     #(r'^likitomi/home/pt/$',section)
