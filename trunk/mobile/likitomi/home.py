@@ -159,7 +159,7 @@ def workWH(eID,section_title):
 	today = todayDate()
 	#create items for WH
 	wh = str(currentProcess("WH"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id").order_by('plan_wh_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
 	items = list(item_plan)
 	return render_to_response('listWH.html',locals())
 	

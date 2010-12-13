@@ -51,38 +51,26 @@
 			{% endif %}</li>
 		{% endif %}
 		<!-- Start Table-->
-			<ul class="pageitem"><li class="textbox"><span class="header">{{ product_code }}</span><p>Display corrugator specification of {{product_code}}</p>
-	<table><tr><td>Sheet Code</td><td>: {{product_code}}</td></tr>
-	<tr><td>Customer Name</td><td>: {{cname}}</td></tr>
-	<tr><td>Product</td><td>: {{product_name}}</td></tr>
-	<tr><td>Flute</td><td>: {{flute}}</td></tr>
-	</table>
-	<table>
-	<tr><td>Paper</td></tr>
-	<tr><td>D-F</td><td>: {{df}} </td><td>     B-M</td><td>: {{bm}}</td></tr>
-	<tr><td>B-L</td><td>: {{bl}} </td><td>     C-M</td><td>: {{cm}}</td></tr>
-	<tr><td>C-L</td><td>: {{cl}} </td></tr>
-	</table>
-	<table>
-	<tr><td>Paper Width</td><td>: {{width_mm}} mm</td></tr>
-	<tr><td>Sheet Length</td><td>: {{length_mm}} mm</td></tr>
-	<tr><td>Case</td><td>:</td><td>Cut</td><td>: {{cut}}</td></tr>
-	</table>
-	<table>
-	<tr><td>Blank</td><td>: {{blank}}</td></tr>
-	<tr><td>Slit</td><td>: {{slit}}</td></tr>
-	<tr><td>Scoreline</td><td>: {{scoreline}}</td></tr>
-	</table>
-	<table>
-	<tr><td>Next Process</td><td>: {{next_process}}</td></tr>
-	</table>
+			<ul class="pageitem"><li class="textbox"><span class="header">{{ product_code }}</span><p>Display warehouse specification of {{product_code}}</p>
+	
 
 </li>
 </ul>
 			<center>
-			<span class="graytitle">Amount from sale order :</span><li class="bigfield"><input name="product_name" type="text"  value='{{amount}}' style="text-align: center" /> </li> 
+		<li class="bigfield"><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center" disabled="disabled"/></li>
+			<form action="/likitomi/line/update/start/" method="get" name="startForm">
+			<fieldset>
+			<span class="graytitle">Amount from sale order :</span><li class="bigfield"><input name="amount" type="text"  value='{{amount}}' style="text-align: center" /> </li> 
+			<input name="task" type="hidden" value="{{task}}">
+			<input name="eID" type="hidden" value="{{eID}}">
+			<input name="pID" type="hidden" value="{{pID}}">
+			<input name="at" type="hidden" value="{{at}}">
 			<li class="button"><input name="Enter" type="submit" value="Enter" /></li>
-			<li class="bigfield"><input name="start_time" type="text"  value="" disabled="disabled" /></li></center>
+			
+			</center>
+			</fieldset>
+
+			</form>
 
 	</ul>
 </div>

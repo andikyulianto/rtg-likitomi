@@ -79,10 +79,20 @@
 
 </li>
 </ul>
-			<center>
-			<span class="graytitle">Amount from sale order :</span><li class="bigfield"><input name="product_name" type="text"  value='{{amount}}' style="text-align: center" /> </li> 
+		<center><span class="graytitle">Amount from sale order :</span><li class="bigfield"><input name="product_name" type="text"  value='{{amount}}' style="text-align: center" disabled="disabled" /> </li> 
+		<li class="bigfield"><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center" disabled="disabled"/></li>
+			<form action="/likitomi/line/update/start/" method="get" name="startForm">
+			<fieldset>
+			<input name="task" type="hidden" value="{{task}}">
+			<input name="eID" type="hidden" value="{{eID}}">
+			<input name="pID" type="hidden" value="{{pID}}">
+			<input name="at" type="hidden" value="{{at}}">
 			<li class="button"><input name="Enter" type="submit" value="Enter" /></li>
-			<li class="bigfield"><input name="start_time" type="text"  value="" disabled="disabled" /></li></center>
+			
+			</center>
+			</fieldset>
+
+			</form>
 
 	</ul>
 </div>

@@ -24,30 +24,30 @@ class Addresses(models.Model):
 class AppAuthgroup(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(unique=True, max_length=255)
-    class Meta:
-        db_table = u'app_authgroup'
+#    class Meta:
+#        db_table = u'app_authgroup'
 
 class AppAuthgrouppermissions(models.Model):
     id = models.IntegerField(primary_key=True)
     group_id = models.IntegerField()
     permission_id = models.IntegerField()
-    class Meta:
-        db_table = u'app_authgrouppermissions'
+#    class Meta:
+#        db_table = u'app_authgrouppermissions'
 
 class AppAuthmessage(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.IntegerField()
     message = models.TextField()
-    class Meta:
-        db_table = u'app_authmessage'
+#    class Meta:
+#        db_table = u'app_authmessage'
 
 class AppAuthpermission(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=250)
     content_type_id = models.IntegerField()
     codename = models.CharField(unique=True, max_length=250)
-    class Meta:
-        db_table = u'app_authpermission'
+#    class Meta:
+#        db_table = u'app_authpermission'
 
 class AppAuthuser(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -61,22 +61,22 @@ class AppAuthuser(models.Model):
     is_superuser = models.IntegerField()
     last_login = models.DateTimeField()
     date_joined = models.DateTimeField()
-    class Meta:
-        db_table = u'app_authuser'
+#    class Meta:
+#        db_table = u'app_authuser'
 
 class AppAuthusergroups(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.IntegerField()
     group_id = models.IntegerField()
-    class Meta:
-        db_table = u'app_authusergroups'
+#    class Meta:
+#        db_table = u'app_authusergroups'
 
 class AppAuthuseruserpermissions(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.IntegerField()
     permission_id = models.IntegerField()
-    class Meta:
-        db_table = u'app_authuseruserpermissions'
+#    class Meta:
+#        db_table = u'app_authuseruserpermissions'
 
 class AppCisessions(models.Model):
     session_id = models.CharField(max_length=250, primary_key=True)
@@ -84,8 +84,8 @@ class AppCisessions(models.Model):
     user_agent = models.CharField(max_length=250)
     last_activity = models.IntegerField()
     session_data = models.TextField()
-    class Meta:
-        db_table = u'app_cisessions'
+#    class Meta:
+#        db_table = u'app_cisessions'
 
 class AppDjangoadminlog(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -96,30 +96,30 @@ class AppDjangoadminlog(models.Model):
     object_repr = models.CharField(max_length=250)
     action_flag = models.IntegerField()
     change_message = models.TextField()
-    class Meta:
-        db_table = u'app_djangoadminlog'
+#    class Meta:
+#        db_table = u'app_djangoadminlog'
 
 class AppDjangocontenttype(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=900)
     app_label = models.CharField(unique=True, max_length=250)
     model = models.CharField(unique=True, max_length=250)
-    class Meta:
-        db_table = u'app_djangocontenttype'
+#    class Meta:
+#        db_table = u'app_djangocontenttype'
 
 class AppDjangosession(models.Model):
     session_key = models.CharField(max_length=250, primary_key=True)
     session_data = models.TextField()
     expire_date = models.DateTimeField()
-    class Meta:
-        db_table = u'app_djangosession'
+#    class Meta:
+#        db_table = u'app_djangosession'
 
 class AppDjangosite(models.Model):
     id = models.IntegerField(primary_key=True)
     domain = models.CharField(max_length=250)
     name = models.CharField(max_length=250)
-    class Meta:
-        db_table = u'app_djangosite'
+#    class Meta:
+#        db_table = u'app_djangosite'
 
 class AppFacountry(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -127,8 +127,8 @@ class AppFacountry(models.Model):
     name = models.CharField(max_length=720)
     iso3 = models.CharField(max_length=27)
     numcode = models.IntegerField(null=True, blank=True)
-    class Meta:
-        db_table = u'app_facountry'
+#    class Meta:
+#        db_table = u'app_facountry'
 
 class AppFaketotalactual(models.Model):
     actual_id = models.IntegerField(primary_key=True)
@@ -144,8 +144,8 @@ class AppFaketotalactual(models.Model):
     actual_amount_wh = models.IntegerField()
     actual_wh_start = models.DateTimeField(null=True, blank=True)
     actual_wh_end = models.DateTimeField(null=True, blank=True)
-    class Meta:
-        db_table = u'app_faketotalactual'
+#    class Meta:
+#        db_table = u'app_faketotalactual'
 
 class AppFaketotalplanning(models.Model):
     plan_id = models.IntegerField(primary_key=True)
@@ -160,8 +160,8 @@ class AppFaketotalplanning(models.Model):
     wh_start = models.DateTimeField(null=True, blank=True)
     wh_end = models.DateTimeField(null=True, blank=True)
     current_status = models.CharField(max_length=99)
-    class Meta:
-        db_table = u'app_faketotalplanning'
+#    class Meta:
+#        db_table = u'app_faketotalplanning'
 
 class AppFauser(models.Model):
     faid = models.IntegerField(primary_key=True)
@@ -175,8 +175,8 @@ class AppFauser(models.Model):
     last_visit = models.DateTimeField(null=True, blank=True)
     created = models.DateTimeField()
     modified = models.DateTimeField()
-    class Meta:
-        db_table = u'app_fauser'
+#    class Meta:
+#        db_table = u'app_fauser'
 
 class AppFauserprofile(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -184,8 +184,8 @@ class AppFauserprofile(models.Model):
     name = models.CharField(max_length=450)
     surname = models.CharField(max_length=450)
     phone = models.CharField(max_length=450)
-    class Meta:
-        db_table = u'app_fauserprofile'
+#    class Meta:
+#        db_table = u'app_fauserprofile'
 
 class AppFausertemp(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -195,8 +195,8 @@ class AppFausertemp(models.Model):
     email = models.CharField(max_length=1080)
     activation_code = models.CharField(max_length=450)
     created = models.DateTimeField()
-    class Meta:
-        db_table = u'app_fausertemp'
+#    class Meta:
+#        db_table = u'app_fausertemp'
 
 class AppProductcatalog(models.Model):
     product_id = models.IntegerField(primary_key=True)
@@ -238,8 +238,8 @@ class AppProductcatalog(models.Model):
     modified_on = models.DateTimeField(null=True, blank=True)
     modified_by = models.CharField(max_length=270)
     code = models.IntegerField(null=True, blank=True)
-    class Meta:
-        db_table = u'app_productcatalog'
+#    class Meta:
+#        db_table = u'app_productcatalog'
 
 class AppProducts(models.Model):
     auto_pid = models.IntegerField(primary_key=True)
@@ -261,8 +261,8 @@ class AppProducts(models.Model):
     created_by = models.CharField(max_length=270)
     modified_on = models.DateTimeField(null=True, blank=True)
     modified_by = models.CharField(max_length=270)
-    class Meta:
-        db_table = u'app_products'
+#    class Meta:
+#        db_table = u'app_products'
 
 class AssignTask(models.Model):
     etaskid = models.IntegerField(primary_key=True, db_column='eTaskID') # Field name made lowercase.
@@ -274,30 +274,30 @@ class AssignTask(models.Model):
 class AuthGroup(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(unique=True, max_length=240)
-    class Meta:
-        db_table = u'auth_group'
+#    class Meta:
+#        db_table = u'auth_group'
 
 class AuthGroupPermissions(models.Model):
     id = models.IntegerField(primary_key=True)
     group_id = models.IntegerField()
     permission_id = models.IntegerField()
-    class Meta:
-        db_table = u'auth_group_permissions'
+#    class Meta:
+#        db_table = u'auth_group_permissions'
 
 class AuthMessage(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.IntegerField()
     message = models.TextField()
-    class Meta:
-        db_table = u'auth_message'
+#    class Meta:
+#        db_table = u'auth_message'
 
 class AuthPermission(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=150)
     content_type_id = models.IntegerField()
     codename = models.CharField(unique=True, max_length=250)
-    class Meta:
-        db_table = u'auth_permission'
+#    class Meta:
+#        db_table = u'auth_permission'
 
 class AuthUser(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -311,22 +311,22 @@ class AuthUser(models.Model):
     is_superuser = models.IntegerField()
     last_login = models.DateTimeField()
     date_joined = models.DateTimeField()
-    class Meta:
-        db_table = u'auth_user'
+#    class Meta:
+#        db_table = u'auth_user'
 
 class AuthUserGroups(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.IntegerField()
     group_id = models.IntegerField()
-    class Meta:
-        db_table = u'auth_user_groups'
+#    class Meta:
+#        db_table = u'auth_user_groups'
 
 class AuthUserUserPermissions(models.Model):
     id = models.IntegerField(primary_key=True)
     user_id = models.IntegerField()
     permission_id = models.IntegerField()
-    class Meta:
-        db_table = u'auth_user_user_permissions'
+#    class Meta:
+#        db_table = u'auth_user_user_permissions'
 
 class CiSessions(models.Model):
     session_id = models.CharField(max_length=120, primary_key=True)
@@ -334,8 +334,8 @@ class CiSessions(models.Model):
     user_agent = models.CharField(max_length=150)
     last_activity = models.IntegerField()
     session_data = models.TextField(blank=True)
-    class Meta:
-        db_table = u'ci_sessions'
+#    class Meta:
+#        db_table = u'ci_sessions'
 
 class Delivery(models.Model):
     delivery_id = models.IntegerField(primary_key=True)
@@ -355,8 +355,8 @@ class Delivery(models.Model):
     created_by = models.CharField(max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
     modified_by = models.CharField(max_length=90, blank=True)
-    class Meta:
-        db_table = u'delivery'
+#    class Meta:
+#        db_table = u'delivery'
 
 class DeliveryHistory(models.Model):
     histid = models.IntegerField(primary_key=True)
@@ -367,8 +367,8 @@ class DeliveryHistory(models.Model):
     state = models.CharField(max_length=90, blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
     created_by = models.CharField(max_length=90, blank=True)
-    class Meta:
-        db_table = u'delivery_history'
+#    class Meta:
+#        db_table = u'delivery_history'
 
 class DjangoAdminLog(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -379,30 +379,30 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=600)
     action_flag = models.IntegerField()
     change_message = models.TextField()
-    class Meta:
-        db_table = u'django_admin_log'
+#    class Meta:
+#        db_table = u'django_admin_log'
 
 class DjangoContentType(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=300)
     app_label = models.CharField(unique=True, max_length=250)
     model = models.CharField(unique=True, max_length=250)
-    class Meta:
-        db_table = u'django_content_type'
+#    class Meta:
+#        db_table = u'django_content_type'
 
 class DjangoSession(models.Model):
     session_key = models.CharField(max_length=120, primary_key=True)
     session_data = models.TextField()
     expire_date = models.DateTimeField()
-    class Meta:
-        db_table = u'django_session'
+#    class Meta:
+#        db_table = u'django_session'
 
 class DjangoSite(models.Model):
     id = models.IntegerField(primary_key=True)
     domain = models.CharField(max_length=250)
     name = models.CharField(max_length=150)
-    class Meta:
-        db_table = u'django_site'
+#    class Meta:
+#        db_table = u'django_site'
 
 class Employee(models.Model):
     eid = models.CharField(max_length=12, primary_key=True, db_column='eID') # Field name made lowercase.
@@ -695,18 +695,18 @@ class Products(models.Model):
     class Meta:
         db_table = u'products'
 
-class Progress(models.Model):
-    sales_order_id = models.CharField(max_length=18, primary_key=True)
-    stationid = models.CharField(max_length=6, primary_key=True, db_column='stationID') # Field name made lowercase.
-    input = models.IntegerField(null=True, blank=True)
-    processing = models.IntegerField(null=True, blank=True)
-    output = models.IntegerField(null=True, blank=True)
-    finished = models.IntegerField(null=True, blank=True)
-    expected = models.IntegerField(null=True, blank=True)
-    updated_at = models.DateTimeField(null=True, blank=True)
-    updated_by = models.CharField(max_length=12, blank=True)
-    class Meta:
-        db_table = u'progress'
+#class Progress(models.Model):
+#    sales_order_id = models.CharField(max_length=18, primary_key=True)
+#    stationid = models.CharField(max_length=6, primary_key=True, db_column='stationID') # Field name made lowercase.
+#    input = models.IntegerField(null=True, blank=True)
+#    processing = models.IntegerField(null=True, blank=True)
+#    output = models.IntegerField(null=True, blank=True)
+#    finished = models.IntegerField(null=True, blank=True)
+#    expected = models.IntegerField(null=True, blank=True)
+#    updated_at = models.DateTimeField(null=True, blank=True)
+#    updated_by = models.CharField(max_length=12, blank=True)
+#    class Meta:
+#        db_table = u'progress'
 
 class Reader(models.Model):
     id = models.IntegerField(primary_key=True)
