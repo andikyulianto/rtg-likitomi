@@ -3,10 +3,10 @@ from django.conf import settings
 from general import login, index
 from home import section
 from newHome import allSection
-from machine import report
-from product import view
+from product import view,product_list
 from line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
-
+from update import startUpdate,endUpdate
+from machine import machine_list
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -35,6 +35,14 @@ urlpatterns = patterns('',
     (r'^likitomi/line/wh/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     (r'^likitomi/line/wh/end/$', endWH),
     (r'^likitomi/line/wh/end/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/update/start/$', startUpdate),
+    (r'^likitomi/line/update/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/line/update/end/$', endUpdate),
+    (r'^likitomi/line/update/end/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/machine/list/$', machine_list),
+    (r'^likitomi/machine/list/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/product/list/$', endUpdate),
+    (r'^likitomi/product/list/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     #(r'^likitomi/home/cr/$',section),
     #(r'^likitomi/home/cv/$',section)
     #(r'^likitomi/home/pt/$',section)
@@ -43,12 +51,10 @@ urlpatterns = patterns('',
     #(r'^likitomi/(.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
     
     
-	(r'^likitomi/product/$', view),
+	(r'^likitomi/product/$', product_list),
 	(r'^likitomi/product/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     
-    
-    (r'^likitomi/machine/$', report),
-    (r'^likitomi/machine/(?P<path>.*)$','django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+
     #(r'^likitomi/LST/$',work_status),
     # Example:
     # (r'^likitomi/', include('likitomi.foo.urls')),

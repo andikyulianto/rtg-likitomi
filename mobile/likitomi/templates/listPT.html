@@ -61,7 +61,7 @@
 			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
 			{% for plan_id,start,end,product,actual_start,actual_end in items %}
 			<tr align=center><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> <a href="/likitomi/line/pt/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td><td> <a href="/likitomi/line/pt/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
-			<tr align=center><td height="20">{{start|time:"H:i"}}</td><td>{{ end|time:"H:i" }}</td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{ actual_end|time:"H:i" }}</td></tr>
 			{% endfor %}
 			</table>
 			</ul>
