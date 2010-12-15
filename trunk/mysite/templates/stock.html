@@ -42,7 +42,7 @@ $(document).ready(function(){
 	<td valign="middle" style="width:1px; border:1px;">
 		<form>
 			<select id="scode">
-			<option value="">Select paper code:</option>
+			<option value="">Paper Code:</option>
 			{% for paper_code in scode %}
 			<option value="{{ paper_code }}">{{ paper_code }}</option>
 			{% endfor %}
@@ -52,7 +52,7 @@ $(document).ready(function(){
 	<td style="text-align:left; border:1px; width:1px;">
 		<form>
 			<select id="swidth">
-			<option value="">Select size:</option>
+			<option value="">Size:</option>
 			{% for width in swidth %}
 			<option value="{{ width }}">{{ width }}</option>
 			{% endfor %}

@@ -35,8 +35,10 @@ $(document).ready(function(){
 
 <table>
 	<tr>
-		<td class="lft">
-		AS PRODUCTION OF:
+		<td class="lft">AS PRODUCTION OF:</td><td style="border:0px"><a href="/wholeplan/" target="_top"><button>More</botton></a></td>
+	</tr>
+	<tr>
+		<td class="lft" colspan="2">
 			<form>
 				<select id="sel" name="opdate">
 				<option value="">Select date to show plan:</option>
@@ -46,18 +48,17 @@ $(document).ready(function(){
 				</select>
 			</form>
 		</td>
-		<td class="rght"><a href="/wholeplan/" target="_top"><button>More</botton></a></td>
 	</tr>
 </table>
 
 <table>
 	<tr>
-		<th rowspan='2' width="13%">TIME</th>
+		<th rowspan='2' width="10%">TIME</th>
 		<th rowspan='2' width="20%">SHEET CODE</th>
-		<th class='bt' width="21%">WIDTH</th>
+		<th class='bt' width="21%">SIZE</th>
 		<th width="21%">BL</th>
 		<th width="21%">BM</th>
-		<th width="4%" style="border:0px"></th>
+		<th width="7%" style="border:0px"></th>
 	</tr>
 	<tr>
 		<th>DF</th>
@@ -66,7 +67,7 @@ $(document).ready(function(){
 	</tr>
 </table>
 
-<iframe id="plan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" width="100%" height="70%" marginheight="0" marginwidth="0" scrolling="yes">
+<iframe id="plan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" width="100%" height="70%" marginheight="0" marginwidth="0" scrolling="auto">
 <div id="plan"><b>Clamplift plan will be shown here.</b></div>
 </iframe>
 

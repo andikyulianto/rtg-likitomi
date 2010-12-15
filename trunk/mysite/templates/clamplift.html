@@ -82,8 +82,8 @@
 		div.style.position = (navigator.userAgent.indexOf('MSIE 6') > -1) ? 'absolute' : 'fixed';
 		div.style.top = '20px'; 
 		div.style.left = (width / 2) - (400 / 2) + 'px'; 
-		div.style.height = '480px';
-		div.style.width = '420px';
+		div.style.height = '400px';
+		div.style.width = '400px';
 		div.style.backgroundColor = 'lightgray';
 		div.style.opacity = '1';
 		div.style.border = '2px solid silver';
@@ -91,15 +91,15 @@
 		document.body.appendChild(div);
 
 		var mes = document.createElement('b');
-		mes.innerHTML = "<center>Please enter lane and position.</center><br />".fontsize(4);
+		mes.innerHTML = "<center>Please enter lane and position.</center>".fontsize(4);
 		div.appendChild(mes);
 
 		var l = document.createElement('b');
-		l.innerHTML = '_____'.fontcolor('lightgray')+'Lane >> '.fontsize(4);
+		l.innerHTML = '_____'.fontcolor('lightgray')+'Lane >'.fontsize(4);
 		div.appendChild(l);
 
 		var ilane = document.createElement('input');
-		ilane.style.fontSize = '200%';
+		ilane.style.fontSize = '150%';
 		ilane.style.color = 'black';
 		ilane.style.textAlign = 'center';
 		ilane.maxlength = 4;
@@ -114,7 +114,7 @@
 		div.appendChild(d);
 
 		var iposition = document.createElement('input');
-		iposition.style.fontSize = '200%';
+		iposition.style.fontSize = '150%';
 		iposition.style.color = 'black';
 		iposition.style.textAlign = 'center';
 		iposition.maxlength = '4';
@@ -125,89 +125,12 @@
 		div.appendChild(iposition);
 
 		var p = document.createElement('b');
-		p.innerHTML = ' << Position'.fontsize(4);
+		p.innerHTML = '< Position'.fontsize(4);
 		div.appendChild(p);
-
-		var a = document.createElement('a');
-		a.id = 'lanebutton';
-		a.style.top = '120px';
-		a.style.left = '50px';
-		a.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"A".fontsize(4).bold()+"</td></tr></table>";
-		a.onclick = function()
-		{
-			document.getElementById('ilane').value = 'A';
-		}
-		div.appendChild(a);
-
-		var b = document.createElement('a');
-		b.id = 'lanebutton';
-		b.style.top = '170px';
-		b.style.left = '50px'; 
-		b.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"B".fontsize(4).bold()+"</td></tr></table>";
-		b.onclick = function()
-		{
-			document.getElementById('ilane').value = 'B';
-		}
-		div.appendChild(b);
-
-		var c = document.createElement('a');
-		c.id = 'lanebutton';
-		c.style.top = '195px';
-		c.style.left = '50px'; 
-		c.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"C".fontsize(4).bold()+"</td></tr></table>";
-		c.onclick = function()
-		{
-			document.getElementById('ilane').value = 'C';
-		}
-		div.appendChild(c);
-
-		var d = document.createElement('a');
-		d.id = 'lanebutton';
-		d.style.top = '245px';
-		d.style.left = '50px'; 
-		d.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"D".fontsize(4).bold()+"</td></tr></table>";
-		d.onclick = function()
-		{
-			document.getElementById('ilane').value = 'D';
-		}
-		div.appendChild(d);
-
-		var e = document.createElement('a');
-		e.id = 'lanebutton';
-		e.style.top = '270px';
-		e.style.left = '50px'; 
-		e.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"E".fontsize(4).bold()+"</td></tr></table>";
-		e.onclick = function()
-		{
-			document.getElementById('ilane').value = 'E';
-		}
-		div.appendChild(e);
-
-		var f = document.createElement('a');
-		f.id = 'lanebutton';
-		f.style.top = '320px';
-		f.style.left = '50px'; 
-		f.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"F".fontsize(4).bold()+"</td></tr></table>";
-		f.onclick = function()
-		{
-			document.getElementById('ilane').value = 'F';
-		}
-		div.appendChild(f);
-
-		var g = document.createElement('a');
-		g.id = 'lanebutton';
-		g.style.top = '345px';
-		g.style.left = '50px'; 
-		g.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"G".fontsize(4).bold()+"</td></tr></table>";
-		g.onclick = function()
-		{
-			document.getElementById('ilane').value = 'G';
-		}
-		div.appendChild(g);
 
 		var h = document.createElement('a');
 		h.id = 'lanebutton';
-		h.style.top = '395px';
+		h.style.top = '90px';
 		h.style.left = '50px'; 
 		h.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"H".fontsize(4).bold()+"</td></tr></table>";
 		h.onclick = function()
@@ -216,11 +139,88 @@
 		}
 		div.appendChild(h);
 
+		var g = document.createElement('a');
+		g.id = 'lanebutton';
+		g.style.top = '130px';
+		g.style.left = '50px'; 
+		g.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"G".fontsize(4).bold()+"</td></tr></table>";
+		g.onclick = function()
+		{
+			document.getElementById('ilane').value = 'G';
+		}
+		div.appendChild(g);
+
+		var f = document.createElement('a');
+		f.id = 'lanebutton';
+		f.style.top = '160px';
+		f.style.left = '50px'; 
+		f.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"F".fontsize(4).bold()+"</td></tr></table>";
+		f.onclick = function()
+		{
+			document.getElementById('ilane').value = 'F';
+		}
+		div.appendChild(f);
+
+		var e = document.createElement('a');
+		e.id = 'lanebutton';
+		e.style.top = '200px';
+		e.style.left = '50px'; 
+		e.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"E".fontsize(4).bold()+"</td></tr></table>";
+		e.onclick = function()
+		{
+			document.getElementById('ilane').value = 'E';
+		}
+		div.appendChild(e);
+
+		var d = document.createElement('a');
+		d.id = 'lanebutton';
+		d.style.top = '230px';
+		d.style.left = '50px'; 
+		d.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"D".fontsize(4).bold()+"</td></tr></table>";
+		d.onclick = function()
+		{
+			document.getElementById('ilane').value = 'D';
+		}
+		div.appendChild(d);
+
+		var c = document.createElement('a');
+		c.id = 'lanebutton';
+		c.style.top = '270px';
+		c.style.left = '50px'; 
+		c.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"C".fontsize(4).bold()+"</td></tr></table>";
+		c.onclick = function()
+		{
+			document.getElementById('ilane').value = 'C';
+		}
+		div.appendChild(c);
+
+		var b = document.createElement('a');
+		b.id = 'lanebutton';
+		b.style.top = '300px';
+		b.style.left = '50px'; 
+		b.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"B".fontsize(4).bold()+"</td></tr></table>";
+		b.onclick = function()
+		{
+			document.getElementById('ilane').value = 'B';
+		}
+		div.appendChild(b);
+
+		var a = document.createElement('a');
+		a.id = 'lanebutton';
+		a.style.top = '340px';
+		a.style.left = '50px';
+		a.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"A".fontsize(4).bold()+"</td></tr></table>";
+		a.onclick = function()
+		{
+			document.getElementById('ilane').value = 'A';
+		}
+		div.appendChild(a);
+
 		var trig = 0;
 
 		var one = document.createElement('a');
 		one.id = 'posbutton';
-		one.style.top = '120px';
+		one.style.top = '90px';
 		one.style.left = '200px'; 
 		one.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"1".fontsize(6).bold()+"</td></tr></table>";
 		one.onclick = function()
@@ -237,7 +237,7 @@
 
 		var two = document.createElement('a');
 		two.id = 'posbutton';
-		two.style.top = '120px';
+		two.style.top = '90px';
 		two.style.left = '280px'; 
 		two.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"2".fontsize(6).bold()+"</td></tr></table>";
 		two.onclick = function()
@@ -254,7 +254,7 @@
 
 		var three = document.createElement('a');
 		three.id = 'posbutton';
-		three.style.top = '120px';
+		three.style.top = '90px';
 		three.style.left = '360px'; 
 		three.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"3".fontsize(6).bold()+"</td></tr></table>";
 		three.onclick = function()
@@ -271,7 +271,7 @@
 
 		var four = document.createElement('a');
 		four.id = 'posbutton';
-		four.style.top = '200px';
+		four.style.top = '160px';
 		four.style.left = '200px'; 
 		four.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"4".fontsize(6).bold()+"</td></tr></table>";
 		four.onclick = function()
@@ -288,7 +288,7 @@
 
 		var five = document.createElement('a');
 		five.id = 'posbutton';
-		five.style.top = '200px';
+		five.style.top = '160px';
 		five.style.left = '280px'; 
 		five.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"5".fontsize(6).bold()+"</td></tr></table>";
 		five.onclick = function()
@@ -305,7 +305,7 @@
 
 		var six = document.createElement('a');
 		six.id = 'posbutton';
-		six.style.top = '200px';
+		six.style.top = '160px';
 		six.style.left = '360px'; 
 		six.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"6".fontsize(6).bold()+"</td></tr></table>";
 		six.onclick = function()
@@ -322,7 +322,7 @@
 
 		var seven = document.createElement('a');
 		seven.id = 'posbutton';
-		seven.style.top = '280px';
+		seven.style.top = '230px';
 		seven.style.left = '200px'; 
 		seven.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"7".fontsize(6).bold()+"</td></tr></table>";
 		seven.onclick = function()
@@ -339,7 +339,7 @@
 
 		var eight = document.createElement('a');
 		eight.id = 'posbutton';
-		eight.style.top = '280px';
+		eight.style.top = '230px';
 		eight.style.left = '280px'; 
 		eight.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"8".fontsize(6).bold()+"</td></tr></table>";
 		eight.onclick = function()
@@ -356,7 +356,7 @@
 
 		var nine = document.createElement('a');
 		nine.id = 'posbutton';
-		nine.style.top = '280px';
+		nine.style.top = '230px';
 		nine.style.left = '360px'; 
 		nine.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"9".fontsize(6).bold()+"</td></tr></table>";
 		nine.onclick = function()
@@ -373,7 +373,7 @@
 
 		var clr = document.createElement('a');
 		clr.id = 'posbutton';
-		clr.style.top = '360px';
+		clr.style.top = '300px';
 		clr.style.left = '200px'; 
 		clr.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"clr".fontsize(5).bold()+"</td></tr></table>";
 		clr.onclick = function()
@@ -384,7 +384,7 @@
 
 		var zero = document.createElement('a');
 		zero.id = 'posbutton';
-		zero.style.top = '360px';
+		zero.style.top = '300px';
 		zero.style.left = '280px'; 
 		zero.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"0".fontsize(6).bold()+"</td></tr></table>";
 		zero.onclick = function()
@@ -460,7 +460,7 @@
 						<td></td>
 						{% ifequal atlocation "Stock" %}<td colspan="3" align="center"><b class="topping">Near previous</b></td>{% else %}{% endifequal %}
 						<td width="5%"></td>
-						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b class="topping">From current</b></td>{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b class="topping">Current</b></td>{% else %}{% endifequal %}
 					</tr>
 					<tr>
 						<td></td>
@@ -486,7 +486,7 @@
 					</tr>
 				</table>
 			</td>
-			<td align="center" rowspan="2" width="10%">{% ifequal atlocation "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="100px" src="image/changeloc.png"></a>{% else %}{% endifequal %}</td>
+			<td align="center" rowspan="3" width="10%" valign="middle">{% ifequal atlocation "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="80px" src="image/changeloc.png"></a>{% else %}{% endifequal %}</td>
 		</tr>
 	</table>
 
@@ -497,7 +497,7 @@
 			<td></td>
 			<td align="center">{% ifequal atlocation "Scale" %}<b class="topping">New</b>{% endifequal %}</td>
 			<td></td>
-			<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="100px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>
+			<td align="center" rowspan="2" width="10%">{% ifnotequal man_btn "" %}<a href="javascript:weightInput()"><img border="0" height="80px" src="image/manual.png"></a>{% else %}{% endifnotequal %}</td>
 		</tr>
 		<tr>
 			<td style="width:20%;"><p class="label">Weight: </p></td>
