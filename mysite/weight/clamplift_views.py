@@ -16,7 +16,7 @@ def clamplift(request):
 #			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '' # In Likitomi factory
+			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -134,9 +134,9 @@ def clamplift(request):
 			atposition = '5'
 			atlocation = 'Scale'
 
-			atlane = '1'
-			atposition = '13'
-			atlocation = 'Stock'
+#			atlane = '1'
+#			atposition = '13'
+#			atlocation = 'Stock'
 
 			realtag = 64
 
@@ -443,7 +443,7 @@ def minclamp(request):
 #			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '' # In Likitomi factory
+			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -562,9 +562,9 @@ def minclamp(request):
 			atposition = 5
 			atlocation = 'Scale'
 
-			atlane = '1'
-			atposition = '4'
-			atlocation = 'Stock'
+#			atlane = '1'
+#			atposition = '4'
+#			atlocation = 'Stock'
 
 			realtag = 67
 
