@@ -18,15 +18,11 @@ $(document).ready(function(){
 	$("#sel").change(function(){
 		var opd = $("#sel").val();
 		if (opd == "") {
-			$("[id=always]").hide();
-			$("[id=required]").hide();
-			$("[id=detail]").hide();
 			$("#req").hide();
 			$("#det").hide();
 		}
 		else {
-			$("#plan").load("/showreq/?opdate="+opd);
-			$("[id=detail]").hide();
+			$("#required").load("/showreq/?opdate="+opd);
 			$("#req").show();
 			$("#det").show();
 			$("#req").css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
@@ -35,23 +31,21 @@ $(document).ready(function(){
 	});
 
 	$("#req").click(function(){
-		$("#plan").show();
-		$("#detail").show();
-		$("[id=detail]").hide();
-		$("[id=required]").show();
+		var opd = $("#sel").val();
+		$("#required").load("/showreq/?opdate="+opd);
+		$("#required").show();
+		$("#detail").hide();
 		$("#det").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
 		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 	});
 
 	$("#det").click(function(){
-		$("#plan").show();
-		$("#detail").show();
-		$("[id=required]").hide();
-		$("[id=detail]").show();
-		$("#req").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
-		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 		var opd = $("#sel").val();
 		$("#detail").load("/showdet/?opdate="+opd);
+		$("#required").hide();
+		$("#detail").show();
+		$("#req").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
+		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 	});
 
 });
@@ -90,7 +84,7 @@ $(document).ready(function(){
 
 <table><tr>
 	<td style="border:0px;">
-		<div id="plan"><b>Clamplift plan will be shown here.</b></div>
+		<div id="required"><b style="font-size:200%">Clamplift plan will be shown here.</b></div>
 	</td>
 	<td style="border:0px">
 		<div id="detail"></div>
