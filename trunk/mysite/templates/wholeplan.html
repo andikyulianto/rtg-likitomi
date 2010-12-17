@@ -25,7 +25,7 @@ $(document).ready(function(){
 			$("#det").hide();
 		}
 		else {
-			$("#plan").load("/showwhole/?opdate="+opd);
+			$("#plan").load("/showreq/?opdate="+opd);
 			$("[id=detail]").hide();
 			$("#req").show();
 			$("#det").show();
@@ -51,7 +51,7 @@ $(document).ready(function(){
 		$("#req").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
 		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 		var opd = $("#sel").val();
-		$("#detail").load("/detail/?opdate="+opd);
+		$("#detail").load("/showdet/?opdate="+opd);
 	});
 
 });
@@ -68,7 +68,7 @@ $(document).ready(function(){
 	</tr>
 </table>
 	
-<table><tr><td style="border:0px"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px"><div id='now'></div></td></tr><table>
+<table><tr><td style="border:0px; font-size:100%;"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px; font-size:100%;"><div id='now'></div></td></tr><table>
 
 <table>
 	<tr>
@@ -83,8 +83,8 @@ $(document).ready(function(){
 				</select>
 			</form>
 		</td>
-		<td id="req" style="cursor:pointer; width:20%;">Required</td>
-		<td id="det" style="cursor:pointer; width:20%;">Detail</td>
+		<td id="req" style="cursor:pointer; width:20%; font-size:100%; font-weight:bold;">Required</td>
+		<td id="det" style="cursor:pointer; width:20%; font-size:100%; font-weight:bold;">Detail</td>
 	</tr>
 </table>
 

@@ -11,41 +11,45 @@ def inventory(request):
 		if 'pcode' in request.GET and request.GET['pcode']:
 			pcode = request.GET['pcode']
 		else:
-			return HttpResponseRedirect('/inventory/')
+			pcode = ""
 
 		if 'width' in request.GET and request.GET['width']:
 			width = request.GET['width']
 		else:
-			return HttpResponseRedirect('/inventory/')
+			width = ""
 
 		if 'loss' in request.GET and request.GET['loss']:
 			loss = request.GET['loss']
 		else:
-			return HttpResponseRedirect('/inventory/')
+			loss = ""
 
 		query = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('id')
-		delist = list()
-		wlist = list()
-		ridlist = list()
-		elist = list()
+		qexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
 
-		for item in query:
-			totem = list(item)
-			delist.append(totem)
-			rid = int(totem[0])
-			ridlist.append(rid)
+		if qexists == True:
 
-			exists = PaperHistory.objects.filter(roll_id=rid).exists()
-			elist.append(exists)
-			if exists == True:
-				weight = int(str(PaperHistory.objects.filter(roll_id=rid).order_by('-timestamp').values_list('last_wt')[0])[1:][:-3])
-			else:
-				weight = int(str(PaperRoll.objects.filter(id=rid).values_list('initial_weight')[0])[1:][:-3])
-			wlist.append(weight)
-			for totem in delist:
-				totem.append(weight)
+			delist = list()
+			wlist = list()
+			ridlist = list()
+			elist = list()
 
-		initial_weight = int(str(PaperRoll.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
+			for item in query:
+				totem = list(item)
+				delist.append(totem)
+				rid = int(totem[0])
+				ridlist.append(rid)
+
+				exists = PaperHistory.objects.filter(roll_id=rid).exists()
+				elist.append(exists)
+				if exists == True:
+					weight = int(str(PaperHistory.objects.filter(roll_id=rid).order_by('-timestamp').values_list('last_wt')[0])[1:][:-3])
+				else:
+					weight = int(str(PaperRoll.objects.filter(id=rid).values_list('initial_weight')[0])[1:][:-3])
+				wlist.append(weight)
+				for totem in delist:
+					totem.append(weight)
+
+			initial_weight = int(str(PaperRoll.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
 
 		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
 
@@ -172,9 +176,9 @@ def inventory(request):
 			atposition = '5'
 			atlocation = 'Scale'
 
-			atlane = '1'
-			atposition = '8'
-			atlocation = 'Stock'
+			atlane = '0'
+			atposition = '5'
+			atlocation = 'CR'
 
 			realtag = 67
 
@@ -211,6 +215,7 @@ def inventory(request):
 		posa = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 
 		mquery = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('lane', 'position')
+		mexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
 		mstr = str(mquery)
 		mlist = list(mquery)
 
@@ -318,8 +323,8 @@ def inventory(request):
 
 			elif pair[0] == u'F':
 				ind1 = mlist.index(pair)
-				posc.pop(pair[1]-1)
-				posc.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
+				posf.pop(pair[1]-1)
+				posf.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Flist):
 					Flist.append([pair[1]])
 					Flist[-1].extend(zero)
@@ -336,8 +341,8 @@ def inventory(request):
 
 			elif pair[0] == u'G':
 				ind1 = mlist.index(pair)
-				posd.pop(pair[1]-1)
-				posd.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
+				posg.pop(pair[1]-1)
+				posg.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Glist):
 					Glist.append([pair[1]])
 					Glist[-1].extend(zero)
@@ -354,8 +359,8 @@ def inventory(request):
 
 			elif pair[0] == u'H':
 				ind1 = mlist.index(pair)
-				pose.pop(pair[1]-1)
-				pose.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
+				posh.pop(pair[1]-1)
+				posh.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Hlist):
 					Hlist.append([pair[1]])
 					Hlist[-1].extend(zero)
