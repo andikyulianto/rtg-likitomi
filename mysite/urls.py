@@ -4,7 +4,7 @@ from mysite.weight.scale_views import scale
 from mysite.weight.clamplift_views import clamplift, update, undo, changeloc, minclamp, minupdate, minundo, minchangeloc
 from mysite.weight.plan_views import plan, wholeplan
 from mysite.weight.now import now
-from mysite.weight.showplan import showplan, showwhole, detail
+from mysite.weight.showplan import showplan, showreq, reqhead, required, showdet, dethead, detail
 from mysite.weight.stock_views import stock
 from mysite.weight.inventory import inventory
 from mysite.weight.longtry import orient, longtry
@@ -45,8 +45,16 @@ urlpatterns = patterns('',
 	(r'^showplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^wholeplan/$', wholeplan),
 	(r'^wholeplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^showwhole/$', showwhole),
-	(r'^showwhole/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^showreq/$', showreq),
+	(r'^showreq/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^reqhead/$', reqhead),
+	(r'^reqhead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^required/$', required),
+	(r'^required/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^showdet/$', showdet),
+	(r'^showdet/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^dethead/$', dethead),
+	(r'^dethead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^detail/$', detail),
 	(r'^detail/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
