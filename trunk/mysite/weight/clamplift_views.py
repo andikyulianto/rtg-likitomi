@@ -778,7 +778,7 @@ def minupdate(request):
 		f_weight = float(weight)
 	except ValueError:
 		error = "Your submitted weight is not a number."
-		return render_to_response('submit_error.html', locals())
+		return render_to_response('submit_error_min.html', locals())
 
 	if actual_wt > f_weight:
 		p = PaperHistory(roll_id=realtag, before_wt=actual_wt, last_wt=int_weight)
@@ -788,7 +788,7 @@ def minupdate(request):
 	else:
 		err = "w"
 		error = "Your submitted weight is not less than previous weight."
-		return render_to_response('submit_error.html', locals())
+		return render_to_response('submit_error_min.html', locals())
 
 	return HttpResponseRedirect('/minclamp/')
 
