@@ -33,6 +33,7 @@ window.scrollTo(0,45);
 			<th>C-M</th>
 			<th>CUT</th>
 		</tr>
+		</thead>
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut in detail %}
 		<tr>
 			<td rowspan='2'>{{ start_time|time:"H:i" }}</td>

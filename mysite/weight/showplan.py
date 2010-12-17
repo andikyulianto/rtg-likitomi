@@ -20,7 +20,7 @@ def showreq(request):
 	else:
 		return HttpResponseRedirect('/showreq/')
 
-	always = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'sono', 'ordno', 'flute', 'df', 'bl', 'bm', 'cl', 'cm', 'paper_width_mm', 'paper_width_inch', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
+	return render_to_response('showreq.html', locals())
 
 def reqhead(request):
 	if 'opdate' in request.GET and request.GET['opdate']:
