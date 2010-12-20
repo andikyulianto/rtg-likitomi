@@ -1,14 +1,14 @@
 <?php
 // Including all required classes
-require('class/BCGFont.php');
-require('class/BCGColor.php');
-require('class/BCGDrawing.php'); 
+require('../class/BCGFont.php');
+require('../class/BCGColor.php');
+require('../class/BCGDrawing.php'); 
 
 // Including the barcode technology
-include('class/BCGcode39.barcode.php'); 
+include('../class/BCGcode39.barcode.php'); 
 
 // Loading Font
-$font = new BCGFont('./class/font/Arial.ttf', 18);
+$font = new BCGFont('../class/font/Arial.ttf', 18);
 
 // The arguments are R, G, B for color.
 $color_black = new BCGColor(0, 0, 0);

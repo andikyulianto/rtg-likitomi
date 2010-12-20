@@ -332,6 +332,11 @@
 		{ name: 'corrugator_time',	type: 'date', },
 		{ name: 'converter_date',	type: 'date', dateFormat: 'Y-m-d'},
 		{ name: 'converter_time', 	type: 'date', },
+		{ name: 'patchpartition_date',	type: 'date', dateFormat: 'Y-m-d'},
+		{ name: 'patchpartition_time',	type: 'date', },
+		{ name: 'warehouse_date',	type: 'date', dateFormat: 'Y-m-d'},
+		{ name: 'warehouse_time', 	type: 'date', },
+		//{ name: 'next_process'),
 		{ name: 'sort' },
 	]);
 	var resultStore = new Ext.data.Store({
@@ -551,6 +556,7 @@
 						
 						if(!checkDuplicate(deliveryid))
 						{
+							// add here
 							var newPlan = new planRecord({
 								delivery_id			: deliveryid,
 								sales_order			: records[i].get('sales_order'),
@@ -575,6 +581,11 @@
 								corrugator_time		: records[i].get('corrugator_time'),
 								converter_date		: records[i].get('converter_date'),
 								converter_time		: records[i].get('converter_time'),
+								patchpartition_date		: records[i].get('patchpartition_date'),
+								patchpartition_time		: records[i].get('patchpartition_time'),
+								warehouse_date		: records[i].get('warehouse_date'),
+								warehouse_time		: records[i].get('warehouse_time'),
+								next_process		: records[i].get('next_process'),
 								sort				: i,
 							});
 							//gridPlan.stopEditing();
