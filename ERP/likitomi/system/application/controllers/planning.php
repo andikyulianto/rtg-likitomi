@@ -8,6 +8,8 @@ class Planning extends Controller {
 		$this->lang->load('planning',$this->db_session->userdata('language'));
 		$this->load->database();
 		$this->load->model('Planning_model');
+		$this->load->library('image_lib');
+
 	}
 	
 	function index()
@@ -126,6 +128,11 @@ class Planning extends Controller {
 			$deliveryList[$cnt]['corrugator_time']	= "";
 			$deliveryList[$cnt]['converter_date']	= date('Y-m-d');
 			$deliveryList[$cnt]['converter_time']	= "";
+			$deliveryList[$cnt]['patchpartition_date']	= date('Y-m-d');
+			$deliveryList[$cnt]['patchpartition_time']	= "";
+			$deliveryList[$cnt]['warehouse_date']	= date('Y-m-d');
+			$deliveryList[$cnt]['warehouse_time']	= "";
+			//$deliveryList[$cnt]['next_process']	= "";
 			$deliveryList[$cnt]['sort']	= $cnt;
 			
 			$cnt++;
@@ -134,6 +141,15 @@ class Planning extends Controller {
 		//load JSON lib
 		$this->load->library('JSON');	
 		echo '{"delivery" :'.$this->json->encode($deliveryList).',"count":"'.$cnt.'"}';
+	}
+	function formatDate($day)
+	{
+		$hour  = floor($day*24); 
+		$min   = floor((($day*24)-$hour)*60); 
+		$time  = ($hour<10)?"0".$hour:$hour;//
+		$time .= ":";
+		$time .= ($min<10)?"0".$min:$min;
+		return $time;
 	}
 	
 //	function getDeliveryHistory()
@@ -154,10 +170,43 @@ class Planning extends Controller {
 		$this->load->library('JSON');
 		$gridData = $this->json->decode($jsonData);	
 		$this->Planning_model->deleteAllPlanForToday($choosendate);
+
+		//calculate time
+		$time_start_cr = (0.0006949*60)*8;
+		//$time_start_cv =
+		//$time_start_pt = 
+		//$time_start_wh =
 		foreach($gridData as $rowData)
 		{
+			// start stop time of CR 
+			$query = $this->Planning_model->getProduct($rowData->product_code);
+			$key = $query->row_array(0);							//get the only one object
+			$case 	= $rowData->qty;
+			    if(($key['slit'])!=0)
+			$cut2 	= $case/$key['slit'];
+			$metre	= ($key['t_length']*$cut2)/1000;
+			$timeuseCR = 0;
+		if((strtoupper($key['flute'])=="B")||(strtoupper($key['flute'])=="C"))
+		{
+			$timeuseCR = ($metre/120)+4;
+		}
+		else if((strtoupper($key['flute'])=="BC")||(strtoupper($key['flute'])=="W"))
+		{
+			$timeuseCR = ($metre/100)+4;
+		}
+		else $timeuseCR = 0;
+		$time_stop_cr = $time_start_cr;
+		if($timeuseCR!=0)
+		{
+			$time_stop_cr = $time_start_cr + $timeuseCR * 0.0006949;
+		}
+		
+			//print_r($rowData);
+			//print_r($key->row_array(0));
 			$this->Planning_model->savetotalplan($rowData,$choosendate);
-			$this->Planning_model->savetoplanning($rowData);
+			//Save to fake_table for status tracking
+			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr));
+			$time_start_cr = $time_stop_cr;
 		}
 		echo "Data Saved as ".$choosendate." Plan.";
 	}
@@ -218,7 +267,19 @@ class Planning extends Controller {
 			$deliveryList[$cnt]['corrugator_time']	= substr($delivery->corrugator_date,11,5);
 			$deliveryList[$cnt]['converter_date']	= substr($delivery->converter_date,0,10);
 			$deliveryList[$cnt]['converter_time']	= substr($delivery->converter_date,11,5);
-			
+			$deliveryList[$cnt]['patchpartition_date']	= substr($delivery->corrugator_date,0,10);
+			$deliveryList[$cnt]['patchpartition_time']	= substr($delivery->corrugator_date,11,5);
+			$deliveryList[$cnt]['warehouse_date']	= substr($delivery->converter_date,0,10);
+			$deliveryList[$cnt]['warehouse_time']	= substr($delivery->converter_date,11,5);
+		//	$deliveryList[$cnt]['next_process'] = "";
+		/*	$productCat = $this->Planning_model->getProductCat($delivery->product_id,$delivery->product_code);
+			if($productCat->num_rows()>0){
+				$deliveryList[$cnt]['next_process'] = $productCat->row()->next_process;
+			}
+			else
+			{
+				$deliveryList[$cnt]['next_process'] = "";
+			}*/
 			$cnt++;
 		}
 
@@ -232,6 +293,49 @@ class Planning extends Controller {
 		$this->load->view('planning/reportplanning');
 	}
 	
-	
+	function barcode($input)
+	{
+
+
+
+// Including all required classes
+require('class/BCGFont.php');
+require('class/BCGColor.php');
+require('class/BCGDrawing.php'); 
+
+// Including the barcode technology
+include('class/BCGcode39.barcode.php'); 
+
+// Loading Font
+$font = new BCGFont('class/font/Arial.ttf', 18);
+ 
+// The arguments are R, G, B for color.
+$color_black = new BCGColor(0, 0, 0);
+$color_white = new BCGColor(255, 255, 255); 
+
+$code = new BCGcode39();
+$code->setScale(1); // Resolution
+$code->setThickness(30); // Thickness
+$code->setForegroundColor($color_black); // Color of bars
+$code->setBackgroundColor($color_white); // Color of spaces
+$code->setFont($font); // Font (or 0)
+//$code->parse($_GET['text']); // Text
+$code->parse($input);
+
+/* Here is the list of the arguments
+1 - Filename (empty : display on screen)
+2 - Background color */
+$drawing = new BCGDrawing('', $color_white);
+$drawing->setBarcode($code);
+$drawing->draw();
+// clean the output buffer
+ob_clean();
+// Header that says it is an image (remove it if you save the barcode to a file)
+header('Content-Type: image/png');
+
+// Draw (or save) the image into PNG format.
+$drawing->finish(BCGDrawing::IMG_FORMAT_PNG);
+//$this->load->view('planning/reportplanning', 'hello');
+	}
 }
 ?>

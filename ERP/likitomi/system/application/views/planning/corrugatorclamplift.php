@@ -1,3 +1,4 @@
+
 <h2>
 	<div align=center>Corrugator Clamplift Plan : <?=$plandate?></div>
 </h2>
@@ -123,7 +124,12 @@
 	</tr>
 	<tr class='tdView'>
 		<td><?=$key->product_name?></td>
-		<td><?=$key->autoid?></td>
+		<!--MO number; Barcode will be added here--> 
+		<!--<td><?=$key->autoid?></td>-->
+		<?php $path = "/planning/barcode/".$key->autoid."/"; ?> 
+		<td ><img src=<?php echo site_url($path)?>/></td> 
+		<!--<td><img src="C:\barcode.png" /></td>-->
+		
 		<td><?=$key->DF?></td>
 		<td><?=$key->CL?></td>
 		<td><?=$key->CM?></td>
@@ -179,5 +185,6 @@ function formatDate($day)
 	$time .= ($min<10)?"0".$min:$min;
 	return $time;
 }
+
 
 ?>
