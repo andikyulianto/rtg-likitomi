@@ -8,8 +8,12 @@ class Planning extends Controller {
 		$this->lang->load('planning',$this->db_session->userdata('language'));
 		$this->load->database();
 		$this->load->model('Planning_model');
+<<<<<<< .mine
+
+=======
 		$this->load->library('image_lib');
 
+>>>>>>> .r97
 	}
 	
 	function index()
@@ -170,14 +174,61 @@ class Planning extends Controller {
 		$this->load->library('JSON');
 		$gridData = $this->json->decode($jsonData);	
 		$this->Planning_model->deleteAllPlanForToday($choosendate);
+<<<<<<< .mine
+
+		//calculate time
+		$time_start_cr = (0.0006949*60)*8;
+		$time_start_cv = (0.0006949*60)*9;
+		//$time_start_pt = (0.0006949*60)*8;
+		//$time_start_wh = (0.0006949*60)*8;
+=======
 
 		//calculate time
 		$time_start_cr = (0.0006949*60)*8;
 		//$time_start_cv =
 		//$time_start_pt = 
 		//$time_start_wh =
+>>>>>>> .r97
 		foreach($gridData as $rowData)
 		{
+<<<<<<< .mine
+			// start stop time of CR 
+			$query = $this->Planning_model->getProduct($rowData->product_code);
+			$key = $query->row_array(0);							//get the only one object
+			$case 	= $rowData->qty;
+			    if(($key['slit'])!=0)
+			$cut2 	= $case/$key['slit'];
+			$metre	= ($key['t_length']*$cut2)/1000;
+			$timeuseCR = 0;
+		if((strtoupper($key['flute'])=="B")||(strtoupper($key['flute'])=="C"))
+		{
+			$timeuseCR = ($metre/120)+4;
+		}
+		else if((strtoupper($key['flute'])=="BC")||(strtoupper($key['flute'])=="W"))
+		{
+			$timeuseCR = ($metre/100)+4;
+		}
+		else $timeuseCR = 0;
+		$time_stop_cr = $time_start_cr;
+		if($timeuseCR!=0)
+		{
+			$time_stop_cr = $time_start_cr + $timeuseCR * 0.0006949;
+		}
+		//start stop time for CV
+		//print_r($key);
+		if(strpos($key['next_process'],'3CS'))
+			$speed = 120;
+		else
+			$speed = 0;
+		$time_stop_cv = $time_start_cv;
+		if ($speed > 0)
+			$timeuseCV = $rowData->qty / $speed;
+		else
+			$timeuseCV = 0;
+		$time_stop_cv = $time_start_cv+ round($timeuseCV+30) * 0.0006949;
+			//print_r($rowData);
+			//print_r($key->row_array(0));
+=======
 			// start stop time of CR 
 			$query = $this->Planning_model->getProduct($rowData->product_code);
 			$key = $query->row_array(0);							//get the only one object
@@ -203,10 +254,17 @@ class Planning extends Controller {
 		
 			//print_r($rowData);
 			//print_r($key->row_array(0));
+>>>>>>> .r97
 			$this->Planning_model->savetotalplan($rowData,$choosendate);
+<<<<<<< .mine
+			//Save to fake_table for status tracking
+			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv));
+			$time_start_cr = $time_stop_cr;
+=======
 			//Save to fake_table for status tracking
 			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr));
 			$time_start_cr = $time_stop_cr;
+>>>>>>> .r97
 		}
 		echo "Data Saved as ".$choosendate." Plan.";
 	}
