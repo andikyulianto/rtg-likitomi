@@ -49,7 +49,8 @@
 		document.getElementById('lnkTotal').className='';
 		document.getElementById('lnkClamplift').className='';
 		document.getElementById('lnkCorrugator').className='';
-		document.getElementById('lnkKeyIn').className='';
+		//document.getElementById('lnkKeyIn').className='';
+		document.getElementById('lnkConvertor').className='';
 		document.getElementById('lnkDelivery').className='';
 		document.getElementById('lnkProductStatus').className='';
 	}
@@ -64,7 +65,8 @@
 		if(reportType=='lnkTotal') return "totalproductionplan/";
 		if(reportType=='lnkClamplift') return "corrugatorclamplift/";
 		if(reportType=='lnkCorrugator') return "corrugatordaily/";
-		if(reportType=='lnkKeyIn') return "keyin/";
+		//if(reportType=='lnkKeyIn') return "keyin/";
+		if(reportType=='lnkConvertor') return "convertor/";
 		if(reportType=='lnkDelivery') return "deliverydaily/";
 		if(reportType=='lnkProductStatus') return "productstatus/";
 	}
@@ -130,7 +132,8 @@
 							<li><a id='lnkTotal' onclick='loadPlanReport("lnkTotal");' > T.P Plan </a></li>
 							<li><a id='lnkClamplift' onclick='loadPlanReport("lnkClamplift");' > Clamplift Plan</a></li>
 							<li><a id ='lnkCorrugator' onclick='loadPlanReport("lnkCorrugator");' > Corr. Daily Plan </a></li>
-							<li><a id='lnkKeyIn' onclick='loadPlanReport("lnkKeyIn");' > KeyIn </a></li>
+							<!--<li><a id='lnkKeyIn' onclick='loadPlanReport("lnkKeyIn");' > KeyIn </a></li> -->
+							<li><a id='lnkConvertor' onclick='loadPlanReport("lnkConvertor");' > Convertor </a></li>
 							<li><a id='lnkDelivery' onclick='loadPlanReport("lnkDelivery");' > Delivery Plan </a></li>
 							<li><a id='lnkProductStatus' onclick='loadPlanReport("lnkProductStatus");' > Project Status </a></li>
 					</ul>

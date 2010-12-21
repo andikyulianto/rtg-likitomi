@@ -173,7 +173,8 @@
 	</tr>
 	<tr class='tdView'>
 		<td><?=$key->product_name?></td>
-		<td><?=$key->autoid?></td>
+		<?php $path = "/planning/barcode/".$key->autoid."/"; ?> 
+		<td ><img src=<?php echo site_url($path)?>/><br> <?=$key->autoid ?></td> 
 		<td><?=$key->DF?></td>
 		<td><?=$key->CL?></td>
 		<td><?=$key->CM?></td>

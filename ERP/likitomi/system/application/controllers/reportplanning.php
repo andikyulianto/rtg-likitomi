@@ -58,6 +58,14 @@ class Reportplanning extends Controller {
 		$data['plandate'] = $plandate;
 		$this->load->view('planning/keyin',$data);
 	}
+	function convertor()
+	{
+		$today  	= date('Y-m-d');
+		$plandate 	= ($this->input->post('plandate'))?$this->input->post('plandate'):$today;
+		$data['resultConvertor'] = $this->Planning_model->convertor($plandate);
+		$data['plandate'] = $plandate;
+		$this->load->view('planning/convertor',$data);
+	}
 	
 	function corrugatorclamplift()
 	{

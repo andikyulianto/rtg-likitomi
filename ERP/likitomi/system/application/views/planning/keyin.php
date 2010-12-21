@@ -94,7 +94,8 @@
 	</tr>
 	<tr class='tdView'>
 		<td></td>
-		<td><?=$cnt?></td>
+		<?php $path = "/planning/barcode/".$key->autoid."/"; ?> 
+		<td ><img src=<?php echo site_url($path)?>/><br> <?=$key->autoid ?></td> 
 		<td class='blankTbl'></td>
 		<td><?=$key->product_name?></td>
 		<td><?=round($cut2)?></td>
