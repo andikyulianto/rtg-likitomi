@@ -16,6 +16,10 @@ def machine_list(request):
 		cvTwoCL = str(currentProcess("2CL"))[2:8]
 	if(machine == "3CS"):
 		cvThreeCS = str(currentProcess("3CS"))[2:8]
+	if(machine == "2CS"):
+		cvTwoCS = str(currentProcess("2CS"))[2:8]
+	if(machine == "3CW"):
+		cvThreeCW = str(currentProcess("3CW"))[2:8]
 	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).filter(cv_machine=machine).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('machine.html', locals())
@@ -57,6 +61,25 @@ def currentProcess(machine):
 			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
 		except IndexError, error:
 			item_current = 'idle'
+	if(machine=="3CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CS").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="2CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="2CS").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="3CW"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CW").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
+			
 	if(machine=="PT"):
 		try:
 			today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start').values_list("product_id","actual_pt_end")
