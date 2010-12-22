@@ -18,11 +18,9 @@ $(document).ready(function(){
 	$("#sel").change(function(){
 		var opd = $("#sel").val();
 		if (opd == "") {
-			$("#req").hide();
-			$("#det").hide();
 		}
 		else {
-			$("#required").load("/showreq/?opdate="+opd);
+			$("#pp").load("/showreq/?opdate="+opd);
 			$("#req").show();
 			$("#det").show();
 			$("#req").css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
@@ -32,18 +30,14 @@ $(document).ready(function(){
 
 	$("#req").click(function(){
 		var opd = $("#sel").val();
-		$("#required").load("/showreq/?opdate="+opd);
-		$("#required").show();
-		$("#detail").hide();
+		$("#pp").load("/showreq/?opdate="+opd);
 		$("#det").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
 		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 	});
 
 	$("#det").click(function(){
 		var opd = $("#sel").val();
-		$("#detail").load("/showdet/?opdate="+opd);
-		$("#required").hide();
-		$("#detail").show();
+		$("#pp").load("/showdet/?opdate="+opd);
 		$("#req").css({"background-color":"white", "color":"lightgray", "border":"1px solid lightgray"});
 		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 	});
@@ -82,14 +76,14 @@ $(document).ready(function(){
 	</tr>
 </table>
 
-<table><tr>
-	<td style="border:0px;">
-		<div id="required"><b style="font-size:200%">Clamplift plan will be shown here.</b></div>
-	</td>
-	<td style="border:0px">
-		<div id="detail"></div>
-	</td>
-</tr><table>
+<!--<table><tr>-->
+<!--	<td style="border:0px;">-->
+		<div id="pp"><b style="font-size:100%">Clamplift plan will be shown here.</b></div>
+<!--	</td>-->
+<!--	<td style="border:0px">-->
+<!--		<div id="body"></div>-->
+<!--	</td>-->
+<!--</tr><table>-->
 
 </body>
 </html>

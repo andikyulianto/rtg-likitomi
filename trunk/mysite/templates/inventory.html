@@ -46,10 +46,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
 						{% for ls in Hlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
@@ -103,10 +103,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
 						{% for ls in Glist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
@@ -158,10 +158,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
 						{% for ls in Flist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
@@ -215,10 +215,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
 						{% for ls in Elist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
@@ -271,10 +271,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
 						{% for ls in Dlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
@@ -328,10 +328,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
 						{% for ls in Clist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
@@ -383,10 +383,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
 						{% for ls in Blist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
@@ -440,10 +440,10 @@
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
 						{% for ls in Alist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								<td class="red" {% if ls|second != 0 %}style="width:{{ls|second}}%">{{ ls|second }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="yellow" {% if ls|third != 0 %}style="width:{{ls|third}}%">{{ ls|third }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="blue" {% if ls|fourth != 0 %}style="width:{{ls|fourth}}%">{{ ls|fourth }}{% else %}style="width:1%">{% endif %}</td>
-								<td class="green" {% if ls|fifth != 0 %}style="width:{{ls|fifth}}%">{{ ls|fifth }}{% else %}style="width:1%">{% endif %}</td>
+								{% if ls|second != 0 %}<td class="red" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="yellow" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="blue" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="green" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
 							{% endif %}
 						{% endfor %}
 					</tr></table></td>
