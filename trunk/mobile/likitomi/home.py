@@ -6,7 +6,7 @@ from datetime import date
 from app.models import Employee, FakeStatusTracking
 
 #from likitomi import models.Employee,models.FakeStatusTracking
-
+# use PC.html template
 def section(request):
 	eID = request.GET['eID']
 	today = todayDate()
@@ -38,6 +38,8 @@ def todayDate():
 	return tempDate
 def showPC(eID,section_title):
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	#startList = 0
 	#endList = 3
 	#create items for PC
@@ -134,6 +136,8 @@ def showPC(eID,section_title):
 def showMD(eID,section_title):
 	return render_to_response('MD.html',locals())
 def workCR(eID,section_title):
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	eID = eID
 	today = todayDate()
 	#create items for CR
@@ -142,6 +146,8 @@ def workCR(eID,section_title):
 	items = list(item_plan)
 	return render_to_response('listCR.html', locals())
 def workCV(eID,section_title):
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	today = todayDate()
 	#create items for CV
 	cvThreeCS = str(currentProcess("3CS"))[2:8]
@@ -153,6 +159,8 @@ def workCV(eID,section_title):
 	items = list(item_plan)
 	return render_to_response('listCV.html', locals())
 def workPT(eID,section_title):
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	#create items for PT
 	today = todayDate()
 	pt = str(currentProcess("PT"))[2:8]
@@ -160,6 +168,8 @@ def workPT(eID,section_title):
 	items = list(item_plan)
 	return render_to_response('listPT.html', locals())
 def workWH(eID,section_title):
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	today = todayDate()
 	#create items for WH
 	wh = str(currentProcess("WH"))[2:8]

@@ -53,11 +53,17 @@
 <div id="topbar">
 	<div id="title">
 		{{title}}</div>
-	<div id="leftbutton">
-	{% if is_enable_leftbutton %}
-		<a href="http://iwebkit.net" class="noeffect">PC Site</a> 
-	{% endif %}
+		{% if is_enable_leftbutton %}
+	<div id="leftnav">
+		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
 	</div>
+	{% endif %}
+	{% if is_enable_rightbutton %}
+	<div id="rightbutton">
+		<a href="/likitomi/" class="noeffect">Log out</a> 
+	</div>
+	{% endif %}
+	
 </div> 
 {% if is_enable_tributton %}
 <div id="tributton">
@@ -67,9 +73,9 @@
 {% endif %}
 <div id="content">
 	{# for o in set_of_sections #}
-	<span class="graytitle">{{section_title4}}</span>
+	<span class="graytitle">{{section_title}}</span>
 	<ul class="pageitem">
-		<li class="textbox"><span class="header">{{content_header}}</span><p>
+		<li class="textbox"><span class="header">{{content_header}}</span>
 		{{subcontent_header}}</p>
 		</li>
 		{{contents_text}}
