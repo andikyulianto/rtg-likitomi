@@ -21,9 +21,11 @@ $(document).ready(function(){
 		var scode = $("#scode").val();
 		var swidth = $("#swidth").val();
 		var loss = $("#loss").val();
-		$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
-		$("#pcode").val(scode);
-		$("#width").val(swidth);
+		if (scode != "" && swidth != ""){
+			$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
+			$("#pcode").val(scode);
+			$("#width").val(swidth);
+		}
 	});
 
 });
