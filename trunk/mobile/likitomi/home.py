@@ -55,6 +55,8 @@ def showPC(eID,section_title):
 	cvThreeCS = str(currentProcess("3CS"))[2:8]
 	cvThreeCL = str(currentProcess("3CL"))[2:8]
 	cvTwoCL = str(currentProcess("2CL"))[2:8]
+	cvThreeCW = str(currentProcess("3CW"))[2:8]
+	cvTwoCS = str(currentProcess("2CS"))[2:8]
 	pt = str(currentProcess("PT"))[2:8]
 	wh = str(currentProcess("WH"))[2:8]
 	#contents_text = len(items_plan_cr)
@@ -142,9 +144,11 @@ def workCR(eID,section_title):
 def workCV(eID,section_title):
 	today = todayDate()
 	#create items for CV
+	cvThreeCS = str(currentProcess("3CS"))[2:8]
 	cvThreeCL = str(currentProcess("3CL"))[2:8]
 	cvTwoCL = str(currentProcess("2CL"))[2:8]
-	cvThreeCS = str(currentProcess("3CS"))[2:8]
+	cvThreeCW = str(currentProcess("3CW"))[2:8]
+	cvTwoCS = str(currentProcess("2CS"))[2:8]
 	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('listCV.html', locals())
@@ -208,6 +212,22 @@ def positionOfCurrentProcess(machine,product):
 					position = pos
 		except IndexError, error:
 			position = -1
+	if(machine == "3CW"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
+	if(machine == "2CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
+			for pos, item in enumerate(today_plan):
+				if str(item)[2:8] == product:
+					position = pos
+		except IndexError, error:
+			position = -1
 	#contents_text = machine
 	if(machine == "PT"):
 		try:
@@ -264,6 +284,18 @@ def currentProcess(machine):
 			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
 		except IndexError, error:
 			item_current = 'idle'
+	if(machine=="3CW"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CW").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="2CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="2CS").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0]
+		except IndexError, error:
+			item_current = 'idle'
 	if(machine=="PT"):
 		try:
 			today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start').values_list("product_id","actual_pt_end")
@@ -277,3 +309,7 @@ def currentProcess(machine):
 		except IndexError, error:
 			item_current = 'idle'
 	return item_current
+def display(request):
+	product= request.GET['product']
+	return render_to_response('productDetail.html',locals())
+

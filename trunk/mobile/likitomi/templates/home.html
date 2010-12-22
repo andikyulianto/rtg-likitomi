@@ -9,6 +9,16 @@
 <meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
 
 <script src="javascript/functions.js" type="text/javascript"></script>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+	
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#tblLink a').click(function() {
+			$("#loadPage").load(this.href);
+			return false;
+			});
+		});
+</script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>{{ title }}</title>
 <link href="pics/startup.png" rel="apple-touch-startup-image" />
@@ -62,16 +72,16 @@
 			<table align=center width="90%">
 			<tr><td width="50%">{# left #} 
 
-			<table border=1 align=center width="100%"><span class="header">
+			<div id="tblLink"><table border=1 align=center width="100%"><span class="header">
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td></tr>
 			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
 			{% for start,end,product,actual_start,actual_end in items %}
-			<tr align=center><td rowspan="2"  height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td></tr><tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			<tr align=center><td rowspan="2"  height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2"></td></tr><tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
 			{% endfor %}
 			</table>
+			</div>
 			
-			
-			</td><td width="50%"><table border=1 width="100%"> {# right #} Product Detail</table></td></tr>
+			</td><td width="50%"><div id ="loadPage"><table border=1 width="100%"> {# right #} Product Detail</table></div></td></tr>
 			</table>	
 			</td>
 			<td width="50%"> 
