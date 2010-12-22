@@ -10,6 +10,8 @@ def startCR(request):
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	#plan = Employee.objects.get(eid=eID)
 	plan = FakeStatusTracking.objects.get(plan_id = planID )
 	product_code = plan.product_id
@@ -44,6 +46,8 @@ def endCR(request):
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID )
 	amount = str(plan.plan_amount)
 	task = "end"
@@ -56,6 +60,8 @@ def startCV(request):
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
@@ -73,6 +79,8 @@ def endCV(request):
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	task = "end"
@@ -85,6 +93,8 @@ def startPT(request):
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
@@ -102,6 +112,8 @@ def endPT(request):
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	task = "end"
@@ -116,6 +128,8 @@ def startWH(request):
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
@@ -133,6 +147,8 @@ def endWH(request):
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	task = "end"

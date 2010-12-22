@@ -21,11 +21,18 @@
 <div id="topbar">
 	<div id="title">
 		{{title}}</div>
-	<div id="leftbutton">
-	{% if is_enable_leftbutton %}
-		<a href="http://iwebkit.net" class="noeffect">PC Site</a> 
-	{% endif %}
+		{% if is_enable_leftbutton %}
+	<div id="leftnav">
+		<a href='/likitomi/home/?eID={{eID}}'><img alt="home" src="images/home.png" /></a>
+		<a href="#" class="noeffect">CV</a> 
 	</div>
+	{% endif %}
+	{% if is_enable_rightbutton %}
+	<div id="rightbutton">
+		<a href="/likitomi/" class="noeffect">Log out</a> 
+	</div>
+	{% endif %}
+	
 </div> 
 {% if is_enable_tributton %}
 <div id="tributton">
