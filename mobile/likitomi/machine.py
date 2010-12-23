@@ -9,6 +9,8 @@ def machine_list(request):
 	today = todayDate()
 	machine = request.GET['machine']
 	eID = request.GET['eID']
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
 	#create items for CV
 	if(machine == "3CL"):
 		cvThreeCL = str(currentProcess("3CL"))[2:8]
