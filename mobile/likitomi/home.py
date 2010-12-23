@@ -321,5 +321,6 @@ def currentProcess(machine):
 	return item_current
 def display(request):
 	product= request.GET['product']
+	plan_amount = FakeStatusTracking.objects.filter(product_id=product).values_list("plan_amount")
 	return render_to_response('productDetail.html',locals())
 
