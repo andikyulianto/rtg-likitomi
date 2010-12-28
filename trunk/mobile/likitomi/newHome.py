@@ -34,7 +34,7 @@ def allSection(request):
 	
 	return render_to_response('home.html', locals())
 def todayDate():
-	tempDate = date(2010,11,19)
+	tempDate = date.today()
 	return tempDate
 def showPC(eID,section_title):
 	today = todayDate()
