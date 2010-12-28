@@ -104,7 +104,6 @@ class Planning_model extends Model
 		$query = $this->db->query($sql);
 		return $query;
 	}
-<<<<<<< .mine
 	function getProduct($product_code){
 		
 		$sql = 	 "SELECT * FROM ".$this->tblProducts." as p, ".$this->tblCatalog." as c   WHERE p.product_code ='".$product_code."' and p.product_code=c.product_code";
@@ -124,27 +123,6 @@ class Planning_model extends Model
 		return $query;
 	}
 	//add save total_plan 
-=======
-	function getProduct($product_code){
-		
-		$sql = 	 "SELECT * FROM ".$this->tblProducts." as p, ".$this->tblCatalog." as c   WHERE p.product_code ='".$product_code."' and p.product_code=c.product_code";
-		
-		$query = $this->db->query($sql);
-		//echo $sql;
-		return $query;
-	}
-	function getProductCat($pid,$product_code){
-		
-		$sql = 	 "SELECT pc.* FROM ".$this->tblProducts." AS p, ("
-				."SELECT product_code FROM ".$this->tblCatalog." WHERE `product_id` = ".$pid
-				.") AS pc WHERE pc.product_code = p.parent_code "
-				." AND p.product_code ='".$product_code."'";
-		
-		$query = $this->db->query($sql);
-		return $query;
-	}
-	//add save total_plan to fake_table
->>>>>>> .r97
 	function savetotalplan($rowData,$choosendate)
 	{	
 		$param = array( "date" => $choosendate,
@@ -158,7 +136,6 @@ class Planning_model extends Model
 			"CM" => $rowData->CM,
 			"CL" => $rowData->CL,
  			"corrugator_date" => substr($rowData->corrugator_date,0,10)." ".$rowData->corrugator_time.":00",
-<<<<<<< .mine
 			"converter_date" => substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00",
 			//"patchpartition_date" => substr($rowData->patchpartition_date,0,10)." ".$rowData->patchpartition_time.":00",
 			//"warehouse_date" => substr($rowData->warehouse_date,0,10)." ".$rowData->warehouse_time.":00",
@@ -168,30 +145,14 @@ class Planning_model extends Model
 		$this->db->insert($this->totalPlanning, $param);
 
 
-=======
-			"converter_date" => substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00",
-			"patchpartition_date" => substr($rowData->patchpartition_date,0,10)." ".$rowData->patchpartition_time.":00",
-			"warehouse_date" => substr($rowData->warehouse_date,0,10)." ".$rowData->warehouse_time.":00",
-			//"next_process" => $rowData->next_process
-		);
-
-		//$this->db->insert($this->totalPlanning, $param);
-
-
->>>>>>> .r97
 	}
 
-<<<<<<< .mine
         function savetostatustracking($rowData,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv)
-=======
-        function savetostatustracking($rowData,$time_start_cr,$time_stop_cr)
->>>>>>> .r97
         {
 			//echo substr($rowData->corrugator_date,0,10)." ".substr($rowData->corrugator_date,11,5).":00";
 			//echo substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00";
 			//get amount
 
-<<<<<<< .mine
 
 			$sql = "Select product_id,qty From delivery Where delivery_id =".$rowData->delivery_id;
 			$query = $this->db->query($sql);
@@ -236,52 +197,6 @@ class Planning_model extends Model
 			}
 						//print_r($param);
 			$this->db->insert($this->fakeTotalPlan, $param);
-=======
-
-			$sql = "Select product_id,qty From delivery Where delivery_id =".$rowData->delivery_id;
-			$query = $this->db->query($sql);
-			foreach ($query->result() as $row)
-			{
-				$amount = $row->qty;
-				$product_id = $row->product_id;
-			}
-			$sql = "select next_process from product_catalog where product_id=".$product_id;
-			$query = $this->db->query($sql);
-			foreach ($query->result() as $row)
-			{
-				$cv_machine = $row->next_process;
-			}
-			if($cv_machine == 'SHEET')
-			{
-				$param = array("product_id"=>$rowData->product_code,
-						"plan_amount" =>$amount,
-						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
-						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
-						"plan_cv_start" => NULL,
-						"plan_cv_end" => NULL,
-						"plan_pt_start" => NULL,
-						"plan_pt_end" => NULL,
-						"plan_wh_start" => NULL,
-						"cv_machine" => $cv_machine
-				);
-			}
-			else
-			{
-			$param = array("product_id"=>$rowData->product_code,
-						"plan_amount" =>$amount,
-						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
-						"plan_cr_end" => '',
-						"plan_cv_start" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
-						"plan_cv_end" => '',
-						"plan_pt_start" => '',
-						"plan_pt_end" => '',
-						"plan_wh_start" => '',
-						"cv_machine" => $cv_machine
-				);
-			}
-						print_r($param);
-			//$this->db->insert($this->fakeTotalPlan, $param);
->>>>>>> .r97
 				
         }
 	function formatDate($day)
