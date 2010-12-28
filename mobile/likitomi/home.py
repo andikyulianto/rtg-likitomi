@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.db.models import Q
-from datetime import date
+from datetime import date,datetime
 from app.models import Employee, FakeStatusTracking
 
 #from likitomi import models.Employee,models.FakeStatusTracking
@@ -34,7 +34,7 @@ def section(request):
 	
 	return render_to_response('home.html', locals())
 def todayDate():
-	tempDate = date(2010,11,19)
+	tempDate = date.today()
 	return tempDate
 def showPC(eID,section_title):
 	today = todayDate()
@@ -172,8 +172,9 @@ def workWH(eID,section_title):
 	is_enable_rightbutton = True
 	today = todayDate()
 	#create items for WH
-	wh = str(currentProcess("WH"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
+	#wh = str(currentProcess("WH"))[2:8]
+	wh = currentTimeProcess("WH")
+	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
 	items = list(item_plan)
 	return render_to_response('listWH.html',locals())
 	
@@ -258,6 +259,68 @@ def positionOfCurrentProcess(machine,product):
 		except IndexError, error:
 			position = -1
 	return position
+
+def currentTimeProcess(machine):
+	today=todayDate()
+	if(machine=="CR"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id","actual_cr_end")
+			item_current = today_plan.filter(actual_cr_end = None).values_list("plan_cr_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	## top current for CV 
+	if(machine=="CV"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	## current by machine
+	if(machine == "3CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CS").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="3CL"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CL").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="2CL"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="2CL").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="3CW"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CW").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="2CS"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="2CS").values_list("product_id","actual_cv_end")
+			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="PT"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start').values_list("product_id","actual_pt_end")
+			item_current = today_plan.filter(actual_pt_end = None).values_list("plan_pt_start")[0]
+		except IndexError, error:
+			item_current = 'idle'
+	if(machine=="WH"):
+		try:
+			today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("product_id","actual_wh_start").order_by('plan_wh_start')
+			item_current = today_plan.filter(actual_wh_start = None).values_list("plan_wh_start")[0]
+			item_current = item_current[0]
+			#item_current = item_current.strftime("%H:%M")
+		except IndexError, error:
+			item_current = 'idle'
+	return item_current
 	
 ## get current process for each section ##
 def currentProcess(machine):
@@ -314,8 +377,9 @@ def currentProcess(machine):
 			item_current = 'idle'
 	if(machine=="WH"):
 		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start').values_list("product_id","actual_wh_end")
-			item_current = today_plan.filter(actual_wh_end = None).values_list("product_id")[0]
+			today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("product_id","actual_wh_start").order_by('plan_wh_start')
+			item = today_plan.filter(actual_wh_start = None).values_list("product_id")[0]
+			item_current = item.strftime("%H:%M")
 		except IndexError, error:
 			item_current = 'idle'
 	return item_current
