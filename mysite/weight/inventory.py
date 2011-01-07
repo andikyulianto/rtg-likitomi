@@ -176,9 +176,9 @@ def inventory(request):
 			atposition = '5'
 			atlocation = 'Scale'
 
-			atlane = '0'
+			atlane = '1'
 			atposition = '5'
-			atlocation = 'CR'
+			atlocation = 'Stock'
 
 			realtag = 67
 

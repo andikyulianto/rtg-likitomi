@@ -23,13 +23,16 @@
 <td class="top" style="width:10%; border:0px; vertical-align:middle;">
 <table>
 	<tr>
-		<th>ID</th>
-		<th>kgs</th>
+<!--		<th>ID</th>-->
+		<th>kgs.</th>
 	</tr>
 	{% for id, w in delist %}
 	<tr>
-		<td>{{ id }}</td>
-		<td>{{ w }}</td>
+<!--		<td>{{ id }}</td>-->
+		<td {% if w < 100 %}class="red"{% endif %}
+			{% if w >= 100 and w < 400 %}class="yellow"{% endif %}
+			{% if w >= 400 and w < 700 %}class="blue"{% endif %}
+			{% if w >= 700 or w == initail_weight %}class="green"{% endif %}>{{ w }}</td>
 	</tr>
 	{% endfor %}
 </table>
@@ -493,7 +496,13 @@
 
 </td>
 </tr>
+</table>
+
 <table>
+	<tr>
+		<td class="red">0-99</td><td class="yellow">100-399</td><td class="blue">400-699</td><td class="green">700^ or initial</td>
+	</tr>
+</table>
 
 <form id="frm4" action="/minclamp/changeloc/" method="get">
 	<input type="hidden" value="{{ realtag }}" name="realtag" />
