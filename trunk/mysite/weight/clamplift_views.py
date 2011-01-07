@@ -130,13 +130,13 @@ def clamplift(request):
 
 		if operating_mode == 'fake':
 
-			atlane = '5'
-			atposition = '5'
-			atlocation = 'Scale'
+#			atlane = '5'
+#			atposition = '5'
+#			atlocation = 'Scale'
 
-#			atlane = '1'
-#			atposition = '13'
-#			atlocation = 'Stock'
+			atlane = '1'
+			atposition = '13'
+			atlocation = 'Stock'
 
 			realtag = 64
 
@@ -233,6 +233,20 @@ def clamplift(request):
 		else:
 			actual_wt = initial_weight
 			undo_btn = ""
+
+		availoc = ['1A','1B','1C']
+		availoc = availoc + ['2A','2B','2C']
+		availoc = availoc + ['3A','3B','3C','3D','3E','3F','3G','3H']
+		availoc = availoc + ['4A','4B','4C','4D','4E','4F','4G','4H']
+		availoc = availoc + ['5A','5B','5C','5D','5E','5F','5G','5H']
+		availoc = availoc + ['6A','6B','6C','6D','6E','6F','6G','6H']
+		availoc = availoc + ['7A']
+		availoc = availoc + ['8A','8B','8C','8D','8E','8F','8G','8H']
+		availoc = availoc + ['9A','9B','9C','9D','9E','9F','9G','9H']
+		availoc = availoc + ['10A','10B','10C']
+		availoc = availoc + ['11A','11B','11C']
+		availoc = availoc + ['12A','12B','12C']
+		availoc = availoc + ['13A','13B','13C']
 
 # Exceptions #
 	except UnboundLocalError:
@@ -405,7 +419,22 @@ def changeloc(request):
 	else:
 		return HttpResponseRedirect('/clamplift/')
 
-	if int(ipos) <= 43:
+	availoc = ['1A','1B','1C']
+	availoc = availoc + ['2A','2B','2C']
+	availoc = availoc + ['3A','3B','3C','3D','3E','3F','3G','3H']
+	availoc = availoc + ['4A','4B','4C','4D','4E','4F','4G','4H']
+	availoc = availoc + ['5A','5B','5C','5D','5E','5F','5G','5H']
+	availoc = availoc + ['6A','6B','6C','6D','6E','6F','6G','6H']
+	availoc = availoc + ['7A']
+	availoc = availoc + ['8A','8B','8C','8D','8E','8F','8G','8H']
+	availoc = availoc + ['9A','9B','9C','9D','9E','9F','9G','9H']
+	availoc = availoc + ['10A','10B','10C']
+	availoc = availoc + ['11A','11B','11C']
+	availoc = availoc + ['12A','12B','12C']
+	availoc = availoc + ['13A','13B','13C']
+
+	iposlane = str(ipos) + ilane
+	if iposlane in availoc:
 		query = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
 		qlist = list(query)
 		paper_code = qlist[0]
@@ -425,7 +454,7 @@ def changeloc(request):
 
 	else:
 		err = ""
-		error = "Your submitted position is not between 1 and 43."
+		error = "Your submitted location is not available in the map."
 		return render_to_response('submit_error.html', locals())
 
 	return HttpResponseRedirect('/clamplift/')
@@ -646,6 +675,7 @@ def minclamp(request):
 			digit5 = digital[1:2]
 			digit6 = digital[2:3]
 			digit7 = digital[3:4]
+
 		if len(digital) == 3:
 			digit5 = digital[0:1]
 			digit6 = digital[1:2]

@@ -462,28 +462,45 @@
 						<td width="5%"></td>
 						{% ifequal atlocation "Stock" %}<td colspan="3" align="center" width="50%"><b class="topping">Current</b></td>{% else %}{% endifequal %}
 					</tr>
-					<tr>
+					{% if lane == 'A' or lane == 'C' or lane == 'E' or lane == 'G' %}<tr>
 						<td></td>
-						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocDown()"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td {% if downpos|stringformat:"s"|add:opplane in availoc %}class="locbutton" onclick="javascript:changeLocOppDown()"{% endif %}style="text-align:center"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}<td {% if position|stringformat:"s"|add:opplane in availoc %}class="locbutton" onclick="javascript:changeLocOpp()" style="width:10%;"{% endif %}style="text-align:center"><p>{{opplane}}-{{position}}</p></td>{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal uppos 14 %}<td></td>{% else %}<td {% if uppos|stringformat:"s"|add:opplane in availoc %}class="locbutton" onclick="javascript:changeLocOppUp()"{% endif %}style="text-align:center"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
 						<td></td>
-						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppDown()"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocRight()" colspan="3" style="width:10%;"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}
+					</tr>{% else %}<tr>
 						<td></td>
-						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocLeft()" rowspan="3" style="width:10%;"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td {% if downpos|stringformat:"s"|add:lane in availoc %}class="locbutton" onclick="javascript:changeLocDown()"{% endif %}style="text-align:center"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						<td style="width:10%;">{% ifnotequal lane "" %}<p class="var">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+						{% ifequal atlocation "Stock" %}{% ifequal uppos 14 %}<td></td>{% else %}<td {% if uppos|stringformat:"s"|add:lane in availoc %}class="locbutton" onclick="javascript:changeLocUp()"{% endif %}style="text-align:center"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						<td></td>
+						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocRight()" colspan="3" style="width:10%;"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}
 						<td style="width:5%;"></td>
-						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocRight()" rowspan="3" style="width:10%;"><p>{{rightlane}}</p></td>{% else %}{% endifequal %}
-					</tr>
+					</tr>{% endif %}
 					<tr>
 						<td width="46%"><p class="label">Location:</p></td>
-						<td style="width:10%;">{% ifnotequal lane "" %}<p class="var">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+						<td></td>
 						<td style="width:5%;"></td>
-						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocOpp()" style="width:10%;"><p>{{opplane}}-{{position}}</p></td>{% else %}{% endifequal %}
-					</tr>
-					<tr>
 						<td></td>
-						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocUp()"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
-						<td></td>
-						{% ifequal atlocation "Stock" %}{% ifequal uppos 44 %}<td></td>{% else %}<td class="locbutton" onclick="javascript:changeLocOppUp()"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
 					</tr>
+					{% if lane == 'A' or lane == 'C' or lane == 'E' or lane == 'G' %}<tr>
+						<td></td>
+						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td {% if downpos|stringformat:"s"|add:lane in availoc %}class="locbutton" onclick="javascript:changeLocDown()"{% endif %}style="text-align:center"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						<td style="width:10%;">{% ifnotequal lane "" %}<p class="var">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+						{% ifequal atlocation "Stock" %}{% ifequal uppos 14 %}<td></td>{% else %}<td {% if uppos|stringformat:"s"|add:lane in availoc %}class="locbutton" onclick="javascript:changeLocUp()"{% endif %}style="text-align:center"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						<td></td>
+						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocLeft()" colspan="3" style="width:10%;"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}
+						<td style="width:5%;"></td>
+					</tr>{% else %}<tr>
+						<td></td>
+						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td {% if downpos|stringformat:"s"|add:opplane in availoc %}class="locbutton" onclick="javascript:changeLocOppDown()"{% endif %}style="text-align:center"><p>{{opplane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}<td {% if position|stringformat:"s"|add:opplane in availoc %}class="locbutton" onclick="javascript:changeLocOpp()" style="width:10%;"{% endif %}style="text-align:center"><p>{{opplane}}-{{position}}</p></td>{% else %}{% endifequal %}
+						{% ifequal atlocation "Stock" %}{% ifequal uppos 14 %}<td></td>{% else %}<td {% if uppos|stringformat:"s"|add:opplane in availoc %}class="locbutton" onclick="javascript:changeLocOppUp()"{% endif %}style="text-align:center"><p>{{opplane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
+						<td></td>
+						{% ifequal atlocation "Stock" %}<td class="locbutton" onclick="javascript:changeLocLeft()" colspan="3" style="width:10%;"><p>{{leftlane}}</p></td>{% else %}{% endifequal %}
+					</tr>{% endif %}
+
 				</table>
 			</td>
 			<td align="center" rowspan="3" width="10%" valign="middle">{% ifequal atlocation "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="80px" src="image/changeloc.png"></a>{% else %}{% endifequal %}</td>
