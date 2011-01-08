@@ -168,7 +168,7 @@
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td><td width="35%" rowspan="2"> Product code </td><td width="30%" rowspan="2">From</td></tr>
 			<tr align=center><td>Act.IN</td></tr>
 			{% for start,product,actual_start in items_plan_wh %}
-			<tr align=center><td rowspan="2"  height="20"> {% if wh == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td rowspan="2"><a href=/likitomi/display/?product={{product}}>{{product}}</a></td><td rowspan="2"></td></tr>
+			<tr align=center><td rowspan="2"  height="20"> {{wh}}{% if wh == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td rowspan="2"><a href=/likitomi/display/?product={{product}}>{{product}}</a></td><td rowspan="2"></td></tr>
 			<tr align=center><td  height="20" height="20">{{actual_start|time:"H:i"}}</td></tr>
 			{% endfor %}
 			</table>			

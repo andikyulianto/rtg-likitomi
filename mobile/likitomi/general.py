@@ -18,13 +18,3 @@ def index(request):
 	is_enable_login = True
 	return render_to_response('index.html', locals())
 
-def login(request):
-	title = "This is title"
-	return render_to_response('index.html', locals())
-#def login(request):
-#	fp = open('/home/fon/Django-123/projects/likitomi/templates/index.html')
-#	t = Template(fp.read())
-#	fp.close()
-#	html = t.render(Context({'title': "This is title"}))
-#	return HttpResponse(html)
-	

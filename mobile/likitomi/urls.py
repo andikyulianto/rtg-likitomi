@@ -1,13 +1,14 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
-from general import login, index
+from general import index
 from home import section,display
 from newHome import allSection
 from product import view,product_list
 from line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from update import startUpdate,endUpdate
 from machine import machine_list
-from tryout import playandtry
+#from tryout import playandtry
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -15,7 +16,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     #(r'^likitomi/tryout/$', index),
     (r'^likitomi/$', index),
-    #(r'^likitomi/general/login/$', login),
     (r'^likitomi/home/$', section),
     (r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     (r'^likitomi/newHome/$', allSection),
@@ -45,24 +45,14 @@ urlpatterns = patterns('',
     (r'^likitomi/product/list/$', endUpdate),
     (r'^likitomi/product/list/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     
-    (r'^likitomi/playandtry/$', playandtry),
-    (r'^likitomi/playandtry/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    #(r'^likitomi/playandtry/$', playandtry),
+    #(r'^likitomi/playandtry/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     (r'^likitomi/display/$', display),
     (r'^likitomi/display/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-    
-    #(r'^likitomi/home/cr/$',section),
-    #(r'^likitomi/home/cv/$',section)
-    #(r'^likitomi/home/pt/$',section)
-    #(r'^likitomi/home/wh/$',section)
-    #(r'likitomi/statusTracking/$',test)
-    #(r'^likitomi/(.*)$','django.views.static.serve',{'document_root':settings.MEDIA_ROOT}),
-    
     
 	(r'^likitomi/product/$', product_list),
 	(r'^likitomi/product/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     
-
-    #(r'^likitomi/LST/$',work_status),
     # Example:
     # (r'^likitomi/', include('likitomi.foo.urls')),
 
