@@ -25,6 +25,9 @@ $(document).ready(function(){
 			$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
 			$("#pcode").val(scode);
 			$("#width").val(swidth);
+			//$("[id='plan']",top.frames["plan"].document).css("background-color","yellow");
+			$("[id='plan']",top.frames["plan"].document).contents().find("td").css("background-color","white");
+			$("[id='plan']",top.frames["plan"].document).contents().find("[id="+scode+"][class="+swidth+"]").parent().css("background-color","yellow");
 		}
 	});
 
@@ -62,7 +65,7 @@ $(document).ready(function(){
 		</form>
 	</td>
 	<td border="1" valign="top" style="width:1px; border:1px;">
-		<button id="search">Search</button>
+		<button id="search">Search</a></button>
 	</td>
 </tr></table>
 {% endif %}
