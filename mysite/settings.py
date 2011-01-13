@@ -83,7 +83,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'mysite.urls'
 
 TEMPLATE_DIRS = (
-    'C:/Users/Patipol/rtg-likitomi/mysite/templates',
+    '/home/patipol/rtg-likitomi/mysite/templates',
     # 'C:/Program Files/BitNami DjangoStack/djcode/mysite/static',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
