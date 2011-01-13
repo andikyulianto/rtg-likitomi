@@ -20,6 +20,11 @@ def stock(request):
 		else:
 			loss = ""
 
+		if 'opdate' in request.GET and request.GET['opdate']:
+			opdate = request.GET['opdate']
+		else:
+			opdate = ""
+
 		cursor = connection.cursor()
 		cursor.execute("""
 			SELECT DISTINCT paper_code
