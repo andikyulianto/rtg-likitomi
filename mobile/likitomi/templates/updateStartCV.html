@@ -60,22 +60,19 @@
 		<!-- Start Table-->
 			<ul class="pageitem"><li class="textbox"><span class="header">{{ product_code }}</span><p>Display corrugator specification of {{product_code}}</p>
 	<table><tr><td>Color</td><td>: {{color}}</td></tr>
-	<tr><td>Time</td><td>:</td></tr>
-	<tr><td>Speed</td><td>:</td></tr>
+	<tr><td>Time</td><td>: {{time}}</td></tr>
+	<tr><td>Speed</td><td>: {{speed}} items per min</td></tr>
 	<tr><td>Sale Order</td><td>:</td></tr>
 	<tr><td>Order No.</td><td>:</td></tr>
-	<tr><td>P. Code</td><td>:</td></tr>
-	<tr><td>Customer</td><td>: {{cname}}</td></tr>
+	<tr><td>P. Code</td><td>: {{product_code}}</td></tr>
+	<tr><td>Customer</td><td>: {{partner}}</td></tr>
 	<tr><td>Product Name</td><td>: {{product_name}}</td></tr>
-	<tr><td>Amount</td><td></td></tr>
-	<tr><td>Delivery Date</td><td>:</td></tr>
-	<tr><td>Note</td><td>:</td></tr>
-	<tr><td>Next Process</td><td>:</td></tr>
+	<tr><td>Expected Amount</td><td>: {{amount}}</td></tr>
 	</table>
 
 </li>
 </ul>
-			<center><span class="graytitle">Amount from sale order :</span><li class="bigfield"><input name="product_name" type="text"  value='{{amount}}' style="text-align: center" disabled="disabled" /> </li> 
+			<center><span class="graytitle">Amount from previous section:</span><li class="bigfield"><input name="product_name" type="text"  value='{{amount}}' style="text-align: center" disabled="disabled" /> </li> 
 		<li class="bigfield"><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center" disabled="disabled"/></li>
 			<form action="/likitomi/line/update/start/" method="get" name="startForm">
 			<fieldset>

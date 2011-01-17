@@ -2,12 +2,10 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from general import index
 from home import section,display
-from newHome import allSection
-from product import view,product_list
+from detail import pcdetail
 from line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from update import startUpdate,endUpdate
 from machine import machine_list
-#from tryout import playandtry
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -18,8 +16,8 @@ urlpatterns = patterns('',
     (r'^likitomi/$', index),
     (r'^likitomi/home/$', section),
     (r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-    (r'^likitomi/newHome/$', allSection),
-    (r'^likitomi/newHome/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+    (r'^likitomi/pcdetail/$', pcdetail),
+    (r'^likitomi/pcdetail/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     (r'^likitomi/line/cr/start/$', startCR),
     (r'^likitomi/line/cr/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     (r'^likitomi/line/cr/end/$', endCR),
@@ -49,10 +47,7 @@ urlpatterns = patterns('',
     #(r'^likitomi/playandtry/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
     (r'^likitomi/display/$', display),
     (r'^likitomi/display/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-    
-	(r'^likitomi/product/$', product_list),
-	(r'^likitomi/product/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-    
+
     # Example:
     # (r'^likitomi/', include('likitomi.foo.urls')),
 
