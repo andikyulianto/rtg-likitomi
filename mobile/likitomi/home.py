@@ -97,10 +97,11 @@ def showPC(eID,section_title):
 	#prepare list for WH
 	size = len(items_plan_wh)
 	#num = currentProcess("WH")
-	pos = positionOfCurrentProcess("WH",currentProcess("WH")[0][0:8])
-	startList = returnStartingPoint(pos,size)
-	endList = startList+getPCItemNum()
-	items_plan_wh=items_plan_wh[startList:endList]
+	#temp_contents = positionOfCurrentProcess("WH",currentProcess("WH")[0][0:8])
+	temp_contents = currentProcess("WH")
+#	startList = returnStartingPoint(pos,size)
+#	endList = startList+getPCItemNum()
+#	items_plan_wh=items_plan_wh[startList:endList]
 	return render_to_response('PC.html', locals())
 	
 ###################################################
