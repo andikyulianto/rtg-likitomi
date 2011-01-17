@@ -1,15 +1,27 @@
+# Author: Chanaphan Prasomwong
+# Last updated: 11/1/2010 
+# Purpose: this file is containing function
+# for displaying homepage for each person
+# After logging in by using user ID 
+# This page will check the department and
+# return the personalised homepage for each person
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
-from django.db.models import Q
-from app.models import Employee, FakeStatusTracking
-from utility import todayDate, currentProcess, positionOfCurrentProcess
+from app.models import Employee, FakeStatusTracking, ProductCatalog, Partners
+from utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
+from config import getPCItemNum
 
-# use PC.html template
+####################################################
+##                    for pc                      ##
+## this page is view process via desktop computer ##
+####################################################
 def section(request):
 	eID = request.GET['eID']
 	today = todayDate()
 	temp_contents = ''
+
 	title = str(today)
 	is_enable_table = True
 	is_enable_desktop = True
@@ -37,101 +49,72 @@ def showPC(eID,section_title):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	#startList = 0
-	#endList = 3
+	temp_contents = ""
+
 	#create items for PC
 	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
-	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id", "actual_wh_start").order_by('plan_wh_start')
+	#bug here ordering (also in utility line67)
+	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id", "actual_wh_start").order_by('product_id').order_by('plan_wh_start')
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)
 	items_plan_wh = list (item_plan_wh)
+	#num = currentProcess("WH")[0][0:8]
 	
-	cr = str(currentProcess("CR"))[2:8]
-	cv = str(currentProcess("CV"))[2:8]
-	cvThreeCS = str(currentProcess("3CS"))[2:8]
-	cvThreeCL = str(currentProcess("3CL"))[2:8]
-	cvTwoCL = str(currentProcess("2CL"))[2:8]
-	cvThreeCW = str(currentProcess("3CW"))[2:8]
-	cvTwoCS = str(currentProcess("2CS"))[2:8]
-	pt = str(currentProcess("PT"))[2:8]
-	wh = str(currentProcess("WH"))[2:8]
+	cr = currentTimeProcess("CR")
+	cv = currentTimeProcess("CV")
+	cvThreeCS = currentTimeProcess("3CS")
+	cvThreeCL = currentTimeProcess("3CL")
+	cvTwoCL = currentTimeProcess("2CL")
+	cvThreeCW = currentTimeProcess("3CW")
+	cvTwoCS = currentTimeProcess("2CS")
+	pt = currentTimeProcess("PT")
+	wh = currentTimeProcess("WH")
 	
-	pos = positionOfCurrentProcess("CR",cr)
-	### limit view for 3 record and keep current task in the center ##
-	## cr ##
-	if pos > int(-1) and pos < 3:
-		startList = 0
-		endList = 3
-	elif pos > int(len(items_plan_cr)-3) and pos < int(len(items_plan_cr)): 
-		startList = len(items_plan_cr)-3
-		endList = len(items_plan_cr)
-	elif pos > 0:
-		startList = pos-1
-		endList = pos +1
-	else:
-		startList = 0
-		endList = 0
-	## cv ##
-	pos = positionOfCurrentProcess("CV",cv)
-	if pos > int(-1) and pos < 3:
-		startList = 0
-		endList = 3
-	elif pos > int(len(items_plan_cv)-3) and pos < int(len(items_plan_cv)): 
-		startList = len(items_plan_cv)-3
-		endList = len(items_plan_cv)
-	elif pos > 0:
-		startList = pos-1
-		endList = pos +1
-	else:
-		startList = 0
-		endList = 0
-	## pt ##
-	#positionOfCurrentProcess(machine,product)
-	pos = positionOfCurrentProcess("PT",pt)
-	#contents_text = pos
-	if pos > int(-1) and pos < 3:
-		#contents_text = pos
-		startList = 0
-		endList = 3
-	elif pos > int(len(items_plan_pt)-3) and pos < int(len(items_plan_pt)): 
-		startList = len(items_plan_pt)-3
-		endList = len(items_plan_pt)
-	elif pos > 0:
-		startList = pos-1
-		endList = pos +1
-	else:
-		startList = 0
-		endList = 0
+	#prepare list for CR
+	size = len(items_plan_cr)
+	pos = positionOfCurrentProcess("CR",currentProcess("CR")[0][0:8])
+	startList = returnStartingPoint(pos,size)
+	endList = startList+getPCItemNum()
+	items_plan_cr=items_plan_cr[startList:endList]
 	
-	## wh ##
-	wh = positionOfCurrentProcess("WH",wh)
-	if pos < 3:
-		startListWH = 0
-		endListWH = 3
-	elif pos > int(len(items_plan_wh)-3) and pos < int(len(items_plan_wh)): 
-		startListWH = len(items_plan_wh)-3
-		endListWH = len(items_plan_wh)
-	elif pos > 0:
-		startListWH = pos-1
-		endListWH = pos +1
-	else:
-		startListWH = 0
-		endListWH = 0
-	#contents_text = items_plan_cv
-	items_plan_cr = items_plan_cr[startList:endList]
-	items_plan_cv = items_plan_cv[startList:endList]
-	items_plan_pt = items_plan_pt[startList:endList]
-	#items_plan_wh = items_plan_wh[startListWH:endListWH]
-	#contents_text = items_plan_pt
-	#contents_text = items_plan_pt
-	#str(startList) +","+ str(endList)
-	#contents_text = cvTwoCL
+	#prepare list for CV
+	size = len(items_plan_cv)
+	pos = positionOfCurrentProcess("CV",currentProcess("CV")[0][0:8])
+	startList = returnStartingPoint(pos,size)
+	endList = startList+getPCItemNum()
+	items_plan_cv=items_plan_cv[startList:endList]
+	
+	#prepare list for PT
+	size = len(items_plan_pt)
+	pos = positionOfCurrentProcess("PT",currentProcess("PT")[0][0:8])
+	startList = returnStartingPoint(pos,size)
+	endList = startList+getPCItemNum()
+	items_plan_pt=items_plan_pt[startList:endList]
+	
+	#prepare list for WH
+	size = len(items_plan_wh)
+	#num = currentProcess("WH")
+	pos = positionOfCurrentProcess("WH",currentProcess("WH")[0][0:8])
+	startList = returnStartingPoint(pos,size)
+	endList = startList+getPCItemNum()
+	items_plan_wh=items_plan_wh[startList:endList]
 	return render_to_response('PC.html', locals())
+	
+###################################################
+##                 for manager                   ##
+## this page is view process via mobile computer ##
+###################################################
+#Note : not complete
 def showMD(eID,section_title):
 	return render_to_response('MD.html',locals())
+
+#####################################	
+##             for CR              ##
+## time and process are recordable ##
+#####################################
 def workCR(eID,section_title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -142,6 +125,11 @@ def workCR(eID,section_title):
 	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_id","plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
 	return render_to_response('listCR.html', locals())
+	
+#####################################	
+##             for CV              ##
+## time and process are recordable ##
+#####################################
 def workCV(eID,section_title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -155,175 +143,48 @@ def workCV(eID,section_title):
 	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('listCV.html', locals())
+
+#####################################	
+##             for PT              ##
+## time and process are recordable ##
+#####################################
 def workPT(eID,section_title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	#create items for PT
 	today = todayDate()
-	pt = str(currentProcess("PT"))[2:8]
+	pt = str(currentTimeProcess("PT"))
 	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
 	items = list(item_plan)
 	return render_to_response('listPT.html', locals())
+
+#####################################	
+##             for WH              ##
+## time and process are recordable ##
+#####################################
+
 def workWH(eID,section_title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	today = todayDate()
 	#create items for WH
-	wh = str(currentProcess("WH"))[2:8]
-	#wh = currentTimeProcess("WH")
+	wh = currentTimeProcess("WH")
 	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
 	items = list(item_plan)
-	return render_to_response('listWH.html',locals())
+	return render_to_response('WH.html',locals())
 	
-#def positionOfCurrentProcess(machine,product):
-#	today = todayDate()
-#	position = 0
-#	#cr
-#	if(machine == "CR"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	#cv
-#	if(machine == "CV"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cr_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	if(machine == "3CL"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	if(machine == "3CS"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	if(machine == "2CL"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	if(machine == "3CW"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	if(machine == "2CS"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	#contents_text = machine
-#	if(machine == "PT"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start').values_list("product_id")
-#			#contents_text = today_plan
-#			for pos, item in enumerate(today_plan):
-#				#contents_text = item
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	if(machine == "WH"):
-#		try:
-#			today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start').values_list("product_id")
-#			for pos, item in enumerate(today_plan):
-#				if str(item)[2:8] == product:
-#					position = pos
-#		except IndexError, error:
-#			position = -1
-#	return position
-
-def currentTimeProcess(machine):
-	today=todayDate()
-	if(machine=="CR"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id","actual_cr_end")
-			item_current = today_plan.filter(actual_cr_end = None).values_list("plan_cr_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	## top current for CV 
-	if(machine=="CV"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id","actual_cv_end")
-			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	## current by machine
-	if(machine == "3CS"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CS").values_list("product_id","actual_cv_end")
-			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	if(machine=="3CL"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CL").values_list("product_id","actual_cv_end")
-			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	if(machine=="2CL"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="2CL").values_list("product_id","actual_cv_end")
-			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	if(machine=="3CW"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="3CW").values_list("product_id","actual_cv_end")
-			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	if(machine=="2CS"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').filter(cv_machine="2CS").values_list("product_id","actual_cv_end")
-			item_current = today_plan.filter(actual_cv_end = None).values_list("plan_cv_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	if(machine=="PT"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start').values_list("product_id","actual_pt_end")
-			item_current = today_plan.filter(actual_pt_end = None).values_list("plan_pt_start")[0]
-		except IndexError, error:
-			item_current = 'idle'
-	if(machine=="WH"):
-		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("product_id","actual_wh_start").order_by('plan_wh_start')
-			item_current = today_plan.filter(actual_wh_start = None).values_list("plan_wh_start")[0]
-			item_current = item_current[0]
-			#item_current = item_current.strftime("%H:%M")
-		except IndexError, error:
-			item_current = 'idle'
-	return item_current
 
 ##############################
 ## Display the detail pages ##
 ##############################
 def display(request):
 	product= request.GET['product']
-	plan_amount = FakeStatusTracking.objects.filter(product_id=product).values_list("plan_amount")
+	plan_amount = FakeStatusTracking.objects.filter(product_id=product).values_list("plan_amount")[0][0]
+	so = ''
+	po = FakeStatusTracking.objects.filter(product_id=product).values_list("plan_id")[0][0]
+	#product_name = "product_name"
+	product_name = ProductCatalog.objects.filter(product_code = product).values_list("product_name")[0][0]
+	partner_code = ProductCatalog.objects.filter(product_code = product).values_list("partner_id")[0][0]
+	partner = Partners.objects.filter(partner_id = partner_code).values_list("partner_name")[0][0]
 	return render_to_response('productDetail.html',locals())
 

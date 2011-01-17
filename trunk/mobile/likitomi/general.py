@@ -1,6 +1,15 @@
+#Author: Chanaphan Prasomwong
+# Last updated: 11/1/2010 
+# Purpose: this file is containing function
+# for the first time entering to the site 
+# and check authentication of the page access 
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
+########################
+## display login page ##
+########################
 
 def index(request):
 	title = "Welcome to Likitomi Status Tracking System"
@@ -11,7 +20,6 @@ def index(request):
 	subcontent_header = "Please scan or enter employee code"
 	item_pic = "thumbs/mail.png"
 	item_name = "Item name"
-	item_link = "http://www.google.com"
 	is_enable_link = False
 	is_enable_comment = False
 	is_enable_arrow = False

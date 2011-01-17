@@ -1,9 +1,23 @@
+# Author: Chanaphan Prasomwong
+# Last updated: 11/1/2010 
+# Purpose: this file is containing function
+# for recording start and stop time in each section 
+# that will be used by workers in the production lines
+#
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.db.models import Q
-from datetime import datetime
+from utility import todayDate
+from config import getCVSpeed
 from app.models import Employee, FakeStatusTracking, ProductCatalog, Products
+
+###########################################
+##                 for CR                ##
+## to gatter information before stamping ##
+##    of the loaded time of corrugator   ##
+###########################################
 
 def startCR(request):
 	content_header = "Load"
@@ -41,6 +55,13 @@ def startCR(request):
 	#product_name = product.product_name
 	#product = list(ProductCatalog.objects.all())
 	return render_to_response('updateStartCR.html', locals())
+
+###########################################
+##                 for CR                ##
+## to gatter information before stamping ##
+##   of the finished time of corrugator  ##
+###########################################
+
 def endCR(request):
 	content_header = "Finish"
 	eID = request.GET['eID']
@@ -55,6 +76,12 @@ def endCR(request):
 	current_date_time = todayDate()
 	pID = planID
 	return render_to_response('updateEndCR.html',locals())
+
+###########################################
+##                 for CV                ##
+## to gatter information before stamping ##
+##    of the loaded time of corrugator   ##
+###########################################
 def startCV(request):
 	content_header = "Load"
 	eID = request.GET['eID']
@@ -63,10 +90,14 @@ def startCV(request):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
+
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
+	color = productCat.rope_color
+	cv_machine = productCat.next_process
+	speed = getCVSpeed(cv_machine)
 	product_name = productCat.product_name
-	cname = productCat.cname
+	partner = productCat.cname
 	product = Products.objects.get(product_code = product_code)
 	amount = plan.plan_amount
 	pID = planID
@@ -74,6 +105,12 @@ def startCV(request):
 	task = "start"
 	at = "CV"
 	return render_to_response('updateStartCV.html',locals())
+
+###########################################
+##                 for CV                ##
+## to gatter information before stamping ##
+##   of the finished time of corrugator  ##
+###########################################
 def endCV(request):
 	content_header = "Finish"
 	eID = request.GET['eID']
@@ -88,6 +125,12 @@ def endCV(request):
 	current_date_time = todayDate()
 	pID = planID
 	return render_to_response('updateEndCV.html',locals())
+	
+###########################################
+##                 for PT                ##
+## to gatter information before stamping ##
+##    of the loaded time of corrugator   ##
+###########################################
 def startPT(request):
 	content_header = "Load"
 	eID = request.GET['eID']
@@ -96,10 +139,14 @@ def startPT(request):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	plan = FakeStatusTracking.objects.get(plan_id = planID)
+
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
+	color = productCat.rope_color
+	cv_machine = productCat.next_process
+	speed = getCVSpeed(cv_machine)
 	product_name = productCat.product_name
-	cname = productCat.cname
+	partner = productCat.cname
 	product = Products.objects.get(product_code = product_code)
 	amount = plan.plan_amount
 	pID = planID
@@ -107,6 +154,12 @@ def startPT(request):
 	task = "start"
 	at = "PT"
 	return render_to_response('updateStartCV.html',locals())
+
+###########################################
+##                 for PT                ##
+## to gatter information before stamping ##
+##   of the finished time of corrugator  ##
+###########################################
 def endPT(request):
 	content_header = "Finish"
 	eID = request.GET['eID']
@@ -121,6 +174,12 @@ def endPT(request):
 	current_date_time = todayDate()
 	pID = planID
 	return render_to_response('updateEndCV.html',locals())
+	
+###########################################
+##                 for WH                ##
+## to gatter information before stamping ##
+##    of the loaded time of corrugator   ##
+###########################################
 def startWH(request):
 	content_header = "In"
 	eID = request.GET['eID']
@@ -142,6 +201,12 @@ def startWH(request):
 	task = "start"
 	at = "WH"
 	return render_to_response('updateStartWH.html',locals())
+
+###########################################
+##                 for WH                ##
+## to gatter information before stamping ##
+##   of the finished time of corrugator  ##
+###########################################
 def endWH(request):
 	content_header = "Out"
 	eID = request.GET['eID']
@@ -156,7 +221,4 @@ def endWH(request):
 	current_date_time = todayDate()
 	pID = planID
 	return render_to_response('updateEndWH.html',locals())
-def todayDate():
-	tempDate = datetime.now()
-	return tempDate.strftime("%Y-%m-%d %H:%M:%S")
 
