@@ -421,17 +421,16 @@ class FakeStatusTracking(models.Model):
     plan_wh_start = models.DateTimeField(null=True, blank=True)
     plan_wh_end = models.DateTimeField(null=True, blank=True)
     current_status = models.CharField(max_length=33)
-    actual_id = models.IntegerField()
-    actual_amount_cr = models.IntegerField()
+    actual_amount_cr = models.IntegerField(null=True, blank=True)
     actual_cr_start = models.DateTimeField(null=True, blank=True)
     actual_cr_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_cv = models.IntegerField()
+    actual_amount_cv = models.IntegerField(null=True, blank=True)
     actual_cv_start = models.DateTimeField(null=True, blank=True)
     actual_cv_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_pt = models.IntegerField()
+    actual_amount_pt = models.IntegerField(null=True, blank=True)
     actual_pt_start = models.DateTimeField(null=True, blank=True)
     actual_pt_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_wh = models.IntegerField()
+    actual_amount_wh = models.IntegerField(null=True, blank=True)
     actual_wh_start = models.DateTimeField(null=True, blank=True)
     actual_wh_end = models.DateTimeField(null=True, blank=True)
     previous_section = models.CharField(max_length=15, blank=True)
@@ -861,4 +860,13 @@ class TotalPlanning(models.Model):
     converter_date = models.DateTimeField(null=True, blank=True)
     class Meta:
         db_table = u'total_planning'
+
+"""
+This is my worthless test.
+>>> print "wee"
+wee
+>>> print False
+False
+"""
+
 
