@@ -49,7 +49,6 @@ def showPC(eID,section_title):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	temp_contents = ""
 
 	#create items for PC
 	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
@@ -57,7 +56,9 @@ def showPC(eID,section_title):
 	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
 	#bug here ordering (also in utility line67)
 	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id", "actual_wh_start").order_by('product_id').order_by('plan_wh_start')
+	
 	items_plan_cr = list(item_plan_cr)
+	#temp_contents = len(items_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)
 	items_plan_wh = list (item_plan_wh)
@@ -98,9 +99,10 @@ def showPC(eID,section_title):
 	size = len(items_plan_wh)
 	#num = currentProcess("WH")
 	#temp_contents = positionOfCurrentProcess("WH",currentProcess("WH")[0][0:8])
-	pos = currentProcess("WH")[0][0]
+	pos = positionOfCurrentProcess("WH",currentProcess("WH")[0][0])
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
+	#temp_contents = len(items_plan_cr)
 	items_plan_wh=items_plan_wh[startList:endList]
 	return render_to_response('PC.html', locals())
 	
