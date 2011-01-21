@@ -153,7 +153,38 @@ def scale(request):
 		if operating_mode == 'fake':
 
 			output = "US,NT,+00325.5Kg\r\n"
-			weight = round(random.uniform(1,2000),0)
+			weight = round(random.uniform(1,500),0)
+			digital = str(weight)
+			if len(digital) == 7:
+				digit1 = digital[0:1]
+				digit2 = digital[1:2]
+				digit3 = digital[2:3]
+				digit4 = digital[3:4]
+				digit5 = digital[4:5]
+				digit6 = digital[5:6]
+				digit7 = digital[6:7]
+			if len(digital) == 6:
+				digit2 = digital[0:1]
+				digit3 = digital[1:2]
+				digit4 = digital[2:3]
+				digit5 = digital[3:4]
+				digit6 = digital[4:5]
+				digit7 = digital[5:6]
+			if len(digital) == 5:
+				digit3 = digital[0:1]
+				digit4 = digital[1:2]
+				digit5 = digital[2:3]
+				digit6 = digital[3:4]
+				digit7 = digital[4:5]
+			if len(digital) == 4:
+				digit4 = digital[0:1]
+				digit5 = digital[1:2]
+				digit6 = digital[2:3]
+				digit7 = digital[3:4]
+			if len(digital) == 3:
+				digit5 = digital[0:1]
+				digit6 = digital[1:2]
+				digit7 = digital[2:3]
 
 			realtag = 67
 
@@ -219,6 +250,16 @@ def scale(request):
 		return render_to_response('scale.html', locals())
 
 	except UnboundLocalError:
+		realtag = ""
+		paper_code = ""
+		size = ""
+		uom = ""
+		actual_wt = ""
+		used_weight = ""
+		socror = "[Please change operating mode to 'standby'.]"
+		return render_to_response('scale.html', locals())
+
+	except IndexError:
 		realtag = ""
 		paper_code = ""
 		size = ""
