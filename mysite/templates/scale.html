@@ -14,6 +14,7 @@
 </head>
 <body>
 <div id="scale">
+
 	<table height="30%">
 		<tr>
 			<td></td>
@@ -89,7 +90,7 @@
 	</table>
 
 	<br />
-
+{% if realtag != "" %}
 	<table id="whitesmoke">
 		<tr>
 			<td><p class="label">Paper Roll ID: </p></td>
@@ -116,7 +117,7 @@
 			<td width="20%"></td>
 		</tr>
 	</table>
-
+{% endif %}
 	<p align="center">{{ socror }}</p>
 
 </div>

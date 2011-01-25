@@ -11,9 +11,11 @@ def scale(request):
 	try:
 		weight = 'None'
 
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
+		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
 
-		if operating_mode == 'real':
+		scale_mode = 'fake'
+
+		if scale_mode == 'real':
 
 			ser = serial.Serial()
 			ser.port = '/dev/ttyUSB0'
@@ -72,13 +74,50 @@ def scale(request):
 			else:
 				serror = "[Data sent is not complete.]"
 
+		if scale_mode == 'fake':
+
+			output = "US,NT,+00325.5Kg\r\n"
+			weight = round(random.uniform(1,500),0)
+			digital = str(weight)
+			if len(digital) == 7:
+				digit1 = digital[0:1]
+				digit2 = digital[1:2]
+				digit3 = digital[2:3]
+				digit4 = digital[3:4]
+				digit5 = digital[4:5]
+				digit6 = digital[5:6]
+				digit7 = digital[6:7]
+			if len(digital) == 6:
+				digit2 = digital[0:1]
+				digit3 = digital[1:2]
+				digit4 = digital[2:3]
+				digit5 = digital[3:4]
+				digit6 = digital[4:5]
+				digit7 = digital[5:6]
+			if len(digital) == 5:
+				digit3 = digital[0:1]
+				digit4 = digital[1:2]
+				digit5 = digital[2:3]
+				digit6 = digital[3:4]
+				digit7 = digital[4:5]
+			if len(digital) == 4:
+				digit4 = digital[0:1]
+				digit5 = digital[1:2]
+				digit6 = digital[2:3]
+				digit7 = digital[3:4]
+			if len(digital) == 3:
+				digit5 = digital[0:1]
+				digit6 = digital[1:2]
+				digit7 = digital[2:3]
+
 # Connect RFID reader #
+		if operating_mode == 'real':
 			realtag = 'None'
 
-#			HOST = '192.41.170.55' # CSIM network
+			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '192.168.2.88' # In Likitomi factory
+#			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -96,9 +135,13 @@ def scale(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "AAAA" in tag:
+#				if "AAAA" in tag:
+#					idlist.append(tag)
+#				if "BBBB" in tag:
+#					loclist.append(tag)
+				if "type=STG" in tag or "AAAA" in tag:
 					idlist.append(tag)
-				if "BBBB" in tag:
+				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
 					loclist.append(tag)
 
 			cnt = 0
@@ -145,48 +188,15 @@ def scale(request):
 			if max(repeat_AA) in repeat_AA:
 				n = repeat_AA.index(max(repeat_AA))
 
-			tagsplt = tagid_A[n].split("AAAA")
-			realtag = int(tagsplt[1][0:4])
+#			tagsplt = tagid_A[n].split("AAAA")
+#			realtag = int(tagsplt[1][0:4])
+			realtag = tagid_A[n][7:11]
 
 			soc.close()
 
 		if operating_mode == 'fake':
 
-			output = "US,NT,+00325.5Kg\r\n"
-			weight = round(random.uniform(1,500),0)
-			digital = str(weight)
-			if len(digital) == 7:
-				digit1 = digital[0:1]
-				digit2 = digital[1:2]
-				digit3 = digital[2:3]
-				digit4 = digital[3:4]
-				digit5 = digital[4:5]
-				digit6 = digital[5:6]
-				digit7 = digital[6:7]
-			if len(digital) == 6:
-				digit2 = digital[0:1]
-				digit3 = digital[1:2]
-				digit4 = digital[2:3]
-				digit5 = digital[3:4]
-				digit6 = digital[4:5]
-				digit7 = digital[5:6]
-			if len(digital) == 5:
-				digit3 = digital[0:1]
-				digit4 = digital[1:2]
-				digit5 = digital[2:3]
-				digit6 = digital[3:4]
-				digit7 = digital[4:5]
-			if len(digital) == 4:
-				digit4 = digital[0:1]
-				digit5 = digital[1:2]
-				digit6 = digital[2:3]
-				digit7 = digital[3:4]
-			if len(digital) == 3:
-				digit5 = digital[0:1]
-				digit6 = digital[1:2]
-				digit7 = digital[2:3]
-
-			realtag = 67
+			realtag = '0067'
 
 # Query database #
 		if realtag != 'None':
@@ -205,7 +215,7 @@ def scale(request):
 			int_weight = int(weight)
 
 			if exists == True:
-				actual_wt = query2[0]
+				actual_wt = float(list(query2)[0][0])
 			else:
 				actual_wt = initial_weight
 
