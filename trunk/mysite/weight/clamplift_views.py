@@ -9,14 +9,14 @@ import socket
 def clamplift(request):
 # Connect RFID reader #
 	try:
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
+		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
 
 		if operating_mode == 'real':
 
-#			HOST = '192.41.170.55' # CSIM network
+			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '192.168.2.88' # In Likitomi factory
+#			HOST = '192.168.2.88'  In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -34,9 +34,13 @@ def clamplift(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "AAAA" in tag:
+#				if "AAAA" in tag:
+#					idlist.append(tag)
+#				if "BBBB" in tag:
+#					loclist.append(tag)
+				if "type=STG" in tag or "AAAA" in tag:
 					idlist.append(tag)
-				if "BBBB" in tag:
+				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
 					loclist.append(tag)
 
 			cnt = 0
@@ -83,8 +87,15 @@ def clamplift(request):
 				cnt = 0
 				for rep in repeat_B:
 					if type_B[cnt] == "ISOC":
-						lindex = int(tagid_B[cnt][26:28])
-						pindex = int(tagid_B[cnt][28:30])
+#						lindex = int(tagid_B[cnt][26:28])
+						prelindex = tagid_B[cnt][25:27]
+						if prelindex == 'AB': lindex = 1
+						if prelindex == 'CD': lindex = 2
+						if prelindex == 'EF': lindex = 3
+						if prelindex == 'FF': lindex = 4
+						if prelindex == 'CC': lindex = 0
+						if prelindex == 'DD': lindex = 5
+						pindex = int(tagid_B[cnt][27:30])
 						lan += float(lindex)*float(repeat_B[cnt])
 						pos += float(pindex)*float(repeat_B[cnt])
 						totalCount += float(repeat_B[cnt])
@@ -104,7 +115,7 @@ def clamplift(request):
 
 			if L == 0:
 				atlocation = 'CR'
-			if L == 5 and P == 5:
+			if L == 5:
 				atlocation = 'Scale'
 			if L in range(1, 5):
 				atlocation = 'Stock'
@@ -123,8 +134,9 @@ def clamplift(request):
 			if max(repeat_AA) in repeat_AA:
 				n = repeat_AA.index(max(repeat_AA))
 
-			tagsplt = tagid_A[n].split("AAAA")
-			realtag = int(tagsplt[1][0:4])
+#			tagsplt = tagid_A[n].split("AAAA")
+#			realtag = int(tagsplt[1][0:4])
+			realtag = tagid_A[n][7:11]
 
 			soc.close()
 
@@ -465,14 +477,14 @@ def changeloc(request):
 def minclamp(request):
 # Connect RFID reader #
 	try:
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
+		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
 
 		if operating_mode == 'real':
 
-#			HOST = '192.41.170.55' # CSIM network
+			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '192.168.2.88' # In Likitomi factory
+#			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -490,10 +502,15 @@ def minclamp(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "AAAA" in tag:
+#				if "AAAA" in tag:
+#					idlist.append(tag)
+#				if "BBBB" in tag:
+#					loclist.append(tag)
+				if "type=STG" in tag or "AAAA" in tag:
 					idlist.append(tag)
-				if "BBBB" in tag:
+				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
 					loclist.append(tag)
+
 
 			cnt = 0
 
@@ -540,8 +557,15 @@ def minclamp(request):
 				cnt = 0
 				for rep in repeat_B:
 					if type_B[cnt] == "ISOC":
-						lindex = int(tagid_B[cnt][26:28])
-						pindex = int(tagid_B[cnt][28:30])
+#						lindex = int(tagid_B[cnt][26:28])
+						prelindex = tagid_B[cnt][25:27]
+						if prelindex == 'AB': lindex = 1
+						if prelindex == 'CD': lindex = 2
+						if prelindex == 'EF': lindex = 3
+						if prelindex == 'FF': lindex = 4
+						if prelindex == 'CC': lindex = 0
+						if prelindex == 'DD': lindex = 5
+						pindex = int(tagid_B[cnt][27:30])
 						lan += float(lindex)*float(repeat_B[cnt])
 						pos += float(pindex)*float(repeat_B[cnt])
 						totalCount += float(repeat_B[cnt])
@@ -561,7 +585,7 @@ def minclamp(request):
 
 			if L == 0:
 				atlocation = 'CR'
-			if L == 5 and P == 5:
+			if L == 5:
 				atlocation = 'Scale'
 			if L in range(1, 5):
 				atlocation = 'Stock'
@@ -580,8 +604,9 @@ def minclamp(request):
 			if max(repeat_AA) in repeat_AA:
 				n = repeat_AA.index(max(repeat_AA))
 
-			tagsplt = tagid_A[n].split("AAAA")
-			realtag = int(tagsplt[1][0:4])
+#			tagsplt = tagid_A[n].split("AAAA")
+#			realtag = int(tagsplt[1][0:4])
+			realtag = tagid_A[n][7:11]
 
 			soc.close()
 

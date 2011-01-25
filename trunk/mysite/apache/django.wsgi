@@ -1,5 +1,5 @@
 import os, sys
-sys.path.append('C:/Users/Patipol/rtg-likitomi')
+sys.path.append('/home/patipol/rtg-likitomi')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
 
