@@ -478,14 +478,14 @@
 					</tr>{% endif %}
 					<tr>
 						<td width="46%"><p class="label">Location:</p></td>
-						<td></td>
+						<td>{% if atlocation != "Stock" %}<p class="var">{{lane}}-{{position}}</p>{% endif %}</td>
 						<td style="width:5%;"></td>
 						<td></td>
 					</tr>
 					{% if lane == 'A' or lane == 'C' or lane == 'E' or lane == 'G' %}<tr>
 						<td></td>
 						{% ifequal atlocation "Stock" %}{% ifequal downpos 0 %}<td></td>{% else %}<td {% if downpos|stringformat:"s"|add:lane in availoc %}class="locbutton" onclick="javascript:changeLocDown()"{% endif %}style="text-align:center"><p>{{lane}}-{{downpos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
-						{% ifnotequal lane "" %}<td style="width:10%;"><p class="var">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p></td>{% endifnotequal %}
+						{% ifequal atlocation "Stock" %}<td style="width:10%;"><p class="var">{{lane}}-{{position}}</p></td>{% else %}{% endifequal %}
 						{% ifequal atlocation "Stock" %}{% ifequal uppos 14 %}<td></td>{% else %}<td {% if uppos|stringformat:"s"|add:lane in availoc %}class="locbutton" onclick="javascript:changeLocUp()"{% endif %}style="text-align:center"><p>{{lane}}-{{uppos}}</p></td>{% endifequal %}{% else %}{% endifequal %}
 						<td></td>
 						{% if atlocation == "Stock" and realtag != "" %}<td class="locbutton" onclick="javascript:changeLocLeft()" colspan="3" style="width:10%;"><p>{{leftlane}}</p></td>{% else %}{% endif %}
@@ -517,7 +517,7 @@
 		<tr>
 			<td style="width:20%;"><p class="label">Weight: </p></td>
 			<td style="width:20%;">{% ifnotequal actual_wt "" %}<p class="var">{{ actual_wt }}</p>{% endifnotequal %}</td>
-			{% ifequal atlocation "Stock" %}<td><p class="unit">kgs.</p></td>{% endifequal %}
+			{% if atlocation == "Stock" or atlocation == "CR" or atlocation == ""%}<td><p class="unit">kgs.</p></td>{% endif %}
 			<td align="center">{% ifequal atlocation "Scale" %}<img width="30px" src="image/arrow.png">{% endifequal %}</td>
 			<td align="center" width="300px">
 			{% ifequal digit1 "0" %}<img width="30px" src="image/0.png">{% endifequal %}
