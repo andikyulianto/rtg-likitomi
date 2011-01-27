@@ -22,7 +22,7 @@ def clamplift(request):
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
 			## soc.send('setup.operating_mode = standby\r\n')
-			soc.send('tag.db.scan_tags(1000)\r\n')
+			soc.send('tag.db.scan_tags(100)\r\n')
 			datum = soc.recv(128)
 
 			if datum.find("ok") > -1:
@@ -490,7 +490,7 @@ def minclamp(request):
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
 			## soc.send('setup.operating_mode = standby\r\n')
-			soc.send('tag.db.scan_tags(1000)\r\n')
+			soc.send('tag.db.scan_tags(100)\r\n')
 			datum = soc.recv(128)
 
 			if datum.find("ok") > -1:
@@ -597,6 +597,7 @@ def minclamp(request):
 				toperror = "[No location tag in field.]"
 
 			repeat_AA = list()
+
 
 			for rep_A in repeat_A:
 				repeat_AA.append(int(rep_A))

@@ -215,12 +215,12 @@ def scale(request):
 			int_weight = int(weight)
 
 			if exists == True:
-				actual_wt = float(list(query2)[0][0])
+				actual_wt = int(list(query2)[0][0])
 			else:
 				actual_wt = initial_weight
 
 			if weight != 'None':
-				used_weight = actual_wt - weight
+				used_weight = actual_wt - int(weight)
 
 # Update temp_weight to database #
 				p = PaperRoll(id=realtag, paper_code=paper_code, width=size, wunit=uom, initial_weight=initial_weight, temp_weight=int_weight, lane=lane, position=position)
