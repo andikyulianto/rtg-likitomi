@@ -168,17 +168,17 @@ def inventory(request):
 				atlocation = ""
 				toperror = "[No location tag in field.]"
 
-			repeat_AA = list()
+#			repeat_AA = list()
 
-			for rep_A in repeat_A:
-				repeat_AA.append(int(rep_A))
+#			for rep_A in repeat_A:
+#				repeat_AA.append(int(rep_A))
 
-			if max(repeat_AA) in repeat_AA:
-				n = repeat_AA.index(max(repeat_AA))
+#			if max(repeat_AA) in repeat_AA:
+#				n = repeat_AA.index(max(repeat_AA))
 
 #			tagsplt = tagid_A[n].split("AAAA")
 #			realtag = int(tagsplt[1][0:4])
-			realtag = tagid_A[n][7:11]
+#			realtag = tagid_A[n][7:11]
 
 			soc.close()
 
