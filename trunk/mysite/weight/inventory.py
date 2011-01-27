@@ -63,7 +63,7 @@ def inventory(request):
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
 			## soc.send('setup.operating_mode = standby\r\n')
-			soc.send('tag.db.scan_tags(1000)\r\n')
+			soc.send('tag.db.scan_tags(100)\r\n')
 			datum = soc.recv(128)
 
 			if datum.find("ok") > -1:
@@ -151,6 +151,19 @@ def inventory(request):
 				L = 0
 				P = 0
 
+			if P >= 1 and P <= 3: P = 1
+			if P >= 4 and P <= 6: P = 2
+			if P >= 7 and P <= 9: P = 3
+			if P >= 10 and P <= 12: P = 4
+			if P >= 13 and P <= 15: P = 5
+			if P >= 16 and P <= 18: P = 6
+			if P >= 19 and P <= 21: P = 7
+			if P >= 22 and P <= 24: P = 8
+			if P >= 25 and P <= 27: P = 9
+			if P >= 28 and P <= 30: P = 10
+			if P >= 31 and P <= 33: P = 11
+			if P >= 34 and P <= 36: P = 12
+			if P >= 37: P = 13
 			atlane = str(L)
 			atposition = str(P)
 			atlocation = ''
