@@ -24,7 +24,8 @@
 		{% if is_enable_leftbutton %}
 	<div id="leftnav">
 		<a href='/likitomi/home/?eID={{eID}}'><img alt="home" src="images/home.png" /></a>
-		<a href="#" class="noeffect">WH</a> 
+		<a href="#" class="noeffect">WH</a>  
+	</div>
 	</div>
 	{% endif %}
 	{% if is_enable_rightbutton %}
@@ -67,7 +68,7 @@
 			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td><td width="35%" rowspan="2"> Product code </td><td width="30%" rowspan="2">From</td></tr>
 			<tr align=center><td>Act.IN</td></tr>
 			{% for plan_id,start,product,actual_start in items %}
-			<tr align=center><td rowspan="2" height="20">{% if wh == start and actual_start == none %} > {% endif %}</td><td><a href="/likitomi/line/wh/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td><td rowspan="2">{{product}}</td><td rowspan="2">{{from}}</td></tr>
+			<tr align=center><td rowspan="2" height="20">{% if wh == start and actual_start == none %} > {% endif %}</td><td>{{start|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2">{{from}}</td></tr>
 			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td></tr>
 			{% endfor %}
 			</table>
