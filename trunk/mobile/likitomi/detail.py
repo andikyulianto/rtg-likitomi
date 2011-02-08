@@ -93,4 +93,4 @@ def showWH(eid,section_title):
 	wh = currentTimeProcess("WH")
 	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
 	items = list(item_plan)
-	return render_to_response('listWH.html',locals())
+	return render_to_response('WH.html',locals())

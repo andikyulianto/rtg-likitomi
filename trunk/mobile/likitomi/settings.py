@@ -14,7 +14,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'likitomiv8', # Or path to database file if using sqlite3.
+        'NAME': 'likitomiv9', # Or path to database file if using sqlite3.
         'USER': 'root', # Not used with sqlite3.
         'PASSWORD': 'root', # Not used with sqlite3.
         'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
@@ -22,7 +22,7 @@ DATABASES = {
     },
      'slave': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'likitomi',
+        'NAME': 'likitomiv9slave',
         'HOST': '',
         'TEST_MIRROR': 'default'
         # ... plus some other settings
@@ -99,13 +99,15 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'likitomi.app',
+#    'likitomi',
+    'app',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'likitomi.app',
-    'likitomi',
-    
+    #'likitomi.app',
+    #'app'
 )
 
 ###########
@@ -131,4 +133,6 @@ TEST_DATABASE_COLLATION = None
 ############
 
 # The list of directories to search for fixtures
-FIXTURE_DIRS = ()
+FIXTURE_DIRS = (
+'/home/fon/Django-123/projects/rtg-likitomi/mobile/likitomi/app/fixtures/'
+)

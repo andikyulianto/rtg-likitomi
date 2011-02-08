@@ -55,14 +55,12 @@ def showPC(eID,section_title):
 	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
 	#bug here ordering (also in utility line67)
-	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id", "actual_wh_start").order_by('product_id').order_by('plan_wh_start')
+	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
 	
 	items_plan_cr = list(item_plan_cr)
-	#temp_contents = len(items_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)
 	items_plan_wh = list (item_plan_wh)
-	#num = currentProcess("WH")[0][0:8]
 	
 	cr = currentTimeProcess("CR")
 	cv = currentTimeProcess("CV")
@@ -73,11 +71,13 @@ def showPC(eID,section_title):
 	cvTwoCS = currentTimeProcess("2CS")
 	pt = currentTimeProcess("PT")
 	wh = currentTimeProcess("WH")
+	currentTimeProcess("WH") 
 	
 	#prepare list for CR
 	size = len(items_plan_cr)
-	pos = positionOfCurrentProcess("CR",currentProcess("CR")[0][0:8])
+	pos = positionOfCurrentProcess("CR",currentProcess("CR"))
 	startList = returnStartingPoint(pos,size)
+	#temp_contents = pos
 	endList = startList+getPCItemNum()
 	items_plan_cr=items_plan_cr[startList:endList]
 	
@@ -97,13 +97,13 @@ def showPC(eID,section_title):
 	
 	#prepare list for WH
 	size = len(items_plan_wh)
-	#num = currentProcess("WH")
-	#temp_contents = positionOfCurrentProcess("WH",currentProcess("WH")[0][0:8])
+	#pos =currentProcess("WH")[0][0]
+	#temp_contents = currentProcess("WH")[0][0]
 	pos = positionOfCurrentProcess("WH",currentProcess("WH")[0][0])
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
-	#temp_contents = len(items_plan_cr)
 	items_plan_wh=items_plan_wh[startList:endList]
+	#temp_contents = currentProcess("2CL")
 	return render_to_response('PC.html', locals())
 	
 ###################################################
@@ -124,7 +124,11 @@ def workCR(eID,section_title):
 	eID = eID
 	today = todayDate()
 	#create items for CR
-	cr = str(currentProcess("CR"))[2:8]
+	if(currentProcess("CR")=='idle'):
+		cr = 'idle'
+	else:
+		cr = str(currentProcess("CR"))[2:8]
+	#temp_contents = cr
 	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_id","plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
 	return render_to_response('listCR.html', locals())
@@ -138,11 +142,26 @@ def workCV(eID,section_title):
 	is_enable_rightbutton = True
 	today = todayDate()
 	#create items for CV
-	cvThreeCS = str(currentProcess("3CS"))[2:8]
-	cvThreeCL = str(currentProcess("3CL"))[2:8]
-	cvTwoCL = str(currentProcess("2CL"))[2:8]
-	cvThreeCW = str(currentProcess("3CW"))[2:8]
-	cvTwoCS = str(currentProcess("2CS"))[2:8]
+	if(currentProcess("3CS")=='idle'):
+		cvThreeCS = 'idle'
+	else:
+		cvThreeCS = str(currentProcess("3CS"))[2:8]
+	if(currentProcess("3CL")=='idle'):
+		cvThreeCL = 'idle'
+	else:
+		cvThreeCL = str(currentProcess("3CL"))[2:8]
+	if(currentProcess("2CL")=='idle'):
+		cvTwoCL = 'idle'
+	else:
+		cvTwoCL = str(currentProcess("2CL"))[2:8]
+	if(currentProcess("3CW")=='idle'):
+		cvThreeCW = 'idle'
+	else:
+		cvThreeCW = str(currentProcess("3CW"))[2:8]
+	if(currentProcess("2CS")=='idle'):
+		cvTwoCS = 'idle'
+	else:
+		cvTwoCS = str(currentProcess("2CS"))[2:8]
 	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('listCV.html', locals())

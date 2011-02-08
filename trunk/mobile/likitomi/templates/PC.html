@@ -71,7 +71,7 @@
 		<a id="pressed" href="#">Home</a><a href="changelog.html">Changelog</a><a href="about.html">About</a></div>
 </div>
 {% endif %}
-<div id="content">{{temp_contents}}
+<div id="content">
 	{# for o in set_of_sections #}
 	<span class="graytitle">{{section_title}}</span>
 	<ul class="pageitem">
@@ -90,7 +90,7 @@
 			{% endif %}</li>
 		{% endif %}
 
-		{# start page of planner #}
+		{# start page of planner #}{{temp_contents}}
 			<ul class="pageitem"><li class="textbox"></li>
 			<table align=center width="100%">
 			<tr align = center>
