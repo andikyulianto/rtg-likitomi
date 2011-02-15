@@ -13,16 +13,16 @@ def clamplift(request):
 
 		if operating_mode == 'real':
 
-#			HOST = '192.41.170.55' # CSIM network
+			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '192.168.2.88'  In Likitomi factory
+#			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
 			## soc.send('setup.operating_mode = standby\r\n')
-			soc.send('tag.db.scan_tags(100)\r\n')
+			soc.send('tag.db.scan_tags(1000)\r\n')
 			datum = soc.recv(128)
 
 			if datum.find("ok") > -1:
@@ -136,6 +136,7 @@ def clamplift(request):
 
 #			tagsplt = tagid_A[n].split("AAAA")
 #			realtag = int(tagsplt[1][0:4])
+			real = tagid_A[0]
 			realtag = tagid_A[n][7:11]
 
 			soc.close()
@@ -481,10 +482,10 @@ def minclamp(request):
 
 		if operating_mode == 'real':
 
-#			HOST = '192.41.170.55' # CSIM network
+			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '192.168.2.88' # In Likitomi factory
+#			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -597,6 +598,7 @@ def minclamp(request):
 				toperror = "[No location tag in field.]"
 
 			repeat_AA = list()
+
 
 
 
@@ -883,32 +885,32 @@ def minchangeloc(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 	else:
-		return HttpResponseRedirect('/minclamp/')
+		return HttpResponseRedirect('/inventory/')
 
 	if 'lane' in request.GET and request.GET['lane']:
 		ilane = request.GET['lane']
 	else:
-		return HttpResponseRedirect('/minclamp/')
+		return HttpResponseRedirect('/inventory/')
 
 	if 'pos' in request.GET and request.GET['pos']:
 		ipos = request.GET['pos']
 	else:
-		return HttpResponseRedirect('/minclamp/')
+		return HttpResponseRedirect('/inventory/')
 
 	if 'pcode' in request.GET and request.GET['pcode']:
 		ipcode = request.GET['pcode']
 	else:
-		return HttpResponseRedirect('/minclamp/')
+		return HttpResponseRedirect('/inventory/')
 
 	if 'width' in request.GET and request.GET['width']:
 		iwidth = request.GET['width']
 	else:
-		return HttpResponseRedirect('/minclamp/')
+		return HttpResponseRedirect('/inventory/')
 
 	if 'loss' in request.GET and request.GET['loss']:
 		iloss = request.GET['loss']
 	else:
-		return HttpResponseRedirect('/minclamp/')
+		return HttpResponseRedirect('/inventory/')
 
 	if int(ipos) <= 43:
 		query = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
