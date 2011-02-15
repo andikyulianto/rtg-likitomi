@@ -51,13 +51,26 @@ def inventory(request):
 
 			initial_weight = int(str(PaperRoll.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
 
+		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+
+		lane = ['H','','G','F','','E','D','','C','B','','A']
+		posall = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+		posh = ['','','3','4','5','6','','8','9','','','','']
+		posg = ['','','3','4','5','6','','8','9','','','','']
+		posf = ['','','3','4','5','6','','8','9','','','','']
+		pose = ['','','3','4','5','6','','8','9','','','','']
+		posd = ['','','3','4','5','6','','8','9','','','','']
+		posc = ['1','2','3','4','5','6','','8','9','10','11','12','13']
+		posb = ['1','2','3','4','5','6','','8','9','10','11','12','13']
+		posa = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+
 		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
 
 		if operating_mode == 'real':
-#			HOST = '192.41.170.55' # CSIM network
+			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
-			HOST = '192.168.2.88' # In Likitomi factory
+#			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -151,19 +164,19 @@ def inventory(request):
 				L = 0
 				P = 0
 
-			if P >= 1 and P <= 3: P = 1
-			if P >= 4 and P <= 6: P = 2
-			if P >= 7 and P <= 9: P = 3
-			if P >= 10 and P <= 12: P = 4
-			if P >= 13 and P <= 15: P = 5
-			if P >= 16 and P <= 18: P = 6
-			if P >= 19 and P <= 21: P = 7
-			if P >= 22 and P <= 24: P = 8
-			if P >= 25 and P <= 27: P = 9
-			if P >= 28 and P <= 30: P = 10
-			if P >= 31 and P <= 33: P = 11
-			if P >= 34 and P <= 36: P = 12
-			if P >= 37: P = 13
+#			if P >= 1 and P <= 3: P = 1
+#			if P >= 4 and P <= 6: P = 2
+#			if P >= 7 and P <= 9: P = 3
+#			if P >= 10 and P <= 12: P = 4
+#			if P >= 13 and P <= 15: P = 5
+#			if P >= 16 and P <= 18: P = 6
+#			if P >= 19 and P <= 21: P = 7
+#			if P >= 22 and P <= 24: P = 8
+#			if P >= 25 and P <= 27: P = 9
+#			if P >= 28 and P <= 30: P = 10
+#			if P >= 31 and P <= 33: P = 11
+#			if P >= 34 and P <= 36: P = 12
+#			if P >= 37: P = 13
 			atlane = str(L)
 			atposition = str(P)
 			atlocation = ''
@@ -181,17 +194,23 @@ def inventory(request):
 				atlocation = ""
 				toperror = "[No location tag in field.]"
 
-#			repeat_AA = list()
+			for p in vlane:
+				if p == atposition:
+					ind = vlane.index(p)
+					vlane.remove(p)
+					vlane.insert(ind, '*')
 
-#			for rep_A in repeat_A:
-#				repeat_AA.append(int(rep_A))
+			repeat_AA = list()
 
-#			if max(repeat_AA) in repeat_AA:
-#				n = repeat_AA.index(max(repeat_AA))
+			for rep_A in repeat_A:
+				repeat_AA.append(int(rep_A))
 
-#			tagsplt = tagid_A[n].split("AAAA")
-#			realtag = int(tagsplt[1][0:4])
-#			realtag = tagid_A[n][7:11]
+			if max(repeat_AA) in repeat_AA:
+				n = repeat_AA.index(max(repeat_AA))
+
+			tagsplt = tagid_A[n].split("AAAA")
+			realtag = int(tagsplt[1][0:4])
+			realtag = tagid_A[n][7:11]
 
 			soc.close()
 
@@ -207,13 +226,13 @@ def inventory(request):
 
 			realtag = 67
 
-		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+#		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
-		for p in vlane:
-			if p == atposition:
-				ind = vlane.index(p)
-				vlane.remove(p)
-				vlane.insert(ind, '*')
+#		for p in vlane:
+#			if p == atposition:
+#				ind = vlane.index(p)
+#				vlane.remove(p)
+#				vlane.insert(ind, '*')
 
 		if atlane == '1':
 			leftlane = 'B'
@@ -228,16 +247,16 @@ def inventory(request):
 			leftlane = 'H'
 			rightlane = 'G'
 
-		lane = ['H','','G','F','','E','D','','C','B','','A']
-		posall = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
-		posh = ['','','3','4','5','6','','8','9','','','','']
-		posg = ['','','3','4','5','6','','8','9','','','','']
-		posf = ['','','3','4','5','6','','8','9','','','','']
-		pose = ['','','3','4','5','6','','8','9','','','','']
-		posd = ['','','3','4','5','6','','8','9','','','','']
-		posc = ['1','2','3','4','5','6','','8','9','10','11','12','13']
-		posb = ['1','2','3','4','5','6','','8','9','10','11','12','13']
-		posa = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+#		lane = ['H','','G','F','','E','D','','C','B','','A']
+#		posall = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+#		posh = ['','','3','4','5','6','','8','9','','','','']
+#		posg = ['','','3','4','5','6','','8','9','','','','']
+#		posf = ['','','3','4','5','6','','8','9','','','','']
+#		pose = ['','','3','4','5','6','','8','9','','','','']
+#		posd = ['','','3','4','5','6','','8','9','','','','']
+#		posc = ['1','2','3','4','5','6','','8','9','10','11','12','13']
+#		posb = ['1','2','3','4','5','6','','8','9','10','11','12','13']
+#		posa = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 
 		mquery = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('lane', 'position')
 		mexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
