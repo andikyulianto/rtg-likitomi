@@ -9,18 +9,18 @@
 	<table style="font-size:80%">
 		<thead>
 		<tr>
-			<th rowspan='2' width="5%">TIME</th>
-			<th rowspan='2' width="12%">SHEET CODE</th>
-			<th rowspan='2' width="9%" class="kr">S.O.NO.<br />ORD NO.</th>
-			<th rowspan='2'>F</th>
-			<th rowspan='2'>PAPER<br />D-F</th>
-			<th>B-L</th>
-			<th>B-M</th>
-			<th rowspan='2'>PAPER<br />WIDTH</th>
-			<th rowspan='2'>USED(KGS)<br />D-F</th>
-			<th>B-L</th>
-			<th>B-M</th>
-			<th style="width:1%"></th>
+			<th rowspan='2' width="37px">TIME</th>
+			<th rowspan='2' width="85px">SHEET CODE</th>
+			<th rowspan='2' width="63px" class="kr">S.O.NO.<br />ORD NO.</th>
+			<th rowspan='2' width="21px">F</th>
+			<th rowspan='2' width="72px">PAPER<br />D-F</th>
+			<th width="73px">B-L</th>
+			<th width="73px">B-M</th>
+			<th rowspan='2' width="79px">PAPER<br />WIDTH</th>
+			<th rowspan='2' width="118px">USED(KGS)<br />D-F</th>
+			<th width="37px">B-L</th>
+			<th width="42px">B-M</th>
+			<th></th>
 		</tr>
 		<tr>
 			<th>C-L</th>
@@ -32,17 +32,17 @@
 		<tbody>
 		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in required %}
 		<tr>
-			<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2'>{{ sheet_code }}</td>
-			<td rowspan='2' class="kr">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan='2'>{{ flute }}</td>
-			<td class='df' rowspan='2'><br />{{ df }}</td>
-			<td>{{ bl }}</td>
-			<td>{{ bm }}</td>
-			<td rowspan='2' class="kr">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
-			<td class='df' rowspan='2'><center>+LOSS</center>{{ loss_df }}</td>
-			<td>{{ loss_bl }}</td>
-			<td>{{ loss_bm }}</td>
+			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
+			<td rowspan='2' width="85px">{{ sheet_code }}</td>
+			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
+			<td rowspan='2' width="21px">{{ flute }}</td>
+			<td class='df' rowspan='2' width="72px"><br />{{ df }}</td>
+			<td width="73px">{{ bl }}</td>
+			<td width="73px">{{ bm }}</td>
+			<td rowspan='2' class="kr" width="79px">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
+			<td class='df' rowspan='2' width="118px"><center>+LOSS</center>{{ loss_df }}</td>
+			<td width="37px">{{ loss_bl }}</td>
+			<td width="42px">{{ loss_bm }}</td>
 		</tr>
 		<tr>
 			<td>{{ cl }}</td>

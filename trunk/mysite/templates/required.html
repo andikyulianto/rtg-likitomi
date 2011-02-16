@@ -6,7 +6,7 @@
 <script type="text/javascript">
 function scrollWindow()
 {
-window.scrollTo(0,48);
+window.scrollTo(0,55);
 }
 </script>
 </head>
@@ -38,17 +38,17 @@ window.scrollTo(0,48);
 		<tbody>
 		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in required %}
 		<tr>
-			<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2'>{{ sheet_code }}</td>
-			<td rowspan='2' class="kr">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan='2'>{{ flute }}</td>
-			<td class='df' rowspan='2'><br />{{ df }}</td>
-			<td>{{ bl }}</td>
-			<td>{{ bm }}</td>
-			<td rowspan='2' class="kr">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
-			<td class='df' rowspan='2'><center>+LOSS</center>{{ loss_df }}</td>
-			<td>{{ loss_bl }}</td>
-			<td>{{ loss_bm }}</td>
+			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
+			<td rowspan='2' width="85px">{{ sheet_code }}</td>
+			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
+			<td rowspan='2' width="21px">{{ flute }}</td>
+			<td class='df' rowspan='2' width="72px"><br />{{ df }}</td>
+			<td width="73px">{{ bl }}</td>
+			<td width="73px">{{ bm }}</td>
+			<td rowspan='2' class="kr" width="79px">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
+			<td class='df' rowspan='2' width="118px"><center>+LOSS</center>{{ loss_df }}</td>
+			<td width="37px">{{ loss_bl }}</td>
+			<td width="42px">{{ loss_bm }}</td>
 		</tr>
 		<tr>
 			<td>{{ cl }}</td>
