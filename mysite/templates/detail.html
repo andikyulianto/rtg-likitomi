@@ -4,7 +4,7 @@
 <script type="text/javascript">
 function scrollWindow()
 {
-window.scrollTo(0,48);
+window.scrollTo(0,45);
 }
 </script>
 </head>
@@ -36,18 +36,18 @@ window.scrollTo(0,48);
 		</thead>
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut in detail %}
 		<tr>
-			<td rowspan='2'>{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2'>{{ sheet_code }}</td>
-			<td rowspan='2' class="kr">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan='2' class="kl">{{ customer_name }}<br />{{ product }}</td>
-			<td class='df' rowspan='2'><br />{{ length_df }}</td>
-			<td>{{ length_bl }}</td>
-			<td>{{ length_bm }}</td>
-			<td class='df' rowspan='2'><center>ACTUAL</center>{{ actual_df }}</td>
-			<td>{{ actual_bl }}</td>
-			<td>{{ actual_bm }}</td>
-			<td rowspan="2">{{ sheet_length }}</td>
-			<td>{{ case }}</td>
+			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
+			<td rowspan='2' width="85px">{{ sheet_code }}</td>
+			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
+			<td rowspan='2' class="kl" width="164px">{{ customer_name }}<br />{{ product }}</td>
+			<td class='df' rowspan='2' width="58px"><br />{{ length_df }}</td>
+			<td width="20px">{{ length_bl }}</td>
+			<td width="20px">{{ length_bm }}</td>
+			<td class='df' rowspan='2' width="78px"><center>ACTUAL</center>{{ actual_df }}</td>
+			<td width="16px">{{ actual_bl }}</td>
+			<td width="16px">{{ actual_bm }}</td>
+			<td rowspan="2" width="61px">{{ sheet_length }}</td>
+			<td width="15px">{{ case }}</td>
 		</tr>
 		<tr>
 			<td>{{ length_cl }}</td>
