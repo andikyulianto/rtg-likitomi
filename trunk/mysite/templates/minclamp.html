@@ -77,7 +77,7 @@
 			<td align="center" rowspan="1">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="image/undo.png"></a>{% else %}{% endifnotequal %}</td>
 			<td><p class="label" id="min">Weight: </p></td>
 			<td>{% ifnotequal actual_wt "" %}<p class="var" id="min">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td align="center" id="min">{% ifequal atlocation "Scale" %}>>>{% endifequal %}</td>
+			<td align="center" id="min">{% if realtag != "" and atlocation == "Scale" %}>>>{% endif %}</td>
 			<td>{% ifnotequal digital "" %}<p class="var" id="minbig">{{ digital }}</p>{% else %}{% endifnotequal %}</td>
 			<td><p class="unit" id="min">kgs.</p></td>
 			<td align="center" rowspan="2">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="50px" src="image/update.png"></a>{% else %}{% endifnotequal %}</td>
