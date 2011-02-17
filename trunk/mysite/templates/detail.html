@@ -1,53 +1,53 @@
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
-<script type="text/javascript">
-function scrollWindow()
-{
-window.scrollTo(0,45);
-}
-</script>
+<!--<script type="text/javascript">-->
+<!--function scrollWindow()-->
+<!--{-->
+<!--window.scrollTo(0,45);-->
+<!--}-->
+<!--</script>-->
 </head>
 <body onload="scrollWindow()">
 
 	<table id="detail" style="font-size:80%">
-		<thead style="visibility:hidden;">
-		<tr>
-			<th rowspan='2'>TIME</th>
-			<th rowspan='2'>SHEET CODE</th>
-			<th rowspan='2' class="kr">S.O.NO.<br />ORD NO.</th>
-			<th rowspan='2' class="kl">CUSTOMER NAME<br />PRODUCT</th>
-			<th rowspan='2'>USED(L)<br />D-F</th>
-			<th>B-L</th>
-			<th>B-M</th>
-			<th rowspan='2'>USED(KGS)<br />D-F</th>
-			<th>B-L</th>
-			<th>B-M</th>
-			<th rowspan='2'>SHEET<br />LENGTH</th>
-			<th>CASE</th>
-		</tr>
-		<tr>
-			<th>C-L</th>
-			<th>C-M</th>
-			<th>C-L</th>
-			<th>C-M</th>
-			<th>CUT</th>
-		</tr>
-		</thead>
+<!--		<thead style="visibility:hidden;">-->
+<!--		<tr>-->
+<!--			<th rowspan='2'>TIME</th>-->
+<!--			<th rowspan='2'>SHEET CODE</th>-->
+<!--			<th rowspan='2' class="kr">S.O.NO.<br />ORD NO.</th>-->
+<!--			<th rowspan='2' class="kl">CUSTOMER NAME<br />PRODUCT</th>-->
+<!--			<th rowspan='2'>USED(L)<br />D-F</th>-->
+<!--			<th>B-L</th>-->
+<!--			<th>B-M</th>-->
+<!--			<th rowspan='2'>USED(KGS)<br />D-F</th>-->
+<!--			<th>B-L</th>-->
+<!--			<th>B-M</th>-->
+<!--			<th rowspan='2'>SHEET<br />LENGTH</th>-->
+<!--			<th>CASE</th>-->
+<!--		</tr>-->
+<!--		<tr>-->
+<!--			<th>C-L</th>-->
+<!--			<th>C-M</th>-->
+<!--			<th>C-L</th>-->
+<!--			<th>C-M</th>-->
+<!--			<th>CUT</th>-->
+<!--		</tr>-->
+<!--		</thead>-->
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut in detail %}
 		<tr>
 			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
 			<td rowspan='2' width="85px">{{ sheet_code }}</td>
 			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan='2' class="kl" width="164px">{{ customer_name }}<br />{{ product }}</td>
-			<td class='df' rowspan='2' width="58px"><br />{{ length_df }}</td>
-			<td width="20px">{{ length_bl }}</td>
-			<td width="20px">{{ length_bm }}</td>
-			<td class='df' rowspan='2' width="78px"><center>ACTUAL</center>{{ actual_df }}</td>
-			<td width="16px">{{ actual_bl }}</td>
-			<td width="16px">{{ actual_bm }}</td>
-			<td rowspan="2" width="61px">{{ sheet_length }}</td>
-			<td width="15px">{{ case }}</td>
+			<td rowspan='2' class="kl" width="150px">{{ customer_name }}<br />{{ product }}</td>
+			<td class='df' rowspan='2' width="60px"><br />{{ length_df }}</td>
+			<td width="30px">{{ length_bl }}</td>
+			<td width="30px">{{ length_bm }}</td>
+			<td class='df' rowspan='2' width="80px"><center>ACTUAL</center>{{ actual_df }}</td>
+			<td width="25px">{{ actual_bl }}</td>
+			<td width="28px">{{ actual_bm }}</td>
+			<td rowspan="2" width="65px">{{ sheet_length }}</td>
+			<td width="40px">{{ case }}</td>
 		</tr>
 		<tr>
 			<td>{{ length_cl }}</td>

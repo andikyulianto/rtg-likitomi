@@ -3,37 +3,37 @@
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
 
 <script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript">
-function scrollWindow()
-{
-window.scrollTo(0,55);
-}
-</script>
+<!--<script type="text/javascript">-->
+<!--function scrollWindow()-->
+<!--{-->
+<!--window.scrollTo(0,55);-->
+<!--}-->
+<!--</script>-->
 </head>
 
 <body onload="scrollWindow()">
 	<table id="reqired" style="font-size:80%">
-		<thead style="visibility:hidden;">
-		<tr>
-			<th rowspan='2' width="5%">TIME</th>
-			<th rowspan='2' width="12%">SHEET CODE</th>
-			<th rowspan='2' width="9%" class="kr">S.O.NO.<br />ORD NO.</th>
-			<th rowspan='2'>F</th>
-			<th rowspan='2'>PAPER<br />D-F</th>
-			<th>B-L</th>
-			<th>B-M</th>
-			<th rowspan='2'>PAPER<br />WIDTH</th>
-			<th rowspan='2'>USED(KGS)<br />D-F</th>
-			<th>B-L</th>
-			<th>B-M</th>
-		</tr>
-		<tr>
-			<th>C-L</th>
-			<th>C-M</th>
-			<th>C-L</th>
-			<th>C-M</th>
-		</tr>
-		</thead>
+<!--		<thead style="visibility:hidden;">-->
+<!--		<tr>-->
+<!--			<th rowspan='2' width="5%">TIME</th>-->
+<!--			<th rowspan='2' width="12%">SHEET CODE</th>-->
+<!--			<th rowspan='2' width="9%" class="kr">S.O.NO.<br />ORD NO.</th>-->
+<!--			<th rowspan='2'>F</th>-->
+<!--			<th rowspan='2'>PAPER<br />D-F</th>-->
+<!--			<th>B-L</th>-->
+<!--			<th>B-M</th>-->
+<!--			<th rowspan='2'>PAPER<br />WIDTH</th>-->
+<!--			<th rowspan='2'>USED(KGS)<br />D-F</th>-->
+<!--			<th>B-L</th>-->
+<!--			<th>B-M</th>-->
+<!--		</tr>-->
+<!--		<tr>-->
+<!--			<th>C-L</th>-->
+<!--			<th>C-M</th>-->
+<!--			<th>C-L</th>-->
+<!--			<th>C-M</th>-->
+<!--		</tr>-->
+<!--		</thead>-->
 
 		<tbody>
 		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in required %}

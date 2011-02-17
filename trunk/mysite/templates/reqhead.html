@@ -29,29 +29,29 @@
 			<th>C-M</th>
 		</tr>
 		</thead>
-		<tbody>
-		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in required %}
-		<tr>
-			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2' width="85px">{{ sheet_code }}</td>
-			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan='2' width="21px">{{ flute }}</td>
-			<td class='df' rowspan='2' width="72px"><br />{{ df }}</td>
-			<td width="73px">{{ bl }}</td>
-			<td width="73px">{{ bm }}</td>
-			<td rowspan='2' class="kr" width="79px">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
-			<td class='df' rowspan='2' width="118px"><center>+LOSS</center>{{ loss_df }}</td>
-			<td width="37px">{{ loss_bl }}</td>
-			<td width="42px">{{ loss_bm }}</td>
-		</tr>
-		<tr>
-			<td>{{ cl }}</td>
-			<td>{{ cm }}</td>
-			<td>{{ loss_cl }}</td>
-			<td>{{ loss_cm }}</td>
-		</tr>
-		{% endfor %}
-		</tbody>
+<!--		<tbody>-->
+<!--		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in required %}-->
+<!--		<tr>-->
+<!--			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>-->
+<!--			<td rowspan='2' width="85px">{{ sheet_code }}</td>-->
+<!--			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>-->
+<!--			<td rowspan='2' width="21px">{{ flute }}</td>-->
+<!--			<td class='df' rowspan='2' width="72px"><br />{{ df }}</td>-->
+<!--			<td width="73px">{{ bl }}</td>-->
+<!--			<td width="73px">{{ bm }}</td>-->
+<!--			<td rowspan='2' class="kr" width="79px">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>-->
+<!--			<td class='df' rowspan='2' width="118px"><center>+LOSS</center>{{ loss_df }}</td>-->
+<!--			<td width="37px">{{ loss_bl }}</td>-->
+<!--			<td width="42px">{{ loss_bm }}</td>-->
+<!--		</tr>-->
+<!--		<tr>-->
+<!--			<td>{{ cl }}</td>-->
+<!--			<td>{{ cm }}</td>-->
+<!--			<td>{{ loss_cl }}</td>-->
+<!--			<td>{{ loss_cm }}</td>-->
+<!--		</tr>-->
+<!--		{% endfor %}-->
+<!--		</tbody>-->
 	</table>
 </body>
 </html>
