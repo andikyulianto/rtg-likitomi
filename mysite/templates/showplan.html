@@ -39,17 +39,17 @@ $(document).ready(function(){
 <!--	</tr>-->
 	{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in query %}
 	<tr>
-		<td rowspan='2' width="13%">{{ start_time|time:"H:i" }}</td>
-		<td rowspan='2' width="20%">{{ sheet_code }}</td>
-		<td width="21%">{{ paper_width_inch }}</td>
-		<td width="21%">
+		<td rowspan='2' width="33px">{{ start_time|time:"H:i" }}</td>
+		<td rowspan='2' width="53px">{{ sheet_code }}</td>
+		<td width="56px">{{ paper_width_inch }}</td>
+		<td width="56px">
 			{% if bl %}
 				<a id="{{ bl }}" class="{{paper_width_inch}}" href="/stock/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}&opdate={{ opdate }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a>
 			{% else  %}
 				<br /><br />
 			{% endif %}
 		</td>
-		<td width="21%">
+		<td width="56px">
 			{% if bm %}
 				<a id="{{ bm }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}&opdate={{ opdate }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>
 			{% else  %}
