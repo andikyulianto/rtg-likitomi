@@ -69,7 +69,7 @@
 		layer.style.top = '0px';
 		layer.style.left = '0px';
 		//layer.style.height = document.documentElement.scrollHeight + 'px';
-		layer.style.height = screen.height + 'px';
+		layer.style.height = screen.height - 5 + 'px';
 		layer.style.width = width + 'px';
 		layer.style.backgroundColor = 'black';
 		layer.style.opacity = '.6';
@@ -80,7 +80,7 @@
 		div.style.zIndex = 3;
 		div.id = 'box';
 		div.style.position = (navigator.userAgent.indexOf('MSIE 6') > -1) ? 'absolute' : 'fixed';
-		div.style.top = '20px'; 
+		div.style.top = '50px'; 
 		div.style.left = (width / 2) - (400 / 2) + 'px'; 
 		div.style.height = '400px';
 		div.style.width = '400px';

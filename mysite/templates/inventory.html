@@ -20,11 +20,11 @@
 <table style="height:80%">
 <tr>
 
-<td class="top" style="width:10%; border:0px; vertical-align:middle;">
+<td class="top" style="width:8%; border:0px; vertical-align:middle;">
 <table>
 	<tr>
 <!--		<th>ID</th>-->
-		<th>kgs.</th>
+		<th style="border:0px">Wght.</th>
 	</tr>
 	{% for id, w in delist %}
 	<tr>
@@ -35,12 +35,16 @@
 			{% if w >= 700 or w == initail_weight %}class="green"{% endif %}>{{ w }}</td>
 	</tr>
 	{% endfor %}
+	<tr>
+<!--		<th>ID</th>-->
+		<th style="border:0px">Kgs.</th>
+	</tr>
 </table>
 </td>
 
-<td style="width:90%; border:0px;">
+<td style="width:92%; border:0px;">
 <table>
-	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
+	<tr><td class="map"></td>{% for pos in posall %}<td class="map">{{ pos }}</td>{% endfor %}</tr>
 
 	<tr><td class="map">H</td>
 		{% for pos in posh %}
