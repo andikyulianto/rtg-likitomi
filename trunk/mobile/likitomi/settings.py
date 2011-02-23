@@ -99,8 +99,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    'likitomi',
     'likitomi.app',
-#    'likitomi',
     'app',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
