@@ -75,9 +75,12 @@ def showPC(eID,section_title):
 	
 	#prepare list for CR
 	size = len(items_plan_cr)
-	pos = positionOfCurrentProcess("CR",currentProcess("CR"))
+	if(currentProcess("CR")!='idle'):
+		pos = positionOfCurrentProcess("CR",currentProcess("CR")[0][0:8])
+	else :
+		pos = size
+	#temp_contents = currentProcess("CV")
 	startList = returnStartingPoint(pos,size)
-	#temp_contents = pos
 	endList = startList+getPCItemNum()
 	items_plan_cr=items_plan_cr[startList:endList]
 	
@@ -131,6 +134,7 @@ def workCR(eID,section_title):
 	#temp_contents = cr
 	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_id","plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
+	x = ''
 	return render_to_response('listCR.html', locals())
 	
 #####################################	
@@ -207,6 +211,6 @@ def display(request):
 	#product_name = "product_name"
 	product_name = ProductCatalog.objects.filter(product_code = product).values_list("product_name")[0][0]
 	partner_code = ProductCatalog.objects.filter(product_code = product).values_list("partner_id")[0][0]
-	partner = Partners.objects.filter(partner_id = partner_code).values_list("partner_name")[0][0]
+#	partner = Partners.objects.filter(partner_id = partner_code).values_list("partner_name")[0][0]
 	return render_to_response('productDetail.html',locals())
 

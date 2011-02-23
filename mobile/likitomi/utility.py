@@ -7,9 +7,9 @@ from config import getPCItemNum
 ##        return product code           ##
 ##########################################
 def todayDate():
-	#tempDate = date.today()
-	tempDate = date(2010,11,19)
-	#return tempDate.strftime("%Y-%m-%d %H:%M:%S")
+	tempDate = datetime.now()
+	#tempDate = date(2011,02,18)
+	#strftime("%Y-%m-%d %H:%M:%S"))
 	return tempDate
 def returnall():
 	return list(FakeStatusTracking.objects.all())
@@ -20,6 +20,7 @@ def returnall():
 ##########################################
 def currentProcess(machine):
 	today=todayDate()
+	print today
 	if(machine=="CR"):
 		try:
 			today_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id")
@@ -30,8 +31,8 @@ def currentProcess(machine):
 	## top current for CV 
 	if(machine=="CV"):
 		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id","actual_cv_end")
-			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0][0]
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
+			item_current = list(today_plan.filter(actual_cv_end = None).values_list("product_id"))[0][0]
 		except IndexError, error:
 			item_current = 'idle'
 	## current by machine
@@ -97,7 +98,7 @@ def currentTimeProcess(machine):
 	## top current for CV 
 	if(machine=="CV"):
 		try:
-			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("plan_cv_start","actual_cv_end")
+			today_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("actual_cv_end")
 			item_current = today_plan.filter(actual_cv_end = None).values_list("product_id")[0][0]
 		except IndexError, error:
 			item_current = 'idle'

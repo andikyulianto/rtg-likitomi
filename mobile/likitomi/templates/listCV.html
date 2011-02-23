@@ -4,7 +4,7 @@
 <head>
 <meta content="yes" name="apple-mobile-web-app-capable" />
 <meta content="index,follow" name="robots" />
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=tis-620" http-equiv="Content-Type" />
 <link href="pics/homescreen.gif" rel="apple-touch-icon" />
 <meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
 
@@ -56,22 +56,40 @@
 			{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
 			{% endif %}</li>
 		{% endif %}
+		<!-- Start Table-->
+			<ul class="pageitem">{{ temp_contents }}
+			<li class="textbox">			
+			<table align=center><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="20" rowspan="2"> Product code </th><th width="15" rowspan="2">Machine</th><th width="20" rowspan="2">Next</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			</span>
+			{% for plan_id,start,end,product,actual_start,actual_end,cv_machine in items %}
+		<tr>
+			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
+			<td><a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
+			<td><a href="/likitomi/line/cv/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{ actual_start|time:"H:i" }}
+				{% else %} 
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL %}
+				{{ actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
 
-<!-- start table-->
-		{#start page of cv #}
-			<ul class="pageitem">
-			<li class="textbox">
-			<table border=1 align=center><span class="header">
-			<tr width="100%" align=center><td width="5%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="10%" rowspan="2"> Machine </td><td rowspan="2" width="10%">From</td></tr>
-			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
-			{% for plan_id,start,end,product,actual_start,actual_end,cv_machine,previous_section in items %}
-			<tr align=center><td rowspan="2" height="20"> {% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td><td> <a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td><td><a href="/likitomi/line/cv/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td><td rowspan="2">{{product}}</td><td rowspan="2"><a href="/likitomi/machine/list/?eID={{eID}}&pID={{plan_id}}&machine={{cv_machine}}">{{cv_machine}}</a></td><td rowspan="2">{{previous_section}}</td></tr>
-			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			</p></td>
+			</tr>
 			{% endfor %}
 			</table>
 			</ul>
-
-
 	</ul>
 </div>
 <div id="footer">

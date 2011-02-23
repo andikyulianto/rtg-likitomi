@@ -45,7 +45,7 @@ urlpatterns = patterns('',
     
     #(r'^likitomi/playandtry/$', playandtry),
     #(r'^likitomi/playandtry/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-    (r'^likitomi/display/$', display),
+    (r'^likitomi/home/display/$', display),
     (r'^likitomi/display/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
     # Example:
