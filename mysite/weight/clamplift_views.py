@@ -9,7 +9,7 @@ import socket
 def clamplift(request):
 # Connect RFID reader #
 	try:
-		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
+		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
 
 		if operating_mode == 'real':
 
@@ -148,10 +148,10 @@ def clamplift(request):
 #			atlocation = 'Scale'
 
 			atlane = '1'
-			atposition = '13'
+			atposition = '5'
 			atlocation = 'Stock'
 
-			realtag = 64
+			realtag = 67
 
 # Query database #
 		query = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'width', 'initial_weight','temp_weight', 'lane', 'position')[0]
@@ -478,7 +478,7 @@ def changeloc(request):
 def minclamp(request):
 # Connect RFID reader #
 	try:
-		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
+		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
 
 		if operating_mode == 'real':
 
@@ -599,10 +599,6 @@ def minclamp(request):
 
 			repeat_AA = list()
 
-
-
-
-
 			for rep_A in repeat_A:
 				repeat_AA.append(int(rep_A))
 
@@ -617,13 +613,13 @@ def minclamp(request):
 
 		if operating_mode == 'fake':
 
-			atlane = 5
-			atposition = 5
-			atlocation = 'Scale'
+#			atlane = 5
+#			atposition = 5
+#			atlocation = 'Scale'
 
-#			atlane = '1'
-#			atposition = '4'
-#			atlocation = 'Stock'
+			atlane = '1'
+			atposition = '5'
+			atlocation = 'Stock'
 
 			realtag = 67
 
@@ -929,8 +925,9 @@ def minchangeloc(request):
 		p.lane = ilane
 		p.position = ipos
 		p.save()
+		realtag = ""
 
-		response = "/stock/?pcode="+str(ipcode)+"&width="+str(iwidth)+"&loss="+str(iloss)
+		response = "/stock/?pcode="+str(ipcode)+"&width="+str(iwidth)+"&loss="+str(iloss)+"&change="+"yes"
 
 	else:
 		err = ""

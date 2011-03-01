@@ -3,7 +3,8 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
 from mysite.weight.models import ClampliftPlan
-from datetime import date
+from datetime import date, time, datetime, timedelta
+import datetime
 
 def showplan(request):
 	if 'opdate' in request.GET and request.GET['opdate']:
@@ -13,6 +14,27 @@ def showplan(request):
 		opdate.strftime("%Y-%m-%d")
 
 	query = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'paper_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
+
+	now = datetime.datetime.now()
+	qlist = list(query)
+	nlist = list()
+	for lst in qlist:
+		nlst = list(lst)
+		nlist.append(nlst)
+	c = 0
+	for lst in nlist:
+		lst.append(c)
+		c = c + 1
+	tdelta = list()
+	s_tdelta = list()
+	for tup in qlist:
+		delta = datetime.datetime(now.year,now.month,now.day,tup[0].hour,tup[0].minute)-now
+		tdelta.append(int(delta.seconds))
+		s_tdelta.append(int(delta.seconds))
+	s_tdelta.sort()
+	if tdelta:
+		chosen = tdelta.index(s_tdelta[0])
+		scroll = chosen*76
 
 	return render_to_response('showplan.html', locals())
 

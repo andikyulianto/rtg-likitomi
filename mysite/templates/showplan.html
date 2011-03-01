@@ -18,12 +18,15 @@ $(document).ready(function(){
 //		$("[id="+"HKS231"+"][class="+"56"+"]").parent().css("background-color","yellow");
 //	});
 
+
+
 });
 </script>
 </head>
 
-<body>
-
+<body onload="window.scrollTo(0,{{scroll}})">
+<!--<a id="jump" href="#{{chosen}}">{{chosen}}</a>-->
+<!--scroll:{{scroll}}<br />{{tdelta}}-->
 <table id="splan" style="font-size:80%">
 <!--	<tr>-->
 <!--		<th rowspan='2'>TIME</th>-->
@@ -37,9 +40,10 @@ $(document).ready(function(){
 <!--		<th>CL</th>-->
 <!--		<th>CM</th>-->
 <!--	</tr>-->
-	{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in query %}
+	{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
 	<tr>
-		<td rowspan='2' width="33px">{{ start_time|time:"H:i" }}</td>
+		<td rowspan='2' style="width:10px; border:0px">{% if chosen == n %}>{% endif %}</td>
+		<td rowspan='2' width="33px">{{ start_time|time:"H:i" }}<a name="{{ n }}" /></td>
 		<td rowspan='2' width="53px">{{ sheet_code }}</td>
 		<td width="56px">{{ paper_width_inch }}</td>
 		<td width="56px">

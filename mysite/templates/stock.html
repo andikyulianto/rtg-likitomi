@@ -12,7 +12,8 @@ $(document).ready(function(){
 			var pcode = $("#pcode").val();
 			var width = $("#width").val();
 			var loss = $("#loss").val();
-			$("#invHint").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss);
+			var change = $("#change").val();
+			$("#invHint").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&change="+change);
 			setTimeout(clamplift, 2000);
 		}
 	});
@@ -21,8 +22,9 @@ $(document).ready(function(){
 		var scode = $("#scode").val();
 		var swidth = $("#swidth").val();
 		var loss = $("#loss").val();
+		var change = $("#change").val();
 		if (scode != "" && swidth != ""){
-			$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
+			$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss+"&change="+change);
 			$("#pcode").val(scode);
 			$("#width").val(swidth);
 			//$("[id='plan']",top.frames["plan"].document).css("background-color","yellow");
@@ -39,7 +41,10 @@ $(document).ready(function(){
 
 <input id="pcode" value="{{ pcode }}" type="hidden" />
 <input id="width" value="{{ width }}" type="hidden" />
+<input id="rpcode" value="{{ rpcode }}" type="hidden" />
+<input id="rwidth" value="{{ rwidth }}" type="hidden" />
 <input id="loss" value="{{ loss }}" type="hidden" />
+<input id="change" value="{{ change }}" type="hidden" />
 
 {% if pcode %}
 <table><tr>
@@ -49,7 +54,7 @@ $(document).ready(function(){
 			<select id="scode">
 			<option value="">Paper Code:</option>
 			{% for paper_code in scode %}
-			<option value="{{ paper_code }}">{{ paper_code }}</option>
+			<option value="{{ paper_code }}"{% if pcode == paper_code %}selected="selected"{% endif %}>{{ paper_code }}</option>
 			{% endfor %}
 			</select>
 		</form>
@@ -58,8 +63,8 @@ $(document).ready(function(){
 		<form>
 			<select id="swidth">
 			<option value="">Size:</option>
-			{% for width in swidth %}
-			<option value="{{ width }}">{{ width }}</option>
+			{% for size in swidth %}
+			<option value="{{ size }}"{% if width == size|stringformat:"s" %}selected="selected"{% endif %}>{{ size }}</option>
 			{% endfor %}
 			</select>
 		</form>

@@ -15,30 +15,43 @@
 
 <div id="invent">
 
-{% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %}
-
+Looking for: {% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %} ***
+<!--<br />@{{atlane}}-{{atposition}}<br />Tag:{{realtag}}--Location:{{lane}}-{{position}}<br />Clamping:{{clamping}}<br / >Changed:{{change}}-->
+<br />On clamplift: [{{realtag}}] {{rpcode}} >>> {{rwidth}}"
 <table style="height:80%">
 <tr>
 
 <td class="top" style="width:8%; border:0px; vertical-align:middle;">
 <table>
-	<tr>
+<!--	<tr>-->
 <!--		<th>ID</th>-->
-		<th style="border:0px">Wght.</th>
-	</tr>
-	{% for id, w in delist %}
+<!--		<th style="border:0px">Wght.</th>-->
+<!--	</tr>-->
 	<tr>
-<!--		<td>{{ id }}</td>-->
+	<td style="border:0">
+	<table>
+	{% for w in ddwlist %}
+	<tr>
 		<td {% if w < 100 %}class="red"{% endif %}
 			{% if w >= 100 and w < 400 %}class="yellow"{% endif %}
 			{% if w >= 400 and w < 700 %}class="blue"{% endif %}
 			{% if w >= 700 or w == initail_weight %}class="green"{% endif %}>{{ w }}</td>
 	</tr>
 	{% endfor %}
-	<tr>
-<!--		<th>ID</th>-->
-		<th style="border:0px">Kgs.</th>
+	</table>
+	</td>
+	<td style="border:0">
+	<table>
+	{% for c in clist %}
+	<tr><td style="border:0">x{{ c }}</td></tr>
+	{% endfor %}
+	</table>
+	</td>
 	</tr>
+<!--	<tr>-->
+<!--		<th>ID</th>-->
+<!--		<th style="border:0px">Kgs.</th>-->
+<!--	</tr>-->
 </table>
 </td>
 

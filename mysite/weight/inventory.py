@@ -23,6 +23,11 @@ def inventory(request):
 		else:
 			loss = ""
 
+		if 'change' in request.GET and request.GET['change']:
+			change = request.GET['change']
+		else:
+			change = ""
+
 		query = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('id')
 		qexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
 
@@ -32,6 +37,9 @@ def inventory(request):
 			wlist = list()
 			ridlist = list()
 			elist = list()
+			dwlist = list()
+			ddwlist = list()
+			clist = list()
 
 			for item in query:
 				totem = list(item)
@@ -46,8 +54,17 @@ def inventory(request):
 				else:
 					weight = int(str(PaperRoll.objects.filter(id=rid).values_list('initial_weight')[0])[1:][:-3])
 				wlist.append(weight)
+				dwlist.append(weight)
 				for totem in delist:
 					totem.append(weight)
+			dwlist.sort()
+			dwlist.reverse()
+			for w in dwlist:
+				if w not in ddwlist:
+					ddwlist.append(w)
+			for w in ddwlist:
+				c = dwlist.count(w)
+				clist.append(c)
 
 			initial_weight = int(str(PaperRoll.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
 
@@ -226,7 +243,8 @@ def inventory(request):
 						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
 							ls[4] = ls[4] + 1
 
-		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
+		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
+		clamping = 'no'
 
 		if operating_mode == 'real':
 			HOST = '192.41.170.55' # CSIM network
@@ -378,15 +396,51 @@ def inventory(request):
 
 		if operating_mode == 'fake':
 
-			atlane = '5'
-			atposition = '5'
-			atlocation = 'Scale'
+#			atlane = '5'
+#			atposition = '5'
+#			atlocation = 'Scale'
 
 			atlane = '1'
-			atposition = '5'
+			atposition = '4'
 			atlocation = 'Stock'
+			vlane = ['1', '2', '3', '*', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+
+#			atlane = '1'
+#			atposition = '5'
+#			atlocation = 'Stock'
+#			vlane = ['1', '2', '3', '4', '*', '6', '7', '8', '9', '10', '11', '12', '13']
 
 			realtag = 67
+
+		if change == 'yes': realtag = ""
+
+		query1 = PaperRoll.objects.filter(id=realtag).values_list('lane', 'position', 'paper_code', 'width')[0]
+		lane = query1[0]
+		position = str(query1[1])
+		rpcode = query1[2]
+		rwidth = query1[3]
+		if lane == 'A' or lane == 'B': lane = '1'
+		if lane == 'C' or lane == 'D': lane = '2'
+		if lane == 'E' or lane == 'F': lane = '3'
+		if lane == 'G' or lane == 'H': lane = '4'
+		if lane == atlane and position == atposition:
+			clamping = 'yes'
+			query2 = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
+			qlist = list(query2)
+			paper_code = qlist[0]
+			wize = qlist[1]
+			wunit = qlist[2]
+			initial_weight = qlist[3]
+			temp_weight = qlist[4]
+			p = PaperRoll(id=realtag, width=wize, wunit=wunit, initial_weight=initial_weight, temp_weight=temp_weight)
+			p.paper_code = paper_code
+			p.width = width
+			p.wunit = wunit
+			p.initial_weight = initial_weight
+			p.temp_weight = temp_weight
+			p.lane = atlane
+			p.position = atposition
+			p.save()
 
 #		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 

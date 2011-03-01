@@ -25,6 +25,11 @@ def stock(request):
 		else:
 			opdate = ""
 
+		if 'change' in request.GET and request.GET['change']:
+			change = request.GET['change']
+		else:
+			change = ""
+
 		cursor = connection.cursor()
 		cursor.execute("""
 			SELECT DISTINCT paper_code
