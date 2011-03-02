@@ -47,6 +47,14 @@ $(document).ready(function(){
 		$(this).css({"background-color":"lightgray", "color":"black", "border":"1px solid black"});
 	});
 
+	$("#down").click(function(){
+		$("#required,#detail")[0].contentWindow.scrollBy(0,64);
+	});
+
+	$("#up").click(function(){
+		$("#required,#detail")[0].contentWindow.scrollBy(0,-64);
+	});
+
 });
 </script>
 
@@ -76,6 +84,7 @@ $(document).ready(function(){
 				</select>
 			</form>
 		</td>
+		<td style="border:0px;"><img id="up" src="image/earlier.png" width="285px"/></td>
 		<td id="req" style="cursor:pointer; width:20%; font-size:100%; font-weight:bold;">Required</td>
 		<td id="det" style="cursor:pointer; width:20%; font-size:100%; font-weight:bold;">Detail</td>
 	</tr>
@@ -89,6 +98,6 @@ $(document).ready(function(){
 <!--		<div id="body"></div>-->
 <!--	</td>-->
 <!--</tr><table>-->
-
+<table><tr><td style="border:0px;"><img id="down" src="image/later.png" width="285px"/></td></tr></table>
 </body>
 </html>

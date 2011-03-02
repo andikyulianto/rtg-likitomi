@@ -8,9 +8,9 @@
 <!--}-->
 <!--</script>-->
 </head>
-<body onload="scrollWindow()">
+<body onload="window.scrollTo(0,{{scroll}})">
 
-	<table id="detail" style="font-size:80%">
+	<table style="font-size:80%">
 <!--		<thead style="visibility:hidden;">-->
 <!--		<tr>-->
 <!--			<th rowspan='2'>TIME</th>-->
@@ -35,7 +35,7 @@
 <!--		</tr>-->
 <!--		</thead>-->
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut in detail %}
-		<tr>
+		<tr height="30px">
 			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
 			<td rowspan='2' width="85px">{{ sheet_code }}</td>
 			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
@@ -49,7 +49,7 @@
 			<td rowspan="2" width="65px">{{ sheet_length }}</td>
 			<td width="40px">{{ case }}</td>
 		</tr>
-		<tr>
+		<tr height="30px">
 			<td>{{ length_cl }}</td>
 			<td>{{ length_cm }}</td>
 			<td>{{ actual_cl }}</td>
