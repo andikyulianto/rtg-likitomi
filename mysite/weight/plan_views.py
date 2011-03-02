@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
 from mysite.weight.models import ClampliftPlan, PaperRoll, PaperHistory
+from datetime import date
 
 def plan(request):
 	try:
@@ -31,6 +32,11 @@ def plan(request):
 
 def wholeplan(request):
 	try:
+		if 'opdate' in request.GET and request.GET['opdate']:
+			opdate = request.GET['opdate']
+		else:
+			opdate = ""
+
 		cursor = connection.cursor()
 		cursor.execute("""
 			SELECT DISTINCT date
