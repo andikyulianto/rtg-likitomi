@@ -51,8 +51,7 @@ def reqhead(request):
 	if 'opdate' in request.GET and request.GET['opdate']:
 		opdate = request.GET['opdate']
 	else:
-		opdate = date.today()
-		opdate.strftime("%Y-%m-%d")
+		opdate = ""
 
 	required = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'sono', 'ordno', 'flute', 'df', 'bl', 'bm', 'cl', 'cm', 'paper_width_mm', 'paper_width_inch', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
 
@@ -62,8 +61,7 @@ def required(request):
 	if 'opdate' in request.GET and request.GET['opdate']:
 		opdate = request.GET['opdate']
 	else:
-		opdate = date.today()
-		opdate.strftime("%Y-%m-%d")
+		opdate = ""
 
 	required = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'sono', 'ordno', 'flute', 'df', 'bl', 'bm', 'cl', 'cm', 'paper_width_mm', 'paper_width_inch', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
 
