@@ -9,6 +9,13 @@
 <!--window.scrollTo(0,55);-->
 <!--}-->
 <!--</script>-->
+<script type="text/javascript">
+$(document).ready(function(){
+
+	if ()
+
+});
+</script>
 </head>
 
 <body onload="window.scrollTo(0,{{scroll}})">
@@ -36,8 +43,8 @@
 <!--		</thead>-->
 
 		<tbody>
-		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm in required %}
-		<tr height="30px">
+		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
+		<tr style="height:30px; {% if chosen == n %}background-color:lightgray;{% endif %}">
 			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
 			<td rowspan='2' width="85px">{{ sheet_code }}</td>
 			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
@@ -50,7 +57,7 @@
 			<td width="37px">{{ loss_bl }}</td>
 			<td width="42px">{{ loss_bm }}</td>
 		</tr>
-		<tr height="30px">
+		<tr style="height:30px; {% if chosen == n %}background-color:lightgray;{% endif %}">
 			<td>{{ cl }}</td>
 			<td>{{ cm }}</td>
 			<td>{{ loss_cl }}</td>

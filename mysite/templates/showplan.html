@@ -6,11 +6,18 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-	$("a").click(function(){
+//	$("a").click(function(){
+//		$("td").css("background-color","white");
+//		var hicode = $(this).attr("id");
+//		var hiwidth = $(this).attr("class");
+////		alert(hicode+", "+hiwidth);
+//		$("[id="+hicode+"][class="+hiwidth+"]").parent().css("background-color","yellow");
+//	});
+
+	$(".select").click(function(){
 		$("td").css("background-color","white");
-		var hicode = $(this).attr("id");
-		var hiwidth = $(this).attr("class");
-//		alert(hicode+", "+hiwidth);
+		var hicode = $(this).children().attr("id");
+		var hiwidth = $(this).children().attr("class");
 		$("[id="+hicode+"][class="+hiwidth+"]").parent().css("background-color","yellow");
 	});
 
@@ -46,38 +53,33 @@ $(document).ready(function(){
 		<td rowspan='2' width="33px">{{ start_time|time:"H:i" }}<a name="{{ n }}" /></td>
 		<td rowspan='2' width="53px">{{ sheet_code }}</td>
 		<td width="56px">{{ paper_width_inch }}</td>
-		<td width="56px">
-			{% if bl %}
-				<a id="{{ bl }}" class="{{paper_width_inch}}" href="/stock/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}&opdate={{ opdate }}" target="stock">{{ bl }}<br />({{ loss_bl }})</a>
+			{% if bl %} <!-- BL -->
+				<td class="select" width="56px" onclick="top.stock.location='/stock/?pcode={{ bl }}&width={{ paper_width_inch }}&loss={{ loss_bl }}&opdate={{ opdate }}'"><a id="{{ bl }}" class="{{paper_width_inch}}">{{ bl }}<br />({{ loss_bl }})</a></td>
 			{% else  %}
-				<br /><br />
+				<td><br /><br /></td>
 			{% endif %}
-		</td>
-		<td width="56px">
-			{% if bm %}
-				<a id="{{ bm }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}&opdate={{ opdate }}" target="stock">{{ bm }}<br />({{ loss_bm }})</a>
+			{% if bm %} <!-- BM -->
+				<td class="select" width="56px" onclick="top.stock.location='/stock/?pcode={{ bm }}&width={{ paper_width_inch }}&loss={{ loss_bm }}&opdate={{ opdate }}'"><a id="{{ bm }}" class="{{paper_width_inch}}">{{ bm }}<br />({{ loss_bm }})</a></td>
 			{% else  %}
-				<br /><br />
+				<td><br /><br /></td>
 			{% endif %}
-		</td>
 	</tr>
 	<tr>
-		<td class='bt'>
-			{% if df %}<a id="{{ df }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}&opdate={{ opdate }}" target="stock">{{ df }}<br />({{ loss_df }})</a>
+			{% if df %} <!-- DF -->
+				<td class="select" width="56px" onclick="top.stock.location='/stock/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}&opdate={{ opdate }}'"><a id="{{ df }}" class="{{paper_width_inch}}">{{ df }}<br />({{ loss_df }})</a></td>
 			{% else  %}
-				<br /><br />
+				<td><br /><br /></td>
 			{% endif %}
-		</td>
-		<td>
-			{% if cl %}<a id="{{ cl }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}&opdate={{ opdate }}" target="stock">{{ cl }}<br />({{ loss_cl }})</a>
+			{% if cl %} <!-- CL -->
+				<td class="select" width="56px" onclick="top.stock.location='/stock/?pcode={{ cl }}&width={{ paper_width_inch }}&loss={{ loss_cl }}&opdate={{ opdate }}'"><a id="{{ cl }}" class="{{paper_width_inch}}">{{ cl }}<br />({{ loss_cl }})</a></td>
 			{% else  %}
-				<br /><br />
-			{% endif %}</td>
-		<td>
-			{% if cm %}<a id="{{ cm }}" class="{{ paper_width_inch }}" href="/stock/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}&opdate={{ opdate }}" target="stock">{{ cm }}<br />({{ loss_cm }})</a>
+				<td><br /><br /></td>
+			{% endif %}
+			{% if cm %} <!-- CM -->
+				<td class="select" width="56px" onclick="top.stock.location='/stock/?pcode={{ cm }}&width={{ paper_width_inch }}&loss={{ loss_cm }}&opdate={{ opdate }}'"><a id="{{ cm }}" class="{{paper_width_inch}}">{{ cm }}<br />({{ loss_cm }})</a></td>
 			{% else  %}
-				<br /><br />
-			{% endif %}</td>
+				<td><br /><br /></td>
+			{% endif %}
 	</tr>
 	{% endfor %}
 </table>
