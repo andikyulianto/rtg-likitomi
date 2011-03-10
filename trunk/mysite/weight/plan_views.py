@@ -25,6 +25,11 @@ def plan(request):
 			datefrm = date.replace(", ","-")
 			datelist.append(datefrm)
 
+		if 'opdate' in request.GET and request.GET['opdate']:
+			opdate = request.GET['opdate']
+		else:
+			opdate = ""
+
 	except:
 		pass
 

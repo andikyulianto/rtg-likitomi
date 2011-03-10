@@ -20,6 +20,10 @@ def inventory(request):
 
 		if 'loss' in request.GET and request.GET['loss']:
 			loss = request.GET['loss']
+			losspx = int(loss)/4
+			if losspx > 250:
+				losspx = 250
+			lossinv = 250-losspx
 		else:
 			loss = ""
 
@@ -40,6 +44,21 @@ def inventory(request):
 			dwlist = list()
 			ddwlist = list()
 			clist = list()
+			c1 = 0
+			c2 = 0
+			c3 = 0
+			c4 = 0
+			c1list = list()
+			c2list = list()
+			c3list = list()
+			c4list = list()
+
+			ablist = list()
+			bllist = list()
+			cablist = list()
+			cbllist = list()
+			dablist = list()
+			dbllist = list()
 
 			for item in query:
 				totem = list(item)
@@ -62,11 +81,41 @@ def inventory(request):
 			for w in dwlist:
 				if w not in ddwlist:
 					ddwlist.append(w)
+			for w in wlist:
+				if 100 > int(w):
+					c1 = c1 + 1
+					c1list.append(w)
+				if 100 <= int(w) and int(w) < 400:
+					c2 = c2 + 1
+					c2list.append(w)
+				if 400 <= int(w) and int(w) < 700:
+					c3 = c3 + 1
+					c3list.append(w)
+				if 700 <= int(w):
+					c4 = c4 + 1
+					c4list.append(w)
 			for w in ddwlist:
 				c = dwlist.count(w)
 				clist.append(c)
 
+			for w in dwlist:
+				if int(w) > int(loss):
+					ablist.append(w)
+				else:
+					bllist.append(w)
+			for w in ablist:
+				if w not in dablist: dablist.append(w)
+			for w in bllist:
+				if w not in dbllist: dbllist.append(w)
+			for w in dablist:
+				c = ablist.count(w)
+				cablist.append(c)
+			for w in dbllist:
+				c = bllist.count(w)
+				cbllist.append(c)
+
 			initial_weight = int(str(PaperRoll.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
+
 
 		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
@@ -75,11 +124,12 @@ def inventory(request):
 		posh = ['','','3','4','5','6','','8','9','','','','']
 		posg = ['','','3','4','5','6','','8','9','','','','']
 		posf = ['','','3','4','5','6','','8','9','','','','']
-		pose = ['','','3','4','5','6','','8','9','','','','']
-		posd = ['','','3','4','5','6','','8','9','','','','']
+		pose = ['1','2','3','4','5','6','','8','9','','','','']
+		posd = ['1','2','3','4','5','6','','8','9','','','','']
 		posc = ['1','2','3','4','5','6','','8','9','10','11','12','13']
 		posb = ['1','2','3','4','5','6','','8','9','10','11','12','13']
 		posa = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
+		buff = ['1','2']
 
 		mquery = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('lane', 'position')
 		mexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
@@ -400,10 +450,10 @@ def inventory(request):
 #			atposition = '5'
 #			atlocation = 'Scale'
 
-			atlane = '1'
-			atposition = '4'
+			atlane = '2'
+			atposition = '1'
 			atlocation = 'Stock'
-			vlane = ['1', '2', '3', '*', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+			vlane = ['*', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
 #			atlane = '1'
 #			atposition = '5'

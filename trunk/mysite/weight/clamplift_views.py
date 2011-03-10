@@ -247,8 +247,8 @@ def clamplift(request):
 			actual_wt = initial_weight
 			undo_btn = ""
 
-		availoc = ['1A','1B','1C']
-		availoc = availoc + ['2A','2B','2C']
+		availoc = ['1A','1B','1C','1D','1E']
+		availoc = availoc + ['2A','2B','2C','2D','2E']
 		availoc = availoc + ['3A','3B','3C','3D','3E','3F','3G','3H']
 		availoc = availoc + ['4A','4B','4C','4D','4E','4F','4G','4H']
 		availoc = availoc + ['5A','5B','5C','5D','5E','5F','5G','5H']

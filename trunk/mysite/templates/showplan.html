@@ -14,11 +14,30 @@ $(document).ready(function(){
 //		$("[id="+hicode+"][class="+hiwidth+"]").parent().css("background-color","yellow");
 //	});
 
-	$(".select").click(function(){
-		$("td").css("background-color","white");
+	$(".select").mouseup(function(){
+		//$("td").css("background-color","white");
+		var i = 0;
+		for (i=0;i<=100;i++){
+			if (i<{{chosen}}){
+				$("[name="+i+"]").children().css("background-color","lightgray");
+			}
+			else if (i=={{chosen}}){
+				$("[name="+i+"]").children().css("background-color","tan");
+			}
+			else {
+				$("[name="+i+"]").children().css("background-color","white");
+			}
+		}
 		var hicode = $(this).children().attr("id");
 		var hiwidth = $(this).children().attr("class");
 		$("[id="+hicode+"][class="+hiwidth+"]").parent().css("background-color","yellow");
+		$(".infront").css("background-color","white");
+	});
+
+	$(".select").dblclick(function(){
+		$(this).css("background-color","#FFFF99");
+		//$(this).children().attr("title", "clicked");
+		//$("[name="+{{chosen}}+"]").children().css("background-color","red");
 	});
 
 //	$("[id='search']").click(function(){
@@ -48,8 +67,9 @@ $(document).ready(function(){
 <!--		<th>CM</th>-->
 <!--	</tr>-->
 	{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
-	<tr>
-		<td rowspan='2' style="width:10px; border:0px">{% if chosen == n %}>{% endif %}</td>
+<!--	<tr>-->
+	<tr name="{{ n }}" {% if n < chosen %}style="background-color:lightgray;"{% endif %}{% if n == chosen %}style="background-color:tan;"{% endif %}{% if n > chosen %}style="background-color:white;"{% endif %}>
+		<td class="infront" rowspan='2' style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
 		<td rowspan='2' width="33px">{{ start_time|time:"H:i" }}<a name="{{ n }}" /></td>
 		<td rowspan='2' width="53px">{{ sheet_code }}</td>
 		<td width="56px">{{ paper_width_inch }}</td>
@@ -64,7 +84,8 @@ $(document).ready(function(){
 				<td><br /><br /></td>
 			{% endif %}
 	</tr>
-	<tr>
+<!--	<tr>-->
+	<tr name="{{ n }}" {% if n < chosen %}style="background-color:lightgray;"{% endif %}{% if n == chosen %}style="background-color:tan;"{% endif %}{% if n > chosen %}style="background-color:white;"{% endif %}>
 			{% if df %} <!-- DF -->
 				<td class="select" width="56px" onclick="top.stock.location='/stock/?pcode={{ df }}&width={{ paper_width_inch }}&loss={{ loss_df }}&opdate={{ opdate }}'"><a id="{{ df }}" class="{{paper_width_inch}}">{{ df }}<br />({{ loss_df }})</a></td>
 			{% else  %}
