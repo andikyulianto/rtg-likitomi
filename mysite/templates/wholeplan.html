@@ -55,6 +55,11 @@ $(document).ready(function(){
 		$("#required,#detail")[0].contentWindow.scrollBy(0,-64);
 	});
 
+	$("#back").click(function(){
+		var opd = $("#sel").val();
+		$(this).attr("href", "/index/?opdate="+opd);
+	});
+
 });
 </script>
 
@@ -64,7 +69,7 @@ $(document).ready(function(){
 
 <table>
 	<tr>
-		<td class="lft"><a href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
+		<td class="lft"><a id="back" href="/index/"><img border="0" height="100px" src="image/back.png"></a></td>	
 		<td class="rght"><a href="/wholeplan/"><img border="0" height="100px" src="image/refresh.png"></a></td>
 	</tr>
 </table>

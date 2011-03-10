@@ -15,5 +15,13 @@ from django.shortcuts import render_to_response
 #import random
 
 def index(request):
+	try:
+		if 'opdate' in request.GET and request.GET['opdate']:
+			opdate = request.GET['opdate']
+		else:
+			opdate = ""
+	except:
+		pass
+
 	return render_to_response('index.html', locals())
 
