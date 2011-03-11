@@ -39,7 +39,30 @@
                 return false;
             });
         });
-    	</script>
+var preEl ;
+var orgBColor;
+var orgTColor;
+
+function HighLightTR(el, backColor,textColor){
+  if(typeof(preEl)!='undefined') {
+     preEl.bgColor=orgBColor;
+     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+  }
+  orgBColor = el.bgColor;
+  orgTColor = el.style.color;
+  el.bgColor=backColor;
+  
+
+  try{ChangeTextColor(el,textColor);}catch(e){;}
+  preEl = el;
+}
+
+
+function ChangeTextColor(a_obj,a_color){  ;
+   for (i=0;i<a_obj.cells.length;i++)
+    a_obj.cells(i).style.color=a_color;
+}
+</script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>{{ title }}</title>
 <link href="pics/startup.png" rel="apple-touch-startup-image" />
@@ -91,26 +114,41 @@
 		{% endif %}
 
 		{# start page of planner #}{{temp_contents}}
-			<ul class="pageitem"><li class="textbox"></li>
+			<ul class="pageitem"><li class="textbox">
 			<table align=center width="100%">
 			<tr align = center>
-			<td width="50%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR">CR</a>
+			<td width="50%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR">Show full CR schedule</a>
 			<table align=center width="90%">
 			<tr><td width="50%">{# left #} 
 	<div id="linkCR">
 			<table align=center width="100%"><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th></tr>
-			<tr align=center bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
-			{% for start,end,product,actual_start,actual_end in items_plan_cr %}
-			<tr align=center>
-				<td rowspan="2" height="20">{% if cr == product %} > {% endif %}</td>
-				<td>{{start|time:"H:i"}}</td>
-				<td>{{end|time:"H:i"}}</td>
-				<td rowspan="2"><a href="/likitomi/display/?product={{product}}"><p class="tbunderline">{{product}}</a><br><font color="white">-</font></p></td>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="40%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,plan_due,age in items_plan_cr %}
+			<tr  onClick="HighLightTR(this,'#c9cc99','cc3333');" >
+			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
+			<td>{{start|time:"H:i"}}</td>
+			<td>{{ end|time:"H:i" }}</td>
+			<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}</a><br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">{{age}}<br><font color="white">-</font></p></td>
 			</tr>
-			<tr align=center>
-				<td height="20"><p class="tbsgunderline">{{actual_start|time:"H:i"}}</p></td>
-				<td><p class="tbsgunderline">{{actual_end|time:"H:i"}}</p></td>
+			<tr  onClick="HighLightTR(this,'#c9cc99','cc3333');" >
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">-</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
 			</tr>
 			{% endfor %}
 			</table>
@@ -118,20 +156,41 @@
 			
 			</td><td width="50%"><table width="100%"> <div id="loadPageCR">{# right #} Product Detail</div></table></td></tr>
 			</table>	
+			</li>
 			</td>
 			<td width="50%"> 
 			
-			{# section 2: CV #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV">CV</a>
+			{# section 2: CV #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV">Show full CV schedule</a>
 			<table align=center width="90%">
 			<tr  height="5"><td width="60%">{# left #}
 			
 			<div id="linkCV">
 			<table align=center width="100%"><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th></tr>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th height="20">Act.IN</th><th>Act.OUT</th></tr></thead>
 			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items_plan_cv %}
-			<tr align=center><td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td><td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td><td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td></tr>
-			<tr align=center><td height="20"><p class="tbsgunderline">{{actual_start|time:"H:i"}}</p></td><td><p class="tbsgunderline">{{actual_end|time:"H:i"}}</p></td></tr>
+			<tr align=center><td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
+<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td>
+<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td>
+<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td></tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">-</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
 			{% endfor %}
 			</table></div>
 			
@@ -141,16 +200,36 @@
 
 </td></tr>
 			<tr align = center><td width="50%">
-			{# section 3: PT #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT">PT</a>
+			{# section 3: PT #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT">Show full PT schedule</a>
 			<table align=center width="90%">
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th></tr>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></span></thead>
 			{% for start,end,product,actual_start,actual_end in items_plan_pt %}
-			<tr align=center><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td><td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td></tr>
-			<tr align=center><td height="20"><p class="tbsgunderline">{{actual_start|time:"H:i"}}</></td><td><p class="tbsgunderline">{{actual_end|time:"H:i"}}</p></td></tr>
+			<tr align=center><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
+<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
+<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
+<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">-</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
 			{% endfor %}
 			</table></div>
 			
@@ -160,16 +239,28 @@
 			</table>
 			</td><td width="50%">
 			{# Section 4: WH #}
-			<table width="90%"> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH">WH</a>
+			<table width="90%"> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH">Show full WH schedule</a>
 			<tr>
 			<td width="50%"> {# left #}
 			<div id="linkWH">
 			<table align=center width = 100%><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th></tr>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th></tr></span></thead>
 			{% for start,product,actual_start in items_plan_wh %}
-			<tr align=center><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td><td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td></tr>
-			<tr align=center><td  height="20" height="20"><p class="tbsgunderline">{{actual_start|time:"H:i"}}</p></td></tr>
+			<tr><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td><td> {{start|time:"H:i"}}</td>
+<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
+<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
+<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">-</font>
+				{% endif %}
+			</p></td>
+			</td></tr>
 			{% endfor %}
 			</table>			
 			</div>

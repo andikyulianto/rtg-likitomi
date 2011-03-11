@@ -1,11 +1,31 @@
-{% extends "generic.html" %}
-{% block content %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="index,follow" name="robots" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link href="pics/homescreen.gif" rel="apple-touch-icon" />
+<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+
+<script src="javascript/functions.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<title>{{ title }}</title>
+<link href="pics/startup.png" rel="apple-touch-startup-image" />
+<meta content="iPod,iPhone,Webkit,iWebkit,Website,Create,mobile,Tutorial,free" name="keywords" />
+<meta content="Try out all the new features of iWebKit 5 with a simple touch of a finger and a smooth screen rotation!" name="description" />
+</head>
+
+<body>
+
 <div id="topbar">
 	<div id="title">
 		{{title}}</div>
 		{% if is_enable_leftbutton %}
 	<div id="leftnav">
-		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+		<a href='/likitomi/home/?eID={{eID}}'><img alt="home" src="images/home.png" /></a>
+		<a href="#" class="noeffect">WH</a>  
+	</div>
 	</div>
 	{% endif %}
 	{% if is_enable_rightbutton %}
@@ -38,18 +58,20 @@
 			{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
 			{% endif %}</li>
 		{% endif %}
-		<!-- Start Table-->
+
+
+	
+		{#start page of wh #}
 			<ul class="pageitem">
-			<li class="textbox">	
+			<li class="textbox">
 			<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="20" rowspan="2">Next</th></tr>
-			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="20" rowspan="2">Next</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th></tr></thead>
 			</span>
-			{% for plan_id,start,end,product,actual_start,actual_end in items %}
+			{% for plan_id,start,product,actual_start,actual_end in items %}
 		<tr>
-			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
-			<td><a href="/likitomi/line/pt/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
-			<td><a href="/likitomi/line/pt/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td>
+			<td rowspan="2">{% if wh == product %} > {% endif %}</td>
+			<td><a href="/likitomi/line/wh/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
 			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
 			<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
 			<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
@@ -72,12 +94,12 @@
 			</p></td>
 			</tr>
 			{% endfor %}
-			</table>		
+			</table>
 <!--			<table border=1 align=center><span class="header">-->
-<!--			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%"> Sch.IN </td><td width="40%" rowspan="2"> Product code </td><td rowspan="2">From</td></tr><tr align=center><td>Act.IN</td>-->
-<!--			<span>-->
+<!--			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td><td width="35%" rowspan="2"> Product code </td><td width="30%" rowspan="2">From</td></tr>-->
+<!--			<tr align=center><td>Act.IN</td></tr>-->
 <!--			{% for plan_id,start,product,actual_start in items %}-->
-<!--			<tr align=center><td rowspan="2" height="20">{% if wh == start and actual_start == none %} > {% endif %}</td><td><a href="/likitomi/line/wh/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td><td rowspan="2">{{product}}</td><td rowspan="2">{{from}}</td></tr>-->
+<!--			<tr align=center><td rowspan="2" height="20">{% if wh == start and actual_start == none %} > {% endif %}</td><td>{{start|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2">{{from}}</td></tr>-->
 <!--			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td></tr>-->
 <!--			{% endfor %}-->
 <!--			</table>-->
@@ -85,4 +107,9 @@
 			</ul>
 	</ul>
 </div>
-{% endblock %}
+<div id="footer">
+	<a href="http://iwebkit.net">Powered by iWebKit</a></div>
+
+</body>
+
+</html>

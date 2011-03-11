@@ -42,13 +42,34 @@
 		<!-- Start Table-->
 			<ul class="pageitem">{{ temp_contents }}
 			<li class="textbox">			
-			<table border=1 align=center><span class="header">
-			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%"> Sch.IN </td><td width="25%"> Sch.OUT </td><td width="40%" rowspan="2"> Product code </td></tr>
-			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
-			<span>
+			<table align=center><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"> Sch.IN </td><td width="15%"> Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th  width ="10%" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			</span>
 			{% for start,end,product,actual_start,actual_end in items %}
-			<tr align=center><td rowspan="2" height="20">{% if cr == product %} > {% endif %}</td><td>{{start|time:"H:i"}}</td><td>{{ end|time:"H:i" }}</td><td rowspan="2">{{product}}</td></tr>
-			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			<tr>
+			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
+			<td>{{start|time:"H:i"}}</td>
+			<td>{{ end|time:"H:i" }}</td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{ actual_start|time:"H:i" }}
+				{% else %} 
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{ actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
 			{% endfor %}
 			</table>
 			</ul>
