@@ -52,10 +52,10 @@ def showPC(eID,section_title):
 
 	#create items for PC
 	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
-	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
-	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
+	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section","plan_due").order_by('plan_cv_start')
+	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end","plan_due").order_by('plan_pt_start')
 	#bug here ordering (also in utility line67)
-	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
+	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id","actual_wh_start","plan_due").order_by('plan_wh_start')
 	
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
@@ -136,7 +136,7 @@ def workCR(eID,section_title):
 	items = list(item_plan)
 	x = ''
 	return render_to_response('listCR.html', locals())
-	
+#	return render_to_response('content_cr.html',locals())	
 #####################################	
 ##             for CV              ##
 ## time and process are recordable ##

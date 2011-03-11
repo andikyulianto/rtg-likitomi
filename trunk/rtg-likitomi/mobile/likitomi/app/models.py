@@ -132,6 +132,7 @@ class FakeStatusTracking(models.Model):
     plan_pt_end = models.DateTimeField(null=True, blank=True)
     plan_wh_start = models.DateTimeField(null=True, blank=True)
     plan_wh_end = models.DateTimeField(null=True, blank=True)
+    plan_due = models.DateTimeField(null=True, blank = True)
     current_status = models.CharField(max_length=33, blank=True)
     actual_amount_cr = models.IntegerField(null=True, blank=True)
     actual_cr_start = models.DateTimeField(null=True, blank=True)
@@ -145,10 +146,17 @@ class FakeStatusTracking(models.Model):
     actual_amount_wh = models.IntegerField(null=True, blank=True)
     actual_wh_start = models.DateTimeField(null=True, blank=True)
     actual_wh_end = models.DateTimeField(null=True, blank=True)
+    actual_due = models.DateTimeField(null=True, blank=True)
     previous_section = models.CharField(max_length=15, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
     class Meta:
         db_table = u'fake_status_tracking'
+    def calculate_age(self):
+        import datetime
+        return int((datetime.datetime.now() - self.plan_due))
+        #return int((datetime.datetime.now() - self.plan_due))
+    days_left = property(calculate_age)
+
 
 class InchMm(models.Model):
     inch = models.IntegerField(primary_key=True)
