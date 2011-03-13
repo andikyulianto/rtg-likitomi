@@ -420,6 +420,7 @@ class FakeStatusTracking(models.Model):
     plan_pt_end = models.DateTimeField(null=True, blank=True)
     plan_wh_start = models.DateTimeField(null=True, blank=True)
     plan_wh_end = models.DateTimeField(null=True, blank=True)
+    plan_due = models.DateTimeField(null=True, blank=True)
     current_status = models.CharField(max_length=33)
     actual_amount_cr = models.IntegerField(null=True, blank=True)
     actual_cr_start = models.DateTimeField(null=True, blank=True)
@@ -433,8 +434,13 @@ class FakeStatusTracking(models.Model):
     actual_amount_wh = models.IntegerField(null=True, blank=True)
     actual_wh_start = models.DateTimeField(null=True, blank=True)
     actual_wh_end = models.DateTimeField(null=True, blank=True)
-    previous_section = models.CharField(max_length=15, blank=True)
+    actual_due = models.DateTimeField(null=True, blank=True)
+    process1 = models.CharField(max_length=5, blank=True)
+    process2 = models.CharField(max_length=5, blank=True)
+    process3 = models.CharField(max_length=5, blank=True)
+    process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
+    days_left = models.IntegerField(null=True, blank=True)
     class Meta:
         db_table = u'fake_status_tracking'
 
