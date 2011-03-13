@@ -125,13 +125,13 @@ function ChangeTextColor(a_obj,a_color){  ;
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="40%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,plan_due,age in items_plan_cr %}
+			{% for start,end,product,actual_start,actual_end,days_left in items_plan_cr %}
 			<tr  onClick="HighLightTR(this,'#c9cc99','cc3333');" >
 			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
 			<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}</a><br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">{{age}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">#{{days_left}}#<br><font color="white">-</font></p></td>
 			</tr>
 			<tr  onClick="HighLightTR(this,'#c9cc99','cc3333');" >
 			<td><p class="tbsgunderline">
@@ -207,10 +207,10 @@ function ChangeTextColor(a_obj,a_color){  ;
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></span></thead>
-			{% for start,end,product,actual_start,actual_end in items_plan_pt %}
+			{% for start,end,product,actual_start,actual_end,previous_section in items_plan_pt %}
 			<tr align=center><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
 <td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
-<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td>
 <td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
 </tr>
 			<tr>
@@ -246,10 +246,10 @@ function ChangeTextColor(a_obj,a_color){  ;
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th></tr></span></thead>
-			{% for start,product,actual_start in items_plan_wh %}
+			{% for start,product,actual_start,process1,process2,process3 in items_plan_wh %}
 			<tr><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td><td> {{start|time:"H:i"}}</td>
 <td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
-<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
+<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white">-</font></p></td>
 <td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
 </tr>
 			<tr>

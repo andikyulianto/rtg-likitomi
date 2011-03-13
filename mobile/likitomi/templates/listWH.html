@@ -24,7 +24,6 @@
 		{% if is_enable_leftbutton %}
 	<div id="leftnav">
 		<a href='/likitomi/home/?eID={{eID}}'><img alt="home" src="images/home.png" /></a>
-		<a href="#" class="noeffect">WH</a>  
 	</div>
 	</div>
 	{% endif %}
@@ -65,15 +64,15 @@
 			<ul class="pageitem">
 			<li class="textbox">
 			<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="20" rowspan="2">Next</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="20" rowspan="2">Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th></tr></thead>
 			</span>
-			{% for plan_id,start,product,actual_start,actual_end in items %}
+			{% for plan_id,start,product,actual_start,process1,process2,process3 in items %}
 		<tr>
 			<td rowspan="2">{% if wh == product %} > {% endif %}</td>
 			<td><a href="/likitomi/line/wh/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
 			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white">-</font></p></td>
 			<td rowspan="2"><p class="tbunderline">!!<br><font color="white">-</font></p></td>
 			</tr>
 			<tr>
