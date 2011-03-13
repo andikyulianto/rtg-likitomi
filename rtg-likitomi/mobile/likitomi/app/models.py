@@ -9,6 +9,7 @@
 
 from django.db import models
 
+
 class Addresses(models.Model):
     address_id = models.IntegerField(primary_key=True)
     partner_id = models.IntegerField()
@@ -147,15 +148,22 @@ class FakeStatusTracking(models.Model):
     actual_wh_start = models.DateTimeField(null=True, blank=True)
     actual_wh_end = models.DateTimeField(null=True, blank=True)
     actual_due = models.DateTimeField(null=True, blank=True)
-    previous_section = models.CharField(max_length=15, blank=True)
+    process1 = models.CharField(max_length=5, blank=True)
+    process2 = models.CharField(max_length=5, blank=True)
+    process3 = models.CharField(max_length=5, blank=True)
+    process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
+    days_left = models.IntegerField(null=True, blank=True)
+
+    class Admin: pass
+
     class Meta:
         db_table = u'fake_status_tracking'
-    def calculate_age(self):
+    def calculate_date(self):
         import datetime
-        return int((datetime.datetime.now() - self.plan_due))
+        return 8
         #return int((datetime.datetime.now() - self.plan_due))
-    days_left = property(calculate_age)
+    #days_left = property(calculate_date)
 
 
 class InchMm(models.Model):
@@ -409,4 +417,3 @@ class TotalPlanning(models.Model):
     next_process = models.CharField(max_length=33, blank=True)
     class Meta:
         db_table = u'total_planning'
-

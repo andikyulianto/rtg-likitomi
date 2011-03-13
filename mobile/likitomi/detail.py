@@ -63,7 +63,7 @@ def showCV(eid,section_title):
 	cvThreeCL = str(currentProcess("3CL"))[2:8]
 	cvTwoCL = str(currentProcess("2CL"))[2:8]
 	cvThreeCS = str(currentProcess("3CS"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "previous_section").order_by('plan_cv_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "process1","process3","process4").order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('CV.html', locals())
 #################################
@@ -77,7 +77,7 @@ def showPT(eid,section_title):
 	#create items for PT
 	today = todayDate()
 	pt = str(currentTimeProcess("PT"))
-	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end").order_by('plan_pt_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end","process2","process4").order_by('plan_pt_start')
 	items = list(item_plan)
 	return render_to_response('PT.html', locals())
 #################################
@@ -91,6 +91,6 @@ def showWH(eid,section_title):
 	today = todayDate()
 	#create items for WH
 	wh = currentTimeProcess("WH")
-	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start").order_by('plan_wh_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start","process1","process2","process3").order_by('plan_wh_start')
 	items = list(item_plan)
 	return render_to_response('WH.html',locals())
