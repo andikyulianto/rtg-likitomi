@@ -42,16 +42,18 @@
 			<ul class="pageitem">{{ temp_contents }}
 			<li class="textbox">			
 			<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="20" rowspan="2"> Product code </th><th width="15" rowspan="2">Machine</th><th width="20" rowspan="2">Next</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="20" rowspan="2"> Product code </th><th width="15" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
 			</span>
-			{% for plan_id,start,end,product,actual_start,actual_end,cv_machine in items %}
+			{% for plan_id,start,end,product,actual_start,actual_end,cv_machine,previous_section,next_process,last in items %}
 		<tr>
 			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
 			<td><a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
 			<td><a href="/likitomi/line/cv/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td>
 			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
 			<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{% if next_process != NULL %}{{next_process}}{% else %}{{last}}{% endif %}<br><font color="white">-</font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
