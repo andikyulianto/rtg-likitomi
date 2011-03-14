@@ -43,18 +43,26 @@ var preEl ;
 var orgBColor;
 var orgTColor;
 
-function HighLightTR(el, backColor,textColor){
+function HighLightTR(elstr, backColor,textColor){
   if(typeof(preEl)!='undefined') {
+     preEl.bgColor=orgBColor;
      preEl.bgColor=orgBColor;
      try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
   }
-  orgBColor = el.bgColor;
-  orgTColor = el.style.color;
-  el.bgColor=backColor;
-  
+  var el=document.getElementsByClassName(elstr);
+  //alert(el[0].innerHTML);
+  //alert(el[1].innerHTML);
+  //el = elstr;
 
-  try{ChangeTextColor(el,textColor);}catch(e){;}
-  preEl = el;
+  orgBColor = el[0].bgColor;
+  orgBColor = el[1].bgColor;
+  //orgTColor = el[i].style.color;
+  el[0].bgColor=backColor;
+  el[1].bgColor=backColor;
+
+  //try{ChangeTextColor(el[i],textColor);}catch(e){;}
+  //preEl = el[0];
+  preEl = el[1];
 }
 
 
@@ -62,6 +70,20 @@ function ChangeTextColor(a_obj,a_color){  ;
    for (i=0;i<a_obj.cells.length;i++)
     a_obj.cells(i).style.color=a_color;
 }
+function getElementsByClassName(oElm, strTagName, strClassName){
+var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
+	    var arrReturnElements = new Array();
+	    strClassName = strClassName.replace(/\-/g, "\\-");
+	    var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
+	    var oElement;
+	    for(var i=0; i<arrElements.length; i++){
+	        oElement = arrElements[i];
+	        if(oRegExp.test(oElement.className)){
+	            arrReturnElements.push(oElement);
+	        }
+	    }
+	    return (arrReturnElements)
+	}
 </script>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <title>{{ title }}</title>
@@ -126,14 +148,14 @@ function ChangeTextColor(a_obj,a_color){  ;
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
 			</span>
 			{% for start,end,product,actual_start,actual_end,days_left in items_plan_cr %}
-			<tr  onClick="HighLightTR(this,'#c9cc99','cc3333');" >
+			<tr class="{% cycle 'row1' 'row2' 'row3' as rowcount %}" onClick="HighLightTR('{{rowcount}}','#c9cc99','cc3333');">
 			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
 			<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}</a><br><font color="white">-</font></p></td>
 			<td rowspan="2"><p class="tbsgunderline">#{{days_left}}#<br><font color="white">-</font></p></td>
 			</tr>
-			<tr  onClick="HighLightTR(this,'#c9cc99','cc3333');" >
+			<tr class="{{ rowcount }}" onClick="HighLightTR('{{rowcount}}','#c9cc99','cc3333');" >
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{actual_start|time:"H:i" }}
