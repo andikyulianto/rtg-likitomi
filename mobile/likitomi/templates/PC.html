@@ -10,41 +10,18 @@
 <!--<script type="text/javascript" src="javascript/functions.js" ></script>-->
 <script type="text/javascript" src="javascript/jquery.js"></script>
 	
-	<script type="text/javascript">
-		//cr
-        $(document).ready(function() {
-            $('#linkCR a').click(function() {
-                $("#loadPageCR").load(this.href);
-                return false;
-            });
-        });
-        //cv
-        $(document).ready(function() {
-            $('#linkCV a').click(function() {
-                $("#loadPageCV").load(this.href);
-                return false;
-            });
-        });
-        //pt
-        $(document).ready(function() {
-            $('#linkPT a').click(function() {
-                $("#loadPagePT").load(this.href);
-                return false;
-            });
-        });
-        //wh
-        $(document).ready(function() {
-            $('#linkWH a').click(function() {
-                $("#loadPageWH").load(this.href);
-                return false;
-            });
-        });
+<script type="text/javascript">
 
-
-function HighLightCR(elstr, backColor,textColor,product_code){
+function showDetail(sectionName,urlLink)
+{
+	//alert(sectionName);
+	$(sectionName).load(urlLink);
+}
 var preEl ;
 var orgBColor;
 var orgTColor;
+function HighLightTR(elstr, backColor,textColor,product_code){
+
   if(typeof(preEl0)!='undefined') {
      preEl0.bgColor=orgBColor;
      preEl1.bgColor=orgBColor;
@@ -70,94 +47,7 @@ var orgTColor;
   preEl0 = el[0];
   //window.location = "/likitomi/display/?product=".product_code; 
 }
-function HighLightCV(elstr, backColor,textColor,product_code){
-var preEl ;
-var orgBColor;
-var orgTColor;
-  if(typeof(preEl0)!='undefined') {
-     preEl0.bgColor=orgBColor;
-     preEl1.bgColor=orgBColor;
-     try{ChangeTextColor(preEl0,orgTColor);}catch(e){;}
-     try{ChangeTextColor(preEl1,orgTColor);}catch(e){;}
-  }
-  var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
 
-  orgBColor = el[0].bgColor;
-  orgBColor = el[1].bgColor;
-  orgTColor = el[0].style.color;
-  orgTColor = el[1].style.color;
-  el[0].bgColor=backColor;
-  el[1].bgColor=backColor;
-
-  try{ChangeTextColor(el[0],textColor);}catch(e){;}
-  try{ChangeTextColor(el[1],textColor);}catch(e){;}
-
-  preEl1 = el[1];
-  preEl0 = el[0];
-  //window.location = "/likitomi/display/?product=".product_code; 
-}
-function HighLightPT(elstr, backColor,textColor,product_code){
-var preEl0 ;
-var preEl1 ;
-var orgBColor ;
-var orgTColor;
-  if(typeof(preEl0)!='undefined') {
-     preEl0.bgColor=orgBColor;
-     preEl1.bgColor=orgBColor;
-//     try{ChangeTextColor(preEl0,orgTColor);}catch(e){;}
-//     try{ChangeTextColor(preEl1,orgTColor);}catch(e){;}
-  }
-  var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
-
-  orgBColor = el[0].bgColor;
-  orgBColor = el[1].bgColor;
-  orgTColor = el[0].style.color;
-  orgTColor = el[1].style.color;
-  el[0].bgColor=backColor;
-  el[1].bgColor=backColor;
-
-//  try{ChangeTextColor(el[0],textColor);}catch(e){;}
-//  try{ChangeTextColor(el[1],textColor);}catch(e){;}
-
-  preEl1 = el[1];
-  preEl0 = el[0];
-  //window.location = "/likitomi/display/?product=".product_code; 
-}
-function HighLightWH(elstr, backColor,textColor,product_code){
-var preEl ;
-var orgBColor;
-var orgTColor;
-  if(typeof(preEl0)!='undefined') {
-     preEl0.bgColor=orgBColor;
-     preEl1.bgColor=orgBColor;
-     try{ChangeTextColor(preEl0,orgTColor);}catch(e){;}
-     try{ChangeTextColor(preEl1,orgTColor);}catch(e){;}
-  }
-  var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
-
-  orgBColor = el[0].bgColor;
-  orgBColor = el[1].bgColor;
-  orgTColor = el[0].style.color;
-  orgTColor = el[1].style.color;
-  el[0].bgColor=backColor;
-  el[1].bgColor=backColor;
-
-  try{ChangeTextColor(el[0],textColor);}catch(e){;}
-  try{ChangeTextColor(el[1],textColor);}catch(e){;}
-
-  preEl1 = el[1];
-  preEl0 = el[0];
-  //window.location = "/likitomi/display/?product=".product_code; 
-}
 
 function ChangeTextColor(a_obj,a_color){  ;
    for (i=0;i<a_obj.cells.length;i++)
@@ -231,37 +121,40 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 		{# start page of planner #}{{temp_contents}}
 			<ul class="pageitem"><li class="textbox">
 			<table align=center width="100%">
+			
 			<tr align = center>
 			<td width="50%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR">Show full CR schedule</a>
 			<table align=center width="90%"> <!-- table CR -->
-			
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
 			<tr><td width="50%">{# left #} 
 	<div id="linkCR">
 			<table align=center width="100%"><!-- table left --><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="40%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
 			</span>
 			{% for start,end,product,actual_start,actual_end,days_left in items_plan_cr %}
-			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');">
+			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
 			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
-			<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">#{{days_left}}#<br><font color="white">-</font></p></td>
+			<td rowspan="2" align="center"><p class="tbunderline">{{product}}</p></td>
+			<td rowspan="2"><p class="tbunderline">{{days_left}}</p></td>
 			</tr>
-			<tr class="{{ rowcountCR }}" onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');" >
+			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{actual_start|time:"H:i" }}
 				{% else %} 
-				<font color="white">-</font>
+				<font color="white"> </font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
 				{% if actual_end != NULL%}
 				{{actual_end|time:"H:i" }}
 				{% else %}
-				<font color="white">-</font>
+				<font color="white">  </font>
 				{% endif %}
 
 			</p></td>
@@ -270,7 +163,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			</table> <!-- end table left -->
 			</div>
 			
-			</td><td width="50%" bgColor="#F8F8F8"><div id="loadPageCR"><table> <tr><td>{# right #} Product Detail</td></tr></table></div></td></tr>
+			</td><td width="50%" bgColor="#F8F8F8"><div id="loadPageCR"><table> <tr><td>{# right #} << Please Click in norder to see Product Detail</td></tr></table></div></td></tr>
 
 			</table><!-- end table CR -->	
 			</li>
@@ -279,6 +172,9 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			
 			{# section 2: CV #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV">Show full CV schedule</a>
 			<table align=center width="90%">
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
 			<tr  height="5"><td width="60%">{# left #}
 			
 			<div id="linkCV">
@@ -286,13 +182,13 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th height="20">Act.IN</th><th>Act.OUT</th></tr></thead>
 			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items_plan_cv %}
-			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333','{{product}}');">
+			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
 			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
-<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
-<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td>
-<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td>
-<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td></tr>
-			<tr class="{{ rowcountCV }}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333',{{product}});" >
+<td rowspan="2"><p class="tbunderline">{{product}}</p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">##<br></p></td></tr>
+			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{actual_start|time:"H:i" }}
@@ -312,7 +208,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			{% endfor %}
 			</table></div>
 			
-			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} Product Detail </div> </table></td></tr>
+			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} << Please Click in norder to see Product Detail</div> </table></td></tr>
 			</table>
 
 
@@ -320,18 +216,21 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tr align = center><td width="50%">
 			{# section 3: PT #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT">Show full PT schedule</a>
 			<table align=center width="90%">
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></span></thead>
 			{% for start,end,product,actual_start,actual_end,previous_section in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
-<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
-<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td>
-<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">##</p></td>
 </tr>
-			<tr class="{{ rowcountPT }}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');" >
+			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{actual_start|time:"H:i" }}
@@ -351,7 +250,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			{% endfor %}
 			</table></div>
 			
-			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} Product Detail </div></table></td>
+			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in norder to see Product Detail</div></table></td>
 
 			</td>
 			</table>
@@ -359,18 +258,21 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			{# Section 4: WH #}
 			<table width="90%"> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH">Show full WH schedule</a>
 			<tr>
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
 			<td width="50%"> {# left #}
 			<div id="linkWH">
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th></tr></span></thead>
 			{% for start,product,actual_start,process1,process2,process3 in items_plan_wh %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightWH('{{rowcountPT}}','#c9cc99','cc3333',{{product}});"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td><td> {{start|time:"H:i"}}</td>
-<td rowspan="2"><a href=/likitomi/display/?product={{product}}><p class="tbunderline">{{product}}<br><font color="white">-</font></p></a></td>
-<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white">-</font></p></td>
-<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td><td> {{start|time:"H:i"}}</td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br></p></td>
+<td rowspan="2"><p class="tbunderline">##<br></p></td>
 </tr>
-			<tr class="{{ rowcountWH }}" onClick="HighLightWH('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');" >
+			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{actual_start|time:"H:i" }}
@@ -383,7 +285,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			</table>			
 			</div>
 			</td>
-			<td width="50%" bgColor="#F8F8F8"><table width="100%"><div id="loadPageWH"> {# right #}Product Detail </div></table>
+			<td width="50%" bgColor="#F8F8F8"><table width="100%"><div id="loadPageWH"> {# right #} << Please Click in norder to see Product Detail </div></table>
 			</td>
 			</tr>
 			</table>
