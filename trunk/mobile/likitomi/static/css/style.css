@@ -1127,6 +1127,10 @@ p.tbsgunderline {
 }
 .textbox td p.tbunderline{
 	text-align:center;
+	position:absolute; 
+
+
+
 }
 div.row1 {
 	background-color: black;

@@ -47,10 +47,10 @@
 			</span>
 			{% for plan_id,start,end,product,actual_start,actual_end in items %}
 		<tr>
-			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
+			<td rowspan="2">{% if wh == product %} > {% endif %}</td>
 			<td><a href="/likitomi/line/cr/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
 			<td><a href="/likitomi/line/cr/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td>
-			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{product}}</p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
