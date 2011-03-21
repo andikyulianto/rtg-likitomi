@@ -881,32 +881,32 @@ def minchangeloc(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 	else:
-		return HttpResponseRedirect('/inventory/')
+		realtag = ""
 
 	if 'lane' in request.GET and request.GET['lane']:
 		ilane = request.GET['lane']
 	else:
-		return HttpResponseRedirect('/inventory/')
+		ilane = ""
 
 	if 'pos' in request.GET and request.GET['pos']:
 		ipos = request.GET['pos']
 	else:
-		return HttpResponseRedirect('/inventory/')
+		ipos = ""
 
 	if 'pcode' in request.GET and request.GET['pcode']:
 		ipcode = request.GET['pcode']
 	else:
-		return HttpResponseRedirect('/inventory/')
+		ipcode = ""
 
 	if 'width' in request.GET and request.GET['width']:
 		iwidth = request.GET['width']
 	else:
-		return HttpResponseRedirect('/inventory/')
+		iwidth = ""
 
 	if 'loss' in request.GET and request.GET['loss']:
 		iloss = request.GET['loss']
 	else:
-		return HttpResponseRedirect('/inventory/')
+		iloss = ""
 
 	if int(ipos) <= 43:
 		query = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
@@ -925,9 +925,9 @@ def minchangeloc(request):
 		p.lane = ilane
 		p.position = ipos
 		p.save()
-		realtag = ""
+#		realtag = ""
 
-		response = "/stock/?pcode="+str(ipcode)+"&width="+str(iwidth)+"&loss="+str(iloss)+"&change="+"yes"
+		response = "/stock/?pcode="+str(ipcode)+"&width="+str(iwidth)+"&loss="+str(iloss)+"&clamping=no&changed=yes"
 
 	else:
 		err = ""

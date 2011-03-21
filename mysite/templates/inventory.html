@@ -2,6 +2,7 @@
 <head>
 
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
 
 </head>
 
@@ -14,9 +15,22 @@
 {% load fifth %}
 
 <div id="invent">
+<input id="lane2" value="{{ lane }}" type="hidden" />
+<input id="position2" value="{{ position }}" type="hidden" />
+<input id="atlane2" value="{{ atlane }}" type="hidden" />
+<input id="atposition2" value="{{ atposition }}" type="hidden" />
+
+<input id="clamping2" value="{{ clamping }}" type="hidden" />
+<input id="changed2" value="{{ changed }}" type="hidden" />
+<input type="hidden" value="{{ pcode }}" id="pcode" />
+<input type="hidden" value="{{ width }}" id="width" />
+<input type="hidden" value="{{ loss }}" id="loss" />
+
 Looking for: {% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %} ***
 <!--<br />@{{atlane}}-{{atposition}}<br />Tag:{{realtag}}--Location:{{lane}}-{{position}}<br />Clamping:{{clamping}}<br / >Changed:{{change}}-->
 <br />On clamplift: [{{realtag}}] {{rpcode}} >>> {{rwidth}}"
+<!--<br />clamping:"{{clamping}}"--changed:"{{changed}}"-->
+<!--<br />{{lane}}={{atlane}}, {{position}}={{atposition}}-->
 <table style="height:80%">
 <tr>
 
@@ -39,7 +53,7 @@ Looking for: {% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %} ***
 					{% endfor %}
 				</table></td>
 			</tr>
-			<tr><td colspan="2" style="background-color:lightgray;">{{ loss }} >></td></tr>
+			<tr><td colspan="2" style="background-color:lightgray;">{{ loss }}>></td></tr>
 			<tr>
 				<td style="border:0px; vertical-align:top;" height="{{ losspx }}px"><table>
 				{% for w in dbllist %}<tr><td {% if w < 100 %}class="red"{% endif %}{% if w >= 100 and w < 400 %}class="yellow"{% endif %}{% if w >= 400 and w < 700 %}class="blue"{% endif %}{% if w >= 700 or w == initail_weight %}class="green"{% endif %}>{{ w }}</td></tr>{% endfor %}

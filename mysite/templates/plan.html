@@ -57,32 +57,42 @@ $(document).ready(function(){
 
 <table style="width:100%">
 	<tr>
-		<td class="lft">AS PRODUCTION OF:</td><td style="border:0px"><a id="lnk" target="_top"><button>More</botton></a></td>
-	</tr>
-	<tr>
 		<td class="lft" colspan="2">
 			<form>
 				<select id="sel" name="opdate">
-				<option value="">Select date to show plan:</option>
+				<option value="">AS PRODUCTION OF:</option>
 				{% for date in datelist %}
 				<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
 				{% endfor %}
 				</select>
 			</form>
 		</td>
+		<td style="border:0px"><a id="lnk" target="_top"><button>More</botton></a></td>
 	</tr>
+<!--	<tr>-->
+<!--		<td class="lft" colspan="2">-->
+<!--			<form>-->
+<!--				<select id="sel" name="opdate">-->
+<!--				<option value="">Select date to show plan:</option>-->
+<!--				{% for date in datelist %}-->
+<!--				<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>-->
+<!--				{% endfor %}-->
+<!--				</select>-->
+<!--			</form>-->
+<!--		</td>-->
+<!--	</tr>-->
 </table>
 <table><tr><td style="width:10px; border:0px;"></td><td style="border:0px;"><img id="up" src="image/earlier.png" width="285px"/></td></tr></table>
 <table style="font-size:80%">
-	<tr>
-		<th rowspan='2' style="width:10px; border:0px"></th>
+	<tr style="background-color:black; color:white;">
+		<th rowspan='2' style="width:10px; border-width:0px; background-color:white"></th>
 		<th rowspan='2' width='33px'>Time</th>
 		<th rowspan='2' width='53px'>Sheet Code</th>
 		<th class='bt' width='56px'>Size</th>
 		<th width='56px'>BL</th>
 		<th width='56px'>BM</th>
 	</tr>
-	<tr>
+	<tr style="background-color:black; color:white;">
 		<th>DF</th>
 		<th>CL</th>
 		<th>CM</th>

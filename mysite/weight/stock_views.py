@@ -25,10 +25,15 @@ def stock(request):
 		else:
 			opdate = ""
 
-		if 'change' in request.GET and request.GET['change']:
-			change = request.GET['change']
+		if 'clamping' in request.GET and request.GET['clamping']:
+			clamping = request.GET['clamping']
 		else:
-			change = ""
+			clamping = "no"
+
+		if 'changed' in request.GET and request.GET['changed']:
+			changed = request.GET['changed']
+		else:
+			changed = "no"
 
 		cursor = connection.cursor()
 		cursor.execute("""

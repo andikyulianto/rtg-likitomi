@@ -12,8 +12,28 @@ $(document).ready(function(){
 			var pcode = $("#pcode").val();
 			var width = $("#width").val();
 			var loss = $("#loss").val();
-			var change = $("#change").val();
-			$("#invHint").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&change="+change);
+			var clamping = $("#clamping").val();
+			var changed = $("#changed").val();
+			var lane = $("[id='lane2']").val();
+			var position = $("[id='position2']").val();
+			var atlane = $("[id='atlane2']").val();
+			var atposition = $("[id='atposition2']").val();
+//			alert(clamping);
+//			alert(changed);
+//			alert(lane);
+//			alert(position);
+//			alert(atlane);
+//			alert(atposition);
+
+			if (lane == atlane && position == atposition && clamping == "no" && changed == "no" && lane != undefined){
+				//alert("equal");
+				$("#invHint").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&clamping=yes&changed=no");
+			}
+			else {
+				//alert("notequal");
+				$("#invHint").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&clamping="+clamping+"&changed="+changed);
+			}
+
 			setTimeout(clamplift, 2000);
 		}
 	});
@@ -24,7 +44,8 @@ $(document).ready(function(){
 		var loss = $("#loss").val();
 		var change = $("#change").val();
 		if (scode != "" && swidth != ""){
-			$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss+"&change="+change);
+			$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss+"&clamping="+clamping+"&changed="+changed);
+			//$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
 			$("#pcode").val(scode);
 			$("#width").val(swidth);
 			//$("[id='plan']",top.frames["plan"].document).css("background-color","yellow");
@@ -44,7 +65,12 @@ $(document).ready(function(){
 <input id="rpcode" value="{{ rpcode }}" type="hidden" />
 <input id="rwidth" value="{{ rwidth }}" type="hidden" />
 <input id="loss" value="{{ loss }}" type="hidden" />
-<input id="change" value="{{ change }}" type="hidden" />
+<input id="clamping" value="{{ clamping }}" type="hidden" />
+<input id="changed" value="{{ changed }}" type="hidden" />
+<input id="lane" value="{{ lane }}" type="hidden" />
+<input id="position" value="{{ position }}" type="hidden" />
+<input id="atlane" value="{{ atlane }}" type="hidden" />
+<input id="atposition" value="{{ atposition }}" type="hidden" />
 
 {% if pcode %}
 <table><tr>
