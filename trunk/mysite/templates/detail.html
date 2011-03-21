@@ -35,9 +35,9 @@
 <!--		</tr>-->
 <!--		</thead>-->
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut, n in nlist %}
-		<tr style="height:30px; {% if chosen == n %}background-color:lightgray;{% endif %}">
-			<td rowspan='2' width="37px">{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2' width="85px">{{ sheet_code }}</td>
+		<tr name="{{ n }}" height="30px"{% if n < chosen %}style="background-color:lightgray;"{% endif %}{% if n == chosen %}style="background-color:tan;"{% endif %}{% if n > chosen %}style="background-color:white;"{% endif %}>
+			<td rowspan='2' width="52px">{{ start_time|time:"H:i" }}</td>
+			<td rowspan='2' width="70px">{{ sheet_code }}</td>
 			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
 			<td rowspan='2' class="kl" width="150px">{{ customer_name }}<br />{{ product }}</td>
 			<td class='df' rowspan='2' width="60px"><br />{{ length_df }}</td>
@@ -49,7 +49,7 @@
 			<td rowspan="2" width="65px">{{ sheet_length }}</td>
 			<td width="40px">{{ case }}</td>
 		</tr>
-		<tr style="height:30px; {% if chosen == n %}background-color:lightgray;{% endif %}">
+		<tr name="{{ n }}" height="30px"{% if n < chosen %}style="background-color:lightgray;"{% endif %}{% if n == chosen %}style="background-color:tan;"{% endif %}{% if n > chosen %}style="background-color:white;"{% endif %}>
 			<td>{{ length_cl }}</td>
 			<td>{{ length_cm }}</td>
 			<td>{{ actual_cl }}</td>

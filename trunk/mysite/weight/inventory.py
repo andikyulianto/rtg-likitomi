@@ -7,6 +7,7 @@ from mysite.weight.models import PaperRoll, PaperHistory
 import socket
 
 def inventory(request):
+
 	try:
 		if 'pcode' in request.GET and request.GET['pcode']:
 			pcode = request.GET['pcode']
@@ -27,10 +28,15 @@ def inventory(request):
 		else:
 			loss = ""
 
-		if 'change' in request.GET and request.GET['change']:
-			change = request.GET['change']
+		if 'clamping' in request.GET and request.GET['clamping']:
+			clamping = request.GET['clamping']
 		else:
-			change = ""
+			clamping = "inv"
+
+		if 'changed' in request.GET and request.GET['changed']:
+			changed = request.GET['changed']
+		else:
+			changed = "inv"
 
 		query = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('id')
 		qexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
@@ -119,7 +125,7 @@ def inventory(request):
 
 		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
-		lane = ['H','','G','F','','E','D','','C','B','','A']
+		laneall = ['H','','G','F','','E','D','','C','B','','A']
 		posall = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 		posh = ['','','3','4','5','6','','8','9','','','','']
 		posg = ['','','3','4','5','6','','8','9','','','','']
@@ -294,7 +300,7 @@ def inventory(request):
 							ls[4] = ls[4] + 1
 
 		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
-		clamping = 'no'
+#		clamping = 'no'
 
 		if operating_mode == 'real':
 			HOST = '192.41.170.55' # CSIM network
@@ -451,9 +457,9 @@ def inventory(request):
 #			atlocation = 'Scale'
 
 			atlane = '2'
-			atposition = '1'
+			atposition = '3'
 			atlocation = 'Stock'
-			vlane = ['*', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+			vlane = ['1', '2', '*', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
 #			atlane = '1'
 #			atposition = '5'
@@ -462,19 +468,30 @@ def inventory(request):
 
 			realtag = 67
 
-		if change == 'yes': realtag = ""
-
 		query1 = PaperRoll.objects.filter(id=realtag).values_list('lane', 'position', 'paper_code', 'width')[0]
 		lane = query1[0]
 		position = str(query1[1])
 		rpcode = query1[2]
 		rwidth = query1[3]
-		if lane == 'A' or lane == 'B': lane = '1'
-		if lane == 'C' or lane == 'D': lane = '2'
-		if lane == 'E' or lane == 'F': lane = '3'
-		if lane == 'G' or lane == 'H': lane = '4'
-		if lane == atlane and position == atposition:
-			clamping = 'yes'
+		if lane == 'A' or lane == 'B' or lane == '1': lane = '1'
+		if lane == 'C' or lane == 'D' or lane == '2': lane = '2'
+		if lane == 'E' or lane == 'F' or lane == '3': lane = '3'
+		if lane == 'G' or lane == 'H' or lane == '4': lane = '4'
+
+		if atlane == '1':
+			leftlane = 'B'
+			rightlane = 'A'
+		if atlane == '2':
+			leftlane = 'D'
+			rightlane = 'C'
+		if atlane == '3':
+			leftlane = 'F'
+			rightlane = 'E'
+		if atlane == '4':
+			leftlane = 'H'
+			rightlane = 'G'
+
+		if clamping == "yes" and changed == "no":
 			query2 = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
 			qlist = list(query2)
 			paper_code = qlist[0]
@@ -491,199 +508,6 @@ def inventory(request):
 			p.lane = atlane
 			p.position = atposition
 			p.save()
-
-#		vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
-
-#		for p in vlane:
-#			if p == atposition:
-#				ind = vlane.index(p)
-#				vlane.remove(p)
-#				vlane.insert(ind, '*')
-
-		if atlane == '1':
-			leftlane = 'B'
-			rightlane = 'A'
-		if atlane == '2':
-			leftlane = 'D'
-			rightlane = 'C'
-		if atlane == '3':
-			leftlane = 'F'
-			rightlane = 'E'
-		if atlane == '4':
-			leftlane = 'H'
-			rightlane = 'G'
-
-#		lane = ['H','','G','F','','E','D','','C','B','','A']
-#		posall = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
-#		posh = ['','','3','4','5','6','','8','9','','','','']
-#		posg = ['','','3','4','5','6','','8','9','','','','']
-#		posf = ['','','3','4','5','6','','8','9','','','','']
-#		pose = ['','','3','4','5','6','','8','9','','','','']
-#		posd = ['','','3','4','5','6','','8','9','','','','']
-#		posc = ['1','2','3','4','5','6','','8','9','10','11','12','13']
-#		posb = ['1','2','3','4','5','6','','8','9','10','11','12','13']
-#		posa = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
-
-#		mquery = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('lane', 'position')
-#		mexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
-#		mstr = str(mquery)
-#		mlist = list(mquery)
-
-#		Alist = list()
-#		Blist = list()
-#		Clist = list()
-#		Dlist = list()
-#		Elist = list()
-#		Flist = list()
-#		Glist = list()
-#		Hlist = list()
-
-#		zero = [0, 0, 0, 0]
-
-#		for ind,pair in enumerate(mlist):
-#			if pair[0] == u'A':
-#				ind1 = mlist.index(pair)
-#				posa.pop(pair[1]-1)
-#				posa.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Alist):
-#					Alist.append([pair[1]])
-#					Alist[-1].extend(zero)
-#				for ls in Alist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
-
-#			elif pair[0] == u'B':
-#				ind1 = mlist.index(pair)
-#				posb.pop(pair[1]-1)
-#				posb.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Blist):
-#					Blist.append([pair[1]])
-#					Blist[-1].extend(zero)
-#				for ls in Blist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
-
-#			elif pair[0] == u'C':
-#				ind1 = mlist.index(pair)
-#				posc.pop(pair[1]-1)
-#				posc.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Clist):
-#					Clist.append([pair[1]])
-#					Clist[-1].extend(zero)
-#				for ls in Clist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
-
-#			elif pair[0] == u'D':
-#				ind1 = mlist.index(pair)
-#				posd.pop(pair[1]-1)
-#				posd.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Dlist):
-#					Dlist.append([pair[1]])
-#					Dlist[-1].extend(zero)
-#				for ls in Dlist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
-
-#			elif pair[0] == u'E':
-#				ind1 = mlist.index(pair)
-#				pose.pop(pair[1]-1)
-#				pose.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Elist):
-#					Elist.append([pair[1]])
-#					Elist[-1].extend(zero)
-#				for ls in Elist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
-
-#			elif pair[0] == u'F':
-#				ind1 = mlist.index(pair)
-#				posf.pop(pair[1]-1)
-#				posf.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Flist):
-#					Flist.append([pair[1]])
-#					Flist[-1].extend(zero)
-#				for ls in Flist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
-
-#			elif pair[0] == u'G':
-#				ind1 = mlist.index(pair)
-#				posg.pop(pair[1]-1)
-#				posg.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Glist):
-#					Glist.append([pair[1]])
-#					Glist[-1].extend(zero)
-#				for ls in Glist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
-
-#			elif pair[0] == u'H':
-#				ind1 = mlist.index(pair)
-#				posh.pop(pair[1]-1)
-#				posh.insert(pair[1]-1, float(str(wlist[ind1])+"."+str(pair[1])))
-#				if str(pair[1]) not in str(Hlist):
-#					Hlist.append([pair[1]])
-#					Hlist[-1].extend(zero)
-#				for ls in Hlist:
-#					if pair[1] == ls[0]:
-#						if 100 > wlist[ind]:
-#							ls[1] = ls[1] + 1
-#						elif 100 <= wlist[ind] and wlist[ind] < 400:
-#							ls[2] = ls[2] + 1
-#						elif 400 <= wlist[ind] and wlist[ind] < 700:
-#							ls[3] = ls[3] + 1
-#						elif 700 <= wlist[ind] or loss < wlist[ind] or wlist[ind] == initial_weight:
-#							ls[4] = ls[4] + 1
 
 		cursor = connection.cursor()
 		cursor.execute("""
@@ -707,4 +531,3 @@ def inventory(request):
 		pass
 
 	return render_to_response('inventory.html', locals())
-

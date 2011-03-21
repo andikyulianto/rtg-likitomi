@@ -79,10 +79,10 @@ $(document).ready(function(){
 <table>
 	<tr>
 		<td class="lft">
-		AS PRODUCTION OF:
+<!--		AS PRODUCTION OF:-->
 			<form>
 				<select id="sel" name="opdate">
-				<option value="">Select date to show plan:</option>
+				<option value="">AS PRODUCTION OF:</option>
 				{% for date in datelist %}
 				<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
 				{% endfor %}
