@@ -457,9 +457,9 @@ def inventory(request):
 #			atlocation = 'Scale'
 
 			atlane = '2'
-			atposition = '3'
+			atposition = '1'
 			atlocation = 'Stock'
-			vlane = ['1', '2', '*', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+			vlane = ['*', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
 #			atlane = '1'
 #			atposition = '5'
@@ -473,6 +473,253 @@ def inventory(request):
 		position = str(query1[1])
 		rpcode = query1[2]
 		rwidth = query1[3]
+
+		if pcode != rpcode or width != rwidth:
+			query2 = PaperRoll.objects.filter(paper_code=rpcode, width=rwidth).values_list('id')
+			qexists2 = PaperRoll.objects.filter(paper_code=rpcode, width=rwidth).exists()
+
+			if qexists2 == True:
+
+				delist2 = list()
+				wlist2 = list()
+				ridlist2 = list()
+				elist2 = list()
+				dwlist2 = list()
+				ddwlist2 = list()
+				clist2 = list()
+
+				c12 = 0
+				c22 = 0
+				c32 = 0
+				c42 = 0
+				c1list2 = list()
+				c2list2 = list()
+				c3list2 = list()
+				c4list2 = list()
+
+				ablist2 = list()
+				bllist2 = list()
+				cablist2 = list()
+				cbllist2 = list()
+				dablist2 = list()
+				dbllist2 = list()
+
+				for item in query2:
+					totem = list(item)
+					delist2.append(totem)
+					rid = int(totem[0])
+					ridlist2.append(rid)
+
+					exists = PaperHistory.objects.filter(roll_id=rid).exists()
+					elist2.append(exists)
+					if exists == True:
+						weight = int(str(PaperHistory.objects.filter(roll_id=rid).order_by('-timestamp').values_list('last_wt')[0])[1:][:-3])
+					else:
+						weight = int(str(PaperRoll.objects.filter(id=rid).values_list('initial_weight')[0])[1:][:-3])
+					wlist2.append(weight)
+					dwlist2.append(weight)
+					for totem in delist2:
+						totem.append(weight)
+				dwlist2.sort()
+				dwlist2.reverse()
+				for w in dwlist2:
+					if w not in ddwlist2:
+						ddwlist2.append(w)
+				for w in wlist2:
+					if 100 > int(w):
+						c12 = c12 + 1
+						c1list2.append(w)
+					if 100 <= int(w) and int(w) < 400:
+						c22 = c22 + 1
+						c2list2.append(w)
+					if 400 <= int(w) and int(w) < 700:
+						c32 = c32 + 1
+						c3list2.append(w)
+					if 700 <= int(w):
+						c42 = c42 + 1
+						c4list2.append(w)
+				for w in ddwlist2:
+					c = dwlist2.count(w)
+					clist2.append(c)
+
+				for w in dwlist2:
+					if int(w) > int(loss):
+						ablist2.append(w)
+					else:
+						bllist2.append(w)
+				for w in ablist2:
+					if w not in dablist2: dablist2.append(w)
+				for w in bllist2:
+					if w not in dbllist2: dbllist2.append(w)
+				for w in dablist2:
+					c = ablist2.count(w)
+					cablist2.append(c)
+				for w in dbllist2:
+					c = bllist2.count(w)
+					cbllist2.append(c)
+
+#				initial_weight2 = int(str(PaperRoll.objects.filter(paper_code=rpcode).values_list('initial_weight')[0])[1:][:-3])
+
+			mquery2 = PaperRoll.objects.filter(paper_code=rpcode, width=rwidth).values_list('lane', 'position')
+			mexists2 = PaperRoll.objects.filter(paper_code=rpcode, width=rwidth).exists()
+			mstr2 = str(mquery2)
+			mlist2 = list(mquery2)
+
+			zero8 = [0, 0, 0, 0, 0, 0, 0, 0]
+
+			for ind,pair in enumerate(mlist2):
+				if pair[0] == u'A':
+					ind1 = mlist2.index(pair)
+					posa.pop(pair[1]-1)
+					posa.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Alist):
+						Alist.append([pair[1]])
+						Alist[-1].extend(zero8)
+					Alist[-1].extend(zero)
+					for ls in Alist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
+				elif pair[0] == u'B':
+					ind1 = mlist2.index(pair)
+					posb.pop(pair[1]-1)
+					posb.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Blist):
+						Blist.append([pair[1]])
+						Blist[-1].extend(zero8)
+					Blist[-1].extend(zero)
+					for ls in Blist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
+				elif pair[0] == u'C':
+					ind1 = mlist2.index(pair)
+					posc.pop(pair[1]-1)
+					posc.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Clist):
+						Clist.append([pair[1]])
+						Clist[-1].extend(zero8)
+					Clist[-1].extend(zero)
+					for ls in Clist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
+				elif pair[0] == u'D':
+					ind1 = mlist2.index(pair)
+					posd.pop(pair[1]-1)
+					posd.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Dlist):
+						Dlist.append([pair[1]])
+						Dlist[-1].extend(zero8)
+					Dlist[-1].extend(zero)
+					for ls in Dlist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
+				elif pair[0] == u'E':
+					ind1 = mlist2.index(pair)
+					pose.pop(pair[1]-1)
+					pose.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Elist):
+						Elist.append([pair[1]])
+						Elist[-1].extend(zero8)
+					Elist[-1].extend(zero)
+					for ls in Elist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
+				elif pair[0] == u'F':
+					ind1 = mlist2.index(pair)
+					posf.pop(pair[1]-1)
+					posf.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Flist):
+						Flist.append([pair[1]])
+						Flist[-1].extend(zero8)
+					Flist[-1].extend(zero)
+					for ls in Flist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
+				elif pair[0] == u'G':
+					ind1 = mlist2.index(pair)
+					posg.pop(pair[1]-1)
+					posg.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Glist):
+						Glist.append([pair[1]])
+						Glist[-1].extend(zero8)
+					Glist[-1].extend(zero)
+					for ls in Glist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
+				elif pair[0] == u'H':
+					ind1 = mlist2.index(pair)
+					posh.pop(pair[1]-1)
+					posh.insert(pair[1]-1, float(str(wlist2[ind1])+"."+str(pair[1])))
+					if str(pair[1]) not in str(Hlist):
+						Hlist.append([pair[1]])
+						Hlist[-1].extend(zero8)
+					Hlist[-1].extend(zero)
+					for ls in Hlist:
+						if pair[1] == ls[0]:
+							if 100 > wlist2[ind]:
+								ls[5] = ls[5] + 1
+							elif 100 <= wlist2[ind] and wlist2[ind] < 400:
+								ls[6] = ls[6] + 1
+							elif 400 <= wlist2[ind] and wlist2[ind] < 700:
+								ls[7] = ls[7] + 1
+							elif 700 <= wlist2[ind] or loss < wlist2[ind] or wlist2[ind] == initial_weight2:
+								ls[8] = ls[8] + 1
+
 		if lane == 'A' or lane == 'B' or lane == '1': lane = '1'
 		if lane == 'C' or lane == 'D' or lane == '2': lane = '2'
 		if lane == 'E' or lane == 'F' or lane == '3': lane = '3'
@@ -501,7 +748,7 @@ def inventory(request):
 			temp_weight = qlist[4]
 			p = PaperRoll(id=realtag, width=wize, wunit=wunit, initial_weight=initial_weight, temp_weight=temp_weight)
 			p.paper_code = paper_code
-			p.width = width
+			p.width = wize
 			p.wunit = wunit
 			p.initial_weight = initial_weight
 			p.temp_weight = temp_weight
