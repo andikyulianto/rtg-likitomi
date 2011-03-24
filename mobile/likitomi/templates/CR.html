@@ -1,9 +1,13 @@
 {% extends "generic.html" %}
 {% block content %}
-<ul id="crumbs">{% if is_enable_leftbutton %}<li><b>
-	<div id="leftnav">
-		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
-</div></b></li>{% endif %}
+<ul id="crumbs">{% if is_enable_leftbutton %}
+	<li>
+		<a href="#"><img alt="home" src="images/home.png" /></a> 
+	</li>
+	<li><b><div id="leftnav">
+		<a href="#"> CR section</a> 
+	</div></b></li>
+{% endif %}
 <div id="rightbutton">
 		<li class="button"><a href="/likitomi/" class="noeffect"><input type="submit" value="Log out" /></a></li>
 	</div>

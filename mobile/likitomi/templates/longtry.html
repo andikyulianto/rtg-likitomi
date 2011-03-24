@@ -1,0 +1,54 @@
+﻿<html>
+<head>
+
+<script type="text/javascript" src="js/jquery.js"></script>
+
+<script type="text/javascript">
+	window.addEventListener("MozOrientation", handleOrientation, true);
+	function handleOrientation(orientData)
+	{
+	var x = orientData.x;
+	var y = orientData.y;
+	var z = orientData.z;
+	//Do stuff with the new orientation data
+	alert(x);
+	alert(y);
+	alert(z);
+	}
+</script>
+
+<script type="text/javascript">
+	window.addEventListener("deviceorientation", handleOrientation2(orientData)
+	{
+	{alpha: 90,
+	beta: 0,
+	gamma: 0};
+	}, true);
+
+	window.addEventListener("devicemotion", function(event)
+	{
+	{x: 0,
+	y: 0,
+	z: 9.81};
+	}, true);
+
+	function handleOrientation2(orientData)
+	{
+	var x = orientData.x;
+	var y = orientData.y;
+	var z = orientData.z;
+	//Do stuff with the new orientation data
+	alert(x);
+	alert(y);
+	alert(z);
+	}
+</script>
+
+</head>
+
+<body>
+
+Long try...
+
+</body>
+</html>
