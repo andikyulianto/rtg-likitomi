@@ -1,0 +1,625 @@
+﻿<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="css/plan.css" />
+<script type="text/javascript" src="js/jquery.js"></script>
+
+</head>
+
+<body>
+{% load getpos %}
+{% load floor %}
+{% load second %}
+{% load third %}
+{% load fourth %}
+{% load fifth %}
+{% load sixth %}
+{% load seventh %}
+{% load eighth %}
+{% load ninth %}
+
+<div id="invent">
+<input id="lane2" value="{{ lane }}" type="hidden" />
+<input id="position2" value="{{ position }}" type="hidden" />
+<input id="atlane2" value="{{ atlane }}" type="hidden" />
+<input id="atposition2" value="{{ atposition }}" type="hidden" />
+
+<input id="clamping2" value="{{ clamping }}" type="hidden" />
+<input id="changed2" value="{{ changed }}" type="hidden" />
+<input type="hidden" value="{{ pcode }}" id="pcode" />
+<input type="hidden" value="{{ width }}" id="width" />
+<input type="hidden" value="{{ loss }}" id="loss" />
+
+Looking for: {% if pcode %}{{ pcode }} >>> {{ width }}"{% endif %} {{mlist}}
+<!--<br />@{{atlane}}-{{atposition}}<br />Tag:{{realtag}}--Location:{{lane}}-{{position}}<br />Clamping:{{clamping}}<br / >Changed:{{change}}-->
+<br />On clamplift: [{{realtag}}] {{rpcode}} >>> {{rwidth}}" {{mlist2}}
+<!--<br />clamping:"{{clamping}}"--changed:"{{changed}}"-->
+<!--<br />{{lane}}={{atlane}}, {{position}}={{atposition}}-->
+<table style="height:80%">
+<tr>
+
+<td class="top" style="width:8%; border:0px; vertical-align:middle;">
+<table>
+<!--	<tr>-->
+<!--		<th>ID</th>-->
+<!--		<th style="border:0px">Wght.</th>-->
+<!--	</tr>-->
+	<tr>
+		<td style="border:0px;">
+			<table>
+			<tr>
+				<td style="border:0px; vertical-align:bottom;" height="{{ lossinv }}px"><table>
+				{% for w in dablist %}<tr><td {% if w < 100 %}class="lkf4"{% endif %}{% if w >= 100 and w < 400 %}class="lkf3"{% endif %}{% if w >= 400 and w < 700 %}class="lkf2"{% endif %}{% if w >= 700 or w == initail_weight %}class="lkf1"{% endif %}>{{ w }}</td></tr>{% endfor %}
+				</table></td>
+				<td style="border:0px; vertical-align:bottom;"><table>
+					{% for c in cablist %}
+					<tr><td style="border:0px;">x{{ c }}</td></tr>
+					{% endfor %}
+				</table></td>
+			</tr>
+			<tr><td colspan="2" style="background-color:lightgray;">{{ loss }}>></td></tr>
+			<tr>
+				<td style="border:0px; vertical-align:top;" height="{{ losspx }}px"><table>
+				{% for w in dbllist %}<tr><td {% if w < 100 %}class="lkf4"{% endif %}{% if w >= 100 and w < 400 %}class="lkf3"{% endif %}{% if w >= 400 and w < 700 %}class="lkf2"{% endif %}{% if w >= 700 or w == initail_weight %}class="lkf1"{% endif %}>{{ w }}</td></tr>{% endfor %}
+				</table></td>
+				<td style="border:0px; vertical-align:top;"><table>
+					{% for c in cbllist %}
+					<tr><td style="border:0px;">x{{ c }}</td></tr>
+					{% endfor %}
+				</table></td>
+			</tr>
+			</table>
+		</td>
+		<td style="border:0px;"><img src="image/ruler.png" width="25px"/></td>
+<!--		<td style="border:0px;"><table>-->
+<!--			<tr height="75px"><td style="border:0px;">{% if c4 != 0 %}{{ c4 }}{% endif %}</td></tr>-->
+<!--			<tr height="75px"><td style="border:0px;">{% if c3 != 0 %}{{ c3 }}{% endif %}</td></tr>-->
+<!--			<tr height="75px"><td style="border:0px;">{% if c2 != 0 %}{{ c2 }}{% endif %}</td></tr>-->
+<!--			<tr height="25px"><td style="border:0px;">{% if c1 != 0 %}{{ c1 }}{% endif %}</td></tr>-->
+<!--		</table></td>-->
+<!--	<td style="border:0px">-->
+<!--	<table>-->
+<!--	{% for w in ddwlist %}-->
+<!--	<tr>-->
+<!--		<td {% if w < 100 %}class="red"{% endif %}-->
+<!--			{% if w >= 100 and w < 400 %}class="yellow"{% endif %}-->
+<!--			{% if w >= 400 and w < 700 %}class="blue"{% endif %}-->
+<!--			{% if w >= 700 or w == initail_weight %}class="green"{% endif %}>{{ w }}</td>-->
+<!--	</tr>-->
+<!--	{% endfor %}-->
+<!--	</table>-->
+<!--	</td>-->
+<!--	<td style="border:0">-->
+<!--	<table>-->
+<!--	{% for c in clist %}-->
+<!--	<tr><td style="border:0">x{{ c }}</td></tr>-->
+<!--	{% endfor %}-->
+<!--	</table>-->
+<!--	</td>-->
+	</tr>
+<!--	<tr>-->
+<!--		<th>ID</th>-->
+<!--		<th style="border:0px">Kgs.</th>-->
+<!--	</tr>-->
+</table>
+</td>
+
+<td style="width:92%; border:0px;">
+<table>
+	<tr><td class="map"></td>{% for pos in posall %}<td class="map">{{ pos }}</td>{% endfor %}</tr>
+
+	<tr><td class="map">H</td>
+		{% for pos in posh %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+						{% for ls in Hlist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '4' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">H</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '4' and pos == '*' %}<img style="width:10px" src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">G</td>
+		{% for pos in posg %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+						{% for ls in Glist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '4' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '4' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">G</td></tr>
+
+	<tr><td class="map">F</td>
+		{% for pos in posf %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+						{% for ls in Flist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '3' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">F</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '3' and pos == '*' %}<img style="width:10px" src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">E</td>
+		{% for pos in pose %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+						{% for ls in Elist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '3' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '3' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %} onclick="getElementById('frm5').submit()">{{pos}}</td>
+					{% else %}
+						<td {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">E</td></tr>
+
+	<tr><td class="map">D</td>
+		{% for pos in posd %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+						{% for ls in Dlist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '2' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %} onclick="getElementById('frm4').submit()"></td>
+					{% else %}
+						<td {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">D</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '2' and pos == '*' %}<img style="width:10px" src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">C</td>
+		{% for pos in posc %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+						{% for ls in Clist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '2' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '2' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">C</td></tr>
+
+	<tr><td class="map">B</td>
+		{% for pos in posb %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+						{% for ls in Blist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm4').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '1' and atposition == pos %}
+						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">B</td></tr>
+
+	<tr><td class="map">|</td>{% for pos in vlane %}<td class="map">{% if atlane == '1' and pos == '*' %}<img style="width:10px" src="image/clamplift.png" />{% endif %}</td>{% endfor %}<td class="map">|</td></tr>
+
+	<tr><td class="map">A</td>
+		{% for pos in posa %}
+			{% if pos %}
+				{% if pos|getpos in mstr or pos|getpos in mstr2 %}
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+						{% for ls in Alist %}
+							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|sixth != 0 %}<td class="ocl4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+								{% if ls|seventh != 0 %}<td class="ocl3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+								{% if ls|eighth != 0 %}<td class="ocl2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+								{% if ls|ninth != 0 %}<td class="ocl1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+							{% endif %}
+						{% endfor %}
+					</tr></table></td>
+<!--					{% if pos|floor == initial_weight or pos|floor >= loss or pos|floor >= 700 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="green" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="green">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 400 <= pos|floor and pos|floor < 700 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="blue" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="blue">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if 100 <= pos|floor and pos|floor < 400 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="yellow" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="yellow">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+<!--					{% if pos|floor < 100 %}-->
+<!--						{% if atlane == '1' and atposition == pos|getpos %}-->
+<!--							<td id="locup" style="cursor:pointer;" class="red" onclick="getElementById('frm5').submit()">{{ pos|floor }}</td>-->
+<!--						{% else %}-->
+<!--							<td class="red">{{ pos|floor }}</td>-->
+<!--						{% endif %}-->
+<!--					{% endif %}-->
+				{% else %}
+					{% if atlane == '1' and atposition == pos %}
+						<td style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+					{% else %}
+						<td class="gray"></td>
+					{% endif %}
+				{% endif %}
+			{% else %}
+				<td class="map"></td>
+			{% endif %}
+		{% endfor %}
+	<td class="map">A</td></tr>
+
+	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<!--<table>-->
+<!--	<tr>-->
+<!--		<td class="red">0-99</td><td class="yellow">100-399</td><td class="blue">400-699</td><td class="green">700^ or initial</td>-->
+<!--	</tr>-->
+<!--</table>-->
+
+<form id="frm4" action="/minclamp/changeloc/" method="get">
+	<input type="hidden" value="{{ realtag }}" name="realtag" />
+	<input type="hidden" value="{{ leftlane }}" name="lane" />
+	<input type="hidden" value="{{ atposition }}" name="pos" />
+	<input type="hidden" value="{{ pcode }}" name="pcode" />
+	<input type="hidden" value="{{ width }}" name="width" />
+	<input type="hidden" value="{{ loss }}" name="loss" />
+</form>
+
+<form id="frm5" action="/minclamp/changeloc/" method="get">
+	<input type="hidden" value="{{ realtag }}" name="realtag" />
+	<input type="hidden" value="{{ rightlane }}" name="lane" />
+	<input type="hidden" value="{{ atposition }}" name="pos" />
+	<input type="hidden" value="{{ pcode }}" name="pcode" />
+	<input type="hidden" value="{{ width }}" name="width" />
+	<input type="hidden" value="{{ loss }}" name="loss" />
+</form>
+
+</div>
+</body>
+</html>
