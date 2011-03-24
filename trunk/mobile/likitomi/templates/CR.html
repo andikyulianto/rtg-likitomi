@@ -1,21 +1,13 @@
 {% extends "generic.html" %}
 {% block content %}
-<div id="topbar">
-	<div id="title">
-		{{title}}</div>
-		{% if is_enable_leftbutton %}
+<ul id="crumbs">{% if is_enable_leftbutton %}<li><b>
 	<div id="leftnav">
-		<a href='/likitomi/home/?eID={{eID}}'><img alt="home" src="images/home.png" /></a>
-		<a href="#" class="noeffect">CR</a> 
+		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+</div></b></li>{% endif %}
+<div id="rightbutton">
+		<li class="button"><a href="/likitomi/" class="noeffect"><input type="submit" value="Log out" /></a></li>
 	</div>
-	{% endif %}
-	{% if is_enable_rightbutton %}
-	<div id="rightbutton">
-		<a href="/likitomi/" class="noeffect">Log out</a> 
-	</div>
-	{% endif %}
-	
-</div> 
+</ul>
 {% if is_enable_tributton %}
 <div id="tributton">
 	<div class="links">

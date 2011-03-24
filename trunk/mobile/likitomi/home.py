@@ -32,7 +32,7 @@ def section(request):
 	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
 	if(page == "PC"):
 		return showPC(eID,section_title)
-	if(page == "MD"):
+	if(page == "GM"):
 		return showMD(eID,section_title)
 	if(page == "CR"):
 		return workCR(eID,section_title)
@@ -119,6 +119,11 @@ def showPC(eID,section_title):
 ###################################################
 #Note : not complete
 def showMD(eID,section_title):
+	is_enable_leftbutton = True
+	is_enable_rightbutton = True
+	today= todayDate()
+	showMD_items = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("product_id","plan_amount","actual_amount_cr","plan_cr_start","actual_amount_cv","plan_cv_start","actual_amount_pt","plan_pt_start","actual_amount_wh","plan_wh_start","plan_due")
+	content_header = "Please select product item in order to view realtime progress"
 	return render_to_response('MD.html',locals())
 
 #####################################	

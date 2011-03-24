@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 {% extends "genericM.html" %}
 {% block content %}
+<ul id="crumbs">
+<li><b>Likitomi Status Tracking System</b></li>
+</ul>
 <div id="topbar">
 	<div id="title">
 		{{title}}</div>
@@ -12,7 +15,7 @@
 	{% endif %}
 	{% if is_enable_rightbutton %}
 	<div id="rightbutton">
-		<a href="/likitomi/" class="noeffect">Log out</a> 
+		<a href="/likitomi/" class="noeffect">Logout</a> 
 	</div>
 	{% endif %}
 	
