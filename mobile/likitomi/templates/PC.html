@@ -2,12 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-<meta content="yes" name="apple-mobile-web-app-capable" />
-<meta content="index,follow" name="robots" />
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 <link href="pics/homescreen.gif" rel="apple-touch-icon" />
 <meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
-<!--<script type="text/javascript" src="javascript/functions.js" ></script>-->
+<script type="text/javascript" src="javascript/jquery-ui.js" ></script>
 <script type="text/javascript" src="javascript/jquery.js"></script>
 	
 <script type="text/javascript">
@@ -27,11 +25,10 @@ function HighLightTR(elstr, backColor,textColor,product_code){
      preEl1.bgColor=orgBColor;
      try{ChangeTextColor(preEl0,orgTColor);}catch(e){;}
      try{ChangeTextColor(preEl1,orgTColor);}catch(e){;}
+     
   }
   var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
+
 
   orgBColor = el[0].bgColor;
   orgBColor = el[1].bgColor;
@@ -68,31 +65,26 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 	    return (arrReturnElements)
 	}
 </script>
-<link rel="stylesheet" type="text/css" href="css/style.css">
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="css/greyscale.css" /> 
+<link type="text/css" href="css/greyscale.css" rel="stylesheet" />
+
 <title>{{ title }}</title>
-<link href="pics/startup.png" rel="apple-touch-startup-image" />
-<meta content="iPod,iPhone,Webkit,iWebkit,Website,Create,mobile,Tutorial,free" name="keywords" />
-<meta content="Try out all the new features of iWebKit 5 with a simple touch of a finger and a smooth screen rotation!" name="description" />
 </head>
 <body>
-
-<input id="eID" value="{{eID}}" type="hidden" />
-
-<div id="topbar">
-	<div id="title">
-		{{title}}</div>
-		{% if is_enable_leftbutton %}
+<ul id="crumbs">{% if is_enable_leftbutton %}<li><b>
 	<div id="leftnav">
 		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+</div></b></li>{% endif %}
+<div id="rightbutton">
+		<li class="button"><a href="/likitomi/" class="noeffect"><input type="submit" value="Log out" /></a></li>
 	</div>
-	{% endif %}
-	{% if is_enable_rightbutton %}
-	<div id="rightbutton">
-		<a href="/likitomi/" class="noeffect">Log out</a> 
-	</div>
-	{% endif %}
-	
-</div> 
+</ul>
+<table bgColor="gray">
+</table>
+<input id="eID" value="{{eID}}" type="hidden" />
+
+
 {% if is_enable_tributton %}
 <div id="tributton">
 	<div class="links">
@@ -131,7 +123,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tr><td width="50%">{# left #} 
 	<div id="linkCR">
 			<table align=center width="100%"><!-- table left --><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td width="20%"> Sch.OUT </td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"> <b>Sch.OUT</b> </td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
 			</span>
 			{% for start,end,product,actual_start,actual_end,days_left in items_plan_cr %}
@@ -163,7 +155,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			</table> <!-- end table left -->
 			</div>
 			
-			</td><td width="50%" bgColor="#F8F8F8"><div id="loadPageCR"><table> <tr><td>{# right #} << Please Click in norder to see Product Detail</td></tr></table></div></td></tr>
+			</td><td width="50%" bgColor="#F8F8F8"><table><div id="loadPageCR"> {# right #} << Please Click in order to see Product Detail </div></table></td></tr>
 
 			</table><!-- end table CR -->	
 			</li>
@@ -179,7 +171,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			
 			<div id="linkCV">
 			<table align=center width="100%"><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%"><b>Sch.IN</b></td><td width="25%"><b>Sch.OUT</b></td><th width="30%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th height="20">Act.IN</th><th>Act.OUT</th></tr></thead>
 			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items_plan_cv %}
 			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
@@ -208,7 +200,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			{% endfor %}
 			</table></div>
 			
-			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} << Please Click in norder to see Product Detail</div> </table></td></tr>
+			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} << Please Click in order to see Product Detail</div> </table></td></tr>
 			</table>
 
 
@@ -222,7 +214,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%"><b>Sch.IN</b></td> <td width="25%"><b>Sch.OUT </b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></span></thead>
 			{% for start,end,product,actual_start,actual_end,previous_section in items_plan_pt %}
 			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
@@ -250,21 +242,20 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			{% endfor %}
 			</table></div>
 			
-			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in norder to see Product Detail</div></table></td>
+			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in order to see Product Detail</div></table></td>
 
 			</td>
 			</table>
 			</td><td width="50%">
 			{# Section 4: WH #}
-			<table width="90%"> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH">Show full WH schedule</a>
-			<tr>
+			<table align="center" width="90%"> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH">Show full WH schedule</a>
 			<tr>
 			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
 			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
 			<td width="50%"> {# left #}
 			<div id="linkWH">
 			<table align=center width = 100%><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%">Sch.IN</td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%"><b>Sch.IN</b></td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th></tr></span></thead>
 			{% for start,product,actual_start,process1,process2,process3 in items_plan_wh %}
 			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td><td> {{start|time:"H:i"}}</td>
@@ -285,7 +276,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			</table>			
 			</div>
 			</td>
-			<td width="50%" bgColor="#F8F8F8"><table width="100%"><div id="loadPageWH"> {# right #} << Please Click in norder to see Product Detail </div></table>
+			<td width="50%" bgColor="#F8F8F8"><table width="100%"><div id="loadPageWH"> {# right #} << Please Click in order to see Product Detail </div></table>
 			</td>
 			</tr>
 			</table>
@@ -300,7 +291,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 
 </div>
 <div id="footer">
-	<a href="http://iwebkit.net">Powered by iWebKit</a></div>
+	<a href="http://im.ait.ac.th">Powered by Likitomi Project</a></div>
 
 </body>
 

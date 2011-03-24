@@ -1,20 +1,13 @@
 {% extends "generic.html" %}
 {% block content %}
-<div id="topbar">
-	<div id="title">
-		{{title}}</div>
-		{% if is_enable_leftbutton %}
+<ul id="crumbs">{% if is_enable_leftbutton %}<li><b>
 	<div id="leftnav">
 		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+</div></b></li>{% endif %}
+<div id="rightbutton">
+		<li class="button"><a href="/likitomi/" class="noeffect"><input type="submit" value="Log out" /></a></li>
 	</div>
-	{% endif %}
-	{% if is_enable_rightbutton %}
-	<div id="rightbutton">
-		<a href="/likitomi/" class="noeffect">Log out</a> 
-	</div>
-	{% endif %}
-	
-</div> 
+</ul>
 {% if is_enable_tributton %}
 <div id="tributton">
 	<div class="links">
@@ -42,7 +35,7 @@
 			<ul class="pageitem">{{ temp_contents }}
 			<li class="textbox">			
 			<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="25%"> Sch.IN </td><td width="25%"> Sch.OUT </td><th width="40%" rowspan="2"> Product code </th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="25%"><b> Sch.IN </b></td><td width="25%"><b> Sch.OUT </b> </td><th width="40%" rowspan="2"> Product code </th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
 			</span>
 			{% for plan_id,start,end,product,actual_start,actual_end in items %}
