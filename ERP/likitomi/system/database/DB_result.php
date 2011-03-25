@@ -6,7 +6,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2010, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -329,7 +329,6 @@ class CI_DB_result {
 	function num_rows() { return $this->num_rows; }
 	function num_fields() { return 0; }
 	function list_fields() { return array(); }
-	function field_names() { return array(); } // Deprecated
 	function field_data() { return array(); }	
 	function free_result() { return TRUE; }
 	function _data_seek() { return TRUE; }
