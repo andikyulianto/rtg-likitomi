@@ -1,0 +1,108 @@
+﻿<html>
+<head>
+
+<title>Likitomi: Clamplift Plan</title>
+<link rel="stylesheet" type="text/css" href="css/plan.css" />
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$(window).load(function now(){
+		$("#now").load("/now/");
+		setTimeout(now, 1000);
+	});
+
+	$(window).load(function(){
+		$("#plan").attr("src", "/showplan/?opdate={{opdate}}");
+	});
+
+	$("#sel").change(function(){
+		var opd = $("#sel").val();
+		if (opd == ""){
+			$("[id=splan]").hide();
+		}
+		else {
+//			$("#plan").load("/showplan/?opdate="+opd);
+			$("#plan").attr("src", "/showplan/?opdate="+opd);
+		}
+	});
+
+	$("#down").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,76);
+	});
+
+	$("#up").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,-76);
+	});
+
+	$("#lnk").click(function(){
+		var opda = $("#sel").val();
+		if (opda != ""){
+			$("#lnk").attr("href", "/wholeplan/?opdate="+opda); //This does not work in Chrome!
+		}
+		else {
+			alert("Select date first!");
+		}
+	});
+
+});
+</script>
+
+</head>
+
+<body>
+
+<table style="width:100%"><tr><td style="border:0px; font-size:100%;"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px; font-size:100%;"><div id='now'></div></td></tr><table>
+
+<table style="width:100%">
+	<tr>
+		<td class="lft" colspan="2">
+			<form>
+				<select id="sel" name="opdate">
+				<option value="">AS PRODUCTION OF:</option>
+				{% for date in datelist %}
+				<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
+				{% endfor %}
+				</select>
+			</form>
+		</td>
+		<td style="border:0px"><a id="lnk" target="_top"><button>More</botton></a></td>
+	</tr>
+<!--	<tr>-->
+<!--		<td class="lft" colspan="2">-->
+<!--			<form>-->
+<!--				<select id="sel" name="opdate">-->
+<!--				<option value="">Select date to show plan:</option>-->
+<!--				{% for date in datelist %}-->
+<!--				<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>-->
+<!--				{% endfor %}-->
+<!--				</select>-->
+<!--			</form>-->
+<!--		</td>-->
+<!--	</tr>-->
+</table>
+<table><tr><td style="width:10px; border:0px;"></td><td style="border:0px;"><img id="up" src="image/earlier.png" width="285px"/></td></tr></table>
+<table style="font-size:80%">
+	<tr style="background-color:black; color:white;">
+		<th rowspan='2' style="width:10px; border-width:0px; background-color:white"></th>
+		<th rowspan='2' width='33px'>Time</th>
+		<th rowspan='2' width='53px'>Sheet Code</th>
+		<th class='bt' width='56px'>Size</th>
+		<th width='56px'>BL</th>
+		<th width='56px'>BM</th>
+	</tr>
+	<tr style="background-color:black; color:white;">
+		<th>DF</th>
+		<th>CL</th>
+		<th>CM</th>
+	</tr>
+</table>
+
+<iframe id="plan" name="plan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" width="100%" height="306px" marginheight="0" marginwidth="0" scrolling="no">
+<div><b>Clamplift plan will be shown here.</b></div>
+</iframe>
+<br />
+<table><tr><td style="width:10px; border:0px;"></td><td style="border:0px;"><img id="down" src="image/later.png" width="285px"/></td></tr></table>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{% extends "generic.html" %}
+{% block content %}
+<ul id="crumbs">{% if is_enable_leftbutton %}<li><b>
+	<div id="leftnav">
+		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+</div></b></li>{% endif %}
+<div id="rightbutton">
+		<li class="button"><a href="/likitomi/" class="noeffect"><input type="submit" value="Log out" /></a></li>
+	</div>
+</ul>
+{% if is_enable_tributton %}
+<div id="tributton">
+	<div class="links">
+		<a id="pressed" href="#">Home</a><a href="changelog.html">Changelog</a><a href="about.html">About</a></div>
+</div>
+{% endif %}
+<div id="content">
+	<span class="graytitle">{{section_title}}</span>
+	<ul class="pageitem">
+		<li class="textbox"><span class="header">{{content_header}}</span><p>
+		{{subcontent_header}}</p>
+		</li>
+		{{contents_text}}
+		{% if is_enable_list %}
+			<li class="menu">
+			{% if is_enable_link %}<a href="{{item_link}}">
+			<img alt="item_pic_name" src="{{item_pic}}" /><span class="name">{{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment">{{comment_name}}</span>{% endif %}
+			{% if is_enable_arrow %} <span class="arrow"></span>{% endif %}</a>
+			{% else %} <span class="name"> {{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
+			{% endif %}</li>
+		{% endif %}
+		<!-- Start Table-->
+			<ul class="pageitem">{{ temp_contents }}
+			<li class="textbox">			
+			<table align=center><span class="header">
+			<tr width="100%" align=center  bgColor= "#cccccc">
+			<th>P.O.</th><th>S.O.</th><th>P.code</th><th>Amout</th><th>CR</th><th>CV</th><th>PT</th><th>WH</th><th>Due</th><th>Readiness</th>
+			</tr>
+			{% for product_code,plan_amount,actual_amount_cr,plan_cr_start,actual_amount_cv,plan_cv_start,actual_amount_pt,plan_pt_start,actual_amount_wh,plan_wh_start,plan_due in showMD_items %}
+			<tr align="center">
+			<td></td><td></td><td>{{product_code}}</td><td><center>{{plan_amount}}<center></td>{% if plan_cr_start != NULL %}<td>{{actual_amount_cr}}</td>{% else %}<td bgColor="black"></td>{% endif %}{% if plan_cv_start != NULL %}<td>{{actual_amount_cv}}</td>{% else %}<td bgColor="black"></td>{% endif %}{% if plan_pt_start != NULL %}<td>{{actual_amount_pt}}</td>{% else %}<td bgColor="black"></td>{% endif %}{% if plan_wh_start != NULL %}<td>{{actual_amount_wh}}</td>{% else %}<td bgColor="black"></td>{% endif %}<td>{{plan_due}}</td><td>{% if plan_amount <= actual_amount_wh %}<span class='name'><img alt='list' src='images/office/Package-Accept32.png' />{% else %}<img alt='list' src='images/office/Package-Warning32.png' />{% endif %}</span></td>
+			</tr>
+			{% endfor %}
+
+			</tr>
+			</table>
+			</ul>
+	</ul>
+</div>
+{% endblock %}

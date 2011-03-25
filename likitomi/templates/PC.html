@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link href="pics/homescreen.gif" rel="apple-touch-icon" />
+<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+<script type="text/javascript" src="javascript/jquery-ui.js" ></script>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+	
+<script type="text/javascript">
+
+function showDetail(sectionName,urlLink)
+{
+	//alert(sectionName);
+	$(sectionName).load(urlLink);
+}
+var preEl ;
+var orgBColor;
+var orgTColor;
+function HighLightTR(elstr, backColor,textColor,product_code){
+
+  if(typeof(preEl0)!='undefined') {
+     preEl0.bgColor=orgBColor;
+     preEl1.bgColor=orgBColor;
+     try{ChangeTextColor(preEl0,orgTColor);}catch(e){;}
+     try{ChangeTextColor(preEl1,orgTColor);}catch(e){;}
+     
+  }
+  var el=document.getElementsByClassName(elstr);
+
+
+  orgBColor = el[0].bgColor;
+  orgBColor = el[1].bgColor;
+  orgTColor = el[0].style.color;
+  orgTColor = el[1].style.color;
+  el[0].bgColor=backColor;
+  el[1].bgColor=backColor;
+
+  try{ChangeTextColor(el[0],textColor);}catch(e){;}
+  try{ChangeTextColor(el[1],textColor);}catch(e){;}
+
+  preEl1 = el[1];
+  preEl0 = el[0];
+  //window.location = "/likitomi/display/?product=".product_code; 
+}
+
+
+function ChangeTextColor(a_obj,a_color){  ;
+   for (i=0;i<a_obj.cells.length;i++)
+    a_obj.cells(i).style.color=a_color;
+}
+function getElementsByClassName(oElm, strTagName, strClassName){
+var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
+	    var arrReturnElements = new Array();
+	    strClassName = strClassName.replace(/\-/g, "\\-");
+	    var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
+	    var oElement;
+	    for(var i=0; i<arrElements.length; i++){
+	        oElement = arrElements[i];
+	        if(oRegExp.test(oElement.className)){
+	            arrReturnElements.push(oElement);
+	        }
+	    }
+	    return (arrReturnElements)
+	}
+</script>
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="css/greyscale.css" /> 
+<link type="text/css" href="css/greyscale.css" rel="stylesheet" />
+
+<title>{{ title }}</title>
+</head>
+<body>
+<ul id="crumbs">{% if is_enable_leftbutton %}<li><b>
+	<div id="leftnav">
+		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+</div></b></li>{% endif %}
+<div id="rightbutton">
+		<li class="button"><a href="/likitomi/" class="noeffect"><input type="submit" value="Log out" /></a></li>
+	</div>
+</ul>
+<table bgColor="gray">
+</table>
+<input id="eID" value="{{eID}}" type="hidden" />
+
+
+{% if is_enable_tributton %}
+<div id="tributton">
+	<div class="links">
+		<a id="pressed" href="#">Home</a><a href="changelog.html">Changelog</a><a href="about.html">About</a></div>
+</div>
+{% endif %}
+<div id="content">
+	{# for o in set_of_sections #}
+	<span class="graytitle">{{section_title}}</span>
+	<ul class="pageitem">
+		<li class="textbox"><span class="header">{{content_header}}</span>
+		{{subcontent_header}}</p>
+		</li>
+		{{contents_text}}
+		{% if is_enable_list %}
+			<li class="menu">
+			{% if is_enable_link %}<a href="{{item_link}}">
+			<img alt="item_pic_name" src="{{item_pic}}" /><span class="name">{{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment">{{comment_name}}</span>{% endif %}
+			{% if is_enable_arrow %} <span class="arrow"></span>{% endif %}</a>
+			{% else %} <span class="name"> {{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
+			{% endif %}</li>
+		{% endif %}
+
+		{# start page of planner #}{{temp_contents}}
+			<ul class="pageitem"><li class="textbox">
+			<table align=center width="100%">
+			
+			<tr align = center>
+			<td width="50%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR">Show full CR schedule</a>
+			<table align=center width="90%"> <!-- table CR -->
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
+			<tr><td width="50%">{# left #} 
+	<div id="linkCR">
+			<table align=center width="100%"><!-- table left --><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"> <b>Sch.OUT</b> </td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,days_left in items_plan_cr %}
+			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
+			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
+			<td>{{start|time:"H:i"}}</td>
+			<td>{{ end|time:"H:i" }}</td>
+			<td rowspan="2" align="center"><p class="tbunderline">{{product}}</p></td>
+			<td rowspan="2"><p class="tbunderline">{{days_left}}</p></td>
+			</tr>
+			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white"> </font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">  </font>
+				{% endif %}
+
+			</p></td>
+			</tr></a>
+			{% endfor %}
+			</table> <!-- end table left -->
+			</div>
+			
+			</td><td width="50%" bgColor="#F8F8F8"><table><div id="loadPageCR"> {# right #} << Please Click in order to see Product Detail </div></table></td></tr>
+
+			</table><!-- end table CR -->	
+			</li>
+			</td>
+			<td width="50%"> 
+			
+			{# section 2: CV #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV">Show full CV schedule</a>
+			<table align=center width="90%">
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
+			<tr  height="5"><td width="60%">{# left #}
+			
+			<div id="linkCV">
+			<table align=center width="100%"><span class="header">
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%"><b>Sch.IN</b></td><td width="25%"><b>Sch.OUT</b></td><th width="30%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr width="100%" align=center bgcolor="#cccccc"><th height="20">Act.IN</th><th>Act.OUT</th></tr></thead>
+			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items_plan_cv %}
+			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
+			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
+<td rowspan="2"><p class="tbunderline">{{product}}</p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">##<br></p></td></tr>
+			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">-</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+			</table></div>
+			
+			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} << Please Click in order to see Product Detail</div> </table></td></tr>
+			</table>
+
+
+</td></tr>
+			<tr align = center><td width="50%">
+			{# section 3: PT #}<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT">Show full PT schedule</a>
+			<table align=center width="90%">
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
+			<tr><td width="50%">{# left #}
+			<div id="linkPT">
+			<table align=center width = 100%><span class="header">
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%"><b>Sch.IN</b></td> <td width="25%"><b>Sch.OUT </b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></span></thead>
+			{% for start,end,product,actual_start,actual_end,previous_section in items_plan_pt %}
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">##</p></td>
+</tr>
+			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">-</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+			</table></div>
+			
+			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in order to see Product Detail</div></table></td>
+
+			</td>
+			</table>
+			</td><td width="50%">
+			{# Section 4: WH #}
+			<table align="center" width="90%"> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH">Show full WH schedule</a>
+			<tr>
+			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
+			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
+			<td width="50%"> {# left #}
+			<div id="linkWH">
+			<table align=center width = 100%><span class="header">
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%"><b>Sch.IN</b></td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.IN</th></tr></span></thead>
+			{% for start,product,actual_start,process1,process2,process3 in items_plan_wh %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td><td> {{start|time:"H:i"}}</td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br></p></td>
+<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br></p></td>
+<td rowspan="2"><p class="tbunderline">##<br></p></td>
+</tr>
+			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">-</font>
+				{% endif %}
+			</p></td>
+			</td></tr>
+			{% endfor %}
+			</table>			
+			</div>
+			</td>
+			<td width="50%" bgColor="#F8F8F8"><table width="100%"><div id="loadPageWH"> {# right #} << Please Click in order to see Product Detail </div></table>
+			</td>
+			</tr>
+			</table>
+
+			</td></tr>			
+			</table>
+			</ul>
+
+
+
+	
+
+</div>
+<div id="footer">
+	<a href="http://im.ait.ac.th">Powered by Likitomi Project</a></div>
+
+</body>
+
+</html>
