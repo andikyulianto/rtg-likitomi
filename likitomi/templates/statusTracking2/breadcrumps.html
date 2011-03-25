@@ -1,0 +1,14 @@
+{% extends "generic.html" %}
+{% block breadcrumps %}
+{% if section_title = "Welcome" %}
+<ul id="crumbs"> <li>{{section_title}} </li></ul>
+{% else %}
+<ul id="crumbs">
+<li><a href="#">Home</a></li>
+<li><a href="#">Main section</a></li>
+<li><a href="#">Sub section</a></li>
+<li><a href="#">Sub sub section</a></li>
+<li>The page you are on right now</li>
+</ul>
+{% endif %}
+{% endblock %}
