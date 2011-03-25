@@ -1,0 +1,32 @@
+<html>
+	<head>
+	<script type="text/javascript" src="javascript/jquery.js"></script>
+	<script type="text/javascript" src="javascript/apply_jquery.js"></script>
+	
+	<script type="text/javascript">
+        $(document).ready(function() {
+            $('#tblLink a').click(function() {
+                $("#loadPage").load(this.href);
+                return false;
+            });
+        });
+    	</script>
+</head>
+<body>
+	<div id="tblLink">
+		{% for i in listProduct %}
+			Product ID: <a href="/likitomi/display/?listProduct={{i}}" >{{i}}</a><br>
+		{% endfor %}
+	</div><br>
+	<div id="loadPage">Details after clicking link</div>
+	<br>
+
+
+	<!--<input type="button" onclick="displayDetails('#detailka', 'fon_detail.php?id=xx');" value="Show alert box" />-->
+	<input type="button" onclick="alert('abc');" value="Show alert box" />
+	<br><br>
+	<div id="detailka">Details after clicking button</div>
+	<br><br><br><br>
+
+</body>
+</html>

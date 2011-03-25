@@ -1,0 +1,72 @@
+{% extends "generic.html" %}
+{% block content %}
+<ul id="crumbs">{% if is_enable_leftbutton %}<li><b>
+	<div id="leftnav">
+		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+</div></b></li>{% endif %}
+<div id="rightbutton">
+		<li class="button"><a href="/likitomi/" class="noeffect"><input type="submit" value="Log out" /></a></li>
+	</div>
+</ul>
+{% if is_enable_tributton %}
+<div id="tributton">
+	<div class="links">
+		<a id="pressed" href="#">Home</a><a href="changelog.html">Changelog</a><a href="about.html">About</a></div>
+</div>
+{% endif %}
+<div id="content">
+	<span class="graytitle">{{section_title}}</span>
+	<ul class="pageitem">
+		<li class="textbox"><span class="header">{{content_header}}</span><p>
+		{{subcontent_header}}</p>
+		</li>
+		{{contents_text}}
+		{% if is_enable_list %}
+			<li class="menu">
+			{% if is_enable_link %}<a href="{{item_link}}">
+			<img alt="item_pic_name" src="{{item_pic}}" /><span class="name">{{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment">{{comment_name}}</span>{% endif %}
+			{% if is_enable_arrow %} <span class="arrow"></span>{% endif %}</a>
+			{% else %} <span class="name"> {{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
+			{% endif %}</li>
+		{% endif %}
+		<!-- Start Table-->
+			<ul class="pageitem">{{ temp_contents }}
+			<li class="textbox">			
+			<table align=center><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT</b> </td><th width="20" rowspan="2"> Product code </th><th width="15" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			</span>
+			{% for plan_id,start,end,product,actual_start,actual_end,cv_machine,previous_section,next_process,last in items %}
+		<tr>
+			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
+			<td><a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
+			<td><a href="/likitomi/line/cv/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{% if next_process != NULL %}{{next_process}}{% else %}{{last}}{% endif %}<br><font color="white">-</font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{ actual_start|time:"H:i" }}
+				{% else %} 
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL %}
+				{{ actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+			</table>
+			</ul>
+	</ul>
+</div>
+{% endblock %}

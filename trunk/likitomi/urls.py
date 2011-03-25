@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
-from statusTracking.general import index2
+from statusTracking.general import login
 from statusTracking.home import section,display
 from statusTracking.detail import pcdetail
 from statusTracking.line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
@@ -23,7 +23,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	(r'^likitomi/$', index2),
+	(r'^likitomi/$', login),
 	(r'^likitomi/home/$', section),	
 	(r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/pcdetail/$', pcdetail),

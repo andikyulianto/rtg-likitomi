@@ -1,5 +1,5 @@
 #Author: Chanaphan Prasomwong
-# Last updated: 25/03/2010 
+# Last updated: 11/1/2010 
 # Purpose: this file is containing function
 # for the first time entering to the site 
 # and check authentication of the page access 
@@ -13,7 +13,6 @@ from django.template import Template, Context
 
 def login(request):
 	title = "Welcome to Likitomi Status Tracking System"
-	flashMessage =""
 	is_enable_tributton = False
 	is_enable_leftbutton = False
 	section_title = "Welcome"
