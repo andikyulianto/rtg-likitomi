@@ -28,6 +28,23 @@ $(document).ready(function(){
 		}
 	});
 
+
+	$("#uppest").click(function(){
+		$("#plan")[0].contentWindow.scrollTo(0,0);
+	});
+
+	$("#downest").click(function(){
+		$("#plan")[0].contentWindow.scrollTo(0,9999);
+	});
+
+	$("#downer").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,304);
+	});
+
+	$("#upper").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,-304);
+	});
+
 	$("#down").click(function(){
 		$("#plan")[0].contentWindow.scrollBy(0,76);
 	});
@@ -35,6 +52,7 @@ $(document).ready(function(){
 	$("#up").click(function(){
 		$("#plan")[0].contentWindow.scrollBy(0,-76);
 	});
+
 
 	$("#lnk").click(function(){
 		var opda = $("#sel").val();
@@ -82,7 +100,7 @@ $(document).ready(function(){
 <!--		</td>-->
 <!--	</tr>-->
 </table>
-<table><tr><td style="width:10px; border:0px;"></td><td style="border:0px;"><img id="up" src="image/earlier.png" width="285px"/></td></tr></table>
+<table border="0"><tr><td style="width:10px; border:0px;"></td><td style="border:1px;"><img id="uppest" src="image/earliest.png"/></td><td style="border:0px;"><img id="upper" src="image/early.png"/></td><td style="border:0px;"><img id="up" src="image/earlier.png"/></td></tr></table>
 <table style="font-size:80%">
 	<tr style="background-color:black; color:white;">
 		<th rowspan='2' style="width:10px; border-width:0px; background-color:white"></th>
@@ -103,6 +121,6 @@ $(document).ready(function(){
 <div><b>Clamplift plan will be shown here.</b></div>
 </iframe>
 <br />
-<table><tr><td style="width:10px; border:0px;"></td><td style="border:0px;"><img id="down" src="image/later.png" width="285px"/></td></tr></table>
+<table><tr><td style="width:10px; border:0px;"></td><td style="border:0px;"><img id="down" src="image/later.png"/></td><td style="border:0px;"><img id="downer" src="image/lately.png"/></td><td style="border:0px;"><img id="downest" src="image/latest.png"/></td></tr></table>
 </body>
 </html>

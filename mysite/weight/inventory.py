@@ -457,9 +457,9 @@ def inventory(request):
 #			atlocation = 'Scale'
 
 			atlane = '2'
-			atposition = '1'
+			atposition = '3'
 			atlocation = 'Stock'
-			vlane = ['*', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+			vlane = ['1', '2', '*', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
 #			atlane = '1'
 #			atposition = '5'
