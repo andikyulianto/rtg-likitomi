@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="index,follow" name="robots" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link href="pics/homescreen.gif" rel="apple-touch-icon" />
+<meta content="minimum-scale=1.0, width=device-width, maximum-scale=0.6667, user-scalable=no" name="viewport" />
+
+<script src="javascript/functions.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<title>{{ title }}</title>
+<link href="pics/startup.png" rel="apple-touch-startup-image" />
+<meta content="iPod,iPhone,Webkit,iWebkit,Website,Create,mobile,Tutorial,free" name="keywords" />
+<meta content="Try out all the new features of iWebKit 5 with a simple touch of a finger and a smooth screen rotation!" name="description" />
+</head>
+
+<body>
+
+<div id="topbar">
+	<div id="title">
+		{{title}}</div>
+	<div id="leftbutton">
+	{% if is_enable_leftbutton %}
+		<a href="http://iwebkit.net" class="noeffect">PC Site</a> 
+	{% endif %}
+	</div>
+</div> 
+{% if is_enable_tributton %}
+<div id="tributton">
+	<div class="links">
+		<a id="pressed" href="#">Home</a><a href="changelog.html">Changelog</a><a href="about.html">About</a></div>
+</div>
+{% endif %}
+<div id="content">
+	<span class="graytitle">{{section_title}}</span>
+	<ul class="pageitem">
+		<li class="textbox"><span class="header">{{content_header}}</span><p>
+		{{subcontent_header}}</p>
+		</li>
+		{{contents_text}}
+		{% if is_enable_list %}
+			<li class="menu">
+			{% if is_enable_link %}<a href="{{item_link}}">
+			<img alt="item_pic_name" src="{{item_pic}}" /><span class="name">{{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment">{{comment_name}}</span>{% endif %}
+			{% if is_enable_arrow %} <span class="arrow"></span>{% endif %}</a>
+			{% else %} <span class="name"> {{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
+			{% endif %}</li>
+		{% endif %}
+		<!-- Start Table-->
+			<ul class="pageitem">{{ temp_contents }}
+			<li class="bigfield"><input name="product_name" type="text"  value='{{product}}' disabled="disabled"/> </li>
+			<span class="graytitle">Amount from sale order</span> 
+			</ul>
+	</ul>
+</div>
+<div id="footer">
+	<a href="http://iwebkit.net">Powered by iWebKit</a></div>
+
+</body>
+
+</html>

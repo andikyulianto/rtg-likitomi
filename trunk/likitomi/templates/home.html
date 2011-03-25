@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+{% extends "genericM.html" %}
+{% block content %}
+<ul id="crumbs">
+<li><b>Likitomi Status Tracking System</b></li>
+</ul>
+<div id="topbar">
+	<div id="title">
+		{{title}}</div>
+		{% if is_enable_leftbutton %}
+	<div id="leftnav">
+		<a href="#" class="noeffect"><img alt="home" src="images/home.png" /></a> 
+	</div>
+	{% endif %}
+	{% if is_enable_rightbutton %}
+	<div id="rightbutton">
+		<a href="/likitomi/" class="noeffect">Logout</a> 
+	</div>
+	{% endif %}
+	
+</div> 
+{% if is_enable_tributton %}
+<div id="tributton">
+	<div class="links">
+		<a id="pressed" href="#">Home</a><a href="changelog.html">Changelog</a><a href="about.html">About</a></div>
+</div>
+{% endif %}
+<div id="content">
+	{# for o in set_of_sections #}
+	<span class="graytitle">{{section_title}}</span>
+	<ul class="pageitem">
+		<li class="textbox"><span class="header">{{content_header}}</span><p>
+		{{subcontent_header}}</p>
+		</li>
+		{{contents_text}}
+		{% if is_enable_list %}
+			<li class="menu">
+			{% if is_enable_link %}<a href="{{item_link}}">
+			<img alt="item_pic_name" src="{{item_pic}}" /><span class="name">{{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment">{{comment_name}}</span>{% endif %}
+			{% if is_enable_arrow %} <span class="arrow"></span>{% endif %}</a>
+			{% else %} <span class="name"> {{item_name}}</span>
+			{% if is_enable_comment %}<span class="comment"> {{comment_name}}</span>{% endif %}
+			{% endif %}</li>
+		{% endif %}
+
+		{# start page of planner #}
+		{% if page_section == "PC" %}
+		{% if is_enable_desktop %}
+			<ul class="pageitem"><li class="textbox"></li>
+			<table align=center width="100%">
+			<tr align = center>
+			<td width="50%">
+			{% block cr4pc %} {% endblock %}
+			</td>
+			<td width="50%"> 
+			
+			{# section 2: CV #}
+			<table align=center width="90%">
+			<tr  height="5"><td width="60%">{# left #}
+			
+			<table border=1 align=center width="100%"><span class="header">
+			<tr width="100%" align=center  height="5"><td width="10%" rowspan="2" height="20"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="5%" rowspan="2"> Mac. </td><td rowspan="2">From</td></tr>
+			<tr align=center><td height="20">Act.IN</td><td>Act.OUT</td></tr>
+			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items_plan_cv %}
+			<tr align=center><td rowspan="2" height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2">{{previous_section}}</td><td rowspan="2">{{cv_machine}}</td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			
+			</td><td width="40%"><table border=1 width="100%"> {# right #} Product Detail </table><td></tr>
+			</table>
+
+
+</td></tr>
+			<tr align = center><td width="50%"><table align=center width="90%">
+			{# section 3: PT #}
+			<tr><td width="50%">{# left #}
+
+			<table border=1 align=center width="100%"><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="10%" rowspan="2|time:"H:i""> From </td></tr>
+			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr></span>
+			{% for start,end,product,actual_start,actual_end in items_plan_pt %}
+			<tr align=center><td rowspan="2" height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			
+			</td><td width="50%"><table border=1 width="100%"> {# right #} Product Detail </table>
+
+			</td>
+			</table>
+			</td><td width="50%">
+			{# Section 4: WH #}
+			<table width="90%">
+			<tr align=center>
+			<td width="50%"> {# left #}
+
+			<table border=1 align=center width = 100%><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td><td width="35%" rowspan="2"> Product code </td><td width="30%" rowspan="2">From</td></tr>
+			<tr align=center><td>Act.IN</td></tr>
+			{% for start,product,actual_start in items_plan_wh %}
+			<tr align=center><td rowspan="2"  height="20"> </td><td> {{start|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td  height="20" height="20">{{actual_start|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>			
+			
+			</td>
+			<td width="50%"><table border=1 width="100%"> {# right #} Product Detail </table>
+			</td>
+			</tr>
+			</table>
+
+			</td></tr>			
+			</table>
+			</ul>
+		{% endif %}
+		{% endif %}	
+
+
+
+	
+		{# start page of cr and pt #}
+		{% if page_section == "CR" %}
+		{% if is_enable_table %}
+			<ul class="pageitem">{{ temp_contents }}
+			<li class="textbox">			
+			<table border=1 align=center><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%"> Sch.IN </td><td width="25%"> Sch.OUT </td><td width="40%" rowspan="2"> Product code </td></tr>
+			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
+			<span>
+			{% for start,end,product,actual_start,actual_end in items_plan_cr %}
+			<tr align=center><td rowspan="2" height="20">  </td><td>{{start|time:"H:i"}}</td><td>{{ end|time:"H:i" }}</td><td rowspan="2">{{product}}</td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			</ul>
+		{% endif %}
+		{% endif %}
+		
+
+		{#start page of cv #}
+		{% if page_section == "CV" %}
+		{% if is_enable_table %}
+			<ul class="pageitem">
+			<li class="textbox">
+			<table border=1 align=center><span class="header">
+			<tr width="100%" align=center><td width="5%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="10%" rowspan="2"> Machine </td><td rowspan="2" width="10%">From</td></tr>
+			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
+			{% for start,end,product,actual_start,actual_end,previous_section,cv_machine in items %}
+			<tr align=center><td rowspan="2" height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2">{{previous_section}}</td><td rowspan="2">{{cv_machine}}</td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			</ul>
+		{% endif %}
+		{% endif %}
+
+		{# start page of pt #}
+		{% if page_section == "PT" %}
+		{% if is_enable_table %}
+			<ul class="pageitem">
+			<li class="textbox">
+			<table border=1 align=center><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td> <td width="25%">Sch.OUT </td><td width="30%" rowspan="2"> Product code </td><td width="10%" rowspan="2"> From</td></tr>
+			<tr align=center><td>Act.IN</td><td>Act.OUT</td></tr>
+			{% for start,end,product,actual_start,actual_end in items %}
+			<tr align=center><td rowspan="2" height="20"> </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td height="20">{{actual_start|time:"H:i"}}</td><td>{{actual_end|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			</ul>
+		{% endif %}
+		{% endif %}	
+	
+		{#start page of wh #}
+		{% if page_section == "WH" %}
+		{% if is_enable_table %}
+			<ul class="pageitem">
+			<li class="textbox">
+			<table border=1 align=center><span class="header">
+			<tr width="100%" align=center><td width="10%" rowspan="2"></td><td width="25%">Sch.IN</td><td width="35%" rowspan="2"> Product code </td><td width="30%" rowspan="2">From</td></tr>
+			<tr align=center><td>Act.IN</td></tr>
+			{% for start,product,actual_start in items %}
+			<tr align=center><td rowspan="2" height="20"> </td><td> {{start|time:"H:i"}}</td><td rowspan="2">{{product}}</td><td rowspan="2"></td></tr>
+			<tr align=center><td>{{actual_start|time:"H:i"}}</td></tr>
+			{% endfor %}
+			</table>
+			</ul>
+		{% endif %}
+		{% endif %}
+	</ul>
+	{# endfor #}
+</div>
+{% endblock %}
