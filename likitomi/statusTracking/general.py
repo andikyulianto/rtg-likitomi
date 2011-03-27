@@ -14,6 +14,8 @@ from django.template import Template, Context
 def login(request):
 	title = "Welcome to Likitomi Status Tracking System"
 	flashMessage =""
+	page ="login"
+	la_user_name = "USERNAME"
 	is_enable_tributton = False
 	is_enable_leftbutton = False
 	section_title = "Welcome"
@@ -25,5 +27,5 @@ def login(request):
 	is_enable_comment = False
 	is_enable_arrow = False
 	is_enable_login = True
-	return render_to_response('container.html', locals())
+	return render_to_response('view.html', locals())
 

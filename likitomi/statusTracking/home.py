@@ -1,5 +1,5 @@
 # Author: Chanaphan Prasomwong
-# Last updated: 11/1/2010 
+# Last updated: 26/03/2010 
 # Purpose: this file is containing function
 # for displaying homepage for each person
 # After logging in by using user ID 
@@ -45,10 +45,12 @@ def section(request):
 	
 	return render_to_response('home.html', locals())
 
-def showPC(eID,section_title):
+def showPC(eID,title):
 	today = todayDate()
+	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+	
 
 	#create items for PC
 	#extra = db_type(FakeStatusTracking.objects.all())
@@ -111,26 +113,26 @@ def showPC(eID,section_title):
 	endList = startList+getPCItemNum()
 	items_plan_wh=items_plan_wh[startList:endList]
 	#temp_contents = currentProcess("2CL")
-	return render_to_response('PC.html', locals())
+	return render_to_response('PC/view.html', locals())
 	
 ###################################################
 ##                 for manager                   ##
 ## this page is view process via mobile computer ##
 ###################################################
 #Note : not complete
-def showMD(eID,section_title):
+def showMD(eID,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	today= todayDate()
 	showMD_items = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("product_id","plan_amount","actual_amount_cr","plan_cr_start","actual_amount_cv","plan_cv_start","actual_amount_pt","plan_pt_start","actual_amount_wh","plan_wh_start","plan_due")
 	content_header = "Please select product item in order to view realtime progress"
-	return render_to_response('MD.html',locals())
+	return render_to_response('MD/MD.html',locals())
 
 #####################################	
 ##             for CR              ##
 ## time and process are recordable ##
 #####################################
-def workCR(eID,section_title):
+def workCR(eID,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	eID = eID
@@ -144,13 +146,13 @@ def workCR(eID,section_title):
 	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_id","plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
 	x = ''
-	return render_to_response('listCR.html', locals())
+	return render_to_response('CR/listCR.html', locals())
 #	return render_to_response('content_cr.html',locals())	
 #####################################	
 ##             for CV              ##
 ## time and process are recordable ##
 #####################################
-def workCV(eID,section_title):
+def workCV(eID,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	today = todayDate()
@@ -177,13 +179,13 @@ def workCV(eID,section_title):
 		cvTwoCS = str(currentProcess("2CS"))[2:8]
 	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "process1","process3","process4").order_by('plan_cv_start')
 	items = list(item_plan)
-	return render_to_response('listCV.html', locals())
+	return render_to_response('CV/listCV.html', locals())
 
 #####################################	
 ##             for PT              ##
 ## time and process are recordable ##
 #####################################
-def workPT(eID,section_title):
+def workPT(eID,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	#create items for PT
@@ -191,14 +193,14 @@ def workPT(eID,section_title):
 	pt = str(currentTimeProcess("PT"))
 	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end","process2","process4").order_by('plan_pt_start')
 	items = list(item_plan)
-	return render_to_response('listPT.html', locals())
+	return render_to_response('PT/listPT.html', locals())
 
 #####################################	
 ##             for WH              ##
 ## time and process are recordable ##
 #####################################
 
-def workWH(eID,section_title):
+def workWH(eID,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	today = todayDate()
@@ -206,7 +208,7 @@ def workWH(eID,section_title):
 	wh = currentTimeProcess("WH")
 	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start","process1","process2","process3").order_by('plan_wh_start')
 	items = list(item_plan)
-	return render_to_response('listWH.html',locals())
+	return render_to_response('WH/listWH.html',locals())
 	
 
 ##############################
