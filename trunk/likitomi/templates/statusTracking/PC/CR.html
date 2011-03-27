@@ -1,0 +1,56 @@
+{% extends "PC/container.html"%}
+{% block view %}
+<div id="wrapper">
+    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> CR <br>
+    	<!-- start Menu-->
+    <ul id="navlist">
+		<li id="active"><a href="/likitomi">Logout</a></li>
+	</ul>
+
+
+	<!-- End Menu-->
+	</div>
+<!-- endheader-->
+<!-- content-->
+	<div id="browse_crag">
+		<div class="login">
+			{{title}}
+		</div>
+	</div>
+<br>
+<center>
+
+	<table align='center' width="30%" class='tbltables' border=1><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%" align="left"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><th width="30%" rowspan="2"> Product code </th><th  width ="10%" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end in items %}
+			<tr>
+			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
+			<td>{{start|time:"H:i"}}</td>
+			<td>{{ end|time:"H:i" }}</td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{ actual_start|time:"H:i" }}
+				{% else %} 
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{ actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+			</table>
+</div>
+<!--END Menu and Topbar-->
+
+{% endblock %}
