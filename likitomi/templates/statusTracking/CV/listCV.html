@@ -1,0 +1,57 @@
+{% extends "PC/container.html" %}
+{% block view %}
+<div id="wrapper">
+    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> CV <br>
+    	<!-- start Menu-->
+    <ul id="navlist">
+		<li id="active"><a href="/likitomi">Logout</a></li>
+	</ul>
+
+
+	<!-- End Menu-->
+	</div>
+<!-- endheader-->
+<!-- content-->
+	<div id="browse_crag">
+		<div class="login">
+			{{title}}
+		</div>
+	</div>
+<br>
+<center>
+
+			
+	<table align=center><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT</b> </td><th width="20" rowspan="2"> Product code </th><th width="15" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th></tr>
+			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th></tr></thead>
+			</span>
+			{% for plan_id,start,end,product,actual_start,actual_end,cv_machine,previous_section,next_process,last in items %}
+		<tr>
+			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
+			<td><a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
+			<td><a href="/likitomi/line/cv/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{% if next_process != NULL %}{{next_process}}{% else %}{{last}}{% endif %}<br><font color="white">-</font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{ actual_start|time:"H:i" }}
+				{% else %} 
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL %}
+				{{ actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+			</table>
+</div>
+{% endblock %}
