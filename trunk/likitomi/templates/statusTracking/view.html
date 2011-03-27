@@ -1,0 +1,46 @@
+{% extends "container.html" %}
+{% block view %}
+<div id='loginDiv'>
+	<fieldset><legend accesskey="D" tabindex="1">{{content_header}}</legend>
+<form id="login_form" method="get" action="/likitomi/home/">
+<!--USERNAME-->
+	<p><label for="user_name">{{la_user_name}}:</label>
+	<input type="text" size="20" maxlength="30" id="user_name" value="" name="eID">
+	</p>
+    <!--PASSWORD-->
+	<!--<p><label for="password"><?=$this->lang->line('FAL_user_password_label')?>:</label>
+	<?=form_password(array('name'=>'password', 
+	                       'id'=>'password',
+	                       'maxlength'=>'30', 
+	                       'size'=>'20',
+	                       'value'=>''))?>
+    
+    <?=(isset($this->fal_validation) ? $this->fal_validation->{'password'.'_error'} : '')?>
+	
+    </p>	-->
+    <!--CAPTCHA (security image)-->
+	<!--<?php
+	if ($this->config->item('FAL_use_captcha_login'))
+	{?>
+	<p><label for="security"><?=$this->lang->line('FAL_captcha_label')?>:</label>
+	<?=form_input(array('name'=>'security', 
+	                       'id'=>'security',
+	                       'maxlength'=>'45', 
+	                       'size'=>'45',
+	                       'value'=>''))?>
+    <?=(isset($this->fal_validation) ? $this->fal_validation->{'security'.'_error'} : '')?>
+    <?=$this->load->view($this->config->item('FAL_captcha_img_tag_view'), null, true)?></p>
+    <?php }?>-->
+    <!-- END CAPTCHA (security image)-->
+
+	<p>
+		<input type="submit" id="login" value="Login" name="login">
+	</p>
+</form>
+</fieldset>
+</div>
+<script>
+	document.getElementById('user_name').focus();
+</script>
+
+{% endblock %}
