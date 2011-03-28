@@ -1,0 +1,85 @@
+{% extends "PC/container.html" %}
+{% block view %}
+<div id="wrapper">
+    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> CR <br>
+    	<!-- start Menu-->
+    <ul id="navlist">
+		<li id="active"><a href="/likitomi">Logout</a></li>
+	</ul>
+
+
+	<!-- End Menu-->
+	</div>
+<!-- endheader-->
+<!-- content-->
+	<div id="browse_crag">
+		<div class="login">
+			{{title}}
+		</div>
+	</div>
+<br>
+<center>
+
+	<table cellspacing="2" cellpadding="2" class="tblFixedBorder">
+	<tbody><tr>
+        <td class="tblProdViewLabel">Sheet Code</td>
+		<td class="tblProdViewLabel">Customer name</td>
+		<td class="tblProdViewLabel">Product</td>
+		<td class="tblProdViewLabel">Flute</td>
+		<td class="tblProdViewLabel">DF</td>
+		<td class="tblProdViewLabel">BM</td>
+		<td class="tblProdViewLabel">BL</td>
+		<td class="tblProdViewLabel">CM</td>
+		<td class="tblProdViewLabel">CL</td>
+		<td class="tblProdViewLabel">Length</td>
+		<td class="tblProdViewLabel">Width</td>
+		<td class="tblProdViewLabel">Case</td>
+		<td class="tblProdViewLabel">Cut</td>
+		<td class="tblProdViewLabel">Blank</td>
+		<td class="tblProdViewLabel">Slit</td>
+		<td class="tblProdViewLabel">Scoreline</td>
+		<td class="tblProdViewLabel">Next Process</td>
+	</tr>
+	
+<tr>
+	<td class="tblProdView">{{product_code}}</td>
+	<td class="tblProdView">{{cname}}</td>
+	<td class="tblProdView">{{product_name}}</td>
+	<td class="tblProdView">{{flute}}</td>
+	<td class="tblProdView">{{df}}</td>
+	<td class="tblProdView">{{bm}}</td>
+	<td class="tblProdView">{{bl}}</td>
+	<td class="tblProdView">{{cm}}</td>
+	<td class="tblProdView">{{cl}}</td>
+	<td class="tblProdView">{{length_mm}}</td>
+	<td class="tblProdView">{{width_mm}}</td>
+	<td class="tblProdView">{{case}}</td>
+	<td class="tblProdView">{{cut}}</td>
+	<td class="tblProdView">{{blank}}</td>
+	<td class="tblProdView">{{slit}}</td>
+	<td class="tblProdView">{{scoreline}}</td>
+	<td class="tblProdView">{{next_process}}</td>
+</tr>
+</tbody></table>
+	
+
+</li>
+</ul>
+		<center><span class="graytitle">Amount from sale order :</span><li class="bigfield"><input name="product_name" type="text"  value='{{amount}}' style="text-align: center" disabled="disabled" /> </li> 
+		<li class="bigfield"><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center" disabled="disabled"/></li>
+			<form action="/likitomi/line/update/start/" method="get" name="startForm">
+			<fieldset>
+			<input name="task" type="hidden" value="{{task}}">
+			<input name="eID" type="hidden" value="{{eID}}">
+			<input name="pID" type="hidden" value="{{pID}}">
+			<input name="at" type="hidden" value="{{at}}">
+			<li class="button"><input name="Enter" type="submit" value="Enter" /></li>
+			
+			</center>
+			</fieldset>
+
+			</form>
+
+	</ul>
+</div>
+{% endblock %}

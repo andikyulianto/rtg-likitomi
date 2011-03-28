@@ -21,6 +21,7 @@ from statusTracking.models import Employee, FakeStatusTracking, ProductCatalog, 
 
 def startCR(request):
 	content_header = "Load"
+	
 	eID = request.GET['eID']
 	planID = request.GET['pID']
 	today = todayDate()
@@ -54,7 +55,8 @@ def startCR(request):
 	#product = ProductCatalog.objects.filter(product_code= product_id)
 	#product_name = product.product_name
 	#product = list(ProductCatalog.objects.all())
-	return render_to_response('updateStartCR.html', locals())
+	title = "starting "+product_code+" in corrugator"
+	return render_to_response('CR/updateStartCR.html', locals())
 
 ###########################################
 ##                 for CR                ##
