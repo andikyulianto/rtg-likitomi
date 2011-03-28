@@ -71,13 +71,41 @@ def endCR(request):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+###
 	plan = FakeStatusTracking.objects.get(plan_id = planID )
-	amount = str(plan.plan_amount)
+	product_code = plan.product_id
+	productCat = ProductCatalog.objects.get(product_code = product_code)
+	product_name = productCat.product_name
+	cname = productCat.cname
+	product = Products.objects.get(product_code = product_code)
+	flute = product.flute
+	df = product.df
+	bm = product.bm
+	bl = product.bl
+	cm = product.cm
+	cl = product.cl
+	width_mm = product.width_mm
+	length_mm = product.length_mm
+	cut = productCat.cut
+	blank = productCat.blank
+	slit = productCat.slit
+	scoreline = productCat.scoreline_d
+	next_process = productCat.next_process
+	amount = plan.plan_amount
+	task = "start"
+	at = "CR"
+	current_date_time = todayDate()
+	pID = planID
+	#product = ProductCatalog.objects.filter(product_code= product_id)
+	#product_name = product.product_name
+	#product = list(ProductCatalog.objects.all())
+	title = "Finished "+product_code+" in corrugator"
+###
 	task = "end"
 	at = "CR"
 	current_date_time = todayDate()
 	pID = planID
-	return render_to_response('updateEndCR.html',locals())
+	return render_to_response('CR/updateEndCR.html',locals())
 
 ###########################################
 ##                 for CV                ##
@@ -106,7 +134,8 @@ def startCV(request):
 	current_date_time = todayDate()
 	task = "start"
 	at = "CV"
-	return render_to_response('updateStartCV.html',locals())
+	title = "starting "+product_code+" in convertor"
+	return render_to_response('CV/updateStartCV.html',locals())
 
 ###########################################
 ##                 for CV                ##
@@ -125,8 +154,20 @@ def endCV(request):
 	task = "end"
 	at = "CV"
 	current_date_time = todayDate()
+	##
+	product_code = plan.product_id
+	productCat = ProductCatalog.objects.get(product_code = product_code)
+	color = productCat.rope_color
+	cv_machine = productCat.next_process
+	speed = getCVSpeed(cv_machine)
+	product_name = productCat.product_name
+	partner = productCat.cname
+	product = Products.objects.get(product_code = product_code)
+	amount = plan.plan_amount
 	pID = planID
-	return render_to_response('updateEndCV.html',locals())
+	##	
+	title = "Finished "+product_code+" in corvertor"
+	return render_to_response('CV/updateEndCV.html',locals())
 	
 ###########################################
 ##                 for PT                ##
@@ -155,7 +196,8 @@ def startPT(request):
 	current_date_time = todayDate()
 	task = "start"
 	at = "PT"
-	return render_to_response('updateStartCV.html',locals())
+	title = "Starting "+product_code+" in pad /partition"
+	return render_to_response('PT/updateStartCV.html',locals())
 
 ###########################################
 ##                 for PT                ##
@@ -174,8 +216,21 @@ def endPT(request):
 	task = "end"
 	at = "PT"
 	current_date_time = todayDate()
+
+
+	product_code = plan.product_id
+	productCat = ProductCatalog.objects.get(product_code = product_code)
+	color = productCat.rope_color
+	cv_machine = productCat.next_process
+	speed = getCVSpeed(cv_machine)
+	product_name = productCat.product_name
+	partner = productCat.cname
+	product = Products.objects.get(product_code = product_code)
+	amount = plan.plan_amount
 	pID = planID
-	return render_to_response('updateEndCV.html',locals())
+
+	title = "Finished "+product_code+" in pad /partition"
+	return render_to_response('PT/updateEndCV.html',locals())
 	
 ###########################################
 ##                 for WH                ##
@@ -202,7 +257,8 @@ def startWH(request):
 	current_date_time = todayDate()
 	task = "start"
 	at = "WH"
-	return render_to_response('updateStartWH.html',locals())
+	title = "Finished "+product_code+" warehouse"
+	return render_to_response('WH/updateStartWH.html',locals())
 
 ###########################################
 ##                 for WH                ##
