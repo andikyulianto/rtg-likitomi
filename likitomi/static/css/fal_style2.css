@@ -6,9 +6,11 @@
     padding: 0;
 }
 
+/*
 h1, h2, h3, h4, h5, h6, p, pre, blockquote, ul {
     margin: 1em 0;
 }
+*/
 
 .clear {
     clear: both;
@@ -330,7 +332,79 @@ label {
 	background:#dee7ec;
 }
 
+
 .tbltables td{
 	vertical-align: text-top;
 	
 }
+table.tbltableMD td{
+	border-bottom: dashed 0.1em black;
+}
+table.tbltableMD th{
+	border-bottom: solid 0.25em black; 
+}
+table .even{
+	background:#f8f8f8;
+}
+table .odd{
+	background:white;
+}
+thead th { 
+        border-bottom: solid 0.25em black; 
+}
+p.tbunderline {
+        border-bottom: dashed 0.1em black;
+
+}
+p.tbsgunderline {
+        border-bottom: dashed 0.1em black;
+	text-align:right;
+}
+.textbox td p.tbsgunderline{
+        text-align:right;
+}
+.textbox td p.tbunderline{
+        text-align:center;
+        position:absolute; 
+}
+table a:link {border-bottom: 1px dashed #ddd;
+color: #000;}
+/* =links
+----------------------------------------------- */
+
+table a {padding: 1px;
+text-decoration: none;
+font-weight: bold;
+background: transparent;
+}
+
+table a:link {border-bottom: 1px dashed #ddd;
+color: #000;}
+
+table a:visited {border-bottom: 1px dashed #ccc;
+text-decoration: line-through;
+color: #808080;}
+
+table a:hover {border-bottom: 1px dashed #bbb;
+color: #666;}
+.tblProdViewLabel {
+	color: #7F7F7F;
+    text-align: center;
+	white-space:nowrap;
+	padding:4px;
+	width:50px;
+	background-color: #F6F6F6;
+	border: 1px solid #C8C8C8;
+}
+.tblProdView {
+	color: inherit;
+    text-align: center;
+	white-space:nowrap;
+	padding:4px;
+	border: 1px #C8C8C8 solid;
+}
+table {
+    border-collapse: collapse;
+}
+
+

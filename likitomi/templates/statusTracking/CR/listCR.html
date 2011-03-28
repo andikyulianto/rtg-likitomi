@@ -26,13 +26,13 @@
 			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th></tr></thead>
 			</span>
 			{% for plan_id,start,end,product,actual_start,actual_end in items %}
-		<tr>
+		<tr rowspan="2" class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td rowspan="2">{% if wh == product %} > {% endif %}</td>
 			<td><a href="/likitomi/line/cr/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
 			<td><a href="/likitomi/line/cr/end/?eID={{eID}}&pID={{plan_id}}">{{ end|time:"H:i" }}</a></td>
 			<td rowspan="2"><p class="tbunderline">{{product}}</p></td>
 			</tr>
-			<tr>
+			<tr rowspan="2" class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{actual_start|time:"H:i" }}

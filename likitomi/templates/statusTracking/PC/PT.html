@@ -24,7 +24,7 @@
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
 			</span>
 			{% for start,end,product,actual_start,actual_end,previous,next in items %}
-			<tr>
+			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
@@ -33,7 +33,7 @@
 			<td rowspan="2"><p class="tbunderline">{{next}}<br><font color="white">-</font></p></td>
 			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
 			</tr>
-			<tr>
+			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{ actual_start|time:"H:i" }}
