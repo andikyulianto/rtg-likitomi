@@ -1,0 +1,77 @@
+{% extends "CR/containerCR.html" %}
+{% block view %}
+<div id="wrapper">
+    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> <a href="/likitomi/line/pt/end/?eID={{eID}}&pID={{pID}}">Finish PT</a><br>
+    	<!-- start Menu-->
+    <ul id="navlist">
+		<li id="active"><a href="/likitomi">Logout</a></li>
+	</ul>
+
+
+	<!-- End Menu-->
+	</div>
+<!-- endheader-->
+<!-- content-->
+	<div id="browse_crag">
+		<div class="login">
+			{{title}}
+		</div>
+	</div>
+<br>
+<center>
+
+
+	<table cellspacing="2" cellpadding="2" class="tblFixedBorder" width="630">
+	<tbody><tr>
+        <td class="tblProdViewLabel">Color</td>
+		<td class="tblProdViewLabel">Time</td>
+		<td class="tblProdViewLabel">Speed</td>
+		<td class="tblProdViewLabel">Sale Order</td>
+		<td class="tblProdViewLabel">Order No.</td>
+		<td class="tblProdViewLabel">P.Code</td>
+		<td class="tblProdViewLabel">Customer</td>
+		<td class="tblProdViewLabel">Product Name</td>
+		<td class="tblProdViewLabel">Expected Amount</td>
+		<td class="tblProdViewLabel">Next Process</td>
+	</tr>
+	
+<tr>
+	<td class="tblProdView">{{color}}</td>
+	<td class="tblProdView">{{time}}</td>
+	<td class="tblProdView">{{speed}} pcs/min</td>
+	<td class="tblProdView"></td>
+	<td class="tblProdView">{{pID}}</td>
+	<td class="tblProdView">{{product_code}}</td>
+	<td class="tblProdView">{{partner}}</td>
+	<td class="tblProdView">{{product_name}}</td>
+	<td class="tblProdView">{{amount}}</td>
+	<td class="tblProdView">{{next_process}}</td>
+</tr>
+</tbody></table>
+
+
+<br><br>
+	<div id="boxcontainer" style="width:630px">
+<table>
+	<tbody><tr><form action="/likitomi/line/update/end/" method="get" name="startForm">
+        <td class="tblDetailViewLabel">Finished at :</td>
+		<td><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center" disabled="disabled"/></td>
+		<td class="tblDetailViewLabel">Amount of plan :</td>
+		<td><input name="amount" type="text"  value='{{amount}}' style="text-align: center" /></td>
+		<td> <input name="task" type="hidden" value="{{task}}">
+			<input name="eID" type="hidden" value="{{eID}}">
+			<input name="pID" type="hidden" value="{{pID}}">
+			<input name="at" type="hidden" value="{{at}}"></td>
+	</tr>
+	<tr> 
+	<td>
+	</td>
+
+	<td>
+	</td>
+	<td>
+	</td>
+	<td><br><input name="Enter" type="submit" value="Enter" /></td></tr>
+	</tbody></table>
+</div>
+{% endblock %}
