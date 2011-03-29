@@ -148,7 +148,7 @@ def minclamp(request):
 #			atlocation = 'Scale'
 
 			atlane = '1'
-			atposition = '4'
+			atposition = '5'
 			atlocation = 'Scale'
 
 			realtag = 68
@@ -285,63 +285,3 @@ def minundo(request):
 #	transaction.rollback()
 
 	return HttpResponseRedirect('/minclamp/')
-
-### CHANGE LOCATION ###
-def minchangeloc(request):
-	if 'realtag' in request.GET and request.GET['realtag']:
-		realtag = request.GET['realtag']
-	else:
-		realtag = ""
-
-	if 'lane' in request.GET and request.GET['lane']:
-		ilane = request.GET['lane']
-	else:
-		ilane = ""
-
-	if 'pos' in request.GET and request.GET['pos']:
-		ipos = request.GET['pos']
-	else:
-		ipos = ""
-
-	if 'pcode' in request.GET and request.GET['pcode']:
-		ipcode = request.GET['pcode']
-	else:
-		ipcode = ""
-
-	if 'width' in request.GET and request.GET['width']:
-		iwidth = request.GET['width']
-	else:
-		iwidth = ""
-
-	if 'loss' in request.GET and request.GET['loss']:
-		iloss = request.GET['loss']
-	else:
-		iloss = ""
-
-	if int(ipos) <= 43:
-		query = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
-		qlist = list(query)
-		paper_code = qlist[0]
-		width = qlist[1]
-		wunit = qlist[2]
-		initial_weight = qlist[3]
-		temp_weight = qlist[4]
-		p = PaperRoll(id=realtag, width=width, wunit=wunit, initial_weight=initial_weight, temp_weight=temp_weight)
-		p.paper_code = paper_code
-		p.width = width
-		p.wunit = wunit
-		p.initial_weight = initial_weight
-		p.temp_weight = temp_weight
-		p.lane = ilane
-		p.position = ipos
-		p.save()
-#		realtag = ""
-
-		response = "/stock/?pcode="+str(ipcode)+"&width="+str(iwidth)+"&loss="+str(iloss)+"&clamping=no&changed=yes"
-
-	else:
-		err = ""
-		error = "Your submitted position is not between 1 and 43."
-		return render_to_response('submit_error.html', locals())
-
-	return HttpResponseRedirect(response)

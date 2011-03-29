@@ -6,7 +6,40 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#values").hide();
+
 	$(window).load(function loadMap(){
+		var pcode = $("#pcode").html();
+		var width = $("#width").html();
+		var loss = $("#loss").html();
+		var spcode = $("#spcode").html();
+		var swidth = $("#swidth").html();
+		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
+		var cwidth = $('#minclamp', top.document).contents().find('#cwidth').val();
+		var lane = $('#minclamp', top.document).contents().find('#lane').val();
+		if (lane == 'A' || lane == 'B'){var enal = '1';}
+		if (lane == 'C' || lane == 'D'){var enal = '2';}
+		if (lane == 'E' || lane == 'F'){var enal = '3';}
+		if (lane == 'G' || lane == 'H'){var enal = '4';}
+		var position = $('#minclamp', top.document).contents().find('#position').val();
+		var atlane = $('#minclamp', top.document).contents().find('#atlane').val();
+		var atposition = $('#minclamp', top.document).contents().find('#atposition').val();
+		var clamping = $("#clamping").html();
+		var changed = $("#changed").html();
+		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
+		//alert(enal+"-"+position+" = "+atlane+"-"+atposition);
+		if (enal == atlane && position == atposition && clamping == "no" && changed == "no" && lane != undefined){
+			var clamping = "yes";
+			var changed = "no";
+			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+		}
+		else {
+			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+		}
+
+		setTimeout(loadMap, 2000);
+	});
+
+	$("#locup").click(function(){
 		var pcode = $("#pcode").html();
 		var width = $("#width").html();
 		var loss = $("#loss").html();
@@ -18,11 +51,30 @@ $(document).ready(function(){
 		var position = $('#minclamp', top.document).contents().find('#position').val();
 		var atlane = $('#minclamp', top.document).contents().find('#atlane').val();
 		var atposition = $('#minclamp', top.document).contents().find('#atposition').val();
-		var clamping = $("#clamping").html();
-		var changed = $("#changed").html();
-		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed);
-		setTimeout(loadMap, 2000);
+		var clamping = "no";
+		var changed = "yes";
+		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
+		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
 	});
+
+	$("#locdown").click(function(){
+		var pcode = $("#pcode").html();
+		var width = $("#width").html();
+		var loss = $("#loss").html();
+		var spcode = $("#spcode").html();
+		var swidth = $("#swidth").html();
+		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
+		var cwidth = $('#minclamp', top.document).contents().find('#cwidth').val();
+		var lane = $('#minclamp', top.document).contents().find('#lane').val();
+		var position = $('#minclamp', top.document).contents().find('#position').val();
+		var atlane = $('#minclamp', top.document).contents().find('#atlane').val();
+		var atposition = $('#minclamp', top.document).contents().find('#atposition').val();
+		var clamping = "no";
+		var changed = "yes";
+		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
+		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
+	});
+
 });
 </script>
 </head>
@@ -60,22 +112,25 @@ $(document).ready(function(){
 	<div id="atposition">{{ atposition }}</div>
 	<div id="clamping">{{ clamping }}</div>
 	<div id="changed">{{ changed }}</div>
+	<div id="realtag">{{ realtag }}</div>
+	<div id="loc">{{ loc }}</div>
 </div>
 
-<!--H: {{Hlist}}<br/>-->
-<!--G: {{Glist}}<br/>-->
-<!--F: {{Flist}}<br/>-->
-<!--E: {{Elist}}<br/>-->
-<!--D: {{Dlist}}<br/>-->
-<!--C: {{Clist}}<br/>-->
-<!--B: {{Blist}}<br/>-->
-<!--A: {{Alist}}-->
-@{{atlane}}-{{atposition}}<br/>
+H: {{Hlist}}<br/>
+G: {{Glist}}<br/>
+F: {{Flist}}<br/>
+E: {{Elist}}<br/>
+D: {{Dlist}}<br/>
+C: {{Clist}}<br/>
+B: {{Blist}}<br/>
+A: {{Alist}}
+<!--@{{atlane}}-{{atposition}} *** {{lane}}-{{position}}<br/>Clamping: {{clamping}}; Changed: {{changed}}<br/>-->
 <!--4th: {{THlist}}<br/>-->
 <!--3rd: {{RDlist}}<br/>-->
 <!--2nd: {{NDlist}}<br/>-->
-1st: {{STlist}}
-
+<!--1st: {{STlist}}-->
+<!--<br/>{{delist}}<br/>{{wlist}}<br/>{{ridlist}}<br/>{{elist}}-->
+<br/>{{mlist}}
 <table style="height:80%">
 <tr>
 
@@ -153,7 +208,7 @@ $(document).ready(function(){
 		{% for pos in posh %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Hlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -173,7 +228,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '4' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+						<td id="locup" style="cursor:pointer;" class="gray"></td>
 					{% else %}
 						<td class="gray"></td>
 					{% endif %}
@@ -229,7 +284,7 @@ $(document).ready(function(){
 		{% for pos in posg %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Glist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -249,7 +304,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '4' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						<td id="locdown" style="cursor:pointer;" class="gray"></td>
 					{% else %}
 						<td class="gray"></td>
 					{% endif %}
@@ -264,7 +319,7 @@ $(document).ready(function(){
 		{% for pos in posf %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Flist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -284,7 +339,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '3' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+						<td id="locup" style="cursor:pointer;" class="gray"></td>
 					{% else %}
 						<td class="gray"></td>
 					{% endif %}
@@ -339,7 +394,7 @@ $(document).ready(function(){
 		{% for pos in pose %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Elist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -359,7 +414,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '3' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %} onclick="getElementById('frm5').submit()">{{pos}}</td>
+						<td id="locdown" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}>{{pos}}</td>
 					{% else %}
 						<td {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
 					{% endif %}
@@ -374,7 +429,7 @@ $(document).ready(function(){
 		{% for pos in posd %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Dlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -394,7 +449,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '2' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %} onclick="getElementById('frm4').submit()"></td>
+						<td id="locup" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
 					{% else %}
 						<td {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
 					{% endif %}
@@ -450,7 +505,7 @@ $(document).ready(function(){
 		{% for pos in posc %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Clist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -470,7 +525,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '2' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						<td id="locdown" style="cursor:pointer;" class="gray"></td>
 					{% else %}
 						<td class="gray"></td>
 					{% endif %}
@@ -485,7 +540,7 @@ $(document).ready(function(){
 		{% for pos in posb %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm4').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Blist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -505,7 +560,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '1' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" class="gray" onclick="getElementById('frm4').submit()"></td>
+						<td id="locup" style="cursor:pointer;" class="gray"></td>
 					{% else %}
 						<td class="gray"></td>
 					{% endif %}
@@ -561,7 +616,7 @@ $(document).ready(function(){
 		{% for pos in posa %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}style="cursor:pointer;" onclick="getElementById('frm5').submit()"{% endif %}><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
 						{% for ls in Alist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -581,7 +636,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '1' and atposition == pos %}
-						<td style="cursor:pointer;" class="gray" onclick="getElementById('frm5').submit()"></td>
+						<td id="locdown" style="cursor:pointer;" class="gray"></td>
 					{% else %}
 						<td class="gray"></td>
 					{% endif %}
@@ -598,24 +653,6 @@ $(document).ready(function(){
 </td>
 </tr>
 </table>
-
-<form id="frm4" action="/minclamp/changeloc/" method="get">
-	<input type="hidden" value="{{ realtag }}" name="realtag" />
-	<input type="hidden" value="{{ leftlane }}" name="lane" />
-	<input type="hidden" value="{{ atposition }}" name="pos" />
-	<input type="hidden" value="{{ pcode }}" name="pcode" />
-	<input type="hidden" value="{{ width }}" name="width" />
-	<input type="hidden" value="{{ loss }}" name="loss" />
-</form>
-
-<form id="frm5" action="/minclamp/changeloc/" method="get">
-	<input type="hidden" value="{{ realtag }}" name="realtag" />
-	<input type="hidden" value="{{ rightlane }}" name="lane" />
-	<input type="hidden" value="{{ atposition }}" name="pos" />
-	<input type="hidden" value="{{ pcode }}" name="pcode" />
-	<input type="hidden" value="{{ width }}" name="width" />
-	<input type="hidden" value="{{ loss }}" name="loss" />
-</form>
 
 </div>
 </body>
