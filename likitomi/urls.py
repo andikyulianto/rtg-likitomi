@@ -6,6 +6,7 @@ from statusTracking.detail import pcdetail
 from statusTracking.line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from statusTracking.update import startUpdate,endUpdate
 from statusTracking.machine import machine_list
+#from statusTracking.query import queryDateNotProcess
 
 #Weight
 from weight.views import index
@@ -26,6 +27,8 @@ urlpatterns = patterns('',
 	(r'^likitomi/$', login),
 	(r'^likitomi/home/$', section),	
 	(r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+#	(r'^likitomi/query/date/$',queryDateNotProcess),
+#	(r'^likitomi/query/date/?p<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/pcdetail/$', pcdetail),
 	(r'^likitomi/pcdetail/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/line/cr/start/$', startCR),

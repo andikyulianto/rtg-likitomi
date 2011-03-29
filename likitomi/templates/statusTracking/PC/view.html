@@ -20,27 +20,30 @@
 
 
 <!--END Menu and Topbar-->
-<br>
-<center>
-<table align='center' height='450' width="95%" class='tbltables' >
+<div id="accordion">
+
+	<h3><a href="#">Normal Plan</a></h3>
+	<div>
+		<p>
+
+<!--- table of normal plan -->
+		<table align='center' height='450' width="95%" class='tbltables' >
 	<tr>
 		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
 		{% block crview %}
 		<!-- table CR --><center><table align=center width="90%"> 
-			<tr>
-			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
-			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
-			<tr><td width="50%">{# left #} 
+			<tr><td width="50%">{# left #} From: 
 	<div id="linkCR">
 			<table align=center width="100%"><!-- table left --><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"> <b>Sch.OUT</b> </td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th></tr></thead>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,days_left in items_plan_cr %}
+			{% for start,end,product,actual_start,actual_end,days_left,plan_amount,actual_amount_cr in items_plan_cr %}
 			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
 			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
+			<td>{{plan_amount}} </td>
 			<td rowspan="2" align="center"><p class="tbunderline">{{product}}</p></td>
 			<td rowspan="2"><p class="tbunderline">{{days_left}}</p></td>
 			</tr>
@@ -60,6 +63,16 @@
 				{% endif %}
 
 			</p></td>
+			<td><p class="tbsgunderline">
+				{% if plan_amount > actual_amount_cr %}
+				<font color="red">{{actual_amount_cr}}</font>
+				{% else %}{% if actual_amount_cr != NULL%}
+				{{actual_amount_cr}}
+				{% else %}
+				0
+				{% endif %}{% endif %}
+
+			</p></td>
 			</tr></a>
 			{% endfor %}
 			</table> <!-- end table left -->
@@ -71,9 +84,7 @@
 		{% endblock%}
 		</td> <td><a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>
 		<table align=center width="90%">
-			<tr>
-			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
-			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
+
 			<tr  height="5"><td width="60%">{# left #}
 			
 			<div id="linkCV">
@@ -117,9 +128,7 @@
 		<td><a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>
 		<!-- start pt table --><center>
 		<table align=center width="95%">
-			<tr>
-			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
-			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
+			
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
@@ -160,9 +169,7 @@
 		{% block whview %}
 		<!-- start wh table--><center>
 		<table align="center" width="80%"> 
-			<tr>
-			<td bgColor="#FFF7E6"><img src="images/alertOrange.png" alt="Missing quantity" height="18" width="18"/>Missing</td>
-			<td bgColor="#FFF0F5"><img src="images/alertRed.png" alt="It is skipted" height="18" width="18"/>Not process</td></tr>
+
 			<td width="50%"> {# left #}
 			<div id="linkWH">
 			<table align=center width = 100%><span class="header">
@@ -197,9 +204,51 @@
 	</tr>
 
 </table>
-</center>
-<br>
+<!-- end table of normal plan -->
+		</p>
+	</div>
 
+	<h3><a href="#">Not Process</a></h3>
+	<div>
+<div align="right"><Form action="/" id="searchDate">From: <input type="text" name="from" id="datepickerFrom"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="to" id="datepickerTo">&nbsp;&nbsp;<input type="submit" value="Submit"/></Form> </div><br>
+		 <div id="result"></div>
+		<script>
+		  // attach a submit handler to the form
+		  $("#searchDate").submit(function(event) {
 
+		    // stop form from submitting normally
+		    event.preventDefault(); 
+		    var eID = $("#userID").val();
+		    // get some values from elements on the page:
+		    var $form = $( this ),
+			termFrom = $form.find( 'input[name="from"]' ).val(),
+			termTo = $form.find( 'input[name="to"]' ).val(),
+			url = $form.attr( 'action' );
+		    // Send the data using post and put the results in a div
+		$.post("/likitomi/home/?eID="+eID, function(data){
+		$( "#result" ).html(termFrom+" "+termTo);
+		}
+
+		    );
+		  });
+		</script>
+	</div>
+	<h3><a href="#">Missing in pcs.</a></h3>
+	<div>
+		<p>
+		Nam enim risus, molestie et, porta ac, aliquam ac, risus. Quisque lobortis.
+		Phasellus pellentesque purus in massa. Aenean in pede. Phasellus ac libero
+		ac tellus pellentesque semper. Sed ac felis. Sed commodo, magna quis
+		lacinia ornare, quam ante aliquam nisi, eu iaculis leo purus venenatis dui.
+		</p>
+		<ul>
+			<li>List item one</li>
+			<li>List item two</li>
+			<li>List item three</li>
+		</ul>
+	</div>
+</div>
+
+</div>
 
 {% endblock %}
