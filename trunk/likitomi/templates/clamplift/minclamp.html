@@ -1,94 +1,102 @@
 ﻿<html>
 <head>
-	<title>Likitomi: @Clamplift</title>
-	<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
-	<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-	<script type="text/javascript" src="javascript/clamplift.js"></script>
-	<script type="text/javascript" src="javascript/jquery.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$(window).load(function minclamp(){
-			$("#minclamp").load("/minclamp/");
-			setTimeout(minclamp, 2000);
-		});
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(window).load(function minClamp(){
+		$("#minclamp").load("/minclamp/");
+		setTimeout(minClamp, 2000);
 	});
-	</script>
-	<script type="text/javascript">
-	function changeLocDown()
-	{
-		document.getElementById("lane").value = '{{lane}}';
-		document.getElementById("pos").value = '{{downpos}}';
-		document.getElementById("frm3").submit();
-	}
+});
+</script>
+<script type="text/javascript">
+function submit()
+{
+	document.getElementById("frm1").submit();
+}
 
-	function changeLocUp()
-	{
-		document.getElementById("lane").value = '{{lane}}';
-		document.getElementById("pos").value = '{{uppos}}';
-		document.getElementById("frm3").submit();
-	}
+function undoSubmit()
+{
+	document.getElementById("frm2").submit();
+}
 
-	function changeLocOpp()
-	{
-		document.getElementById("lane").value = '{{opplane}}';
-		document.getElementById("pos").value = '{{position}}';
-		document.getElementById("frm3").submit();
-	}
+function changeLocDown()
+{
+	document.getElementById("lane").value = '{{lane}}';
+	document.getElementById("pos").value = '{{downpos}}';
+	document.getElementById("frm3").submit();
+}
 
-	function changeLocOppDown()
-	{
-		document.getElementById("lane").value = '{{opplane}}';
-		document.getElementById("pos").value = '{{downpos}}';
-		document.getElementById("frm3").submit();
-	}
+function changeLocUp()
+{
+	document.getElementById("lane").value = '{{lane}}';
+	document.getElementById("pos").value = '{{uppos}}';
+	document.getElementById("frm3").submit();
+}
 
-	function changeLocOppUp()
-	{
-		document.getElementById("lane").value = '{{opplane}}';
-		document.getElementById("pos").value = '{{uppos}}';
-		document.getElementById("frm3").submit();
-	}
+function changeLocOpp()
+{
+	document.getElementById("lane").value = '{{opplane}}';
+	document.getElementById("pos").value = '{{position}}';
+	document.getElementById("frm3").submit();
+}
 
-	function changeLocLeft()
-	{
-		document.getElementById("frm4").submit();
-	}
+function changeLocOppDown()
+{
+	document.getElementById("lane").value = '{{opplane}}';
+	document.getElementById("pos").value = '{{downpos}}';
+	document.getElementById("frm3").submit();
+}
 
-	function changeLocRight()
-	{
-		document.getElementById("frm5").submit();
-	}
+function changeLocOppUp()
+{
+	document.getElementById("lane").value = '{{opplane}}';
+	document.getElementById("pos").value = '{{uppos}}';
+	document.getElementById("frm3").submit();
+}
 
-	</script>
+function changeLocLeft()
+{
+	document.getElementById("frm4").submit();
+}
+
+function changeLocRight()
+{
+	document.getElementById("frm5").submit();
+}
+</script>
 </head>
 <body>
-<div id="minclamp">
-	<table>
-		<tr>
-			<td><p class="label" id="min">ID: </p></td>
-			<td>{% ifnotequal realtag "" %}<p class="var" id="min">{% ifchanged %}{{ realtag }}{% endifchanged %}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td><p class="label" id="min">P.Code: </p></td>
-			<td>{% ifnotequal paper_code "" %}<p class="var" id="minbig">{{ paper_code }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td><p class="label" id="min">Size: </p></td>
-			<td>{% ifnotequal size "" %}<p class="var" id="min">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-
-			<td><p class="label" id="min">Loc.:</p></td>
-			<td>{% ifnotequal lane "" %}<p class="var" id="min">{{lane}}-{{position}}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-
-			<td align="center" rowspan="1">{% ifnotequal undo_btn "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% else %}{% endifnotequal %}</td>
-			<td><p class="label" id="min">Weight: </p></td>
-			<td>{% ifnotequal actual_wt "" %}<p class="var" id="min">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td align="center" id="min">{% if realtag != "" and atlocation == "Scale" %}>>>{% endif %}</td>
-			<td>{% ifnotequal digital "" %}<p class="var" id="minbig">{{ digital }}</p>{% else %}{% endifnotequal %}</td>
-			<td><p class="unit" id="min">kgs.</p></td>
-			<td align="center" rowspan="2">{% ifnotequal submit_btn "" %}<a align="right" href="javascript:submit()"><img id="submit" border="0" height="50px" src="images/clamplift/update.png"></a>{% else %}{% endifnotequal %}</td>
-			<td style="text-align:center"><a href="/clamplift/" target="_parent"><button>More</button></a></td>
-		</tr>
-	</table>
+	<div id="minclamp">
+	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
+	<input id="cwidth" type="hidden" value="{{ size }}" />
+	<input id="lane" type="hidden" value="{{ lane }}" />
+	<input id="position" type="hidden" value="{{ position }}" />
+	<input id="atlane" type="hidden" value="{{ atlane }}" />
+	<input id="atposition" type="hidden" value="{{ atposition }}" />
+	{% if realtag %}
+	<table style="width:100%;"><tr>
+		<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
+		<td><p class="label">P.Code: </p></td><td><p class="var">{{ paper_code }}</p></td>
+		<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td>
+		<td><p class="label">Loc.:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
+		<td align="center" rowspan="2">{% if undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}</td>
+		<td><p class="label">Weight: </p></td><td><p class="var">{{ actual_wt }}</p></td>
+		{% if atlocation == "Scale" and actual_wt > temp_weight %}
+		<td align="center">>>></td>
+		<td><p class="var" id="minbig">{{ temp_weight }}</p></td>
+		{% endif %}
+		<td><p class="unit">kgs.</p></td>
+		{% if atlocation == "Scale" and actual_wt > temp_weight %}<td align="center" rowspan="2"><a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a></td>{% endif %}
+		<td style="text-align:center"><a href="/clamplift/" target="_parent"><button>More</button></a></td>
+	</tr></table>
+	{% endif %}
 
 	<form id="frm1" action="/minclamp/update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
-		<input id="manweight" type="hidden" value="{{ temp_weight }}" name="weight" />
+		<input type="hidden" value="{{ actual_wt }}" name="actual_wt" />
+		<input type="hidden" value="{{ temp_weight }}" name="temp_weight" />
 	</form>
 
 	<form id="frm2" action="/minclamp/undo/" method="get">
@@ -112,7 +120,6 @@
 		<input type="hidden" value="{{ rightlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
-
-</div>
+	</div>
 </body>
 </html>

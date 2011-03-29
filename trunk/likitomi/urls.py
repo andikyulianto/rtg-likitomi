@@ -11,11 +11,12 @@ from statusTracking.machine import machine_list
 #Weight
 from weight.views import index
 from weight.scale_views import scale
-from weight.clamplift_views import clamplift, update, undo, changeloc, minclamp, minupdate, minundo, minchangeloc
+from weight.minclamp import minclamp, minupdate, minundo, minchangeloc
+from weight.clamplift_views import clamplift, update, undo, changeloc
 from weight.plan_views import plan, wholeplan
 from weight.now import now
 from weight.showplan import showplan, showreq, reqhead, required, showdet, dethead, detail
-from weight.stock_views import stock
+from weight.stock_views import stock, search
 from weight.inventory import inventory
 from weight.longtry import orient, longtry
 
@@ -59,7 +60,7 @@ urlpatterns = patterns('',
 	(r'^likitomi/display/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
-	(r'^index/$', index),
+	(r'^index/$', index),###
 	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^scale/$', scale),
@@ -84,7 +85,7 @@ urlpatterns = patterns('',
 	(r'^now/$', now),
 	(r'^plan/$', plan),
 	(r'^plan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^showplan/$', showplan),
+	(r'^showplan/$', showplan),###
 	(r'^showplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^wholeplan/$', wholeplan),
 	(r'^wholeplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
@@ -101,6 +102,8 @@ urlpatterns = patterns('',
 	(r'^detail/$', detail),
 	(r'^detail/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
+	(r'^search/$', search),
+	(r'^search/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^stock/$', stock),
 	(r'^stock/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^inventory/$', inventory),

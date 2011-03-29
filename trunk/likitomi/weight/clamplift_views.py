@@ -151,7 +151,7 @@ def clamplift(request):
 			atposition = '5'
 			atlocation = 'Stock'
 
-			realtag = 67
+			realtag = 68
 
 # Query database #
 		query = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'width', 'initial_weight','temp_weight', 'lane', 'position')[0]

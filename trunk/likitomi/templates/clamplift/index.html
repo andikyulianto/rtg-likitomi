@@ -2,17 +2,212 @@
 <head>
 <title>Likitomi: Clamplift Apps</title>
 <script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript">
+function startTime()
+{
+var today=new Date();
+var h=today.getHours();
+var m=today.getMinutes();
+var s=today.getSeconds();
+// add a zero in front of numbers<10
+m=checkTime(m);
+s=checkTime(s);
+document.getElementById('clock').innerHTML=h+":"+m+":"+s;
+t=setTimeout('startTime()',500);
+}
+
+function checkTime(i)
+{
+if (i<10)
+  {
+  i="0" + i;
+  }
+return i;
+}
+
+//function minClamp(){
+//	$("#minclamp").load("/minclamp/");
+//	t = setTimeout('minClamp()', 2000);
+//}
+
+$(document).ready(function(){
+	startTime();
+//	minClamp();
+
+	$("#selected").change(function(){
+		var opdate = $("#selected").val();
+		if (opdate == ""){
+			$("#plan").css("visibility","hidden");
+		}
+		else {
+			$("#plan").attr("src", "/showplan/?opdate="+opdate);
+			$("#plan").css("visibility","visible");
+		}
+	});
+
+	$("#uppest").click(function(){
+		$("#plan")[0].contentWindow.scrollTo(0,0);
+	});
+
+	$("#upper").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,-304);
+	});
+
+	$("#up").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,-76);
+	});
+
+	$("#down").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,76);
+	});
+
+	$("#downer").click(function(){
+		$("#plan")[0].contentWindow.scrollBy(0,304);
+	});
+
+	$("#downest").click(function(){
+		$("#plan")[0].contentWindow.scrollTo(0,9999);
+	});
+
+	$("#search").click(function(){
+		var pcode = $('#map').contents().find('#pcode').html();
+		var width = $('#map').contents().find('#width').html();
+		var loss = $('#map').contents().find('#loss').html();
+
+		var spcode = $('#spcode').val();
+		var swidth = $('#swidth').val();
+
+		var cpcode = $('#map').contents().find('#cpcode').html();
+		var cwidth = $('#map').contents().find('#cwidth').html();
+		var lane = $('#map').contents().find('#lane').html();
+		var position = $('#map').contents().find('#position').html();
+		var atlane = $('#map').contents().find('#atlane').html();
+		var atposition = $('#map').contents().find('#atposition').html();
+		var clamping = $('#map').contents().find('#clamping').html();
+		var changed = $('#map').contents().find('#changed').html();
+		if (spcode != "" && swidth != ""){
+			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
+		}
+	});
+
+});
+
+</script>
+<style type="text/css">
+td {border: 0px solid black;}
+</style>
 </head>
 
-<frameset rows="88%,12%">
-	<frameset cols="40%,60%">
-		<frame src="/plan/?opdate={{opdate}}" scrolling="no" name="plan" id="plan">
-		<frame src="/stock/" name="stock" id="stock"/>
-	</frameset>
-	<frame src="/minclamp/" scrolling="no" />
-</frameset>
+<!--<frameset rows="88%,12%">-->
+<!--	<frameset cols="40%,60%">-->
+<!--		<frame src="/plan/?opdate={{opdate}}" scrolling="no" name="plan" id="plan">-->
+<!--		<frameset rows="11%,89%">-->
+<!--			<frame src="/search/">-->
+<!--			<frame src="/stock/" name="stock" id="stock"/>-->
+<!--		</frameset>-->
+<!--	</frameset>-->
+<!--	<frame src="/minclamp/" scrolling="no" />-->
+<!--</frameset>-->
 
 <body>
+<table style="width:100%; height:100%; position:absolute; left:0px; right:0px; top:0px; bottom:0px;">
+	<tr style="height:10%;">
+<!--DATETIME-->
+		<td>
+			<table style="width:100%; height:100%;"><tr><td>{% now "Y-m-d" %}</td><td style="text-align:right;"><div id="clock"></div></td></tr></table>
+		</td>
+<!--SEARCH-->
+		<td colspan="2" style="position:absolute; right:0px;">
+			<table><tr>
+				<td>
+					<form>
+						<select id="spcode">
+							<option value="">Paper Code:</option>
+							{% for paper_code in spcodelist %}
+							<option value="{{ paper_code }}">{{ paper_code }}</option>
+							{% endfor %}
+						</select>
+					</form>
+				</td>
+				<td>
+					<form>
+						<select id="swidth">
+							<option value="">Size:</option>
+							{% for size in swidthlist %}
+							<option value="{{ size }}">{{ size }}</option>
+							{% endfor %}
+						</select>
+					</form>
+				</td>
+				<td style="vertical-align:top;"><button id="search">Search</button></td>
+			</tr></table>
+		</td>
+	</tr>
+	<tr style="height:80%;">
+<!--PLAN-->
+		<td style="width:50%;">
+			<table style="width:100%; height:100%;">
+				<tr>
+					<td>
+						<form>
+							<select id="selected" name="opdate">
+								<option value="">AS PRODUCTION OF:</option>
+								{% for date in datelist %}
+								<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
+								{% endfor %}
+							</select>
+						</form>
+					</td>
+					<td><button>More</button></td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<table style="width:100%;"><tr>
+							<td style="width:100px;"></td>
+							<td><img id="uppest" src="images/clamplift/earliest.png"/></td>
+							<td><img id="upper" src="images/clamplift/early.png"/></td>
+							<td><img id="up" src="images/clamplift/earlier.png"/></td>
+						</tr></table>
+						<table style="font-size:80%; width:100%;">
+							<tr style="background-color:black; color:white;">
+								<th rowspan='2' style="width:10px; border-width:0px; background-color:white"></th>
+								<th rowspan='2' width='33px'>Time</th>
+								<th rowspan='2' width='53px'>Sheet Code</th>
+								<th width='56px'>Size</th>
+								<th width='56px'>BL</th>
+								<th width='56px'>BM</th>
+							</tr>
+							<tr style="background-color:black; color:white;">
+								<th>DF</th>
+								<th>CL</th>
+								<th>CM</th>
+							</tr>
+						</table>
 
+						<iframe id="plan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" width="100%" height="306px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+
+						<table style="width:100%;"><tr>
+							<td style="width:100px;"></td>
+							<td><img id="downest" src="images/clamplift/latest.png"/></td>
+							<td><img id="downer" src="images/clamplift/lately.png"/></td>
+							<td><img id="down" src="images/clamplift/later.png"/></td>
+						</tr></table>
+					</td>
+				</tr>
+			</table>
+		</td>
+<!--MAP-->
+		<td style="width:50%;" colspan="2">
+			<iframe id="map" name="map" src="/inventory/" frameborder="0" width="100%" height="100%" marginheight="0" marginwidth="0" scrolling="yes"></iframe>
+		</td>
+	</tr>
+<!--CLAMPLIFT-->
+	<tr style="height:10%;">
+		<td colspan="3">
+			<iframe id="minclamp" src="/minclamp/" frameborder="0" width="100%" height="80px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+<!--			<div id="minclamp"></div>-->
+		</td>
+	</tr>
+</table>
 </body>
 </html>
