@@ -1,5 +1,6 @@
 ﻿<html>
 <head>
+<title>Likitomi: Paper Roll Stock</title>
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
 <link rel="stylesheet" type="text/css" href="css/plan.css" />
 
@@ -49,7 +50,8 @@ $(document).ready(function(){
 		var clamping = $("#clamping").val();
 		var changed = $("#changed").val();
 		if (spcode != "" && swidth != ""){
-			$("#invHint").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&clamping="+clamping+"&changed="+changed+"&spcode="+spcode+"&swidth="+swidth);
+			//alert(loss);
+			$("[id=invHint]").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&clamping="+clamping+"&changed="+changed+"&spcode="+spcode+"&swidth="+swidth);
 			//$("#invHint").load("/inventory/?pcode="+scode+"&width="+swidth+"&loss="+loss);
 //			$("#pcode").val(scode);
 //			$("#width").val(swidth);
@@ -77,6 +79,7 @@ $(document).ready(function(){
 <input id="position" value="{{ position }}" type="hidden" />
 <input id="atlane" value="{{ atlane }}" type="hidden" />
 <input id="atposition" value="{{ atposition }}" type="hidden" />
+
 
 <table><tr>
 	<td style="text-align:left; border:1px;"></td>
@@ -106,9 +109,6 @@ $(document).ready(function(){
 		<button id="search">Search</a></button>
 	</td>
 </tr></table>
-
-
-<div id="invHint"><b>Paper roll inventory will be shown here.</b></div>
 
 </body>
 </html>

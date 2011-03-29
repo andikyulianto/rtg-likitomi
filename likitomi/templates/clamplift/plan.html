@@ -7,11 +7,32 @@
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
+function startTime()
+{
+var today=new Date();
+var h=today.getHours();
+var m=today.getMinutes();
+var s=today.getSeconds();
+// add a zero in front of numbers<10
+m=checkTime(m);
+s=checkTime(s);
+document.getElementById('clock').innerHTML=h+":"+m+":"+s;
+t=setTimeout('startTime()',500);
+}
+
+function checkTime(i)
+{
+if (i<10)
+  {
+  i="0" + i;
+  }
+return i;
+}
+
 $(document).ready(function(){
 
 	$(window).load(function now(){
-		$("#now").load("/now/");
-		setTimeout(now, 1000);
+		startTime();
 	});
 
 	$(window).load(function(){
@@ -72,7 +93,7 @@ $(document).ready(function(){
 
 <body>
 
-<table style="width:100%"><tr><td style="border:0px; font-size:100%;"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px; font-size:100%;"><div id='now'></div></td></tr><table>
+<table style="width:100%"><tr><td style="border:0px; font-size:100%;"><div class='lft'>{% now "Y-m-d" %}</div></td><td style="border:0px; font-size:100%;"><div id='clock'></div></td></tr><table>
 
 <table style="width:100%">
 	<tr>

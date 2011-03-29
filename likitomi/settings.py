@@ -82,10 +82,10 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'likitomi.urls'
 
 TEMPLATE_DIRS = (
-	"/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/statusTracking",
+	"/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/statusTracking/",
 	"/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/clamplift/",
-#	"/home/patipol/rtg-likitomi/likitomi/templates/",
-#	"/home/patipol/rtg-likitomi/likitomi/templates/clamplift/"
+	"/home/patipol/rtg-likitomi/likitomi/templates/statusTracking/",
+	"/home/patipol/rtg-likitomi/likitomi/templates/clamplift/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

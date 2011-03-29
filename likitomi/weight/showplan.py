@@ -10,10 +10,10 @@ def showplan(request):
 	if 'opdate' in request.GET and request.GET['opdate']:
 		opdate = request.GET['opdate']
 	else:
-		opdate = date.today()
-		opdate.strftime("%Y-%m-%d")
+		opdate = ""
 
-	query = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'paper_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
+	if opdate: 
+		query = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'paper_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
 
 	now = datetime.datetime.now()
 	qlist = list(query)
