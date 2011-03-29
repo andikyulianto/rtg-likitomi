@@ -11,7 +11,7 @@ from statusTracking.machine import machine_list
 #Weight
 from weight.views import index
 from weight.scale_views import scale
-from weight.minclamp import minclamp, minupdate, minundo, minchangeloc
+from weight.minclamp import minclamp, minupdate, minundo
 from weight.clamplift_views import clamplift, update, undo, changeloc
 from weight.plan_views import plan, wholeplan
 from weight.now import now
@@ -74,12 +74,11 @@ urlpatterns = patterns('',
 	(r'^clamplift/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-	(r'^minclamp/$', minclamp),
-	(r'^minclamp/update/$', minupdate),
-	(r'^minclamp/update/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^minclamp/undo/$', minundo),
-	(r'^minclamp/changeloc/$', minchangeloc),
-	(r'^minclamp/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^minclamp/$', minclamp),###
+	(r'^minclamp/update/$', minupdate),###
+	(r'^minclamp/undo/$', minundo),###
+#	(r'^minclamp/changeloc/$', minchangeloc),
+#	(r'^minclamp/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^minclamp/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^now/$', now),
