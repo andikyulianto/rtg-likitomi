@@ -1,7 +1,37 @@
 ﻿<html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
-<link rel="stylesheet" type="text/css" href="css/plan.css" />
+<style type="text/css">
+table
+{
+width:100%;
+}
+
+td
+{
+text-align:center;
+vertical-align:middle;
+}
+
+.map{border-width:0px; width:80px;}
+
+.gray{background-color:lightgray; border-width:0px;}
+
+.lkf1{background-color:#004000; color:white; font-weight:bold; border-width:0px;}
+.lkf2{background-color:#006600; color:white; font-weight:bold; border-width:0px;}
+.lkf3{background-color:#339933; color:black; font-weight:bold; border-width:0px;}
+.lkf4{background-color:#99CC99; color:black; font-weight:bold; border-width:0px;}
+
+.s1{background-color:#000080; color:white; font-weight:bold; border-width:0px;}
+.s2{background-color:#0000CC; color:white; font-weight:bold; border-width:0px;}
+.s3{background-color:#3333FF; color:black; font-weight:bold; border-width:0px;}
+.s4{background-color:#9999FF; color:black; font-weight:bold; border-width:0px;}
+
+.ocl1{background-color:#800000; color:white; font-weight:bold; border-width:0px;}
+.ocl2{background-color:#CC0000; color:white; font-weight:bold; border-width:0px;}
+.ocl3{background-color:#FF3333; color:black; font-weight:bold; border-width:0px;}
+.ocl4{background-color:#FF9999; color:black; font-weight:bold; border-width:0px;}
+</style>
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -95,9 +125,7 @@ $(document).ready(function(){
 {% load twelfth %}
 {% load thirteenth %}
 <div id="inventory">
-<!--Plan: {{pcode}} >> {{width}} {{mlist}}<br/>-->
-<!--Search: {{spcode}} >> {{swidth}} {{mlist2}}<br/>-->
-<!--Clamplift: {{cpcode}} >> {{cwidth}}, Location: {{lane}}-{{position}} *** @{{atlane}}-{{atposition}} {{mlist3}}<br/>-->
+
 <div id="values">
 	<div id="pcode">{{ pcode }}</div>
 	<div id="width">{{ width }}</div>
@@ -116,91 +144,23 @@ $(document).ready(function(){
 	<div id="loc">{{ loc }}</div>
 </div>
 
-H: {{Hlist}}<br/>
-G: {{Glist}}<br/>
-F: {{Flist}}<br/>
-E: {{Elist}}<br/>
-D: {{Dlist}}<br/>
-C: {{Clist}}<br/>
-B: {{Blist}}<br/>
-A: {{Alist}}
+<!--H: {{Hlist}} => {{posh}}<br/>-->
+<!--4th: {{THlist}} => {{pos4}}<br/>-->
+<!--G: {{Glist}} => {{posg}}<br/>-->
+<!--F: {{Flist}} => {{posf}}<br/>-->
+<!--3rd: {{RDlist}} => {{pos3}}<br/>-->
+<!--E: {{Elist}} => {{pose}}<br/>-->
+<!--D: {{Dlist}} => {{posd}}<br/>-->
+<!--2nd: {{NDlist}} => {{pos2}}<br/>-->
+<!--C: {{Clist}} => {{posc}}<br/>-->
+<!--B: {{Blist}} => {{posb}}<br/>-->
+<!--1st: {{STlist}} => {{pos1}}<br/>-->
+<!--A: {{Alist}} => {{posa}}<br/>-->
+<!--PLAN: {{mlist}}<br/>SEARCH: {{mlist2}}<br/>CLAMPLIFT: {{mlist3}}<br/>-->
 <!--@{{atlane}}-{{atposition}} *** {{lane}}-{{position}}<br/>Clamping: {{clamping}}; Changed: {{changed}}<br/>-->
-<!--4th: {{THlist}}<br/>-->
-<!--3rd: {{RDlist}}<br/>-->
-<!--2nd: {{NDlist}}<br/>-->
-<!--1st: {{STlist}}-->
-<!--<br/>{{delist}}<br/>{{wlist}}<br/>{{ridlist}}<br/>{{elist}}-->
-<br/>{{mlist}}
-<table style="height:80%">
-<tr>
 
-<!--<td class="top" style="width:8%; border:0px; vertical-align:middle;">-->
-<!--<table>-->
-<!--<!--	<tr>-->-->
-<!--<!--		<th>ID</th>-->-->
-<!--<!--		<th style="border:0px">Wght.</th>-->-->
-<!--<!--	</tr>-->-->
-<!--	<tr>-->
-<!--		<td style="border:0px;">-->
-<!--			<table>-->
-<!--			<tr>-->
-<!--				<td style="border:0px; vertical-align:bottom;" height="{{ lossinv }}px"><table>-->
-<!--				{% for w in dablist %}<tr><td {% if w < 100 %}class="lkf4"{% endif %}{% if w >= 100 and w < 400 %}class="lkf3"{% endif %}{% if w >= 400 and w < 700 %}class="lkf2"{% endif %}{% if w >= 700 or w == initail_weight %}class="lkf1"{% endif %}>{{ w }}</td></tr>{% endfor %}-->
-<!--				</table></td>-->
-<!--				<td style="border:0px; vertical-align:bottom;"><table>-->
-<!--					{% for c in cablist %}-->
-<!--					<tr><td style="border:0px;">x{{ c }}</td></tr>-->
-<!--					{% endfor %}-->
-<!--				</table></td>-->
-<!--			</tr>-->
-<!--			<tr><td colspan="2" style="background-color:lightgray;">{{ loss }}>></td></tr>-->
-<!--			<tr>-->
-<!--				<td style="border:0px; vertical-align:top;" height="{{ losspx }}px"><table>-->
-<!--				{% for w in dbllist %}<tr><td {% if w < 100 %}class="lkf4"{% endif %}{% if w >= 100 and w < 400 %}class="lkf3"{% endif %}{% if w >= 400 and w < 700 %}class="lkf2"{% endif %}{% if w >= 700 or w == initail_weight %}class="lkf1"{% endif %}>{{ w }}</td></tr>{% endfor %}-->
-<!--				</table></td>-->
-<!--				<td style="border:0px; vertical-align:top;"><table>-->
-<!--					{% for c in cbllist %}-->
-<!--					<tr><td style="border:0px;">x{{ c }}</td></tr>-->
-<!--					{% endfor %}-->
-<!--				</table></td>-->
-<!--			</tr>-->
-<!--			</table>-->
-<!--		</td>-->
-<!--		<td style="border:0px;"><img src="images/clamplift/ruler2.png" width="25px"/></td>-->
-<!--<!--		<td style="border:0px;"><table>-->-->
-<!--<!--			<tr height="75px"><td style="border:0px;">{% if c4 != 0 %}{{ c4 }}{% endif %}</td></tr>-->-->
-<!--<!--			<tr height="75px"><td style="border:0px;">{% if c3 != 0 %}{{ c3 }}{% endif %}</td></tr>-->-->
-<!--<!--			<tr height="75px"><td style="border:0px;">{% if c2 != 0 %}{{ c2 }}{% endif %}</td></tr>-->-->
-<!--<!--			<tr height="25px"><td style="border:0px;">{% if c1 != 0 %}{{ c1 }}{% endif %}</td></tr>-->-->
-<!--<!--		</table></td>-->-->
-<!--<!--	<td style="border:0px">-->-->
-<!--<!--	<table>-->-->
-<!--<!--	{% for w in ddwlist %}-->-->
-<!--<!--	<tr>-->-->
-<!--<!--		<td {% if w < 100 %}class="red"{% endif %}-->-->
-<!--<!--			{% if w >= 100 and w < 400 %}class="yellow"{% endif %}-->-->
-<!--<!--			{% if w >= 400 and w < 700 %}class="blue"{% endif %}-->-->
-<!--<!--			{% if w >= 700 or w == initail_weight %}class="green"{% endif %}>{{ w }}</td>-->-->
-<!--<!--	</tr>-->-->
-<!--<!--	{% endfor %}-->-->
-<!--<!--	</table>-->-->
-<!--<!--	</td>-->-->
-<!--<!--	<td style="border:0">-->-->
-<!--<!--	<table>-->-->
-<!--<!--	{% for c in clist %}-->-->
-<!--<!--	<tr><td style="border:0">x{{ c }}</td></tr>-->-->
-<!--<!--	{% endfor %}-->-->
-<!--<!--	</table>-->-->
-<!--<!--	</td>-->-->
-<!--	</tr>-->
-<!--<!--	<tr>-->-->
-<!--<!--		<th>ID</th>-->-->
-<!--<!--		<th style="border:0px">Kgs.</th>-->-->
-<!--<!--	</tr>-->-->
-<!--</table>-->
-<!--</td>-->
+<table style="height:100%;"><tr><td>
 
-<td style="width:100%; border:0px;">
 <table>
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map">{{ pos }}</td>{% endfor %}</tr>
 
@@ -208,7 +168,7 @@ A: {{Alist}}
 		{% for pos in posh %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '4' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Hlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -284,7 +244,7 @@ A: {{Alist}}
 		{% for pos in posg %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '4' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Glist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -319,7 +279,7 @@ A: {{Alist}}
 		{% for pos in posf %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '3' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Flist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -394,7 +354,7 @@ A: {{Alist}}
 		{% for pos in pose %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '3' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Elist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -429,7 +389,7 @@ A: {{Alist}}
 		{% for pos in posd %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '2' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Dlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -505,7 +465,7 @@ A: {{Alist}}
 		{% for pos in posc %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '2' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Clist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -540,7 +500,7 @@ A: {{Alist}}
 		{% for pos in posb %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Blist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -616,7 +576,7 @@ A: {{Alist}}
 		{% for pos in posa %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
+					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Alist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -650,9 +610,7 @@ A: {{Alist}}
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 </table>
 
-</td>
-</tr>
-</table>
+</td></tr></table>
 
 </div>
 </body>

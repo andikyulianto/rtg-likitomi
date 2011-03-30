@@ -18,37 +18,6 @@ from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 def index(request):
 	try:
 
-# GET values #
-		if 'opdate' in request.GET and request.GET['opdate']:
-			opdate = request.GET['opdate']
-		else:
-			opdate = ""
-
-		if 'pcode' in request.GET and request.GET['pcode']:
-			pcode = request.GET['pcode']
-		else:
-			pcode = ""
-
-		if 'width' in request.GET and request.GET['width']:
-			width = request.GET['width']
-		else:
-			width = ""
-
-		if 'loss' in request.GET and request.GET['loss']:
-			loss = request.GET['loss']
-		else:
-			loss = ""
-
-		if 'clamping' in request.GET and request.GET['clamping']:
-			clamping = request.GET['clamping']
-		else:
-			clamping = "no"
-
-		if 'changed' in request.GET and request.GET['changed']:
-			changed = request.GET['changed']
-		else:
-			changed = "no"
-
 # Query date list for plan #
 		dcursor = connection.cursor()
 		dcursor.execute("""
@@ -87,8 +56,6 @@ def index(request):
 		swidthlist = list()
 		for width in swidth:
 			swidthlist.append(width[0])
-
-
 
 	except:
 		pass

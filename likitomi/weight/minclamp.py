@@ -147,11 +147,11 @@ def minclamp(request):
 #			atposition = 5
 #			atlocation = 'Scale'
 
-			atlane = '1'
-			atposition = '5'
+			atlane = '2'
+			atposition = '3'
 			atlocation = 'Scale'
 
-			realtag = 68
+			realtag = 67
 
 # Query database from realtag #
 		if realtag:
