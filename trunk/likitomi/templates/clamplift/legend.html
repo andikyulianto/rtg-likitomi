@@ -1,0 +1,68 @@
+﻿<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<style type="text/css">
+.lkf1{background-color:#004000; color:white; font-weight:bold; border-width:0px;}
+.lkf2{background-color:#006600; color:white; font-weight:bold; border-width:0px;}
+.lkf3{background-color:#339933; color:black; font-weight:bold; border-width:0px;}
+.lkf4{background-color:#99CC99; color:black; font-weight:bold; border-width:0px;}
+
+.s1{background-color:#000080; color:white; font-weight:bold; border-width:0px;}
+.s2{background-color:#0000CC; color:white; font-weight:bold; border-width:0px;}
+.s3{background-color:#3333FF; color:black; font-weight:bold; border-width:0px;}
+.s4{background-color:#9999FF; color:black; font-weight:bold; border-width:0px;}
+
+.ocl1{background-color:#800000; color:white; font-weight:bold; border-width:0px;}
+.ocl2{background-color:#CC0000; color:white; font-weight:bold; border-width:0px;}
+.ocl3{background-color:#FF3333; color:black; font-weight:bold; border-width:0px;}
+.ocl4{background-color:#FF9999; color:black; font-weight:bold; border-width:0px;}
+</style>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+</head>
+<body>
+	<table>
+		<tr>
+			<td style="width:{{losspx}}px;">
+				<div style="float:right;"><table>
+					<tr>
+					{% for w in dlesslist %}<td style="text-align:center;" 
+						{% if w < 100 %}class="lkf4"{% endif %}
+						{% if w >= 100 and w < 400 %}class="lkf3"{% endif %}
+						{% if w >= 400 and w < 700 %}class="lkf2"{% endif %}
+						{% if w >= 700 or w == initail_weight %}class="lkf1"{% endif %}
+					>{{ w }}</td>{% endfor %}
+					</tr>
+					<tr>
+					{% for c in clesslist %}<td style="text-align:center;">x{{ c }}</td>{% endfor %}
+					</tr>
+				</table></div>
+			</td>
+			<td style="width:1px;">
+				<table>
+					<tr><td style="text-align:center;">{{loss}}</td></tr>
+					<tr><td><center>|</center></td></tr>
+				</table>
+			</td>
+			<td>
+				<table>
+					<tr>
+					{% for w in dmorelist %}<td style="text-align:center;" 
+						{% if w < 100 %}class="lkf4"{% endif %}
+						{% if w >= 100 and w < 400 %}class="lkf3"{% endif %}
+						{% if w >= 400 and w < 700 %}class="lkf2"{% endif %}
+						{% if w >= 700 or w == initail_weight %}class="lkf1"{% endif %}
+					>{{ w }}</td>{% endfor %}
+					</tr>
+					<tr>
+					{% for c in cmorelist %}<td style="text-align:center;">x{{ c }}</td>{% endfor %}
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="99"><img src="images/clamplift/legend.png"></td>
+		</tr>
+	<table>
+</body>
+﻿</html>
+

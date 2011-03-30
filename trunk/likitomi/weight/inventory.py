@@ -122,9 +122,14 @@ def inventory(request):
 		zero8 = [0, 0, 0, 0, 0, 0, 0, 0]
 		zero12 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+		pswitch = "on"
+		sswitch = "on"
+		cswitch = "on"
 
-# FROM PLAN #
-		if pcode != "" and width != "":
+###################################################################################################################################################################
+# FROM PLAN # ####################################################################################################################################################
+###################################################################################################################################################################
+		if pcode and width and pswitch == "on":
 			query = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('id')
 			qexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
 
@@ -156,11 +161,10 @@ def inventory(request):
 
 			for ind,pair in enumerate(mlist):
 				if pair[0] == u'A':
-					posa.pop(ind)
-					posa.insert(ind, float(str(wlist[ind])+"."+str(pair[1])))
+					posa.pop(pair[1]-1)
+					posa.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Alist):
-						Alist.append([pair[1]])
-						Alist[-1].extend(zero4)
+						Alist.append([pair[1],0,0,0,0])
 					for ls in Alist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -176,8 +180,7 @@ def inventory(request):
 					posb.pop(pair[1]-1)
 					posb.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Blist):
-						Blist.append([pair[1]])
-						Blist[-1].extend(zero4)
+						Blist.append([pair[1],0,0,0,0])
 					for ls in Blist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -193,8 +196,7 @@ def inventory(request):
 					posc.pop(pair[1]-1)
 					posc.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Clist):
-						Clist.append([pair[1]])
-						Clist[-1].extend(zero4)
+						Clist.append([pair[1],0,0,0,0])
 					for ls in Clist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -210,8 +212,7 @@ def inventory(request):
 					posd.pop(pair[1]-1)
 					posd.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Dlist):
-						Dlist.append([pair[1]])
-						Dlist[-1].extend(zero4)
+						Dlist.append([pair[1],0,0,0,0])
 					for ls in Dlist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -227,8 +228,7 @@ def inventory(request):
 					pose.pop(pair[1]-1)
 					pose.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Elist):
-						Elist.append([pair[1]])
-						Elist[-1].extend(zero4)
+						Elist.append([pair[1],0,0,0,0])
 					for ls in Elist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -244,8 +244,7 @@ def inventory(request):
 					posf.pop(pair[1]-1)
 					posf.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Flist):
-						Flist.append([pair[1]])
-						Flist[-1].extend(zero4)
+						Flist.append([pair[1],0,0,0,0])
 					for ls in Flist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -261,8 +260,7 @@ def inventory(request):
 					posg.pop(pair[1]-1)
 					posg.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Glist):
-						Glist.append([pair[1]])
-						Glist[-1].extend(zero4)
+						Glist.append([pair[1],0,0,0,0])
 					for ls in Glist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -278,8 +276,7 @@ def inventory(request):
 					posh.pop(pair[1]-1)
 					posh.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Hlist):
-						Hlist.append([pair[1]])
-						Hlist[-1].extend(zero4)
+						Hlist.append([pair[1],0,0,0,0])
 					for ls in Hlist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -295,9 +292,7 @@ def inventory(request):
 					pos4.pop(pair[1]-1)
 					pos4.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(THlist):
-						THlist.append([pair[1]])
-						THlist[-1].extend(zero4)
-					THlist[-1].extend(zero8)
+						THlist.append([pair[1],0,0,0,0])
 					for ls in THlist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -313,9 +308,7 @@ def inventory(request):
 					pos3.pop(pair[1]-1)
 					pos3.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(RDlist):
-						RDlist.append([pair[1]])
-						RDlist[-1].extend(zero4)
-					RDlist[-1].extend(zero8)
+						RDlist.append([pair[1],0,0,0,0])
 					for ls in RDlist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -331,9 +324,7 @@ def inventory(request):
 					pos2.pop(pair[1]-1)
 					pos2.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(NDlist):
-						NDlist.append([pair[1]])
-						NDlist[-1].extend(zero4)
-					NDlist[-1].extend(zero8)
+						NDlist.append([pair[1],0,0,0,0])
 					for ls in NDlist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -349,9 +340,7 @@ def inventory(request):
 					pos1.pop(pair[1]-1)
 					pos1.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(STlist):
-						STlist.append([pair[1]])
-						STlist[-1].extend(zero4)
-					STlist[-1].extend(zero8)
+						STlist.append([pair[1],0,0,0,0])
 					for ls in STlist:
 						if pair[1] == ls[0]:
 							if wlist[ind] == initial_weight or wlist[ind] >= 700:
@@ -363,8 +352,10 @@ def inventory(request):
 							elif 100 > wlist[ind]:
 								ls[1] = ls[1] + 1
 
-# FROM SEARCH #
-		if spcode != "" and swidth != "":
+###################################################################################################################################################################
+# FROM SEARCH # ##################################################################################################################################################
+###################################################################################################################################################################
+		if spcode and swidth and sswitch == "on":
 			query2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).values_list('id')
 			qexists2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).exists()
 
@@ -399,9 +390,12 @@ def inventory(request):
 					posa.pop(pair[1]-1)
 					posa.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Alist):
-						Alist.append([pair[1]])
-						Alist[-1].extend(zero4)
-					Alist[-1].extend(zero8)
+						Alist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Alist:
+							if ls[0] == pair[1]:
+								dex = Alist.index(ls)
+						Alist[dex].extend(zero4)
 					for ls in Alist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -417,9 +411,12 @@ def inventory(request):
 					posb.pop(pair[1]-1)
 					posb.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Blist):
-						Blist.append([pair[1]])
-						Blist[-1].extend(zero4)
-					Blist[-1].extend(zero8)
+						Blist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Blist:
+							if ls[0] == pair[1]:
+								dex = Blist.index(ls)
+						Blist[dex].extend(zero4)
 					for ls in Blist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -435,9 +432,12 @@ def inventory(request):
 					posc.pop(pair[1]-1)
 					posc.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Clist):
-						Clist.append([pair[1]])
-						Clist[-1].extend(zero4)
-					Clist[-1].extend(zero8)
+						Clist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Clist:
+							if ls[0] == pair[1]:
+								dex = Clist.index(ls)
+						Clist[dex].extend(zero4)
 					for ls in Clist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -453,9 +453,12 @@ def inventory(request):
 					posd.pop(pair[1]-1)
 					posd.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Dlist):
-						Dlist.append([pair[1]])
-						Dlist[-1].extend(zero4)
-					Dlist[-1].extend(zero8)
+						Dlist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Dlist:
+							if ls[0] == pair[1]:
+								dex = Dlist.index(ls)
+						Dlist[dex].extend(zero4)
 					for ls in Dlist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -471,9 +474,12 @@ def inventory(request):
 					pose.pop(pair[1]-1)
 					pose.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Elist):
-						Elist.append([pair[1]])
-						Elist[-1].extend(zero4)
-					Elist[-1].extend(zero8)
+						Elist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Elist:
+							if ls[0] == pair[1]:
+								dex = Elist.index(ls)
+						Elist[dex].extend(zero4)
 					for ls in Elist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -489,9 +495,12 @@ def inventory(request):
 					posf.pop(pair[1]-1)
 					posf.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Flist):
-						Flist.append([pair[1]])
-						Flist[-1].extend(zero4)
-					Flist[-1].extend(zero8)
+						Flist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Flist:
+							if ls[0] == pair[1]:
+								dex = Flist.index(ls)
+						Flist[dex].extend(zero4)
 					for ls in Flist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -507,9 +516,12 @@ def inventory(request):
 					posg.pop(pair[1]-1)
 					posg.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Glist):
-						Glist.append([pair[1]])
-						Glist[-1].extend(zero4)
-					Glist[-1].extend(zero8)
+						Glist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Glist:
+							if ls[0] == pair[1]:
+								dex = Glist.index(ls)
+						Glist[dex].extend(zero4)
 					for ls in Glist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -525,9 +537,12 @@ def inventory(request):
 					posh.pop(pair[1]-1)
 					posh.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Hlist):
-						Hlist.append([pair[1]])
-						Hlist[-1].extend(zero4)
-					Hlist[-1].extend(zero8)
+						Hlist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in Hlist:
+							if ls[0] == pair[1]:
+								dex = Hlist.index(ls)
+						Hlist[dex].extend(zero4)
 					for ls in Hlist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -543,9 +558,12 @@ def inventory(request):
 					pos4.pop(pair[1]-1)
 					pos4.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(THlist):
-						THlist.append([pair[1]])
-						THlist[-1].extend(zero4)
-					THlist[-1].extend(zero8)
+						THlist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in THlist:
+							if ls[0] == pair[1]:
+								dex = THlist.index(ls)
+						THlist[dex].extend(zero4)
 					for ls in THlist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -561,9 +579,12 @@ def inventory(request):
 					pos3.pop(pair[1]-1)
 					pos3.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(RDlist):
-						RDlist.append([pair[1]])
-						RDlist[-1].extend(zero4)
-					RDlist[-1].extend(zero8)
+						RDlist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in RDlist:
+							if ls[0] == pair[1]:
+								dex = RDlist.index(ls)
+						RDlist[dex].extend(zero4)
 					for ls in RDlist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -579,9 +600,12 @@ def inventory(request):
 					pos2.pop(pair[1]-1)
 					pos2.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(NDlist):
-						NDlist.append([pair[1]])
-						NDlist[-1].extend(zero4)
-					NDlist[-1].extend(zero8)
+						NDlist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in NDlist:
+							if ls[0] == pair[1]:
+								dex = NDlist.index(ls)
+						NDlist[dex].extend(zero4)
 					for ls in NDlist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -597,9 +621,12 @@ def inventory(request):
 					pos1.pop(pair[1]-1)
 					pos1.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(STlist):
-						STlist.append([pair[1]])
-						STlist[-1].extend(zero4)
-					STlist[-1].extend(zero8)
+						STlist.append([pair[1],0,0,0,0,0,0,0,0])
+					else:
+						for ls in STlist:
+							if ls[0] == pair[1]:
+								dex = STlist.index(ls)
+						STlist[dex].extend(zero4)
 					for ls in STlist:
 						if pair[1] == ls[0]:
 							if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -611,8 +638,10 @@ def inventory(request):
 							elif 100 > wlist2[ind]:
 								ls[5] = ls[5] + 1
 
-# FROM CLAMPLIFT #
-		if cpcode != "" and cwidth != "":
+###################################################################################################################################################################
+# FROM CLAMPLIFT # ###############################################################################################################################################
+###################################################################################################################################################################
+		if cpcode and cwidth and cswitch == "on":
 			query3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).values_list('id')
 			qexists3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).exists()
 
@@ -647,9 +676,13 @@ def inventory(request):
 					posa.pop(pair[1]-1)
 					posa.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Alist):
-						Alist.append([pair[1]])
-						Alist[-1].extend(zero8)
-					Alist[-1].extend(zero12)
+						Alist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Alist:
+							if ls[0] == pair[1]:
+								dex = Alist.index(ls)
+						if len(Alist[dex]) == 5: Alist[dex].extend(zero8)
+						if len(Alist[dex]) == 9: Alist[dex].extend(zero4)
 					for ls in Alist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -665,9 +698,13 @@ def inventory(request):
 					posb.pop(pair[1]-1)
 					posb.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Blist):
-						Blist.append([pair[1]])
-						Blist[-1].extend(zero8)
-					Blist[-1].extend(zero12)
+						Blist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Blist:
+							if ls[0] == pair[1]:
+								dex = Blist.index(ls)
+						if len(Blist[dex]) == 5: Blist[dex].extend(zero8)
+						if len(Blist[dex]) == 9: Blist[dex].extend(zero4)
 					for ls in Blist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -683,9 +720,13 @@ def inventory(request):
 					posc.pop(pair[1]-1)
 					posc.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Clist):
-						Clist.append([pair[1]])
-						Clist[-1].extend(zero8)
-					Clist[-1].extend(zero12)
+						Clist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Clist:
+							if ls[0] == pair[1]:
+								dex = Clist.index(ls)
+						if len(Clist[dex]) == 5: Clist[dex].extend(zero8)
+						if len(Clist[dex]) == 9: Clist[dex].extend(zero4)
 					for ls in Clist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -701,9 +742,13 @@ def inventory(request):
 					posd.pop(pair[1]-1)
 					posd.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Dlist):
-						Dlist.append([pair[1]])
-						Dlist[-1].extend(zero8)
-					Dlist[-1].extend(zero12)
+						Dlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Dlist:
+							if ls[0] == pair[1]:
+								dex = Dlist.index(ls)
+						if len(Dlist[dex]) == 5: Dlist[dex].extend(zero8)
+						if len(Dlist[dex]) == 9: Dlist[dex].extend(zero4)
 					for ls in Dlist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -719,9 +764,13 @@ def inventory(request):
 					pose.pop(pair[1]-1)
 					pose.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Elist):
-						Elist.append([pair[1]])
-						Elist[-1].extend(zero8)
-					Elist[-1].extend(zero12)
+						Elist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Elist:
+							if ls[0] == pair[1]:
+								dex = Elist.index(ls)
+						if len(Elist[dex]) == 5: Elist[dex].extend(zero8)
+						if len(Elist[dex]) == 9: Elist[dex].extend(zero4)
 					for ls in Elist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -737,9 +786,13 @@ def inventory(request):
 					posf.pop(pair[1]-1)
 					posf.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Flist):
-						Flist.append([pair[1]])
-						Flist[-1].extend(zero8)
-					Flist[-1].extend(zero12)
+						Flist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Flist:
+							if ls[0] == pair[1]:
+								dex = Flist.index(ls)
+						if len(Flist[dex]) == 5: Flist[dex].extend(zero8)
+						if len(Flist[dex]) == 9: Flist[dex].extend(zero4)
 					for ls in Flist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -755,9 +808,13 @@ def inventory(request):
 					posg.pop(pair[1]-1)
 					posg.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Glist):
-						Glist.append([pair[1]])
-						Glist[-1].extend(zero8)
-					Glist[-1].extend(zero12)
+						Glist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Glist:
+							if ls[0] == pair[1]:
+								dex = Glist.index(ls)
+						if len(Glist[dex]) == 5: Glist[dex].extend(zero8)
+						if len(Glist[dex]) == 9: Glist[dex].extend(zero4)
 					for ls in Glist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -773,9 +830,13 @@ def inventory(request):
 					posh.pop(pair[1]-1)
 					posh.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(Hlist):
-						Hlist.append([pair[1]])
-						Hlist[-1].extend(zero8)
-					Hlist[-1].extend(zero12)
+						Hlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in Hlist:
+							if ls[0] == pair[1]:
+								dex = Hlist.index(ls)
+						if len(Hlist[dex]) == 5: Hlist[dex].extend(zero8)
+						if len(Hlist[dex]) == 9: Hlist[dex].extend(zero4)
 					for ls in Hlist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -791,9 +852,13 @@ def inventory(request):
 					pos4.pop(pair[1]-1)
 					pos4.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(THlist):
-						THlist.append([pair[1]])
-						THlist[-1].extend(zero4)
-					THlist[-1].extend(zero8)
+						THlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in THlist:
+							if ls[0] == pair[1]:
+								dex = THlist.index(ls)
+						if len(THlist[dex]) == 5: THlist[dex].extend(zero8)
+						if len(THlist[dex]) == 9: THlist[dex].extend(zero4)
 					for ls in THlist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -809,9 +874,13 @@ def inventory(request):
 					pos3.pop(pair[1]-1)
 					pos3.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(RDlist):
-						RDlist.append([pair[1]])
-						RDlist[-1].extend(zero4)
-					RDlist[-1].extend(zero8)
+						RDlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in RDlist:
+							if ls[0] == pair[1]:
+								dex = RDlist.index(ls)
+						if len(RDlist[dex]) == 5: RDlist[dex].extend(zero8)
+						if len(RDlist[dex]) == 9: RDlist[dex].extend(zero4)
 					for ls in RDlist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -827,9 +896,13 @@ def inventory(request):
 					pos2.pop(pair[1]-1)
 					pos2.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(NDlist):
-						NDlist.append([pair[1]])
-						NDlist[-1].extend(zero4)
-					NDlist[-1].extend(zero8)
+						NDlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in NDlist:
+							if ls[0] == pair[1]:
+								dex = NDlist.index(ls)
+						if len(NDlist[dex]) == 5: NDlist[dex].extend(zero8)
+						if len(NDlist[dex]) == 9: NDlist[dex].extend(zero4)
 					for ls in NDlist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -837,6 +910,7 @@ def inventory(request):
 							elif 700 > wlist3[ind] and wlist3[ind] >= 400:
 								ls[11] = ls[11] + 1
 							elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+
 								ls[10] = ls[10] + 1
 							elif 100 > wlist3[ind]:
 								ls[9] = ls[9] + 1
@@ -845,9 +919,13 @@ def inventory(request):
 					pos1.pop(pair[1]-1)
 					pos1.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 					if str(pair[1]) not in str(STlist):
-						STlist.append([pair[1]])
-						STlist[-1].extend(zero4)
-					STlist[-1].extend(zero8)
+						STlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
+					else:
+						for ls in STlist:
+							if ls[0] == pair[1]:
+								dex = STlist.index(ls)
+						if len(STlist[dex]) == 5: STlist[dex].extend(zero8)
+						if len(STlist[dex]) == 9: STlist[dex].extend(zero4)
 					for ls in STlist:
 						if pair[1] == ls[0]:
 							if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -861,7 +939,7 @@ def inventory(request):
 
 # FLOATING VEHICLE #
 		for ind,item in enumerate(pos1):
-			if item == atposition:
+			if item == atposition and atlane == '1':
 				pos1.pop(ind)
 				pos1.insert(ind,"*")
 			if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
@@ -873,7 +951,7 @@ def inventory(request):
 				pos1.insert(ind,vios)
 
 		for ind,item in enumerate(pos2):
-			if item == atposition:
+			if item == atposition and atlane == '2':
 				pos2.pop(ind)
 				pos2.insert(ind,"*")
 			if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
@@ -885,7 +963,7 @@ def inventory(request):
 				pos2.insert(ind,vios)
 
 		for ind,item in enumerate(pos3):
-			if item == atposition:
+			if item == atposition and atlane == '3':
 				pos3.pop(ind)
 				pos3.insert(ind,"*")
 			if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
@@ -897,7 +975,7 @@ def inventory(request):
 				pos3.insert(ind,vios)
 
 		for ind,item in enumerate(pos4):
-			if item == atposition:
+			if item == atposition and atlane == '4':
 				pos4.pop(ind)
 				pos4.insert(ind,"*")
 			if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
@@ -923,6 +1001,7 @@ def inventory(request):
 			leftlane = 'H'
 			rightlane = 'G'
 
+# MANUAL CHANGE LOCATION #
 		if loc == "up" or loc == "down":
 			lquery = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
 			lqlist = list(lquery)
@@ -942,6 +1021,7 @@ def inventory(request):
 			p.position = atposition
 			p.save()
 
+# AUTO CHANGE LOCATION #
 		if clamping == "yes" and changed == "no":
 			ccquery = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
 			ccqlist = list(ccquery)

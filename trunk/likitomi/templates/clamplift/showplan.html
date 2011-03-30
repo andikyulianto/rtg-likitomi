@@ -1,7 +1,13 @@
 ﻿<html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
-<link rel="stylesheet" type="text/css" href="css/plan.css" />
+<style type="text/css">
+td
+{
+text-align:center;
+vertical-align:middle;
+}
+</style>
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -10,17 +16,20 @@ $(document).ready(function(){
 		var i = 0;
 		for (i=0;i<=100;i++){
 			if (i<{{chosen}}){
-				$("[name="+i+"]").children().css("background-color","#FBFBFB");
+				$("[name="+i+"]").children().css("background-color","#F8F8F8");
 			}
 			else if (i=={{chosen}}){
-				$("[name="+i+"]").children().css("background-color","#EDEDED");
+				$("[name="+i+"]").children().css("background-color","#F1F1F1");
 			}
 			else {
-				$("[name="+i+"]").children().css("background-color","white");
+				$("[name="+i+"]").children().css("background-color","#F8F8F8");
 			}
 		}
 		var hicode = $(this).attr("title");
 		var hiwidth = $(this).attr("id");
+		var loss = $(this).attr("lang");
+		$("#legend", top.document).load("/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss);
+
 		$("[title="+hicode+"][id="+hiwidth+"]").css("background-color","yellow");
 		$(".infront").css("background-color","white");
 
@@ -42,37 +51,37 @@ $(document).ready(function(){
 </head>
 
 <body onload="window.scrollTo(0,{{scroll}})">
-	<table style="font-size:80%">
+	<table style="font-size:80%;">
 		{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
-		<tr name="{{ n }}" height="30px"{% if n < chosen %}style="background-color:#FBFBFB;"{% endif %}{% if n == chosen %}style="background-color:#EDEDED;"{% endif %}{% if n > chosen %}style="background-color:white;"{% endif %}>
-			<td class="infront" rowspan='2' style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
-			<td rowspan='2' width="33px">{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2' width="53px">{{ sheet_code }}</td>
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
+			<td class="infront" rowspan="2" style="width:10px; height:60px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
+			<td rowspan='2' style="width:52px;">{{ start_time|time:"H:i" }}</td>
+			<td rowspan='2' style="width:70px;">{{ sheet_code }}</td>
 			<td width="56px">{{ paper_width_inch }}</td>
 			{% if bl %} <!-- BL -->
-			<td class="click" width="56px" title="{{bl}}" id="{{paper_width_inch}}">{{ bl }}<br />({{ loss_bl }})</td>
+			<td class="click" style="width:56px;" title="{{bl}}" id="{{paper_width_inch}}" lang="{{loss_bl}}">{{ bl }}<br />({{ loss_bl }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if bm %} <!-- BM -->
-			<td class="click" width="56px" title="{{bm}}" id="{{paper_width_inch}}">{{ bm }}<br />({{ loss_bm }})</td>
+			<td class="click" style="width:56px;" title="{{bm}}" id="{{paper_width_inch}}" lang="{{loss_bm}}">{{ bm }}<br />({{ loss_bm }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 		</tr>
-		<tr name="{{ n }}" height="30px"{% if n < chosen %}style="background-color:#FBFBFB;"{% endif %}{% if n == chosen %}style="background-color:#EDEDED;"{% endif %}{% if n > chosen %}style="background-color:white;"{% endif %}>
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
 			{% if df %} <!-- DF -->
-			<td class="click" width="56px" title="{{df}}" id="{{paper_width_inch}}">{{ df }}<br />({{ loss_df }})</td>
+			<td class="click" style="width:56px;" title="{{df}}" id="{{paper_width_inch}}" lang="{{loss_df}}">{{ df }}<br />({{ loss_df }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if cl %} <!-- CL -->
-			<td class="click" width="56px" title="{{cl}}" id="{{paper_width_inch}}">{{ cl }}<br />({{ loss_cl }})</td>
+			<td class="click" style="width:56px;" title="{{cl}}" id="{{paper_width_inch}}" lang="{{loss_cl}}">{{ cl }}<br />({{ loss_cl }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if cm %} <!-- CM -->
-			<td class="click" width="56px" title="{{cm}}" id="{{paper_width_inch}}">{{ cm }}<br />({{ loss_cm }})</td>
+			<td class="click" style="width:56px;" title="{{cm}}" id="{{paper_width_inch}}" lang="{{loss_cm}}">{{ cm }}<br />({{ loss_cm }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
