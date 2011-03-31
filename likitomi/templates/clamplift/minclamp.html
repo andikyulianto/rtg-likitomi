@@ -1,7 +1,95 @@
 ﻿<html>
 <head>
+
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<style type="text/css">
+td
+{
+border: 0px solid black;
+text-align:center;
+}
+
+p{font-size:150%;}
+
+.label
+{
+text-align:right;
+color:dimgray;
+}
+
+.var
+{
+color:black;
+text-align:center;
+font-weight:bold;
+}
+
+#big{font-size:200%;}
+
+
+.locbutton
+{
+background-color:gray;
+border:2px solid silver;
+text-align:center;
+cursor:pointer;
+width:10%;
+}
+
+.minloc
+{
+background-color:gray;
+border:2px solid silver;
+text-align:center;
+cursor:pointer;
+font-size:50%;
+}
+
+#gridbutton
+{
+position:absolute; 
+height:50px;
+width:50px;
+border:2px solid silver;
+background-color:dimgray;
+text-align:center;
+cursor:pointer;
+}
+
+#confirm
+{
+position:absolute;
+bottom:10px;
+height:50px;
+width:80px;
+border:2px solid silver;
+background-color:dimgray;
+text-align:center;
+}
+
+#lanebutton
+{
+position:absolute; 
+height:25px;
+width:100px;
+border:2px solid silver;
+background-color:mediumaquamarine;
+text-align:center;
+}
+
+#posbutton
+{
+position:absolute; 
+height:50px;
+width:50px;
+border:2px solid silver;
+background-color:slategray;
+text-align:center;
+}
+</style>
+
 <script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/clamplift.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$(window).load(function minClamp(){
@@ -65,6 +153,377 @@ function changeLocRight()
 {
 	document.getElementById("frm5").submit();
 }
+
+function otherLoc()
+{
+	var width = top.document.documentElement.clientWidth + top.document.documentElement.scrollLeft;
+
+	var layer = top.document.createElement('div');
+	layer.style.zIndex = 2;
+	layer.id = 'layer';
+	layer.style.position = 'absolute';
+	layer.style.top = '0px';
+	layer.style.left = '0px';
+	//layer.style.height = top.document.documentElement.scrollHeight + 'px';
+	layer.style.height = screen.height - 5 + 'px';
+	layer.style.width = width + 'px';
+	layer.style.backgroundColor = 'black';
+	layer.style.opacity = '.6';
+	layer.style.filter += ("progid:DXImageTransform.Microsoft.Alpha(opacity=60)");
+	top.document.body.appendChild(layer);
+
+	var div = top.document.createElement('div');
+	div.style.zIndex = 3;
+	div.id = 'box';
+	div.style.position = (navigator.userAgent.indexOf('MSIE 6') > -1) ? 'absolute' : 'fixed';
+	div.style.top = '50px'; 
+	div.style.left = (width / 2) - (400 / 2) + 'px'; 
+	div.style.height = '400px';
+	div.style.width = '400px';
+	div.style.backgroundColor = 'lightgray';
+	div.style.opacity = '1';
+	div.style.border = '2px solid silver';
+	div.style.padding = '20px';
+	top.document.body.appendChild(div);
+
+	var mes = document.createElement('b');
+	mes.innerHTML = "<center>Please enter lane and position.</center>".fontsize(4);
+	div.appendChild(mes);
+
+	var l = document.createElement('b');
+	l.innerHTML = '_____'.fontcolor('lightgray')+'Lane >'.fontsize(4);
+	div.appendChild(l);
+
+	var ilane = document.createElement('input');
+	ilane.style.fontSize = '150%';
+	ilane.style.color = 'black';
+	ilane.style.textAlign = 'center';
+	ilane.maxlength = 4;
+	ilane.size = 1;
+	ilane.type = 'text';
+	ilane.id = 'ilane';
+	ilane.value = '{{lane}}';
+	div.appendChild(ilane);
+
+	var d = document.createElement('b');
+	d.innerHTML = '-'.fontsize(4);
+	div.appendChild(d);
+
+	var iposition = document.createElement('input');
+	iposition.style.fontSize = '150%';
+	iposition.style.color = 'black';
+	iposition.style.textAlign = 'center';
+	iposition.maxlength = '4';
+	iposition.size = '1';
+	iposition.type = 'text';
+	iposition.id = 'iposition';
+	iposition.value = '{{position}}';
+	div.appendChild(iposition);
+
+	var p = document.createElement('b');
+	p.innerHTML = '< Position'.fontsize(4);
+	div.appendChild(p);
+
+	var h = document.createElement('a');
+	h.id = 'lanebutton';
+	h.style.top = '90px';
+	h.style.left = '50px'; 
+	h.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"H".fontsize(4).bold()+"</td></tr></table>";
+	h.onclick = function()
+	{
+		document.getElementById('ilane').value = 'H';
+	}
+	div.appendChild(h);
+
+	var g = document.createElement('a');
+	g.id = 'lanebutton';
+	g.style.top = '130px';
+	g.style.left = '50px'; 
+	g.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"G".fontsize(4).bold()+"</td></tr></table>";
+	g.onclick = function()
+	{
+		document.getElementById('ilane').value = 'G';
+	}
+	div.appendChild(g);
+
+	var f = document.createElement('a');
+	f.id = 'lanebutton';
+	f.style.top = '160px';
+	f.style.left = '50px'; 
+	f.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"F".fontsize(4).bold()+"</td></tr></table>";
+	f.onclick = function()
+	{
+		document.getElementById('ilane').value = 'F';
+	}
+	div.appendChild(f);
+
+	var e = document.createElement('a');
+	e.id = 'lanebutton';
+	e.style.top = '200px';
+	e.style.left = '50px'; 
+	e.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"E".fontsize(4).bold()+"</td></tr></table>";
+	e.onclick = function()
+	{
+		document.getElementById('ilane').value = 'E';
+	}
+	div.appendChild(e);
+
+	var d = document.createElement('a');
+	d.id = 'lanebutton';
+	d.style.top = '230px';
+	d.style.left = '50px'; 
+	d.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"D".fontsize(4).bold()+"</td></tr></table>";
+	d.onclick = function()
+	{
+		document.getElementById('ilane').value = 'D';
+	}
+	div.appendChild(d);
+
+	var c = document.createElement('a');
+	c.id = 'lanebutton';
+	c.style.top = '270px';
+	c.style.left = '50px'; 
+	c.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"C".fontsize(4).bold()+"</td></tr></table>";
+	c.onclick = function()
+	{
+		document.getElementById('ilane').value = 'C';
+	}
+	div.appendChild(c);
+
+	var b = document.createElement('a');
+	b.id = 'lanebutton';
+	b.style.top = '300px';
+	b.style.left = '50px'; 
+	b.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"B".fontsize(4).bold()+"</td></tr></table>";
+	b.onclick = function()
+	{
+		document.getElementById('ilane').value = 'B';
+	}
+	div.appendChild(b);
+
+	var a = document.createElement('a');
+	a.id = 'lanebutton';
+	a.style.top = '340px';
+	a.style.left = '50px';
+	a.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"A".fontsize(4).bold()+"</td></tr></table>";
+	a.onclick = function()
+	{
+		document.getElementById('ilane').value = 'A';
+	}
+	div.appendChild(a);
+
+	var trig = 0;
+
+	var one = document.createElement('a');
+	one.id = 'posbutton';
+	one.style.top = '90px';
+	one.style.left = '200px'; 
+	one.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"1".fontsize(6).bold()+"</td></tr></table>";
+	one.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '1';
+	}
+	div.appendChild(one);
+
+	var two = document.createElement('a');
+	two.id = 'posbutton';
+	two.style.top = '90px';
+	two.style.left = '280px'; 
+	two.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"2".fontsize(6).bold()+"</td></tr></table>";
+	two.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '2';
+	}
+	div.appendChild(two);
+
+	var three = document.createElement('a');
+	three.id = 'posbutton';
+	three.style.top = '90px';
+	three.style.left = '360px'; 
+	three.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"3".fontsize(6).bold()+"</td></tr></table>";
+	three.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '3';
+	}
+	div.appendChild(three);
+
+	var four = document.createElement('a');
+	four.id = 'posbutton';
+	four.style.top = '160px';
+	four.style.left = '200px'; 
+	four.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"4".fontsize(6).bold()+"</td></tr></table>";
+	four.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '4';
+	}
+	div.appendChild(four);
+
+	var five = document.createElement('a');
+	five.id = 'posbutton';
+	five.style.top = '160px';
+	five.style.left = '280px'; 
+	five.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"5".fontsize(6).bold()+"</td></tr></table>";
+	five.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '5';
+	}
+	div.appendChild(five);
+
+	var six = document.createElement('a');
+	six.id = 'posbutton';
+	six.style.top = '160px';
+	six.style.left = '360px'; 
+	six.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"6".fontsize(6).bold()+"</td></tr></table>";
+	six.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '6';
+	}
+	div.appendChild(six);
+
+	var seven = document.createElement('a');
+	seven.id = 'posbutton';
+	seven.style.top = '230px';
+	seven.style.left = '200px'; 
+	seven.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"7".fontsize(6).bold()+"</td></tr></table>";
+	seven.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '7';
+	}
+	div.appendChild(seven);
+
+	var eight = document.createElement('a');
+	eight.id = 'posbutton';
+	eight.style.top = '230px';
+	eight.style.left = '280px'; 
+	eight.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"8".fontsize(6).bold()+"</td></tr></table>";
+	eight.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '8';
+	}
+	div.appendChild(eight);
+
+	var nine = document.createElement('a');
+	nine.id = 'posbutton';
+	nine.style.top = '230px';
+	nine.style.left = '360px'; 
+	nine.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"9".fontsize(6).bold()+"</td></tr></table>";
+	nine.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '9';
+	}
+	div.appendChild(nine);
+
+	var clr = document.createElement('a');
+	clr.id = 'posbutton';
+	clr.style.top = '300px';
+	clr.style.left = '200px'; 
+	clr.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"clr".fontsize(5).bold()+"</td></tr></table>";
+	clr.onclick = function()
+	{
+		document.getElementById('iposition').value = '';
+	}
+	div.appendChild(clr);
+
+	var zero = document.createElement('a');
+	zero.id = 'posbutton';
+	zero.style.top = '300px';
+	zero.style.left = '280px'; 
+	zero.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"0".fontsize(6).bold()+"</td></tr></table>";
+	zero.onclick = function()
+	{
+		if (trig == 0)
+		{
+			document.getElementById('iposition').value = '';
+			trig = 1;
+		}
+		if (document.getElementById('iposition').value != '' && document.getElementById('iposition').value.length < 2 && trig == 1)
+		document.getElementById('iposition').value += '0';
+	}
+	div.appendChild(zero);
+
+	var ok = document.createElement('a');
+	ok.id = 'confirm';
+	ok.style.left = '70px'; 
+	ok.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
+	//ok.href = 'javascript:void(0)';
+	ok.onclick = function() 
+	{
+		var lanebox = document.getElementById('ilane').value;
+		var posbox = document.getElementById('iposition').value;
+		document.getElementById("lane").value = lanebox;
+		document.getElementById("pos").value = posbox;
+		document.getElementById("frm3").submit();
+		document.body.removeChild(document.getElementById('layer'));
+		document.body.removeChild(document.getElementById('box'));
+	}
+	div.appendChild(ok);
+
+	var cancel = document.createElement('a');
+	cancel.id = 'confirm';
+	cancel.style.right = '80px'; 
+	cancel.innerHTML = "<table height='100%'><tr><td style='cursor:pointer' align='center'>"+"Cancel".fontsize(4).bold()+"</td></tr></table>";
+	//cancel.href = 'javascript:void(0)';
+	cancel.onclick = function() 
+	{
+		document.body.removeChild(document.getElementById('layer'));
+		document.body.removeChild(document.getElementById('box'));
+	}
+	div.appendChild(cancel);
+}
 </script>
 </head>
 <body>
@@ -77,22 +536,29 @@ function changeLocRight()
 	<input id="atposition" type="hidden" value="{{ atposition }}" />
 	<input id="realtag" type="hidden" value="{{ realtag }}" />
 	{% if realtag %}
-	<table style="width:100%;"><tr>
-		<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
-		<td><p class="label">P.Code: </p></td><td><p class="var">{{ paper_code }}</p></td>
-		<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td>
-		<td><p class="label">Loc.:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
-		<td align="center" rowspan="2">{% if undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}</td>
-		<td><p class="label">Weight: </p></td><td><p class="var">{{ actual_wt }}</p></td>
-		{% if atlocation == "Scale" and actual_wt > temp_weight %}
-		<td align="center">>>></td>
-		<td><p class="var" id="minbig">{{ temp_weight }}</p></td>
-		{% endif %}
-		<td><p class="unit">kgs.</p></td>
-		{% if atlocation == "Scale" and actual_wt > temp_weight %}<td align="center" rowspan="2"><a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a></td>{% endif %}
-		<td style="text-align:center"><a href="/clamplift/" target="_parent"><button>More</button></a></td>
-		<td><img src="images/clamplift/legend.png"></td>
-	</tr></table>
+	<table style="width:100%;">
+		<tr>
+			<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
+			<td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td>
+			<td style="text-align:center;" rowspan="2">
+				{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}
+				{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="50px" src="images/clamplift/changeloc.png"></a>{% endif %}
+			</td>
+			<td rowspan="2"><p class="label">Weight: </p></td><td rowspan="2"><p class="var">{{ actual_wt }}</p></td>
+			{% if atlocation == "Scale" and actual_wt > temp_weight %}
+			<td  rowspan="2" style="text-align:center;">>>></td>
+			<td rowspan="2"><p class="var">{{ temp_weight }}</p></td>
+			{% endif %}
+			<td rowspan="2"><p class="unit">kgs.</p></td>
+			{% if atlocation == "Scale" and actual_wt > temp_weight %}<td style="text-align:center;" rowspan="2"><a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a></td>{% endif %}
+			{% if atlocation == "Scale" %}<td style="text-align:center;" rowspan="2"><a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a></td>{% endif %}
+			<td rowspan="2" style="text-align:right;"><img src="images/clamplift/legend.png"></td>
+		</tr>
+		<tr>
+			<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td>
+			<td><p class="label">Loc.:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
+		</tr>
+	</table>
 	{% endif %}
 
 	<form id="frm1" action="/minclamp/update/" method="get">
