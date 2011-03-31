@@ -149,7 +149,7 @@ def clamplift(request):
 
 			atlane = '1'
 			atposition = '5'
-			atlocation = 'Stock'
+			atlocation = 'Scale'
 
 			realtag = 68
 
