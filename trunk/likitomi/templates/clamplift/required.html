@@ -14,21 +14,21 @@ vertical-align:middle;
 	<table style="font-size:80%">
 		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
 		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
-			<td rowspan="2" style="width:10px; height:50px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
-			<td rowspan='2' style="width:52px;">{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2' style="width:70px;">{{ sheet_code }}</td>
-			<td rowspan='2' class="kr" style="width:63px;">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan='2' style="width:21px;">{{ flute }}</td>
-			<td class='df' rowspan='2' style="width:72px;"><br />{{ df }}</td>
-			<td style="width:73px;">{{ bl }}</td>
+			<td rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
+			<td rowspan="2" style="width:52px;">{{ start_time|time:"H:i" }}</td>
+			<td rowspan="2" style="width:70px;">{{ sheet_code }}</td>
+			<td rowspan="2" class="kr" style="width:63px;">{{ sono }}<br />{{ ordno }}</td>
+			<td rowspan="2" style="width:21px;">{{ flute }}</td>
+			<td class='df' rowspan="2" style="width:72px;"><br />{{ df }}</td>
+			<td style="width:73px; height:34px;">{{ bl }}</td>
 			<td style="width:73px;">{{ bm }}</td>
-			<td rowspan='2' class="kr" style="width:79px;">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
-			<td class='df' rowspan='2' style="width:118px;"><center>+LOSS</center>{{ loss_df }}</td>
+			<td rowspan="2" class="kr" style="width:79px;">{{ paper_width_mm }}<br />{{ paper_width_inch }}</td>
+			<td class='df' rowspan="2" style="width:118px;"><center>+LOSS</center>{{ loss_df }}</td>
 			<td style="width:37px;">{{ loss_bl }}</td>
 			<td style="width:42px;">{{ loss_bm }}</td>
 		</tr>
 		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
-			<td style="height:50px;">{{ cl }}</td>
+			<td style="height:34px;">{{ cl }}</td>
 			<td>{{ cm }}</td>
 			<td>{{ loss_cl }}</td>
 			<td>{{ loss_cm }}</td>

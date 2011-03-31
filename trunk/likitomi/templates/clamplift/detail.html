@@ -13,22 +13,22 @@ vertical-align:middle;
 	<table style="font-size:80%">
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut, n in nlist %}
 		<tr name="{{ n }}" style="height:30px; background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
-			<td class="infront" rowspan='2' style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
-			<td rowspan='2' width="52px">{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2' width="70px">{{ sheet_code }}</td>
-			<td rowspan='2' class="kr" width="63px">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan='2' class="kl" width="150px">{{ customer_name }}<br />{{ product }}</td>
-			<td class='df' rowspan='2' width="60px"><br />{{ length_df }}</td>
-			<td width="30px">{{ length_bl }}</td>
-			<td width="30px">{{ length_bm }}</td>
-			<td class='df' rowspan='2' width="80px"><center>ACTUAL</center>{{ actual_df }}</td>
-			<td width="25px">{{ actual_bl }}</td>
-			<td width="28px">{{ actual_bm }}</td>
-			<td rowspan="2" width="65px">{{ sheet_length }}</td>
-			<td width="40px">{{ case }}</td>
+			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
+			<td rowspan="2" style="width:52px;">{{ start_time|time:"H:i" }}</td>
+			<td rowspan="2" style="width:70px;">{{ sheet_code }}</td>
+			<td rowspan="2" class="kr" style="width:63px;">{{ sono }}<br />{{ ordno }}</td>
+			<td rowspan="2" class="kl" style="width:150px;">{{ customer_name }}<br />{{ product }}</td>
+			<td class='df' rowspan="2" style="width:60px;"><br />{{ length_df }}</td>
+			<td style="width:30px; height:34px;">{{ length_bl }}</td>
+			<td style="width:30px;">{{ length_bm }}</td>
+			<td class='df' rowspan="2" style="width:80px;"><center>ACTUAL</center>{{ actual_df }}</td>
+			<td style="width:25px;">{{ actual_bl }}</td>
+			<td style="width:28px;">{{ actual_bm }}</td>
+			<td rowspan="2" style="width:65px;">{{ sheet_length }}</td>
+			<td style="width:40px;">{{ case }}</td>
 		</tr>
 		<tr name="{{ n }}" style="height:30px; background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
-			<td>{{ length_cl }}</td>
+			<td style="height:34px;">{{ length_cl }}</td>
 			<td>{{ length_cm }}</td>
 			<td>{{ actual_cl }}</td>
 			<td>{{ actual_cm }}</td>

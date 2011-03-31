@@ -32,26 +32,30 @@ if (i<10)
 return i;
 }
 
-//function minClamp(){
-//	$("#minclamp").load("/minclamp/");
-//	t = setTimeout('minClamp()', 2000);
-//}
-
 $(document).ready(function(){
 	startTime();
-//	minClamp();
 
 	$("#selected").change(function(){
 		var opdate = $("#selected").val();
 		if (opdate == ""){
 			$("#plan").css("visibility","hidden");
-			$("#whole").attr("disabled", "disabled");
+			$("#whole").attr("disabled","disabled");
 		}
 		else {
-			$("#plan").attr("src", "/showplan/?opdate="+opdate);
 			$("#plan").css("visibility","visible");
 			$("#whole").removeAttr("disabled");
+			var status = $("#status").val();
+			if (status == "min"){
+				$("#plan").attr("src", "/showplan/?opdate="+opdate);
+			}
+			else if (status == "req"){
+				$("#plan").attr("src", "/required/?opdate="+opdate);
+			}
+			else if (status == "det"){
+				$("#plan").attr("src", "/detail/?opdate="+opdate);
+			}
 		}
+		$("#legend").hide();
 	});
 
 	$("#uppest").click(function(){
@@ -78,6 +82,7 @@ $(document).ready(function(){
 		$("#plan")[0].contentWindow.scrollTo(0,9999);
 	});
 
+	$("#slegend").hide();
 	$("#search").click(function(){
 		var pcode = $('#map').contents().find('#pcode').html();
 		var width = $('#map').contents().find('#width').html();
@@ -95,6 +100,7 @@ $(document).ready(function(){
 		var clamping = $('#map').contents().find('#clamping').html();
 		var changed = $('#map').contents().find('#changed').html();
 		if (spcode != "" && swidth != ""){
+			$("#slegend").show();
 			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
 		}
 	});
@@ -102,18 +108,22 @@ $(document).ready(function(){
 	$("#min").hide();
 	$("#reqhead").hide();
 	$("#dethead").hide();
+	$("#reqdet").hide();
 	$("#whole").click(function(){
 		$(this).hide();
 		$("#min").show();
 //		$("#plan").animate({width:"1500px"});
 		$("#hide").hide();
-		$("#span").attr("colspan","2")
+		$("#span").attr("colspan","3")
+		$("#reqdet").show();
 		// Table Head //
 		$("#minhead").hide();
 		$("#reqhead").show();
 		// Table Body //
 		var opdate = $("#selected").val();
 		$("#plan").attr("src","/required/?opdate="+opdate);
+		$("#status").val("req");
+		$("#legend").hide();
 	});
 
 	$("#min").click(function(){
@@ -122,12 +132,35 @@ $(document).ready(function(){
 //		$("#plan").animate({width:"1500px"});
 		$("#hide").show();
 		$("#span").attr("colspan","1")
+		$("#reqdet").hide();
 		// Table Head //
 		$("#minhead").show();
 		$("#reqhead").hide();
+		$("#dethead").hide();
 		// Table Body //
 		var opdate = $("#selected").val();
 		$("#plan").attr("src","/showplan/?opdate="+opdate);
+		$("#status").val("min");
+	});
+
+	$("#reqbut").click(function(){
+		$(this).attr("disabled","disabled");
+		$("#detbut").removeAttr("disabled");
+		$("#dethead").hide();
+		$("#reqhead").show();
+		var opdate = $("#selected").val();
+		$("#plan").attr("src","/required/?opdate="+opdate);
+		$("#status").val("req");
+	});
+
+	$("#detbut").click(function(){
+		$(this).attr("disabled","disabled");
+		$("#reqbut").removeAttr("disabled");
+		$("#reqhead").hide();
+		$("#dethead").show();
+		var opdate = $("#selected").val();
+		$("#plan").attr("src","/detail/?opdate="+opdate);
+		$("#status").val("det");
 	});
 
 });
@@ -135,28 +168,17 @@ $(document).ready(function(){
 
 </head>
 
-<!--<frameset rows="88%,12%">-->
-<!--	<frameset cols="40%,60%">-->
-<!--		<frame src="/plan/?opdate={{opdate}}" scrolling="no" name="plan" id="plan">-->
-<!--		<frameset rows="11%,89%">-->
-<!--			<frame src="/search/">-->
-<!--			<frame src="/stock/" name="stock" id="stock"/>-->
-<!--		</frameset>-->
-<!--	</frameset>-->
-<!--	<frame src="/minclamp/" scrolling="no" />-->
-<!--</frameset>-->
-
 <body>
 <table style="width:100%; height:100%; position:absolute; left:0px; right:0px; top:0px; bottom:0px;">
-	<tr style="height:10%;">
+	<tr>
 <!--DATETIME-->
-		<td>
-			<table style="width:540px; height:100%;"><tr><td style="text-align:left;">{% now "Y-m-d" %}</td><td style="text-align:right;"><div id="clock"></div></td></tr></table>
+		<td style="height:1px;">
+			<table style="width:360px; height:100%;"><tr><td style="text-align:left;">{% now "Y-m-d" %}</td><td style="text-align:right;"><div id="clock"></div></td></tr></table>
 		</td>
 <!--SEARCH-->
 		<td colspan="2">
 			<div style="float:right;"><table><tr>
-				<td><img src="images/clamplift/legend.png"></td>
+				<td><img id="slegend" src="images/clamplift/legend.png"></td>
 				<td>
 					<form>
 						<select id="spcode">
@@ -181,12 +203,16 @@ $(document).ready(function(){
 			</tr></table></div>
 		</td>
 	</tr>
-	<tr style="height:80%;">
+	<tr>
 <!--PLAN-->
 		<td id="span" style="width:40%;">
 			<table style="width:100%; height:100%;">
 				<tr>
-					<td style="width:1px;">
+					<td style="width:260px; height:82px;">
+<!--						<div id="legend"></div>-->
+						<iframe id="legend" frameborder="0" width="260px" height="80px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+					</td>
+					<td style="text-align:left;">
 						<form>
 							<select id="selected" name="opdate">
 								<option value="">Date:</option>
@@ -195,16 +221,15 @@ $(document).ready(function(){
 								{% endfor %}
 							</select>
 						</form>
+						<button id="whole" disabled="disabled">More</button><button id="min">Less</button>
 					</td>
-					<td style="height:115px; width:350px;">
-						<center><div id="legend"></div></center>
-					</td>
-					<td style="text-align:left;"><button id="whole" disabled="disabled">More</button><button id="min">Less</button></td>
+					<input id="status" value="min" type="hidden" />
+					<td id="reqdet"><button id="reqbut" disabled="disabled">Required</button><button id="detbut">Detail</button></td>
 				</tr>
 				<tr>
 					<td colspan="3">
 						<table style="width:100%;"><tr>
-							<td style="width:100px;"></td>
+							<td style="width:10px;"></td>
 							<td><img id="uppest" src="images/clamplift/earliest.png"/></td>
 							<td><img id="upper" src="images/clamplift/early.png"/></td>
 							<td><img id="up" src="images/clamplift/earlier.png"/></td>
@@ -229,7 +254,7 @@ $(document).ready(function(){
 								<td rowspan='2' style="width:10px; background-color:white;"></td>
 								<td rowspan='2' style="width:52px;">TIME</td>
 								<td rowspan='2' style="width:70px;">SHEET<br />CODE</td>
-								<td rowspan='2' style="width:63px;" class="kr">S.O.NO.<br />ORD NO.</td>
+								<td rowspan='2' style="width:63px;" class="kr">S.O.NO.<br />ORD.NO.</td>
 								<td rowspan='2' style="width:21px;">F</td>
 								<td rowspan='2' style="width:72px;">PAPER<br />D-F</td>
 								<td style="width:73px;">B-L</td>
@@ -274,7 +299,7 @@ $(document).ready(function(){
 						<iframe id="plan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" width="100%" height="290px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 
 						<table style="width:100%;"><tr>
-							<td style="width:100px;"></td>
+							<td style="width:10px;"></td>
 							<td><img id="downest" src="images/clamplift/latest.png"/></td>
 							<td><img id="downer" src="images/clamplift/lately.png"/></td>
 							<td><img id="down" src="images/clamplift/later.png"/></td>
@@ -289,9 +314,9 @@ $(document).ready(function(){
 		</td>
 	</tr>
 <!--CLAMPLIFT-->
-	<tr style="height:10%;">
+	<tr>
 		<td colspan="3">
-			<iframe id="minclamp" src="/minclamp/" frameborder="0" width="100%" height="50px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+			<iframe id="minclamp" src="/minclamp/" frameborder="0" width="100%" height="80px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 <!--			<div id="minclamp"></div>-->
 		</td>
 	</tr>

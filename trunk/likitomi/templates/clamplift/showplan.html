@@ -28,7 +28,9 @@ $(document).ready(function(){
 		var hicode = $(this).attr("title");
 		var hiwidth = $(this).attr("id");
 		var loss = $(this).attr("lang");
-		$("#legend", top.document).load("/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss);
+//		$("#legend", top.document).load("/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss);
+		top.legend.location = "/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss;
+		$("#legend", top.document).show();
 
 		$("[title="+hicode+"][id="+hiwidth+"]").css("background-color","yellow");
 		$(".infront").css("background-color","white");
