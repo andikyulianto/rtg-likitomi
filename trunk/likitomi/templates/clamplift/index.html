@@ -10,6 +10,35 @@ border: 0px solid black;
 text-align:center;
 }
 
+#numbtn
+{
+position: absolute;
+width: 50px;
+height: 50px;
+background-color: dimgray;
+border: 2px solid silver;
+}
+
+#lanebtn
+{
+position: absolute;
+width: 75px;
+height: 25px;
+background-color: slategray;
+border: 2px solid silver;
+}
+
+#confirm
+{
+position:absolute;
+bottom:10px;
+height:50px;
+width:80px;
+border:2px solid silver;
+background-color:dimgray;
+}
+
+/* Not using */
 #overlay
 {
 position: fixed;
@@ -25,7 +54,7 @@ z-index: 2;
 #layer
 {
 position: fixed;
-width: 300px;
+width: 400px;
 height: 400px;
 background-color: lightgray;
 opacity: 1;
@@ -46,15 +75,45 @@ font-size: 150%;
 text-align: center; 
 }
 
-.lanebtn
-{
-width: 100px;
-height: 25px;
-background-color: dimgray;
-border: 2px solid silver;
-}
+
 
 .space {height: 15px;}
+
+
+
+#gridbutton
+{
+position:absolute;
+height:50px;
+width:50px;
+border:2px solid silver;
+background-color:dimgray;
+text-align:center;
+cursor:pointer;
+}
+
+
+
+#lanebutton
+{
+position:absolute; 
+height:25px;
+width:100px;
+border:2px solid silver;
+background-color:mediumaquamarine;
+text-align:center;
+}
+
+#posbutton
+{
+position:absolute; 
+height:50px;
+width:50px;
+border:2px solid silver;
+background-color:slategray;
+text-align:center;
+}
+
 </style>
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
@@ -212,6 +271,9 @@ $(document).ready(function(){
 		$("#status").val("det");
 	});
 
+	$("#numbtn").click(function(){
+	alert("alert");
+	});
 });
 </script>
 
