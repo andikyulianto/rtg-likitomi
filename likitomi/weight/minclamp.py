@@ -285,3 +285,38 @@ def minundo(request):
 #	transaction.rollback()
 
 	return HttpResponseRedirect('/minclamp/')
+
+def minchangeloc(request):
+	if 'realtag' in request.GET and request.GET['realtag']:
+		realtag = request.GET['realtag']
+	else:
+		realtag = ""
+
+	if 'lane' in request.GET and request.GET['lane']:
+		ilane = request.GET['lane']
+	else:
+		ilane = ""
+
+	if 'pos' in request.GET and request.GET['pos']:
+		ipos = request.GET['pos']
+	else:
+		ipos = ""
+
+	lquery = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
+	lqlist = list(lquery)
+	paper_code = lqlist[0]
+	width = lqlist[1]
+	wunit = lqlist[2]
+	initial_weight = lqlist[3]
+	temp_weight = lqlist[4]
+	p = PaperRoll(id=realtag, width=width, wunit=wunit, initial_weight=initial_weight, temp_weight=temp_weight)
+	p.paper_code = paper_code
+	p.width = width
+	p.wunit = wunit
+	p.initial_weight = initial_weight
+	p.temp_weight = temp_weight
+	p.lane = ilane
+	p.position = ipos
+	p.save()
+
+	return HttpResponseRedirect('/minclamp/')
