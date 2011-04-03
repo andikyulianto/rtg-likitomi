@@ -20,32 +20,45 @@
 	<br>
 	<center>
 			<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
-			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,previous,next in items %}
+			{% for start,end,product,actual_start,actual_end,previous,next,plan_amount,actual_amount_pt in items %}
 			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
-			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbunderline">{{previous}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbunderline">{{next}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+			<td> {{plan_amount}} </td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{previous}}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{next}}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">&nbsp;</font></p></td>
 			</tr>
 			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td><p class="tbsgunderline">
 				{% if actual_start != NULL %}
 				{{ actual_start|time:"H:i" }}
 				{% else %} 
-				<font color="white">-</font>
+				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
 				{% if actual_end != NULL %}
 				{{ actual_end|time:"H:i" }}
 				{% else %}
-				<font color="white">-</font>
+				<font color="white">&nbsp;</font>
+				{% endif %}
+
+			</p></td>
+			<td align="right"><p class="tbsgunderline">				
+				{% if actual_amount_pt != NULL%}
+				 {% if actual_amount_pt < plan_amount %}
+				<font color="red">{{actual_amount_pt}}</font>
+				{% else %}
+				{{actual_amount_pt}}
+				{% endif %}
+				{% else %}
+				<font color="red">0</font>
 				{% endif %}
 
 			</p></td>

@@ -20,19 +20,20 @@
 <center>
 <br>
 <table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"> Sch.IN </td><td width="15%"> Sch.OUT </td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
-			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th></tr></thead>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,cv_machine,previous,next,next2 in items %}
+			{% for start,end,product,actual_start,actual_end,cv_machine,previous,next,next2,plan_amount,actual_amount_cv in items %}
 			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
-			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">{{previous}}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">{% if next == NULL %} {{next2}} {% else %}{{next}}{% endif %}<br><font color="white">-</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+			<td>{{ plan_amount }}</td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">{{previous}}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">{% if next == NULL %} {{next2}} {% else %}{{next}}{% endif %}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">&nbsp;</font></p></td>
 			</tr>
 			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
 			<td><p class="tbsgunderline">
@@ -45,10 +46,23 @@
 				{% if actual_end != NULL %}
 				{{ actual_end|time:"H:i" }}
 				{% else %}
-				<font color="white">-</font>
+				<font color="white">&nbsp;</font>
 				{% endif %}
 
 			</p></td>
+			<td align="right"><p class="tbsgunderline">				
+				{% if actual_amount_cv != NULL%}
+				 {% if actual_amount_cv < plan_amount %}
+				<font color="red">{{actual_amount_cv}}</font>
+				{% else %}
+				{{actual_amount_cv}}
+				{% endif %}
+				{% else %}
+				<font color="red">0</font>
+				{% endif %}
+
+			</p></td>
+
 			</tr>
 			{% endfor %}
 			</table>
