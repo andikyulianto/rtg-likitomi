@@ -14,13 +14,30 @@
 	$(function() {
 		$( "#accordion" ).accordion();
 	});
+	
+	var auto_refresh = setInterval(
+	function()
+	{	
+		$div = $('#divNormalPlan');
+		if ($div.hasClass('ui-accordion-content-active'))
+        	{
+			$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("slow");
+		}
+	}, 15000);
 
 	$(function() {
-		$( "#datepickerFrom" ).datepicker();
+		$( "#datepickerFromNotProcess" ).datepicker();
 	});
 
 	$(function() {
-		$( "#datepickerTo" ).datepicker();
+		$( "#datepickerToNotProcess" ).datepicker();
+	});
+	$(function() {
+		$( "#datepickerFromMissing" ).datepicker();
+	});
+
+	$(function() {
+		$( "#datepickerToMissing" ).datepicker();
 	});
 	</script>
 </head>
