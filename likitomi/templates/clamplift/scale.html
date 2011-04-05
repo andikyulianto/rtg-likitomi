@@ -1,25 +1,51 @@
 ﻿<html>
 <head>
-	<title>Likitomi: @Scale</title>
-	<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
-	<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
-	<script type="text/javascript" src="javascript/jquery.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$(window).load(function scale(){
-			$("#scale").load("/scale/");
-			setTimeout(scale, 1000);
-		});
+<title>Likitomi: Scale Apps</title>
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<style type="text/css">
+td
+{
+border:0px solid black;
+vertical-align:middle;
+}
+
+p{font-size:200%;}
+
+.label
+{
+text-align:right;
+color:dimgray;
+}
+
+.var
+{
+color:black;
+text-align:center;
+font-weight:bold;
+}
+
+.unit
+{
+text-align:left;
+color:dimgray;
+}
+</style>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(window).load(function scale(){
+		$("#scale").load("/scale/");
+		setTimeout(scale, 1000);
 	});
-	</script>
+});
+</script>
 </head>
 <body>
 <div id="scale">
 
-	<table height="30%">
+	<center><table height="30%">
 		<tr>
-			<td></td>
-			<td id="black" width="80%"><div align="center">
+			<td style="width:500px; text-align:center; background-color:black;"><div>
 			{% ifequal digit1 "0" %}<img width="80px" src="images/clamplift/0.png">{% endifequal %}
 			{% ifequal digit1 "1" %}<img width="80px" src="images/clamplift/1.png">{% endifequal %}
 			{% ifequal digit1 "2" %}<img width="80px" src="images/clamplift/2.png">{% endifequal %}
@@ -86,13 +112,12 @@
 <!--			{% ifequal digit7 "8" %}<img width="80px" src="images/clamplift/8.png">{% endifequal %}-->
 <!--			{% ifequal digit7 "9" %}<img width="80px" src="images/clamplift/9.png">{% endifequal %}-->
 			</div></td>
-			<td></td>
 		</tr>
-	</table>
+	</table></center>
 
 	<br />
 {% if realtag != "" %}
-	<table id="whitesmoke">
+	<center><table id="whitesmoke">
 		<tr>
 			<td><p class="label">Paper Roll ID: </p></td>
 			<td>{%ifnotequal realtag "" %}<p class="var">{{ realtag }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
@@ -115,9 +140,8 @@
 			<td><p class="label">Used Weight: </p></td>
 			<td>{%ifnotequal used_weight "" %}<p class="var">{{ used_weight }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 			<td><p class="unit">kgs.</p></td>
-			<td width="20%"></td>
 		</tr>
-	</table>
+	</table></center>
 {% endif %}
 	<p align="center">{{ socror }}</p>
 

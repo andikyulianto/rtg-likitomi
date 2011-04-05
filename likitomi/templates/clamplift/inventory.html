@@ -14,36 +14,39 @@ text-align:center;
 vertical-align:middle;
 }
 
-.map{border-width:0px; width:20px; height:20px;}
+.map{border-width:0px; width:30px; height:30px;}
 
 .gray{background-color:lightgray; border-width:0px;}
 
-.lkf1{background-color:#004000; color:white; font-weight:bold; border-width:0px;}
-.lkf2{background-color:#006600; color:white; font-weight:bold; border-width:0px;}
-.lkf3{background-color:#339933; color:black; font-weight:bold; border-width:0px;}
-.lkf4{background-color:#99CC99; color:black; font-weight:bold; border-width:0px;}
+/* Green shades */
+.lkf1{background-color:#005A00; color:white; font-weight:bold; border-width:0px;}
+.lkf2{background-color:#008000; color:white; font-weight:bold; border-width:0px;}
+.lkf3{background-color:#4DA64D; color:black; font-weight:bold; border-width:0px;}
+.lkf4{background-color:#A6D2A6; color:black; font-weight:bold; border-width:0px;}
 
-.s1{background-color:#000080; color:white; font-weight:bold; border-width:0px;}
-.s2{background-color:#0000CC; color:white; font-weight:bold; border-width:0px;}
-.s3{background-color:#3333FF; color:black; font-weight:bold; border-width:0px;}
-.s4{background-color:#9999FF; color:black; font-weight:bold; border-width:0px;}
+/* Blue shades */
+.s1{background-color:#0000B2; color:white; font-weight:bold; border-width:0px;}
+.s2{background-color:#0000FF; color:white; font-weight:bold; border-width:0px;}
+.s3{background-color:#6666FF; color:black; font-weight:bold; border-width:0px;}
+.s4{background-color:#B2B2FF; color:black; font-weight:bold; border-width:0px;}
 
-.ocl1{background-color:#800000; color:white; font-weight:bold; border-width:0px;}
-.ocl2{background-color:#CC0000; color:white; font-weight:bold; border-width:0px;}
-.ocl3{background-color:#FF3333; color:black; font-weight:bold; border-width:0px;}
-.ocl4{background-color:#FF9999; color:black; font-weight:bold; border-width:0px;}
+/* Red shades */
+.ocl1{background-color:#B20000; color:white; font-weight:bold; border-width:0px;}
+.ocl2{background-color:#FF0000; color:white; font-weight:bold; border-width:0px;}
+.ocl3{background-color:#FF6666; color:black; font-weight:bold; border-width:0px;}
+.ocl4{background-color:#FFB2B2; color:black; font-weight:bold; border-width:0px;}
 </style>
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#values").hide();
+//	$("#values").hide();
 
 	$(window).load(function loadMap(){
-		var pcode = $("#pcode").html();
-		var width = $("#width").html();
-		var loss = $("#loss").html();
-		var spcode = $("#spcode").html();
-		var swidth = $("#swidth").html();
+		var pcode = $("#pcode").val();
+		var width = $("#width").val();
+		var loss = $("#loss").val();
+		var spcode = $("#spcode").val();
+		var swidth = $("#swidth").val();
 		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
 		var cwidth = $('#minclamp', top.document).contents().find('#cwidth').val();
 		var lane = $('#minclamp', top.document).contents().find('#lane').val();
@@ -54,8 +57,8 @@ $(document).ready(function(){
 		var position = $('#minclamp', top.document).contents().find('#position').val();
 		var atlane = $('#minclamp', top.document).contents().find('#atlane').val();
 		var atposition = $('#minclamp', top.document).contents().find('#atposition').val();
-		var clamping = $("#clamping").html();
-		var changed = $("#changed").html();
+		var clamping = $("#clamping").val();
+		var changed = $("#changed").val();
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
 		//alert(enal+"-"+position+" = "+atlane+"-"+atposition);
 		if (enal == atlane && position == atposition && clamping == "no" && changed == "no" && lane != undefined){
@@ -71,11 +74,11 @@ $(document).ready(function(){
 	});
 
 	$("#locup").click(function(){
-		var pcode = $("#pcode").html();
-		var width = $("#width").html();
-		var loss = $("#loss").html();
-		var spcode = $("#spcode").html();
-		var swidth = $("#swidth").html();
+		var pcode = $("#pcode").val();
+		var width = $("#width").val();
+		var loss = $("#loss").val();
+		var spcode = $("#spcode").val();
+		var swidth = $("#swidth").val();
 		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
 		var cwidth = $('#minclamp', top.document).contents().find('#cwidth').val();
 		var lane = $('#minclamp', top.document).contents().find('#lane').val();
@@ -89,11 +92,11 @@ $(document).ready(function(){
 	});
 
 	$("#locdown").click(function(){
-		var pcode = $("#pcode").html();
-		var width = $("#width").html();
-		var loss = $("#loss").html();
-		var spcode = $("#spcode").html();
-		var swidth = $("#swidth").html();
+		var pcode = $("#pcode").val();
+		var width = $("#width").val();
+		var loss = $("#loss").val();
+		var spcode = $("#spcode").val();
+		var swidth = $("#swidth").val();
 		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
 		var cwidth = $('#minclamp', top.document).contents().find('#cwidth').val();
 		var lane = $('#minclamp', top.document).contents().find('#lane').val();
@@ -127,23 +130,39 @@ $(document).ready(function(){
 {% load thirteenth %}
 <div id="inventory">
 
-<div id="values">
-	<div id="pcode">{{ pcode }}</div>
-	<div id="width">{{ width }}</div>
-	<div id="loss">{{ loss }}</div>
-	<div id="spcode">{{ spcode }}</div>
-	<div id="swidth">{{ swidth }}</div>
-	<div id="cpcode">{{ cpcode }}</div>
-	<div id="cwidth">{{ cwidth }}</div>
-	<div id="lane">{{ lane }}</div>
-	<div id="position">{{ position }}</div>
-	<div id="atlane">{{ atlane }}</div>
-	<div id="atposition">{{ atposition }}</div>
-	<div id="clamping">{{ clamping }}</div>
-	<div id="changed">{{ changed }}</div>
-	<div id="realtag">{{ realtag }}</div>
-	<div id="loc">{{ loc }}</div>
-</div>
+<!--<div id="values">-->
+<!--	<div id="pcode">{{ pcode }}</div>-->
+<!--	<div id="width">{{ width }}</div>-->
+<!--	<div id="loss">{{ loss }}</div>-->
+<!--	<div id="spcode">{{ spcode }}</div>-->
+<!--	<div id="swidth">{{ swidth }}</div>-->
+<!--	<div id="cpcode">{{ cpcode }}</div>-->
+<!--	<div id="cwidth">{{ cwidth }}</div>-->
+<!--	<div id="lane">{{ lane }}</div>-->
+<!--	<div id="position">{{ position }}</div>-->
+<!--	<div id="atlane">{{ atlane }}</div>-->
+<!--	<div id="atposition">{{ atposition }}</div>-->
+<!--	<div id="clamping">{{ clamping }}</div>-->
+<!--	<div id="changed">{{ changed }}</div>-->
+<!--	<div id="realtag">{{ realtag }}</div>-->
+<!--	<div id="loc">{{ loc }}</div>-->
+<!--</div>-->
+
+<input id="pcode" type="hidden" value="{{ pcode }}" />
+<input id="width" type="hidden" value="{{ width }}" />
+<input id="loss" type="hidden" value="{{ loss }}" />
+<input id="spcode" type="hidden" value="{{ spcode }}" />
+<input id="swidth" type="hidden" value="{{ swidth }}" />
+<input id="cpcode" type="hidden" value="{{ cpcode }}" />
+<input id="cwidth" type="hidden" value="{{ cwidth }}" />
+<input id="lane" type="hidden" value="{{ lane }}" />
+<input id="position" type="hidden" value="{{ position }}" />
+<input id="atlane" type="hidden" value="{{ atlane }}" />
+<input id="atposition" type="hidden" value="{{ atposition }}" />
+<input id="clamping" type="hidden" value="{{ clamping }}" />
+<input id="changed" type="hidden" value="{{ changed }}" />
+<input id="realtag" type="hidden" value="{{ realtag }}" />
+<input id="loc" type="hidden" value="{{ loc }}" />
 
 <!--H: {{Hlist}} => {{posh}}<br/>-->
 <!--4th: {{THlist}} => {{pos4}}<br/>-->
@@ -204,25 +223,27 @@ $(document).ready(function(){
 		{% for pos in pos4 %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
-						{% for ls in THlist %}
-							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if pos < 0 %}<img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" />{% endif %}
-								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
-								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
-								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
-								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
-								{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
-								{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
-								{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
-								{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
-								{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
-							{% endif %}
-						{% endfor %}
-					</tr></table></td>
+					<td style="border:0px">
+						<table cellspacing="0" cellpadding="0">
+							{% if pos < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
+							<tr>{% for ls in THlist %}
+								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+									{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+									{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+									{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+									{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+									{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+									{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
+									{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
+									{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
+									{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
+								{% endif %}
+							{% endfor %}</tr>
+						</table>
+					</td>
 				{% else %}
 					{% if atlane == '4' and pos == '*' %}
 						<td class="map"><img style="width:20px" src="images/clamplift/clamplift.png" /></td>
@@ -315,25 +336,27 @@ $(document).ready(function(){
 		{% for pos in pos3 %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
-						{% for ls in RDlist %}
-							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if pos < 0 %}<img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" />{% endif %}
-								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
-								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
-								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
-								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
-								{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
-								{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
-								{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
-								{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
-								{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
-							{% endif %}
-						{% endfor %}
-					</tr></table></td>
+					<td style="border:0px">
+						<table cellspacing="0" cellpadding="0">
+							{% if pos < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
+							<tr>{% for ls in RDlist %}
+								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+									{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+									{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+									{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+									{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+									{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+									{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
+									{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
+									{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
+									{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
+								{% endif %}
+							{% endfor %}</tr>
+						</table>
+					</td>
 				{% else %}
 					{% if atlane == '3' and pos == '*' %}
 						<td class="map"><img style="width:20px" src="images/clamplift/clamplift.png" /></td>
@@ -425,25 +448,27 @@ $(document).ready(function(){
 		{% for pos in pos2 %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" style="height:1px;"><tr>
-						{% for ls in NDlist %}
-							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if pos < 0 %}<img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" />{% endif %}
-								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
-								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
-								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
-								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
-								{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
-								{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
-								{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
-								{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
-								{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
-							{% endif %}
-						{% endfor %}
-					</tr></table></td>
+					<td style="border:0px">
+						<table cellspacing="0" cellpadding="0">
+							{% if pos < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
+							<tr>{% for ls in NDlist %}
+								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+									{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+									{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+									{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+									{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+									{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+									{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
+									{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
+									{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
+									{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
+								{% endif %}
+							{% endfor %}</tr>
+						</table>
+					</td>
 				{% else %}
 					{% if atlane == '2' and pos == '*' %}
 						<td class="map"><img style="width:20px" src="images/clamplift/clamplift.png" /></td>
@@ -536,25 +561,27 @@ $(document).ready(function(){
 		{% for pos in pos1 %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0"><tr>
-						{% for ls in STlist %}
-							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if pos < 0 %}<img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" />{% endif %}
-								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
-								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
-								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
-								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
-								{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
-								{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
-								{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
-								{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
-								{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
-							{% endif %}
-						{% endfor %}
-					</tr></table></td>
+					<td style="border:0px">
+						<table cellspacing="0" cellpadding="0">
+							{% if pos < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
+							<tr>{% for ls in STlist %}
+								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
+									{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
+									{% if ls|third != 0 %}<td class="lkf3" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
+									{% if ls|fourth != 0 %}<td class="lkf2" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
+									{% if ls|fifth != 0 %}<td class="lkf1" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
+									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
+									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
+									{% if ls|ninth != 0 %}<td class="s1" style="width:{{ls|ninth}}%">{{ ls|ninth }}</td>{% else %}{% endif %}
+									{% if ls|tenth != 0 %}<td class="ocl4" style="width:{{ls|tenth}}%">{{ ls|tenth }}</td>{% else %}{% endif %}
+									{% if ls|eleventh != 0 %}<td class="ocl3" style="width:{{ls|eleventh}}%">{{ ls|eleventh }}</td>{% else %}{% endif %}
+									{% if ls|twelfth != 0 %}<td class="ocl2" style="width:{{ls|twelfth}}%">{{ ls|twelfth }}</td>{% else %}{% endif %}
+									{% if ls|thirteenth != 0 %}<td class="ocl1" style="width:{{ls|thirteenth}}%">{{ ls|thirteenth }}</td>{% else %}{% endif %}
+								{% endif %}
+							{% endfor %}</tr>
+						</table>
+					</td>
 				{% else %}
 					{% if atlane == '1' and pos == '*' %}
 						<td class="map"><img style="width:20px" src="images/clamplift/clamplift.png" /></td>

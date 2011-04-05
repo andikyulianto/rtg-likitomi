@@ -11,7 +11,7 @@ vertical-align:middle;
 </head>
 
 <body onload="window.scrollTo(0,{{scroll}})">
-	<table style="font-size:80%">
+	<table style="font-size:60%">
 		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
 		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
 			<td rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>

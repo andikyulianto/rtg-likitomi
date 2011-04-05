@@ -11,7 +11,7 @@ def scale(request):
 	try:
 		weight = 'None'
 
-		operating_mode = 'real' # Operating mode = {'real', 'fake'} #
+		operating_mode = 'fake' # Operating mode = {'real', 'fake'} #
 
 		scale_mode = 'fake'
 
@@ -196,7 +196,7 @@ def scale(request):
 
 		if operating_mode == 'fake':
 
-			realtag = '0067'
+			realtag = 67
 
 # Query database #
 		if realtag != 'None':
