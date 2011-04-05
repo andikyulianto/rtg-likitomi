@@ -2,7 +2,6 @@
 <head>
 
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
-<link rel="stylesheet" type="text/css" href="css/mystyle.css" />
 <style type="text/css">
 td
 {
@@ -10,7 +9,7 @@ border: 0px solid black;
 text-align:center;
 }
 
-p{font-size:150%;}
+p{font-size:100%;}
 
 .label
 {
@@ -25,83 +24,7 @@ text-align:center;
 font-weight:bold;
 }
 
-#big{font-size:200%;}
-
-/* Not using */
-
-
-.locbutton
-{
-background-color:gray;
-border:2px solid silver;
-text-align:center;
-cursor:pointer;
-width:10%;
-}
-
-.minloc
-{
-background-color:gray;
-border:2px solid silver;
-text-align:center;
-cursor:pointer;
-font-size:50%;
-}
-
-.gridbutton
-{
-height:50px;
-width:50px;
-border:2px solid silver;
-background-color:dimgray;
-text-align:center;
-cursor:pointer;
-}
-
-.confirm
-{
-position:absolute;
-bottom:10px;
-height:50px;
-width:80px;
-border:2px solid silver;
-background-color:dimgray;
-text-align:center;
-}
-
-.lanebutton
-{
-position:absolute; 
-height:25px;
-width:100px;
-border:2px solid silver;
-background-color:mediumaquamarine;
-text-align:center;
-}
-
-.posbutton
-{
-position:absolute; 
-height:50px;
-width:50px;
-border:2px solid silver;
-background-color:slategray;
-text-align:center;
-}
-
-#overlay {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: black;
-filter:alpha(opacity=50);
--moz-opacity:0.5;
--khtml-opacity: 0.5;
-opacity: 0.5;
-z-index: 10000;
-}
+#big{font-size:150%;}
 </style>
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
@@ -125,40 +48,40 @@ function undoSubmit()
 	document.getElementById("frm2").submit();
 }
 
-function changeLocDown()
-{
-	document.getElementById("lane").value = '{{lane}}';
-	document.getElementById("pos").value = '{{downpos}}';
-	document.getElementById("frm3").submit();
-}
+//function changeLocDown()
+//{
+//	document.getElementById("lane").value = '{{lane}}';
+//	document.getElementById("pos").value = '{{downpos}}';
+//	document.getElementById("frm3").submit();
+//}
 
-function changeLocUp()
-{
-	document.getElementById("lane").value = '{{lane}}';
-	document.getElementById("pos").value = '{{uppos}}';
-	document.getElementById("frm3").submit();
-}
+//function changeLocUp()
+//{
+//	document.getElementById("lane").value = '{{lane}}';
+//	document.getElementById("pos").value = '{{uppos}}';
+//	document.getElementById("frm3").submit();
+//}
 
-function changeLocOpp()
-{
-	document.getElementById("lane").value = '{{opplane}}';
-	document.getElementById("pos").value = '{{position}}';
-	document.getElementById("frm3").submit();
-}
+//function changeLocOpp()
+//{
+//	document.getElementById("lane").value = '{{opplane}}';
+//	document.getElementById("pos").value = '{{position}}';
+//	document.getElementById("frm3").submit();
+//}
 
-function changeLocOppDown()
-{
-	document.getElementById("lane").value = '{{opplane}}';
-	document.getElementById("pos").value = '{{downpos}}';
-	document.getElementById("frm3").submit();
-}
+//function changeLocOppDown()
+//{
+//	document.getElementById("lane").value = '{{opplane}}';
+//	document.getElementById("pos").value = '{{downpos}}';
+//	document.getElementById("frm3").submit();
+//}
 
-function changeLocOppUp()
-{
-	document.getElementById("lane").value = '{{opplane}}';
-	document.getElementById("pos").value = '{{uppos}}';
-	document.getElementById("frm3").submit();
-}
+//function changeLocOppUp()
+//{
+//	document.getElementById("lane").value = '{{opplane}}';
+//	document.getElementById("pos").value = '{{uppos}}';
+//	document.getElementById("frm3").submit();
+//}
 
 function changeLocLeft()
 {
@@ -172,17 +95,30 @@ function changeLocRight()
 
 function otherLoc()
 {
+	var agent = navigator.userAgent;
+	var patt1 = /Chrome/;
+	var patt2 = /Firefox/;
+	var chrome = agent.match(patt1);
+	var firefox = agent.match(patt2);
+
 	var height = top.document.documentElement.clientHeight + top.document.documentElement.scrollTop;
 	var width = top.document.documentElement.clientWidth + top.document.documentElement.scrollLeft;
 
 	var layer = document.createElement('div');
 	layer.id = 'layer';
-	layer.style.zIndex = 2;
+	layer.style.zIndex = '2';
 	layer.style.position = 'absolute';
 	layer.style.top = '0px';
 	layer.style.left = '0px';
-	layer.style.height = height-5 + 'px';
-	layer.style.width = width-5 + 'px';
+//	layer.style.height = height-5 + 'px';
+//	layer.style.width = width-5 + 'px';
+	if (chrome == 'Chrome'){
+		layer.style.height = 600 +'px';
+		layer.style.width = 800 +'px';
+	} else if (firefox == 'Firefox'){
+		layer.style.height = 600-5 +'px';
+		layer.style.width = 800 +'px';
+	}
 	layer.style.backgroundColor = 'black';
 	layer.style.opacity = '.6';
 	layer.style.filter += ("progid:DXImageTransform.Microsoft.Alpha(opacity=60)");
@@ -190,10 +126,12 @@ function otherLoc()
 
 	var div = document.createElement('div');
 	div.id = 'box';
-	div.style.zIndex = 3;
+	div.style.zIndex = '3';
 	div.style.position = (navigator.userAgent.indexOf('MSIE 6') > -1) ? 'absolute' : 'fixed';
-	div.style.top = height/2-430/2 + 'px'; 
-	div.style.left = width/2-400/2 + 'px'; 
+//	div.style.top = height/2-430/2 + 'px'; 
+//	div.style.left = width/2-400/2 + 'px'; 
+	div.style.top = '85px'; 
+	div.style.left = '200px'; 
 	div.style.height = '430px';
 	div.style.width = '400px';
 	div.style.backgroundColor = 'lightgray';
@@ -535,8 +473,12 @@ function otherLoc()
 		var lanebox = top.document.getElementById('ilane').value;
 		var posbox = top.document.getElementById('iposition').value;
 		if (parseInt(posbox) <= 13) {
-			document.getElementById("lane").value = lanebox;
-			document.getElementById("pos").value = posbox;
+//			alert(lanebox);
+//			alert(posbox);
+			document.getElementById("ilane").value = lanebox;
+			document.getElementById("ipos").value = posbox;
+//			alert(document.getElementById("ilane").value);
+//			alert(document.getElementById("ipos").value);
 			document.getElementById("frm3").submit();
 			top.document.body.removeChild(top.document.getElementById('layer'));
 			top.document.body.removeChild(top.document.getElementById('box'));
@@ -581,13 +523,13 @@ function otherLoc()
 			</td>
 			<td rowspan="2"><p class="label">Weight: </p></td><td rowspan="2"><p class="var">{{ actual_wt }}</p></td>
 			{% if atlocation == "Scale" and actual_wt > temp_weight %}
-			<td  rowspan="2" style="text-align:center;">>>></td>
+			<td  rowspan="2" style="text-align:center;">></td>
 			<td rowspan="2"><p class="var">{{ temp_weight }}</p></td>
 			{% endif %}
 			<td rowspan="2"><p class="unit">kgs.</p></td>
 			{% if atlocation == "Scale" and actual_wt > temp_weight %}<td style="text-align:center;" rowspan="2"><a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a></td>{% endif %}
 			{% if atlocation == "Scale" %}<td style="text-align:center;" rowspan="2"><a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a></td>{% endif %}
-			<td rowspan="2" style="text-align:right;"><img src="images/clamplift/legend.png"></td>
+			<td rowspan="2" style="text-align:right;"><img src="images/clamplift/rlegend.png"></td>
 		</tr>
 		<tr>
 			<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td>
@@ -608,8 +550,8 @@ function otherLoc()
 
 	<form id="frm3" action="/minclamp/changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
-		<input id="lane" type="hidden" value="{{ lane }}" name="lane" />
-		<input id="pos" type="hidden" value="{{ position }}" name="pos" />
+		<input id="ilane" type="hidden" value="{{ lane }}" name="lane" />
+		<input id="ipos" type="hidden" value="{{ position }}" name="pos" />
 	</form>
 
 	<form id="frm4" action="/minclamp/changeloc/" method="get">

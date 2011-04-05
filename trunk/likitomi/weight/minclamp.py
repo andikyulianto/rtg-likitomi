@@ -165,30 +165,30 @@ def minclamp(request):
 			temp_weight = rtquerylist[4]
 			lane = rtquerylist[5]
 			position = rtquerylist[6]
-			uppos = int(position)+1
-			downpos = int(position)-1
 
-			if lane == 'A': opplane = 'B'
-			if lane == 'B': opplane = 'A' 
-			if lane == 'C': opplane = 'D'
-			if lane == 'D': opplane = 'C'
-			if lane == 'E': opplane = 'F'
-			if lane == 'F': opplane = 'E'
-			if lane == 'G': opplane = 'H'
-			if lane == 'H': opplane = 'G'
+#			uppos = int(position)+1
+#			downpos = int(position)-1
+#			if lane == 'A': opplane = 'B'
+#			if lane == 'B': opplane = 'A' 
+#			if lane == 'C': opplane = 'D'
+#			if lane == 'D': opplane = 'C'
+#			if lane == 'E': opplane = 'F'
+#			if lane == 'F': opplane = 'E'
+#			if lane == 'G': opplane = 'H'
+#			if lane == 'H': opplane = 'G'
 
-			if atlane == '1':
-				leftlane = 'A'
-				rightlane = 'B'
-			if atlane == '2':
-				leftlane = 'C'
-				rightlane = 'D'
-			if atlane == '3':
-				leftlane = 'E'
-				rightlane = 'F'
-			if atlane == '4':
-				leftlane = 'G'
-				rightlane = 'H'
+#			if atlane == '1':
+#				leftlane = 'A'
+#				rightlane = 'B'
+#			if atlane == '2':
+#				leftlane = 'C'
+#				rightlane = 'D'
+#			if atlane == '3':
+#				leftlane = 'E'
+#				rightlane = 'F'
+#			if atlane == '4':
+#				leftlane = 'G'
+#				rightlane = 'H'
 
 # For Hulk #
 #			digital = str(temp_weight)

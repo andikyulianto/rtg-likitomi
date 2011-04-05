@@ -37,83 +37,6 @@ width:80px;
 border:2px solid silver;
 background-color:dimgray;
 }
-
-/* Not using */
-#overlay
-{
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: black;
-opacity: 0.5;
-z-index: 2;
-}
-
-#layer
-{
-position: fixed;
-width: 400px;
-height: 400px;
-background-color: lightgray;
-opacity: 1;
-z-index: 3;
-border: 2px solid silver;
-}
-
-.txt
-{
-text-align: center;
-font-weight: bold;
-font-size: 100%;
-}
-
-.inp
-{
-font-size: 150%;
-text-align: center; 
-}
-
-
-
-.space {height: 15px;}
-
-
-
-#gridbutton
-{
-position:absolute;
-height:50px;
-width:50px;
-border:2px solid silver;
-background-color:dimgray;
-text-align:center;
-cursor:pointer;
-}
-
-
-
-#lanebutton
-{
-position:absolute; 
-height:25px;
-width:100px;
-border:2px solid silver;
-background-color:mediumaquamarine;
-text-align:center;
-}
-
-#posbutton
-{
-position:absolute; 
-height:50px;
-width:50px;
-border:2px solid silver;
-background-color:slategray;
-text-align:center;
-}
-
 </style>
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
@@ -171,7 +94,7 @@ $(document).ready(function(){
 	});
 
 	$("#upper").click(function(){
-		$("#plan")[0].contentWindow.scrollBy(0,-288);
+		$("#plan")[0].contentWindow.scrollBy(0,-216);
 	});
 
 	$("#up").click(function(){
@@ -183,7 +106,7 @@ $(document).ready(function(){
 	});
 
 	$("#downer").click(function(){
-		$("#plan")[0].contentWindow.scrollBy(0,288);
+		$("#plan")[0].contentWindow.scrollBy(0,216);
 	});
 
 	$("#downest").click(function(){
@@ -192,21 +115,21 @@ $(document).ready(function(){
 
 	$("#slegend").hide();
 	$("#search").click(function(){
-		var pcode = $('#map').contents().find('#pcode').html();
-		var width = $('#map').contents().find('#width').html();
-		var loss = $('#map').contents().find('#loss').html();
+		var pcode = $('#map').contents().find('#pcode').val();
+		var width = $('#map').contents().find('#width').val();
+		var loss = $('#map').contents().find('#loss').val();
 
-		var spcode = $('#spcode').val();
-		var swidth = $('#swidth').val();
+		var spcode = $('#spcodedd').val();
+		var swidth = $('#swidthdd').val();
 
-		var cpcode = $('#map').contents().find('#cpcode').html();
-		var cwidth = $('#map').contents().find('#cwidth').html();
-		var lane = $('#map').contents().find('#lane').html();
-		var position = $('#map').contents().find('#position').html();
-		var atlane = $('#map').contents().find('#atlane').html();
-		var atposition = $('#map').contents().find('#atposition').html();
-		var clamping = $('#map').contents().find('#clamping').html();
-		var changed = $('#map').contents().find('#changed').html();
+		var cpcode = $('#map').contents().find('#cpcode').val();
+		var cwidth = $('#map').contents().find('#cwidth').val();
+		var lane = $('#map').contents().find('#lane').val();
+		var position = $('#map').contents().find('#position').val();
+		var atlane = $('#map').contents().find('#atlane').val();
+		var atposition = $('#map').contents().find('#atposition').val();
+		var clamping = $('#map').contents().find('#clamping').val();
+		var changed = $('#map').contents().find('#changed').val();
 		if (spcode != "" && swidth != ""){
 			$("#slegend").show();
 			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
@@ -232,6 +155,12 @@ $(document).ready(function(){
 		$("#plan").attr("src","/required/?opdate="+opdate);
 		$("#status").val("req");
 		$("#legend").hide();
+		// Buttons //
+		$("#reqbut").attr("disabled","disabled");
+		$("#detbut").removeAttr("disabled");
+		$("#search").attr("disabled","disabled");
+		$("#spcodedd").attr("disabled","disabled");
+		$("#swidthdd").attr("disabled","disabled");
 	});
 
 	$("#min").click(function(){
@@ -249,6 +178,10 @@ $(document).ready(function(){
 		var opdate = $("#selected").val();
 		$("#plan").attr("src","/showplan/?opdate="+opdate);
 		$("#status").val("min");
+		// Buttons //
+		$("#search").removeAttr("disabled");
+		$("#spcodedd").removeAttr("disabled");
+		$("#swidthdd").removeAttr("disabled");
 	});
 
 	$("#reqbut").click(function(){
@@ -284,15 +217,15 @@ $(document).ready(function(){
 	<tr>
 <!--DATETIME-->
 		<td style="height:1px;">
-			<table style="width:360px; height:100%;"><tr><td style="text-align:left;">{% now "Y-m-d" %}</td><td style="text-align:right;"><div id="clock"></div></td></tr></table>
+			<table style="width:360px;"><tr><td style="text-align:left;">{% now "Y-m-d" %}</td><td style="text-align:right;"><div id="clock"></div></td></tr></table>
 		</td>
 <!--SEARCH-->
 		<td colspan="2">
 			<div style="float:right;"><table><tr>
-				<td><img id="slegend" src="images/clamplift/legend.png"></td>
+				<td><img id="slegend" src="images/clamplift/blegend.png"></td>
 				<td>
 					<form class="ui-menu">
-						<select id="spcode">
+						<select id="spcodedd">
 							<option value="">Paper Code:</option>
 							{% for paper_code in spcodelist %}
 							<option value="{{ paper_code }}">{{ paper_code }}</option>
@@ -302,7 +235,7 @@ $(document).ready(function(){
 				</td>
 				<td>
 					<form class="ui-menu">
-						<select id="swidth">
+						<select id="swidthdd">
 							<option value="">Size:</option>
 							{% for size in swidthlist %}
 							<option value="{{ size }}">{{ size }}</option>
@@ -407,7 +340,7 @@ $(document).ready(function(){
 							</tr>
 						</table>
 
-						<iframe id="plan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" width="100%" height="290px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+						<iframe id="plan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" width="100%" height="218px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 
 						<table style="width:100%;"><tr>
 							<td style="width:10px;"></td>

@@ -8,17 +8,17 @@ from statusTracking.update import startUpdate,endUpdate
 from statusTracking.machine import machine_list
 #from statusTracking.query import queryDateNotProcess
 
-#Weight
-from weight.views import index
-from weight.legend import legend
+# Weight #
 from weight.scale_views import scale
-from weight.minclamp import minclamp, minupdate, minundo, minchangeloc
-from weight.clamplift_views import clamplift, update, undo, changeloc
-from weight.plan_views import plan, wholeplan
-from weight.now import now
-from weight.showplan import showplan, showreq, reqhead, required, showdet, dethead, detail
-from weight.stock_views import stock, search
+from weight.views import index
+from weight.showplan import showplan, required, detail
 from weight.inventory import inventory
+from weight.minclamp import minclamp, minupdate, minundo, minchangeloc
+from weight.legend import legend
+#from weight.clamplift_views import clamplift, update, undo, changeloc
+#from weight.plan_views import plan, wholeplan
+#from weight.now import now
+#from weight.stock_views import stock, search
 from weight.longtry import orient, longtry
 
 # Uncomment the next two lines to enable the admin:
@@ -61,56 +61,57 @@ urlpatterns = patterns('',
 	(r'^likitomi/display/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
-	(r'^index/$', index),###
-	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-
-	(r'^legend/$', legend),###
-	(r'^legend/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-
+# Weight #
 	(r'^scale/$', scale),
 	(r'^scale/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	
+	(r'^index/$', index),
+	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-	(r'^clamplift/$', clamplift),
-	(r'^clamplift/update/$', update),
-	(r'^clamplift/update/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^clamplift/undo/$', undo),
-	(r'^clamplift/changeloc/$', changeloc),
-	(r'^clamplift/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^showplan/$', showplan),
+	(r'^showplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^required/$', required),
+	(r'^required/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^detail/$', detail),
+	(r'^detail/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^inventory/$', inventory),
+	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-	(r'^minclamp/$', minclamp),###
-	(r'^minclamp/update/$', minupdate),###
-	(r'^minclamp/undo/$', minundo),###
+	(r'^minclamp/$', minclamp),
+	(r'^minclamp/update/$', minupdate),
+	(r'^minclamp/undo/$', minundo),
 	(r'^minclamp/changeloc/$', minchangeloc),
 	(r'^minclamp/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^minclamp/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-	(r'^now/$', now),
-	(r'^plan/$', plan),
-	(r'^plan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^showplan/$', showplan),###
-	(r'^showplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^wholeplan/$', wholeplan),
-	(r'^wholeplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^showreq/$', showreq),
-	(r'^showreq/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^reqhead/$', reqhead),
-	(r'^reqhead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^required/$', required),
-	(r'^required/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^showdet/$', showdet),
-	(r'^showdet/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^dethead/$', dethead),
-	(r'^dethead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^detail/$', detail),
-	(r'^detail/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^legend/$', legend),
+	(r'^legend/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-	(r'^search/$', search),
-	(r'^search/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^stock/$', stock),
-	(r'^stock/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^inventory/$', inventory),
-	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^clamplift/$', clamplift),
+#	(r'^clamplift/update/$', update),
+#	(r'^clamplift/update/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^clamplift/undo/$', undo),
+#	(r'^clamplift/changeloc/$', changeloc),
+#	(r'^clamplift/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+
+#	(r'^now/$', now),
+#	(r'^plan/$', plan),
+#	(r'^plan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^wholeplan/$', wholeplan),
+#	(r'^wholeplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^showreq/$', showreq),
+#	(r'^showreq/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^reqhead/$', reqhead),
+#	(r'^reqhead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^showdet/$', showdet),
+#	(r'^showdet/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^dethead/$', dethead),
+#	(r'^dethead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^search/$', search),
+#	(r'^search/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^stock/$', stock),
+#	(r'^stock/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^orient/$', orient),
 	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
