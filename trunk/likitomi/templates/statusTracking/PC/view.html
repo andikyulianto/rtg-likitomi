@@ -4,7 +4,7 @@
     <div id="header">HOME<br>
     	<!-- start Menu-->
     <ul id="navlist">
-		<li><a href="/likitomi/total">Total Plan</a></li>
+		<li><a href="/likitomi/plan/plan/?eID={{eID}}">Total Plan</a></li>
 		<li><a href="/likitomi">Logout</a></li>
 	</ul>
 
@@ -270,7 +270,7 @@
 			termTo = $form.find( 'input[name="to"]' ).val(),
 			url = $form.attr( 'action' );
 		    // Send the data using post and put the results in a div
-		$.post("/likitomi/query/date/notprocess/",{"from":termFrom,"to":termTo}, function(data){
+		$.post("/likitomi/query/date/notprocess/",{"from":termFrom,"to":termTo,"eID":eID}, function(data){
 			$( "#result" ).fadeOut('fast').html(data).fadeIn('fast');
 		}
 
@@ -295,9 +295,10 @@
 			termTo = $form.find( 'input[name="toMissing"]' ).val(),
 			url = $form.attr( 'action' );
 		    // Send the data using post and put the results in a div
-		$.post("/likitomi/query/date/missing/",{"termFrom":termFrom,"termTo":termTo}, function(data){
-			$( "#resultMissing" ).html(data);
+		$.post("/likitomi/query/date/missing/",{"from":termFrom,"to":termTo,"eID":eID}, function(data){
+			$( "#resultMissing" ).fadeOut('fast').html(data).fadeIn('fast');
 		}
+
 
 		    );
 		  });

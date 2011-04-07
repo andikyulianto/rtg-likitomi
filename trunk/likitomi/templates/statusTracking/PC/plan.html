@@ -1,0 +1,58 @@
+{% extends "PC/container.html"%}
+{% block view %}
+<div id="wrapper">
+    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> Total Plan <br>
+    	<!-- start Menu-->
+    <ul id="navlist">
+		<li><a href="/likitomi/plan/totalPlan/?eID={{eID}}">Total Plan</a></li>
+		<li><a href="/likitomi">Logout</a></li>
+	</ul>
+
+
+	<!-- End Menu-->
+	</div>
+<!-- endheader-->
+<!-- content-->
+	<div id="browse_crag">
+		<div class="login">
+			{{title}}
+		</div>
+	</div>
+
+
+<!--END Menu and Topbar-->
+<div id="content">
+<!-- start content -->
+<center><table align='center' height='350' width="95%" class='tbltables' ><tr><td>
+<div align="right"><Form action="/" id="searchTotal">From: <input type="text" name="fromTotal" id="datepickerFromTotal"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="toTotal" id="datepickerToTotal">&nbsp;&nbsp;<input type="submit" value="Submit"/></Form> </div><br>
+		 <div id="resultTotal"></div>
+		<script>
+		  // attach a submit handler to the form
+		  $("#searchTotal").submit(function(event) {
+		
+		    // stop form from submitting normally
+		    event.preventDefault(); 
+		    var eID = $("#userID").val();
+		    // get some values from elements on the page:
+		    var $form = $( this ),
+			termFrom = $form.find( 'input[name="fromTotal"]' ).val(),
+			termTo = $form.find( 'input[name="toTotal"]' ).val(),
+			url = $form.attr( 'action' );
+		    // Send the data using post and put the results in a div
+		$.post("/likitomi/plan/totalPlan/",{"from":termFrom,"to":termTo,"eID":eID}, function(data){
+			$( "#resultTotal" ).fadeOut('fast').html(data).fadeIn('fast');
+		}
+
+
+		    );
+		  });
+		</script>
+	</div></td></tr></table></center>
+
+
+<!-- end content -->
+
+
+</div>
+{% endblock %}
+

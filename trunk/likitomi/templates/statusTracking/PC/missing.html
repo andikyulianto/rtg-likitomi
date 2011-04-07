@@ -1,9 +1,8 @@
-{% extends "PC/container.html" %}
-{% block view %}
+
 <!--- table of normal plan -->
 		<table align='center' height='350' width="95%" class='tbltables' >
 	<tr>
-		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>{{eID}}
+		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>{{temp}}
 		{% block crview %}
 		<!-- table CR --><center><table align=center width="90%"> 
 			<tr><td width="50%">{# left #}
@@ -186,7 +185,7 @@
 			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td>
 		<td> {{start|time:"H:i"}}</td>
 		<td>{{plan_amount}} </td>
-<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline"> {{product}}<br><font color="white"> &nbsp; </font></p></td>
 <td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white"> &nbsp; </font></p></td>
 <td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
 </tr>
@@ -227,4 +226,3 @@
 
 </table>
 <!-- end table of normal plan -->
-{% endblock %}
