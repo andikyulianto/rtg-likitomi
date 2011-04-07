@@ -1,9 +1,9 @@
 {% extends "PC/container.html" %}
 {% block view %}
 <!--- table of normal plan -->
-		<table align='center' height='450' width="95%" class='tbltables' >
+		<table align='center' height='350' width="95%" class='tbltables' >
 	<tr>
-		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
+		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>{{eID}}
 		{% block crview %}
 		<!-- table CR --><center><table align=center width="90%"> 
 			<tr><td width="50%">{# left #}

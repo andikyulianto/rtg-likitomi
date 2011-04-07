@@ -1,12 +1,11 @@
-{% extends "PC/container.html" %}
-{% block view %}
+
 <!--- table of normal plan -->
-		<table align='center' height='450' width="95%" class='tbltables' >
+		<table align='center' height='350' width="95%" class='tbltables'>
 	<tr>
 		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
 		{% block crview %}
 		<!-- table CR --><center><table align=center width="90%"> 
-			<tr><td width="50%">{# left #}
+			<tr><td width="50%">{# left #}{{temp}}
 	<div id="linkCR">
 			<table align=center width="100%"><!-- table left --><span class="header">
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
@@ -228,5 +227,5 @@
 
 </table>
 <!-- end table of normal plan -->
-{% endblock %}
+
 
