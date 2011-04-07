@@ -21,8 +21,8 @@
 <center>
 
 	<table align='center' width="30%" class='tbltables' ><span class="header">
-	<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%" align="left"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td>Sch.Pcs</td><th width="30%" rowspan="2"> Product code </th><th  width ="10%" rowspan="2">Due</th></tr>
-			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th>Act.Pcs</th></tr></thead>
+	<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%" align="left"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th  width ="10%" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc" align="right"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
 			</span>
 			{% for start,end,product,actual_start,actual_end,plan_amount,actual_amount_cr in items %}
 			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
@@ -30,7 +30,7 @@
 			<td>{{start|time:"H:i"}}</td>
 			<td>{{ end|time:"H:i" }}</td>
 			<td>{{plan_amount}}</td>
-			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">&nbsp;</font></p></td>
+			<td rowspan="2" align="center"><p class="tbunderline">{{product}}<br><font color="white">&nbsp;</font></p></td>
 			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">&nbsp;</font></p></td>
 			</tr>
 			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">

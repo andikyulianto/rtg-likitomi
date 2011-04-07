@@ -4,7 +4,8 @@
     <div id="header">HOME<br>
     	<!-- start Menu-->
     <ul id="navlist">
-		<li id="active"><a href="/likitomi">Logout</a></li>
+		<li><a href="/likitomi/total">Total Plan</a></li>
+		<li><a href="/likitomi">Logout</a></li>
 	</ul>
 
 
@@ -20,13 +21,14 @@
 
 
 <!--END Menu and Topbar-->
+<div id="content">
 <div id="accordion">
 
 	<h3><a href="#">Normal Plan</a></h3>
 	<div id="divNormalPlan">
 		<p>
 		<!--- table of normal plan -->
-		<table align='center' height='450' width="95%" class='tbltables' >
+		<table align='center' height='450' width="95%" class='tbltables'>
 	<tr>
 		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
 		{% block crview %}
@@ -250,10 +252,10 @@
 <!-- end table of normal plan -->
 		</p>
 	</div>
-
+	
 	<h3><a href="#">Not Process</a></h3>
 	<div>
-<div align="right"><Form action="/" id="searchDate">From: <input type="text" name="from" id="datepickerFromNotProcess"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="to" id="datepickerToNotProcess">&nbsp;&nbsp;<input type="submit" value="Submit"/></Form> </div><br>
+<div align="right"><form action="/" id="searchDate">From: <input type="text" name="from" id="datepickerFromNotProcess"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="to" id="datepickerToNotProcess">&nbsp;&nbsp;<input type="submit" value="Submit"/></form> </div><br>
 		 <div id="result"></div>
 		<script>
 		  // attach a submit handler to the form
@@ -268,9 +270,8 @@
 			termTo = $form.find( 'input[name="to"]' ).val(),
 			url = $form.attr( 'action' );
 		    // Send the data using post and put the results in a div
-		$.post("/likitomi/home/?eID="+eID, function(data){
-		alert("HEllo");
-		$( "#result" ).load("/");//.html(termFrom+" "+termTo);
+		$.post("/likitomi/query/date/notprocess/",{"from":termFrom,"to":termTo}, function(data){
+			$( "#result" ).fadeOut('fast').html(data).fadeIn('fast');
 		}
 
 		    );
@@ -284,7 +285,7 @@
 		<script>
 		  // attach a submit handler to the form
 		  $("#searchDateMissing").submit(function(event) {
-
+		
 		    // stop form from submitting normally
 		    event.preventDefault(); 
 		    var eID = $("#userID").val();
@@ -294,8 +295,8 @@
 			termTo = $form.find( 'input[name="toMissing"]' ).val(),
 			url = $form.attr( 'action' );
 		    // Send the data using post and put the results in a div
-		$.get("/likitomi/query/date/missing/?eID="+eID, function(data){
-		$( "#resultMissing" ).html('abc');
+		$.post("/likitomi/query/date/missing/",{"termFrom":termFrom,"termTo":termTo}, function(data){
+			$( "#resultMissing" ).html(data);
 		}
 
 		    );
@@ -305,5 +306,5 @@
 </div>
 
 </div>
-
+</div>
 {% endblock %}
