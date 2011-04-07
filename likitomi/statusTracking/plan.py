@@ -15,8 +15,19 @@ from statusTracking.config import getPCItemNum
 ########################
 
 def totalPlan(request):
-	title = "Welcome to Likitomi Status Tracking System"
+	title = "Total Plan"
 	flashMessage =""
+	eID = request.GET['eID']
+	today = todayDate()
+	page ="login"
+	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_id","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
+	return render_to_response('PC/plan.html', locals())
+
+def totalPlanSelectedDate(request):
+	title = "Total Plan"
+	flashMessage =""
+	eID = request.POST['eID']
+	today = todayDate()
 	page ="login"
 	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_id","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
 	return render_to_response('PC/totalPlan.html', locals())
