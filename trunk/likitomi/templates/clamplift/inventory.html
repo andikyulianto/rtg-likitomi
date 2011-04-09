@@ -35,6 +35,8 @@ vertical-align:middle;
 .ocl2{background-color:#FF0000; color:white; font-weight:bold; border-width:0px;}
 .ocl3{background-color:#FF6666; color:black; font-weight:bold; border-width:0px;}
 .ocl4{background-color:#FFB2B2; color:black; font-weight:bold; border-width:0px;}
+
+.buff {background-color:lightgray; border:1px solid black; border-width:1px;}
 </style>
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
@@ -433,7 +435,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '2' and atposition == pos %}
-						<td id="locup" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
+						<td id="locup" style="cursor:pointer;" {% if pos in buff %}class="buff" border="1"{% else %}class="gray"{% endif %}></td>
 					{% else %}
 						<td {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
 					{% endif %}

@@ -34,7 +34,7 @@ def showplan(request):
 	s_tdelta.sort()
 	if tdelta:
 		chosen = tdelta.index(s_tdelta[0])
-		scroll = chosen*72
+		scroll = chosen*84
 
 	return render_to_response('showplan.html', locals())
 
@@ -84,7 +84,7 @@ def required(request):
 	s_tdelta.sort()
 	if tdelta:
 		chosen = tdelta.index(s_tdelta[0])
-		scroll = chosen*72
+		scroll = chosen*84
 
 	return render_to_response('required.html', locals())
 
@@ -135,6 +135,6 @@ def detail(request):
 	s_tdelta.sort()
 	if tdelta:
 		chosen = tdelta.index(s_tdelta[0])
-		scroll = chosen*72
+		scroll = chosen*84
 
 	return render_to_response('detail.html', locals())

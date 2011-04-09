@@ -1,0 +1,329 @@
+<html>
+<head>
+
+<title>Likitomi: Clamplift Apps</title>
+
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<style type="text/css">
+div
+{
+position:absolute;
+background-color:white;
+}
+
+button {height:30px;}
+
+option {padding:10px;}
+
+td {text-align: center;}
+
+input {height:30px;}
+
+#plantab, #layouttab, #clamplifttab, #searchtab
+{
+width:145px;
+height:95px;
+background-color:white;
+}
+
+</style>
+
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript">
+function startTime()
+{
+var today=new Date();
+var h=today.getHours();
+var m=today.getMinutes();
+var s=today.getSeconds();
+// add a zero in front of numbers<10
+m=checkTime(m);
+s=checkTime(s);
+document.getElementById('clock').innerHTML=h+":"+m+":"+s;
+t=setTimeout('startTime()',500);
+}
+
+function checkTime(i)
+{
+if (i<10)
+  {
+  i="0" + i;
+  }
+return i;
+}
+
+$(document).ready(function(){
+	startTime();
+
+	$("#opdate").change(function(){
+		var opdate = $("#opdate").val();
+		if (opdate == ""){
+			$("#showplan").css("visibility","hidden");
+			$("#whole").attr("disabled","disabled");
+		}
+		else {
+			$("#showplan").css("visibility","visible");
+			$("#showplan").attr("src", "/showplan/?opdate="+opdate);
+			$("#whole").removeAttr("disabled");
+			var status = $("#status").val();
+			if (status == "min"){
+				$("#showplan").attr("src", "/showplan/?opdate="+opdate);
+			}
+			else if (status == "req"){
+				$("#showplan").attr("src", "/required/?opdate="+opdate);
+			}
+			else if (status == "det"){
+				$("#showplan").attr("src", "/detail/?opdate="+opdate);
+			}
+		}
+	});
+
+	$("#uppest").click(function(){
+		$("#showplan")[0].contentWindow.scrollTo(0,0);
+	});
+
+	$("#upper").click(function(){
+		$("#showplan")[0].contentWindow.scrollBy(0,-252);
+	});
+
+	$("#up").click(function(){
+		$("#showplan")[0].contentWindow.scrollBy(0,-84);
+	});
+
+	$("#down").click(function(){
+		$("#showplan")[0].contentWindow.scrollBy(0,84);
+	});
+
+	$("#downer").click(function(){
+		$("#showplan")[0].contentWindow.scrollBy(0,252);
+	});
+
+	$("#downest").click(function(){
+		$("#showplan")[0].contentWindow.scrollTo(0,9999);
+	});
+
+// Buttons //
+	$( "#whole" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
+	$( "#uppest" ).button({icons: {primary: "ui-icon-seek-start"}, text: false});
+	$( "#upper" ).button({icons: {primary: "ui-icon-seek-prev"}, text: false});
+	$( "#up" ).button({icons: {primary: "ui-icon-triangle-1-w"}, text: false});
+	$( "#downest" ).button({icons: {primary: "ui-icon-seek-end"}, text: false});
+	$( "#downer" ).button({icons: {primary: "ui-icon-seek-next"}, text: false});
+	$( "#down" ).button({icons: {primary: "ui-icon-triangle-1-e"}, text: false});
+
+	$( "#radio" ).buttonset();
+
+//	$("#min").hide();
+	$("#reqhead").hide();
+	$("#dethead").hide();
+//	$("#reqdet").hide();
+	$("#whole").click(function(){
+		$("#layout, #clamplift, #search").hide();
+		$("#plan").css({"width":"800px","height":"500px"});
+		$(this).hide();
+//		$("#min").show();
+//		$("#hide").hide();
+//		$("#span").attr("colspan","3")
+//		$("#reqdet").show();
+		// Table Head //
+		$("#minhead").hide();
+		$("#reqhead").show();
+		// Table Body //
+		var opdate = $("#opdate").val();
+		$("#showplan").attr("src","/required/?opdate="+opdate);
+		$("#showplan").css("width","800px");
+//		$("#phead, #pbody").animate({"width":"200px"}, function(){$(this).animate({"width":"800px"});});
+		$("#status").val("req");
+//		$("#legend").hide();
+		// Buttons //
+		$("#upper").parent().css("left","390px");
+		$("#downer").parent().css("left","390px");
+		$("#reqbtn").attr("checked","checked").button("refresh");
+		$("#detbtn").removeAttr("checked").button("refresh");
+//		$("#reqbut").attr("disabled","disabled");
+//		$("#detbut").removeAttr("disabled");
+//		$("#search").attr("disabled","disabled");
+//		$("#spcodedd").attr("disabled","disabled");
+//		$("#swidthdd").attr("disabled","disabled");
+		$("#menutab").fadeIn();
+	});
+
+//	$("#min").click(function(){
+//		$(this).hide();
+//		$("#whole").show();
+//		$("#hide").show();
+//		$("#span").attr("colspan","1")
+//		$("#reqdet").hide();
+//		// Table Head //
+//		$("#minhead").show();
+//		$("#reqhead").hide();
+//		$("#dethead").hide();
+//		// Table Body //
+//		var opdate = $("#selected").val();
+//		$("#showplan").attr("src","/showplan/?opdate="+opdate);
+//		$("#status").val("min");
+//		// Buttons //
+//		$("#search").removeAttr("disabled");
+//		$("#spcodedd").removeAttr("disabled");
+//		$("#swidthdd").removeAttr("disabled");
+//	});
+
+	$("#reqbtn").click(function(){
+//		$(this).attr("disabled","disabled");
+//		$("#detbut").removeAttr("disabled");
+		$("#dethead").hide();
+		$("#reqhead").show();
+		var opdate = $("#opdate").val();
+		$("#showplan").attr("src","/required/?opdate="+opdate);
+		$("#status").val("req");
+	});
+
+	$("#detbtn").click(function(){
+//		$(this).attr("disabled","disabled");
+//		$("#reqbut").removeAttr("disabled");
+		$("#reqhead").hide();
+		$("#dethead").show();
+		var opdate = $("#opdate").val();
+		$("#showplan").attr("src","/detail/?opdate="+opdate);
+		$("#status").val("det");
+	});
+
+	$("#menutab").hide();
+	$("#dashtab").click(function(){
+		$("#menutab").fadeOut();
+		$("#whole").show();
+		$("#layout, #clamplift, #search").fadeIn();
+		$("#plan").css({"width":"398px","height":"403px"});
+		$("#minhead").show();
+		$("#reqhead").hide();
+		$("#dethead").hide();
+		var opdate = $("#opdate").val();
+		$("#showplan").attr("src","/showplan/?opdate="+opdate);
+		$("#showplan").css("width","398px");
+		$("#status").val("min");
+		$("#upper").parent().css("left","185px");
+		$("#downer").parent().css("left","185px");
+	});
+
+});
+</script>
+
+</head>
+
+<body style="background-color:black;">
+
+<!--PLAN-->
+	<div id="plan" style="top:0px; left:0px; width:398px; height:403px;">
+		<div id="clock" style="top:0px; left:0px;"></div>
+		<div style="top:0px; left:100px;">{% now "Y-m-d" %}</div>
+		<div style="top:0px; left:200px;">
+			<input id="status" value="min" type="hidden" />
+			<form>
+				<select id="opdate" name="opdate" style="height:30px;">
+					<option value="" selected="selected">Date:</option>
+					{% for date in datelist %}
+					<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
+					{% endfor %}
+				</select>
+			</form>
+		</div>
+		<div id="radio" style="top:0px; left:500px;">
+			<input type="radio" id="reqbtn" name="radio" checked="checked" /><label for="reqbtn">Required</label>
+			<input type="radio" id="detbtn" name="radio" /><label for="detbtn">Detail</label>
+		</div>
+		<div style="top:0px; right:0px;"><button id="whole"></button></div>
+		<div style="top:35px; left:0px;"><button id="uppest"></button></div>
+		<div style="top:35px; left:185px;"><button id="upper"></button></div>
+		<div style="top:35px; right:0px;"><button id="up"></button></div>
+		<div style="bottom:0px; left:0px;"><button id="downest"></button></div>
+		<div style="bottom:0px; left:185px;"><button id="downer"></button></div>
+		<div style="bottom:0px; right:0px;"><button id="down"></button></div>
+		<div id="phead" style="top:68px; left:0px;">
+			<table id="minhead" style="font-size:100%;">
+				<tr style="background-color:black; color:white;">
+					<td rowspan='2' style="width:10px; background-color:white;"></td>
+					<td rowspan='2' style="width:52px;">TIME</td>
+					<td rowspan='2' style="width:70px;">SHEET CODE</td>
+					<td style="width:75px;">SIZE</td>
+					<td style="width:75px;">BL</td>
+					<td style="width:75px;">BM</td>
+				</tr>
+				<tr style="background-color:black; color:white;">
+					<td>DF</td>
+					<td>CL</td>
+					<td>CM</td>
+				</tr>
+			</table>
+			<table id="reqhead" style="font-size:100%;">
+				<tr style="background-color:black; color:white;">
+					<td rowspan='2' style="width:10px; background-color:white;"></td>
+					<td rowspan='2' style="width:52px;">TIME</td>
+					<td rowspan='2' style="width:70px;">SHEET<br />CODE</td>
+					<td rowspan='2' style="width:67px; text-align:right;">S.O.NO.<br />ORD.NO.</td>
+					<td rowspan='2' style="width:21px;">F</td>
+					<td rowspan='2' style="width:72px;">PAPER<br />D-F</td>
+					<td style="width:73px;">B-L</td>
+					<td style="width:73px;">B-M</td>
+					<td rowspan='2' style="width:79px;">PAPER<br />WIDTH</td>
+					<td rowspan='2' style="width:118px;">USED(KGS)<br />D-F</td>
+					<td style="width:50px;">B-L</td>
+					<td style="width:50px;">B-M</td>
+				</tr>
+				<tr style="background-color:black; color:white;">
+					<td>C-L</td>
+					<td>C-M</td>
+					<td>C-L</td>
+					<td>C-M</td>
+				</tr>
+			</table>
+			<table id="dethead" style="font-size:100%;">
+				<tr style="background-color:black; color:white;">
+					<td rowspan='2' style="width:10px; background-color:white;"></td>
+					<td rowspan='2' style="width:52px;">TIME</td>
+					<td rowspan='2' style="width:70px;">SHEET<br />CODE</td>
+					<td rowspan='2' style="width:67px; text-align:right;">S.O.NO.<br />ORD.NO.</td>
+					<td rowspan='2' style="width:120px; text-align:left;">CUST. NAME<br />PRODUCT</td>
+					<td rowspan='2' style="width:63px;">USED(L)<br />D-F</td>
+					<td style="width:40px;">B-L</td>
+					<td style="width:40px;">B-M</td>
+					<td rowspan='2' style="width:86px;">USED(KGS)<br />D-F</td>
+					<td style="width:40px;">B-L</td>
+					<td style="width:40px;">B-M</td>
+					<td rowspan='2' style="width:66px;">SHEET<br />LENGTH</td>
+					<td style="width:42px;">CASE</td>
+				</tr>
+				<tr style="background-color:black; color:white;">
+					<td>C-L</td>
+					<td>C-M</td>
+					<td>C-L</td>
+					<td>C-M</td>
+					<td>CUT</td>
+				</tr>
+			</table>
+			<div id="pbody"><iframe id="showplan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" style="visibility:hidden; width:398px; height:254px;" marginheight="0" marginwidth="0" scrolling="no"></iframe></div>
+		</div>
+	</div>
+
+<!--LAYOUT-->
+	<div id="layout" style="top:0px; left:400px; width:398px; height:403px;">
+
+	</div>
+
+<!--CLAMPLIFT-->
+	<div id="clamplift" style="top:405px; left:0px; width:398px; height:193px;"></div>
+
+<!--SEARCH-->
+	<div id="search" style="top:405px; left:400px; width:398px; height:193px;"></div>
+
+<!--MENU TABS-->
+	<div id="menutab" style="position:fixed; bottom:0px; left:0px; width:800px; height:100px; background-color:lightgray;">
+		<div id="plantab" style="bottom:0px; left:0px;">Plan</div>
+		<div id="layouttab" style="bottom:0px; left:150px;">Layout</div>
+		<div id="clamplifttab" style="bottom:0px; left:300px;">Clamplift</div>
+		<div id="searchtab" style="bottom:0px; left:450px;">Search</div>
+		<div id="dashtab" style="bottom:0px; left:600px; width:195px; height:95px;">Dashboard</div>
+	</div>
+
+</body>
+</html>

@@ -11,7 +11,7 @@ from statusTracking.query import queryDateNotProcess, queryDateMissing
 
 # Weight #
 from weight.scale_views import scale
-from weight.views import index
+from weight.views import index, dashboard
 from weight.showplan import showplan, required, detail
 from weight.inventory import inventory
 from weight.minclamp import minclamp, minupdate, minundo, minchangeloc
@@ -72,9 +72,12 @@ urlpatterns = patterns('',
 # Weight #
 	(r'^scale/$', scale),
 	(r'^scale/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	
+
 	(r'^index/$', index),
 	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+
+	(r'^dashboard/$', dashboard),
+	(r'^dashboard/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^showplan/$', showplan),
 	(r'^showplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
