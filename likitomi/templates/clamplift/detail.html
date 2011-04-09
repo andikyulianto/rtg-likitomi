@@ -10,25 +10,25 @@ vertical-align:middle;
 </style>
 </head>
 <body onload="window.scrollTo(0,{{scroll}})">
-	<table style="font-size:60%">
+	<table style="font-size:100%">
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut, n in nlist %}
-		<tr name="{{ n }}" style="height:30px; background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
 			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
 			<td rowspan="2" style="width:52px;">{{ start_time|time:"H:i" }}</td>
 			<td rowspan="2" style="width:70px;">{{ sheet_code }}</td>
-			<td rowspan="2" class="kr" style="width:63px;">{{ sono }}<br />{{ ordno }}</td>
-			<td rowspan="2" class="kl" style="width:150px;">{{ customer_name }}<br />{{ product }}</td>
-			<td class='df' rowspan="2" style="width:60px;"><br />{{ length_df }}</td>
-			<td style="width:30px; height:34px;">{{ length_bl }}</td>
-			<td style="width:30px;">{{ length_bm }}</td>
-			<td class='df' rowspan="2" style="width:80px;"><center>ACTUAL</center>{{ actual_df }}</td>
-			<td style="width:25px;">{{ actual_bl }}</td>
-			<td style="width:28px;">{{ actual_bm }}</td>
-			<td rowspan="2" style="width:65px;">{{ sheet_length }}</td>
-			<td style="width:40px;">{{ case }}</td>
+			<td rowspan="2" style="width:67px; text-align:right;">{{ sono }}<br />{{ ordno }}</td>
+			<td rowspan="2" style="width:120px; text-align:left; font-size:80%;">{{ customer_name }}<br />{{ product }}</td>
+			<td rowspan="2" style="width:63px; vertical-align:bottom; padding-bottom:11px;">{{ length_df }}</td>
+			<td style="width:40px; height:40px;">{{ length_bl }}</td>
+			<td style="width:40px;">{{ length_bm }}</td>
+			<td rowspan="2" style="width:86px; text-align:right; vertical-align:bottom; padding-bottom:11px;"><center>ACTUAL</center>{{ actual_df }}</td>
+			<td style="width:40px;">{{ actual_bl }}</td>
+			<td style="width:40px;">{{ actual_bm }}</td>
+			<td rowspan="2" style="width:66px;">{{ sheet_length }}</td>
+			<td style="width:42px;">{{ case }}</td>
 		</tr>
-		<tr name="{{ n }}" style="height:30px; background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
-			<td style="height:34px;">{{ length_cl }}</td>
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+			<td style="height:40px;">{{ length_cl }}</td>
 			<td>{{ length_cm }}</td>
 			<td>{{ actual_cl }}</td>
 			<td>{{ actual_cm }}</td>

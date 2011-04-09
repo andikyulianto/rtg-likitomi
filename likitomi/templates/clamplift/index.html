@@ -66,6 +66,8 @@ return i;
 $(document).ready(function(){
 	startTime();
 
+	top.map.location = "/inventory/";
+
 	$("#selected").change(function(){
 		var opdate = $("#selected").val();
 		if (opdate == ""){
@@ -113,6 +115,7 @@ $(document).ready(function(){
 		$("#plan")[0].contentWindow.scrollTo(0,9999);
 	});
 
+	$("#legend").hide();
 	$("#slegend").hide();
 	$("#search").click(function(){
 		var pcode = $('#map').contents().find('#pcode').val();
@@ -203,10 +206,6 @@ $(document).ready(function(){
 		$("#plan").attr("src","/detail/?opdate="+opdate);
 		$("#status").val("det");
 	});
-
-	$("#numbtn").click(function(){
-	alert("alert");
-	});
 });
 </script>
 
@@ -216,40 +215,39 @@ $(document).ready(function(){
 <table style="width:100%; height:100%; position:absolute; left:0px; right:0px; top:0px; bottom:0px;">
 	<tr>
 <!--DATETIME-->
-		<td style="height:1px;">
-			<table style="width:360px;"><tr><td style="text-align:left;">{% now "Y-m-d" %}</td><td style="text-align:right;"><div id="clock"></div></td></tr></table>
-		</td>
+		<td style="height:1px;" colspan="2">
+			<table style="width:100%;"><tr>
+				<td style="text-align:left;"><div id="clock"></div></td>
+				<td style="text-align:right;">{% now "Y-m-d" %}</td>
 <!--SEARCH-->
-		<td colspan="2">
-			<div style="float:right;"><table><tr>
-				<td><img id="slegend" src="images/clamplift/blegend.png"></td>
-				<td>
+				<td style="width:250px;"><img id="slegend" src="images/clamplift/blegend.png"></td>
+				<td style="width:1px;">
 					<form class="ui-menu">
 						<select id="spcodedd">
-							<option value="">Paper Code:</option>
+							<option value="" selected="selected">Paper Code:</option>
 							{% for paper_code in spcodelist %}
 							<option value="{{ paper_code }}">{{ paper_code }}</option>
 							{% endfor %}
 						</select>
 					</form>
 				</td>
-				<td>
+				<td style="width:1px;">
 					<form class="ui-menu">
 						<select id="swidthdd">
-							<option value="">Size:</option>
+							<option value="" selected="selected">Size:</option>
 							{% for size in swidthlist %}
 							<option value="{{ size }}">{{ size }}</option>
 							{% endfor %}
 						</select>
 					</form>
 				</td>
-				<td style="vertical-align:middle;"><button id="search">Search</button></td>
-			</tr></table></div>
+				<td style="vertical-align:middle; width:1px;"><button id="search">Search</button></td>
+			</tr></table>
 		</td>
 	</tr>
 	<tr>
 <!--PLAN-->
-		<td id="span" style="width:40%;">
+		<td id="span" style="width:45%;">
 			<table style="width:100%; height:100%;">
 				<tr>
 					<td style="width:260px; height:82px;">
@@ -259,7 +257,7 @@ $(document).ready(function(){
 					<td style="text-align:left;">
 						<form>
 							<select id="selected" name="opdate">
-								<option value="">Date:</option>
+								<option value="" selected="selected">Date:</option>
 								{% for date in datelist %}
 								<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
 								{% endfor %}
@@ -353,13 +351,13 @@ $(document).ready(function(){
 			</table>
 		</td>
 <!--MAP-->
-		<td id="hide" style="width:60%;" colspan="2">
+		<td id="hide" style="width:55%;">
 			<iframe id="map" name="map" src="/inventory/" frameborder="0" width="100%" height="100%" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 		</td>
 	</tr>
 <!--CLAMPLIFT-->
 	<tr>
-		<td colspan="3">
+		<td colspan="2">
 			<iframe id="minclamp" src="/minclamp/" frameborder="0" width="100%" height="80px" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 <!--			<div id="minclamp"></div>-->
 		</td>

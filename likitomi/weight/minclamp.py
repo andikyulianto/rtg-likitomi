@@ -9,7 +9,7 @@ import socket
 def minclamp(request):
 	try:
 # RFID: paper roll and location tags #
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'}
+		operating_mode = 'real' # Operating mode = {'real', 'fake'}
 
 		if operating_mode == 'real':
 

@@ -15,13 +15,13 @@ $(document).ready(function(){
 		var i = 0;
 		for (i=0;i<=100;i++){
 			if (i<{{chosen}}){
-				$("[name="+i+"]").children().css("background-color","#F8F8F8");
+				$("[name="+i+"]").children().css("background-color","#F6F6F6");
 			}
 			else if (i=={{chosen}}){
-				$("[name="+i+"]").children().css("background-color","#F1F1F1");
+				$("[name="+i+"]").children().css("background-color","#E5E5E5");
 			}
 			else {
-				$("[name="+i+"]").children().css("background-color","#F8F8F8");
+				$("[name="+i+"]").children().css("background-color","#F6F6F6");
 			}
 		}
 		var hicode = $(this).attr("title");
@@ -56,37 +56,37 @@ $(document).ready(function(){
 </head>
 
 <body onload="window.scrollTo(0,{{scroll}})">
-	<table style="font-size:60%;">
+	<table style="font-size:100%;">
 		{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
-			<td class="infront" rowspan="2" style="width:10px; height:60px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
 			<td rowspan='2' style="width:52px;">{{ start_time|time:"H:i" }}</td>
 			<td rowspan='2' style="width:70px;">{{ sheet_code }}</td>
-			<td style="width:56px; height:34px;">{{ paper_width_inch }}</td>
+			<td style="width:75px; height:34px;">{{ paper_width_inch }}</td>
 			{% if bl %} <!-- BL -->
-			<td class="cell" style="width:56px;" title="{{bl}}" id="{{paper_width_inch}}" lang="{{loss_bl}}">{{ bl }}<br />({{ loss_bl }})</td>
+			<td class="cell" style="width:75px; height:34px;" title="{{bl}}" id="{{paper_width_inch}}" lang="{{loss_bl}}">{{ bl }}<br />({{ loss_bl }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if bm %} <!-- BM -->
-			<td class="cell" style="width:56px;" title="{{bm}}" id="{{paper_width_inch}}" lang="{{loss_bm}}">{{ bm }}<br />({{ loss_bm }})</td>
+			<td class="cell" style="width:75px; height:34px;" title="{{bm}}" id="{{paper_width_inch}}" lang="{{loss_bm}}">{{ bm }}<br />({{ loss_bm }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 		</tr>
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F8F8F8{% endif %}{% if n == chosen %}#F1F1F1{% endif %}{% if n > chosen %}#F8F8F8{% endif %};">
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
 			{% if df %} <!-- DF -->
-			<td class="cell" style="width:56px; height:34px;" title="{{df}}" id="{{paper_width_inch}}" lang="{{loss_df}}">{{ df }}<br />({{ loss_df }})</td>
+			<td class="cell" style="width:75px; height:34px;" title="{{df}}" id="{{paper_width_inch}}" lang="{{loss_df}}">{{ df }}<br />({{ loss_df }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if cl %} <!-- CL -->
-			<td class="cell" style="width:56px;" title="{{cl}}" id="{{paper_width_inch}}" lang="{{loss_cl}}">{{ cl }}<br />({{ loss_cl }})</td>
+			<td class="cell" style="width:75px; height:34px;" title="{{cl}}" id="{{paper_width_inch}}" lang="{{loss_cl}}">{{ cl }}<br />({{ loss_cl }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if cm %} <!-- CM -->
-			<td class="cell" style="width:56px;" title="{{cm}}" id="{{paper_width_inch}}" lang="{{loss_cm}}">{{ cm }}<br />({{ loss_cm }})</td>
+			<td class="cell" style="width:75px; height:34px;" title="{{cm}}" id="{{paper_width_inch}}" lang="{{loss_cm}}">{{ cm }}<br />({{ loss_cm }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
