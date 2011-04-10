@@ -6,8 +6,8 @@ from statusTracking.detail import pcdetail
 from statusTracking.line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from statusTracking.update import startUpdate,endUpdate
 from statusTracking.machine import machine_list
-from statusTracking.plan import totalPlan, totalPlanSelectedDate
-from statusTracking.query import queryDateNotProcess, queryDateMissing
+#from statusTracking.plan import totalPlan, totalPlanSelectedDate
+#from statusTracking.query import queryDateNotProcess, queryDateMissing
 
 # Weight #
 from weight.scale_views import scale
@@ -33,13 +33,13 @@ urlpatterns = patterns('',
 	(r'^likitomi/pcdetail/$', pcdetail),
 	(r'^likitomi/pcdetail/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
-	(r'^likitomi/query/date/notprocess/$', queryDateNotProcess),
+#	(r'^likitomi/query/date/notprocess/$', queryDateNotProcess),
 	(r'^likitomi/query/date/notprocess/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/query/date/missing/$', queryDateMissing),
+#	(r'^likitomi/query/date/missing/$', queryDateMissing),
 	(r'^likitomi/query/date/missing/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/plan/plan/$', totalPlan),
+#	(r'^likitomi/plan/plan/$', totalPlan),
 	(r'^likitomi/plan/plan/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/plan/totalPlan/$', totalPlanSelectedDate),
+#	(r'^likitomi/plan/totalPlan/$', totalPlanSelectedDate),
 	(r'^likitomi/plan/totalPlan/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/line/cr/start/$', startCR),
 	(r'^likitomi/line/cr/start/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),

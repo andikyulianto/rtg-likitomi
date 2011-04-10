@@ -9,7 +9,7 @@ import socket
 def minclamp(request):
 	try:
 # RFID: paper roll and location tags #
-		operating_mode = 'real' # Operating mode = {'real', 'fake'}
+		operating_mode = 'fake' # Operating mode = {'real', 'fake'}
 
 		if operating_mode == 'real':
 
@@ -155,16 +155,17 @@ def minclamp(request):
 
 # Query database from realtag #
 		if realtag:
-			rtquery = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'width', 'initial_weight','temp_weight', 'lane', 'position')[0]
+			rtquery = PaperRoll.objects.filter(id=realtag).values_list('id', 'paper_code', 'width', 'wunit', 'initial_weight','temp_weight', 'lane', 'position')[0]
 			rtquerylist = list(rtquery)
 
 			paper_roll_id = rtquerylist[0]
 			paper_code = rtquerylist[1]
 			size = rtquerylist[2]
-			initial_weight = rtquerylist[3]
-			temp_weight = rtquerylist[4]
-			lane = rtquerylist[5]
-			position = rtquerylist[6]
+			unit = rtquerylist[3]
+			initial_weight = rtquerylist[4]
+			temp_weight = rtquerylist[5]
+			lane = rtquerylist[6]
+			position = rtquerylist[7]
 
 #			uppos = int(position)+1
 #			downpos = int(position)-1
