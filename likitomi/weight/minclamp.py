@@ -148,8 +148,8 @@ def minclamp(request):
 #			atlocation = 'Scale'
 
 			atlane = '2'
-			atposition = '3'
-			atlocation = 'Scale'
+			atposition = '2'
+			atlocation = 'Stock'
 
 			realtag = 67
 
