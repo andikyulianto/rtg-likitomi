@@ -3,6 +3,11 @@
 
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
 <style type="text/css">
+body
+{
+font-family:"Times New Roman", Times, serif;
+}
+
 td
 {
 border: 0px solid black;
@@ -24,6 +29,12 @@ text-align:center;
 font-weight:bold;
 }
 
+.unit
+{
+text-align:left;
+color:dimgray;
+}
+
 #big{font-size:150%;}
 </style>
 
@@ -31,10 +42,20 @@ font-weight:bold;
 <script type="text/javascript" src="javascript/clamplift.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	$(window).load(function minClamp(){
-		$("#minclamp").load("/minclamp/");
-		setTimeout(minClamp, 2000);
+	$(window).load(function clampAll(){
+		$("#clampall").load("/minclamp/");
+		setTimeout(clampAll, 1000);
 	});
+
+	var sta = $("#clampsta", top.document).val();
+	if (sta == "minsta"){
+		$("#maxic").hide();
+		$("#minic").show();
+	}
+	if (sta == "maxsta"){
+		$("#minic").hide();
+		$("#maxic").show();
+	}
 });
 </script>
 <script type="text/javascript">
@@ -503,7 +524,7 @@ function otherLoc()
 </script>
 </head>
 <body>
-	<div id="minclamp">
+	<div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
 	<input id="lane" type="hidden" value="{{ lane }}" />
@@ -513,29 +534,71 @@ function otherLoc()
 	<input id="realtag" type="hidden" value="{{ realtag }}" />
 	<input id="actual" type="hidden" value="{{ actual_wt }}" />
 	{% if realtag %}
-	<table style="width:100%;">
-		<tr>
-			<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
-			<td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td>
-			<td style="text-align:center;" rowspan="2">
-				{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}
-				{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="50px" src="images/clamplift/changeloc.png"></a>{% endif %}
-			</td>
-			<td rowspan="2"><p class="label">Weight: </p></td><td rowspan="2"><p class="var">{{ actual_wt }}</p></td>
-			{% if atlocation == "Scale" and actual_wt > temp_weight %}
-			<td  rowspan="2" style="text-align:center;">></td>
-			<td rowspan="2"><p class="var">{{ temp_weight }}</p></td>
-			{% endif %}
-			<td rowspan="2"><p class="unit">kgs.</p></td>
-			{% if atlocation == "Scale" and actual_wt > temp_weight %}<td style="text-align:center;" rowspan="2"><a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a></td>{% endif %}
-			{% if atlocation == "Scale" %}<td style="text-align:center;" rowspan="2"><a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a></td>{% endif %}
-			<td rowspan="2" style="text-align:right;"><img src="images/clamplift/rlegend.png"></td>
-		</tr>
-		<tr>
-			<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td>
-			<td><p class="label">Loc.:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
-		</tr>
-	</table>
+		<div id="minic">
+			<table style="width:100%;">
+				<tr>
+					<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
+					<td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td>
+				</tr>
+			</table>
+			<table style="width:100%;">
+				<tr>
+					<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td>
+					<td><p class="label">Location:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
+					<td style="text-align:center; width:60px; height:50px;" >
+						{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="50px" src="images/clamplift/changeloc.png"></a>{% endif %}
+					</td>
+				</tr>
+			</table>
+			<table style="width:100%;">
+				<tr>
+					<td style="text-align:center; width:44px; height:50px;">
+						{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}
+					</td>
+					<td ><p class="label">Weight: </p></td><td ><p class="var">{{ actual_wt }}</p></td>
+					{% if atlocation == "Scale" and actual_wt > temp_weight %}
+					<td style="text-align:center;">>>></td>
+					<td ><p class="var">{{ temp_weight }}</p></td>
+					{% endif %}
+					<td ><p class="unit">kgs.</p></td>
+					<td style="text-align:center; width:44px; height:50px;">
+						{% if atlocation == "Scale" and actual_wt > temp_weight %}<a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a>{% endif %}
+					</td>
+					<td style="text-align:center; width:60px; height:50px;">
+						{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a>{% endif %}
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="maxic">
+			<table style="width:100%; font-size:200%;">
+				<tr style="height:80px;"><td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td></tr>
+				<tr style="height:80px;"><td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td></tr>
+				<tr style="height:80px;"><td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td></tr>
+				<tr>
+					<td><p class="label">Location:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
+					<td style="text-align:center; width:96px; height:80px;" >
+						{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="80px" src="images/clamplift/changeloc.png"></a>{% endif %}</td>
+				</tr>
+			</table>
+			<table style="width:100%; font-size:200%;">
+				<tr>
+					<td style="text-align:center; width:70px; height:80px;">
+						{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="80px" src="images/clamplift/undo.png"></a>{% endif %}</td>
+					<td ><p class="label">Weight: </p></td><td ><p class="var">{{ actual_wt }}</p></td>
+					{% if atlocation == "Scale" and actual_wt > temp_weight %}
+					<td style="text-align:center;">>>></td>
+					<td ><p class="var">{{ temp_weight }}</p></td>
+					{% endif %}
+					<td ><p class="unit">kgs.</p></td>
+					<td style="text-align:center; width:70px; height:80px;">
+						{% if atlocation == "Scale" and actual_wt > temp_weight %}<a href="javascript:submit()"><img border="0" height="80px" src="images/clamplift/update.png"></a>{% endif %}
+					</td>
+					<td style="text-align:center; width:96px; height:80px;">
+						{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="80px" src="images/clamplift/manual.png"></a>{% endif %}</td>
+				</tr>
+			</table>
+		</div>
 	{% endif %}
 
 	<form id="frm1" action="/minclamp/update/" method="get">
