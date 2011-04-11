@@ -18,10 +18,10 @@ def inventory(request):
 
 		if 'loss' in request.GET and request.GET['loss']:
 			loss = request.GET['loss']
-			losspx = int(loss)/4
-			if losspx > 250:
-				losspx = 250
-			lossinv = 250-losspx
+			losspx = int(loss)/5 - 5
+			if losspx > 194:
+				losspx = 200
+			lossinv = 200-losspx
 		else:
 			loss = ""
 
@@ -138,6 +138,7 @@ def inventory(request):
 				wlist = list()
 				ridlist = list()
 				elist = list()
+				wlistpx = list()
 
 				for item in query:
 					totem = list(item)
@@ -152,7 +153,14 @@ def inventory(request):
 						weight = int(str(PaperRoll.objects.filter(id=rid).values_list('initial_weight')[0])[1:][:-3])
 					wlist.append(weight)
 
+				for w in wlist:
+					wpx = int(w)/5 - 5
+					if wpx > 194:
+						wpx = 200
+					wlistpx.append(wpx)
+
 				initial_weight = int(str(PaperRoll.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
+				initialpx = initial_weight/5 - 5
 
 			mquery = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('lane', 'position')
 			mexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
@@ -364,6 +372,7 @@ def inventory(request):
 				wlist2 = list()
 				ridlist2 = list()
 				elist2 = list()
+				wlistpx2 = list()
 
 				for item in query2:
 					totem = list(item)
@@ -378,7 +387,14 @@ def inventory(request):
 						weight = int(str(PaperRoll.objects.filter(id=rid).values_list('initial_weight')[0])[1:][:-3])
 					wlist2.append(weight)
 
+				for w in wlist2:
+					wpx = int(w)/5 - 5
+					if wpx > 194:
+						wpx = 200
+					wlistpx2.append(wpx)
+
 				initial_weight2 = int(str(PaperRoll.objects.filter(paper_code=spcode).values_list('initial_weight')[0])[1:][:-3])
+				initialpx2 = initial_weight2/5 - 5
 
 			mquery2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).values_list('lane', 'position')
 			mexists2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).exists()
@@ -650,6 +666,7 @@ def inventory(request):
 				wlist3 = list()
 				ridlist3 = list()
 				elist3 = list()
+				wlistpx3 = list()
 
 				for item in query3:
 					totem = list(item)
@@ -664,7 +681,14 @@ def inventory(request):
 						weight = int(str(PaperRoll.objects.filter(id=rid).values_list('initial_weight')[0])[1:][:-3])
 					wlist3.append(weight)
 
+				for w in wlist3:
+					wpx = int(w)/5 - 5
+					if wpx > 194:
+						wpx = 200
+					wlistpx3.append(wpx)
+
 				initial_weight3 = int(str(PaperRoll.objects.filter(paper_code=cpcode).values_list('initial_weight')[0])[1:][:-3])
+				initialpx3 = initial_weight3/5 - 5
 
 			mquery3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).values_list('lane', 'position')
 			mexists3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).exists()
@@ -910,6 +934,7 @@ def inventory(request):
 							elif 700 > wlist3[ind] and wlist3[ind] >= 400:
 								ls[11] = ls[11] + 1
 							elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+
 
 								ls[10] = ls[10] + 1
 							elif 100 > wlist3[ind]:
