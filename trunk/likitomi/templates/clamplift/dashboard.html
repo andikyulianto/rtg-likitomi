@@ -59,7 +59,7 @@ background-color:dimgray;
 /* MENU TABS */
 #plantab, #layouttab, #clamplifttab, #searchtab
 {
-width:145px;
+width:175px;
 height:95px;
 background-color:white;
 }
@@ -140,13 +140,14 @@ $(document).ready(function(){
 	$("#radio").hide();
 	$("#reqhead").hide();
 	$("#dethead").hide();
-	$("#magplan").click(function(){
+	$("#magplan, #plantab").click(function(){
 		$("#layout, #clamplift, #search").hide();
-		$("#plan").animate({"width":"800px","height":"495px"});
-		$(this).hide();
+		$("#plan").show().animate({"width":"800px","height":"495px"});
+		$("#magplan").hide();
 		$("#radio").show();
 		$("#minhead").hide();
 		$("#reqhead").show();
+		$("#dethead").hide();
 		var opdate = $("#opdate").val();
 		$("#showplan").attr("src","/required/?opdate="+opdate);
 		$("#showplan").css({"width":"800px","height":"338px"});
@@ -177,30 +178,30 @@ $(document).ready(function(){
 
 // LAYOUT //
 	$( "#maglay" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
-	$("#maglay").click(function(){
+	$("#maglay, #layouttab").click(function(){
 		$("#plan, #clamplift, #search").hide();
-		$("#layout").animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
-		$(this).hide();
+		$("#layout").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+		$("#maglay").hide();
 		$("#menutab").fadeIn();
 		$("#map").css("margin-top","0px");
 	});
 
 // CLAMPLIFT //
 	$( "#magclamp" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
-	$("#magclamp").click(function(){
+	$("#magclamp, #clamplifttab").click(function(){
 		$("#plan, #layout, #search").hide();
-		$("#clamplift").animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
-		$(this).hide();
+		$("#clamplift").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+		$("#magclamp").hide();
 		$("#menutab").fadeIn();
 		$("#clampsta").val("maxsta");
 	});
 
 // SEARCH //
 	$( "#magsearch" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
-	$("#magsearch").click(function(){
+	$("#magsearch, #searchtab").click(function(){
 		$("#plan, #layout, #clamplift").hide();
-		$("#search").animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
-		$(this).hide();
+		$("#search").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+		$("#magsearch").hide();
 		$("#menutab").fadeIn();
 	});
 	$( "#searchbtn" ).button({icons: {primary: "ui-icon-search"}});
@@ -221,7 +222,7 @@ $(document).ready(function(){
 		var clamping = $('#map').contents().find('#clamping').val();
 		var changed = $('#map').contents().find('#changed').val();
 		if (spcode != "" && swidth != ""){
-			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
+			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
 		}
 	});
 
@@ -255,7 +256,15 @@ $(document).ready(function(){
 		// SEARCH //
 		$("#search").animate({"width":"398px","height":"40px","top":"0px","left":"400px"});
 	});
+	$("#plantab").click(function(){
 
+	});
+	$("#layouttab").click(function(){
+
+	});
+	$("#clamplifttab").click(function(){
+
+	});
 });
 </script>
 
@@ -358,7 +367,7 @@ $(document).ready(function(){
 <!--LAYOUT-->
 	<div id="layout" style="top:42px; left:400px; width:398px; height:551px;">
 		<div style="top:0px; right:0px;"><button id="maglay"></button></div> <!--Magnifying Button-->
-		<iframe id="map" name="map" src="/inventory/" frameborder="0" style="width:100%; height:100%; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
+		<iframe id="map" name="map" src="/inventory/" frameborder="0" style="width:100%; height:500px; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
 	</div>
 
 <!--CLAMPLIFT-->
@@ -399,12 +408,12 @@ $(document).ready(function(){
 	</div>
 
 <!--MENU TABS-->
-	<div id="menutab" style="position:fixed; bottom:0px; left:0px; width:800px; height:100px; background-color:lightgray;">
+	<div id="menutab" style="position:fixed; bottom:0px; left:0px; width:800px; height:100px; background-color:black;">
 		<div id="plantab" style="bottom:0px; left:0px;">Plan</div>
-		<div id="layouttab" style="bottom:0px; left:150px;">Layout</div>
-		<div id="clamplifttab" style="bottom:0px; left:300px;">Clamplift</div>
-		<div id="searchtab" style="bottom:0px; left:450px;">Search</div>
-		<div id="dashtab" style="bottom:0px; left:600px; width:195px; height:95px;">Dashboard</div>
+		<div id="layouttab" style="bottom:0px; left:180px;">Layout</div>
+		<div id="clamplifttab" style="bottom:0px; left:360px;">Clamplift</div>
+<!--		<div id="searchtab" style="bottom:0px; left:450px;">Search</div>-->
+		<div id="dashtab" style="bottom:0px; left:540px; width:255px; height:95px;">Dashboard</div>
 	</div>
 
 </body>

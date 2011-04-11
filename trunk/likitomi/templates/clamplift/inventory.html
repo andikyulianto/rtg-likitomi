@@ -42,6 +42,14 @@ vertical-align:middle;
 .ocl4{background-color:#FFB2B2; color:black; font-weight:bold; border-width:0px;}
 
 .buff {background-color:lightgray; border:1px solid black; border-width:1px;}
+
+.nomarpad
+{
+margin-left:0px;
+margin:right:0px;
+padding-left:0px;
+padding-right:0px;
+}
 </style>
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
@@ -71,10 +79,10 @@ $(document).ready(function(){
 		if (enal == atlane && position == atposition && clamping == "no" && changed == "no" && lane != undefined){
 			var clamping = "yes";
 			var changed = "no";
-			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 		else {
-			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 
 		setTimeout(loadMap, 2000);
@@ -95,7 +103,7 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
+		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
 	});
 
 	$("#locdown").click(function(){
@@ -113,7 +121,7 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
+		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
 	});
 
 });
@@ -185,25 +193,50 @@ $(document).ready(function(){
 <!--A: {{Alist}} => {{posa}}<br/>-->
 <!--PLAN: {{mlist}}<br/>SEARCH: {{mlist2}}<br/>CLAMPLIFT: {{mlist3}}<br/>-->
 <!--@{{atlane}}-{{atposition}} *** {{lane}}-{{position}}<br/>Clamping: {{clamping}}; Changed: {{changed}}<br/>-->
-
-<div style="float:right;"><table style="height:1px; width:380px;">
+<!--{{wlist}}-{{wlistpx}}<br/>{{wlist2}}--{{wlistpx2}}<br/>{{wlist3}}--{{wlistpx3}}-->
+<div style="float:right;"><table style="height:1px; width:390px;">
 	<tr>
-		<td></td><td style="text-align:right;">Weight (kgs.)</td><td style="width:200px;"><img src="images/clamplift/legend.png" style="width:200px;"/></td>
+		<td style="text-align:right;">Weight (kgs.)</td><td class="nomarpad" style="width:200px; background-image:url('images/clamplift/legend.png');"></td>
 	</tr>
-	<tr style="background-image:url('images/clamplift/greengradient.png'); {% if not pcode %}visibility:hidden;{% endif %}">
-		<td>Product</td><td>{% if pcode %}: {{pcode}}, {{width}}{% endif %}</td><td><img src="images/clamplift/triangle.png" style="vertical-align:top;"/></td>
+	<tr>
+		<td></td><td class="nomarpad" style="{% if not loss %}visibility:hidden;{% endif %} width:200px; text-align:left; position:absolute;"><img src="images/clamplift/atarrow.png" style="position:absolute; top:0px; left:{{losspx}}px; z-index:2;" title="{{loss}}"/></td>
 	</tr>
-	<tr style="background-image:url('images/clamplift/redgradient.png'); {% if not cpcode %}visibility:hidden;{% endif %}">
-		<td>Clamplift</td><td>{% if cpcode %}: {{cpcode}}, {{cwidth}}{% endif %}</td><td></td>
+	<tr style="{% if not pcode %}visibility:hidden;{% endif %}">
+		<td style="text-align:left; background-image:url('images/clamplift/greengradient.png');">Product: {{pcode}}, {{width}}</td>
+		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
+			{% for w in wlistpx %}<img src="images/clamplift/
+				{% if w < 15 %}lkf4daimond17.png{% endif %}
+				{% if w >= 15 and w < 75 %}lkf3daimond17.png{% endif %}
+				{% if w >= 75 and w < 135 %}lkf2daimond17.png{% endif %}
+				{% if w >= 135 or w == initailpx %}lkf1daimond17.png{% endif %}
+			" style="position:absolute; left:{{w}}px;" onclick="alert('ss');"/>{% endfor %}
+		</td>
 	</tr>
-	<tr style="background-image:url('images/clamplift/bluegradient.png'); {% if not spcode %}visibility:hidden;{% endif %}">
-		<td>Search</td><td>{% if spcode %}: {{spcode}}, {{swidth}}{% endif %}</td><td></td>
+	<tr style="{% if not spcode %}visibility:hidden;{% endif %}">
+		<td style="text-align:left; background-image:url('images/clamplift/bluegradient.png');">Search: {{spcode}}, {{swidth}}</td>
+		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
+			{% for w in wlistpx2 %}<img src="images/clamplift/
+				{% if w < 15 %}s4daimond17.png{% endif %}
+				{% if w >= 15 and w < 75 %}s3daimond17.png{% endif %}
+				{% if w >= 75 and w < 135 %}s2daimond17.png{% endif %}
+				{% if w >= 135 or w == initailpx2 %}s1daimond17.png{% endif %}
+			" style="position:absolute; left:{{w}}px;" />{% endfor %}
+		</td>
+	</tr>
+	<tr style="{% if not cpcode %}visibility:hidden;{% endif %}">
+		<td style="text-align:left; background-image:url('images/clamplift/redgradient.png');">Clamplift: {{cpcode}}, {{cwidth}}</td>
+		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
+			{% for w in wlistpx3 %}<img src="images/clamplift/
+				{% if w < 15 %}ocl4daimond17.png{% endif %}
+				{% if w >= 15 and w < 75 %}ocl3daimond17.png{% endif %}
+				{% if w >= 75 and w < 135 %}ocl2daimond17.png{% endif %}
+				{% if w >= 135 or w == initailpx3 %}ocl1daimond17.png{% endif %}
+			" style="position:absolute; left:{{w}}px;" />{% endfor %}
+		</td>
 	</tr>
 </table></div>
 
-<table style="height:400px;"><tr><td>
-
-<table>
+<table style="height:400px; position:absolute; bottom:0px; right:0px;">
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map">{{ pos }}</td>{% endfor %}</tr>
 
 	<tr><td class="map">H</td>
@@ -276,11 +309,6 @@ $(document).ready(function(){
 			{% else %}
 				<td class="map"></td>
 			{% endif %}
-<!--			<td class="map">-->
-<!--				{% if atlane == '4' and pos == '*' %}-->
-<!--					<img style="width:10px" src="images/clamplift/clamplift.png" />-->
-<!--				{% endif %}-->
-<!--			</td>-->
 		{% endfor %}
 	<td class="map">|</td></tr>
 
@@ -389,11 +417,6 @@ $(document).ready(function(){
 			{% else %}
 				<td class="map"></td>
 			{% endif %}
-<!--			<td class="map">-->
-<!--				{% if atlane == '3' and pos == '*' %}-->
-<!--					<img style="width:10px" src="images/clamplift/clamplift.png" />-->
-<!--				{% endif %}-->
-<!--			</td>-->
 		{% endfor %}
 	<td class="map">|</td></tr>
 	<tr><td class="map">E</td>
@@ -501,11 +524,6 @@ $(document).ready(function(){
 			{% else %}
 				<td class="map"></td>
 			{% endif %}
-<!--			<td class="map">-->
-<!--				{% if atlane == '2' and pos == '*' %}-->
-<!--					<img style="width:10px" src="images/clamplift/clamplift.png" />-->
-<!--				{% endif %}-->
-<!--			</td>-->
 		{% endfor %}
 	<td class="map">|</td></tr>
 
@@ -614,11 +632,6 @@ $(document).ready(function(){
 			{% else %}
 				<td class="map"></td>
 			{% endif %}
-<!--			<td class="map">-->
-<!--				{% if atlane == '1' and pos == '*' %}-->
-<!--					<img style="width:10px" src="images/clamplift/clamplift.png" />-->
-<!--				{% endif %}-->
-<!--			</td>-->
 		{% endfor %}
 	<td class="map">|</td></tr>
 
@@ -659,8 +672,6 @@ $(document).ready(function(){
 
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map" width='1%'>{{ pos }}</td>{% endfor %}</tr>
 </table>
-
-</td></tr></table>
 
 </div>
 </body>
