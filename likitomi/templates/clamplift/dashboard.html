@@ -188,12 +188,15 @@ $(document).ready(function(){
 
 // CLAMPLIFT //
 	$( "#magclamp" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
+	$("#maxclamp").hide();
 	$("#magclamp, #clamplifttab").click(function(){
 		$("#plan, #layout, #search").hide();
 		$("#clamplift").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
 		$("#magclamp").hide();
 		$("#menutab").fadeIn();
 		$("#clampsta").val("maxsta");
+		$("#minclamp").hide();
+		$("#maxclamp").show();
 	});
 
 // SEARCH //
@@ -253,6 +256,8 @@ $(document).ready(function(){
 		// CLAMPLIFT //
 		$("#clamplift").animate({"width":"398px","height":"188px","top":"405px","left":"0px"});
 		$("#clampsta").val("minsta");
+		$("#minclamp").show();
+		$("#maxclamp").hide();
 		// SEARCH //
 		$("#search").animate({"width":"398px","height":"40px","top":"0px","left":"400px"});
 	});
@@ -375,6 +380,7 @@ $(document).ready(function(){
 		<div style="top:0px; right:0px;"><button id="magclamp"></button></div> <!--Magnifying Button-->
 		<input id="clampsta" value="minsta" type="hidden" />
 		<iframe id="minclamp" src="/minclamp/" frameborder="0" style="width:100%; height:100%; margin-height:35px; margin-left:0px;" scrolling="no"></iframe>
+		<iframe id="maxclamp" src="/maxclamp/" frameborder="0" style="width:100%; height:100%; margin-height:0px; margin-left:0px;" scrolling="no"></iframe>
 	</div>
 
 <!--SEARCH-->

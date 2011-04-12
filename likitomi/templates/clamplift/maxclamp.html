@@ -43,7 +43,7 @@ color:dimgray;
 <script type="text/javascript">
 $(document).ready(function(){
 	$(window).load(function clampAll(){
-		$("#clampall").load("/minclamp/");
+		$("#clampall").load("/maxclamp/");
 		setTimeout(clampAll, 2000);
 	});
 });
@@ -489,68 +489,60 @@ function otherLoc()
 	<input id="realtag" type="hidden" value="{{ realtag }}" />
 	<input id="actual" type="hidden" value="{{ actual_wt }}" />
 	{% if realtag %}
-		<div id="minic">
-			<table style="width:100%;">
+		<div id="maxic">
+			<table style="width:100%; font-size:200%;">
+				<tr style="height:80px;"><td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td></tr>
+				<tr style="height:80px;"><td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td></tr>
+				<tr style="height:80px;"><td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td></tr>
 				<tr>
-					<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
-					<td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td>
-				</tr>
-			</table>
-			<table style="width:100%;">
-				<tr>
-					<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td>
 					<td><p class="label">Location:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
-					<td style="text-align:center; width:60px; height:50px;" >
-						{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="50px" src="images/clamplift/changeloc.png"></a>{% endif %}
-					</td>
+					<td style="text-align:center; width:96px; height:80px;" >
+						{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="80px" src="images/clamplift/changeloc.png"></a>{% endif %}</td>
 				</tr>
 			</table>
-			<table style="width:100%;">
+			<table style="width:100%; font-size:200%;">
 				<tr>
-					<td style="text-align:center; width:44px; height:50px;">
-						{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}
-					</td>
+					<td style="text-align:center; width:70px; height:80px;">
+						{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="80px" src="images/clamplift/undo.png"></a>{% endif %}</td>
 					<td ><p class="label">Weight: </p></td><td ><p class="var">{{ actual_wt }}</p></td>
-
 					{% if atlocation == "Scale" and actual_wt > temp_weight %}
 					<td style="text-align:center;">>>></td>
 					<td ><p class="var">{{ temp_weight }}</p></td>
 					{% endif %}
 					<td ><p class="unit">kgs.</p></td>
-					<td style="text-align:center; width:44px; height:50px;">
-						{% if atlocation == "Scale" and actual_wt > temp_weight %}<a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a>{% endif %}
+					<td style="text-align:center; width:70px; height:80px;">
+						{% if atlocation == "Scale" and actual_wt > temp_weight %}<a href="javascript:submit()"><img border="0" height="80px" src="images/clamplift/update.png"></a>{% endif %}
 					</td>
-					<td style="text-align:center; width:60px; height:50px;">
-						{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a>{% endif %}
-					</td>
+					<td style="text-align:center; width:96px; height:80px;">
+						{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="80px" src="images/clamplift/manual.png"></a>{% endif %}</td>
 				</tr>
 			</table>
 		</div>
 	{% endif %}
 
-	<form id="frm1" action="/minclamp/update/" method="get">
+	<form id="frm1" action="/maxclamp/update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ actual_wt }}" name="actual_wt" />
 		<input id="temp" type="hidden" value="{{ temp_weight }}" name="temp_weight" />
 	</form>
 
-	<form id="frm2" action="/minclamp/undo/" method="get">
+	<form id="frm2" action="/maxclamp/undo/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 	</form>
 
-	<form id="frm3" action="/minclamp/changeloc/" method="get">
+	<form id="frm3" action="/maxclamp/changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input id="ilane" type="hidden" value="{{ lane }}" name="lane" />
 		<input id="ipos" type="hidden" value="{{ position }}" name="pos" />
 	</form>
 
-	<form id="frm4" action="/minclamp/changeloc/" method="get">
+	<form id="frm4" action="/maxclamp/changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ leftlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
 
-	<form id="frm5" action="/minclamp/changeloc/" method="get">
+	<form id="frm5" action="/maxclamp/changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ rightlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
