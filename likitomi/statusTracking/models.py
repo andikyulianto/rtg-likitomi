@@ -226,8 +226,7 @@ class Planning(models.Model):
         db_table = u'planning'
 
 class ProductCatalog(models.Model):
-    product_code_id = models.IntegerField(primary_key=True)
-    product_code = models.CharField(unique=True, max_length=60, blank=True)
+    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
     product_name = models.CharField(max_length=765, blank=True)
     partner_id = models.CharField(max_length=765, blank=True)
     cname = models.CharField(max_length=765, blank=True)
