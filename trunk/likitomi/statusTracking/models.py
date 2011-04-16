@@ -121,50 +121,6 @@ class FaUserTemp(models.Model):
     class Meta:
         db_table = u'fa_user_temp'
 
-class FakeStatusTracking(models.Model):
-    plan_id = models.IntegerField(primary_key=True)
-    product_id = models.CharField(max_length=30, blank=True)
-    plan_amount = models.IntegerField(null=True, blank=True)
-    plan_cr_start = models.DateTimeField(null=True, blank=True)
-    plan_cr_end = models.DateTimeField(null=True, blank=True)
-    plan_cv_start = models.DateTimeField(null=True, blank=True)
-    plan_cv_end = models.DateTimeField(null=True, blank=True)
-    plan_pt_start = models.DateTimeField(null=True, blank=True)
-    plan_pt_end = models.DateTimeField(null=True, blank=True)
-    plan_wh_start = models.DateTimeField(null=True, blank=True)
-    plan_wh_end = models.DateTimeField(null=True, blank=True)
-    plan_due = models.DateTimeField(null=True, blank = True)
-    current_status = models.CharField(max_length=33, blank=True)
-    actual_amount_cr = models.IntegerField(null=True, blank=True)
-    actual_cr_start = models.DateTimeField(null=True, blank=True)
-    actual_cr_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_cv = models.IntegerField(null=True, blank=True)
-    actual_cv_start = models.DateTimeField(null=True, blank=True)
-    actual_cv_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_pt = models.IntegerField(null=True, blank=True)
-    actual_pt_start = models.DateTimeField(null=True, blank=True)
-    actual_pt_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_wh = models.IntegerField(null=True, blank=True)
-    actual_wh_start = models.DateTimeField(null=True, blank=True)
-    actual_wh_end = models.DateTimeField(null=True, blank=True)
-    actual_due = models.DateTimeField(null=True, blank=True)
-    process1 = models.CharField(max_length=5, blank=True)
-    process2 = models.CharField(max_length=5, blank=True)
-    process3 = models.CharField(max_length=5, blank=True)
-    process4 = models.CharField(max_length=5, blank=True)
-    cv_machine = models.CharField(max_length=15, blank=True)
-    days_left = models.IntegerField(null=True, blank=True)
-
-    class Admin: pass
-
-    class Meta:
-        db_table = u'fake_status_tracking'
-    def calculate_date(self):
-        import datetime
-        return 8
-        #return int((datetime.datetime.now() - self.plan_due))
-    #days_left = property(calculate_date)
-
 
 class InchMm(models.Model):
     inch = models.IntegerField(primary_key=True)
@@ -270,7 +226,7 @@ class Planning(models.Model):
         db_table = u'planning'
 
 class ProductCatalog(models.Model):
-    product_id = models.IntegerField(primary_key=True)
+    product_code_id = models.IntegerField(primary_key=True)
     product_code = models.CharField(unique=True, max_length=60, blank=True)
     product_name = models.CharField(max_length=765, blank=True)
     partner_id = models.CharField(max_length=765, blank=True)
@@ -417,3 +373,49 @@ class TotalPlanning(models.Model):
     next_process = models.CharField(max_length=33, blank=True)
     class Meta:
         db_table = u'total_planning'
+
+class FakeStatusTracking(models.Model):
+    plan_id = models.IntegerField(primary_key=True)
+    product_code = models.ForeignKey(ProductCatalog)
+    plan_amount = models.IntegerField(null=True, blank=True)
+    plan_cr_start = models.DateTimeField(null=True, blank=True)
+    plan_cr_end = models.DateTimeField(null=True, blank=True)
+    plan_cv_start = models.DateTimeField(null=True, blank=True)
+    plan_cv_end = models.DateTimeField(null=True, blank=True)
+    plan_pt_start = models.DateTimeField(null=True, blank=True)
+    plan_pt_end = models.DateTimeField(null=True, blank=True)
+    plan_wh_start = models.DateTimeField(null=True, blank=True)
+    plan_wh_end = models.DateTimeField(null=True, blank=True)
+    plan_due = models.DateTimeField(null=True, blank = True)
+    current_status = models.CharField(max_length=33, blank=True)
+    actual_amount_cr = models.IntegerField(null=True, blank=True)
+    actual_cr_start = models.DateTimeField(null=True, blank=True)
+    actual_cr_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_cv = models.IntegerField(null=True, blank=True)
+    actual_cv_start = models.DateTimeField(null=True, blank=True)
+    actual_cv_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_pt = models.IntegerField(null=True, blank=True)
+    actual_pt_start = models.DateTimeField(null=True, blank=True)
+    actual_pt_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_wh = models.IntegerField(null=True, blank=True)
+    actual_wh_start = models.DateTimeField(null=True, blank=True)
+    actual_wh_end = models.DateTimeField(null=True, blank=True)
+    actual_due = models.DateTimeField(null=True, blank=True)
+    process1 = models.CharField(max_length=5, blank=True)
+    process2 = models.CharField(max_length=5, blank=True)
+    process3 = models.CharField(max_length=5, blank=True)
+    process4 = models.CharField(max_length=5, blank=True)
+    cv_machine = models.CharField(max_length=15, blank=True)
+    days_left = models.IntegerField(null=True, blank=True)
+
+    class Admin: pass
+
+    class Meta:
+        db_table = u'fake_status_tracking'
+    def calculate_date(self):
+        import datetime
+        return 8
+        #return int((datetime.datetime.now() - self.plan_due))
+    #days_left = property(calculate_date)
+
+
