@@ -1,5 +1,14 @@
 <center><h3>Total plan</h3></center>
+<br>
 <center><table border=1>
-<tr><td rowspan="2">SO NO</td><td rowspan="2">PO NO</td><td colspan="2">Product Code</td><td rowspan="2">Company</td><td rowspan="2">Product Name</td><td colspan="3">Product Spec.</td><td colspan="2">Amount</td><td colspan="2">Delivery</td><td colspan="3">Corrugator</td><td colspan="3">Convertor</td><td rowspan="2">Actual</td><td rowspan="2">REMARK</td></tr>
+
+	<tr><td rowspan="2">SO NO</td><td rowspan="2">PO NO</td><td colspan="2">Product Code</td><td rowspan="2">Company</td><td rowspan="2">Product Name</td><td colspan="3">Product Spec.</td><td colspan="2">Amount</td><td colspan="2">Delivery</td><td colspan="3">Corrugator</td><td colspan="3">Convertor</td><td rowspan="2">Actual</td><td rowspan="2">REMARK</td></tr>
 <tr><td>CODE</td><td>MC</td><td>P.W</td><td>Lenght</td><td>F</td><td>PCS</td><td>ALW +\-</td><td>Date</td><td>Amount</td><td>Date</td><td>Amount</td><td>Time used</td><td>Date</td><td>Amount</td><td>Time used</td></tr>
-</table></center>
+
+
+	{% for id,product,CV,plan_amount,plan_due in items %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>company</td><td>product_name</td><td>P_W</td><td>Lenght</td><td>F</td><td>{{plan_amount}}</td><td>ALW</td><td>{{plan_due|time:"H:i"}}</td><td>amount</td><td>date</td><td>amount</td><td>time_used</td><td>date</td><td>amount</td><td>time_used</td><td>act.</td><td>REMARK</td></tr>
+	{% endfor %}
+			</table>
+</center>
+

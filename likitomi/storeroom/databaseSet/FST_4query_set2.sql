@@ -7,7 +7,7 @@
 -- Generation Time: Apr 02, 2011 at 12:16 PM
 -- Server version: 5.1.49
 -- PHP Version: 5.3.3-1ubuntu9.3
-TRUNCATE TABLE `fake_status_tracking`;
+TRUNCATE TABLE `fakestatustracking`;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
@@ -26,7 +26,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Table structure for table `fake_status_tracking`
 --
 
-CREATE TABLE IF NOT EXISTS `fake_status_tracking` (
+CREATE TABLE IF NOT EXISTS `fakestatustracking` (
   `plan_id` int(11) NOT NULL,
   `product_id` varchar(30) COLLATE tis620_bin NOT NULL,
   `plan_amount` int(11) DEFAULT NULL,

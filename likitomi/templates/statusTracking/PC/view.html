@@ -4,7 +4,6 @@
     <div id="header">HOME<br>
     	<!-- start Menu-->
     <ul id="navlist">
-		<li><a href="/likitomi/plan/plan/?eID={{eID}}">Total Plan</a></li>
 		<li><a href="/likitomi">Logout</a></li>
 	</ul>
 
@@ -22,16 +21,21 @@
 
 <!--END Menu and Topbar-->
 <div id="content">
-<div id="accordion">
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Daily Plan</a></li>
+		<li><a href="#tabs-2">Monthly Plan</a></li>
+	</ul>
+	<div id="tabs-1">
+		<div id="accordion">
 
 	<h3><a href="#">Normal Plan</a></h3>
 	<div id="divNormalPlan">
 		<p>
 		<!--- table of normal plan -->
-		<table align='center' height='450' width="95%" class='tbltables'>
+		<table align='center' height='400' width="95%" class='tbltables'>
 	<tr>
 		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
-		{% block crview %}
 		<!-- table CR --><center><table align=center width="90%"> 
 			<tr><td width="50%">{# left #}
 	<div id="linkCR">
@@ -84,7 +88,7 @@
 			</td><td width="50%" bgColor="#F8F8F8"><table><div id="loadPageCR"> {# right #} << Please Click in order to see Product Detail </div></table></td></tr>
 
 			</table><!-- end table CR -->
-		{% endblock%}
+
 		</td> <td><a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>
 		<table align=center width="90%">
 
@@ -196,7 +200,6 @@
 			</table></center>
 		<!-- end pt table -->
 		</td> <td> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
-		{% block whview %}
 		<!-- start wh table--><center>
 		<table align="center" width="80%"> 
 
@@ -244,7 +247,6 @@
 			</tr>
 			</table></center>
 		<!-- end wh table-->
-		{% endblock%}
 		</td>
 	</tr>
 
@@ -304,7 +306,42 @@
 		  });
 		</script>
 	</div>
-</div>
+</div> <!-- accordion -->
+</div> <!-- tab ID 1-->
+
+{{temp_contents}}
+<!-- start tab 2 -->
+<div id="tabs-2">
+	<div id="accordionMonthly">
+
+	<h3><a href="#">Normal Plan</a></h3>
+	<div><table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}}</h3></center>
+<br>
+<center><table border=1>
+
+	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
+<tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
+
+
+	{% for id,product,CV,plan_amount,plan_due in items %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>company</td><td>product_name</td><td>P_W</td><td>Lenght</td><td>F</td><td>{{plan_amount}}</td><td>ALW</td><td>{{plan_due|date:"d/m"}}</td><td>amount</td><td>date</td><td>amount</td><td>time_used</td><td>date</td><td>amount</td><td>time_used</td><td>act.</td><td>REMARK</td></tr>
+	{% endfor %}
+			</table>
+</center>
+</td></tr></table>
+	</div>
+	<h3><a href="#">Not Process</a></h3>
+	<div>
+		Not Process
+	</div>
+	<h3><a href="#">Missing in pcs.</a></h3>
+	<div>
+		Missing
+	</div>
+	</div> <!-- end accordion tab 2-->
+</div> <!-- tab ID 2-->
+
+</div> <!-- tabs-->
 
 </div>
 </div>
