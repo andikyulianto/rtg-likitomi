@@ -37,7 +37,7 @@
 	<tr>
 		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
 		<!-- table CR --><center><table align=center width="90%"> 
-			<tr><td width="50%">{# left #}
+			<tr><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR">
 			<table align=center width="100%"><!-- table left --><span class="header">
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
@@ -257,8 +257,9 @@
 	
 	<h3><a href="#">Not Process</a></h3>
 	<div>
-<div align="right"><form action="/" id="searchDate">From: <input type="text" name="from" id="datepickerFromNotProcess"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="to" id="datepickerToNotProcess">&nbsp;&nbsp;<input type="submit" value="Submit"/></form> </div><br>
-		 <div id="result"></div>
+	
+<!--<div align="right"><form action="/" id="searchDate">From: <input type="text" name="from" id="datepickerFromNotProcess"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="to" id="datepickerToNotProcess">&nbsp;&nbsp;<input type="submit" value="Submit"/></form> </div><br>
+
 		<script>
 		  // attach a submit handler to the form
 		  $("#searchDate").submit(function(event) {
@@ -279,32 +280,1586 @@
 		    );
 		  });
 		</script>
+-->
+	<div id="result">
+	
+<!--- table of not process plan -->
+		<table align='center' height='350' width="95%" class='tbltables'>
+	<tr>
+		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
+		{% block crview %}
+		<!-- table CR --><center><table align=center width="90%"> 
+			<tr><td width="50%">{# left #}{{temp}}
+	<div id="linkCR">
+			<table align=center width="100%"><!-- table left --><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,days_left,plan_amount,actual_amount_cr in notProcessCR %}
+			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
+			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
+			<td>{{start|time:"H:i"}}</td>
+			<td>{{ end|time:"H:i" }}</td>
+			<td>{{plan_amount}}</td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{days_left}}<br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white"> </font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">  </font>
+				{% endif %}
+
+			</p></td>
+			<td><p class="tbsgunderline">
+				{% if plan_amount > actual_amount_cr %}
+				<font color="red">{{actual_amount_cr}}</font>
+				{% else %}{% if actual_amount_cr != NULL%}
+				{{actual_amount_cr}}
+				{% else %}
+				0
+				{% endif %}{% endif %}
+
+			</p></td>
+			</tr></a>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countNotProcessFullCR = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCR = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCR = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- add empty line -->
+			</table> <!-- end table left -->
+			</center></div>
+			
+			</td><td width="50%" bgColor="#F8F8F8"><table><div id="loadPageCR"> {# right #} << Please Click in order to see Product Detail </div></table></td></tr>
+
+			</table><!-- end table CR -->
+		{% endblock%}
+		</td> <td><a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>
+		<table align=center width="90%">
+
+			<tr  height="5"><td width="60%">{# left #}
+			
+			<div id="linkCV">
+			<table align=center width="100%"><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,cv_machine,previuos,plan_due,plan_amount,actual_amount_cv in notProcessCV %}
+			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
+			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td>
+			<td> {{start|time:"H:i"}}</td>
+			<td> {{end|time:"H:i"}}</td>
+			<td>{{ plan_amount }}</td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline" align="center">{{cv_machine}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">NEXT<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td></tr>
+			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">&nbsp;</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">&nbsp;</font>
+				{% endif %}
+
+			</p></td>
+			<td align="right"><p class="tbsgunderline">				
+				{% if actual_amount_cv != NULL%}
+				 {% if actual_amount_cv < plan_amount %}
+				<font color="red">{{actual_amount_cv}}</font>
+				{% else %}
+				{{actual_amount_cv}}
+				{% endif %}
+				{% else %}
+				<font color="red">0</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countNotProcessFullCV = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCV = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCV = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- add empty line -->
+			</table></div>
+			
+			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} << Please Click in order to see Product Detail</div> </table></td></tr>
+			</table>
+<!-- end cv table -->
+		</center>
+		</td>		
+	</tr>
+	<tr>
+		<td><a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>
+		<!-- start pt table --><center>
+		<table align=center width="95%">
+			
+			<tr><td width="50%">{# left #}
+			<div id="linkPT">
+			<table align=center width = 100%><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,previous_section,plan_due,plan_amount,actual_amount_pt in notProcessPT %}
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td>
+	<td> {{start|time:"H:i"}}</td>
+	<td> {{end|time:"H:i"}}</td>
+	<td> {{plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+</tr>
+			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">&nbsp;</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">&nbsp;</font>
+				{% endif %}
+
+			</p></td>
+<td align="right"><p class="tbsgunderline">				
+				{% if actual_amount_pt != NULL%}
+				 {% if actual_amount_pt < plan_amount %}
+				<font color="red">{{actual_amount_pt}}</font>
+				{% else %}
+				{{actual_amount_pt}}
+				{% endif %}
+				{% else %}
+				<font color="red">0</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countNotProcessFullPT = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCR = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCR = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- end empty line -->
+			</table></div>
+			
+			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in order to see Product Detail</div></table></td>
+
+			</td>
+			</table></center>
+		<!-- end pt table -->
+		</td> <td> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
+		{% block whview %}
+		<!-- start wh table--><center>
+		<table align="center" width="80%"> 
+
+			<td width="50%"> {# left #}
+			<div id="linkWH">
+			<table align=center><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td>Sch.Pcs</td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.Pcs</th></tr></thead>
+			</span>
+			{% for start,product,actual_start,process1,process2,process3,plan_due,plan_amount,actual_amount_wh in notProcessWH %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td>
+		<td> {{start|time:"H:i"}}</td>
+		<td>{{plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2" align="center"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+</tr>
+			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">&nbsp;</font>
+				{% endif %}
+			</p></td>
+			<td align="right"><p class="tbsgunderline">
+				{% if actual_amount_wh != NULL%}
+				 {% if actual_amount_wh < plan_amount %}
+					<font color="red">{{actual_amount_wh}}</font>
+				{% else %}
+					{{actual_amount_wh}}
+				{% endif %}
+				{% else %}
+					<font color="red">0</font>
+				{% endif %}
+
+			</p></td>
+			</td></tr>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countNotProcessFullWH = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCR = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countNotProcessFullCR = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- add empty line -->
+			</table>			
+			</div>
+			</td>
+			<td width="50%" bgColor="#F8F8F8"><table width="100%"><div id="loadPageWH"> {# right #} << Please Click in order to see Product Detail </div></table>
+			</td>
+
+			</tr>
+			</table></center>
+		<!-- end wh table-->
+		{% endblock%}
+		</td>
+	</tr>
+
+</table>
+<!-- end not process plan -->
+
+
+	</div>
 	</div>
 	<h3><a href="#">Missing in pcs.</a></h3>
 	<div>
-<div align="right"><Form action="/" id="searchDateMissing">From: <input type="text" name="fromMissing" id="datepickerFromMissing"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="toMissing" id="datepickerToMissing">&nbsp;&nbsp;<input type="submit" value="Submit"/></Form> </div><br>
 		 <div id="resultMissing"></div>
-		<script>
-		  // attach a submit handler to the form
-		  $("#searchDateMissing").submit(function(event) {
 		
-		    // stop form from submitting normally
-		    event.preventDefault(); 
-		    var eID = $("#userID").val();
-		    // get some values from elements on the page:
-		    var $form = $( this ),
-			termFrom = $form.find( 'input[name="fromMissing"]' ).val(),
-			termTo = $form.find( 'input[name="toMissing"]' ).val(),
-			url = $form.attr( 'action' );
-		    // Send the data using post and put the results in a div
-		$.post("/likitomi/query/date/missing/",{"from":termFrom,"to":termTo,"eID":eID}, function(data){
-			$( "#resultMissing" ).fadeOut('fast').html(data).fadeIn('fast');
-		}
+<!--- table of missing -->
+		<table align='center' height='350' width="95%" class='tbltables' >
+	<tr>
+		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>{{temp}}
+		<!-- table CR --><center><table align=center width="90%"> 
+			<tr><td width="50%">{# left #}
+	<div id="linkCR">
+			<table align=center width="100%"><!-- table left --><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,days_left,plan_amount,actual_amount_cr in missingInCR %}
+			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
+			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
+			<td>{{start|time:"H:i"}}</td>
+			<td>{{ end|time:"H:i" }}</td>
+			<td>{{plan_amount}} </td>
+			<td rowspan="2" align="center"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{days_left}}<br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white"> </font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">  </font>
+				{% endif %}
 
+			</p></td>
+			<td><p class="tbsgunderline">
+				{% if plan_amount > actual_amount_cr %}
+				<font color="red">{{actual_amount_cr}}</font>
+				{% else %}{% if actual_amount_cr != NULL%}
+				{{actual_amount_cr}}
+				{% else %}
+				0
+				{% endif %}{% endif %}
 
-		    );
-		  });
-		</script>
+			</p></td>
+			</tr></a>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countMissingFullCR = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullCR = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullCR = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- end empty line -->
+			</table> <!-- end table left -->
+			</center></div>
+			
+			</td><td width="50%" bgColor="#F8F8F8"><table><div id="loadPageCR"> {# right #} << Please Click in order to see Product Detail </div></table></td></tr>
+
+			</table><!-- end table CR -->
+		</td> <td><a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>
+		<table align=center width="90%">
+
+			<tr  height="5"><td width="60%">{# left #}
+			
+			<div id="linkCV">
+			<table align=center width="100%"><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,cv_machine,previuos,plan_due,plan_amount,actual_amount_cv in missingInCV %}
+			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
+			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td>
+			<td> {{start|time:"H:i"}}</td>
+			<td> {{end|time:"H:i"}}</td>
+			<td>{{ plan_amount }}</td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td></tr>
+			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white"> &nbsp; </font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">&nbsp;</font>
+				{% endif %}
+
+			</p></td>
+			<td align="right"><p class="tbsgunderline">				
+				{% if actual_amount_cv != NULL%}
+				 {% if actual_amount_cv < plan_amount %}
+				<font color="red">{{actual_amount_cv}}</font>
+				{% else %}
+				{{actual_amount_cv}}
+				{% endif %}
+				{% else %}
+				<font color="red">0</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countMissingFullCV = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullCV = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullCV = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- end empty line -->
+			</table></div>
+			
+			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} << Please Click in order to see Product Detail</div> </table></td></tr>
+			</table>
+<!-- end cv table -->
+		</center>
+		</td>		
+	</tr>
+	<tr>
+		<td><a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>
+		<!-- start pt table --><center>
+		<table align=center width="95%">
+			
+			<tr><td width="50%">{# left #}
+			<div id="linkPT">
+			<table align=center width = 100%><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end,previous_section,plan_due,plan_amount,actual_amount_pt in missingInPT %}
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td>
+	<td> {{start|time:"H:i"}}</td>
+	<td> {{end|time:"H:i"}}</td>
+	<td> {{plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font><br></p></td>
+<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font><br></p></td>
+<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+</tr>
+			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">&nbsp;</font>
+				{% endif %}
+			</p></td>
+			<td><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">&nbsp;</font>
+				{% endif %}
+
+			</p></td>
+<td align="right"><p class="tbsgunderline">				
+				{% if actual_amount_pt != NULL%}
+				 {% if actual_amount_pt < plan_amount %}
+				<font color="red">{{actual_amount_pt}}</font>
+				{% else %}
+				{{actual_amount_pt}}
+				{% endif %}
+				{% else %}
+				<font color="red">0</font>
+				{% endif %}
+
+			</p></td>
+			</tr>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countMissingFullPT = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullPT = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullPT = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- end empty line -->
+			</table></div>
+			
+			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in order to see Product Detail</div></table></td>
+
+			</td>
+			</table></center>
+		<!-- end pt table -->
+		</td> <td> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
+		<!-- start wh table--><center>
+		<table align="center" width="80%"> 
+
+			<td width="50%"> {# left #}
+			<div id="linkWH">
+			<table align=center><span class="header">
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td>Sch.Pcs</td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="10" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.Pcs</th></tr></thead>
+			</span>
+			{% for start,product,actual_start,process1,process2,process3,plan_due,plan_amount,actual_amount_wh in missingInWH %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td>
+		<td> {{start|time:"H:i"}}</td>
+		<td>{{plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline"> {{product}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+</tr>
+			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
+			<td><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{actual_start|time:"H:i" }}
+				{% else %} 
+				<font color="white">&nbsp;</font>
+				{% endif %}
+			</p></td>
+			<td align="right"><p class="tbsgunderline">
+				{% if actual_amount_wh != NULL%}
+				 {% if actual_amount_wh < plan_amount %}
+					<font color="red">{{actual_amount_wh}}</font>
+				{% else %}
+					{{actual_amount_wh}}
+				{% endif %}
+				{% else %}
+					<font color="red">0</font>
+				{% endif %}
+
+			</p></td>
+			</td></tr>
+			{% endfor %}
+		<!--- add empty line -->
+			{% if countMissingFullWH = 0 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullWH = 1 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+			{% if countMissingFullWH = 2 %}
+			<!-- empty line one -->
+			<tr>
+			<td rowspan="2">&nbsp; </td>
+			<td>&nbsp; </td>
+			<td>&nbsp; </td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			</tr>
+			<tr>
+			<td><p class="tbsgunderline">				
+				&nbsp; 
+			</p></td>
+			<td><p class="tbsgunderline">
+				&nbsp; 
+			</p></td>
+			</tr>
+			<!-- end empty line -->
+			{% endif %}
+		<!--- end empty line -->
+			</table>			
+			</div>
+			</td>
+			<td width="50%" bgColor="#F8F8F8"><table width="100%"><div id="loadPageWH"> {# right #} << Please Click in order to see Product Detail </div></table>
+			</td>
+
+			</tr>
+			</table></center>
+		<!-- end wh table-->
+		</td>
+	</tr>
+
+</table>
+<!-- end table of missing plan -->
 	</div>
 </div> <!-- accordion -->
 </div> <!-- tab ID 1-->
@@ -315,28 +1870,94 @@
 	<div id="accordionMonthly">
 
 	<h3><a href="#">Normal Plan</a></h3>
-	<div><table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}}</h3></center>
+	<div>
+<!-- start normal plan (others can copy start from here) -->
+<table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}}</h3></center>
 <br>
-<center><table border=1>
+<center><table border=1 class="totalPlan">
 
 	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
 <tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
 
 
-	{% for id,product,CV,plan_amount,plan_due in items %}
-		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>company</td><td>product_name</td><td>P_W</td><td>Lenght</td><td>F</td><td>{{plan_amount}}</td><td>ALW</td><td>{{plan_due|date:"d/m"}}</td><td>amount</td><td>date</td><td>amount</td><td>time_used</td><td>date</td><td>amount</td><td>time_used</td><td>act.</td><td>REMARK</td></tr>
+	{% for id,product,CV,company,product_name,p_w,lenght,alw,plan_amount,plan_due,plan_cr_start,plan_cr_end,plan_cv_start,actual_amount_wh in items %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>{{company}}</td><td>{{product_name}}</td><td align="right">{{p_w}}</td><td  align="right">{{lenght}}</td><td>F</td><td align="right">{{plan_amount}}</td><td>{{alw}}</td><td>{{plan_due|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>{{plan_cr_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% if plan_cv_start != NULL %}
+	<td>{{plan_cv_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% else %}
+	<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
+	{% endif %}
+	{% if actual_amount_wh >= plan_amount %}
+	<td>{{actual_amount_wh}}</td>
+	{% else %}
+	<td><font color=red>{{actual_amount_wh}}</font></td>
+	{% endif %}
+	<td>REMARK</td></tr>
 	{% endfor %}
 			</table>
 </center>
 </td></tr></table>
+<!-- end total plan -->
 	</div>
 	<h3><a href="#">Not Process</a></h3>
 	<div>
-		Not Process
+<!-- start to copy not process here -->
+		<table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}} (not process)</h3></center>
+<br>
+<center><table border=1 class="totalPlan">
+
+	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
+<tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
+
+
+	{% for id,product,CV,company,product_name,p_w,lenght,alw,plan_amount,plan_due,plan_cr_start,plan_cr_end,plan_cv_start,actual_amount_wh in itemsNotProcess %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>{{company}}</td><td>{{product_name}}</td><td align="right">{{p_w}}</td><td  align="right">{{lenght}}</td><td>F</td><td align="right">{{plan_amount}}</td><td>{{alw}}</td><td>{{plan_due|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>{{plan_cr_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% if plan_cv_start != NULL %}
+	<td>{{plan_cv_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% else %}
+	<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
+	{% endif %}
+	{% if actual_amount_wh >= plan_amount %}
+	<td>{{actual_amount_wh}}</td>
+	{% else %}
+	<td><font color=red>{{actual_amount_wh}}</font></td>
+	{% endif %}
+	<td>REMARK</td></tr>
+	{% endfor %}
+			</table>
+</center>
+</td></tr></table>
+<!-- end copy here not process-->
 	</div>
 	<h3><a href="#">Missing in pcs.</a></h3>
 	<div>
-		Missing
+		<!-- start copy here missing-->
+<table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}}</h3></center>
+<br>
+<center><table border=1 class="totalPlan">
+
+	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
+<tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
+
+
+	{% for id,product,CV,company,product_name,p_w,lenght,alw,plan_amount,plan_due,plan_cr_start,plan_cr_end,plan_cv_start,actual_amount_wh in itemsMissing %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>{{company}}</td><td>{{product_name}}</td><td align="right">{{p_w}}</td><td  align="right">{{lenght}}</td><td>F</td><td align="right">{{plan_amount}}</td><td>{{alw}}</td><td>{{plan_due|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>{{plan_cr_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% if plan_cv_start != NULL %}
+	<td>{{plan_cv_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% else %}
+	<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
+	{% endif %}
+	{% if actual_amount_wh >= plan_amount %}
+	<td>{{actual_amount_wh}}</td>
+	{% else %}
+	<td><font color=red>{{actual_amount_wh}}</font></td>
+	{% endif %}
+	<td>REMARK</td></tr>
+	{% endfor %}
+			</table>
+</center>
+</td></tr></table>
+		<!-- end copy here missing -->
 	</div>
 	</div> <!-- end accordion tab 2-->
 </div> <!-- tab ID 2-->

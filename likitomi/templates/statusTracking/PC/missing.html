@@ -1,9 +1,8 @@
 
-<!--- table of normal plan -->
+<!--- table of missing -->
 		<table align='center' height='350' width="95%" class='tbltables' >
 	<tr>
 		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>{{temp}}
-		{% block crview %}
 		<!-- table CR --><center><table align=center width="90%"> 
 			<tr><td width="50%">{# left #}
 	<div id="linkCR">
@@ -54,7 +53,6 @@
 			</td><td width="50%" bgColor="#F8F8F8"><table><div id="loadPageCR"> {# right #} << Please Click in order to see Product Detail </div></table></td></tr>
 
 			</table><!-- end table CR -->
-		{% endblock%}
 		</td> <td><a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>
 		<table align=center width="90%">
 
@@ -171,7 +169,6 @@
 			</table></center>
 		<!-- end pt table -->
 		</td> <td> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
-		{% block whview %}
 		<!-- start wh table--><center>
 		<table align="center" width="80%"> 
 
@@ -220,9 +217,8 @@
 			</tr>
 			</table></center>
 		<!-- end wh table-->
-		{% endblock%}
 		</td>
 	</tr>
 
 </table>
-<!-- end table of normal plan -->
+<!-- end table of missing plan -->

@@ -13,6 +13,8 @@ from statusTracking.models import Employee, FakeStatusTracking, ProductCatalog, 
 from statusTracking.utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
 from statusTracking.config import getPCItemNum
 from datetime import date, datetime
+from django.db.models import F
+import calendar
 
 ####################################################
 ##                    for pc                      ##
@@ -52,17 +54,16 @@ def showPC(eID,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	
-
 	#create items for PC
 	#extra = db_type(FakeStatusTracking.objects.all())
 	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_code","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
 	#temp_contents = extra[0].days_left
-	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_code","actual_cr_start","actual_cr_end").order_by('plan_cr_start')
+	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
 	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year=
-	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_code", "actual_cv_start", "actual_cv_end", "cv_machine","process1","plan_due","plan_amount","actual_amount_cv").order_by('plan_cv_start')
-	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_code", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_cv").order_by('plan_pt_start')
-	#bug here ordering (also in utility line67)
-	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_code","actual_wh_start","process1","process2","process3","plan_due","plan_amount","actual_amount_wh").order_by('plan_wh_start')
+	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product", "actual_cv_start", "actual_cv_end", "cv_machine","process1","plan_due","plan_amount","actual_amount_cv").order_by('plan_cv_start')
+	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_cv").order_by('plan_pt_start')
+
+	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product","actual_wh_start","process1","process2","process3","plan_due","plan_amount","actual_amount_wh").order_by('plan_wh_start')
 	
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
@@ -115,19 +116,60 @@ def showPC(eID,title):
 	items_plan_wh=items_plan_wh[startList:endList]
 	#temp_contents = currentProcess("2CL")
 
+###########################################
+		## not in process ##
+
+	notProcessCRFull = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).exclude(actual_cr_end__isnull=False).exclude(plan_cr_end__isnull=True).values_list("plan_cr_start","plan_cr_end","product","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
+	notProcessCVFull = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).exclude(actual_cv_end__isnull=False).exclude(plan_cv_end__isnull=True).values_list("plan_cv_start", "plan_cv_end", "product", "actual_cv_start", "actual_cv_end", "cv_machine","process1","plan_due","plan_amount","actual_amount_cv").order_by('plan_cv_start')
+	notProcessPTFull = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).exclude(actual_pt_end__isnull=False).exclude(plan_pt_end__isnull=True).values_list("plan_pt_start", "plan_pt_end", "product", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_cv").order_by('plan_pt_start')
+	notProcessWHFull = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).exclude(actual_wh_start__isnull=False).exclude(plan_wh_start__isnull=True).values_list("plan_wh_start", "product","actual_wh_start","process1","process2","process3","plan_due","plan_amount","actual_amount_wh").order_by('plan_wh_start')
+
+	countNotProcessFullCR = notProcessCRFull.count()
+	countNotProcessFullCV = notProcessCVFull.count()
+	countNotProcessFullPT = notProcessPTFull.count()
+	countNotProcessFullWH = notProcessWHFull.count()
+
+	notProcessCR = notProcessCRFull[0:3]
+	notProcessCV = notProcessCVFull[0:3]
+	notProcessPT = notProcessPTFull[0:3]
+	notProcessWH = notProcessWHFull[0:3]
+###########################################
+
+###########################################
+		##missing##
+
+	missingInCRFull = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).exclude(actual_amount_cr__gte= F('plan_amount')).exclude(actual_cr_end__isnull=True).values_list("plan_cr_start","plan_cr_end","product","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
+	missingInCVFull = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).exclude(actual_amount_cv__gte= F('plan_amount')).exclude(actual_cv_end__isnull=True).values_list("plan_cv_start", "plan_cv_end", "product", "actual_cv_start", "actual_cv_end", "cv_machine","process1","plan_due","plan_amount","actual_amount_cv").order_by('plan_cv_start')
+	missingInPTFull = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).exclude(actual_amount_pt__gte=F('plan_amount')).exclude(actual_pt_end__isnull=True).values_list("plan_pt_start", "plan_pt_end", "product", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_pt").order_by('plan_pt_start')
+	missingInWHFull = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).values_list("plan_wh_start", "product","actual_wh_start","process1","process2","process3","plan_due","plan_amount","actual_amount_wh").order_by('plan_wh_start')
+
+	countMissingFullCR = missingInCRFull.count()
+	countMissingFullCV = missingInCVFull.count()
+	countMissingFullPT = missingInPTFull.count()
+	countMissingFullWH = missingInWHFull.count()
+
+	missingInCR = missingInCRFull[0:3]
+	missingInCV = missingInCVFull[0:3]
+	missingInPT = missingInPTFull[0:3]
+	missingInWH = missingInWHFull[0:3]
+
+############################################
+
 	##########################
 	########Monthly###########
 	##########################
-	datefrominMonth = datetime(2011,03,12)
-	datetoinMonth = datetime(2011,04,12)
-	eID = "T101"
 	today = todayDate()
+	datefrominMonth = datetime(today.year,today.month,1)
+	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
+	eID = "T101"
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
 	page ="totalPlanSelectedDate"
 	#temp_contents = FakeStatusTracking.objects.all()
 
-	items = FakeStatusTracking.objects.select_related().filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).values_list	("plan_id","product_code","cv_machine","plan_amount","plan_due").order_by('plan_due')
+	items = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).values_list	("plan_id","product","cv_machine","product__partner_id__partner_name","product__product_name","product__p_width_inch","product__t_length","product__qty_allowance","plan_amount","plan_due","plan_cr_start","plan_cr_end","plan_cv_start","actual_amount_wh").order_by('plan_due')
+	itemsNotProcess = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_wh_start__isnull=False).values_list	("plan_id","product","cv_machine","product__partner_id__partner_name","product__product_name","product__p_width_inch","product__t_length","product__qty_allowance","plan_amount","plan_due","plan_cr_start","plan_cr_end","plan_cv_start","actual_amount_wh").order_by('plan_due')
+	itemsMissing = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).values_list	("plan_id","product","cv_machine","product__partner_id__partner_name","product__product_name","product__p_width_inch","product__t_length","product__qty_allowance","plan_amount","plan_due","plan_cr_start","plan_cr_end","plan_cv_start","actual_amount_wh").order_by('plan_due')
 
 	return render_to_response('PC/view.html', locals())
 
