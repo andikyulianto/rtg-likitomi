@@ -228,7 +228,8 @@ class Planning(models.Model):
 class ProductCatalog(models.Model):
     product_code = models.CharField(primary_key=True, max_length=60, blank=True)
     product_name = models.CharField(max_length=765, blank=True)
-    partner_id = models.CharField(max_length=765, blank=True)
+    partner =  models.ForeignKey(Partners,null=False)
+    #partner_id = models.CharField(max_length=765, blank=True)
     cname = models.CharField(max_length=765, blank=True)
     product_type = models.CharField(max_length=60, blank=True)
     customer_part_no = models.CharField(max_length=60, blank=True)
@@ -375,7 +376,8 @@ class TotalPlanning(models.Model):
 
 class FakeStatusTracking(models.Model):
     plan_id = models.IntegerField(primary_key=True)
-    product_code = models.ForeignKey(ProductCatalog)
+    product = models.ForeignKey(ProductCatalog,null=False)
+    #product_id = models.CharField(max_length=33, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
     plan_cr_end = models.DateTimeField(null=True, blank=True)
@@ -406,8 +408,6 @@ class FakeStatusTracking(models.Model):
     process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
     days_left = models.IntegerField(null=True, blank=True)
-
-    class Admin: pass
 
     class Meta:
         db_table = u'fake_status_tracking'
