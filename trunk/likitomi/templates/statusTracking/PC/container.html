@@ -10,6 +10,7 @@
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
 <script>
 	$(function() {
 		$( "#accordion" ).accordion();
@@ -24,8 +25,14 @@
 		$div = $('#divNormalPlan');
 		if ($div.hasClass('ui-accordion-content-active'))
         	{
-			$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("slow");
+			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
+			$div.load('/likitomi/PCrefresher/');
+			 $('#updateMessage').fadeIn('slow');
+			setTimeout(function() {
+		    $('#updateMessage').fadeOut('slow');
+			}, 3000);
 		}
+		
 	}, 15000);
 
 /*	$(function() {
@@ -37,7 +44,7 @@
 	});
 	$(function() {
 		$( "#datepickerFromMissing" ).datepicker();
-	});
+	});$('input#search').quicksearch('table tbody tr');
 
 	$(function() {
 		$( "#datepickerToMissing" ).datepicker();
@@ -53,6 +60,7 @@
 		$( "#tabs" ).tabs();
 	});
 
+	$('input#search').quicksearch('table tbody tr');
 	</script>
 </head>
 <body>

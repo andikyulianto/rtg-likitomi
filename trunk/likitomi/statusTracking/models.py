@@ -413,8 +413,9 @@ class FakeStatusTracking(models.Model):
         db_table = u'fake_status_tracking'
     def calculate_date(self):
         import datetime
-        return 8
-        #return int((datetime.datetime.now() - self.plan_due))
+        #self.days_left = int((datetime.datetime.now() - self.plan_due))
+        #super(FakeStatusTracking,self).save()
+        return int((datetime.datetime.now() - self.plan_due))
     #days_left = property(calculate_date)
 
 

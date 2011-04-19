@@ -61,7 +61,7 @@ def showPC(eID,title):
 	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
 	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year=
 	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product", "actual_cv_start", "actual_cv_end", "cv_machine","process1","plan_due","plan_amount","actual_amount_cv").order_by('plan_cv_start')
-	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_cv").order_by('plan_pt_start')
+	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_pt").order_by('plan_pt_start')
 
 	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product","actual_wh_start","process1","process2","process3","plan_due","plan_amount","actual_amount_wh").order_by('plan_wh_start')
 	
@@ -216,7 +216,7 @@ def PCrefresher(request):
 	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_id","actual_cr_start","actual_cr_end").order_by('plan_cr_start')
 	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year=
 	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine","process1","plan_due","plan_amount","actual_amount_cv").order_by('plan_cv_start')
-	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_cv").order_by('plan_pt_start')
+	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end","process2","plan_due","plan_amount","actual_amount_pt").order_by('plan_pt_start')
 	#bug here ordering (also in utility line67)
 	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_wh_start", "product_id","actual_wh_start","process1","process2","process3","plan_due","plan_amount","actual_amount_wh").order_by('plan_wh_start')
 	
