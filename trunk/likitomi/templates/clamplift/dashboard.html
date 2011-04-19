@@ -142,7 +142,8 @@ $(document).ready(function(){
 	$("#dethead").hide();
 	$("#magplan, #plantab").click(function(){
 		$("#layout, #clamplift, #search").hide();
-		$("#plan").show().animate({"width":"800px","height":"495px"});
+//		$("#plan").show().animate({"width":"800px","height":"495px"});
+		$("#plan").fadeIn().css({"width":"800px","height":"495px"});
 		$("#magplan").hide();
 		$("#radio").show();
 		$("#minhead").hide();
@@ -180,7 +181,8 @@ $(document).ready(function(){
 	$( "#maglay" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
 	$("#maglay, #layouttab").click(function(){
 		$("#plan, #clamplift, #search").hide();
-		$("#layout").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+//		$("#layout").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+		$("#layout").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
 		$("#maglay").hide();
 		$("#menutab").fadeIn();
 		$("#map").css("margin-top","0px");
@@ -191,7 +193,8 @@ $(document).ready(function(){
 	$("#maxclamp").hide();
 	$("#magclamp, #clamplifttab").click(function(){
 		$("#plan, #layout, #search").hide();
-		$("#clamplift").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+//		$("#clamplift").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+		$("#clamplift").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
 		$("#magclamp").hide();
 		$("#menutab").fadeIn();
 		$("#clampsta").val("maxsta");
@@ -203,7 +206,7 @@ $(document).ready(function(){
 	$( "#magsearch" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
 	$("#magsearch, #searchtab").click(function(){
 		$("#plan, #layout, #clamplift").hide();
-		$("#search").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+		$("#search").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
 		$("#magsearch").hide();
 		$("#menutab").fadeIn();
 	});
@@ -239,7 +242,7 @@ $(document).ready(function(){
 		$("#magsearch").show();
 		$("#plan, #layout, #clamplift, #search").fadeIn();
 		// PLAN //
-		$("#plan").animate({"width":"398px","height":"403px"});
+		$("#plan").css({"width":"398px","height":"403px"});
 		$("#minhead").show();
 		$("#reqhead").hide();
 		$("#dethead").hide();
@@ -251,25 +254,28 @@ $(document).ready(function(){
 		$("#upper").parent().css("left","185px");
 		$("#downer").parent().css("left","185px");
 		// LAYOUT //
-		$("#layout").animate({"width":"398px","height":"551px","top":"42px","left":"400px"});
+		$("#layout").css({"width":"398px","height":"551px","top":"42px","left":"400px"});
 		$("#map").css("margin-top","35px");
 		// CLAMPLIFT //
-		$("#clamplift").animate({"width":"398px","height":"188px","top":"405px","left":"0px"});
+		$("#clamplift").css({"width":"398px","height":"188px","top":"405px","left":"0px"});
 		$("#clampsta").val("minsta");
 		$("#minclamp").show();
 		$("#maxclamp").hide();
 		// SEARCH //
 		$("#search").animate({"width":"398px","height":"40px","top":"0px","left":"400px"});
 	});
-	$("#plantab").click(function(){
-
-	});
-	$("#layouttab").click(function(){
-
-	});
-	$("#clamplifttab").click(function(){
-
-	});
+//	$("#plantab").click(function(){
+//		$("#layout, #clamplift, #search").hide();
+//		$("#plan").fadeIn().css({"width":"800px","height":"495px"});
+//	});
+//	$("#layouttab").click(function(){
+//		$("#plan, #clamplift, #search").hide();
+//		$("#layout").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
+//	});
+//	$("#clamplifttab").click(function(){
+//		$("#plan, #layout, #search").hide();
+//		$("#clamplift").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
+//	});
 });
 </script>
 
@@ -415,11 +421,11 @@ $(document).ready(function(){
 
 <!--MENU TABS-->
 	<div id="menutab" style="position:fixed; bottom:0px; left:0px; width:800px; height:100px; background-color:black;">
-		<div id="plantab" style="bottom:0px; left:0px;">Plan</div>
-		<div id="layouttab" style="bottom:0px; left:180px;">Layout</div>
-		<div id="clamplifttab" style="bottom:0px; left:360px;">Clamplift</div>
+		<div id="plantab" style="bottom:0px; left:0px; background-image:url('images/clamplift/plantab.png');"><center><h2>PLAN</h2></center></div>
+		<div id="layouttab" style="bottom:0px; left:180px; background-image:url('images/clamplift/layouttab.png');"><center><h2>LAYOUT</h2></center></div>
+		<div id="clamplifttab" style="bottom:0px; left:360px; background-image:url('images/clamplift/clamplifttab.png');"><center><h2>CLAMPLIFT</h2></center></div>
 <!--		<div id="searchtab" style="bottom:0px; left:450px;">Search</div>-->
-		<div id="dashtab" style="bottom:0px; left:540px; width:255px; height:95px;">Dashboard</div>
+		<div id="dashtab" style="bottom:0px; left:540px; width:255px; height:95px; background-image:url('images/clamplift/dashtab.png');"><center><h2>DASHBOARD</h2></center></div>
 	</div>
 
 </body>
