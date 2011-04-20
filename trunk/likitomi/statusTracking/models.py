@@ -411,14 +411,14 @@ class FakeStatusTracking(models.Model):
     def days_left(self):
         import datetime
 #        self.days_left = 8
-#        self.days_left = int((datetime.datetime.now() - self.plan_due))
+        self.days_left = int((self.plan_due - datetime.datetime.now()).days)
         #super(FakeStatusTracking,self).save()
 
-        return 5-3
+        return self.days_left
     def cr_time_used(self):
-        return 5
+        return float((self.plan_cr_end - self.plan_cr_start).seconds)/60
     def cv_time_used(self):
-        return 10
+        return float((self.plan_cv_end - self.plan_cv_start).seconds)/60
 
     class Meta:
         db_table = u'fake_status_tracking'

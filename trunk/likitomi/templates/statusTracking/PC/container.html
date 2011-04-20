@@ -11,13 +11,45 @@
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
+<script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
 <script>
-	$(function() {
-		$( "#accordion" ).accordion();
-	});
-	$(function() {
-		$( "#accordionMonthly" ).accordion();
-	});
+
+$(document).ready(function(){
+  $('#totalPlanMonthly').tablesorter({
+    headers: {
+      2: {sorter: false},
+      5: {sorter: false},
+      6: {sorter: false},
+      7: {sorter: false},
+      8: {sorter: false},
+      9: {sorter: false}
+    } 
+  } )
+
+
+$('#notProcessTotalPlanMonthly').tablesorter({
+    headers: {
+      2: {sorter: false},
+      5: {sorter: false},
+      6: {sorter: false},
+      7: {sorter: false},
+      8: {sorter: false},
+      9: {sorter: false}
+    } 
+  });
+
+$('#missingTotalPlanMonthly').tablesorter({
+    headers: {
+      2: {sorter: false},
+      5: {sorter: false},
+      6: {sorter: false},
+      7: {sorter: false},
+      8: {sorter: false},
+      9: {sorter: false}
+    } 
+  });
+});
 
 	var auto_refresh = setInterval(
 	function()
@@ -32,28 +64,7 @@
 		    $('#updateMessage').fadeOut('slow');
 			}, 1000);
 		}
-		$divNotInProcess = $('#divNotProcess');
-		if ($divNotInProcess.hasClass('ui-accordion-content-active'))
-        	{
-			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
-			$divNotInProcess.load('/likitomi/notProcessRefresher/');
-			 $('#updateMessageNotProcess').fadeIn('slow');
-			setTimeout(function() {
-		    $('#updateMessageNotProcess').fadeOut('slow');
-			}, 1000);
-		}
-		$divMissing = $('#divMissing');
-		if ($divMissing.hasClass('ui-accordion-content-active'))
-        	{
-			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
-			$divMissing.load('/likitomi/missingRefresher/');
-			 $('#updateMessageMissing').fadeIn('slow');
-			setTimeout(function() {
-		    $('#updateMessageMissing').fadeOut('slow');
-			}, 1000);
-		}
-		
-		
+
 	}, 15000);
 
 /*	$(function() {
@@ -82,7 +93,8 @@
 	});
 
 	$('input#search').quicksearch('table tbody tr');
-	</script>
+
+</script>
 </head>
 <body>
 
