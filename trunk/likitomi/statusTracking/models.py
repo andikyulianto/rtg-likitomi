@@ -269,9 +269,8 @@ class ProductCatalog(models.Model):
         db_table = u'product_catalog'
 
 class Products(models.Model):
-    auto_pid = models.IntegerField(primary_key=True)
-    parent_code = models.CharField(max_length=60, blank=True)
-    product_code = models.CharField(max_length=60, blank=True)
+    parent_code = models.ForeignKey(ProductCatalog,null=False)
+    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     df = models.CharField(max_length=30, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=30, db_column='BM', blank=True) # Field name made lowercase.
@@ -376,7 +375,7 @@ class TotalPlanning(models.Model):
 
 class FakeStatusTracking(models.Model):
     plan_id = models.IntegerField(primary_key=True)
-    product = models.ForeignKey(ProductCatalog,null=False)
+    product = models.ForeignKey(Products,null=False)
     #product_id = models.CharField(max_length=33, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
@@ -408,14 +407,26 @@ class FakeStatusTracking(models.Model):
     process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
     days_left = models.IntegerField(null=True, blank=True)
+#    days_left = models.IntegerField(null=True, blank=True)
+    def days_left(self):
+        import datetime
+#        self.days_left = 8
+#        self.days_left = int((datetime.datetime.now() - self.plan_due))
+        #super(FakeStatusTracking,self).save()
+
+        return 5-3
+    def cr_time_used(self):
+        return 5
+    def cv_time_used(self):
+        return 10
 
     class Meta:
         db_table = u'fake_status_tracking'
-    def calculate_date(self):
-        import datetime
-        #self.days_left = int((datetime.datetime.now() - self.plan_due))
+#    def set_days_left(self):
+#        import datetime
+ #       self.days_left = int((datetime.datetime.now() - self.plan_due))
         #super(FakeStatusTracking,self).save()
-        return int((datetime.datetime.now() - self.plan_due))
-    #days_left = property(calculate_date)
+        #return int((datetime.datetime.now() - self.plan_due))
+
 
 

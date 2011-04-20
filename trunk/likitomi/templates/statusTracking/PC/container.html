@@ -26,12 +26,33 @@
 		if ($div.hasClass('ui-accordion-content-active'))
         	{
 			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
-			$div.load('/likitomi/PCrefresher/');
+			$div.load('/likitomi/normalPlanRefresher/');
 			 $('#updateMessage').fadeIn('slow');
 			setTimeout(function() {
 		    $('#updateMessage').fadeOut('slow');
-			}, 3000);
+			}, 1000);
 		}
+		$divNotInProcess = $('#divNotProcess');
+		if ($divNotInProcess.hasClass('ui-accordion-content-active'))
+        	{
+			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
+			$divNotInProcess.load('/likitomi/notProcessRefresher/');
+			 $('#updateMessageNotProcess').fadeIn('slow');
+			setTimeout(function() {
+		    $('#updateMessageNotProcess').fadeOut('slow');
+			}, 1000);
+		}
+		$divMissing = $('#divMissing');
+		if ($divMissing.hasClass('ui-accordion-content-active'))
+        	{
+			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
+			$divMissing.load('/likitomi/missingRefresher/');
+			 $('#updateMessageMissing').fadeIn('slow');
+			setTimeout(function() {
+		    $('#updateMessageMissing').fadeOut('slow');
+			}, 1000);
+		}
+		
 		
 	}, 15000);
 

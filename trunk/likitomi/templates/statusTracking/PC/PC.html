@@ -3,48 +3,48 @@
 <span class="ui-icon ui-icon-info" style="float: left; margin-right: .1em;"></span>
 					Plan has been refreshed!
 </div></td></tr></table></center>
-		<table align='center' height='400' width="95%" class='tbltables' >
+		<!--- table of normal plan -->
+		<table align='center' height='400' width="95%" class='tbltables'>
 	<tr>
 		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
-		{% block crview %}
 		<!-- table CR --><center><table align=center width="90%"> 
-			<tr><td width="50%">{# left #}
+			<tr><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR">
 			<table align=center width="100%"><!-- table left --><span class="header">
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,days_left,plan_amount,actual_amount_cr in items_plan_cr %}
+			{% for CR_items in items_plan_cr %}
 			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
-			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
-			<td>{{start|time:"H:i"}}</td>
-			<td>{{ end|time:"H:i" }}</td>
-			<td>{{plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{days_left}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2">{% if cr == CR_items.product %} > {% endif %}</td>
+			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
+			<td>{{CR_items.plan_cr_end|time:"H:i" }}</td>
+			<td>{{CR_items.plan_amount}} </td>
+			<td rowspan="2"><center><p class="tbunderline">{{CR_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{CR_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 			</tr>
 			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CR_items.actual_cr_start != NULL %}
+				{{CR_items.actual_cr_start|time:"H:i" }}
 				{% else %} 
 				<font color="white"> </font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CR_items.actual_cr_end != NULL%}
+				{{CR_items.actual_cr_end|time:"H:i" }}
 				{% else %}
 				<font color="white">  </font>
 				{% endif %}
 
 			</p></td>
 			<td><p class="tbsgunderline">
-				{% if actual_amount_cr != NULL%}
-				 {% if actual_amount_cr < plan_amount %}
-				<font color="red">{{actual_amount_cr}}</font>
+				{% if CR_items.actual_amount_cr != NULL%}
+				 {% if CR_items.actual_amount_cr < CR_items.plan_amount %}
+					<font color="red">{{CR_items.actual_amount_cr}}</font>
 				{% else %}
-				{{actual_amount_cr}}
+					{{CR_items.actual_amount_cr}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -59,7 +59,7 @@
 			</td><td width="50%" bgColor="#F8F8F8"><table><div id="loadPageCR"> {# right #} << Please Click in order to see Product Detail </div></table></td></tr>
 
 			</table><!-- end table CR -->
-		{% endblock%}
+
 		</td> <td><a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>
 		<table align=center width="90%">
 
@@ -69,38 +69,38 @@
 			<table align=center width="100%"><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%" align="left"><b>Sch.IN</b></td><td width="25%" align="left"><b>Sch.OUT</b></td><td><b>Sch.Pcs</b></td><th width="20%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></thead>
-			{% for start,end,product,actual_start,actual_end,cv_machine,previous_section,plan_due,plan_amount,actual_amount_cv in items_plan_cv %}
+			{% for CV_items in items_plan_cv %}
 			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
-			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td>
-			<td> {{start|time:"H:i"}}</td>
-			<td> {{end|time:"H:i"}}</td>
-			<td> {{plan_amount}}</td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{previous_section}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{cv_machine}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">##<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2" height="20">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} </td>
+			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
+			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
+			<td> {{CV_items.plan_amount}}</td>
+			<td rowspan="2"><center><p class="tbunderline">{{CV_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{CV_items.cv_machine}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{CV_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CV_items.actual_cv_start != NULL %}
+				{{CV_items.actual_cv_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CV_items.actual_cv_end != NULL%}
+				{{CV_items.actual_cv_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_cv != NULL%}
-				 {% if actual_amount_cv < plan_amount %}
-				<font color="red">{{actual_amount_cv}}</font>
+				{% if CV_items.actual_amount_cv != NULL%}
+				 {% if CV_items.actual_amount_cv < plan_amount %}
+					<font color="red">{{actual_amount_cv}}</font>
 				{% else %}
-				{{actual_amount_cv}}
+					{{CV_items.actual_amount_cv}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -127,34 +127,34 @@
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td> <td width="25%" align="left"><b>Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></span></thead>
-			{% for start,end,product,actual_start,actual_end,previous_section,plan_due,plan_amount,actual_amount_pt in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
-<td> {{plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{previous_section}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">##<br><font color=white>&nbsp;</font></p></center></td>
+			{% for PT_items in items_plan_pt %}
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+<td> {{PT_items.plan_amount}} </td>
+			<td rowspan="2"><center><p class="tbunderline">{{PT_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{PT_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
 			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if PT_items.actual_pt_start != NULL %}
+				{{PT_items.actual_pt_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if PT_items.actual_pt_end != NULL%}
+				{{PT_items.actual_pt_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_pt != NULL%}
-				 {% if actual_amount_pt < plan_amount %}
-				<font color="red">{{actual_amount_pt}}</font>
+				{% if PT_items.actual_amount_pt != NULL%}
+				 {% if PT_items.actual_amount_pt < PT_items.plan_amount %}
+				<font color="red">{{PT_items.actual_amount_pt}}</font>
 				{% else %}
-				{{actual_amount_pt}}
+				{{PT_items.actual_amount_pt}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -171,7 +171,6 @@
 			</table></center>
 		<!-- end pt table -->
 		</td> <td> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
-		{% block whview %}
 		<!-- start wh table--><center>
 		<table align="center" width="80%"> 
 
@@ -180,29 +179,29 @@
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td><td align="left"><b>Sch.Pcs</b></td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.Pcs</th></tr></span></thead>
-			{% for start,product,actual_start,process1,process2,process3,plan_due,plan_amount,actual_amount_wh in items_plan_wh %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td>
-			<td> {{start|time:"H:i"}}</td>
-			<td> {{plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">##<br><font color=white>&nbsp;</font></p></center></td>
+			{% for WH_items in items_plan_wh %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+			<td> {{WH_items.plan_wh_start|time:"H:i"}}</td>
+			<td> {{WH_items.plan_amount}} </td>
+			<td rowspan="2"><center><p class="tbunderline">{{WH_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{WH_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
 			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if WH_items.actual_wh_start != NULL %}
+				{{WH_items.actual_wh_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			</td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_wh != NULL%}
-				 {% if actual_amount_wh < plan_amount %}
-				<font color="red">{{actual_amount_wh}}</font>
+				{% if WH_items.actual_amount_wh != NULL%}
+				 {% if WH_items.actual_amount_wh < WH_items.plan_amount %}
+				<font color="red">{{WH_items.actual_amount_wh}}</font>
 				{% else %}
-				{{actual_amount_wh}}
+				{{WH_items.actual_amount_wh}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -219,7 +218,6 @@
 			</tr>
 			</table></center>
 		<!-- end wh table-->
-		{% endblock%}
 		</td>
 	</tr>
 

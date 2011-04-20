@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from statusTracking.general import login
-from statusTracking.home import section,display,PCrefresher
+from statusTracking.home import section,display,normalPlanRefresher,notProcessRefresher,missingRefresher
 from statusTracking.detail import pcdetail
 from statusTracking.line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from statusTracking.update import startUpdate,endUpdate
@@ -30,8 +30,14 @@ urlpatterns = patterns('',
 	(r'^likitomi/$', login),
 	(r'^likitomi/home/$', section),	
 	(r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/PCrefresher/$', PCrefresher),	
-	(r'^likitomi/PCrefresher/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/normalPlanRefresher/$', normalPlanRefresher),	
+	(r'^likitomi/normalPlanRefresher/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/notProcessRefresher/$', notProcessRefresher),	
+	(r'^likitomi/notProcessRefresher/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/missingRefresher/$', missingRefresher),	
+	(r'^likitomi/missingRefresher/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/normalPlanRefresher/$', normalPlanRefresher),	
+	(r'^likitomi/normalPlanRefresher/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/pcdetail/$', pcdetail),
 	(r'^likitomi/pcdetail/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
