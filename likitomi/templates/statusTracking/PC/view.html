@@ -41,37 +41,37 @@
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,days_left,plan_amount,actual_amount_cr in items_plan_cr %}
+			{% for CR_items in items_plan_cr %}
 			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
-			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
-			<td>{{start|time:"H:i"}}</td>
-			<td>{{ end|time:"H:i" }}</td>
-			<td>{{plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{days_left}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2">{% if cr == CR_items.product.product_code %} > {% endif %}</td>
+			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
+			<td>{{CR_items.plan_cr_end|time:"H:i" }}</td>
+			<td>{{CR_items.plan_amount}} </td>
+			<td rowspan="2"><center><p class="tbunderline">{{CR_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{CR_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 			</tr>
 			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CR_items.actual_cr_start != NULL %}
+				{{CR_items.actual_cr_start|time:"H:i" }}
 				{% else %} 
 				<font color="white"> </font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CR_items.actual_cr_end != NULL%}
+				{{CR_items.actual_cr_end|time:"H:i" }}
 				{% else %}
 				<font color="white">  </font>
 				{% endif %}
 
 			</p></td>
 			<td><p class="tbsgunderline">
-				{% if actual_amount_cr != NULL%}
-				 {% if actual_amount_cr < plan_amount %}
-				<font color="red">{{actual_amount_cr}}</font>
+				{% if CR_items.actual_amount_cr != NULL%}
+				 {% if CR_items.actual_amount_cr < CR_items.plan_amount %}
+					<font color="red">{{CR_items.actual_amount_cr}}</font>
 				{% else %}
-				{{actual_amount_cr}}
+					{{CR_items.actual_amount_cr}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -96,38 +96,38 @@
 			<table align=center width="100%"><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%" align="left"><b>Sch.IN</b></td><td width="25%" align="left"><b>Sch.OUT</b></td><td><b>Sch.Pcs</b></td><th width="20%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></thead>
-			{% for start,end,product,actual_start,actual_end,cv_machine,previous_section,plan_due,plan_amount,actual_amount_cv in items_plan_cv %}
+			{% for CV_items in items_plan_cv %}
 			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
-			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td>
-			<td> {{start|time:"H:i"}}</td>
-			<td> {{end|time:"H:i"}}</td>
-			<td> {{plan_amount}}</td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{previous_section}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{cv_machine}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">##<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2" height="20">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} </td>
+			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
+			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
+			<td> {{CV_items.plan_amount}}</td>
+			<td rowspan="2"><center><p class="tbunderline">{{CV_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{CV_items.cv_machine}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{CV_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CV_items.actual_cv_start != NULL %}
+				{{CV_items.actual_cv_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CV_items.actual_cv_end != NULL%}
+				{{CV_items.actual_cv_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_cv != NULL%}
-				 {% if actual_amount_cv < plan_amount %}
-				<font color="red">{{actual_amount_cv}}</font>
+				{% if CV_items.actual_amount_cv != NULL%}
+				 {% if CV_items.actual_amount_cv < plan_amount %}
+					<font color="red">{{actual_amount_cv}}</font>
 				{% else %}
-				{{actual_amount_cv}}
+					{{CV_items.actual_amount_cv}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -154,34 +154,34 @@
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td> <td width="25%" align="left"><b>Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></span></thead>
-			{% for start,end,product,actual_start,actual_end,previous_section,plan_due,plan_amount,actual_amount_pt in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td><td> {{start|time:"H:i"}}</td><td> {{end|time:"H:i"}}</td>
-<td> {{plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{previous_section}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">##<br><font color=white>&nbsp;</font></p></center></td>
+			{% for PT_items in items_plan_pt %}
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+<td> {{PT_items.plan_amount}} </td>
+			<td rowspan="2"><center><p class="tbunderline">{{PT_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{PT_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
 			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if PT_items.actual_pt_start != NULL %}
+				{{PT_items.actual_pt_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if PT_items.actual_pt_end != NULL%}
+				{{PT_items.actual_pt_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_pt != NULL%}
-				 {% if actual_amount_pt < plan_amount %}
-				<font color="red">{{actual_amount_pt}}</font>
+				{% if PT_items.actual_amount_pt != NULL%}
+				 {% if PT_items.actual_amount_pt < PT_items.plan_amount %}
+				<font color="red">{{PT_items.actual_amount_pt}}</font>
 				{% else %}
-				{{actual_amount_pt}}
+				{{PT_items.actual_amount_pt}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -206,29 +206,29 @@
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td><td align="left"><b>Sch.Pcs</b></td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.Pcs</th></tr></span></thead>
-			{% for start,product,actual_start,process1,process2,process3,plan_due,plan_amount,actual_amount_wh in items_plan_wh %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td>
-			<td> {{start|time:"H:i"}}</td>
-			<td> {{plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{product}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">##<br><font color=white>&nbsp;</font></p></center></td>
+			{% for WH_items in items_plan_wh %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+			<td> {{WH_items.plan_wh_start|time:"H:i"}}</td>
+			<td> {{WH_items.plan_amount}} </td>
+			<td rowspan="2"><center><p class="tbunderline">{{WH_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}<br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2"><center><p class="tbunderline">{{WH_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
 			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if WH_items.actual_wh_start != NULL %}
+				{{WH_items.actual_wh_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			</td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_wh != NULL%}
-				 {% if actual_amount_wh < plan_amount %}
-				<font color="red">{{actual_amount_wh}}</font>
+				{% if WH_items.actual_amount_wh != NULL%}
+				 {% if WH_items.actual_amount_wh < WH_items.plan_amount %}
+				<font color="red">{{WH_items.actual_amount_wh}}</font>
 				{% else %}
-				{{actual_amount_wh}}
+				{{WH_items.actual_amount_wh}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -254,7 +254,7 @@
 	</div>
 	
 	<h3><a href="#">Not Process</a></h3>
-	<div>
+	<div id="divNotProcess">
 	
 <!--<div align="right"><form action="/" id="searchDate">From: <input type="text" name="from" id="datepickerFromNotProcess"><input type="hidden" id="userID" value="{{eID}}" /> To: <input type="text" name="to" id="datepickerToNotProcess">&nbsp;&nbsp;<input type="submit" value="Submit"/></form> </div><br>
 
@@ -279,7 +279,6 @@
 		  });
 		</script>
 -->
-	<div id="result">
 	
 <!--- table of not process plan -->
 		<table align='center' height='350' width="95%" class='tbltables'>
@@ -293,36 +292,36 @@
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,days_left,plan_amount,actual_amount_cr in notProcessCR %}
+			{% for CR_items in notProcessCR %}
 			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
-			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
-			<td>{{start|time:"H:i"}}</td>
-			<td>{{ end|time:"H:i" }}</td>
-			<td>{{plan_amount}}</td>
-			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline">{{days_left}}<br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2">{% if cr == CR_items.product %} > {% endif %}</td>
+			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
+			<td>{{ CR_items.plan_cr_end|time:"H:i" }}</td>
+			<td>{{CR_items.plan_amount}}</td>
+			<td rowspan="2"><p class="tbunderline">{{CR_items.product.product_code}}<br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2"><p class="tbunderline">{{CR_items.days_left}}<br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CR_items.actual_cr_start != NULL %}
+				{{CR_items.actual_cr_start|time:"H:i" }}
 				{% else %} 
 				<font color="white"> </font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CR_items.actual_cr_end != NULL%}
+				{{CR_items.actual_cr_end|time:"H:i" }}
 				{% else %}
 				<font color="white">  </font>
 				{% endif %}
 
 			</p></td>
 			<td><p class="tbsgunderline">
-				{% if plan_amount > actual_amount_cr %}
-				<font color="red">{{actual_amount_cr}}</font>
-				{% else %}{% if actual_amount_cr != NULL%}
-				{{actual_amount_cr}}
+				{% if CR_items.plan_amount > CR_items.actual_amount_cr %}
+				<font color="red">{{CR_items.actual_amount_cr}}</font>
+				{% else %}{% if CR_items.actual_amount_cr != NULL%}
+				{{CR_items.actual_amount_cr}}
 				{% else %}
 				0
 				{% endif %}{% endif %}
@@ -478,42 +477,41 @@
 			
 			<div id="linkCV">
 			<table align=center width="100%"><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="10" rowspan="2">Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,cv_machine,previuos,plan_due,plan_amount,actual_amount_cv in notProcessCV %}
+			{% for CV_items in notProcessCV %}
 			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
-			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td>
-			<td> {{start|time:"H:i"}}</td>
-			<td> {{end|time:"H:i"}}</td>
+			<td rowspan="2" height="20">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} </td>
+			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
+			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
 			<td>{{ plan_amount }}</td>
-<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline" align="center">{{cv_machine}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">NEXT<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td></tr>
+<td rowspan="2"><p class="tbunderline">{{CV_items.product.product_code}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline" align="center">{{CV_items.cv_machine}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{{CV_items.days_left}}<br><font color="white"> &nbsp; </font></p></td></tr>
 			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CV_items.actual_cv_start != NULL %}
+				{{CV_items.actual_cv_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CV_items.actual_cv_end != NULL%}
+				{{CV_items.actual_cv_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 
 			</p></td>
 			<td align="right"><p class="tbsgunderline">				
-				{% if actual_amount_cv != NULL%}
-				 {% if actual_amount_cv < plan_amount %}
-				<font color="red">{{actual_amount_cv}}</font>
+				{% if CV_items.actual_amount_cv != NULL%}
+				 {% if CV_items.actual_amount_cv < CV_items.plan_amount %}
+				<font color="red">{{CV_items.actual_amount_cv}}</font>
 				{% else %}
-				{{actual_amount_cv}}
+				{{CV_items.actual_amount_cv}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -534,7 +532,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -559,7 +556,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -579,7 +575,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -609,7 +604,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -629,7 +623,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -691,40 +684,40 @@
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="10" rowspan="2">Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,previous_section,plan_due,plan_amount,actual_amount_pt in notProcessPT %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td>
-	<td> {{start|time:"H:i"}}</td>
-	<td> {{end|time:"H:i"}}</td>
-	<td> {{plan_amount}} </td>
-<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+			{% for PT_items in notProcessPT %}
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td>
+	<td> {{PT_items.plan_pt_start|time:"H:i"}}</td>
+	<td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+	<td> {{PT_items.plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline">{{PT_items.product.product_code}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{{PT_items.days_left}}<br><font color="white"> &nbsp; </font></p></td>
 </tr>
 			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if PT_items.actual_pt_start != NULL %}
+				{{PT_items.actual_pt_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if PT_items.actual_pt_end != NULL%}
+				{{PT_items.actual_pt_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 
 			</p></td>
 <td align="right"><p class="tbsgunderline">				
-				{% if actual_amount_pt != NULL%}
-				 {% if actual_amount_pt < plan_amount %}
-				<font color="red">{{actual_amount_pt}}</font>
+				{% if PT_items.actual_amount_pt != NULL%}
+				 {% if PT_items.actual_amount_pt < PT_items.plan_amount %}
+				<font color="red">{{PT_items.actual_amount_pt}}</font>
 				{% else %}
-				{{actual_amount_pt}}
+				{{PT_items.actual_amount_pt}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -744,7 +737,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -767,7 +759,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -787,7 +778,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -810,12 +800,8 @@
 			<tr>
 			<td rowspan="2">&nbsp; </td>
 			<td>&nbsp; </td>
-			<td>&nbsp; </td>			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
+			<td>&nbsp; </td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -838,7 +824,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -863,7 +848,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -897,31 +881,31 @@
 			<td width="50%"> {# left #}
 			<div id="linkWH">
 			<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td>Sch.Pcs</td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="10" rowspan="2">Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="10" rowspan="2">Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,product,actual_start,process1,process2,process3,plan_due,plan_amount,actual_amount_wh in notProcessWH %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td>
-		<td> {{start|time:"H:i"}}</td>
-		<td>{{plan_amount}} </td>
-<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2" align="center"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+			{% for WH_items in notProcessWH %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+		<td> {{WH_items.plan_wh_start|time:"H:i"}}</td>
+		<td>{{WH_items.plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline">{{WH_items.product.product_code}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2" align="center"><p class="tbunderline">{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline">{{WH_items.days_left}}<br><font color="white"> &nbsp; </font></p></td>
 </tr>
 			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if WH_items.actual_wh_start != NULL %}
+				{{WH_items.actual_wh_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_wh != NULL%}
-				 {% if actual_amount_wh < plan_amount %}
-					<font color="red">{{actual_amount_wh}}</font>
+				{% if WH_items.actual_amount_wh != NULL%}
+				 {% if WH_items.actual_amount_wh < WH_items.plan_amount %}
+					<font color="red">{{WH_items.actual_amount_wh}}</font>
 				{% else %}
-					{{actual_amount_wh}}
+					{{WH_items.actual_amount_wh}}
 				{% endif %}
 				{% else %}
 					<font color="red">0</font>
@@ -1082,10 +1066,8 @@
 
 
 	</div>
-	</div>
 	<h3><a href="#">Missing in pcs.</a></h3>
-	<div>
-		 <div id="resultMissing"></div>
+	<div id="divMissing">
 		
 <!--- table of missing -->
 		<table align='center' height='350' width="95%" class='tbltables' >
@@ -1098,36 +1080,36 @@
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,days_left,plan_amount,actual_amount_cr in missingInCR %}
+			{% for CR_items in missingInCR %}
 			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
-			<td rowspan="2">{% if cr == product %} > {% endif %}</td>
-			<td>{{start|time:"H:i"}}</td>
-			<td>{{ end|time:"H:i" }}</td>
-			<td>{{plan_amount}} </td>
-			<td rowspan="2" align="center"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline">{{days_left}}<br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2">{% if cr == CR_items.product %} > {% endif %}</td>
+			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
+			<td>{{ CR_items.plan_cr_end|time:"H:i" }}</td>
+			<td>{{CR_items.plan_amount}} </td>
+			<td rowspan="2" align="center"><p class="tbunderline">{{CR_items.product.product_code}}<br><font color="white"> &nbsp; </font></p></td>
+			<td rowspan="2" align="right"><p class="tbunderline">{{CR_items.days_left}}<br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CR_items.actual_cr_start != NULL %}
+				{{CR_items.actual_cr_start|time:"H:i" }}
 				{% else %} 
 				<font color="white"> </font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CR_items.actual_cr_end != NULL%}
+				{{CR_items.actual_cr_end|time:"H:i" }}
 				{% else %}
 				<font color="white">  </font>
 				{% endif %}
 
 			</p></td>
 			<td><p class="tbsgunderline">
-				{% if plan_amount > actual_amount_cr %}
-				<font color="red">{{actual_amount_cr}}</font>
-				{% else %}{% if actual_amount_cr != NULL%}
-				{{actual_amount_cr}}
+				{% if CR_items.plan_amount > CR_items.actual_amount_cr %}
+				<font color="red">{{CR_items.actual_amount_cr}}</font>
+				{% else %}{% if CR_items.actual_amount_cr != NULL%}
+				{{CR_items.actual_amount_cr}}
 				{% else %}
 				0
 				{% endif %}{% endif %}
@@ -1282,41 +1264,41 @@
 			
 			<div id="linkCV">
 			<table align=center width="100%"><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="10" rowspan="2">Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,cv_machine,previuos,plan_due,plan_amount,actual_amount_cv in missingInCV %}
+			{% for CV_items in missingInCV %}
 			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
-			<td rowspan="2" height="20">{% if cvThreeCL == product or cvThreeCS == product or cvTwoCL == product %} > {% endif %} </td>
-			<td> {{start|time:"H:i"}}</td>
-			<td> {{end|time:"H:i"}}</td>
-			<td>{{ plan_amount }}</td>
-<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td></tr>
+			<td rowspan="2" height="20">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} </td>
+			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
+			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
+			<td>{{ CV_items.plan_amount }}</td>
+<td rowspan="2"><p class="tbunderline">{{CV_items.product.product_code}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2" align="center"><p class="tbunderline">{{CV_items.cv_machine}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2" align="center"><p class="tbunderline">{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline" align="right">{{CV_items.days_left}}<br><font color="white"> &nbsp; </font></p></td></tr>
 			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if CV_items.actual_cv_start != NULL %}
+				{{CV_items.actual_cv_start|time:"H:i" }}
 				{% else %} 
 				<font color="white"> &nbsp; </font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if CV_items.actual_cv_end != NULL%}
+				{{CV_items.actual_cv_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 
 			</p></td>
 			<td align="right"><p class="tbsgunderline">				
-				{% if actual_amount_cv != NULL%}
-				 {% if actual_amount_cv < plan_amount %}
-				<font color="red">{{actual_amount_cv}}</font>
+				{% if CV_items.actual_amount_cv != NULL%}
+				 {% if CV_items.actual_amount_cv < CV_items.plan_amount %}
+				<font color="red">{{CV_items.actual_amount_cv}}</font>
 				{% else %}
-				{{actual_amount_cv}}
+				{{CV_items.actual_amount_cv}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -1337,7 +1319,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -1361,7 +1342,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -1381,7 +1361,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -1411,7 +1390,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -1431,7 +1409,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -1457,7 +1434,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -1493,40 +1469,40 @@
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td width="20%"><b> Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">From</th><th width="10" rowspan="2">Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,end,product,actual_start,actual_end,previous_section,plan_due,plan_amount,actual_amount_pt in missingInPT %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == product %} > {% endif %} </td>
-	<td> {{start|time:"H:i"}}</td>
-	<td> {{end|time:"H:i"}}</td>
-	<td> {{plan_amount}} </td>
-<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white"> &nbsp; </font><br></p></td>
-<td rowspan="2"><p class="tbunderline">{{previous_section}}<br><font color="white"> &nbsp; </font><br></p></td>
-<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+			{% for PT_items in missingInPT %}
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td>
+	<td> {{PT_items.plan_pt_start|time:"H:i"}}</td>
+	<td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+	<td> {{PT_items.plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline">{{PT_items.product.product_code}}<br><font color="white"> &nbsp; </font><br></p></td>
+<td rowspan="2"><p class="tbunderline" align="center">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color="white"> &nbsp; </font><br></p></td>
+<td rowspan="2"><p class="tbunderline" align="right">{{PT_items.days_left}}<br><font color="white"> &nbsp; </font></p></td>
 </tr>
 			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if PT_items.actual_pt_start != NULL %}
+				{{PT_items.actual_pt_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL%}
-				{{actual_end|time:"H:i" }}
+				{% if PT_items.actual_pt_end != NULL%}
+				{{PT_items.actual_pt_end|time:"H:i" }}
 				{% else %}
 				<font color="white">&nbsp;</font>
 				{% endif %}
 
 			</p></td>
 <td align="right"><p class="tbsgunderline">				
-				{% if actual_amount_pt != NULL%}
-				 {% if actual_amount_pt < plan_amount %}
-				<font color="red">{{actual_amount_pt}}</font>
+				{% if PT_items.actual_amount_pt != NULL%}
+				 {% if PT_items.actual_amount_pt < PT_items.plan_amount %}
+				<font color="red">{{PT_items.actual_amount_pt}}</font>
 				{% else %}
-				{{actual_amount_pt}}
+				{{PT_items.actual_amount_pt}}
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
@@ -1546,7 +1522,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -1569,7 +1544,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -1589,7 +1563,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -1617,7 +1590,6 @@
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			</tr>
 			<tr>
 			<td><p class="tbsgunderline">
@@ -1637,7 +1609,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -1662,7 +1633,6 @@
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
 			<td>&nbsp; </td>
-			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
 			<td rowspan="2"><p class="tbunderline"><br><font color="white"> &nbsp; </font></p></td>
@@ -1695,31 +1665,31 @@
 			<td width="50%"> {# left #}
 			<div id="linkWH">
 			<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"> Sch.IN </td><td>Sch.Pcs</td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="10" rowspan="2">Due</th></tr>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><td><b>Sch.Pcs</b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="10" rowspan="2">Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.Pcs</th></tr></thead>
 			</span>
-			{% for start,product,actual_start,process1,process2,process3,plan_due,plan_amount,actual_amount_wh in missingInWH %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == start %} > {% endif %} </td>
-		<td> {{start|time:"H:i"}}</td>
-		<td>{{plan_amount}} </td>
-<td rowspan="2"><p class="tbunderline"> {{product}}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white"> &nbsp; </font></p></td>
-<td rowspan="2"><p class="tbunderline">##<br><font color="white"> &nbsp; </font></p></td>
+			{% for WH_items in missingInWH %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+		<td> {{WH_items.plan_wh_start|time:"H:i"}}</td>
+		<td>{{WH_items.plan_amount}} </td>
+<td rowspan="2"><p class="tbunderline"> {{WH_items.product.product_code}}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline" align="center">{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}<br><font color="white"> &nbsp; </font></p></td>
+<td rowspan="2"><p class="tbunderline" align="right" >{{WH_items.days_left}}<br><font color="white"> &nbsp; </font></p></td>
 </tr>
 			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
 			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{actual_start|time:"H:i" }}
+				{% if WH_items.actual_wh_start != NULL %}
+				{{WH_items.actual_wh_start|time:"H:i" }}
 				{% else %} 
 				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
-				{% if actual_amount_wh != NULL%}
-				 {% if actual_amount_wh < plan_amount %}
-					<font color="red">{{actual_amount_wh}}</font>
+				{% if WH_items.actual_amount_wh != NULL%}
+				 {% if WH_items.actual_amount_wh < WH_items.plan_amount %}
+					<font color="red">{{WH_items.actual_amount_wh}}</font>
 				{% else %}
-					{{actual_amount_wh}}
+					{{WH_items.actual_amount_wh}}
 				{% endif %}
 				{% else %}
 					<font color="red">0</font>
@@ -1882,19 +1852,19 @@
 	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
 <tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
 
-	{% for id,product,CV,company,product_name,p_w,lenght,alw,plan_amount,plan_due,plan_cr_start,plan_cr_end,plan_cv_start,actual_amount_wh in items %}
-		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>{{company}}</td><td>{{product_name}}</td><td align="right">{{p_w}}</td><td  align="right">{{lenght}}</td><td>F</td><td align="right">{{plan_amount}}</td><td>{{alw}}</td><td>{{plan_due|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>{{plan_cr_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
-	{% if plan_cv_start != NULL %}
-	<td>{{plan_cv_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% for item in items %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ plan_id }}"><td>{{item.plan_id}}</td><td>PO</td><td>{{item.product.product_code}}</td><td>{{item.cv_machine}}</td><td>{{item.product.parent_code.partner.partner_name}}</td><td>{{item.product.parent_code.product_name}}</td><td align="right">{{item.product.parent_code.p_width_inch}}</td><td  align="right">{{item.product.parent_code.t_length}}</td><td>{{item.product.flute}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.product.parent_code.qty_allowance}}</td><td>{{item.plan_due|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.plan_cr_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cr_time_used}}</td>
+	{% if item.plan_cv_start != NULL %}
+	<td>{{item.plan_cv_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cv_time_used}}</td>
 	{% else %}
 	<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
 	{% endif %}
-	{% if actual_amount_wh >= plan_amount %}
-	<td>{{actual_amount_wh}}</td>
+	{% if item.actual_amount_wh >= item.plan_amount %}
+	<td align="right">{{item.actual_amount_wh}}</td>
 	{% else %}
-	<td><font color=red>{{actual_amount_wh}}</font></td>
+	<td align="right"><font color=red>{{item.actual_amount_wh}}</font></td>
 	{% endif %}
-	<td>REMARK</td></tr>
+	<td></td></tr>
 	{% endfor %}
 
 			</table>
@@ -1907,26 +1877,26 @@
 <!-- start to copy not process here -->
 		<table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}} (not process)</h3></center>
 <br>
-<center><table border=1>
+<center><table border=1 class="totalPlan" id="normalPlan">
 
 	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
 <tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
 
-
-	{% for id,product,CV,company,product_name,p_w,lenght,alw,plan_amount,plan_due,plan_cr_start,plan_cr_end,plan_cv_start,actual_amount_wh in itemsNotProcess %}
-		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>{{company}}</td><td>{{product_name}}</td><td align="right">{{p_w}}</td><td  align="right">{{lenght}}</td><td>F</td><td align="right">{{plan_amount}}</td><td>{{alw}}</td><td>{{plan_due|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>{{plan_cr_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
-	{% if plan_cv_start != NULL %}
-	<td>{{plan_cv_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% for item in itemsNotProcess %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ plan_id }}"><td>{{item.plan_id}}</td><td>PO</td><td>{{item.product.product_code}}</td><td>{{item.cv_machine}}</td><td>{{item.product.parent_code.partner.partner_name}}</td><td>{{item.product.parent_code.product_name}}</td><td align="right">{{item.product.parent_code.p_width_inch}}</td><td  align="right">{{item.product.parent_code.t_length}}</td><td>{{item.product.flute}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.product.parent_code.qty_allowance}}</td><td>{{item.plan_due|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.plan_cr_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cr_time_used}}</td>
+	{% if item.plan_cv_start != NULL %}
+	<td>{{item.plan_cv_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cv_time_used}}</td>
 	{% else %}
 	<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
 	{% endif %}
-	{% if actual_amount_wh >= plan_amount %}
-	<td>{{actual_amount_wh}}</td>
+	{% if item.actual_amount_wh >= item.plan_amount %}
+	<td align="right">{{item.actual_amount_wh}}</td>
 	{% else %}
-	<td><font color=red>{{actual_amount_wh}}</font></td>
+	<td align="right"><font color=red>{{item.actual_amount_wh}}</font></td>
 	{% endif %}
-	<td>REMARK</td></tr>
+	<td></td></tr>
 	{% endfor %}
+
 			</table>
 </center>
 </td></tr></table>
@@ -1935,28 +1905,28 @@
 	<h3><a href="#">Missing in pcs.</a></h3>
 	<div>
 		<!-- start copy here missing-->
-<table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}}</h3></center>
+<table align='center' height='400' width="95%" class='tbltables'><tr><td><center><h3>Total plan of {{strThisMonth}} (Missing)</h3></center>
 <br>
-<center><table border=1 class="totalPlan">
+<center><table border=1 class="totalPlan" id="normalPlan">
 
 	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
 <tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
 
-
-	{% for id,product,CV,company,product_name,p_w,lenght,alw,plan_amount,plan_due,plan_cr_start,plan_cr_end,plan_cv_start,actual_amount_wh in itemsMissing %}
-		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}"><td>{{id}}</td><td>PO</td><td>{{product}}</td><td>{{CV}}</td><td>{{company}}</td><td>{{product_name}}</td><td align="right">{{p_w}}</td><td  align="right">{{lenght}}</td><td>F</td><td align="right">{{plan_amount}}</td><td>{{alw}}</td><td>{{plan_due|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>{{plan_cr_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
-	{% if plan_cv_start != NULL %}
-	<td>{{plan_cv_start|date:"d/m"}}</td><td align="right">{{plan_amount}}</td><td>time_used</td>
+	{% for item in itemsMissing %}
+		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ plan_id }}"><td>{{item.plan_id}}</td><td>PO</td><td>{{item.product.product_code}}</td><td>{{item.cv_machine}}</td><td>{{item.product.parent_code.partner.partner_name}}</td><td>{{item.product.parent_code.product_name}}</td><td align="right">{{item.product.parent_code.p_width_inch}}</td><td  align="right">{{item.product.parent_code.t_length}}</td><td>{{item.product.flute}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.product.parent_code.qty_allowance}}</td><td>{{item.plan_due|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.plan_cr_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cr_time_used}}</td>
+	{% if item.plan_cv_start != NULL %}
+	<td>{{item.plan_cv_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cv_time_used}}</td>
 	{% else %}
 	<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
 	{% endif %}
-	{% if actual_amount_wh >= plan_amount %}
-	<td>{{actual_amount_wh}}</td>
+	{% if item.actual_amount_wh >= item.plan_amount %}
+	<td align="right">{{item.actual_amount_wh}}</td>
 	{% else %}
-	<td><font color=red>{{actual_amount_wh}}</font></td>
+	<td align="right"><font color=red>{{item.actual_amount_wh}}</font></td>
 	{% endif %}
-	<td>REMARK</td></tr>
+	<td></td></tr>
 	{% endfor %}
+
 			</table>
 </center>
 </td></tr></table>
