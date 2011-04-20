@@ -349,8 +349,15 @@ table .even{
 table .odd{
 	background:white;
 }
+table.tablesorter tbody tr.even td{
+	background:#f8f8f8;
+}
+table.tablesorter tbody tr.odd td{
+	background:white;
+}
+
 thead th { 
-        border-bottom: solid 0.25em black; 
+/*        border-bottom: solid 0.25em black; */
 }
 p.tbunderline {
         border-bottom: dashed 0.1em black;
