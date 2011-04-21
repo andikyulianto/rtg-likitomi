@@ -1,22 +1,21 @@
-<!--- table of normal plan -->
-<center><table width="300"><tr><td><div id="updateMessage" class="ui-state-highlight ui-corner-all" style="margin-top: 0px; padding: .2em .1em;">
-<span class="ui-icon ui-icon-info" style="float: left; margin-right: .1em;"></span>
-					Plan has been refreshed!
-</div></td></tr></table></center>
-		<!--- table of normal plan -->
-		<table align='center' height='400' width="95%" class='tbltables'>
+
+	<center><table align='center' height='400' width="100%" class='tbltables' border=2>
 	<tr>
-		<td width="45%"><a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
+		<td width="50%" align="right"><button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+
+
+
+<!-- <a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
 		<!-- table CR --><center><table align=center width="90%"> 
 			<tr><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR">
 			<table align=center width="100%"><!-- table left --><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="10%"><b> Sch.IN </b></td><td width="10%"> <b>Sch.OUT</b> <td width="10%"><b> Sch.pcs</b></td></td><th width="20%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.pcs</th></tr></thead>
+			<thead><tr bgcolor="#cccccc" width="100%"><th width="5%">Sch.</th><th width="15%" align="left">IN</td><td width="15%"> <b>OUT</b> <td width="10%"><b>Pcs</b></td></td><th width="10%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
 			</span>
 			{% for CR_items in items_plan_cr %}
-			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');">
-			<td rowspan="2">{% if cr == CR_items.product %} > {% endif %}</td>
+			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" id="{{CR_items.stateCR}}">
+			<td rowspan="2"><center><p class="tbunderline">{% if cr == CR_items.product.product_code %} > {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
 			<td>{{CR_items.plan_cr_end|time:"H:i" }}</td>
 			<td>{{CR_items.plan_amount}} </td>
@@ -60,18 +59,20 @@
 
 			</table><!-- end table CR -->
 
-		</td> <td><a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>
-		<table align=center width="90%">
+		</td> <td align="right">
+<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
+		<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>-->
+		<center><table align=center width="90%">
 			<tr  height="5"><td width="60%">{# left #}
 			
 			<div id="linkCV">
 			<table align=center width="100%"><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2" height="20"></th><td width="25%" align="left"><b>Sch.IN</b></td><td width="25%" align="left"><b>Sch.OUT</b></td><td><b>Sch.Pcs</b></td><th width="20%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></thead>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="5%" height="20">Sch.</th><td width="25%" align="left"><b>IN</b></td><td width="25%" align="left"><b>OUT</b></td><td width="20%" align="left"><b>Pcs</b></td><th width="20%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
 			{% for CV_items in items_plan_cv %}
-			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
-			<td rowspan="2" height="20">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} </td>
+			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');" id="{{CV_items.stateCV}}">
+			<td rowspan="2" height="20"><center><p class="tbunderline">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} <br><font color=white>&nbsp;</font></p></center></td>
 			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
 			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
 			<td> {{CV_items.plan_amount}}</td>
@@ -118,9 +119,14 @@
 		</td>		
 	</tr>
 	<tr>
-		<td><a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>
+		<td align="right">
+<button style="height:30px" id="zoomPT" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+
+
+
+<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>
 		<!-- start pt table --><center>
-		<table align=center width="95%">
+		<table align=center width="90%">
 			
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
@@ -128,7 +134,7 @@
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td> <td width="25%" align="left"><b>Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></span></thead>
 			{% for PT_items in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
 <td> {{PT_items.plan_amount}} </td>
 			<td rowspan="2"><center><p class="tbunderline">{{PT_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
@@ -170,9 +176,14 @@
 			</td>
 			</table></center>
 		<!-- end pt table -->
-		</td> <td> <a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
+		</td> <td align="right">
+<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+
+
+
+<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
 		<!-- start wh table--><center>
-		<table align="center" width="80%"> 
+		<table align="center" width="90%"> 
 
 			<td width="50%"> {# left #}
 			<div id="linkWH">
@@ -180,7 +191,7 @@
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td><td align="left"><b>Sch.Pcs</b></td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.Pcs</th></tr></span></thead>
 			{% for WH_items in items_plan_wh %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');" id="{{WH_items.state}}"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
 			<td> {{WH_items.plan_wh_start|time:"H:i"}}</td>
 			<td> {{WH_items.plan_amount}} </td>
 			<td rowspan="2"><center><p class="tbunderline">{{WH_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
@@ -222,5 +233,3 @@
 	</tr>
 
 </table>
-<!-- end table of normal plan -->
-
