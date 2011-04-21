@@ -15,6 +15,30 @@
 <script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
 <script>
 
+	$(function() {
+		$( "#filterCriteria" ).buttonset();
+	});
+	$(function() {
+		$( "#filterCriteriaMonthly" ).buttonset();
+	});
+	$(function() {
+		$( "#magCR" )
+			.click(function() {
+				//$("#resultTable").hide();
+				/*$("#crTable").animate({
+				    width: "100%",
+				    opacity: 0.4,
+				    marginLeft: "0.6in",
+				    fontSize: "3em",
+				    borderWidth: "10px"
+				  }, 1500 );
+				*/
+			$("#magCV").hide()
+				
+			})
+			
+	});
+
 $(document).ready(function(){
   $('#totalPlanMonthly').tablesorter({
     headers: {
