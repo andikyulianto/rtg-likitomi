@@ -13,6 +13,7 @@
 <script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
 <script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="javascript/picnet.table.filter.min.js"></script>
 <script>
 
 	$(function() {
@@ -50,30 +51,44 @@ $(document).ready(function(){
       9: {sorter: false}
     } 
   } )
-
-
-$('#notProcessTotalPlanMonthly').tablesorter({
-    headers: {
-      2: {sorter: false},
-      5: {sorter: false},
-      6: {sorter: false},
-      7: {sorter: false},
-      8: {sorter: false},
-      9: {sorter: false}
-    } 
-  });
-
-$('#missingTotalPlanMonthly').tablesorter({
-    headers: {
-      2: {sorter: false},
-      5: {sorter: false},
-      6: {sorter: false},
-      7: {sorter: false},
-      8: {sorter: false},
-      9: {sorter: false}
-    } 
-  });
 });
+
+$(document).ready(function() {
+	$("#finishedM").click(function(){ 
+		if($("#finishedM").attr("checked")==true)
+		{
+		    $("tr#normal").show();
+		}
+		else
+		{
+		    $("tr#normal").hide();
+		}
+	});
+	$("#notProcessM").click(function(){ 
+		if($("#notProcessM").attr("checked")==true)
+		{
+		    $("tr#notProcess").show();
+		}
+		else
+		{
+		    $("tr#notProcess").hide();
+		}
+	});
+	$("#missingM").click(function(){ 
+		if($("#missingM").attr("checked")==true)
+		{
+		    $("tr#missing").show();
+		}
+		else
+		{
+		    $("tr#missing").hide();
+		}
+	});
+});
+
+$(document).ready(function() {
+
+		});
 
 	var auto_refresh = setInterval(
 	function()
