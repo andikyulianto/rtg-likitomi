@@ -1,9 +1,11 @@
 <html>
 <head>
+<meta charset="utf-8">
 
 <title>Likitomi: Clamplift Apps</title>
 
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<link rel="stylesheet" type="text/css" href="css/jALDropDown1.7.3.css" />
 <style type="text/css">
 body
 {
@@ -15,6 +17,10 @@ div
 position:absolute;
 background-color:white;
 }
+
+div.greenbg {background-color:#CCE6CC;}
+div.bluebg {background-color:#E6E6FF;}
+div.redbg {background-color:#FFE6E6;}
 
 td
 {
@@ -68,6 +74,7 @@ background-color:white;
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript" src="javascript/jALDropDown1.7.3.js"></script>
 <script type="text/javascript">
 function startTime()
 {
@@ -276,6 +283,17 @@ $(document).ready(function(){
 //		$("#plan, #layout, #search").hide();
 //		$("#clamplift").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
 //	});
+
+//	$("#opdate").jALDropdown({Action:{"ActionName":"disable"}});
+
+var c=document.getElementById("myCanvas");
+var cxt=c.getContext("2d");
+var grd=cxt.createLinearGradient(0,0,175,50);
+grd.addColorStop(0,"#FF0000");
+grd.addColorStop(1,"#00FF00");
+cxt.fillStyle=grd;
+cxt.fillRect(0,0,175,50);
+
 });
 </script>
 
@@ -284,10 +302,11 @@ $(document).ready(function(){
 <body style="background-color:black;">
 
 <!--PLAN-->
-	<div id="plan" style="top:0px; left:0px; width:398px; height:403px;">
-		<div id="clock" style="top:0px; left:0px;"></div>
-		<div style="top:0px; left:100px;">{% now "Y-m-d" %}</div>
-		<div style="top:0px; left:200px;">
+	<div id="plan" class="greenbg" style="top:0px; left:0px; width:398px; height:403px;">
+<!--		<canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3;"></canvas>-->
+		<div id="clock" class="greenbg" style="top:0px; left:0px;"></div>
+		<div class="greenbg" style="top:0px; left:100px;">{% now "Y-m-d" %}</div>
+		<div class="greenbg" style="top:0px; left:200px;">
 			<input id="status" value="min" type="hidden" />
 			<form>
 				<select id="opdate" name="opdate" style="height:30px;">
@@ -298,21 +317,21 @@ $(document).ready(function(){
 				</select>
 			</form>
 		</div>
-		<div id="radio" style="top:0px; left:500px;">
+		<div id="radio" class="greenbg" style="top:0px; left:500px;">
 			<input type="radio" id="reqbtn" name="radio" checked="checked" /><label for="reqbtn">Required</label>
 			<input type="radio" id="detbtn" name="radio" /><label for="detbtn">Detail</label>
 		</div>
-		<div style="top:0px; right:0px;"><button id="magplan"></button></div> <!--Magnifying Button-->
-		<div style="top:35px; left:0px;"><button id="uppest"></button></div>
-		<div style="top:35px; left:185px;"><button id="upper"></button></div>
-		<div style="top:35px; right:0px;"><button id="up"></button></div>
-		<div style="bottom:0px; left:0px;"><button id="downest"></button></div>
-		<div style="bottom:0px; left:185px;"><button id="downer"></button></div>
-		<div style="bottom:0px; right:0px;"><button id="down"></button></div>
-		<div id="phead" style="top:68px; left:0px;">
+		<div class="greenbg" style="top:0px; right:0px;"><button id="magplan">Plan</button></div> <!--Magnifying Button-->
+		<div class="greenbg" style="top:35px; left:0px;"><button id="uppest">Top Most</button></div>
+		<div class="greenbg" style="top:35px; left:185px;"><button id="upper">Seek Previous</button></div>
+		<div class="greenbg" style="top:35px; right:0px;"><button id="up">Previous</button></div>
+		<div class="greenbg" style="bottom:0px; left:0px;"><button id="downest">Bottom Most</button></div>
+		<div class="greenbg" style="bottom:0px; left:185px;"><button id="downer">Seek Next</button></div>
+		<div class="greenbg" style="bottom:0px; right:0px;"><button id="down">Next</button></div>
+		<div id="phead" class="greenbg" style="top:68px; left:0px;">
 			<table id="minhead" style="font-size:100%;">
 				<tr style="background-color:black; color:white;">
-					<td rowspan='2' style="width:10px; background-color:white;"></td>
+					<td rowspan='2' style="width:10px; background-color:#CCE6CC;"></td>
 					<td rowspan='2' style="width:52px;">TIME</td>
 					<td rowspan='2' style="width:70px;">SHEET CODE</td>
 					<td style="width:75px;">SIZE</td>
@@ -327,7 +346,7 @@ $(document).ready(function(){
 			</table>
 			<table id="reqhead" style="font-size:100%;">
 				<tr style="background-color:black; color:white;">
-					<td rowspan='2' style="width:10px; background-color:white;"></td>
+					<td rowspan='2' style="width:10px; background-color:#CCE6CC;"></td>
 					<td rowspan='2' style="width:52px;">TIME</td>
 					<td rowspan='2' style="width:70px;">SHEET<br />CODE</td>
 					<td rowspan='2' style="width:67px; text-align:right;">S.O.NO.<br />ORD.NO.</td>
@@ -349,7 +368,7 @@ $(document).ready(function(){
 			</table>
 			<table id="dethead" style="font-size:100%;">
 				<tr style="background-color:black; color:white;">
-					<td rowspan='2' style="width:10px; background-color:white;"></td>
+					<td rowspan='2' style="width:10px; background-color:#CCE6CC;"></td>
 					<td rowspan='2' style="width:52px;">TIME</td>
 					<td rowspan='2' style="width:70px;">SHEET<br />CODE</td>
 					<td rowspan='2' style="width:67px; text-align:right;">S.O.NO.<br />ORD.NO.</td>
@@ -371,28 +390,28 @@ $(document).ready(function(){
 					<td>CUT</td>
 				</tr>
 			</table>
-			<div id="pbody"><iframe id="showplan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" style="visibility:hidden; width:398px; height:254px;" marginheight="0" marginwidth="0" scrolling="no"></iframe></div>
+			<div id="pbody" class="greenbg"><iframe id="showplan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" style="visibility:hidden; width:398px; height:254px;" marginheight="0" marginwidth="0" scrolling="no"></iframe></div>
 		</div>
 	</div>
 
 <!--LAYOUT-->
 	<div id="layout" style="top:42px; left:400px; width:398px; height:551px;">
-		<div style="top:0px; right:0px;"><button id="maglay"></button></div> <!--Magnifying Button-->
+		<div style="top:0px; right:0px;"><button id="maglay">Layout</button></div> <!--Magnifying Button-->
 		<iframe id="map" name="map" src="/inventory/" frameborder="0" style="width:100%; height:500px; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
 	</div>
 
 <!--CLAMPLIFT-->
-	<div id="clamplift" style="top:405px; left:0px; width:398px; height:188px;">
-		<div style="top:0px; right:0px;"><button id="magclamp"></button></div> <!--Magnifying Button-->
+	<div id="clamplift" class="redbg" style="top:405px; left:0px; width:398px; height:188px;">
+		<div class="redbg" style="top:0px; right:0px;"><button id="magclamp">Clamplift</button></div> <!--Magnifying Button-->
 		<input id="clampsta" value="minsta" type="hidden" />
 		<iframe id="minclamp" src="/minclamp/" frameborder="0" style="width:100%; height:100%; margin-height:35px; margin-left:0px;" scrolling="no"></iframe>
 		<iframe id="maxclamp" src="/maxclamp/" frameborder="0" style="width:100%; height:100%; margin-height:0px; margin-left:0px;" scrolling="no"></iframe>
 	</div>
 
 <!--SEARCH-->
-	<div id="search" style="top:0px; left:400px; width:398px; height:40px;">
-<!--		<div style="top:0px; right:0px;"><button id="magsearch"></button></div> <!--Magnifying Button-->
-		<table style="margin-top:0px;">
+	<div id="search" class="bluebg" style="top:0px; left:400px; width:398px; height:40px;">
+<!--		<div style="top:0px; right:0px;"><button id="magsearch">Search</button></div> <!--Magnifying Button-->
+		<div class="bluebg" style="top:0px; right:0px;"><table style="margin-top:0px;">
 			<tr>
 				<td>
 					<form class="ui-menu">
@@ -414,9 +433,9 @@ $(document).ready(function(){
 						</select>
 					</form>
 				</td>
-				<td colspan="2" style="vertical-align:middle;"><button id="searchbtn">Search</button></td>
+				<td colspan="2"><button id="searchbtn" style="font-size:80%;">Search</button></td>
 			</tr>
-		</table>
+		</table></div>
 	</div>
 
 <!--MENU TABS-->

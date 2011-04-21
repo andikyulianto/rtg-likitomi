@@ -20,13 +20,13 @@ $(document).ready(function(){
 		var i = 0;
 		for (i=0;i<=100;i++){
 			if (i<{{chosen}}){
-				$("[name="+i+"]").children().css("background-color","#F6F6F6");
+				$("[name="+i+"]").children().css({"background-color":"#F6F6F6","color":"black"});
 			}
 			else if (i=={{chosen}}){
-				$("[name="+i+"]").children().css("background-color","#E5E5E5");
+				$("[name="+i+"]").children().css({"background-color":"white","color":"black"});
 			}
 			else {
-				$("[name="+i+"]").children().css("background-color","#F6F6F6");
+				$("[name="+i+"]").children().css({"background-color":"#F6F6F6","color":"black"});
 			}
 		}
 		var hicode = $(this).attr("title");
@@ -34,12 +34,13 @@ $(document).ready(function(){
 		var loss = $(this).attr("lang");
 //		$("#legend", top.document).load("/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss);
 //		top.legend.location = "/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss;
-		var lsrc = "/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss;
-		$("#legend", top.document).attr("src",lsrc);
-		$("#legend", top.document).show();
+//		var lsrc = "/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss;
+//		$("#legend", top.document).attr("src",lsrc);
+//		$("#legend", top.document).show();
 
-		$("[title="+hicode+"][id="+hiwidth+"]").css("background-color","yellow");
-		$(".infront").css("background-color","white");
+		$("[title="+hicode+"][id="+hiwidth+"]").css({"background-color":"#4DA64D","color":"black"});
+		$("[title="+hicode+"][id="+hiwidth+"][lang="+loss+"]").css({"background-color":"#005A00","color":"white"});
+		$(".infront").css("background-color","#CCE6CC");
 
 		var spcode = $('#map', top.document).contents().find('#spcode').val();
 		var swidth = $('#map', top.document).contents().find('#swidth').val();
@@ -61,37 +62,37 @@ $(document).ready(function(){
 </head>
 
 <body onload="window.scrollTo(0,{{scroll}})">
-	<table style="font-size:100%;">
+	<table style="font-size:90%;">
 		{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
-			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:#CCE6CC;">{% if n == chosen %}>{% endif %}</td>
 			<td rowspan='2' style="width:52px;">{{ start_time|time:"H:i" }}</td>
 			<td rowspan='2' style="width:70px;">{{ sheet_code }}</td>
-			<td style="width:75px; height:34px;">{{ paper_width_inch }}</td>
+			<td style="width:75px; height:40px;">{{ paper_width_inch }}</td>
 			{% if bl %} <!-- BL -->
-			<td class="cell" style="width:75px; height:34px;" title="{{bl}}" id="{{paper_width_inch}}" lang="{{loss_bl}}">{{ bl }}<br />({{ loss_bl }})</td>
+			<td class="cell" style="width:75px; height:40px;" title="{{bl}}" id="{{paper_width_inch}}" lang="{{loss_bl}}">{{ bl }}<br />({{ loss_bl }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if bm %} <!-- BM -->
-			<td class="cell" style="width:75px; height:34px;" title="{{bm}}" id="{{paper_width_inch}}" lang="{{loss_bm}}">{{ bm }}<br />({{ loss_bm }})</td>
+			<td class="cell" style="width:75px; height:40px;" title="{{bm}}" id="{{paper_width_inch}}" lang="{{loss_bm}}">{{ bm }}<br />({{ loss_bm }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 		</tr>
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
 			{% if df %} <!-- DF -->
-			<td class="cell" style="width:75px; height:34px;" title="{{df}}" id="{{paper_width_inch}}" lang="{{loss_df}}">{{ df }}<br />({{ loss_df }})</td>
+			<td class="cell" style="width:75px; height:40px;" title="{{df}}" id="{{paper_width_inch}}" lang="{{loss_df}}">{{ df }}<br />({{ loss_df }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if cl %} <!-- CL -->
-			<td class="cell" style="width:75px; height:34px;" title="{{cl}}" id="{{paper_width_inch}}" lang="{{loss_cl}}">{{ cl }}<br />({{ loss_cl }})</td>
+			<td class="cell" style="width:75px; height:40px;" title="{{cl}}" id="{{paper_width_inch}}" lang="{{loss_cl}}">{{ cl }}<br />({{ loss_cl }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}
 			{% if cm %} <!-- CM -->
-			<td class="cell" style="width:75px; height:34px;" title="{{cm}}" id="{{paper_width_inch}}" lang="{{loss_cm}}">{{ cm }}<br />({{ loss_cm }})</td>
+			<td class="cell" style="width:75px; height:40px;" title="{{cm}}" id="{{paper_width_inch}}" lang="{{loss_cm}}">{{ cm }}<br />({{ loss_cm }})</td>
 			{% else  %}
 			<td><br /><br /></td>
 			{% endif %}

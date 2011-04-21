@@ -17,8 +17,8 @@ vertical-align:middle;
 <body onload="window.scrollTo(0,{{scroll}})">
 	<table style="font-size:100%">
 		{% for start_time, sheet_code, sono, ordno, customer_name, product, length_df, length_bl, length_bm, length_cl, length_cm, actual_df, actual_bl, actual_bm, actual_cl, actual_cm, sheet_length, case, cut, n in nlist %}
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
-			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:#CCE6CC;">{% if n == chosen %}>{% endif %}</td>
 			<td rowspan="2" style="width:52px;">{{ start_time|time:"H:i" }}</td>
 			<td rowspan="2" style="width:70px;">{{ sheet_code }}</td>
 			<td rowspan="2" style="width:67px; text-align:right;">{{ sono }}<br />{{ ordno }}</td>
@@ -32,7 +32,7 @@ vertical-align:middle;
 			<td rowspan="2" style="width:66px;">{{ sheet_length }}</td>
 			<td style="width:42px;">{{ case }}</td>
 		</tr>
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
 			<td style="height:40px;">{{ length_cl }}</td>
 			<td>{{ length_cm }}</td>
 			<td>{{ actual_cl }}</td>
