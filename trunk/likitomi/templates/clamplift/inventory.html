@@ -41,7 +41,7 @@ vertical-align:middle;
 .ocl3{background-color:#FF6666; color:black; font-weight:bold; border-width:0px;}
 .ocl4{background-color:#FFB2B2; color:black; font-weight:bold; border-width:0px;}
 
-.buff {background-color:lightgray; border:1px solid black; border-width:1px;}
+.buff {background-color:lightgray; outline:black solid 2px;}
 
 .nomarpad
 {
@@ -199,7 +199,7 @@ $(document).ready(function(){
 		<td style="text-align:right;">Weight (kgs.)</td><td class="nomarpad" style="width:200px; background-image:url('images/clamplift/legend.png');"></td>
 	</tr>
 	<tr>
-		<td></td><td class="nomarpad" style="{% if not loss %}visibility:hidden;{% endif %} width:200px; text-align:left; position:absolute;"><img src="images/clamplift/atarrow.png" style="position:absolute; top:0px; left:{{losspx}}px; z-index:2;" title="{{loss}}"/></td>
+		<td></td><td class="nomarpad" style="{% if not loss %}visibility:hidden;{% endif %} width:200px; text-align:left; position:absolute;"><img src="images/clamplift/verticaline.png" style="position:absolute; top:0px; left:{{losspx}}px; z-index:2;" title="{{loss}}"/></td>
 	</tr>
 	<tr style="{% if not pcode %}visibility:hidden;{% endif %}">
 		<td style="text-align:left; background-image:url('images/clamplift/greengradient.png');">Product: {{pcode}}, {{width}}</td>
@@ -209,7 +209,7 @@ $(document).ready(function(){
 				{% if w >= 15 and w < 75 %}lkf3daimond17.png{% endif %}
 				{% if w >= 75 and w < 135 %}lkf2daimond17.png{% endif %}
 				{% if w >= 135 or w == initailpx %}lkf1daimond17.png{% endif %}
-			" style="position:absolute; left:{{w}}px;" onclick="alert('ss');"/>{% endfor %}
+			" style="position:absolute; left:{{w}}px;"/>{% endfor %}
 		</td>
 	</tr>
 	<tr style="{% if not spcode %}visibility:hidden;{% endif %}">
@@ -223,7 +223,7 @@ $(document).ready(function(){
 			" style="position:absolute; left:{{w}}px;" />{% endfor %}
 		</td>
 	</tr>
-	<tr style="{% if not cpcode %}visibility:hidden;{% endif %}">
+	<tr style="{% if not cpcode or cpcode == 'undefined' %}visibility:hidden;{% endif %}">
 		<td style="text-align:left; background-image:url('images/clamplift/redgradient.png');">Clamplift: {{cpcode}}, {{cwidth}}</td>
 		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
 			{% for w in wlistpx3 %}<img src="images/clamplift/
@@ -423,7 +423,7 @@ $(document).ready(function(){
 		{% for pos in pose %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '3' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
+					<td style="border:0px" {% if pos|getpos in buff %}class="buff"{% endif %}><table cellspacing="0" cellpadding="0" {% if atlane == '3' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Elist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
@@ -458,7 +458,7 @@ $(document).ready(function(){
 		{% for pos in posd %}
 			{% if pos %}
 				{% if pos|getpos in mstr or pos|getpos in mstr2 or pos|getpos in mstr3 %}
-					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '2' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
+					<td style="border:0px" {% if pos|getpos in buff %}class="buff"{% endif %}><table cellspacing="0" cellpadding="0" {% if atlane == '2' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Dlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
 								{% if ls|second != 0 %}<td class="lkf4" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}

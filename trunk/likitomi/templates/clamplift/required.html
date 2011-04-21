@@ -18,8 +18,8 @@ vertical-align:middle;
 <body onload="window.scrollTo(0,{{scroll}})">
 	<table style="font-size:100%">
 		{% for start_time, sheet_code, sono, ordno, flute, df, bl, bm, cl, cm, paper_width_mm, paper_width_inch, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
-			<td rowspan="2" style="width:10px; border:0px; background-color:white;">{% if n == chosen %}>{% endif %}</td>
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+			<td rowspan="2" style="width:10px; border:0px; background-color:#CCE6CC;">{% if n == chosen %}>{% endif %}</td>
 			<td rowspan="2" style="width:52px;">{{ start_time|time:"H:i" }}</td>
 			<td rowspan="2" style="width:70px;">{{ sheet_code }}</td>
 			<td rowspan="2" style="width:67px; text-align:right;">{{ sono }}<br />{{ ordno }}</td>
@@ -32,7 +32,7 @@ vertical-align:middle;
 			<td style="width:50px;">{{ loss_bl }}</td>
 			<td style="width:50px;">{{ loss_bm }}</td>
 		</tr>
-		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}#E5E5E5{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
+		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
 			<td style="height:40px;">{{ cl }}</td>
 			<td>{{ cm }}</td>
 			<td>{{ loss_cl }}</td>
