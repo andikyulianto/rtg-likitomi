@@ -419,6 +419,16 @@ class FakeStatusTracking(models.Model):
         return float((self.plan_cr_end - self.plan_cr_start).seconds)/60
     def cv_time_used(self):
         return float((self.plan_cv_end - self.plan_cv_start).seconds)/60
+    def state(self):
+	if self.actual_amount_wh == 0 :
+		status = 'notProcess'
+	elif self.actual_amount_wh < self.plan_amount :
+		status = 'missing'
+	elif self.actual_amount_wh >= self.plan_amount :
+		status = 'normal'
+	else :
+		status = ''
+	return status
 
     class Meta:
         db_table = u'fake_status_tracking'
