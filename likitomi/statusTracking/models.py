@@ -429,7 +429,36 @@ class FakeStatusTracking(models.Model):
 	else :
 		status = ''
 	return status
-
+    def stateCR(self):
+	if self.actual_amount_cr == 0 :
+		status = 'notProcess'
+	elif self.actual_amount_cr < self.plan_amount :
+		status = 'missing'
+	elif self.actual_amount_cr >= self.plan_amount :
+		status = 'normal'
+	else :
+		status = ''
+	return status
+    def stateCV(self):
+	if self.actual_amount_cv == 0 :
+		status = 'notProcess'
+	elif self.actual_amount_cv < self.plan_amount :
+		status = 'missing'
+	elif self.actual_amount_cv >= self.plan_amount :
+		status = 'normal'
+	else :
+		status = ''
+	return status
+    def statePT(self):
+	if self.actual_amount_pt == 0 :
+		status = 'notProcess'
+	elif self.actual_amount_pt < self.plan_amount :
+		status = 'missing'
+	elif self.actual_amount_pt >= self.plan_amount :
+		status = 'normal'
+	else :
+		status = ''
+	return status
     class Meta:
         db_table = u'fake_status_tracking'
 #    def set_days_left(self):

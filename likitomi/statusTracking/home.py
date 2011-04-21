@@ -153,7 +153,7 @@ def showPC(eID,title):
 
 ############################################
 
-	##########################
+##########################
 	########Monthly###########
 	##########################
 	today = todayDate()
@@ -271,72 +271,31 @@ def normalPlanRefresher(request):
 
 	return render_to_response('PC/PC.html', locals())
 
-def notProcessRefresher(request):
+def lastUpdate(request):
 ###########################################
 ############# not in process ##############
 ###########################################
 	today = todayDate()
-	notProcessCRFull = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).exclude(actual_cr_end__isnull=False).exclude(plan_cr_end__isnull=True).order_by('plan_cr_start')
-	notProcessCVFull = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).exclude(actual_cv_end__isnull=False).exclude(plan_cv_end__isnull=True).order_by('plan_cv_start')
-	notProcessPTFull = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).exclude(actual_pt_end__isnull=False).exclude(plan_pt_end__isnull=True).order_by('plan_pt_start')
-	notProcessWHFull = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).exclude(actual_wh_start__isnull=False).exclude(plan_wh_start__isnull=True).order_by('plan_wh_start')
 
-	cr = currentTimeProcess("CR")
-	cv = currentTimeProcess("CV")
-	cvThreeCS = currentTimeProcess("3CS")
-	cvThreeCL = currentTimeProcess("3CL")
-	cvTwoCL = currentTimeProcess("2CL")
-	cvThreeCW = currentTimeProcess("3CW")
-	cvTwoCS = currentTimeProcess("2CS")
-	pt = currentTimeProcess("PT")
-	wh = currentTimeProcess("WH")
-	
+	return render_to_response('PC/lastUpdate.html',locals())
 
-
-	countNotProcessFullCR = notProcessCRFull.count()
-	countNotProcessFullCV = notProcessCVFull.count()
-	countNotProcessFullPT = notProcessPTFull.count()
-	countNotProcessFullWH = notProcessWHFull.count()
-
-	notProcessCR = notProcessCRFull[0:3]
-	notProcessCV = notProcessCVFull[0:3]
-	notProcessPT = notProcessPTFull[0:3]
-	notProcessWH = notProcessWHFull[0:3]
-
-	return render_to_response('PC/notInProcess.html',locals())
-
-def missingRefresher(request):
-###########################################
-#############missing#######################
-###########################################
+def monthlyPlan(request):
+	##########################
+	########Monthly###########
+	##########################
 	today = todayDate()
-	missingInCRFull = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).exclude(actual_amount_cr__gte= F('plan_amount')).exclude(actual_cr_end__isnull=True).order_by('plan_cr_start')
-	missingInCVFull = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).exclude(actual_amount_cv__gte= F('plan_amount')).exclude(actual_cv_end__isnull=True).order_by('plan_cv_start')
-	missingInPTFull = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).exclude(actual_amount_pt__gte=F('plan_amount')).exclude(actual_pt_end__isnull=True).order_by('plan_pt_start')
-	missingInWHFull = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_wh_start')
+	datefrominMonth = datetime(today.year,today.month,1)
+	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
+	eID = "T101"
+	strThisMonth = today.strftime("%B")
+	thisMonth = today.month
+	page ="totalPlanSelectedDate"
+	#temp_contents = FakeStatusTracking.objects.all()
 
-	cr = currentTimeProcess("CR")
-	cv = currentTimeProcess("CV")
-	cvThreeCS = currentTimeProcess("3CS")
-	cvThreeCL = currentTimeProcess("3CL")
-	cvTwoCL = currentTimeProcess("2CL")
-	cvThreeCW = currentTimeProcess("3CW")
-	cvTwoCS = currentTimeProcess("2CS")
-	pt = currentTimeProcess("PT")
-	wh = currentTimeProcess("WH")
-	
-
-
-	countMissingFullCR = missingInCRFull.count()
-	countMissingFullCV = missingInCVFull.count()
-	countMissingFullPT = missingInPTFull.count()
-	countMissingFullWH = missingInWHFull.count()
-
-	missingInCR = missingInCRFull[0:3]
-	missingInCV = missingInCVFull[0:3]
-	missingInPT = missingInPTFull[0:3]
-	missingInWH = missingInWHFull[0:3]
-	return render_to_response('PC/missing.html',locals())
+	items = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	itemsNotProcess = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_wh_start__isnull=False).order_by('plan_due')
+	itemsMissing = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_due')
+	return render_to_response('PC/monthlyPlan.html',locals())
 
 ###################################################
 ##                 for manager                   ##

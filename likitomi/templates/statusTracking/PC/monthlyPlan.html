@@ -1,65 +1,3 @@
-{% extends "PC/container.html"%}
-{% block view %}
-<!--<div id="wrapper">
-    <div id="header">HOME<br>
-    	<!-- start Menu-->
-<!--    <ul id="navlist">
-		<li><a href="/likitomi">Logout</a></li>
-	</ul>
-
-
-	<!-- End Menu-->
-	</div>
-<!-- endheader-->
-<!-- content
-	<div id="browse_crag">
-		<div class="login">
-			{{title}}
-		</div>
-	</div>
--->
-
-<!--END Menu and Topbar-->
-<div id="content">
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-1">Daily Plan</a></li>
-		<li><a href="#tabs-2">Monthly Plan</a></li>
-	</ul>
-	<div id="tabs-1">
-	<!--top bar -->
-	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
-	<br>
-	<div id="filterCriteria" align="center">
-	<input type="checkbox" id="normal" checked /><label for="normal">Finished</label>
-	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
-	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
-
-	</div> <!-- end Filter -->
-	<br>
-
-			<!--- table of normal plan -->
-	<div id="resultTable">
-	
-</div> <!-- end table result -->
-<!-- end table of normal plan -->
-
-
-
-
-	</div> <!-- end tab-1 -->
-	<div id="tabs-2">
-	<!--top bar-->
-	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Total plan of {{strThisMonth}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
-	<br>
-	
-
-	<div id="filterCriteriaMonthly" align="center">
-	<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
-	<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Not yet process</label>
-	<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
-	</div> <!-- end Filter -->
-<br>
 <center><table border=1 class="tablesorter" id="totalPlanMonthly">
 <thead> 
 	<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
@@ -98,10 +36,4 @@
 		</select>
 	</form>
 </div>
-	</div> <!-- end tab-2 -->
 
-
-
-</div> <!-- content -->
-</div><!-- tabs -->
-{% endblock %}
