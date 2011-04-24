@@ -14,6 +14,41 @@
 <script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="javascript/picnet.table.filter.min.js"></script>
+    <style type="text/css"> 
+#totalPlanDaily
+{
+ position: relative; top: 0px; left: 0px;
+height:400px
+}
+.CRarea
+{
+ position: absolute; top: 0px; left: 0px;
+ border : 1px solid black;
+  width: 50%;
+ height:50%;
+}
+.CVarea
+{
+ position: absolute; top: 0px; left: 50%;
+ border : 1px solid black;
+  width: 50%;
+height:50%;
+}
+.PTarea
+{
+ position: absolute; top: 200px; left: 0;
+ border : 1px solid black;
+  width: 50%;
+height:50%
+}
+.WHarea
+{
+ position: absolute; top: 200px; left: 50%;
+ border : 1px solid black;
+  width: 50%;
+height:50%;
+}
+    </style>
 <script>
 
 	$(function() {
@@ -22,23 +57,7 @@
 	$(function() {
 		$( "#filterCriteriaMonthly" ).buttonset();
 	});
-	$(function() {
-		$( "#magCR" )
-			.click(function() {
-				//$("#resultTable").hide();
-				/*$("#crTable").animate({
-				    width: "100%",
-				    opacity: 0.4,
-				    marginLeft: "0.6in",
-				    fontSize: "3em",
-				    borderWidth: "10px"
-				  }, 1500 );
-				*/
-			$("#magCV").hide()
-				
-			})
-			
-	});
+
 
 
 
@@ -73,6 +92,42 @@ $(document).ready(function() {
 		    $("#totalPlanMonthly tr#missing").hide();
 		}
 	});
+
+//button of daily 
+$("#finished").click(function(){ 
+		if($("#finished").attr("checked")==true)
+		{
+		    $("#totalPlanDaily tr#normal").show();
+			
+		}
+		else
+		{
+		    $("#totalPlanDaily tr#normal").hide();
+		}
+	});
+	$("#notProcess").click(function(){ 
+		if($("#notProcess").attr("checked")==true)
+		{
+		    $("#totalPlanDaily tr#notProcess").show();
+		}
+		else
+		{
+		    $("#totalPlanDaily tr#notProcess").hide();
+		}
+	});
+	$("#missing").click(function(){ 
+		if($("#missing").attr("checked")==true)
+		{
+		    $("#totalPlanDaily tr#missing").show();
+		}
+		else
+		{
+		    $("#totalPlanDaily tr#missing").hide();
+		}
+	});
+
+
+
 });
 
 $(document).ready(function() {
@@ -80,14 +135,16 @@ $(document).ready(function() {
 		$('#dailyPlanUpdate').load('/likitomi/lastUpdate/');
 		//$('#monthlyPlan').load('/likitomi/monthlyPlan/');
 		});
-
+	
 	var auto_refresh = setInterval(
 	function()
 	{	
 			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
 			$('#resultTable').load('/likitomi/normalPlanRefresher/');
-			 $('#dailyPlanUpdate').load('/likitomi/lastUpdate/');
-
+			$('#dailyPlanUpdate').load('/likitomi/lastUpdate/');
+			$('#finished').attr('checked', 'checked').button('refresh');
+			$('#notProcess').attr('checked', 'checked').button('refresh');
+			$('#missing').attr('checked', 'checked').button('refresh');
 	}, 15000);
 
 /*	$(function() {
@@ -129,6 +186,13 @@ $(document).ready(function(){
 widthFixed: true, widgets: ['zebra']} )
 
 .tablesorterPager({container: $("#pager")});
+
+
+		$("#zoomCR").click(function(){
+			alert("zoomCR");
+		});
+
+
 });
 </script>
 </head>
