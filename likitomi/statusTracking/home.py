@@ -16,12 +16,20 @@ from datetime import date, datetime
 from django.db.models import F
 import calendar
 
+employee_id = ""
+def set_employeeID(emID):
+	global employee_id
+	employee_id = emID
+	return employee_id
+
 ####################################################
 ##                    for pc                      ##
 ## this page is view process via desktop computer ##
 ####################################################
 def section(request):
 	eID = request.GET['eID']
+	e = employee()
+	e.set_employeeID(eID)
 	today = todayDate()
 	temp_contents = ''
 
@@ -48,11 +56,12 @@ def section(request):
 	
 	return render_to_response('home.html', locals())
 
-def showPC(eID,title):
+def showPC(emID,title):
 	today = todayDate()
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+	set_employeeID(emID)
 	
 	#create items for PC
 	#extra = db_type(FakeStatusTracking.objects.all())
@@ -175,7 +184,6 @@ def showPC(eID,title):
 def section(request):
 	eID = request.GET['eID']
 	today = todayDate()
-	temp_contents = ''
 
 	title = str(today)
 	is_enable_table = True
@@ -205,6 +213,8 @@ def normalPlanRefresher(request):
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+	global employee_id 
+	eID = employee_id
 	
 
 	#create items for PC
@@ -397,13 +407,13 @@ def workWH(eID,title):
 ## Display the detail pages ##
 ##############################
 def display(request):
-	product= request.GET['product']
-	plan_amount = FakeStatusTracking.objects.filter(product_id=product).values_list("plan_amount")[0][0]
+	productID= request.GET['product']
+	plan_amount = FakeStatusTracking.objects.filter(product=productID).values_list("plan_amount")[0][0]
 	so = ''
-	po = FakeStatusTracking.objects.filter(product_id=product).values_list("plan_id")[0][0]
+	po = FakeStatusTracking.objects.filter(product=productID).values_list("plan_id")[0][0]
 	#product_name = "product_name"
-	product_name = ProductCatalog.objects.filter(product_code = product).values_list("product_name")[0][0]
-	partner_code = ProductCatalog.objects.filter(product_code = product).values_list("partner_id")[0][0]
-#	partner = Partners.objects.filter(partner_id = partner_code).values_list("partner_name")[0][0]
-	return render_to_response('productDetail.html',locals())
+	product_name = ProductCatalog.objects.filter(product_code = productID).values_list("product_name")[0][0]
+	partner_code = ProductCatalog.objects.filter(product_code = productID).values_list("partner_id")[0][0]
+	partner = Partners.objects.filter(partner_id = partner_code).values_list("partner_name")[0][0]
+	return render_to_response('PC/productDetail.html',locals())
 

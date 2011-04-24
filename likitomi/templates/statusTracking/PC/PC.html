@@ -1,20 +1,120 @@
+<script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
+<script>
+$(document).ready(function(){
 
-	<center><table align='center' height='400' width="100%" class='tbltables' border=2>
-	<tr>
-		<td width="50%" align="right"><button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+/*		$("#zoomCR").click(function(){
+		onClick="return go('http://www.mysite.com')	$(".CRarea").animate({
+                                    width: "100%",
+					height: "100%",
+                                    //opacity: 0.4,
+                                    marginLeft: "0in",
+                                    fontSize: "3em",
+                                    borderWidth: "1px"
+                                  }, 1500 );
+			$(".CVarea").hide();
+			$(".PTarea").hide();
+			$(".WHarea").hide();
+		});
+		$("#zoomCV").click(function(){
+			alert("zoomCV");
+		});
+		$("#zoomPT").click(function(){
+			alert("zoomPT");
+		});
+		$("#zoomWH").click(function(){
+			alert("zoomWH");
+		});
+*/
+
+});
+function showDetail(sectionName,urlLink)
+{
+        //alert(document.getElementById(sectionName));
+        //$(sectionName).load(urlLink);
+	var el = document.getElementById(sectionName)
+	el.innerHTML="<iframe src='"+urlLink+"' align='left' scrolling='no' frameborder='0' height='130px'></iframe>";
+}
+
+var preEl ;
+var orgBColor;
+var orgTColor;
+
+function HighLightTR(elstr, backColor,textColor){
+  if(typeof(preEl0)!='undefined') {
+     preEl0.bgColor=orgBColor;
+     preEl1.bgColor=orgBColor;
+     try{ChangeTextColor(preEl0,orgTColor);}catch(e){;}
+     try{ChangeTextColor(preEl1,orgTColor);}catch(e){;}
+  }
+  var el=document.getElementsByClassName(elstr);
+  //alert(el[0].innerHTML);
+  //alert(el[1].innerHTML);
+  //el = elstr;
+
+  orgBColor = el[0].bgColor;
+  orgBColor = el[1].bgColor;
+  orgTColor = el[0].style.color;
+  orgTColor = el[1].style.color;
+  el[0].bgColor=backColor;
+  el[1].bgColor=backColor;
+
+  try{ChangeTextColor(el[0],textColor);}catch(e){;}
+  try{ChangeTextColor(el[1],textColor);}catch(e){;}
+
+  preEl1 = el[1];
+  preEl0 = el[0];
+}
+function getElementsByClassName(oElm, strTagName, strClassName){
+	var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
+		    var arrReturnElements = new Array();
+		    strClassName = strClassName.replace(/\-/g, "\\-");
+		    var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
+		    var oElement;
+		    for(var i=0; i<arrElements.length; i++){
+		        oElement = arrElements[i];
+		        if(oRegExp.test(oElement.className)){
+		            arrReturnElements.push(oElement);
+		        }
+		    }
+		    return (arrReturnElements)
+		}
+
+
+function ChangeTextColor(a_obj,a_color){  ;
+   for (i=0;i<a_obj.cells.length;i++)
+    a_obj.cells(i).style.color=a_color;
+}
+function getElementsByClassName(oElm, strTagName, strClassName){
+var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
+            var arrReturnElements = new Array();
+            strClassName = strClassName.replace(/\-/g, "\\-");
+            var oRegExp = new RegExp("(^|\\s)" + strClassName + "(\\s|$)");
+            var oElement;
+            for(var i=0; i<arrElements.length; i++){
+                oElement = arrElements[i];
+                if(oRegExp.test(oElement.className)){
+                    arrReturnElements.push(oElement);
+                }
+            }
+            return (arrReturnElements)
+        }
+</script>
 
 
 
-<!-- <a href="/likitomi/pcdetail/?eID={{eID}}&page=CR"><center>Show full CR schedule</center></a>
+	<center><div align='center' id="totalPlanDaily">
+<div class="CRarea" align="right">
+<button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=CR'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button> 
+
 		<!-- table CR --><center><table align=center width="90%"> 
 			<tr><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR">
-			<table align=center width="100%"><!-- table left --><span class="header">
+			<table align=center width="100%" id="crTable"><!-- table left --><span class="header">
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="5%">Sch.</th><th width="15%" align="left">IN</td><td width="15%"> <b>OUT</b> <td width="10%"><b>Pcs</b></td></td><th width="10%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
-			</span>
+			</span>{{rowcountCR}}
 			{% for CR_items in items_plan_cr %}
-			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" id="{{CR_items.stateCR}}">
+			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
 			<td rowspan="2"><center><p class="tbunderline">{% if cr == CR_items.product.product_code %} > {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
 			<td>{{CR_items.plan_cr_end|time:"H:i" }}</td>
@@ -22,7 +122,7 @@
 			<td rowspan="2"><center><p class="tbunderline">{{CR_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{CR_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 			</tr>
-			<tr class="{{ rowcountCR }}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCR','/likitomi/display/?product={{product}}');" >
+			<tr class="{{ rowcountCR }}" onClick="HighLightTR(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
 			<td><p class="tbsgunderline">
 				{% if CR_items.actual_cr_start != NULL %}
 				{{CR_items.actual_cr_start|time:"H:i" }}
@@ -59,8 +159,12 @@
 
 			</table><!-- end table CR -->
 
-		</td> <td align="right">
-<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+
+
+</div> 
+
+<div class="CVarea" align="right">
+			<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=CV'" ><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 		<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>-->
 		<center><table align=center width="90%">
@@ -80,7 +184,7 @@
 			<td rowspan="2"><center><p class="tbunderline">{{CV_items.cv_machine}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{CV_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
-			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');">
+			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');"  id="{{CV_items.stateCV}}">
 			<td><p class="tbsgunderline">
 				{% if CV_items.actual_cv_start != NULL %}
 				{{CV_items.actual_cv_start|time:"H:i" }}
@@ -116,11 +220,10 @@
 			</table>
 <!-- end cv table -->
 		</center>
-		</td>		
-	</tr>
-	<tr>
-		<td align="right">
-<button style="height:30px" id="zoomPT" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+</div>
+	<div class="PTarea" align="right">
+
+			<button style="height:30px" id="zoomPT" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=PT'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 
 
@@ -140,7 +243,7 @@
 			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{PT_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
-			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');">
+			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');" id="{{PT_items.statePT}}">
 			<td><p class="tbsgunderline">
 				{% if PT_items.actual_pt_start != NULL %}
 				{{PT_items.actual_pt_start|time:"H:i" }}
@@ -176,13 +279,12 @@
 			</td>
 			</table></center>
 		<!-- end pt table -->
-		</td> <td align="right">
-<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title=""><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+
+</div> <div class="WHarea" align="right">
+<button style="height:30px" id="zoomWH" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=WH'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 
-
-<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=WH"><center>Show full WH schedule</center></a>
-		<!-- start wh table--><center>
+<!-- start wh table--><center>
 		<table align="center" width="90%"> 
 
 			<td width="50%"> {# left #}
@@ -198,7 +300,7 @@
 			<td rowspan="2"><center><p class="tbunderline">{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{WH_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
-			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" >
+			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" id="{{WH_items.state}}">
 			<td><p class="tbsgunderline">
 				{% if WH_items.actual_wh_start != NULL %}
 				{{WH_items.actual_wh_start|time:"H:i" }}
@@ -229,7 +331,6 @@
 			</tr>
 			</table></center>
 		<!-- end wh table-->
-		</td>
-	</tr>
 
-</table>
+</div>
+</div> <!-- main div -->
