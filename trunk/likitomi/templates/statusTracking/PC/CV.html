@@ -1,72 +1,188 @@
 {% extends "PC/container.html"%}
 {% block view %}
-<div id="wrapper">
-    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> CV <br>
-    	<!-- start Menu-->
-    <ul id="navlist">
-		<li id="active"><a href="/likitomi">Logout</a></li>
+<div id="content">
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Daily Plan</a></li>
+		<li><a href="#tabs-2">Monthly Plan</a></li>
 	</ul>
+	<div id="tabs-1">
+	<!--top bar -->
+	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
+	<br>
+	<div id="filterCriteria" align="center">
+	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
+	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
+	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
 
+	</div> <!-- end Filter -->
+	<br>
+<div id="resultDivLineCV">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetail"><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<td><b>Sch.</b></th>
+	<th width="5%" align="left"><b> IN </b></th>
+	<th width="5%"><b>OUT </b></th>
+	<th width="5%"><b>Pcs.</b></th>
+	<th rowspan="2"><b>Product code</b></th>
+	<th rowspan="2"><b>Machine</b></th>
+	<th rowspan="2"><b>From</b></th>
+	<th rowspan="2"><b>Color</b></th>
+	<th rowspan="2"><b>Time</b></th>
+	<th rowspan="2"><b>Speed</b></th>
+	<th rowspan="2"><b>Sale Order</b></th>
+	<th rowspan="2"><b>P.Code</b></th>
+	<th rowspan="2"><b>Customer</b></th>
+	<th rowspan="2"><b>Product Name</b></th>
+	<th rowspan="2"><b>Next Process</b></th>
+	<th rowspan="2"><b>Due</b></th>
+</tr>
+	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>OUT</th><th>Pcs</th></tr></thead>
+	</span>	
+	{% for item in items %}
+	<tr id="{{ item.stateCV}}">
+	<td rowspan=2>{% if cv == item.product.product_code %} > {% endif %}</th>
+	<td>{{item.plan_cv_start|time:"H:i"}}</th>
+	<td>{{item.plan_cv_end|time:"H:i" }}</th>
+	<td>{{item.plan_amount}}</th>
+	<td rowspan=2>{{item.product.product_code}}</td>
+	<td rowspan=2>{{item.cv_machine}}</td>
+	<td rowspan=2>{% if item.process4 == 'CV' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'CV'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'CV' %}
+		    {{ item.process1 }}
+		{% endif %}{% endif %}{% endif %}</td>
+	<td rowspan=2>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
+	<td rowspan=2>{{item.cv_time_used}}</td>
+	<td rowspan=2 >{{item.speed}}</td>
+	<td rowspan=2 >{{item.plan_id}}</td>
+	<td rowspan=2 >{{item.po}}</td>
+	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
+	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
+	<td rowspan=2 >
+		{% if item.process1 == 'CV' and item.process2 != NULL %}
+		    {{item.process2}}
+		{% else %}{% if item.process2 == 'CV' and item.process3 != NULL %}
+		    {{ item.process3 }}
+		{% else %}{% if item.process3 == 'CV' and item.process4 != NULL %}
+		    {{ item.process4 }}
+		{% else %}{% if item.process3 == NULL and item.process1 == NULL and item.process2 == NULL and item.process3 == NULL %}
+		
+		{% endif %}{% endif %}{% endif %}{% endif %}</td>
+	<td rowspan="2">{{item.days_left}}</td>
+	</tr>
+	<tr id="{{ item.stateCV}}">
+	
+	<td align="right">{{item.actual_cv_start|time:"H:i"}}</td>
+	<td align="right">{{item.actual_cv_end|time:"H:i" }}</td>
+	<td align="right">{% if item.actual_amount_cv != NULL%}
+		{% if item.actual_amount_cv < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv}}</font>
+		{% else %}
+			{{item.actual_amount_cv}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</td>
 
-	<!-- End Menu-->
-	</div>
-<!-- endheader-->
-<!-- content-->
-	<div id="browse_crag">
-		<div class="login">
-			{{title}}
-		</div>
-	</div>
-<center>
-<br>
-<table align=center><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><td width="15%"><b> Sch.Pcs </b></td><th width="20" rowspan="2"> Product code </th><th width="10" rowspan="2">Machine</th><th width="20" rowspan="2">From</th><th width="20" rowspan="2">Next</th><th width="10" rowspan="2">Due</th></tr>
-			<tr bgcolor="#cccccc"><th>Act.IN</th><th>Act.OUT</th><th>Act.Pcs</th></tr></thead>
-			</span>
-			{% for start,end,product,actual_start,actual_end,cv_machine,previous,next,next2,plan_amount,actual_amount_cv in items %}
-			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
-			<td rowspan="2">{% if cv == product %} > {% endif %}</td>
-			<td>{{start|time:"H:i"}}</td>
-			<td>{{ end|time:"H:i" }}</td>
-			<td>{{ plan_amount }}</td>
-			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">&nbsp;</font></p></td>
-			<td rowspan="2"><p class="tbunderline">{{cv_machine}}<br><font color="white">&nbsp;</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">{{previous}}<br><font color="white">&nbsp;</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">{% if next == NULL %} {{next2}} {% else %}{{next}}{% endif %}<br><font color="white">&nbsp;</font></p></td>
-			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">&nbsp;</font></p></td>
-			</tr>
-			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
-			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{ actual_start|time:"H:i" }}
-				{% else %} 
-				{% endif %}
-			</p></td>
-			<td><p class="tbsgunderline">				
-				{% if actual_end != NULL %}
-				{{ actual_end|time:"H:i" }}
-				{% else %}
-				<font color="white">&nbsp;</font>
-				{% endif %}
-
-			</p></td>
-			<td align="right"><p class="tbsgunderline">				
-				{% if actual_amount_cv != NULL%}
-				 {% if actual_amount_cv < plan_amount %}
-				<font color="red">{{actual_amount_cv}}</font>
-				{% else %}
-				{{actual_amount_cv}}
-				{% endif %}
-				{% else %}
-				<font color="red">0</font>
-				{% endif %}
-
-			</p></td>
-
-			</tr>
+	</tr>
 			{% endfor %}
 			</table>
 </div>
-<!--END Menu and Topbar-->
 
+</div>
+<!--END Menu and Topbar-->
+<div id="tabs-2">
+	<!--top bar-->
+	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Total plan of {{strThisMonth}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
+	<br>
+	
+
+	<div id="filterCriteriaMonthly" align="center">
+	<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
+	<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Not yet process</label>
+	<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
+	</div> <!-- end Filter -->
+<br>
+<div id="resultDivLineCV">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetailM"><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<td><b>Sch.</b></th>
+	<th width="5%" align="left"><b> IN </b></th>
+	<th width="5%"><b>OUT </b></th>
+	<th width="5%"><b>Pcs.</b></th>
+	<th rowspan="2"><b>Product code</b></th>
+	<th rowspan="2"><b>Machine</b></th>
+	<th rowspan="2"><b>From</b></th>
+	<th rowspan="2"><b>Color</b></th>
+	<th rowspan="2"><b>Time</b></th>
+	<th rowspan="2"><b>Speed</b></th>
+	<th rowspan="2"><b>Sale Order</b></th>
+	<th rowspan="2"><b>P.Code</b></th>
+	<th rowspan="2"><b>Customer</b></th>
+	<th rowspan="2"><b>Product Name</b></th>
+	<th rowspan="2"><b>Next Process</b></th>
+	<th rowspan="2"><b>Due</b></th>
+</tr>
+	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>OUT</th><th>Pcs</th></tr></thead>
+	</span>	
+	{% for item in itemsM %}
+	<tr id="{{ item.stateCV}}">
+	<td rowspan=2>{% if cv == item.product.product_code %} > {% endif %}</th>
+	<td>{{item.plan_cv_start|time:"H:i"}}</th>
+	<td>{{item.plan_cv_end|time:"H:i" }}</th>
+	<td>{{item.plan_amount}}</th>
+	<td rowspan=2>{{item.product.product_code}}</td>
+	<td rowspan=2>{{item.cv_machine}}</td>
+	<td rowspan=2>{% if item.process4 == 'CV' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'CV'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'CV' %}
+		    {{ item.process1 }}
+		{% endif %}{% endif %}{% endif %}</td>
+	<td rowspan=2>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
+	<td rowspan=2>{{item.cv_time_used}}</td>
+	<td rowspan=2 >{{item.speed}}</td>
+	<td rowspan=2 >{{item.plan_id}}</td>
+	<td rowspan=2 >{{item.po}}</td>
+	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
+	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
+	<td rowspan=2 >
+		{% if item.process1 == 'CV' and item.process2 != NULL %}
+		    {{item.process2}}
+		{% else %}{% if item.process2 == 'CV' and item.process3 != NULL %}
+		    {{ item.process3 }}
+		{% else %}{% if item.process3 == 'CV' and item.process4 != NULL %}
+		    {{ item.process4 }}
+		{% else %}{% if item.process3 == NULL and item.process1 == NULL and item.process2 == NULL and item.process3 == NULL %}
+		
+		{% endif %}{% endif %}{% endif %}{% endif %}</td>
+	<td rowspan="2">{{item.days_left}}</td>
+	</tr>
+	<tr id="{{ item.stateCV}}">
+	
+	<td align="right">{{item.actual_cv_start|time:"H:i"}}</td>
+	<td align="right">{{item.actual_cv_end|time:"H:i" }}</td>
+	<td align="right">{% if item.actual_amount_cv != NULL%}
+		{% if item.actual_amount_cv < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv}}</font>
+		{% else %}
+			{{item.actual_amount_cv}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</td>
+
+	</tr>
+			{% endfor %}
+			</table>
+</div>
+
+</div>
+</div>
 {% endblock %}

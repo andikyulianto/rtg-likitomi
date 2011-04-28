@@ -48,6 +48,10 @@ height:50%
   width: 50%;
 height:50%;
 }
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-primary .ui-icon, .ui-button-text-icon-secondary .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-icons-only .ui-icon
+{
+	top:20%;
+}
     </style>
 <script>
 
@@ -142,9 +146,9 @@ $(document).ready(function() {
 			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
 			$('#resultTable').load('/likitomi/normalPlanRefresher/');
 			$('#dailyPlanUpdate').load('/likitomi/lastUpdate/');
-			$('#finished').attr('checked', 'checked').button('refresh');
-			$('#notProcess').attr('checked', 'checked').button('refresh');
-			$('#missing').attr('checked', 'checked').button('refresh');
+			$('#finished').button('refresh');
+			$('#notProcess').attr('checked', 'yes').button('refresh');
+			$('#missing').attr('checked', 'yes').button('refresh');
 	}, 15000);
 
 /*	$(function() {
@@ -191,6 +195,77 @@ widthFixed: true, widgets: ['zebra']} )
 		$("#zoomCR").click(function(){
 			alert("zoomCR");
 		});
+
+
+});
+///////////////////////
+/////// Detail ////////
+//////////////////////
+$(document).ready(function() {
+	$("#finishedM").click(function(){ 
+		if($("#finishedM").attr("checked")==true)
+		{
+		    $("#resultTableDetailM tr#normal").show();
+		}
+		else
+		{
+		    $("#resultTableDetailM tr#normal").hide();
+		}
+	});
+	$("#notProcessM").click(function(){ 
+		if($("#notProcessM").attr("checked")==true)
+		{
+		    $("#resultTableDetailM tr#notProcess").show();
+		}
+		else
+		{
+		    $("#resultTableDetailM tr#notProcess").hide();
+		}
+	});
+	$("#missingM").click(function(){ 
+		if($("#missingM").attr("checked")==true)
+		{
+		    $("#resultTableDetailM tr#missing").show();
+		}
+		else
+		{
+		    $("#resultTableDetailM tr#missing").hide();
+		}
+	});
+
+//button of daily 
+$("#finished").click(function(){ 
+		if($("#finished").attr("checked")==true)
+		{
+		    $("#resultTableDetail tr#normal").show();
+			
+		}
+		else
+		{
+		    $("#resultTableDetail tr#normal").hide();
+		}
+	});
+	$("#notProcess").click(function(){ 
+		if($("#notProcess").attr("checked")==true)
+		{
+		    $("#resultTableDetail tr#notProcess").show();
+		}
+		else
+		{
+		    $("#resultTableDetail tr#notProcess").hide();
+		}
+	});
+	$("#missing").click(function(){ 
+		if($("#missing").attr("checked")==true)
+		{
+		    $("#resultTableDetail tr#missing").show();
+		}
+		else
+		{
+		    $("#resultTableDetail tr#missing").hide();
+		}
+	});
+
 
 
 });

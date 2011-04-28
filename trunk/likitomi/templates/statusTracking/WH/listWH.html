@@ -1,48 +1,64 @@
-{% extends "PC/container.html" %}
+{% extends "CR/container.html" %}
 {% block view %}
-<div id="wrapper">
-    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> PT <br>
-    	<!-- start Menu-->
-    <ul id="navlist">
-		<li id="active"><a href="/likitomi">Logout</a></li>
-	</ul>
 
-
-	<!-- End Menu-->
-	</div>
-<!-- endheader-->
-<!-- content-->
-	<div id="browse_crag">
-		<div class="login">
-			{{title}}
-		</div>
+	<div id="filterCriteria" align="center">
+	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
+	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
+	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
 	</div>
 <br>
-<center>
+<div id="resultDivLineWH">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTable"><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<td><b>Sch.</b></th>
+	<th width="5%" align="left"><b> IN </b></th>
+	<th width="5%"><b>Pcs.</b></th>
+	<th rowspan="2"><b>Product code</b></th>
+	<th rowspan="2"><b>Sale Order</b></th>
+	<th rowspan="2"><b>P Code</b></th>
+	<th rowspan="2"><b>Customer</b></th>
+	<th rowspan="2"><b>Product Name</b></th>
+	<th rowspan="2"><b>From</b></th>
+	<th rowspan="2"><b>Due</b></th>
+</tr>
+	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>Pcs</th></tr></thead>
+	</span>	
+	{% for item in items %}
+	<tr id="{{ item.state}}">
+	<td rowspan=2>{% if wh == item.product.product_code %} > {% endif %}</th>
+	<td><a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_wh_start|time:"H:i"}}</a></th>
+	<td>{{item.plan_amount}}</th>
+	<td rowspan=2>{{item.product.product_code}}</td>
+	<td rowspan=2>{{item.plan_id}}</td>
+	<td rowspan=2>{{item.po}}</td>
+	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
+	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
+	<td rowspan=2>{% if item.process4 == 'WH' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'WH'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'WH' %}
+		    {{ item.process1 }}
+		{% endif %}{% endif %}{% endif %}</td>
 
-			
-	<table align=center width="28%"><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="20%"><b> Sch.IN </b></td><th width="20" rowspan="2"> Product code </th><th width="20" rowspan="2">Previous</th><th width="20" rowspan="2">Due</th></tr>
-			<tr bgcolor="#cccccc" align="right"><th>Act.IN</th></tr></thead>
-			</span>
-			{% for plan_id,start,product,actual_start,process1,process2,process3 in items %}
-		<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
-			<td rowspan="2">{% if wh == product %} > {% endif %}</td>
-			<td><a href="/likitomi/line/wh/start/?eID={{eID}}&pID={{plan_id}}">{{start|time:"H:i"}}</a></td>
-			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">&nbsp;</font></p></td>
-			<td rowspan="2"><p class="tbunderline">{% if process3 != NULL%} {{process3}} {% else %}{% if process2 != NULL %} {{process2}}{% else %}{% if process1 != NULL %} {{process1}} {% endif %}{% endif %}{% endif %}<br><font color="white">&nbsp;</font></p></td>
-			<td rowspan="2"><p class="tbunderline">  <br><font color="white">&nbsp;</font></p> </td>
-			</tr>
-			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
-			<td><p class="tbsgunderline">
-				{% if actual_start != NULL %}
-				{{ actual_start|time:"H:i" }}
-				{% else %} 
-				<font color="white">&nbsp;</font>
-				{% endif %}
-			</p></td>
-			</tr>
+	<td rowspan="2">{{item.days_left}}</td>
+	</tr>
+	<tr id="{{ item.state}}">
+	
+	<td align="right">{{item.actual_wh_start|time:"H:i"}}</td>
+	<td align="right">{% if item.actual_amount_wh != NULL%}
+		{% if item.actual_amount_wh < item.plan_amount %}
+			<font color="red">{{item.actual_amount_wh}}</font>
+		{% else %}
+			{{item.actual_amount_wh}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</td>
+
+	</tr>
 			{% endfor %}
 			</table>
-</div>
+</div>	
 {% endblock %}
