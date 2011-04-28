@@ -8,6 +8,7 @@
 # into your database.
 
 from django.db import models
+from statusTracking.config import getCVSpeed
 
 
 class Addresses(models.Model):
@@ -407,6 +408,8 @@ class FakeStatusTracking(models.Model):
     process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
     days_left = models.IntegerField(null=True, blank=True)
+    def speed(self):
+        return getCVSpeed(self.cv_machine)
 #    days_left = models.IntegerField(null=True, blank=True)
     def days_left(self):
         import datetime

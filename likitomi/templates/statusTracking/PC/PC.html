@@ -39,7 +39,7 @@ var preEl ;
 var orgBColor;
 var orgTColor;
 
-function HighLightTR(elstr, backColor,textColor){
+function HighLightCR(elstr, backColor,textColor){
   if(typeof(preEl0)!='undefined') {
      preEl0.bgColor=orgBColor;
      preEl1.bgColor=orgBColor;
@@ -63,6 +63,83 @@ function HighLightTR(elstr, backColor,textColor){
 
   preEl1 = el[1];
   preEl0 = el[0];
+}
+function HighLightCV(elstr, backColor,textColor){
+  if(typeof(preEl2)!='undefined') {
+     preEl2.bgColor=orgBColor;
+     preEl3.bgColor=orgBColor;
+     try{ChangeTextColor(preEl2,orgTColor);}catch(e){;}
+     try{ChangeTextColor(preEl3,orgTColor);}catch(e){;}
+  }
+  var el=document.getElementsByClassName(elstr);
+  //alert(el[0].innerHTML);
+  //alert(el[1].innerHTML);
+  //el = elstr;
+
+  orgBColor = el[0].bgColor;
+  orgBColor = el[1].bgColor;
+  orgTColor = el[0].style.color;
+  orgTColor = el[1].style.color;
+  el[0].bgColor=backColor;
+  el[1].bgColor=backColor;
+
+  try{ChangeTextColor(el[0],textColor);}catch(e){;}
+  try{ChangeTextColor(el[1],textColor);}catch(e){;}
+
+  preEl2 = el[0];
+  preEl3 = el[1];
+}
+
+function HighLightPT(elstr, backColor,textColor){
+  if(typeof(preEl4)!='undefined') {
+     preEl4.bgColor=orgBColor;
+     preEl5.bgColor=orgBColor;
+     try{ChangeTextColor(preEl4,orgTColor);}catch(e){;}
+     try{ChangeTextColor(preEl5,orgTColor);}catch(e){;}
+  }
+  var el=document.getElementsByClassName(elstr);
+  //alert(el[0].innerHTML);
+  //alert(el[1].innerHTML);
+  //el = elstr;
+
+  orgBColor = el[0].bgColor;
+  orgBColor = el[1].bgColor;
+  orgTColor = el[0].style.color;
+  orgTColor = el[1].style.color;
+  el[0].bgColor=backColor;
+  el[1].bgColor=backColor;
+
+  try{ChangeTextColor(el[0],textColor);}catch(e){;}
+  try{ChangeTextColor(el[1],textColor);}catch(e){;}
+
+  preEl4 = el[0];
+  preEl5 = el[1];
+}
+
+function HighLightWH(elstr, backColor,textColor){
+  if(typeof(preEl6)!='undefined') {
+     preEl6.bgColor=orgBColor;
+     preEl7.bgColor=orgBColor;
+     try{ChangeTextColor(preEl6,orgTColor);}catch(e){;}
+     try{ChangeTextColor(preEl7,orgTColor);}catch(e){;}
+  }
+  var el=document.getElementsByClassName(elstr);
+  //alert(el[0].innerHTML);
+  //alert(el[1].innerHTML);
+  //el = elstr;
+
+  orgBColor = el[0].bgColor;
+  orgBColor = el[1].bgColor;
+  orgTColor = el[0].style.color;
+  orgTColor = el[1].style.color;
+  el[0].bgColor=backColor;
+  el[1].bgColor=backColor;
+
+  try{ChangeTextColor(el[0],textColor);}catch(e){;}
+  try{ChangeTextColor(el[1],textColor);}catch(e){;}
+
+  preEl6 = el[0];
+  preEl7 = el[1];
 }
 function getElementsByClassName(oElm, strTagName, strClassName){
 	var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
@@ -106,7 +183,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 <div class="CRarea" align="right">
 <button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=CR'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button> 
 
-		<!-- table CR --><center><table align=center width="90%"> 
+		<!-- table CR --><center><table align=center width="90%">
 			<tr><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR">
 			<table align=center width="100%" id="crTable"><!-- table left --><span class="header">
@@ -114,7 +191,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tr bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
 			</span>{{rowcountCR}}
 			{% for CR_items in items_plan_cr %}
-			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightTR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
+			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
 			<td rowspan="2"><center><p class="tbunderline">{% if cr == CR_items.product.product_code %} > {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
 			<td>{{CR_items.plan_cr_end|time:"H:i" }}</td>
@@ -122,7 +199,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<td rowspan="2"><center><p class="tbunderline">{{CR_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{CR_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 			</tr>
-			<tr class="{{ rowcountCR }}" onClick="HighLightTR(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
+			<tr class="{{ rowcountCR }}" onClick="HighLightCR(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
 			<td><p class="tbsgunderline">
 				{% if CR_items.actual_cr_start != NULL %}
 				{{CR_items.actual_cr_start|time:"H:i" }}
@@ -175,7 +252,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="5%" height="20">Sch.</th><td width="25%" align="left"><b>IN</b></td><td width="25%" align="left"><b>OUT</b></td><td width="20%" align="left"><b>Pcs</b></td><th width="20%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
 			{% for CV_items in items_plan_cv %}
-			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');" id="{{CV_items.stateCV}}">
+			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageCV','/likitomi/display/?product={{CV_items.product.product_code}}');" id="{{CV_items.stateCV}}">
 			<td rowspan="2" height="20"><center><p class="tbunderline">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} <br><font color=white>&nbsp;</font></p></center></td>
 			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
 			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
@@ -184,7 +261,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<td rowspan="2"><center><p class="tbunderline">{{CV_items.cv_machine}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{CV_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
-			<tr class="{{ rowcountCV }}" onClick="HighLightTR('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('#loadPageCV','/likitomi/display/?product={{product}}');"  id="{{CV_items.stateCV}}">
+			<tr class="{{ rowcountCV }}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageCV','/likitomi/display/?product={{CV_items.product.product_code}}');" id="{{CV_items.stateCV}}">
 			<td><p class="tbsgunderline">
 				{% if CV_items.actual_cv_start != NULL %}
 				{{CV_items.actual_cv_start|time:"H:i" }}
@@ -227,7 +304,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 
 
 
-<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>
+<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>-->
 		<!-- start pt table --><center>
 		<table align=center width="90%">
 			
@@ -237,13 +314,13 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td> <td width="25%" align="left"><b>Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></span></thead>
 			{% for PT_items in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
 <td> {{PT_items.plan_amount}} </td>
 			<td rowspan="2"><center><p class="tbunderline">{{PT_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{PT_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
-			<tr class="{{ rowcountPT }}" onClick="HighLightTR('{{rowcountPT}}','#c9cc99','cc3333','{{product}}');  showDetail('#loadPagePT','/likitomi/display/?product={{product}}');" id="{{PT_items.statePT}}">
+			<tr class="{{ rowcountPT }}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}">
 			<td><p class="tbsgunderline">
 				{% if PT_items.actual_pt_start != NULL %}
 				{{PT_items.actual_pt_start|time:"H:i" }}
@@ -293,14 +370,14 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td><td align="left"><b>Sch.Pcs</b></td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.Pcs</th></tr></span></thead>
 			{% for WH_items in items_plan_wh %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');" id="{{WH_items.state}}"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightWH('{{rowcountWH}}','#c9cc99','cc3333','{{product}}'); ; showDetail('loadPageWH','/likitomi/display/?product={{WH_items.product.product_code}}');" id="{{WH_items.state}}"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
 			<td> {{WH_items.plan_wh_start|time:"H:i"}}</td>
 			<td> {{WH_items.plan_amount}} </td>
 			<td rowspan="2"><center><p class="tbunderline">{{WH_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{WH_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
 </tr>
-			<tr class="{{ rowcountWH }}" onClick="HighLightTR('{{rowcountWH}}','#c9cc99','cc3333','{{product}}');showDetail('#loadPageWH','/likitomi/display/?product={{product}}');"" id="{{WH_items.state}}">
+			<tr class="{{ rowcountWH }}" onClick="HighLightWH('{{rowcountWH}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageWH','/likitomi/display/?product={{WH_items.product.product_code}}');" id="{{WH_items.state}}">
 			<td><p class="tbsgunderline">
 				{% if WH_items.actual_wh_start != NULL %}
 				{{WH_items.actual_wh_start|time:"H:i" }}

@@ -12,6 +12,8 @@ from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate, currentTimeProcess, currentProcess
 from statusTracking.models import Employee, FakeStatusTracking
+from datetime import date, datetime
+import calendar
 
 ##################################################
 ##         initialize the page settings         ##
@@ -48,8 +50,15 @@ def showCR(eid,section_title):
 	eID = eid
 	#create items for CR
 	cr = str(currentProcess("CR"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end","plan_amount","actual_amount_cr").order_by('plan_cr_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	items = list(item_plan)
+	##monthlyPlan
+	datefrominMonth = datetime(today.year,today.month,1)
+	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
+	strThisMonth = today.strftime("%B")
+	thisMonth = today.month
+	item_planM = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	itemsM = list(item_planM)
 	return render_to_response('PC/CR.html', locals())
 #################################
 ##            for CV           ##
@@ -65,8 +74,15 @@ def showCV(eid,section_title):
 	cvThreeCL = str(currentProcess("3CL"))[2:8]
 	cvTwoCL = str(currentProcess("2CL"))[2:8]
 	cvThreeCS = str(currentProcess("3CS"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end","cv_machine", "process1","process3","process4","plan_amount","actual_amount_cv").order_by('plan_cv_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	items = list(item_plan)
+	##monthlyPlan
+	datefrominMonth = datetime(today.year,today.month,1)
+	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
+	strThisMonth = today.strftime("%B")
+	thisMonth = today.month
+	item_planM = FakeStatusTracking.objects.filter(plan_cv_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	itemsM = list(item_planM)
 	return render_to_response('PC/CV.html', locals())
 #################################
 ##            for PT           ##
@@ -80,8 +96,15 @@ def showPT(eid,section_title):
 	#create items for PT
 	today = todayDate()
 	pt = str(currentTimeProcess("PT"))
-	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end","process2","process4","plan_amount","actual_amount_pt").order_by('plan_pt_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	items = list(item_plan)
+	##monthlyPlan
+	datefrominMonth = datetime(today.year,today.month,1)
+	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
+	strThisMonth = today.strftime("%B")
+	thisMonth = today.month
+	item_planM = FakeStatusTracking.objects.filter(plan_pt_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	itemsM = list(item_planM)
 	return render_to_response('PC/PT.html', locals())
 #################################
 ##            for WH           ##
@@ -95,6 +118,13 @@ def showWH(eid,section_title):
 	today = todayDate()
 	#create items for WH
 	wh = currentTimeProcess("WH")
-	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start","process1","process2","process3","plan_due","plan_amount","actual_amount_wh").order_by('plan_wh_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
 	items = list(item_plan)
+	##monthlyPlan
+	datefrominMonth = datetime(today.year,today.month,1)
+	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
+	strThisMonth = today.strftime("%B")
+	thisMonth = today.month
+	item_planM = FakeStatusTracking.objects.filter(plan_wh_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	itemsM = list(item_planM)
 	return render_to_response('PC/WH.html',locals())

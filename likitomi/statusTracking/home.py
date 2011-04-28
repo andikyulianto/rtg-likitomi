@@ -122,43 +122,7 @@ def showPC(emID,title):
 	items_plan_wh=items_plan_wh[startList:endList]
 	#temp_contents = currentProcess("2CL")
 
-###########################################
-		## not in process ##
 
-	notProcessCRFull = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).exclude(actual_cr_end__isnull=False).exclude(plan_cr_end__isnull=True).order_by('plan_cr_start')
-	notProcessCVFull = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).exclude(actual_cv_end__isnull=False).exclude(plan_cv_end__isnull=True).order_by('plan_cv_start')
-	notProcessPTFull = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).exclude(actual_pt_end__isnull=False).exclude(plan_pt_end__isnull=True).order_by('plan_pt_start')
-	notProcessWHFull = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).exclude(actual_wh_start__isnull=False).exclude(plan_wh_start__isnull=True).order_by('plan_wh_start')
-
-
-	countNotProcessFullCR = notProcessCRFull.count()
-	countNotProcessFullCV = notProcessCVFull.count()
-	countNotProcessFullPT = notProcessPTFull.count()
-	countNotProcessFullWH = notProcessWHFull.count()
-
-	notProcessCR = notProcessCRFull[0:3]
-	notProcessCV = notProcessCVFull[0:3]
-	notProcessPT = notProcessPTFull[0:3]
-	notProcessWH = notProcessWHFull[0:3]
-###########################################
-
-###########################################
-		##missing##
-
-	missingInCRFull = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).exclude(actual_amount_cr__gte= F('plan_amount')).exclude(actual_cr_end__isnull=True).order_by('plan_cr_start')
-	missingInCVFull = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).exclude(actual_amount_cv__gte= F('plan_amount')).exclude(actual_cv_end__isnull=True).order_by('plan_cv_start')
-	missingInPTFull = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).exclude(actual_amount_pt__gte=F('plan_amount')).exclude(actual_pt_end__isnull=True).order_by('plan_pt_start')
-	missingInWHFull = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_wh_start')
-
-	countMissingFullCR = missingInCRFull.count()
-	countMissingFullCV = missingInCVFull.count()
-	countMissingFullPT = missingInPTFull.count()
-	countMissingFullWH = missingInWHFull.count()
-
-	missingInCR = missingInCRFull[0:3]
-	missingInCV = missingInCVFull[0:3]
-	missingInPT = missingInPTFull[0:3]
-	missingInWH = missingInWHFull[0:3]
 
 ############################################
 
@@ -168,15 +132,13 @@ def showPC(emID,title):
 	today = todayDate()
 	datefrominMonth = datetime(today.year,today.month,1)
 	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
-	eID = "T101"
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
 	page ="totalPlanSelectedDate"
 	#temp_contents = FakeStatusTracking.objects.all()
 
 	items = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
-	itemsNotProcess = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_wh_start__isnull=False).order_by('plan_due')
-	itemsMissing = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_due')
+
 
 	return render_to_response('PC/view.html', locals())
 
@@ -335,7 +297,7 @@ def workCR(eID,title):
 	else:
 		cr = str(currentProcess("CR"))[2:8]
 	#temp_contents = cr
-	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_id","plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	items = list(item_plan)
 	x = ''
 	return render_to_response('CR/listCR.html', locals())
@@ -369,7 +331,7 @@ def workCV(eID,title):
 		cvTwoCS = 'idle'
 	else:
 		cvTwoCS = str(currentProcess("2CS"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "process1","process3","process4").order_by('plan_cv_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('CV/listCV.html', locals())
 
@@ -383,7 +345,7 @@ def workPT(eID,title):
 	#create items for PT
 	today = todayDate()
 	pt = str(currentTimeProcess("PT"))
-	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).values_list("plan_id","plan_pt_start", "plan_pt_end", "product_id", "actual_pt_start", "actual_pt_end","process2","process4").order_by('plan_pt_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	items = list(item_plan)
 	return render_to_response('PT/listPT.html', locals())
 
@@ -398,7 +360,7 @@ def workWH(eID,title):
 	today = todayDate()
 	#create items for WH
 	wh = currentTimeProcess("WH")
-	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).values_list("plan_id","plan_wh_start", "product_id","actual_wh_start","process1","process2","process3").order_by('plan_wh_start')
+	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
 	items = list(item_plan)
 	return render_to_response('WH/listWH.html',locals())
 	
