@@ -276,7 +276,7 @@
 			}
 		} 
 		catch (ex) {
-			alert(ex);
+			//alert(ex);
 		}
 		updateCounter();
 	}

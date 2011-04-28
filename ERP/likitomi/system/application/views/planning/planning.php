@@ -407,6 +407,7 @@
         }
 		row.selected = !row.selected;
 		sel_SetColor(row);
+		alert("Hello")
 		postTable(table.id);
 	}
 	
