@@ -20,35 +20,30 @@ img {
     border: 0;
 }
 
-/* =Typography
------------------------------------------------------------------------------*/
-body {
-    border-top-width: 30px;
-    border-top-style: solid;
-    font: 12px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;
-	background-color: #fff;
-	color: #4F5155; 
-}
-  
 /* =Wrapper
 -----------------------------------------------------------------------------*/
 #wrapper {
     background-color: #FFFFFF;
-	min-height: 500px;
+	/* min-height: 500px; */
 	margin: 0;
 }
 
 /* =Headings
 -----------------------------------------------------------------------------*/
 #header {
+	background-color: #4F5155; /* NOTE: page header for displaying menu and navigator */
     width: 100%;
     margin:3;
     z-index:-1;
+    font-size: 11px;
+    font-weight: bold;
+    color: #FFFFFF;
+    padding: 5px;
 }
 
 #browse_crag {
     margin: 0;
-    /*background-image: url(../images/browse_crag_bg.jpg);*/
+    background-image: url(../images/browse_crag_bg.jpg);
     background-repeat: repeat-x;
     border-bottom: 1px solid #CCCCCC;
 }
@@ -64,6 +59,17 @@ color: #666;}
 .login a:hover {text-decoration:none;
 color: #FF0000;}
 
+
+/* =Typography
+-----------------------------------------------------------------------------*/
+body {
+    /* border-top-width: 30px;
+    border-top-style: solid; */
+    font: 12px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;
+	background-color: #FFFFFF;
+	color: #4F5155; 
+}
+
 /* =Links
 -----------------------------------------------------------------------------*/
 
@@ -76,7 +82,6 @@ color: #FF0000;}
 
 /* =Main Nav
 -----------------------------------------------------------------------------*/
-
 #navlist {margin: 0;}
 
 ul#navlist {
@@ -91,7 +96,6 @@ ul#navlist li {
     margin: 0px 2px 0px 2px;
     border-left: 1px solid #F1F2F5;
 	border-right: 1px solid #F1F2F5;
-	
 }
 
 li#active a {
@@ -182,6 +186,17 @@ form{
 	border:1px dotted;
 }
 
+form#form_search{
+	-moz-border-radius-bottomleft: 0px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-topleft: 0px;
+	-moz-border-radius-topright: 0px;
+	font-weight: bold;
+	border-style: none;
+	padding: 0px;
+	background-color: #4F5155;
+}
+
 #loginDiv {
 	width: 280px;
 	margin: 4em auto;
@@ -258,6 +273,11 @@ fieldset {
     border: 1px solid #EEE;
 }
 
+fieldset#form_search_fieldset{
+	padding: 0.5em;
+    border-style: none;
+}
+
 legend {
     font-weight: bold;
 }
@@ -308,6 +328,7 @@ legend {
     margin: 14px 0 14px 0;
     padding: 12px 10px 12px 10px;
 }
+
 /* =HOME PAGE
 -----------------------------------------------------------------------------*/
 #homeContent p {
@@ -354,8 +375,13 @@ table.tablesorter tbody tr.odd td{
 }
 
 thead th { 
-/*        border-bottom: solid 0.25em black; */
+        border-bottom: 0.25em black; 
 }
+/*NOTE: thead for main menu*/
+thead#mainMenu th{
+	border-style: none;
+}
+
 p.tbunderline {
         border-bottom: dashed 0.1em black;
 
@@ -373,6 +399,7 @@ p.tbsgunderline {
 }
 table a:link {border-bottom: 1px dashed #ddd;
 color: #000;}
+
 /* =links
 ----------------------------------------------- */
 
@@ -391,6 +418,7 @@ color: #808080;}
 
 table a:hover {border-bottom: 1px dashed #bbb;
 color: #666;}
+
 .tblProdViewLabel {
 	color: #7F7F7F;
     text-align: center;
@@ -410,6 +438,12 @@ color: #666;}
 table {
     border-collapse: collapse;
 }
+
+#normalLink { /*NOTE: image link*/
+	border: none;
+	color: none;
+	border-bottom: none;
+}
 /*
 th.headerSortUp { 
     background-image: url(images/small_asc.gif); 
@@ -427,3 +461,19 @@ th.header {
     border-right: 1px solid #dad9c7; 
     margin-left: -1px; 
 } */
+
+
+/* =search box
+----------------------------------------------- */
+.searchbox {
+	background:#FFFFFF url(search-icon.png) no-repeat 4px 4px;
+	background-position: right;
+	padding-right:30px;
+	border:1px solid #CCCCCC;
+	-moz-border-radius-bottomleft:5px;
+    -moz-border-radius-bottomright:5px;
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-topright:5px;
+	width:230px;
+	height:18px;
+}
