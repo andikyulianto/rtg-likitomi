@@ -197,7 +197,7 @@ def startPT(request):
 	task = "start"
 	at = "PT"
 	title = "Starting "+product_code+" in pad /partition"
-	return render_to_response('PT/updateStartCV.html',locals())
+	return render_to_response('PT/updateStartPT.html',locals())
 
 ###########################################
 ##                 for PT                ##
@@ -230,7 +230,7 @@ def endPT(request):
 	pID = planID
 
 	title = "Finished "+product_code+" in pad /partition"
-	return render_to_response('PT/updateEndCV.html',locals())
+	return render_to_response('PT/updateEndPT.html',locals())
 	
 ###########################################
 ##                 for WH                ##

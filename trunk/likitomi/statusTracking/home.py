@@ -12,6 +12,10 @@ from django.template import Template, Context
 from statusTracking.models import Employee, FakeStatusTracking, ProductCatalog, Partners
 from statusTracking.utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
 from statusTracking.config import getPCItemNum
+from datetime import date, datetime
+from django.db.models import F
+from django.utils.safestring import mark_safe
+import calendar
 
 ####################################################
 ##                    for pc                      ##
@@ -50,6 +54,7 @@ def showPC(eID,title):
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+	eID =emID
 	
 
 	#create items for PC
@@ -141,7 +146,7 @@ def workCR(eID,title):
 	if(currentProcess("CR")=='idle'):
 		cr = 'idle'
 	else:
-		cr = str(currentProcess("CR"))[2:8]
+		cr = str(currentProcess("CR"))
 	#temp_contents = cr
 	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_id","plan_cr_start", "plan_cr_end", "product_id", "actual_cr_start", "actual_cr_end").order_by('plan_cr_start')
 	items = list(item_plan)
@@ -177,7 +182,13 @@ def workCV(eID,title):
 		cvTwoCS = 'idle'
 	else:
 		cvTwoCS = str(currentProcess("2CS"))[2:8]
-	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).values_list("plan_id","plan_cv_start", "plan_cv_end", "product_id", "actual_cv_start", "actual_cv_end", "cv_machine", "process1","process3","process4").order_by('plan_cv_start')
+	cv = currentTimeProcess("CV")
+	cvThreeCS = currentTimeProcess("3CS")
+	cvThreeCL = currentTimeProcess("3CL")
+	cvTwoCL = currentTimeProcess("2CL")
+	cvThreeCW = currentTimeProcess("3CW")
+	cvTwoCS = currentTimeProcess("2CS")
+	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('CV/listCV.html', locals())
 
