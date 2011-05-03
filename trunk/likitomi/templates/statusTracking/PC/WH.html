@@ -7,6 +7,41 @@
 		<li id="active"><a href="/likitomi">Logout</a></li>
 	</ul>
 
+	</div> <!-- end Filter -->
+	<br>
+<div id="resultDivLineWH">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetail"><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<td><b>Sch.</b></th>
+	<th width="5%" align="left"><b> IN </b></th>
+	<th width="5%"><b>Pcs.</b></th>
+	<th rowspan="2"><b>Product code</b></th>
+	<th rowspan="2"><b>Sale Order</b></th>
+	<th rowspan="2"><b>P Code</b></th>
+	<th rowspan="2"><b>Customer</b></th>
+	<th rowspan="2"><b>Product Name</b></th>
+	<th rowspan="2"><b>From</b></th>
+	<th rowspan="2"><b>Due</b></th>
+</tr>
+	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>Pcs</th></tr></thead>
+	</span>	
+	{% for item in items %}
+	<tr id="{{ item.state}}">
+	<td rowspan=2>{% if wh == item.plan_wh_start %} > {% endif %}</th>
+	<td>{{item.plan_wh_start|time:"H:i"}}</th>
+	<td>{{item.plan_amount}}</th>
+	<td rowspan=2>{{item.product.product_code}}</td>
+	<td rowspan=2>{{item.plan_id}}</td>
+	<td rowspan=2>{{item.po}}</td>
+	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
+	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
+	<td rowspan=2>{% if item.process4 == 'WH' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'WH'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'WH' %}
+		    {{ item.process1 }}
+		{% endif %}{% endif %}{% endif %}</td>
 
 	<!-- End Menu-->
 	</div>
