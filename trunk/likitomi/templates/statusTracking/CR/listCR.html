@@ -1,14 +1,39 @@
-{% extends "PC/container.html" %}
+{% extends "CR/container.html" %}
 {% block view %}
-<div id="wrapper">
-    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a><br>
+<div id="wrapper" style="width:100%">
+    <div id="header" >
     	<!-- start Menu-->
-    <ul id="navlist">
-		<li id="active"><a href="/likitomi">Logout</a></li>
+    	<table width="100%">
+    		<thead id="mainMenu">
+    			<tr>
+    				<th align="left" width="60%"><a href="/likitomi/home/?eID={{eID}}">Home</a> </th>
+    				<th align="left" width="30%">
+						<form id="form_search" action="#">
+							<fieldset id="form_search_fieldset">
+								Search:&nbsp 
+								<input type="text" class="searchbox" name="search" id="key_search" /> 
+								<span class="loading">Loading ...</span>
+							</fieldset>
+						</form>
+    				</th>
+    				<th align="right" width="10%"><a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+    			</tr>
+    		</thead>
+    	</table>
+		<!-- End Menu-->
+	</div>
+</div>
+<div id="content">
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Daily Plan</a></li>
 	</ul>
+	<div id="tabs-1">
 
-
-	<!-- End Menu-->
+	<div id="filterCriteria" align="center">
+	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
+	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
+	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
 	</div>
 <!-- endheader-->
 <!-- content-->
