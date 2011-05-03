@@ -10,56 +10,9 @@
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
-<script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
-<script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
-<script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
-<script type="text/javascript" src="javascript/picnet.table.filter.min.js"></script>
-    <style type="text/css"> 
-#totalPlanDaily
-{
- position: relative; top: 0px; left: 0px;
-height:400px
-}
-.CRarea
-{
- position: absolute; top: 0px; left: 0px;
- border : 1px solid black;
-  width: 50%;
- height:50%;
-}
-.CVarea
-{
- position: absolute; top: 0px; left: 50%;
- border : 1px solid black;
-  width: 50%;
-height:50%;
-}
-.PTarea
-{
- position: absolute; top: 200px; left: 0;
- border : 1px solid black;
-  width: 50%;
-height:50%
-}
-.WHarea
-{
- position: absolute; top: 200px; left: 50%;
- border : 1px solid black;
-  width: 50%;
-height:50%;
-}
-.ui-button-icon-only .ui-icon, .ui-button-text-icon-primary .ui-icon, .ui-button-text-icon-secondary .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-icons-only .ui-icon
-{
-	top:20%;
-}
-    </style>
 <script>
-
 	$(function() {
-		$( "#filterCriteria" ).buttonset();
-	});
-	$(function() {
-		$( "#filterCriteriaMonthly" ).buttonset();
+		$( "#accordion" ).accordion();
 	});
 
 
@@ -156,120 +109,13 @@ $(document).ready(function() {
 	});
 
 	$(function() {
-		$( "#datepickerToNotProcess" ).datepicker();
+		$( "#datepickerFrom" ).datepicker();
 	});
-	$(function() {
-		$( "#datepickerFromMissing" ).datepicker();
-	});$('input#search').quicksearch('table tbody tr');
 
 	$(function() {
-		$( "#datepickerToMissing" ).datepicker();
+		$( "#datepickerTo" ).datepicker();
 	});
-	$(function() {
-		$( "#datepickerToTotal" ).datepicker();
-	});
-	$(function() {
-		$( "#datepickerFromTotal" ).datepicker();
-	});
-*/
-	$(function() {
-		$( "#tabs" ).tabs();
-	});
-
-	$('input#search').quicksearch('table tbody tr');
-$(document).ready(function(){
-  $('#totalPlanMonthly').tablesorter({
-    headers: {
-      2: {sorter: false},
-      5: {sorter: false},
-      6: {sorter: false},
-      7: {sorter: false},
-      8: {sorter: false},
-      9: {sorter: false}
-    },
-widthFixed: true, widgets: ['zebra']} )
-
-.tablesorterPager({container: $("#pager")});
-
-
-		$("#zoomCR").click(function(){
-			alert("zoomCR");
-		});
-
-
-});
-///////////////////////
-/////// Detail ////////
-//////////////////////
-$(document).ready(function() {
-	$("#finishedM").click(function(){ 
-		if($("#finishedM").attr("checked")==true)
-		{
-		    $("#resultTableDetailM tr#normal").show();
-		}
-		else
-		{
-		    $("#resultTableDetailM tr#normal").hide();
-		}
-	});
-	$("#notProcessM").click(function(){ 
-		if($("#notProcessM").attr("checked")==true)
-		{
-		    $("#resultTableDetailM tr#notProcess").show();
-		}
-		else
-		{
-		    $("#resultTableDetailM tr#notProcess").hide();
-		}
-	});
-	$("#missingM").click(function(){ 
-		if($("#missingM").attr("checked")==true)
-		{
-		    $("#resultTableDetailM tr#missing").show();
-		}
-		else
-		{
-		    $("#resultTableDetailM tr#missing").hide();
-		}
-	});
-
-//button of daily 
-$("#finished").click(function(){ 
-		if($("#finished").attr("checked")==true)
-		{
-		    $("#resultTableDetail tr#normal").show();
-			
-		}
-		else
-		{
-		    $("#resultTableDetail tr#normal").hide();
-		}
-	});
-	$("#notProcess").click(function(){ 
-		if($("#notProcess").attr("checked")==true)
-		{
-		    $("#resultTableDetail tr#notProcess").show();
-		}
-		else
-		{
-		    $("#resultTableDetail tr#notProcess").hide();
-		}
-	});
-	$("#missing").click(function(){ 
-		if($("#missing").attr("checked")==true)
-		{
-		    $("#resultTableDetail tr#missing").show();
-		}
-		else
-		{
-		    $("#resultTableDetail tr#missing").hide();
-		}
-	});
-
-
-
-});
-</script>
+	</script>
 </head>
 <body>
 <div id="wrapper" style="width:100%">

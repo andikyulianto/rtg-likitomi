@@ -1,188 +1,56 @@
 {% extends "PC/container.html"%}
 {% block view %}
-<div id="content">
-<div id="tabs">
-	<ul>
-		<li><a href="#tabs-1">Daily Plan</a></li>
-		<li><a href="#tabs-2">Monthly Plan</a></li>
+<div id="wrapper">
+    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> CR <br>
+    	<!-- start Menu-->
+    <ul id="navlist">
+		<li id="active"><a href="/likitomi">Logout</a></li>
 	</ul>
-	<div id="tabs-1">
-	<!--top bar -->
-	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
-	<br>
-	<div id="filterCriteria" align="center">
-	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
-	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
-	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
-
-	</div> <!-- end Filter -->
-	<br>
-<div id="resultDivLineCR">
-	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetail"><span class="header">
-	<thead><tr bgcolor="#cccccc" width="100%">
-	<th><b>Sch.</b></th>
-	<th width="5%" align="left"><b> IN </b></th>
-	<th width="5%"><b>OUT </b></th>
-	<th width="5%"><b>Pcs.</b></th>
-	<th rowspan="2">Sheet Code</th>
-	<th rowspan="2">Customer name</th>
-	<th rowspan="2">Product</th>
-	<th rowspan="2">Flute</th>
-	<th rowspan="2">DF</th>
-	<th rowspan="2">BM</th>
-	<th rowspan="2">BL</th>
-	<th rowspan="2">CM</th>
-	<th rowspan="2">CL</th>
-	<th rowspan="2">Length</th>
-	<th rowspan="2">Width</th>
-	<th rowspan="2">Case</th>
-	<th rowspan="2">Cut</th>
-	<th rowspan="2">Blank</th>
-	<th rowspan="2">Slit</th>
-	<th rowspan="2">Scoreline</th>
-	<th rowspan="2">Next Process</th>
-	<th rowspan="2">Due</th>
-</tr>
-			<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>OUT</th><th>Pcs</th></tr></thead>
-			</span>	
 
 
+	<!-- End Menu-->
+	</div>
+<!-- endheader-->
+<!-- content-->
+	<div id="browse_crag">
+		<div class="login">
+			{{title}}
+		</div>
+	</div>
+<br>
+<center>
 
-			{% for item in items %}
-			<tr id="{{ item.stateCR}}">
-			<td rowspan=2>{% if cr == item.product.product_code %} > {% endif %}</th>
-			<td>{{item.plan_cr_start|time:"H:i"}}</a></th>
-			<td>{{item.plan_cr_end|time:"H:i" }}</a></th>
-			<td>{{item.plan_amount}}</th>
-			<td rowspan=2>{{item.product.product_code}}</td>
-			<td rowspan=2>{{item.product.parent_code.partner.partner_name}}</td>
-	<td rowspan=2>{{item.product.parent_code.product_name}}</td>
-	<td rowspan=2>{{item.product.flute}}</td>
-	<td rowspan=2>{{item.product.df}}</td>
-	<td rowspan=2 >{{item.product.bm}}</td>
-	<td rowspan=2 >{{item.product.bl}}</td>
-	<td rowspan=2 >{{item.product.cm}}</td>
-	<td rowspan=2 >{{item.product.cl}}</td>
-	<td rowspan=2 >{{item.product.length_mm}}</td>
-	<td rowspan=2 >{{item.product.width_mm}}</td>
-	<td rowspan=2 >{{item.product.parent_code.case}}</td>
-	<td rowspan=2 >{{item.product.parent_code.cut}}</td>
-	<td rowspan=2>{{item.product.parent_code.blank}}</td>
-	<td rowspan=2 >{{item.product.parent_code.slit}}</td>
-	<td rowspan=2 >{{item.product.parent_code.scoreline_f}}</td>
-	<td rowspan=2 >{{item.product.parent_code.next_process}}</td>
-	<td rowspan="2">{{item.days_left}}</td>
-	</tr>
-	<tr id="{{ item.stateCR}}">
-	
-	<td align="right">{{item.actual_cr_start|time:"H:i"}}</td>
-	<td align="right">{{item.actual_cr_end|time:"H:i" }}</td>
-	<td align="right">{% if item.actual_amount_cr != NULL%}
-		{% if item.actual_amount_cr < item.plan_amount %}
-			<font color="red">{{item.actual_amount_cr}}</font>
-		{% else %}
-			{{item.actual_amount_cr}}
-		{% endif %}
-	{% else %}
-		<font color="red">0</font>
-	{% endif %}
-	</td>
+	<table align='center' width="30%" class='tbltables' ><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%"><th width="10%" rowspan="2"></th><td width="15%" align="left"><b> Sch.IN </b></td><td width="15%"><b> Sch.OUT </b></td><th width="30%" rowspan="2"> Product code </th><th  width ="10%" rowspan="2">Due</th></tr>
+			<tr bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th></tr></thead>
+			</span>
+			{% for start,end,product,actual_start,actual_end in items %}
+			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
+			<td rowspan="2" >{% if cr == product %} > {% endif %}</td>
+			<td>{{start|time:"H:i"}}</td>
+			<td>{{ end|time:"H:i" }}</td>
+			<td rowspan="2"><p class="tbunderline">{{product}}<br><font color="white">-</font></p></td>
+			<td rowspan="2"><p class="tbsgunderline">##<br><font color="white">-</font></p></td>
+			</tr>
+			<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
+			<td align="right"><p class="tbsgunderline">
+				{% if actual_start != NULL %}
+				{{ actual_start|time:"H:i" }}
+				{% else %} 
+				{% endif %}
+			</p></td>
+			<td align="right"><p class="tbsgunderline">				
+				{% if actual_end != NULL%}
+				{{ actual_end|time:"H:i" }}
+				{% else %}
+				<font color="white">-</font>
+				{% endif %}
 
-	</tr>
+			</p></td>
+			</tr>
 			{% endfor %}
 			</table>
-</div>
-
 </div>
 <!--END Menu and Topbar-->
-<div id="tabs-2">
-	<!--top bar-->
-	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Total plan of {{strThisMonth}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
-	<br>
-	
 
-	<div id="filterCriteriaMonthly" align="center">
-	<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
-	<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Not yet process</label>
-	<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
-	</div> <!-- end Filter -->
-<br>
-<div id="resultDivLineCRM">
-	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetailM"><span class="header">
-	<thead><tr bgcolor="#cccccc" width="100%">
-	<th><b>Sch.</b></th>
-	<th width="5%" align="left"><b> IN </b></th>
-	<th width="5%"><b>OUT </b></th>
-	<th width="5%"><b>Pcs.</b></th>
-	<th rowspan="2">Sheet Code</th>
-	<th rowspan="2">Customer name</th>
-	<th rowspan="2">Product</th>
-	<th rowspan="2">Flute</th>
-	<th rowspan="2">DF</th>
-	<th rowspan="2">BM</th>
-	<th rowspan="2">BL</th>
-	<th rowspan="2">CM</th>
-	<th rowspan="2">CL</th>
-	<th rowspan="2">Length</th>
-	<th rowspan="2">Width</th>
-	<th rowspan="2">Case</th>
-	<th rowspan="2">Cut</th>
-	<th rowspan="2">Blank</th>
-	<th rowspan="2">Slit</th>
-	<th rowspan="2">Scoreline</th>
-	<th rowspan="2">Next Process</th>
-	<th rowspan="2">Due</th>
-</tr>
-			<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>OUT</th><th>Pcs</th></tr></thead>
-			</span>	
-
-
-
-			{% for item in itemsM %}
-			<tr id="{{ item.stateCR}}">
-			<td rowspan=2>{% if cr == item.product.product_code %} > {% endif %}</th>
-			<td>{{item.plan_cr_start|time:"H:i"}}</a></th>
-			<td>{{item.plan_cr_end|time:"H:i" }}</a></th>
-			<td>{{item.plan_amount}}</th>
-			<td rowspan=2>{{item.product.product_code}}</td>
-			<td rowspan=2>{{item.product.parent_code.partner.partner_name}}</td>
-	<td rowspan=2>{{item.product.parent_code.product_name}}</td>
-	<td rowspan=2>{{item.product.flute}}</td>
-	<td rowspan=2>{{item.product.df}}</td>
-	<td rowspan=2 >{{item.product.bm}}</td>
-	<td rowspan=2 >{{item.product.bl}}</td>
-	<td rowspan=2 >{{item.product.cm}}</td>
-	<td rowspan=2 >{{item.product.cl}}</td>
-	<td rowspan=2 >{{item.product.length_mm}}</td>
-	<td rowspan=2 >{{item.product.width_mm}}</td>
-	<td rowspan=2 >{{item.product.parent_code.case}}</td>
-	<td rowspan=2 >{{item.product.parent_code.cut}}</td>
-	<td rowspan=2>{{item.product.parent_code.blank}}</td>
-	<td rowspan=2 >{{item.product.parent_code.slit}}</td>
-	<td rowspan=2 >{{item.product.parent_code.scoreline_f}}</td>
-	<td rowspan=2 >{{item.product.parent_code.next_process}}</td>
-	<td rowspan="2">{{item.days_left}}</td>
-	</tr>
-	<tr id="{{ item.stateCR}}">
-	
-	<td align="right">{{item.actual_cr_start|time:"H:i"}}</td>
-	<td align="right">{{item.actual_cr_end|time:"H:i" }}</td>
-	<td align="right">{% if item.actual_amount_cr != NULL%}
-		{% if item.actual_amount_cr < item.plan_amount %}
-			<font color="red">{{item.actual_amount_cr}}</font>
-		{% else %}
-			{{item.actual_amount_cr}}
-		{% endif %}
-	{% else %}
-		<font color="red">0</font>
-	{% endif %}
-	</td>
-
-	</tr>
-			{% endfor %}
-			</table>
-</div>
-
-</div>
-</div>
 {% endblock %}
