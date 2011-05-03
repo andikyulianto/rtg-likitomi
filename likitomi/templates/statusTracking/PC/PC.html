@@ -183,9 +183,9 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 <div class="CRarea" align="right">
 <button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=CR'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button> 
 
-		<!-- table CR --><center><table align=center width="90%">
+		<!-- table CR --><center>Corrugator <br><table align=center width="90%">
 			<tr><td width="50%">{# left #}<div id="result"></div>
-	<div id="linkCR">
+	<div id="linkCR"> 
 			<table align=center width="100%" id="crTable"><!-- table left --><span class="header">
 			<thead><tr bgcolor="#cccccc" width="100%"><th width="5%">Sch.</th><th width="15%" align="left">IN</td><td width="15%"> <b>OUT</b> <td width="10%"><b>Pcs</b></td></td><th width="10%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
@@ -204,14 +204,14 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				{% if CR_items.actual_cr_start != NULL %}
 				{{CR_items.actual_cr_start|time:"H:i" }}
 				{% else %} 
-				<font color="white"> </font>
+				<font color="white">&nbsp;</font>
 				{% endif %}
 			</p></td>
 			<td><p class="tbsgunderline">				
 				{% if CR_items.actual_cr_end != NULL%}
 				{{CR_items.actual_cr_end|time:"H:i" }}
 				{% else %}
-				<font color="white">  </font>
+				<font color="white"> &nbsp;dd </font>
 				{% endif %}
 
 			</p></td>
@@ -244,7 +244,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=CV'" ><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 		<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>-->
-		<center><table align=center width="90%">
+		<center>Convertor <br><table align=center width="90%">
 			<tr  height="5"><td width="60%">{# left #}
 			
 			<div id="linkCV">
@@ -253,7 +253,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
 			{% for CV_items in items_plan_cv %}
 			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageCV','/likitomi/display/?product={{CV_items.product.product_code}}');" id="{{CV_items.stateCV}}">
-			<td rowspan="2" height="20"><center><p class="tbunderline">{% if cvThreeCL == CV_items.product or cvThreeCS == CV_items.product or cvTwoCL == CV_items.product %} > {% endif %} <br><font color=white>&nbsp;</font></p></center></td>
+			<td rowspan="2" height="20"><center><p class="tbunderline">{% if cvThreeCL == CV_items.product.product_code or cvThreeCS == CV_items.product.product_code or cvTwoCL == CV_items.product.product_code %} > {% endif %} <br><font color=white>&nbsp;</font></p></center></td>
 			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
 			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
 			<td> {{CV_items.plan_amount}}</td>
@@ -279,8 +279,8 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
 				{% if CV_items.actual_amount_cv != NULL%}
-				 {% if CV_items.actual_amount_cv < plan_amount %}
-					<font color="red">{{actual_amount_cv}}</font>
+				 {% if CV_items.actual_amount_cv < CV_items.plan_amount %}
+					<font color="red">{{CV_items.actual_amount_cv}}</font>
 				{% else %}
 					{{CV_items.actual_amount_cv}}
 				{% endif %}
@@ -305,7 +305,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 
 
 <!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>-->
-		<!-- start pt table --><center>
+		<!-- start pt table --><center> Pad and Partition <br>
 		<table align=center width="90%">
 			
 			<tr><td width="50%">{# left #}
@@ -314,7 +314,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td> <td width="25%" align="left"><b>Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
 			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></span></thead>
 			{% for PT_items in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"> {% if pt == PT_items.product %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"> {% if pt == PT_items.product.product_code %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
 <td> {{PT_items.plan_amount}} </td>
 			<td rowspan="2"><center><p class="tbunderline">{{PT_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
@@ -361,7 +361,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 <button style="height:30px" id="zoomWH" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='/likitomi/pcdetail/?eID={{eID}}&page=WH'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 
-<!-- start wh table--><center>
+<!-- start wh table--><center> Warehouse
 		<table align="center" width="90%"> 
 
 			<td width="50%"> {# left #}

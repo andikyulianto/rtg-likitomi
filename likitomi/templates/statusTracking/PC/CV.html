@@ -7,6 +7,78 @@
 		<li id="active"><a href="/likitomi">Logout</a></li>
 	</ul>
 
+	</div> <!-- end Filter -->
+	<br>
+<div id="resultDivLineCV">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetail"><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<td><b>Sch.</b></th>
+	<th width="5%" align="left"><b> IN </b></th>
+	<th width="5%"><b>OUT </b></th>
+	<th width="5%"><b>Pcs.</b></th>
+	<th rowspan="2"><b>Product code</b></th>
+	<th rowspan="2"><b>Machine</b></th>
+	<th rowspan="2"><b>From</b></th>
+	<th rowspan="2"><b>Color</b></th>
+	<th rowspan="2"><b>Time</b></th>
+	<th rowspan="2"><b>Speed</b></th>
+	<th rowspan="2"><b>Sale Order</b></th>
+	<th rowspan="2"><b>P.Code</b></th>
+	<th rowspan="2"><b>Customer</b></th>
+	<th rowspan="2"><b>Product Name</b></th>
+	<th rowspan="2"><b>Next Process</b></th>
+	<th rowspan="2"><b>Due</b></th>
+</tr>
+	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>OUT</th><th>Pcs</th></tr></thead>
+	</span>	
+	{% for item in items %}
+	<tr id="{{ item.stateCV}}">
+	<td rowspan=2>{% if cvThreeCL == item.product.product_code or cvThreeCS == item.product.product_code or cvTwoCL == item.product.product_code %} > {% endif %}</th>
+	<td>{{item.plan_cv_start|time:"H:i"}}</th>
+	<td>{{item.plan_cv_end|time:"H:i" }}</th>
+	<td>{{item.plan_amount}}</th>
+	<td rowspan=2>{{item.product.product_code}}</td>
+	<td rowspan=2>{{item.cv_machine}}</td>
+	<td rowspan=2>{% if item.process4 == 'CV' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'CV'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'CV' %}
+		    {{ item.process1 }}
+		{% endif %}{% endif %}{% endif %}</td>
+	<td rowspan=2>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
+	<td rowspan=2>{{item.cv_time_used}}</td>
+	<td rowspan=2 >{{item.speed}}</td>
+	<td rowspan=2 >{{item.plan_id}}</td>
+	<td rowspan=2 >{{item.po}}</td>
+	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
+	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
+	<td rowspan=2 >
+		{% if item.process1 == 'CV' and item.process2 != NULL %}
+		    {{item.process2}}
+		{% else %}{% if item.process2 == 'CV' and item.process3 != NULL %}
+		    {{ item.process3 }}
+		{% else %}{% if item.process3 == 'CV' and item.process4 != NULL %}
+		    {{ item.process4 }}
+		{% else %}{% if item.process3 == NULL and item.process1 == NULL and item.process2 == NULL and item.process3 == NULL %}
+		
+		{% endif %}{% endif %}{% endif %}{% endif %}</td>
+	<td rowspan="2">{{item.days_left}}</td>
+	</tr>
+	<tr id="{{ item.stateCV}}">
+	
+	<td align="right">{{item.actual_cv_start|time:"H:i"}}</td>
+	<td align="right">{{item.actual_cv_end|time:"H:i" }}</td>
+	<td align="right">{% if item.actual_amount_cv != NULL%}
+		{% if item.actual_amount_cv < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv}}</font>
+		{% else %}
+			{{item.actual_amount_cv}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</td>
 
 	<!-- End Menu-->
 	</div>

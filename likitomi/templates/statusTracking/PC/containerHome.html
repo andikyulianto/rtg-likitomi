@@ -175,7 +175,7 @@ $(document).ready(function() {
 	$(function() {
 		$( "#tabs" ).tabs();
 	});
-
+/*
 	$('input#search').quicksearch('table tbody tr');
 $(document).ready(function(){
   $('#totalPlanMonthly').tablesorter({
@@ -198,6 +198,13 @@ widthFixed: true, widgets: ['zebra']} )
 
 
 });
+*/
+	$document.ready(function() {
+		$("#key_search").quicksearch("table tbody tr", {
+			noResults: '#noresults',
+			loader: 'span.loading'
+		});
+	});
 ///////////////////////
 /////// Detail ////////
 //////////////////////
@@ -278,7 +285,7 @@ $("#finished").click(function(){
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%">HOME >> </th>
+    				<th align="left" width="60%"><a href="/likitomi/home/?eID={{eID}}">Home</a></th>
     				<th align="left" width="30%">
 						<form id="form_search" action="#">
 							<fieldset id="form_search_fieldset">

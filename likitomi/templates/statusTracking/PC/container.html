@@ -10,6 +10,50 @@
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />	
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
+
+<script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="javascript/picnet.table.filter.min.js"></script>
+    <style type="text/css"> 
+#totalPlanDaily
+{
+ position: relative; top: 0px; left: 0px;
+height:400px
+}
+.CRarea
+{
+ position: absolute; top: 0px; left: 0px;
+ border : 1px solid black;
+  width: 50%;
+ height:50%;
+}
+.CVarea
+{
+ position: absolute; top: 0px; left: 50%;
+ border : 1px solid black;
+  width: 50%;
+height:50%;
+}
+.PTarea
+{
+ position: absolute; top: 200px; left: 0;
+ border : 1px solid black;
+  width: 50%;
+height:50%
+}
+.WHarea
+{
+ position: absolute; top: 200px; left: 50%;
+ border : 1px solid black;
+  width: 50%;
+height:50%;
+}
+.ui-button-icon-only .ui-icon, .ui-button-text-icon-primary .ui-icon, .ui-button-text-icon-secondary .ui-icon, .ui-button-text-icons .ui-icon, .ui-button-icons-only .ui-icon
+{
+	top:20%;
+}
+    </style>
 <script>
 	$(function() {
 		$( "#accordion" ).accordion();
@@ -115,7 +159,120 @@ $(document).ready(function() {
 	$(function() {
 		$( "#datepickerTo" ).datepicker();
 	});
-	</script>
+	$(function() {
+		$( "#datepickerToTotal" ).datepicker();
+	});
+	$(function() {
+		$( "#datepickerFromTotal" ).datepicker();
+	});
+*/
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+
+	$('input#search').quicksearch('table tbody tr');
+$(document).ready(function(){
+  $('#totalPlanMonthly').tablesorter({
+    headers: {
+      2: {sorter: false},
+      5: {sorter: false},
+      6: {sorter: false},
+      7: {sorter: false},
+      8: {sorter: false},
+      9: {sorter: false}
+    },
+widthFixed: true, widgets: ['zebra']} )
+
+.tablesorterPager({container: $("#pager")});
+
+
+		$("#zoomCR").click(function(){
+			alert("zoomCR");
+		});
+
+
+});
+///////////////////////
+/////// Detail ////////
+//////////////////////
+$(document).ready(function() {
+	$("#finishedM").click(function(){ 
+		if($("#finishedM").attr("checked")==true)
+		{
+		    $("#resultTableDetailM tr#normal").show();
+		}
+		else
+		{
+		    $("#resultTableDetailM tr#normal").hide();
+		}
+	});
+	$("#notProcessM").click(function(){ 
+		if($("#notProcessM").attr("checked")==true)
+		{
+		    $("#resultTableDetailM tr#notProcess").show();
+		}
+		else
+		{
+		    $("#resultTableDetailM tr#notProcess").hide();
+		}
+	});
+	$("#missingM").click(function(){ 
+		if($("#missingM").attr("checked")==true)
+		{
+		    $("#resultTableDetailM tr#missing").show();
+		}
+		else
+		{
+		    $("#resultTableDetailM tr#missing").hide();
+		}
+	});
+
+//button of daily 
+$("#finished").click(function(){ 
+		if($("#finished").attr("checked")==true)
+		{
+		    $("#resultTableDetail tr#normal").show();
+			
+		}
+		else
+		{
+		    $("#resultTableDetail tr#normal").hide();
+		}
+	});
+	$("#notProcess").click(function(){ 
+		if($("#notProcess").attr("checked")==true)
+		{
+		    $("#resultTableDetail tr#notProcess").show();
+		}
+		else
+		{
+		    $("#resultTableDetail tr#notProcess").hide();
+		}
+	});
+	$("#missing").click(function(){ 
+		if($("#missing").attr("checked")==true)
+		{
+		    $("#resultTableDetail tr#missing").show();
+		}
+		else
+		{
+		    $("#resultTableDetail tr#missing").hide();
+		}
+	});
+
+
+
+
+});
+
+	$(document).ready(function () {
+		$("#key_search").quicksearch("table tbody tr", {
+				noResults: '#noresults',
+				//stripeRows: ['odd', 'even'],
+				loader: 'span.loading'
+		});
+	});
+</script>
 </head>
 <body>
 <div id="wrapper" style="width:100%">
@@ -124,22 +281,26 @@ $(document).ready(function() {
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%">HOME >> </th>
+    				<th align="left" width="60%">
+					<a href="/likitomi/home/?eID={{eID}}">Home</a> >> <a href="/likitomi/pcdetail/?eID={{eID}}&page={{page}}">{{page}}</a>
+				</th>
     				<th align="left" width="30%">
-						<form id="form_search" action="#">
-							<fieldset id="form_search_fieldset">
-								Search:&nbsp 
-								<input type="text" class="searchbox" name="search" id="key_search" /> 
-								<span class="loading">Loading ...</span>
-							</fieldset>
-						</form>
+					<form id="form_search" action="#">
+						<fieldset id="form_search_fieldset">
+							Search:&nbsp 
+							<input type="text" class="searchbox" name="search" id="key_search" /> 
+							<span class="loading">Loading ...</span>
+						</fieldset>
+					</form>
     				</th>
-    				<th align="right" width="10%"><a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+    				<th align="right" width="10%">
+					<a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp
+				</th>
     			</tr>
     		</thead>
     	</table>
-		<!-- End Menu-->
-	</div>
+	<!-- End Menu-->
+    </div>
 </div>
 <!--START INCLUDED CONTENT-->
 {% if page != '' %}
@@ -155,11 +316,11 @@ view blog
 <!-- footer-->
 <div class="clear"></div>
 
-<center><a href="/likitomi/home/?eID={{eID}}" onmouseover="document.PCbutton.src='images/PC_alpha.png'" onmouseout="document.PCbutton.src='images/PC_normal.png'"><img src="images/PC_normal.png" alt="Planning Control" name="PCbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=CR" onmouseover="document.CRbutton.src='images/CR_alpha.png'" onmouseout="document.CRbutton.src='images/CR_normal.png'"><img src="images/CR_normal.png" alt="Corrugator" name="CRbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV" onmouseover="document.CVbutton.src='images/CV_alpha.png'" onmouseout="document.CVbutton.src='images/CV_normal.png'"><img src="images/CV_normal.png" alt="Convertor" name="CVbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT" onmouseover="document.PTbutton.src='images/PT_alpha.png'" onmouseout="document.PTbutton.src='images/PT_normal.png'"><img src="images/PT_normal.png" alt="Pad and Partitions" name="PTbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=WH" onmouseover="document.WHbutton.src='images/WH_alpha.png'" onmouseout="document.WHbutton.src='images/WH_normal.png'"><img src="images/WH_normal.png" alt="Warehouse" name="WHbutton" /></a></center>
+<center><a href="/likitomi/home/?eID={{eID}}" onmouseover="document.PCbutton.src='images/PC_black.png'" onmouseout="document.PCbutton.src='images/PC_normal.png'"><img src="images/PC_normal.png" alt="Planning Control" name="PCbutton" /></a>
+<a href="/likitomi/pcdetail/?eID={{eID}}&page=CR" onmouseover="document.CRbutton.src='images/CR_black.png'" onmouseout="document.CRbutton.src='images/CR_normal.png'"><img src="images/CR_normal.png" alt="Corrugator" name="CRbutton" /></a>
+<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV" onmouseover="document.CVbutton.src='images/CV_black.png'" onmouseout="document.CVbutton.src='images/CV_normal.png'"><img src="images/CV_normal.png" alt="Convertor" name="CVbutton" /></a>
+<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT" onmouseover="document.PTbutton.src='images/PT_black.png'" onmouseout="document.PTbutton.src='images/PT_normal.png'"><img src="images/PT_normal.png" alt="Pad and Partitions" name="PTbutton" /></a>
+<a href="/likitomi/pcdetail/?eID={{eID}}&page=WH" onmouseover="document.WHbutton.src='images/WH_black.png'" onmouseout="document.WHbutton.src='images/WH_normal.png'"><img src="images/WH_normal.png" alt="Warehouse" name="WHbutton" /></a></center>
 </div> 
 	<div id="footer">
     <hr/>
