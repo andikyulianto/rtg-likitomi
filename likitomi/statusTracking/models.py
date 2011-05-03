@@ -8,7 +8,6 @@
 # into your database.
 
 from django.db import models
-from statusTracking.config import getCVSpeed
 
 
 class Addresses(models.Model):
@@ -122,6 +121,50 @@ class FaUserTemp(models.Model):
     class Meta:
         db_table = u'fa_user_temp'
 
+class FakeStatusTracking(models.Model):
+    plan_id = models.IntegerField(primary_key=True)
+    product_id = models.CharField(max_length=30, blank=True)
+    plan_amount = models.IntegerField(null=True, blank=True)
+    plan_cr_start = models.DateTimeField(null=True, blank=True)
+    plan_cr_end = models.DateTimeField(null=True, blank=True)
+    plan_cv_start = models.DateTimeField(null=True, blank=True)
+    plan_cv_end = models.DateTimeField(null=True, blank=True)
+    plan_pt_start = models.DateTimeField(null=True, blank=True)
+    plan_pt_end = models.DateTimeField(null=True, blank=True)
+    plan_wh_start = models.DateTimeField(null=True, blank=True)
+    plan_wh_end = models.DateTimeField(null=True, blank=True)
+    plan_due = models.DateTimeField(null=True, blank = True)
+    current_status = models.CharField(max_length=33, blank=True)
+    actual_amount_cr = models.IntegerField(null=True, blank=True)
+    actual_cr_start = models.DateTimeField(null=True, blank=True)
+    actual_cr_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_cv = models.IntegerField(null=True, blank=True)
+    actual_cv_start = models.DateTimeField(null=True, blank=True)
+    actual_cv_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_pt = models.IntegerField(null=True, blank=True)
+    actual_pt_start = models.DateTimeField(null=True, blank=True)
+    actual_pt_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_wh = models.IntegerField(null=True, blank=True)
+    actual_wh_start = models.DateTimeField(null=True, blank=True)
+    actual_wh_end = models.DateTimeField(null=True, blank=True)
+    actual_due = models.DateTimeField(null=True, blank=True)
+    process1 = models.CharField(max_length=5, blank=True)
+    process2 = models.CharField(max_length=5, blank=True)
+    process3 = models.CharField(max_length=5, blank=True)
+    process4 = models.CharField(max_length=5, blank=True)
+    cv_machine = models.CharField(max_length=15, blank=True)
+    days_left = models.IntegerField(null=True, blank=True)
+
+    class Admin: pass
+
+    class Meta:
+        db_table = u'fake_status_tracking'
+    def calculate_date(self):
+        import datetime
+        return 8
+        #return int((datetime.datetime.now() - self.plan_due))
+    #days_left = property(calculate_date)
+
 
 class InchMm(models.Model):
     inch = models.IntegerField(primary_key=True)
@@ -227,10 +270,10 @@ class Planning(models.Model):
         db_table = u'planning'
 
 class ProductCatalog(models.Model):
-    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
+    product_id = models.IntegerField(primary_key=True)
+    product_code = models.CharField(unique=True, max_length=60, blank=True)
     product_name = models.CharField(max_length=765, blank=True)
-    partner =  models.ForeignKey(Partners,null=False)
-    #partner_id = models.CharField(max_length=765, blank=True)
+    partner_id = models.CharField(max_length=765, blank=True)
     cname = models.CharField(max_length=765, blank=True)
     product_type = models.CharField(max_length=60, blank=True)
     customer_part_no = models.CharField(max_length=60, blank=True)
@@ -270,8 +313,9 @@ class ProductCatalog(models.Model):
         db_table = u'product_catalog'
 
 class Products(models.Model):
-    parent_code = models.ForeignKey(ProductCatalog,null=False)
-    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
+    auto_pid = models.IntegerField(primary_key=True)
+    parent_code = models.CharField(max_length=60, blank=True)
+    product_code = models.CharField(max_length=60, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     df = models.CharField(max_length=30, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=30, db_column='BM', blank=True) # Field name made lowercase.
@@ -373,102 +417,3 @@ class TotalPlanning(models.Model):
     next_process = models.CharField(max_length=33, blank=True)
     class Meta:
         db_table = u'total_planning'
-
-class FakeStatusTracking(models.Model):
-    plan_id = models.IntegerField(primary_key=True)
-    product = models.ForeignKey(Products,null=False)
-    #product_id = models.CharField(max_length=33, blank=True)
-    plan_amount = models.IntegerField(null=True, blank=True)
-    plan_cr_start = models.DateTimeField(null=True, blank=True)
-    plan_cr_end = models.DateTimeField(null=True, blank=True)
-    plan_cv_start = models.DateTimeField(null=True, blank=True)
-    plan_cv_end = models.DateTimeField(null=True, blank=True)
-    plan_pt_start = models.DateTimeField(null=True, blank=True)
-    plan_pt_end = models.DateTimeField(null=True, blank=True)
-    plan_wh_start = models.DateTimeField(null=True, blank=True)
-    plan_wh_end = models.DateTimeField(null=True, blank=True)
-    plan_due = models.DateTimeField(null=True, blank = True)
-    current_status = models.CharField(max_length=33, blank=True)
-    actual_amount_cr = models.IntegerField(null=True, blank=True)
-    actual_cr_start = models.DateTimeField(null=True, blank=True)
-    actual_cr_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_cv = models.IntegerField(null=True, blank=True)
-    actual_cv_start = models.DateTimeField(null=True, blank=True)
-    actual_cv_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_pt = models.IntegerField(null=True, blank=True)
-    actual_pt_start = models.DateTimeField(null=True, blank=True)
-    actual_pt_end = models.DateTimeField(null=True, blank=True)
-    actual_amount_wh = models.IntegerField(null=True, blank=True)
-    actual_wh_start = models.DateTimeField(null=True, blank=True)
-    actual_wh_end = models.DateTimeField(null=True, blank=True)
-    actual_due = models.DateTimeField(null=True, blank=True)
-    process1 = models.CharField(max_length=5, blank=True)
-    process2 = models.CharField(max_length=5, blank=True)
-    process3 = models.CharField(max_length=5, blank=True)
-    process4 = models.CharField(max_length=5, blank=True)
-    cv_machine = models.CharField(max_length=15, blank=True)
-    days_left = models.IntegerField(null=True, blank=True)
-    def speed(self):
-        return getCVSpeed(self.cv_machine)
-#    days_left = models.IntegerField(null=True, blank=True)
-    def days_left(self):
-        import datetime
-#        self.days_left = 8
-        self.days_left = int((self.plan_due - datetime.datetime.now()).days)
-        #super(FakeStatusTracking,self).save()
-
-        return self.days_left
-    def cr_time_used(self):
-        return float((self.plan_cr_end - self.plan_cr_start).seconds)/60
-    def cv_time_used(self):
-        return float((self.plan_cv_end - self.plan_cv_start).seconds)/60
-    def state(self):
-	if self.actual_amount_wh == 0 :
-		status = 'notProcess'
-	elif self.actual_amount_wh < self.plan_amount :
-		status = 'missing'
-	elif self.actual_amount_wh >= self.plan_amount :
-		status = 'normal'
-	else :
-		status = ''
-	return status
-    def stateCR(self):
-	if self.actual_amount_cr == 0 :
-		status = 'notProcess'
-	elif self.actual_amount_cr < self.plan_amount :
-		status = 'missing'
-	elif self.actual_amount_cr >= self.plan_amount :
-		status = 'normal'
-	else :
-		status = ''
-	return status
-    def stateCV(self):
-	if self.actual_amount_cv == 0 :
-		status = 'notProcess'
-	elif self.actual_amount_cv < self.plan_amount :
-		status = 'missing'
-	elif self.actual_amount_cv >= self.plan_amount :
-		status = 'normal'
-	else :
-		status = ''
-	return status
-    def statePT(self):
-	if self.actual_amount_pt == 0 :
-		status = 'notProcess'
-	elif self.actual_amount_pt < self.plan_amount :
-		status = 'missing'
-	elif self.actual_amount_pt >= self.plan_amount :
-		status = 'normal'
-	else :
-		status = ''
-	return status
-    class Meta:
-        db_table = u'fake_status_tracking'
-#    def set_days_left(self):
-#        import datetime
- #       self.days_left = int((datetime.datetime.now() - self.plan_due))
-        #super(FakeStatusTracking,self).save()
-        #return int((datetime.datetime.now() - self.plan_due))
-
-
-

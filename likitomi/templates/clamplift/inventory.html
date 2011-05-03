@@ -60,6 +60,7 @@ $(document).ready(function(){
 		var pcode = $("#pcode").val();
 		var width = $("#width").val();
 		var loss = $("#loss").val();
+		var lossarr = $("#lossarr").val();
 		var spcode = $("#spcode").val();
 		var swidth = $("#swidth").val();
 		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
@@ -79,10 +80,10 @@ $(document).ready(function(){
 		if (enal == atlane && position == atposition && clamping == "no" && changed == "no" && lane != undefined){
 			var clamping = "yes";
 			var changed = "no";
-			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 		else {
-			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 
 		setTimeout(loadMap, 2000);
@@ -92,6 +93,7 @@ $(document).ready(function(){
 		var pcode = $("#pcode").val();
 		var width = $("#width").val();
 		var loss = $("#loss").val();
+		var lossarr = $("#lossarr").val();
 		var spcode = $("#spcode").val();
 		var swidth = $("#swidth").val();
 		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
@@ -103,13 +105,14 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
+		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
 	});
 
 	$("#locdown").click(function(){
 		var pcode = $("#pcode").val();
 		var width = $("#width").val();
 		var loss = $("#loss").val();
+		var lossarr = $("#lossarr").val();
 		var spcode = $("#spcode").val();
 		var swidth = $("#swidth").val();
 		var cpcode = $('#minclamp', top.document).contents().find('#cpcode').val();
@@ -121,7 +124,7 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
+		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
 	});
 
 });
@@ -166,6 +169,7 @@ $(document).ready(function(){
 <input id="pcode" type="hidden" value="{{ pcode }}" />
 <input id="width" type="hidden" value="{{ width }}" />
 <input id="loss" type="hidden" value="{{ loss }}" />
+<input id="lossarr" type="hidden" value="{{ lossarr }}" />
 <input id="spcode" type="hidden" value="{{ spcode }}" />
 <input id="swidth" type="hidden" value="{{ swidth }}" />
 <input id="cpcode" type="hidden" value="{{ cpcode }}" />
@@ -194,14 +198,15 @@ $(document).ready(function(){
 <!--PLAN: {{mlist}}<br/>SEARCH: {{mlist2}}<br/>CLAMPLIFT: {{mlist3}}<br/>-->
 <!--@{{atlane}}-{{atposition}} *** {{lane}}-{{position}}<br/>Clamping: {{clamping}}; Changed: {{changed}}<br/>-->
 <!--{{wlist}}-{{wlistpx}}<br/>{{wlist2}}--{{wlistpx2}}<br/>{{wlist3}}--{{wlistpx3}}-->
+
 <div style="float:right;"><table style="height:1px; width:390px;">
 	<tr>
 		<td style="text-align:right;">Weight (kgs.)</td><td class="nomarpad" style="width:200px; background-image:url('images/clamplift/legend.png');"></td>
 	</tr>
 	<tr>
-		<td></td><td class="nomarpad" style="{% if not loss %}visibility:hidden;{% endif %} width:200px; text-align:left; position:absolute;"><img src="images/clamplift/verticaline.png" style="position:absolute; top:0px; left:{{losspx}}px; z-index:2;" title="{{loss}}"/></td>
+		<td></td><td class="nomarpad" style="{% if not loss %}visibility:hidden;{% endif %} width:200px; text-align:left; position:absolute;">{% for pxl in losslist %}{% if pxl == losspx %}<img src="images/clamplift/solid_verticaline.png" style="position:absolute; top:0px; left:{{pxl}}px; z-index:2;" title="{{loss}}"/>{% else %}<img src="images/clamplift/dotted_verticaline.png" style="position:absolute; top:0px; left:{{pxl}}px; z-index:2;" title="{{loss}}"/>{% endif %}{% endfor %}</td>
 	</tr>
-	<tr style="{% if not pcode %}visibility:hidden;{% endif %}">
+	<tr style="{% if not pcode or pcode == 'undefined' %}visibility:hidden;{% endif %}">
 		<td style="text-align:left; background-image:url('images/clamplift/greengradient.png');">Product: {{pcode}}, {{width}}</td>
 		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
 			{% for w in wlistpx %}<img src="images/clamplift/
@@ -212,7 +217,7 @@ $(document).ready(function(){
 			" style="position:absolute; left:{{w}}px;"/>{% endfor %}
 		</td>
 	</tr>
-	<tr style="{% if not spcode %}visibility:hidden;{% endif %}">
+	<tr style="{% if not spcode or spcode == 'undefined' %}visibility:hidden;{% endif %}">
 		<td style="text-align:left; background-image:url('images/clamplift/bluegradient.png');">Search: {{spcode}}, {{swidth}}</td>
 		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
 			{% for w in wlistpx2 %}<img src="images/clamplift/

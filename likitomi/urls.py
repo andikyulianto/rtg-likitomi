@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from statusTracking.general import login
-from statusTracking.home import section,display,normalPlanRefresher,lastUpdate,monthlyPlan
+from statusTracking.home import section,display
 from statusTracking.detail import pcdetail
 from statusTracking.line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from statusTracking.update import startUpdate,endUpdate
@@ -30,19 +30,13 @@ urlpatterns = patterns('',
 	(r'^likitomi/$', login),
 	(r'^likitomi/home/$', section),	
 	(r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/normalPlanRefresher/$', normalPlanRefresher),	
-	(r'^likitomi/normalPlanRefresher/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/lastUpdate/$', lastUpdate),	
-	(r'^likitomi/lastUpdate/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/monthlyPlan/$', monthlyPlan),	
-	(r'^likitomi/monthlyPlan/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/pcdetail/$', pcdetail),
 	(r'^likitomi/pcdetail/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
 #	(r'^likitomi/query/date/notprocess/$', queryDateNotProcess),
-#	(r'^likitomi/query/date/notprocess/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/query/date/notprocess/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 #	(r'^likitomi/query/date/missing/$', queryDateMissing),
-#	(r'^likitomi/query/date/missing/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/query/date/missing/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 #	(r'^likitomi/plan/plan/$', totalPlan),
 	(r'^likitomi/plan/plan/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 #	(r'^likitomi/plan/totalPlan/$', totalPlanSelectedDate),

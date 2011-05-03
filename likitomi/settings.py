@@ -48,7 +48,7 @@ USE_L10N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = (
 	'/home/fon/Django-123/projects/rtg-likitomi/likitomi/static/'
-#	'/home/patipol/rtg-likitomi/likitomi/static/'
+	'/home/patipol/RTG-Likitomi/likitomi/static/'
 )
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -84,8 +84,8 @@ ROOT_URLCONF = 'likitomi.urls'
 TEMPLATE_DIRS = (
 	"/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/statusTracking/",
 	"/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/clamplift/",
-	"/home/patipol/rtg-likitomi/likitomi/templates/statusTracking/",
-	"/home/patipol/rtg-likitomi/likitomi/templates/clamplift/"
+	"/home/patipol/RTG-Likitomi/likitomi/templates/statusTracking/",
+	"/home/patipol/RTG-Likitomi/likitomi/templates/clamplift/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

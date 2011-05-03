@@ -282,7 +282,10 @@ legend {
     font-weight: bold;
 }
 
-
+label {
+    float: left;
+    width: 100px;
+}
 
 #register label, #changePassword label {
     width: 150px;
@@ -367,13 +370,6 @@ table .even{
 table .odd{
 	background:white;
 }
-table.tablesorter tbody tr.even td{
-	background:#f8f8f8;
-}
-table.tablesorter tbody tr.odd td{
-	background:white;
-}
-
 thead th { 
         border-bottom: 0.25em black; 
 }
