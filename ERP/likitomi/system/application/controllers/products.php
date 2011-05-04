@@ -206,17 +206,17 @@ class Products extends Controller {
 		$product_data =  array();
 		$pid =$productsall_0[0];
 		$product_data = $this->productData($productsall_0);
-		$product_data['parent_code'] = $products['product_code'];
+		$product_data['parent_code_id'] = $products['product_code'];
 		$this->Products_model->updateProductData($product_data,$pid);
 		
 		$pid =$productsall_1[0];
 		$product_data = $this->productData($productsall_1);
-		$product_data['parent_code'] = $products['product_code'];
+		$product_data['parent_code_id'] = $products['product_code'];
 		$this->Products_model->updateProductData($product_data,$pid);
 		
 		$pid =$productsall_2[0];
 		$product_data = $this->productData($productsall_2);
-		$product_data['parent_code'] = $products['product_code'];
+		$product_data['parent_code_id'] = $products['product_code'];
 		$this->Products_model->updateProductData($product_data,$pid);
 		//never echo here 
 		echo $product_id;
@@ -272,17 +272,17 @@ class Products extends Controller {
 			$product_data =  array();
 			$pid =$productsall_0[0];
 			$product_data = $this->productData($productsall_0);
-			$product_data['parent_code'] = $products['product_code'];
+			$product_data['parent_code_id'] = $products['product_code'];
 			$this->Products_model->updateProductData($product_data,$pid);
 			
 			$pid =$productsall_1[0];
 			$product_data = $this->productData($productsall_1);
-			$product_data['parent_code'] = $products['product_code'];
+			$product_data['parent_code_id'] = $products['product_code'];
 			$this->Products_model->updateProductData($product_data,$pid);
 			
 			$pid =$productsall_2[0];
 			$product_data = $this->productData($productsall_2);
-			$product_data['parent_code'] = $products['product_code'];
+			$product_data['parent_code_id'] = $products['product_code'];
 			$this->Products_model->updateProductData($product_data,$pid);
 
 		}
