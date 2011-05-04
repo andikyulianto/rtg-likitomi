@@ -279,8 +279,8 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			</p></td>
 			<td align="right"><p class="tbsgunderline">
 				{% if CV_items.actual_amount_cv != NULL%}
-				 {% if CV_items.actual_amount_cv < CV_items.plan_amount %}
-					<font color="red">{{CV_items.actual_amount_cv}}</font>
+				 {% if CV_items.actual_amount_cv < plan_amount %}
+					<font color="red">{{actual_amount_cv}}</font>
 				{% else %}
 					{{CV_items.actual_amount_cv}}
 				{% endif %}

@@ -55,8 +55,12 @@ height:50%;
 }
     </style>
 <script>
+
 	$(function() {
-		$( "#accordion" ).accordion();
+		$( "#filterCriteria" ).buttonset();
+	});
+	$(function() {
+		$( "#filterCriteriaMonthly" ).buttonset();
 	});
 
 
@@ -153,11 +157,14 @@ $(document).ready(function() {
 	});
 
 	$(function() {
-		$( "#datepickerFrom" ).datepicker();
+		$( "#datepickerToNotProcess" ).datepicker();
 	});
+	$(function() {
+		$( "#datepickerFromMissing" ).datepicker();
+	});$('input#search').quicksearch('table tbody tr');
 
 	$(function() {
-		$( "#datepickerTo" ).datepicker();
+		$( "#datepickerToMissing" ).datepicker();
 	});
 	$(function() {
 		$( "#datepickerToTotal" ).datepicker();
