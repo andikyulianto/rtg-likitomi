@@ -42,11 +42,12 @@ def startUpdate(request):
 		path = "/likitomi/home/?eID="+eID+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="WH"):
+		print current_time
 		obj.actual_wh_start = current_time
 		obj.actual_amount_wh = amount
 		obj.save()
 		path = "/likitomi/home/?eID="+eID+"&Enter=Enter"
-		return HttpResponseRedirect(path)
+#		return HttpResponseRedirect(path)
 	else:
 		return render_to_response('update.html', locals())
 	
