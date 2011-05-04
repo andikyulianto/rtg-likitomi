@@ -105,7 +105,7 @@ class Products_model extends Model
 	function getProductLine($product_code){
 		$this->db->where('isdeleted',0);
 		$this->db->where('lower(product_code)',strtolower($product_code));
-		$this->db->where('lower(parent_code)',strtolower($product_code));
+		$this->db->where('lower(parent_code_id)',strtolower($product_code));
 		$query = $this->db->get($this->tblProducts);
 		return $query->row();
 	}
@@ -117,10 +117,10 @@ class Products_model extends Model
 		return $query;
 	}
 	
-	function getProductDetails($parent_code)
+	function getProductDetails($parent_code_id)
 	{
 		$this->db->where('isdeleted',0);
-		$this->db->where('parent_code',$parent_code);
+		$this->db->where('parent_code_id',$parent_code_id);
 		$query = $this->db->get($this->tblProducts);
 		return $query->result();
 	}
@@ -139,7 +139,7 @@ class Products_model extends Model
 		$query = $this->db->get($this->tableName);
 		$row = $query->row();
 		$this->db->where('isdeleted',0);
-		$this->db->where('parent_code',$row->product_code);
+		$this->db->where('parent_code_id',$row->product_code);
 		$query = $this->db->get($this->tblProducts);
 		return $query->result();
 	}

@@ -89,7 +89,7 @@ class Planning_model extends Model
 	{
 		$sql = 	"SELECT * FROM ( ".
 					"SELECT * FROM `product_catalog` WHERE product_id = ".$pid.
-					") AS pr LEFT JOIN Partners AS pa ON pa.partner_id = pr.partner_id";
+					") AS pr LEFT JOIN partners AS pa ON pa.partner_id = pr.partner_id";
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
@@ -98,7 +98,7 @@ class Planning_model extends Model
 		
 		$sql = 	 "SELECT p.* FROM ".$this->tblProducts." AS p, ("
 				."SELECT product_code FROM ".$this->tblCatalog." WHERE `product_id` = ".$pid
-				.") AS pc WHERE pc.product_code = p.parent_code "
+				.") AS pc WHERE pc.product_code = p.parent_code_id "
 				." AND p.product_code ='".$product_code."'";
 		
 		$query = $this->db->query($sql);
@@ -116,7 +116,7 @@ class Planning_model extends Model
 		
 		$sql = 	 "SELECT pc.* FROM ".$this->tblProducts." AS p, ("
 				."SELECT product_code FROM ".$this->tblCatalog." WHERE `product_id` = ".$pid
-				.") AS pc WHERE pc.product_code = p.parent_code "
+				.") AS pc WHERE pc.product_code = p.parent_code_id "
 				." AND p.product_code ='".$product_code."'";
 		
 		$query = $this->db->query($sql);
@@ -147,19 +147,20 @@ class Planning_model extends Model
 
 	}
 
-        function savetostatustracking($rowData,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv)
+        function savetostatustracking($rowData,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
         {
 			//echo substr($rowData->corrugator_date,0,10)." ".substr($rowData->corrugator_date,11,5).":00";
 			//echo substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00";
 			//get amount
 
 
-			$sql = "Select product_id,qty From delivery Where delivery_id =".$rowData->delivery_id;
+			$sql = "Select product_id,qty,delivery_date,delivery_time From delivery Where delivery_id =".$rowData->delivery_id;
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
 			{
 				$amount = $row->qty;
 				$product_id = $row->product_id;
+				$plan_due = $row->delivery_date." ".$row->delivery_time;
 			}
 			$sql = "select next_process from product_catalog where product_id=".$product_id;
 			$query = $this->db->query($sql);
@@ -178,6 +179,7 @@ class Planning_model extends Model
 						"plan_pt_start" => NULL,
 						"plan_pt_end" => NULL,
 						"plan_wh_start" => NULL,
+						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
 			}
@@ -189,9 +191,10 @@ class Planning_model extends Model
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
 						"plan_cv_start" => substr($rowData->converter_date,0,10)." ".$time_start_cv.":00",
 						"plan_cv_end" => substr($rowData->converter_date,0,10)." ".$time_stop_cv.":00",
-						"plan_pt_start" => '',
-						"plan_pt_end" => '',
-						"plan_wh_start" => '',
+						"plan_pt_start" => substr($rowData->converter_date,0,10)." ".$time_start_pt.":00",
+						"plan_pt_end" => substr($rowData->converter_date,0,10)." ".$time_stop_pt.":00",
+						"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
+						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
 			}
@@ -288,7 +291,7 @@ class Planning_model extends Model
 				."AND d.sales_order = so.sales_order_id "
 				."AND pc.product_id = d.product_id "
 				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code "
+				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
 				."AND pd.isdeleted =0 "
 				."ORDER BY tp.autoid";
@@ -306,7 +309,7 @@ class Planning_model extends Model
 				."AND d.sales_order = so.sales_order_id "
 				."AND pc.product_id = d.product_id "
 				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code "
+				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
 				."AND pd.isdeleted =0 "
 				."ORDER BY pc.next_process";
@@ -324,7 +327,7 @@ class Planning_model extends Model
 				."AND tp.delivery_id = d.delivery_id "
 				."AND pc.product_id = d.product_id "
 				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code "
+				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
 				."AND pd.isdeleted =0 "
 				."ORDER BY tp.autoid";
@@ -344,7 +347,7 @@ class Planning_model extends Model
 				."AND tp.delivery_id = d.delivery_id "
 				."AND pc.product_id = d.product_id "
 				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code "
+				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
 				."AND pd.isdeleted =0 "
 				."ORDER BY tp.autoid";
@@ -364,7 +367,7 @@ class Planning_model extends Model
 				."AND d.sales_order = so.sales_order_id "
 				."AND pc.product_id = d.product_id "
 				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code "
+				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
 				."AND pd.isdeleted =0 "
 				."ORDER BY tp.autoid";
@@ -383,7 +386,7 @@ class Planning_model extends Model
 				."AND d.sales_order = so.sales_order_id "
 				."AND pc.product_id = d.product_id "
 				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code "
+				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
 				."AND pd.isdeleted =0 "
 				."ORDER BY tp.autoid";
@@ -401,7 +404,7 @@ class Planning_model extends Model
 				 ."AND d.sales_order = so.sales_order_id "  
 				 ."AND pc.product_id = d.product_id  "
 				 ."AND pt.partner_id = pc.partner_id  "
-				 ."AND pc.product_code = pd.parent_code "  
+				 ."AND pc.product_code = pd.parent_code_id "  
 				 ."AND pd.product_code = d.product_code  "
 				 ."AND pd.isdeleted =0  "
 				 ."ORDER BY tp.autoid ";

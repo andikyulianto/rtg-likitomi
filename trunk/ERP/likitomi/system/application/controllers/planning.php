@@ -138,7 +138,7 @@ class Planning extends Controller {
 		}
 		
 		//load JSON lib
-		$this->load->library('JSON');	
+		$this->load->library('json');	
 		echo '{"delivery" :'.$this->json->encode($deliveryList).',"count":"'.$cnt.'"}';
 	}
 	function formatDate($day)
@@ -211,14 +211,17 @@ class Planning extends Controller {
 		else
 			$timeuseCV = 0;
 		$time_stop_cv = $time_start_cv+ round($timeuseCV+30) * 0.0006949;
+		$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
+		$time_stop_pt = $time_start_pt +round( 30) * 0.0006949;
+		$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
 			//print_r($rowData);
 			//print_r($key->row_array(0));
 			$this->Planning_model->savetotalplan($rowData,$choosendate);
 			//Save to fake_table for status tracking
-			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv));
+			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
 			$time_start_cr = $time_stop_cr;
 		}
-		echo "Data Saved as ".$choosendate." Plan.";
+		echo "Data Saved as 	".$choosendate." Plan.";
 	}
 	
 //	function savetotalplan() 
