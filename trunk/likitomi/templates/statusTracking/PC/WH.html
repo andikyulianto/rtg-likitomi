@@ -35,7 +35,7 @@
 	</span>	
 	{% for item in items %}
 	<tr id="{{ item.state}}">
-	<td rowspan=2>{% if wh == item.product.product_code %} > {% endif %}</th>
+	<td rowspan=2>{% if wh == item.plan_wh_start %} > {% endif %}</th>
 	<td>{{item.plan_wh_start|time:"H:i"}}</th>
 	<td>{{item.plan_amount}}</th>
 	<td rowspan=2>{{item.product.product_code}}</td>
@@ -104,7 +104,7 @@
 	</span>	
 	{% for item in itemsM %}
 	<tr id="{{ item.state}}">
-	<td rowspan=2>{% if wh == item.product.product_code %} > {% endif %}</th>
+	<td rowspan=2>{% if wh == item.plan_wh_start %} > {% endif %}</th>
 	<td>{{item.plan_wh_start|time:"H:i"}}</th>
 	<td>{{item.plan_amount}}</th>
 	<td rowspan=2>{{item.product.product_code}}</td>

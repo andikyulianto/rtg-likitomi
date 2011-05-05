@@ -41,7 +41,7 @@
 	</span>	
 	{% for item in items %}
 	<tr id="{{ item.stateCV}}">
-	<td rowspan=2>{% if cv == item.product.product_code %} > {% endif %}</th>
+	<td rowspan=2>{% if cvThreeCL == item.product.product_code or cvThreeCS == item.product.product_code or cvTwoCL == item.product.product_code %} > {% endif %}</th>
 	<td>{{item.plan_cv_start|time:"H:i"}}</th>
 	<td>{{item.plan_cv_end|time:"H:i" }}</th>
 	<td>{{item.plan_amount}}</th>
@@ -131,7 +131,7 @@
 	</span>	
 	{% for item in itemsM %}
 	<tr id="{{ item.stateCV}}">
-	<td rowspan=2>{% if cv == item.product.product_code %} > {% endif %}</th>
+	<td rowspan=2>{% if cvThreeCL == item.product.product_code or cvThreeCS == item.product.product_code or cvTwoCL == item.product.product_code %} > {% endif %}</th>
 	<td>{{item.plan_cv_start|time:"H:i"}}</th>
 	<td>{{item.plan_cv_end|time:"H:i" }}</th>
 	<td>{{item.plan_amount}}</th>

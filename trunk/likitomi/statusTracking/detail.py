@@ -50,7 +50,7 @@ def showCR(eid,section_title):
 	page = "CR"
 	eID = eid
 	#create items for CR
-	cr = str(currentProcess("CR"))[2:8]
+	cr = str(currentProcess("CR"))
 	item_plan = StatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	items = list(item_plan)
 	##monthlyPlan
@@ -73,9 +73,9 @@ def showCV(eid,section_title):
 	eID = eid
 	page = "CV"
 	#create items for CV
-	cvThreeCL = str(currentProcess("3CL"))[2:8]
-	cvTwoCL = str(currentProcess("2CL"))[2:8]
-	cvThreeCS = str(currentProcess("3CS"))[2:8]
+	cvThreeCL = str(currentProcess("3CL"))[3:9]
+	cvTwoCL = str(currentProcess("2CL"))[3:9]
+	cvThreeCS = str(currentProcess("3CS"))[3:9]
 	item_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	items = list(item_plan)
 	##monthlyPlan
