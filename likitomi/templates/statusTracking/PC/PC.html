@@ -311,11 +311,11 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tr><td width="50%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td> <td width="25%" align="left"><b>Sch.OUT </b></td><td><b>Sch.Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.OUT</th><th align="right">Act.Pcs</th></tr></span></thead>
+			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%">Sch.</th><td width="25%" align="left"><b>IN</b></td> <td width="25%" align="left"><b>OUT </b></td><td><b>Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
+			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></span></thead>
 			{% for PT_items in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"> {% if pt == PT_items.product.product_code %} > {% endif %} </td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
-<td> {{PT_items.plan_amount}} </td>
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"><p class="tbunderline"> {% if pt == PT_items.product.product_code %} > {% endif %} <br><font color=white>&nbsp;</font></p></td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
+<td> {{PT_items.plan_amount}} </p></td>
 			<td rowspan="2"><center><p class="tbunderline">{{PT_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
 			<td rowspan="2"><center><p class="tbunderline">{{PT_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
