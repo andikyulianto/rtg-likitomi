@@ -12,7 +12,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from statusTracking.utility import todayDate
 from django.http import HttpResponseRedirect
-from statusTracking.models import Employee, FakeStatusTracking, ProductCatalog, Products
+from statusTracking.models import Employee, StatusTracking, ProductCatalog, Products
 
 ################################################
 ## this page is will record to starting field ##
@@ -25,7 +25,7 @@ def startUpdate(request):
 	pID = request.GET['pID']
 	if(at=="WH"):
 		amount = request.GET['amount']
-	obj = FakeStatusTracking.objects.get(plan_id=pID)
+	obj = StatusTracking.objects.get(plan_id=pID)
 	if (at=="CR"):
 		obj.actual_cr_start = current_time
 		obj.save()
@@ -61,7 +61,7 @@ def endUpdate(request):
 	at = request.GET['at']
 	amount = request.GET['amount']
 	pID = request.GET['pID']
-	obj = FakeStatusTracking.objects.get(plan_id=pID)
+	obj = StatusTracking.objects.get(plan_id=pID)
 	if (at=="CR"):
 		obj.actual_cr_end = current_time
 		obj.actual_amount_cr = amount

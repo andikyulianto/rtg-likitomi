@@ -2,15 +2,15 @@
 <head><title></title>
 <style type="text/css">
 #displayProductDetail{
- position: absolute; top: 0px; left: 0px;
- font-size : 90%;
+ position: fixed; top: 0px; left: 0px;
+ font-size : 60%;
 }
 </style>
 </head>
 
 <body>
-<table id="displayProductDetail" >
-	<tr><th bgColor="#cccccc" align="right">S.O.</th><th bgColor="#cccccc" align="right">P.O.</th><th bgColor="#cccccc" align="right">Product Code</th><th bgColor="#cccccc" align="right">Product Name</th><th bgColor="#cccccc" align="right">Customer Name</th><th bgColor="#cccccc" align="right">Amount </th></tr>
+<table id="displayProductDetail" width="30%">
+	<tr><th bgColor="#cccccc" align="right">S.O.</th><th bgColor="#cccccc" align="right">P.O.</th><th bgColor="#cccccc" align="right">P.Code</th><th bgColor="#cccccc" align="right">Product</th><th bgColor="#cccccc" align="right">Customer</th><th bgColor="#cccccc" align="right">Amount </th></tr>
 	<tr><td bgColor="#F3F3F3">{{so}}</td><td bgColor="#F3F3F3">{{po}}</td><td bgColor="#F3F3F3">{{productID}}</td><td bgColor="#F3F3F3">{{product_name}}</td><td bgColor="#F3F3F3">{{partner}}</td><td bgColor="#F3F3F3">{{plan_amount}}</td></tr>
 </table>
 </body>

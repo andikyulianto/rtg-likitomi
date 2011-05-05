@@ -9,7 +9,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
-from statusTracking.models import Employee, FakeStatusTracking, ProductCatalog, Partners
+from statusTracking.models import Employee, StatusTracking, ProductCatalog, Partners
 from statusTracking.utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
 from statusTracking.config import getPCItemNum
 from datetime import date, datetime
@@ -66,13 +66,13 @@ def showPC(emID,title):
 	eID =emID
 	
 	#create items for PC
-	#extra = db_type(FakeStatusTracking.objects.all())
-	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_code","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
+	#extra = db_type(StatusTracking.objects.all())
+	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_code","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
 	#temp_contents = extra[0].days_left
-	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
-	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
-	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
-	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
+	item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
+	item_plan_cv = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
+	item_plan_pt = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
+	item_plan_wh = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
 	
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
@@ -137,9 +137,9 @@ def showPC(emID,title):
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
 	page ="totalPlanSelectedDate"
-	#temp_contents = FakeStatusTracking.objects.all()
+	#temp_contents = StatusTracking.objects.all()
 
-	items = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	items = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
 
 
 	return render_to_response('PC/view.html', locals())
@@ -182,15 +182,15 @@ def normalPlanRefresher(request):
 	
 
 	#create items for PC
-	#extra = db_type(FakeStatusTracking.objects.all())
-	item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
+	#extra = db_type(StatusTracking.objects.all())
+	item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	#temp_contents = extra[0].days_left
-	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_id","actual_cr_start","actual_cr_end").order_by('plan_cr_start')
-	#item_plan_cr = FakeStatusTracking.objects.filter(plan_cr_start__year=
-	item_plan_cv = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
-	item_plan_pt = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
+	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_id","actual_cr_start","actual_cr_end").order_by('plan_cr_start')
+	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year=
+	item_plan_cv = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
+	item_plan_pt = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	#bug here ordering (also in utility line67)
-	item_plan_wh = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
+	item_plan_wh = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
 	
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
@@ -264,11 +264,11 @@ def monthlyPlan(request):
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
 	page ="totalPlanSelectedDate"
-	#temp_contents = FakeStatusTracking.objects.all()
+	#temp_contents = StatusTracking.objects.all()
 
-	items = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
-	itemsNotProcess = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_wh_start__isnull=False).order_by('plan_due')
-	itemsMissing = FakeStatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_due')
+	items = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	itemsNotProcess = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_wh_start__isnull=False).order_by('plan_due')
+	itemsMissing = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_due')
 	return render_to_response('PC/monthlyPlan.html',locals())
 
 ###################################################
@@ -280,7 +280,7 @@ def showGM(eID,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	today= todayDate()
-	showGM_items = FakeStatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("product_id","plan_amount","actual_amount_cr","plan_cr_start","actual_amount_cv","plan_cv_start","actual_amount_pt","plan_pt_start","actual_amount_wh","plan_wh_start","plan_due")
+	showGM_items = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("product_id","plan_amount","actual_amount_cr","plan_cr_start","actual_amount_cv","plan_cv_start","actual_amount_pt","plan_pt_start","actual_amount_wh","plan_wh_start","plan_due")
 	content_header = "Please select product item in order to view realtime progress"
 	return render_to_response('GM/GM.html',locals())
 
@@ -299,7 +299,7 @@ def workCR(eID,title):
 	else:
 		cr = str(currentProcess("CR"))
 	#temp_contents = cr
-	item_plan = FakeStatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
+	item_plan = StatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	items = list(item_plan)
 	x = ''
 	return render_to_response('CR/listCR.html', locals())
@@ -340,7 +340,7 @@ def workCV(eID,title):
 	cvTwoCL = currentTimeProcess("2CL")
 	cvThreeCW = currentTimeProcess("3CW")
 	cvTwoCS = currentTimeProcess("2CS")
-	item_plan = FakeStatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
+	item_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	items = list(item_plan)
 	return render_to_response('CV/listCV.html', locals())
 
@@ -354,7 +354,7 @@ def workPT(eID,title):
 	#create items for PT
 	today = todayDate()
 	pt = str(currentTimeProcess("PT"))
-	item_plan = FakeStatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
+	item_plan = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	items = list(item_plan)
 	return render_to_response('PT/listPT.html', locals())
 
@@ -369,7 +369,7 @@ def workWH(eID,title):
 	today = todayDate()
 	#create items for WH
 	wh = currentTimeProcess("WH")
-	item_plan = FakeStatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
+	item_plan = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
 	items = list(item_plan)
 	return render_to_response('WH/listWH.html',locals())
 	
@@ -379,9 +379,9 @@ def workWH(eID,title):
 ##############################
 def display(request):
 	productID= request.GET['product']
-	plan_amount = FakeStatusTracking.objects.filter(product=productID).values_list("plan_amount")[0][0]
+	plan_amount = StatusTracking.objects.filter(product=productID).values_list("plan_amount")[0][0]
 	so = ''
-	po = FakeStatusTracking.objects.filter(product=productID).values_list("plan_id")[0][0]
+	po = StatusTracking.objects.filter(product=productID).values_list("plan_id")[0][0]
 	#product_name = "product_name"
 	product_name = ProductCatalog.objects.filter(product_code = productID).values_list("product_name")[0][0]
 	partner_code = ProductCatalog.objects.filter(product_code = productID).values_list("partner_id")[0][0]

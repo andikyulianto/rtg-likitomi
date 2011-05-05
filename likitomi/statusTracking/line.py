@@ -11,7 +11,7 @@ from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate
 from statusTracking.config import getCVSpeed
-from statusTracking.models import Employee, FakeStatusTracking, ProductCatalog, Products
+from statusTracking.models import Employee, StatusTracking, ProductCatalog, Products
 
 ###########################################
 ##                 for CR                ##
@@ -28,7 +28,7 @@ def startCR(request):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	#plan = Employee.objects.get(eid=eID)
-	plan = FakeStatusTracking.objects.get(plan_id = planID )
+	plan = StatusTracking.objects.get(plan_id = planID )
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
@@ -72,7 +72,7 @@ def endCR(request):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 ###
-	plan = FakeStatusTracking.objects.get(plan_id = planID )
+	plan = StatusTracking.objects.get(plan_id = planID )
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
@@ -119,7 +119,7 @@ def startCV(request):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	plan = FakeStatusTracking.objects.get(plan_id = planID)
+	plan = StatusTracking.objects.get(plan_id = planID)
 
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
@@ -149,7 +149,7 @@ def endCV(request):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	plan = FakeStatusTracking.objects.get(plan_id = planID)
+	plan = StatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	task = "end"
 	at = "CV"
@@ -181,7 +181,7 @@ def startPT(request):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	plan = FakeStatusTracking.objects.get(plan_id = planID)
+	plan = StatusTracking.objects.get(plan_id = planID)
 
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
@@ -211,7 +211,7 @@ def endPT(request):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	plan = FakeStatusTracking.objects.get(plan_id = planID)
+	plan = StatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	task = "end"
 	at = "PT"
@@ -241,12 +241,12 @@ def startWH(request):
 	content_header = "In"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
-	plan = FakeStatusTracking.objects.get(plan_id = planID)
+	plan = StatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	plan = FakeStatusTracking.objects.get(plan_id = planID)
+	plan = StatusTracking.objects.get(plan_id = planID)
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
@@ -272,7 +272,7 @@ def endWH(request):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	plan = FakeStatusTracking.objects.get(plan_id = planID)
+	plan = StatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	task = "end"
 	at = "WH"

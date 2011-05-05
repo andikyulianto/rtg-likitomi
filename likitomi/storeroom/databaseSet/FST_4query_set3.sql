@@ -7,7 +7,7 @@
 -- Server version: 5.1.49
 -- PHP Version: 5.3.3-1ubuntu9.3
 
-TRUNCATE TABLE `fake_status_tracking`;
+TRUNCATE TABLE `status_tracking`;
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
@@ -23,10 +23,10 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `fake_status_tracking`
+-- Table structure for table `status_tracking`
 --
 
-CREATE TABLE IF NOT EXISTS `fake_status_tracking` (
+CREATE TABLE IF NOT EXISTS `status_tracking` (
   `plan_id` int(11) NOT NULL,
   `product_id` varchar(30) COLLATE tis620_bin NOT NULL,
   `plan_amount` int(11) DEFAULT NULL,
@@ -62,10 +62,10 @@ CREATE TABLE IF NOT EXISTS `fake_status_tracking` (
 ) ENGINE=MyISAM DEFAULT CHARSET=tis620 COLLATE=tis620_bin;
 
 --
--- Dumping data for table `fake_status_tracking`
+-- Dumping data for table `status_tracking`
 --
 
-CREATE TABLE IF NOT EXISTS `fake_status_tracking` (
+CREATE TABLE IF NOT EXISTS `status_tracking` (
   `plan_id` int(11) NOT NULL,
   `product_id` varchar(30) COLLATE tis620_bin NOT NULL,
   `plan_amount` int(11) DEFAULT NULL,
@@ -101,19 +101,19 @@ CREATE TABLE IF NOT EXISTS `fake_status_tracking` (
 ) ENGINE=MyISAM DEFAULT CHARSET=tis620 COLLATE=tis620_bin;
 
 --
--- Dumping data for table `fake_status_tracking`
+-- Dumping data for table `status_tracking`
 --
 
-INSERT INTO `fake_status_tracking` (`plan_id`, `product_id`, `plan_amount`, `plan_cr_start`, `plan_cr_end`, `plan_cv_start`, `plan_cv_end`, `plan_pt_start`, `plan_pt_end`, `plan_wh_start`, `plan_wh_end`, `plan_due`, `current_status`, `actual_amount_cr`, `actual_cr_start`, `actual_cr_end`, `actual_amount_cv`, `actual_cv_start`, `actual_cv_end`, `actual_amount_pt`, `actual_pt_start`, `actual_pt_end`, `actual_amount_wh`, `actual_wh_start`, `actual_wh_end`, `actual_due`, `process1`, `process2`, `process3`, `process4`, `cv_machine`) VALUES
-(3, 'UTH130', 300, '2011-05-04 09:37:00', '2011-05-04 09:40:00', NULL, NULL, NULL, NULL, '2011-05-04 10:00:00', NULL, '2011-05-04 21:00:00', 'before_cr', 200, '2011-05-04 15:18:00', '2011-05-04 00:00:00', 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'WH', NULL, NULL, NULL),
-(9, 'ADL090', 400, '2011-05-03 11:00:00', '2011-05-03 11:40:00', '2011-05-04 11:00:00', '2011-05-04 12:30:00', NULL, NULL, '2011-05-04 13:00:00', NULL, '2011-05-05 21:00:00', 'before_cr', 0, NULL, NULL, 400, '2010-03-15 23:02:14', '2010-03-15 23:01:57', 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'CV', 'WH', NULL, '2CL'),
-(2, 'UTH140', 200, '2011-05-04 09:31:00', '2011-05-04 09:35:00', '2011-05-04 09:50:00', '2011-05-04 10:30:00', NULL, NULL, '2011-05-04 11:00:00', NULL, '2011-05-05 12:00:00', 'done', 200, '2011-05-04 11:15:00', '2011-05-04 12:00:00', 200, '2011-05-04 15:18:00', '2011-05-04 16:00:00', 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'CV', 'WH', NULL, '2CL'),
-(8, 'GNG100', 600, '2011-05-03 10:00:00', '2011-05-03 10:30:00', '2011-05-04 09:33:00', '2011-05-04 10:30:00', NULL, NULL, '2011-05-04 13:00:00', NULL, '2011-05-05 12:00:00', 'before_cr', 0, NULL, NULL, 600, '2011-05-04 15:00:00', '2011-05-04 15:45:00', 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'CV', 'WH', NULL, '3CS'),
-(6, 'ANU010', 1300, '2011-05-04 09:05:00', '2011-05-04 09:40:00', '2011-05-04 09:40:00', '2011-05-04 10:30:00', '2011-05-04 10:45:00', '2011-05-04 11:30:00', '2011-05-04 12:00:00', NULL, '2011-05-05 12:00:00', 'finish_cr', 1300, '2011-05-04 15:16:00', '2011-05-04 15:47:00', 1300, '2011-05-04 16:15:00', '2011-05-04 17:18:00', 1265, '2011-05-04 18:30:00', '2011-05-04 19:19:00', 0, NULL, NULL, NULL, 'CR', 'CV', 'PT', 'WH', '3CS'),
-(11, 'SHG700', 900, '2011-05-03 15:00:00', '2011-05-03 15:30:00', '2011-05-03 15:40:00', '2011-05-03 16:00:00', '2011-05-04 09:00:00', '2011-05-04 09:30:00', '2011-05-04 10:00:00', NULL, '2011-05-05 11:00:00', 'before_cr', 0, NULL, NULL, 0, NULL, NULL, 900, '2010-12-24 12:28:22', '2010-12-23 15:59:17', 900, '2010-12-24 12:28:58', NULL, NULL, 'CR', 'CV', 'PT', 'WH', '3CL-H'),
-(7, 'AAA010', 1300, '2011-05-03 08:00:00', '2011-05-03 09:00:00', '2011-05-04 09:00:00', '2011-05-04 09:25:00', '2011-05-04 09:30:00', '2011-05-04 10:00:00', '2011-05-04 10:30:00', NULL, '2011-05-05 10:00:00', 'before_cr', 0, NULL, NULL, 1300, '2010-11-19 00:00:00', '2010-11-19 00:00:00', 1300, '2011-05-04 12:00:00', '2011-05-04 13:00:00', 0, NULL, NULL, NULL, 'CR', 'CV', 'PT', 'WH', '2CL'),
-(1, 'MLT790', 500, '2011-05-04 08:00:00', '2011-05-04 09:05:00', '2011-05-04 09:31:00', '2011-05-04 09:45:00', '2011-05-04 10:50:00', '2011-05-04 11:45:00', '2011-05-04 12:00:00', NULL, '2011-05-05 13:00:00', 'finish_cr', 500, '2010-12-27 22:05:00', '2010-11-19 00:00:00', 1, '2010-03-15 22:45:17', '2011-05-04 12:45:00', 500, NULL, '2010-12-27 22:05:47', 0, NULL, NULL, NULL, 'CR', 'CV', 'PT', 'WH', '2CL'),
-(10, 'KFC010', 400, '2011-05-03 13:00:00', '2011-05-03 13:30:00', '2011-05-03 13:30:00', '2011-05-03 15:30:00', '2011-05-04 08:00:00', '2011-05-04 08:50:00', '2011-05-04 09:00:00', NULL, '2011-05-05 17:00:00', 'done', 0, NULL, NULL, 0, NULL, NULL, 400, '2010-11-19 00:00:00', '2010-03-15 23:03:44', 322, '2010-03-15 23:53:42', '2010-03-15 23:13:36', NULL, 'CR', 'CV', 'PT', 'WH', '3CS'),
-(4, 'UTH120', 100, '2011-05-04 09:44:00', '2011-05-04 09:50:00', NULL, NULL, NULL, NULL, '2011-05-04 10:00:00', NULL, '2011-05-05 11:00:00', 'before_cr', 100, '2011-05-04 15:15:00', '2011-05-04 15:45:00', 0, NULL, NULL, 0, NULL, NULL, 100, '2010-11-19 00:00:00', NULL, NULL, 'CR', 'WH', NULL, NULL, NULL),
-(5, 'MOL010', 300, '2011-05-04 09:51:00', '2011-05-04 10:10:00', NULL, NULL, NULL, NULL, '2011-05-04 11:00:00', NULL, '2011-05-05 16:00:00', 'before_cr', 300, '2011-05-04 09:00:00', '2011-05-04 12:15:00', 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'WH', NULL, NULL, NULL);
+INSERT INTO `status_tracking` (`plan_id`, `product_id`, `plan_amount`, `plan_cr_start`, `plan_cr_end`, `plan_cv_start`, `plan_cv_end`, `plan_pt_start`, `plan_pt_end`, `plan_wh_start`, `plan_wh_end`, `plan_due`, `current_status`, `actual_amount_cr`, `actual_cr_start`, `actual_cr_end`, `actual_amount_cv`, `actual_cv_start`, `actual_cv_end`, `actual_amount_pt`, `actual_pt_start`, `actual_pt_end`, `actual_amount_wh`, `actual_wh_start`, `actual_wh_end`, `actual_due`, `process1`, `process2`, `process3`, `process4`, `cv_machine`) VALUES
+(3, 'UTH130', 300, '2011-05-05 09:37:00', '2011-05-05 09:40:00', NULL, NULL, NULL, NULL, '2011-05-05 10:00:00', NULL, '2011-05-05 21:00:00', 'before_cr', 200, '2011-05-05 15:18:00', '2011-05-05 00:00:00', 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'WH', NULL, NULL, NULL),
+(9, 'ADL090', 400, '2011-05-04 11:00:00', '2011-05-04 11:40:00', '2011-05-05 11:00:00', '2011-05-05 12:30:00', NULL, NULL, '2011-05-05 13:00:00', NULL, '2011-05-06 21:00:00', 'before_cr', 0, NULL, NULL, 400, '2010-03-15 23:02:14', '2010-03-15 23:01:57', 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'CV', 'WH', NULL, '2CL'),
+(2, 'UTH140', 200, '2011-05-05 09:31:00', '2011-05-05 09:35:00', '2011-05-05 09:50:00', '2011-05-05 10:30:00', NULL, NULL, '2011-05-05 11:00:00', NULL, '2011-05-06 12:00:00', 'done', 200, '2011-05-05 11:15:00', '2011-05-05 12:00:00', 200, '2011-05-05 15:18:00', '2011-05-05 16:00:00', 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'CV', 'WH', NULL, '2CL'),
+(8, 'GNG100', 600, '2011-05-04 10:00:00', '2011-05-04 10:30:00', '2011-05-05 09:33:00', '2011-05-05 10:30:00', NULL, NULL, '2011-05-05 13:00:00', NULL, '2011-05-06 12:00:00', 'before_cr', 0, NULL, NULL, 600, '2011-05-05 15:00:00', '2011-05-05 15:45:00', 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'CV', 'WH', NULL, '3CS'),
+(6, 'ANU010', 1300, '2011-05-05 09:05:00', '2011-05-05 09:40:00', '2011-05-05 09:40:00', '2011-05-05 10:30:00', '2011-05-05 10:45:00', '2011-05-05 11:30:00', '2011-05-05 12:00:00', NULL, '2011-05-06 12:00:00', 'finish_cr', 1300, '2011-05-05 15:16:00', '2011-05-05 15:47:00', 1300, '2011-05-05 16:15:00', '2011-05-05 17:18:00', 1265, '2011-05-05 18:30:00', '2011-05-05 19:19:00', 0, NULL, NULL, NULL, 'CR', 'CV', 'PT', 'WH', '3CS'),
+(11, 'SHG700', 900, '2011-05-04 15:00:00', '2011-05-04 15:30:00', '2011-05-04 15:40:00', '2011-05-04 16:00:00', '2011-05-05 09:00:00', '2011-05-05 09:30:00', '2011-05-05 10:00:00', NULL, '2011-05-06 11:00:00', 'before_cr', 0, NULL, NULL, 0, NULL, NULL, 900, '2010-12-24 12:28:22', '2010-12-23 15:59:17', 900, '2010-12-24 12:28:58', NULL, NULL, 'CR', 'CV', 'PT', 'WH', '3CL-H'),
+(7, 'AAA010', 1300, '2011-05-04 08:00:00', '2011-05-04 09:00:00', '2011-05-05 09:00:00', '2011-05-05 09:25:00', '2011-05-05 09:30:00', '2011-05-05 10:00:00', '2011-05-05 10:30:00', NULL, '2011-05-06 10:00:00', 'before_cr', 0, NULL, NULL, 1300, '2010-11-19 00:00:00', '2010-11-19 00:00:00', 1300, '2011-05-05 12:00:00', '2011-05-05 13:00:00', 0, NULL, NULL, NULL, 'CR', 'CV', 'PT', 'WH', '2CL'),
+(1, 'MLT790', 500, '2011-05-05 08:00:00', '2011-05-05 09:05:00', '2011-05-05 09:31:00', '2011-05-05 09:45:00', '2011-05-05 10:50:00', '2011-05-05 11:45:00', '2011-05-05 12:00:00', NULL, '2011-05-06 13:00:00', 'finish_cr', 500, '2010-12-27 22:05:00', '2010-11-19 00:00:00', 1, '2010-03-15 22:45:17', '2011-05-05 12:45:00', 500, NULL, '2010-12-27 22:05:47', 0, NULL, NULL, NULL, 'CR', 'CV', 'PT', 'WH', '2CL'),
+(10, 'KFC010', 400, '2011-05-04 13:00:00', '2011-05-04 13:30:00', '2011-05-04 13:30:00', '2011-05-04 15:30:00', '2011-05-05 08:00:00', '2011-05-05 08:50:00', '2011-05-05 09:00:00', NULL, '2011-05-06 17:00:00', 'done', 0, NULL, NULL, 0, NULL, NULL, 400, '2010-11-19 00:00:00', '2010-03-15 23:03:44', 322, '2010-03-15 23:53:42', '2010-03-15 23:13:36', NULL, 'CR', 'CV', 'PT', 'WH', '3CS'),
+(4, 'UTH120', 100, '2011-05-05 09:44:00', '2011-05-05 09:50:00', NULL, NULL, NULL, NULL, '2011-05-05 10:00:00', NULL, '2011-05-06 11:00:00', 'before_cr', 100, '2011-05-05 15:15:00', '2011-05-05 15:45:00', 0, NULL, NULL, 0, NULL, NULL, 100, '2010-11-19 00:00:00', NULL, NULL, 'CR', 'WH', NULL, NULL, NULL),
+(5, 'MOL010', 300, '2011-05-05 09:51:00', '2011-05-05 10:10:00', NULL, NULL, NULL, NULL, '2011-05-05 11:00:00', NULL, '2011-05-06 16:00:00', 'before_cr', 300, '2011-05-05 09:00:00', '2011-05-05 12:15:00', 0, NULL, NULL, 0, NULL, NULL, 0, NULL, NULL, NULL, 'CR', 'WH', NULL, NULL, NULL);
 

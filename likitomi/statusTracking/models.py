@@ -374,7 +374,7 @@ class TotalPlanning(models.Model):
     class Meta:
         db_table = u'total_planning'
 
-class FakeStatusTracking(models.Model):
+class StatusTracking(models.Model):
     plan_id = models.IntegerField(primary_key=True)
     product = models.ForeignKey(Products,null=False)
     #product_id = models.CharField(max_length=33, blank=True)
@@ -463,7 +463,7 @@ class FakeStatusTracking(models.Model):
 		status = ''
 	return status
     class Meta:
-        db_table = u'fake_status_tracking'
+        db_table = u'status_tracking'
 #    def set_days_left(self):
 #        import datetime
  #       self.days_left = int((datetime.datetime.now() - self.plan_due))
