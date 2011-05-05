@@ -32,7 +32,7 @@ function showDetail(sectionName,urlLink)
         //alert(document.getElementById(sectionName));
         //$(sectionName).load(urlLink);
 	var el = document.getElementById(sectionName)
-	el.innerHTML="<iframe src='"+urlLink+"' align='left' scrolling='no' frameborder='0' height='130px'></iframe>";
+	el.innerHTML="<iframe src='"+urlLink+"' align='left' scrolling='no' frameborder='0' width='100%' height='130px'></iframe>";
 }
 
 var preEl ;
@@ -245,7 +245,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 
 		<!--<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>-->
 		<center>Convertor <br><table align=center width="90%">
-			<tr  height="5"><td width="60%">{# left #}
+			<tr  height="5"><td width="57%">{# left #}
 			
 			<div id="linkCV">
 			<table align=center width="100%"><span class="header">
@@ -292,8 +292,8 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			</tr>
 			{% endfor %}
 			</table></div>
-			
-			</td><td width="40%"  bgColor="#F8F8F8"><table width="100%"> <div id="loadPageCV">{# right #} << Please Click in order to see Product Detail</div> </table></td></tr>
+
+			</td><td width="43%"  bgColor="#F8F8F8"><table width="100%"><div vertical-align:top; " id="loadPageCV">{# right #} << Please Click in order to see Product Detail</div></table></td></tr>
 			</table>
 <!-- end cv table -->
 		</center>
