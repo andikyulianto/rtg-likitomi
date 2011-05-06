@@ -10,9 +10,9 @@
 $flash=$this->db_session->flashdata('flashMessage');
 if (isset($flash) AND $flash!='')
 {?>
-        <div id="flashMessage" style="display:none;">
-                <?=$flash?>
-        </div>
+	<div id="flashMessage" style="display:none;">
+		<?=$flash?>
+	</div>
 <?php }?>
 <!--END FLASH-->
 <?php 

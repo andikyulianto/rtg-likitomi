@@ -1,22 +1,22 @@
 <?php
 
 //Modules
-$lang['partners'] 		= "Partners";
-$lang['papers'] 		= "Papers";
-$lang['products'] 		= "Products";
+$lang['partners'] 		= "คู่ค้า";
+$lang['papers'] 		= "ลูกกระดาษ";
+$lang['products'] 		= "สินค้า";
 $lang['salesorder'] 	= "Sales Order";
-$lang['planning'] 		= "Planning";
-$lang['reportplanning'] = "Report Planning";
-$lang['warehouse'] 		= "Warehouse";
-$lang['translation'] 	= "Translation";
+$lang['planning'] 		= "แผนงาน";
+$lang['reportplanning'] = "รายงาน แผนงาน";
+$lang['warehouse'] 		= "คลังสินค้า";
+$lang['translation'] 	= "แปล";
 
 //Buttons
 $lang['edit'] 		= "Edit";
 $lang['update'] 	= "Update";
-$lang['cancel'] 	= "Cancel";
-$lang['save'] 		= "Save";
+$lang['cancel'] 	= "ยกเลิก";
+$lang['save'] 		= "บันทึก";
 $lang['archive'] 	= "Archive";
-$lang['add'] 		= "Add";
+$lang['add'] 		= "เพิ่ม";
 
 
 ?>

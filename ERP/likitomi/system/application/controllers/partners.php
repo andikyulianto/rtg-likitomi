@@ -66,7 +66,6 @@ class Partners extends Controller {
 				$this->Partners_model->getTotalByType('Supplier'),
 				$this->Partners_model->getTotalTrash(),				
 			);
-
 		$this->load->library('json'); 
 		echo json_encode($item);
 	}
