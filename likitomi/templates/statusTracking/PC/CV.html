@@ -8,7 +8,7 @@
 	</ul>
 	<div id="tabs-1">
 	<!--top bar -->
-	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
+	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate">Last update:  {{today}}</div></td></tr></table>
 	<br>
 	<div id="filterCriteria" align="center">
 	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
@@ -18,50 +18,70 @@
 	</div> <!-- end Filter -->
 	<br>
 <div id="resultDivLineCV">
-	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetail"><span class="header">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetail">
 	<thead><tr bgcolor="#cccccc" width="100%">
-	<td><b>Sch.</b></th>
-	<th width="5%" align="left"><b> IN </b></th>
-	<th width="5%"><b>OUT </b></th>
-	<th width="5%"><b>Pcs.</b></th>
-	<th rowspan="2"><b>Product code</b></th>
-	<th rowspan="2"><b>Machine</b></th>
-	<th rowspan="2"><b>From</b></th>
-	<th rowspan="2"><b>Color</b></th>
-	<th rowspan="2"><b>Time</b></th>
-	<th rowspan="2"><b>Speed</b></th>
-	<th rowspan="2"><b>Sale Order</b></th>
-	<th rowspan="2"><b>P.Code</b></th>
-	<th rowspan="2"><b>Customer</b></th>
-	<th rowspan="2"><b>Product Name</b></th>
-	<th rowspan="2"><b>Next Process</b></th>
-	<th rowspan="2"><b>Due</b></th>
-</tr>
-	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>OUT</th><th>Pcs</th></tr></thead>
+	<th><div>Sch.</div><div>Act.</div></th>
+	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
+	<th width="5%"><div class="plan">OUT </div><div class="actual">OUT</div></th>
+	<th width="5%"><div class="plan">Pcs<div class="actual">Pcs</div></th>
+	<th>Product code</th>
+	<th>Machine</th>
+	<th>From</th>
+	<th>Color</th>
+	<th>Time</th>
+	<th>Speed</th>
+	<th>Sale Order</th>
+	<th>P.Code</th>
+	<th>Customer</th>
+	<th>Product Name</th>
+	<th>Next Process</th>
+	<th>Due</th>
+</tr></thead>
 	</span>	
 	{% for item in items %}
 	<tr id="{{ item.stateCV}}">
-	<td rowspan=2>{% if cvThreeCL == item.product.product_code or cvThreeCS == item.product.product_code or cvTwoCL == item.product.product_code %} > {% endif %}</th>
-	<td>{{item.plan_cv_start|time:"H:i"}}</th>
-	<td>{{item.plan_cv_end|time:"H:i" }}</th>
-	<td>{{item.plan_amount}}</th>
-	<td rowspan=2>{{item.product.product_code}}</td>
-	<td rowspan=2>{{item.cv_machine}}</td>
-	<td rowspan=2>{% if item.process4 == 'CV' %}
+	<td>{% if cvThreeCL == item.product.product_code or cvThreeCS == item.product.product_code or cvTwoCL == item.product.product_code %} > {% endif %}</th>
+	<td><div class="plan">{{item.plan_cv_start|time:"H:i"}}</div><div class="actual">
+				{% if item.actual_cv_start != NULL %}
+				{{item.actual_cv_start|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+	</div></td>
+	<td><div class="plan">{{item.plan_cv_end|time:"H:i" }}</div><div class="actual">
+				{% if item.actual_cv_end != NULL %}
+				{{item.actual_cv_end|time:"H:i" }}
+				{% else %}
+				&nbsp;
+				{% endif %} </div></td>
+	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_cv != NULL%}
+		{% if item.actual_amount_cv < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv}}</font>
+		{% else %}
+			{{item.actual_amount_cv}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</div></td>
+	<td>{{item.product.product_code}}</td>
+	<td>{{item.cv_machine}}</td>
+	<td>{% if item.process4 == 'CV' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'CV'%}
 		    {{ item.process2 }}
 		{% else %}{% if item.process2 == 'CV' %}
 		    {{ item.process1 }}
 		{% endif %}{% endif %}{% endif %}</td>
-	<td rowspan=2>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
-	<td rowspan=2>{{item.cv_time_used}}</td>
-	<td rowspan=2 >{{item.speed}}</td>
-	<td rowspan=2 >{{item.plan_id}}</td>
-	<td rowspan=2 >{{item.po}}</td>
-	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
-	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
-	<td rowspan=2 >
+	<td>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
+	<td>{{item.cv_time_used}}</td>
+	<td>{{item.speed}}</td>
+	<td>{{item.plan_id}}</td>
+	<td>{{item.po}}</td>
+	<td>{{item.product.parent_code.partner.partner_name}}</td>
+	<td>{{item.product.parent_code.product_name}}</td>
+	<td>
 		{% if item.process1 == 'CV' and item.process2 != NULL %}
 		    {{item.process2}}
 		{% else %}{% if item.process2 == 'CV' and item.process3 != NULL %}
@@ -71,23 +91,7 @@
 		{% else %}{% if item.process3 == NULL and item.process1 == NULL and item.process2 == NULL and item.process3 == NULL %}
 		
 		{% endif %}{% endif %}{% endif %}{% endif %}</td>
-	<td rowspan="2">{{item.days_left}}</td>
-	</tr>
-	<tr id="{{ item.stateCV}}">
-	
-	<td align="right">{{item.actual_cv_start|time:"H:i"}}</td>
-	<td align="right">{{item.actual_cv_end|time:"H:i" }}</td>
-	<td align="right">{% if item.actual_amount_cv != NULL%}
-		{% if item.actual_amount_cv < item.plan_amount %}
-			<font color="red">{{item.actual_amount_cv}}</font>
-		{% else %}
-			{{item.actual_amount_cv}}
-		{% endif %}
-	{% else %}
-		<font color="red">0</font>
-	{% endif %}
-	</td>
-
+	<td>{{item.days_left}}</td>
 	</tr>
 			{% endfor %}
 			</table>
@@ -97,7 +101,7 @@
 <!--END Menu and Topbar-->
 <div id="tabs-2">
 	<!--top bar-->
-	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Total plan of {{strThisMonth}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
+	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Total plan of {{strThisMonth}}</h4></td><td align="right"><div id="dailyPlanUpdate">Last update:  {{today}}</div></td></tr></table>
 	<br>
 	
 
@@ -107,51 +111,70 @@
 	<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
 	</div> <!-- end Filter -->
 <br>
-<div id="resultDivLineCV">
-	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetailM"><span class="header">
+<div id="resultDivLineCVM">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetailM">
 	<thead><tr bgcolor="#cccccc" width="100%">
-	<td><b>Sch.</b></th>
-	<th width="5%" align="left"><b> IN </b></th>
-	<th width="5%"><b>OUT </b></th>
-	<th width="5%"><b>Pcs.</b></th>
-	<th rowspan="2"><b>Product code</b></th>
-	<th rowspan="2"><b>Machine</b></th>
-	<th rowspan="2"><b>From</b></th>
-	<th rowspan="2"><b>Color</b></th>
-	<th rowspan="2"><b>Time</b></th>
-	<th rowspan="2"><b>Speed</b></th>
-	<th rowspan="2"><b>Sale Order</b></th>
-	<th rowspan="2"><b>P.Code</b></th>
-	<th rowspan="2"><b>Customer</b></th>
-	<th rowspan="2"><b>Product Name</b></th>
-	<th rowspan="2"><b>Next Process</b></th>
-	<th rowspan="2"><b>Due</b></th>
-</tr>
-	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>OUT</th><th>Pcs</th></tr></thead>
-	</span>	
+	<th><div class="plan">Sch.</div><div class="actual">Act.</div></th>
+	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
+	<th width="5%"><div class="plan">OUT </div><div class="actual">OUT</div></th>
+	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
+	<th>Product code</th>
+	<th>Machine</th>
+	<th>From</th>
+	<th>Color</th>
+	<th>Time</th>
+	<th>Speed</th>
+	<th>Sale Order</th>
+	<th>P.Code</th>
+	<th>Customer</th>
+	<th>Product Name</th>
+	<th>Next Process</th>
+	<th>Due</th>
+	</tr></thead>
 	{% for item in itemsM %}
 	<tr id="{{ item.stateCV}}">
-	<td rowspan=2>{% if cvThreeCL == item.product.product_code or cvThreeCS == item.product.product_code or cvTwoCL == item.product.product_code %} > {% endif %}</th>
-	<td>{{item.plan_cv_start|time:"H:i"}}</th>
-	<td>{{item.plan_cv_end|time:"H:i" }}</th>
-	<td>{{item.plan_amount}}</th>
-	<td rowspan=2>{{item.product.product_code}}</td>
-	<td rowspan=2>{{item.cv_machine}}</td>
-	<td rowspan=2>{% if item.process4 == 'CV' %}
+	<td></th>
+	<td><div class="plan">{{item.plan_cv_start|time:"H:i"}}</div><div class="actual">
+				{% if item.actual_cv_start != NULL %}
+				{{item.actual_cv_start|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+	</div></td>
+	<td><div class="plan">{{item.plan_cv_end|time:"H:i" }}</div><div class="actual">
+				{% if item.actual_cv_end != NULL %}
+				{{item.actual_cv_end|time:"H:i" }}
+				{% else %}
+				&nbsp;
+				{% endif %} </div></td>
+	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_cv != NULL%}
+		{% if item.actual_amount_cv < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv}}</font>
+		{% else %}
+			{{item.actual_amount_cv}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</div></th>
+	<td>{{item.product.product_code}}</td>
+	<td>{{item.cv_machine}}</td>
+	<td>{% if item.process4 == 'CV' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'CV'%}
 		    {{ item.process2 }}
 		{% else %}{% if item.process2 == 'CV' %}
 		    {{ item.process1 }}
 		{% endif %}{% endif %}{% endif %}</td>
-	<td rowspan=2>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
-	<td rowspan=2>{{item.cv_time_used}}</td>
-	<td rowspan=2 >{{item.speed}}</td>
-	<td rowspan=2 >{{item.plan_id}}</td>
-	<td rowspan=2 >{{item.po}}</td>
-	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
-	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
-	<td rowspan=2 >
+	<td>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
+	<td>{{item.cv_time_used}}</td>
+	<td>{{item.speed}}</td>
+	<td>{{item.plan_id}}</td>
+	<td>{{item.po}}</td>
+	<td>{{item.product.parent_code.partner.partner_name}}</td>
+	<td>{{item.product.parent_code.product_name}}</td>
+	<td>
 		{% if item.process1 == 'CV' and item.process2 != NULL %}
 		    {{item.process2}}
 		{% else %}{% if item.process2 == 'CV' and item.process3 != NULL %}
@@ -161,26 +184,12 @@
 		{% else %}{% if item.process3 == NULL and item.process1 == NULL and item.process2 == NULL and item.process3 == NULL %}
 		
 		{% endif %}{% endif %}{% endif %}{% endif %}</td>
-	<td rowspan="2">{{item.days_left}}</td>
+	<td>{{item.days_left}}</td>
 	</tr>
-	<tr id="{{ item.stateCV}}">
 	
-	<td align="right">{{item.actual_cv_start|time:"H:i"}}</td>
-	<td align="right">{{item.actual_cv_end|time:"H:i" }}</td>
-	<td align="right">{% if item.actual_amount_cv != NULL%}
-		{% if item.actual_amount_cv < item.plan_amount %}
-			<font color="red">{{item.actual_amount_cv}}</font>
-		{% else %}
-			{{item.actual_amount_cv}}
-		{% endif %}
-	{% else %}
-		<font color="red">0</font>
-	{% endif %}
-	</td>
-
-	</tr>
-			{% endfor %}
-			</table>
+	{% endfor %}
+</tbody>
+</table>
 </div>
 
 </div>

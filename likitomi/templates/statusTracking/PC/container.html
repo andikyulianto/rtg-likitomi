@@ -11,10 +11,11 @@
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
-
+<!--
 <script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
 <script type="text/javascript" src="javascript/picnet.table.filter.min.js"></script>
+-->
     <style type="text/css"> 
 #totalPlanDaily
 {
@@ -177,7 +178,7 @@ $(document).ready(function() {
 		$( "#tabs" ).tabs();
 	});
 
-	$('input#search').quicksearch('table tbody tr');
+/*	$('input#search').quicksearch('table tbody tr');
 $(document).ready(function(){
   $('#totalPlanMonthly').tablesorter({
     headers: {
@@ -192,13 +193,8 @@ widthFixed: true, widgets: ['zebra']} )
 
 .tablesorterPager({container: $("#pager")});
 
-
-		$("#zoomCR").click(function(){
-			alert("zoomCR");
-		});
-
-
 });
+*/
 ///////////////////////
 /////// Detail ////////
 //////////////////////
@@ -275,7 +271,7 @@ $("#finished").click(function(){
 	$(document).ready(function () {
 		$("#key_search").quicksearch("table tbody tr", {
 				noResults: '#noresults',
-				//stripeRows: ['odd', 'even'],
+				stripeRows: ['odd', 'even'],
 				loader: 'span.loading'
 		});
 	});

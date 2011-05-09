@@ -1,32 +1,7 @@
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
+
 <script>
-$(document).ready(function(){
 
-/*		$("#zoomCR").click(function(){
-		onClick="return go('http://www.mysite.com')	$(".CRarea").animate({
-                                    width: "100%",
-					height: "100%",
-                                    //opacity: 0.4,
-                                    marginLeft: "0in",
-                                    fontSize: "3em",
-                                    borderWidth: "1px"
-                                  }, 1500 );
-			$(".CVarea").hide();
-			$(".PTarea").hide();
-			$(".WHarea").hide();
-		});
-		$("#zoomCV").click(function(){
-			alert("zoomCV");
-		});
-		$("#zoomPT").click(function(){
-			alert("zoomPT");
-		});
-		$("#zoomWH").click(function(){
-			alert("zoomWH");
-		});
-*/
-
-});
 function showDetail(sectionName,urlLink)
 {
         //alert(document.getElementById(sectionName));
@@ -186,37 +161,34 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 		<!-- table CR --><center>Corrugator <br><table align=center width="90%">
 			<tr><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR"> 
-			<table align=center width="100%" id="crTable"><!-- table left --><span class="header">
-			<thead><tr bgcolor="#cccccc" width="100%"><th width="5%">Sch.</th><th width="15%" align="left">IN</td><td width="15%"> <b>OUT</b> <td width="10%"><b>Pcs</b></td></td><th width="10%" rowspan="2"> Product code </th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
-			</span>{{rowcountCR}}
+			<table align=center width="100%" id="crTable"><!-- table left -->
+			<thead><tr bgcolor="#cccccc" width="100%">
+			<th width="5%"><div>Sch.</div><div>Act.</div></th>
+			<th width="15%"><div class="plan">IN</div><div class="actual">IN</div></th>
+			<th width="15%"><div class="plan">OUT</div><div class="actual">OUT</div></th>
+			<th width="10%"><div class="plan">Pcs</div><div class="actual">Pcs</div></th>
+			<th width="10%"> Product code </th>
+			<th width="10%"> Due</th></tr></thead>
+			<tbody> 
 			{% for CR_items in items_plan_cr %}
-			<tr class="{% cycle 'rowCR1' 'rowCR2' 'rowCR3' as rowcountCR %}" onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
-			<td rowspan="2"><center><p class="tbunderline">{% if cr == CR_items.product.product_code %} > {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
-			<td>{{CR_items.plan_cr_start|time:"H:i"}}</td>
-			<td>{{CR_items.plan_cr_end|time:"H:i" }}</td>
-			<td>{{CR_items.plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{CR_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{CR_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
-			</tr>
-			<tr class="{{ rowcountCR }}" onClick="HighLightCR(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
-			<td><p class="tbsgunderline">
-				{% if CR_items.actual_cr_start != NULL %}
-				{{CR_items.actual_cr_start|time:"H:i" }}
-				{% else %} 
-				<font color="white">&nbsp;</font>
-				{% endif %}
-			</p></td>
-			<td><p class="tbsgunderline">				
-				{% if CR_items.actual_cr_end != NULL%}
-				{{CR_items.actual_cr_end|time:"H:i" }}
+			<tr onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','/likitomi/display/?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
+			<td>{% if cr == CR_items.product.product_code %} > {% endif %}</td>
+			<td><div class="plan">{{CR_items.plan_cr_start|time:"H:i"}}</div><div class="actual">
+			{% if CR_items.actual_cr_start != NULL %}
+				{{CR_items.actual_cr_start|time:"H:i"}}
 				{% else %}
-				<font color="white"> &nbsp;dd </font>
-				{% endif %}
-
-			</p></td>
-			<td><p class="tbsgunderline">
-				{% if CR_items.actual_amount_cr != NULL%}
+				&nbsp;
+				{% endif %} 
+			</div></td>
+			<td><div class="plan">{{CR_items.plan_cr_end|time:"H:i"}}</div><div class="actual">
+			{% if CR_items.actual_cr_end != NULL %}
+				{{CR_items.actual_cr_end|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+			</div></td>
+			<td><div class="plan">{{CR_items.plan_amount}} 
+			<div class="actual">{% if CR_items.actual_amount_cr != NULL%}
 				 {% if CR_items.actual_amount_cr < CR_items.plan_amount %}
 					<font color="red">{{CR_items.actual_amount_cr}}</font>
 				{% else %}
@@ -225,10 +197,12 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				{% else %}
 				<font color="red">0</font>
 				{% endif %}
-
-			</p></td>
-			</tr></a>
+			</div></td>
+			<td>{{CR_items.product.product_code}}</td>
+			<td>{{CR_items.days_left}}</td>
+			</tr>
 			{% endfor %}
+			</tbody>
 			</table> <!-- end table left -->
 			</center></div>
 			
@@ -248,37 +222,35 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tr  height="5"><td width="57%">{# left #}
 			
 			<div id="linkCV">
-			<table align=center width="100%"><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="5%" height="20">Sch.</th><td width="25%" align="left"><b>IN</b></td><td width="25%" align="left"><b>OUT</b></td><td width="20%" align="left"><b>Pcs</b></td><th width="20%" rowspan="2"> Product code </th><th width="5%" rowspan="2"> Mac. </th><th rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></thead>
+			<table align=center width="100%">
+			<thead><tr width="100%" align=center bgcolor="#cccccc">
+			<th width="5%" height="20"><div>Sch.</div><div>Act.</div></th>
+			<th width="25%"><div class="plan">IN</div><div class="actual">IN</div></td>
+			<th width="25%"><div class="plan">OUT</div><div class="actual">OUT</div></td>
+			<th width="20%"><div class="plan">Pcs</div><div class="actual">Pcs</div></td>
+			<th width="20%"> Product code </th>
+			<th width="5%"> Mac. </th>
+			<th>From</th>
+			<th width="10%"> Due</th></tr></thead><tbody>
 			{% for CV_items in items_plan_cv %}
 			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageCV','/likitomi/display/?product={{CV_items.product.product_code}}');" id="{{CV_items.stateCV}}">
-			<td rowspan="2" height="20"><center><p class="tbunderline">{% if cvThreeCL == CV_items.product.product_code or cvThreeCS == CV_items.product.product_code or cvTwoCL == CV_items.product.product_code %} > {% endif %} <br><font color=white>&nbsp;</font></p></center></td>
-			<td> {{CV_items.plan_cv_start|time:"H:i"}}</td>
-			<td> {{CV_items.plan_cv_end|time:"H:i"}}</td>
-			<td> {{CV_items.plan_amount}}</td>
-			<td rowspan="2"><center><p class="tbunderline">{{CV_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{CV_items.cv_machine}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{CV_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
-			<tr class="{{ rowcountCV }}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageCV','/likitomi/display/?product={{CV_items.product.product_code}}');" id="{{CV_items.stateCV}}">
-			<td><p class="tbsgunderline">
-				{% if CV_items.actual_cv_start != NULL %}
-				{{CV_items.actual_cv_start|time:"H:i" }}
-				{% else %} 
-				<font color="white">&nbsp;</font>
-				{% endif %}
-			</p></td>
-			<td><p class="tbsgunderline">				
-				{% if CV_items.actual_cv_end != NULL%}
+			<td>{% if cvThreeCL == CV_items.product.product_code or cvThreeCS == CV_items.product.product_code or cvTwoCL == CV_items.product.product_code %} > {% endif %} </td>
+			<td> <div class="plan">{{CV_items.plan_cv_start|time:"H:i"}}</div><div class="actual">
+			{% if CV_items.actual_cv_start != NULL %}
+				{{CV_items.actual_cv_start|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+			</div></td>
+			<td> <div class="plan">{{CV_items.plan_cv_end|time:"H:i"}}</div><div class="actual">
+			{% if CV_items.actual_cv_end != NULL %}
 				{{CV_items.actual_cv_end|time:"H:i" }}
 				{% else %}
-				<font color="white">&nbsp;</font>
-				{% endif %}
-
-			</p></td>
-			<td align="right"><p class="tbsgunderline">
-				{% if CV_items.actual_amount_cv != NULL%}
+				&nbsp;
+				{% endif %} 
+			</div></td>
+			<td> <div class="plan">{{CV_items.plan_amount}}</div><div class="actual">
+			{% if CV_items.actual_amount_cv != NULL%}
 				 {% if CV_items.actual_amount_cv < plan_amount %}
 					<font color="red">{{actual_amount_cv}}</font>
 				{% else %}
@@ -287,10 +259,13 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				{% else %}
 				<font color="red">0</font>
 				{% endif %}
-
-			</p></td>
-			</tr>
+			</div></td>
+			<td>{{CV_items.product.product_code}}</td>
+			<td>{{CV_items.cv_machine}}</td>
+			<td>{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}</td>
+			<td>{{CV_items.days_left}}</td>
 			{% endfor %}
+			</tbody>
 			</table></div>
 
 			</td><td width="43%"  bgColor="#F8F8F8"><table width="100%"><div vertical-align:top; " id="loadPageCV">{# right #} << Please Click in order to see Product Detail</div></table></td></tr>
@@ -308,34 +283,35 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 		<!-- start pt table --><center> Pad and Partition <br>
 		<table align=center width="90%">
 			
-			<tr><td width="50%">{# left #}
+			<tr><td width="55%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%">Sch.</th><td width="25%" align="left"><b>IN</b></td> <td width="25%" align="left"><b>OUT </b></td><td><b>Pcs</b></td><th width="30%" rowspan="2"> Product code </th><th width="10%" rowspan="2|time:"H:i""> From </th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr width="100%" align=center bgcolor="#cccccc"><th>Act.</th><th align="right">IN</th><th align="right">OUT</th><th align="right">Pcs</th></tr></span></thead>
+			<thead><tr width="100%" align=center bgcolor="#cccccc">
+			<th width="5%"><div>Sch.</div><div>Act.</div></th>
+			<th width="15%"><div class="plan">IN</div><div class="actual">IN</div></th>
+			<th width="15%"><div class="plan">OUT</div><div class="actual">OUT</div></th>
+			<th widget="15%"><div class="plan">Pcs</div><div class="actual">Pcs</div></th>
+			<th width="25%"> Product code </th>
+			<th width="10%"> From </th>
+			<th width="10%"> Due</th></tr>
+			</thead><tbody>
 			{% for PT_items in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td rowspan="2" height="20"><p class="tbunderline"> {% if pt == PT_items.product.product_code %} > {% endif %} <br><font color=white>&nbsp;</font></p></td><td> {{PT_items.plan_pt_start|time:"H:i"}}</td><td> {{PT_items.plan_pt_end|time:"H:i"}}</td>
-<td> {{PT_items.plan_amount}} </p></td>
-			<td rowspan="2"><center><p class="tbunderline">{{PT_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{PT_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
-</tr>
-			<tr class="{{ rowcountPT }}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}">
-			<td><p class="tbsgunderline">
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','/likitomi/display/?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td> {% if pt == PT_items.product.product_code %} > {% endif %}</td>
+				<td><div class="plan"> {{PT_items.plan_pt_start|time:"H:i"}}</div><div class="actual">
 				{% if PT_items.actual_pt_start != NULL %}
 				{{PT_items.actual_pt_start|time:"H:i" }}
-				{% else %} 
-				<font color="white">&nbsp;</font>
-				{% endif %}
-			</p></td>
-			<td><p class="tbsgunderline">				
-				{% if PT_items.actual_pt_end != NULL%}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+				</div></td>
+				<td><div class="plan"> {{PT_items.plan_pt_end|time:"H:i"}}</div><div class="actual">
+				{% if PT_items.actual_pt_end != NULL %}
 				{{PT_items.actual_pt_end|time:"H:i" }}
 				{% else %}
-				<font color="white">&nbsp;</font>
-				{% endif %}
-			</p></td>
-			<td align="right"><p class="tbsgunderline">
+				&nbsp;
+				{% endif %} 
+				</div></td>
+				<td><div class="plan"> {{PT_items.plan_amount}}</div><div class="actual">
 				{% if PT_items.actual_amount_pt != NULL%}
 				 {% if PT_items.actual_amount_pt < PT_items.plan_amount %}
 				<font color="red">{{PT_items.actual_amount_pt}}</font>
@@ -345,13 +321,15 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				{% else %}
 				<font color="red">0</font>
 				{% endif %}
-
-			</p></td>
+				</div></td>
+			<td>{{PT_items.product.product_code}}</td>
+			<td>{% if PT_items.process2 == "PT" %} {{PT_items.process1}} {% endif %}{% if PT_items.process3 == "PT" %} {{PT_items.process2}} {% endif %}</td>
+			<td>{{PT_items.days_left}}</td>
 			</tr>
-			{% endfor %}
+			{% endfor %}</tbody>
 			</table></div>
 			
-			</td><td width="50%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in order to see Product Detail</div></table></td>
+			</td><td width="45%"  bgColor="#F8F8F8"><table width="100%"><div id="loadPagePT"> {# right #} << Please Click in order to see Product Detail</div></table></td>
 
 			</td>
 			</table></center>
@@ -366,28 +344,25 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 
 			<td width="50%"> {# left #}
 			<div id="linkWH">
-			<table align=center width = 100%><span class="header">
-			<thead><tr width="100%" align=center bgcolor="#cccccc"><th width="10%" rowspan="2"></th><td width="25%" align="left"><b>Sch.IN</b></td><td align="left"><b>Sch.Pcs</b></td><th width="35%" rowspan="2"> Product code </th><th width="30%" rowspan="2">From</th><th width="10%" rowspan="2"> Due</th></tr>
-			<tr width="100%" align=center bgcolor="#cccccc"><th align="right">Act.IN</th><th align="right">Act.Pcs</th></tr></span></thead>
+			<table align=center width = 100%>
+			<thead><tr width="100%" align=center bgcolor="#cccccc">
+			<th width="5%"><div>Sch.</div><div>Act.</div></th>
+			<th width="20%"><div class="plan">IN</div><div class="actual">IN</div></th>
+			<th width="15%"><div class="plan">Pcs<div class="actual">Pcs</td>
+			<th width="35%"> Product code </th>
+			<th width="15%">From</th>
+			<th width="10%"> Due</th></tr></thead><tbody>
 			{% for WH_items in items_plan_wh %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightWH('{{rowcountWH}}','#c9cc99','cc3333','{{product}}'); ; showDetail('loadPageWH','/likitomi/display/?product={{WH_items.product.product_code}}');" id="{{WH_items.state}}"><td rowspan="2"  height="20"> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
-			<td> {{WH_items.plan_wh_start|time:"H:i"}}</td>
-			<td> {{WH_items.plan_amount}} </td>
-			<td rowspan="2"><center><p class="tbunderline">{{WH_items.product.product_code}}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}<br><font color=white>&nbsp;</font></p></center></td>
-			<td rowspan="2"><center><p class="tbunderline">{{WH_items.days_left}}<br><font color=white>&nbsp;</font></p></center></td>
-</tr>
-			<tr class="{{ rowcountWH }}" onClick="HighLightWH('{{rowcountWH}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageWH','/likitomi/display/?product={{WH_items.product.product_code}}');" id="{{WH_items.state}}">
-			<td><p class="tbsgunderline">
-				{% if WH_items.actual_wh_start != NULL %}
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightWH('{{rowcountWH}}','#c9cc99','cc3333','{{product}}'); ; showDetail('loadPageWH','/likitomi/display/?product={{WH_items.product.product_code}}');" id="{{WH_items.state}}"><td> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+			<td><div class="plan">{{WH_items.plan_wh_start|time:"H:i"}}</div>
+			<div class="actual">{% if WH_items.actual_wh_start != NULL %}
 				{{WH_items.actual_wh_start|time:"H:i" }}
-				{% else %} 
-				<font color="white">&nbsp;</font>
-				{% endif %}
-			</p></td>
-			</td>
-			<td align="right"><p class="tbsgunderline">
-				{% if WH_items.actual_amount_wh != NULL%}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+			</div></td>
+			<td><div class="plan">{{WH_items.plan_amount}}</div>
+			<div class="actual">{% if WH_items.actual_amount_wh != NULL%}
 				 {% if WH_items.actual_amount_wh < WH_items.plan_amount %}
 				<font color="red">{{WH_items.actual_amount_wh}}</font>
 				{% else %}
@@ -395,11 +370,12 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				{% endif %}
 				{% else %}
 				<font color="red">0</font>
-				{% endif %}
-
-			</p></td>
-			</tr>
+				{% endif %}</div></td>
+			<td>{{WH_items.product.product_code}}</td>
+			<td>{% if WH_items.process3 != NULL%} {{WH_items.process3}} {% else %}{% if WH_items.process2 != NULL %} {{WH_items.process2}}{% else %}{% if WH_items.process1 != NULL %} {{WH_items.process1}} {% endif %}{% endif %}{% endif %}</td>
+			<td>{{WH_items.days_left}}<br><font color=white></font></p></center></td></tr>
 			{% endfor %}
+			</tbody>
 			</table>			
 			</div>
 			</td>
