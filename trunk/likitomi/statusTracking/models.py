@@ -95,6 +95,7 @@ class FaUser(models.Model):
     password = models.CharField(max_length=150)
     email = models.CharField(max_length=360)
     role = models.CharField(max_length=150)
+    department = models.CharField(max_length=10)
     banned = models.IntegerField()
     forgotten_password_code = models.CharField(max_length=150, blank=True)
     last_visit = models.DateTimeField(null=True, blank=True)

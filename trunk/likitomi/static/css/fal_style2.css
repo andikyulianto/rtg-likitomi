@@ -377,21 +377,14 @@ thead th {
 thead#mainMenu th{
 	border-style: none;
 }
-
-p.tbunderline {
-        border-bottom: dashed 0.1em black;
-
+tr  .plan {
+text-align:left;
 }
-p.tbsgunderline {
-        border-bottom: dashed 0.1em black;
-	text-align:right;
+tr  .actual {
+text-align:right;
 }
-.textbox td p.tbsgunderline{
-        text-align:right;
-}
-.textbox td p.tbunderline{
-        text-align:center;
-        position:absolute; 
+tr {
+text-align:center;
 }
 table a:link {border-bottom: 1px dashed #ddd;
 color: #000;}

@@ -1,7 +1,7 @@
 {% extends "CR/container.html" %}
 {% block view %}
 <div id="wrapper" style="width:100%">
-    <div id="header" >
+    <div id="header">
     	<!-- start Menu-->
     	<table width="100%">
     		<thead id="mainMenu">
@@ -37,45 +37,32 @@
 	</div>
 <br>
 <div id="resultDivLineWH">
-	<table align='center' width="100%" class='tablesorter' border=1 id="resultTable"><span class="header">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTable">
 	<thead><tr bgcolor="#cccccc" width="100%">
-	<td><b>Sch.</b></th>
-	<th width="5%" align="left"><b> IN </b></th>
-	<th width="5%"><b>Pcs.</b></th>
-	<th rowspan="2"><b>Product code</b></th>
-	<th rowspan="2"><b>Sale Order</b></th>
-	<th rowspan="2"><b>P Code</b></th>
-	<th rowspan="2"><b>Customer</b></th>
-	<th rowspan="2"><b>Product Name</b></th>
-	<th rowspan="2"><b>From</b></th>
-	<th rowspan="2"><b>Due</b></th>
-</tr>
-	<tr bgcolor="#cccccc" align="right"><th>Act.</th><th>IN</th><th>Pcs</th></tr></thead>
-	</span>	
+	<th><div>Sch.</div><div>Act.</div></th>
+	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
+	<th width="5%">Pcs.</div><div class="actual">Pcs.</div></th>
+	<th>Product code</th>
+	<th>Sale Order</th>
+	<th>P Code</th>
+	<th>Customer</th>
+	<th>Product Name</th>
+	<th>From</th>
+	<th>Due</th>
+</tr></thead><tbody>
 	{% for item in items %}
 	<tr id="{{ item.state}}">
-	<td rowspan=2>{% if wh == item.plan_wh_start %} > {% endif %}</th>
-	<td><a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_wh_start|time:"H:i"}}</a></th>
-	<td>{{item.plan_amount}}</th>
-	<td rowspan=2>{{item.product.product_code}}</td>
-	<td rowspan=2>{{item.plan_id}}</td>
-	<td rowspan=2>{{item.po}}</td>
-	<td rowspan=2 >{{item.product.parent_code.partner.partner_name}}</td>
-	<td rowspan=2 >{{item.product.parent_code.product_name}}</td>
-	<td rowspan=2>{% if item.process4 == 'WH' %}
-		    {{item.process3}}
-		{% else %}{% if item.process3 == 'WH'%}
-		    {{ item.process2 }}
-		{% else %}{% if item.process2 == 'WH' %}
-		    {{ item.process1 }}
-		{% endif %}{% endif %}{% endif %}</td>
-
-	<td rowspan="2">{{item.days_left}}</td>
-	</tr>
-	<tr id="{{ item.state}}">
-	
-	<td align="right">{{item.actual_wh_start|time:"H:i"}}</td>
-	<td align="right">{% if item.actual_amount_wh != NULL%}
+	<td>{% if wh == item.plan_wh_start %}> {% endif %}</td>
+	<td><div class="plan"><a href="/likitomi/line/cv/start/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_wh_start|time:"H:i"}}</a></div>
+	<div class="actual">
+		{% if item.actual_wh_start != NULL %}
+				{{item.actual_wh_start|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+	</div></td>
+	<td class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_wh != NULL%}
 		{% if item.actual_amount_wh < item.plan_amount %}
 			<font color="red">{{item.actual_amount_wh}}</font>
 		{% else %}
@@ -84,10 +71,23 @@
 	{% else %}
 		<font color="red">0</font>
 	{% endif %}
-	</td>
+	</div></td>
+	<td>{{item.product.product_code}}</td>
+	<td>{{item.plan_id}}</td>
+	<td>{{item.po}}</td>
+	<td>{{item.product.parent_code.partner.partner_name}}</td>
+	<td>{{item.product.parent_code.product_name}}</td>
+	<td>{% if item.process4 == 'WH' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'WH'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'WH' %}
+		    {{ item.process1 }}
+		{% endif %}{% endif %}{% endif %}</td>
 
-	</tr>
+	<td>{{item.days_left}}</td></tr>
 			{% endfor %}
+			</thead>
 			</table>
 </div>	
 {% endblock %}
