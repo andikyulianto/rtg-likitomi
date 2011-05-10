@@ -466,3 +466,11 @@ th.header {
 	width:230px;
 	height:18px;
 }
+	div.dataTables_filter, .dataTables_paginate 
+	{
+	text-align:right;
+	}
+	.dataTables_length, .dataTables_info 
+	{
+	position:absolute; 
+	}

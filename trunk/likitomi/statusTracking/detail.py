@@ -11,8 +11,9 @@ from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate, currentTimeProcess, currentProcess
-from statusTracking.models import Employee, StatusTracking
+from statusTracking.models import AuthUser, StatusTracking
 from datetime import date, datetime
+from employee import Employee
 import calendar
 
 ##################################################
@@ -20,35 +21,35 @@ import calendar
 ## this function for pc to entering view access ##
 ##################################################
 def pcdetail(request):
-	eID = request.GET['eID']
+	user = request.GET['user']
 	page =request.GET['page']
 	today = todayDate()
 	title = str(today)
 	is_enable_table = True
 	is_enable_desktop = True
-	employee = Employee.objects.get(eid=eID)
+	employee = Employee(user)
 	section_title = "Homepage for " + page + " Login as " + employee.firstname + " " + employee.lastname
 	if(page == "CR"):
-		return showCR(eID,section_title)	
+		return showCR(user,section_title)	
 	if(page == "CV"):
-		return showCV(eID,section_title)
+		return showCV(user,section_title)
 	if(page == "PT"):
-		return showPT(eID,section_title)
+		return showPT(user,section_title)
 	if(page == "WH"):
-		return showWH(eID,section_title)
+		return showWH(user,section_title)
 	return render_to_response('home.html', locals())
 
 #################################
 ##            for CR           ##
 ## display only today schedule ##
 #################################
-def showCR(eid,section_title):
+def showCR(User,section_title):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	title = "View corrugator plan"
 	page = "CR"
-	eID = eid
+	user = User
 	#create items for CR
 	cr = str(currentProcess("CR"))
 	item_plan = StatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
@@ -65,12 +66,12 @@ def showCR(eid,section_title):
 ##            for CV           ##
 ## display only today schedule ##
 #################################
-def showCV(eid,section_title):
+def showCV(User,section_title):
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	title = "View convertor plan"
-	eID = eid
+	user = User
 	page = "CV"
 	#create items for CV
 	cvThreeCL = str(currentProcess("3CL"))[3:9]
@@ -90,8 +91,8 @@ def showCV(eid,section_title):
 ##            for PT           ##
 ## display only today schedule ##
 #################################
-def showPT(eid,section_title):
-	eID = eid
+def showPT(User,section_title):
+	user = User
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	title = "View Pad and Partition"
@@ -113,8 +114,8 @@ def showPT(eid,section_title):
 ##            for WH           ##
 ## display only today schedule ##
 #################################
-def showWH(eid,section_title):
-	eID = eid
+def showWH(User,section_title):
+	user = User
 	title = "View Warehouse"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True

@@ -9,7 +9,7 @@ import unittest
 from django.test.client import Client
 from django.conf import settings
 from general import index
-from models import Employee, FakeStatusTracking
+from models import AuthUser, FakeStatusTracking
 
 class SimpleTest(unittest.TestCase):
 	def setUp(self):

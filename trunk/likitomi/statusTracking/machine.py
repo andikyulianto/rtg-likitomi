@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate, currentProcess
-from statusTracking.models import Employee, StatusTracking
+from statusTracking.models import AuthUser, StatusTracking
 
 ###############################################################
 ## this page is will filter for only a particular CV machine ##

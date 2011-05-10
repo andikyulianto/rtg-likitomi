@@ -11,6 +11,7 @@
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
+<script type="text/javascript" src="javascript/jquery.dataTables.js"></script>
 <!--
 <script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
@@ -54,6 +55,7 @@
 	{
 		top:20%;
 	}
+
 </style>
 <script>
 
@@ -161,75 +163,14 @@
 				loader: 'span.loading'
 		});
 	});	
-	
-	///////////////////////
-	/////// Detail ////////
-	//////////////////////
-	$(document).ready(function() {
-		$("#finishedM").click(function(){ 
-			if($("#finishedM").attr("checked")==true)
-			{
-				$("#resultTableDetailM tr#normal").show();
-			}
-			else
-			{
-				$("#resultTableDetailM tr#normal").hide();
-			}
-		});
-		$("#notProcessM").click(function(){ 
-			if($("#notProcessM").attr("checked")==true)
-			{
-				$("#resultTableDetailM tr#notProcess").show();
-			}
-			else
-			{
-				$("#resultTableDetailM tr#notProcess").hide();
-			}
-		});
-		$("#missingM").click(function(){ 
-			if($("#missingM").attr("checked")==true)
-			{
-				$("#resultTableDetailM tr#missing").show();
-			}
-			else
-			{
-				$("#resultTableDetailM tr#missing").hide();
-			}
-		});
-	
-		//button of daily 
-		$("#finished").click(function(){ 
-			if($("#finished").attr("checked")==true)
-			{
-				$("#resultTableDetail tr#normal").show();
-				
-			}
-			else
-			{
-				$("#resultTableDetail tr#normal").hide();
-			}
-		});
-		$("#notProcess").click(function(){ 
-			if($("#notProcess").attr("checked")==true)
-			{
-				$("#resultTableDetail tr#notProcess").show();
-			}
-			else
-			{
-				$("#resultTableDetail tr#notProcess").hide();
-			}
-		});
-		$("#missing").click(function(){ 
-			if($("#missing").attr("checked")==true)
-			{
-				$("#resultTableDetail tr#missing").show();
-			}
-			else
-			{
-				$("#resultTableDetail tr#missing").hide();
-			}
-		});
-	});
+$(document).ready(function() {
+	$('#totalPlanMonthly').dataTable({
+					"bJQueryUI": true,
+					"bAutoWidth": false,
+					"sPaginationType": "full_numbers"
+				});
+} );
+
 </script>
 </head>
 <body>
@@ -239,7 +180,7 @@
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%"><a id="normalLink" href="/likitomi/home/?eID={{eID}}">Home</a></th>
+    				<th align="left" width="60%"><a id="normalLink" href="/likitomi/home/?user={{user}}">Home</a></th>
     				<th align="left" width="30%">
 						<form id="form_search" action="#">
 							<fieldset id="form_search_fieldset">

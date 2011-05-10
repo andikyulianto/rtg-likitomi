@@ -7,7 +7,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
-from statusTracking.models import Employee, FakeStatusTracking
+from statusTracking.models import AuthUser, FakeStatusTracking
 from statusTracking.utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
 from statusTracking.config import getPCItemNum
 from datetime import date, datetime
