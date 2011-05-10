@@ -9,62 +9,73 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
-from statusTracking.models import Employee, StatusTracking, ProductCatalog, Partners
+from statusTracking.models import AuthUser,StatusTracking, ProductCatalog, Partners
 from statusTracking.utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
 from statusTracking.config import getPCItemNum
 from datetime import date, datetime
 from django.db.models import F
 from django.utils.safestring import mark_safe
 import calendar
+from employee import Employee
 
-employee_id = ""
-def set_employeeID(emID):
-	global employee_id
-	employee_id = emID
-	return employee_id
+
+username = ""
+def set_username(user):
+	global username
+	username = user
+	return username
 
 ####################################################
 ##                    for pc                      ##
 ## this page is view process via desktop computer ##
 ####################################################
 def section(request):
-	eID = request.GET['eID']
-	e = employee()
-	e.set_employeeID(eID)
+	user = request.GET['user']
 	today = todayDate()
-	temp_contents = ''
 
 	title = str(today)
 	is_enable_table = True
 	is_enable_desktop = True
 
-	employee = Employee.objects.get(eid=eID)
-	page =  employee.task
-	#section_title = employee.lastname
-	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
-	if(page == "PC"):
-		return showPC(eID,section_title)
-	if(page == "GM"):
-		return showGM(eID,section_title)
-	if(page == "CR"):
-		return workCR(eID,section_title)
-	if(page == "CV"):
-		return workCV(eID,section_title)
-	if(page == "PT"):
-		return workPT(eID,section_title)
-	if(page == "WH"):
-		return workWH(eID,section_title)
+#	employee = Employee.objects.get(eid=eID)
+	try:
+		employee = Employee(user)
+		set_username(user)
+#	group = AuthUserGroups.objects.get(user_id = user.id)
+	
+		eID = employee.id
+		task = employee.task
+
+		page =  task
+		#section_title = employee.lastname
+		section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
+		if(page == "PC"):
+			return showPC(user,section_title)
+		elif(page == "GM"):
+			return showGM(user,section_title)
+		elif(page == "CR"):
+			return workCR(user,section_title)
+		elif(page == "CV"):
+			return workCV(user,section_title)
+		elif(page == "PT"):
+			return workPT(user,section_title)
+		elif(page == "WH"):
+			return workWH(user,section_title)
+		else :
+			return render_to_response('home.html', locals())
+	except:
+		msg = "Error"
 	
 	return render_to_response('home.html', locals())
 
-def showPC(emID,title):
+def showPC(user,title):
+	
 	today = todayDate()
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	set_employeeID(emID)
-	eID =emID
-	
+	global username
+	username = user
 	#create items for PC
 	#extra = db_type(StatusTracking.objects.all())
 	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_code","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
@@ -145,41 +156,14 @@ def showPC(emID,title):
 	return render_to_response('PC/view.html', locals())
 
 
-def section(request):
-	eID = request.GET['eID']
-	today = todayDate()
-
-	title = str(today)
-	is_enable_table = True
-	is_enable_desktop = True
-
-	employee = Employee.objects.get(eid=eID)
-	page =  employee.task
-	#section_title = employee.lastname
-	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
-	if(page == "PC"):
-		return showPC(eID,section_title)
-	if(page == "GM"):
-		return showGM(eID,section_title)
-	if(page == "CR"):
-		return workCR(eID,section_title)
-	if(page == "CV"):
-		return workCV(eID,section_title)
-	if(page == "PT"):
-		return workPT(eID,section_title)
-	if(page == "WH"):
-		return workWH(eID,section_title)
-	
-	return render_to_response('home.html', locals())
 
 def normalPlanRefresher(request):
 	today = todayDate()
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	global employee_id 
-	eID = employee_id
-	
+	global username
+	user = username	
 
 	#create items for PC
 	#extra = db_type(StatusTracking.objects.all())

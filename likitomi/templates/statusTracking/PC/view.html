@@ -58,10 +58,21 @@
 			<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
 		</div> <!-- end Filter -->
 		<br>
-		<center>
-		<table border=1 class="tablesorter" id="totalPlanMonthly" width="100%">
+		<table id="totalPlanMonthly" width="100%">
 			<thead> 
-				<tr bgcolor="#cccccc"><th rowspan="2">SO NO</th><th rowspan="2">PO NO</th><th colspan="2">Product Code</th><th rowspan="2">Company</th><th rowspan="2">Product Name</th><th colspan="3">Product Spec.</th><th colspan="2">Amount</th><th colspan="2">Delivery</th><th colspan="3">Corrugator</th><th colspan="3">Convertor</th><th rowspan="2">Actual</th><th rowspan="2">REMARK</th></tr>
+				<tr bgcolor="#cccccc">
+				<th rowspan="2">SO NO</th>
+				<th rowspan="2">PO NO</th>
+				<th colspan="2" class="ui-state-default">Product Code</th>
+				<th rowspan="2">Company</th>
+				<th rowspan="2">Product Name</th>
+				<th colspan="3" class="ui-state-default">Product Spec.</th>
+				<th colspan="2" class="ui-state-default"> Amount</th>
+				<th colspan="2" class="ui-state-default">Delivery</th>
+				<th colspan="3" class="ui-state-default">Corrugator</th>
+				<th colspan="3" class="ui-state-default">Convertor</th>
+				<th rowspan="2">Actual</th>
+				<th rowspan="2">REMARK</th></tr>
 				<tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
 			</thead>
 			<tbody> 
@@ -82,7 +93,6 @@
 				{% endfor %}
 			</tbody>
 		</table>
-		</center>
 		<br>
 	<!--	<div id="pager" class="pager" align=center>
 			<form>

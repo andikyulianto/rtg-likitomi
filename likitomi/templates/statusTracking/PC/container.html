@@ -11,6 +11,7 @@
 <script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
+<script type="text/javascript" src="javascript/jquery.dataTables.js"></script>
 <!--
 <script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
@@ -274,6 +275,18 @@ $("#finished").click(function(){
 				stripeRows: ['odd', 'even'],
 				loader: 'span.loading'
 		});
+$(document).ready(function() {
+	$('#resultTableDetail').dataTable({
+					"bJQueryUI": true,
+					"bAutoWidth": false,
+					"sPaginationType": "full_numbers"
+				});
+	$('#resultTableDetailM').dataTable({
+					"bJQueryUI": true,
+					"bAutoWidth": false,
+					"sPaginationType": "full_numbers"
+				});
+	} );
 	});
 </script>
 </head>
@@ -285,7 +298,7 @@ $("#finished").click(function(){
     		<thead id="mainMenu">
     			<tr>
     				<th align="left" width="60%">
-					<a href="/likitomi/home/?eID={{eID}}">Home</a> >> <a href="/likitomi/pcdetail/?eID={{eID}}&page={{page}}">{{page}}</a>
+					<a href="/likitomi/home/?user={{user}}">Home</a> >> <a href="/likitomi/pcdetail/?user={{user}}&page={{page}}">{{page}}</a>
 				</th>
     				<th align="left" width="30%">
 					<form id="form_search" action="#">
@@ -319,11 +332,11 @@ view blog
 <!-- footer-->
 <div class="clear"></div>
 
-<center><a href="/likitomi/home/?eID={{eID}}" onmouseover="document.PCbutton.src='images/PC_black.png'" onmouseout="document.PCbutton.src='images/PC_normal.png'"><img src="images/PC_normal.png" alt="Planning Control" name="PCbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=CR" onmouseover="document.CRbutton.src='images/CR_black.png'" onmouseout="document.CRbutton.src='images/CR_normal.png'"><img src="images/CR_normal.png" alt="Corrugator" name="CRbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=CV" onmouseover="document.CVbutton.src='images/CV_black.png'" onmouseout="document.CVbutton.src='images/CV_normal.png'"><img src="images/CV_normal.png" alt="Convertor" name="CVbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=PT" onmouseover="document.PTbutton.src='images/PT_black.png'" onmouseout="document.PTbutton.src='images/PT_normal.png'"><img src="images/PT_normal.png" alt="Pad and Partitions" name="PTbutton" /></a>
-<a href="/likitomi/pcdetail/?eID={{eID}}&page=WH" onmouseover="document.WHbutton.src='images/WH_black.png'" onmouseout="document.WHbutton.src='images/WH_normal.png'"><img src="images/WH_normal.png" alt="Warehouse" name="WHbutton" /></a></center>
+<center><a href="/likitomi/home/?user={{user}}" onmouseover="document.PCbutton.src='images/PC_black.png'" onmouseout="document.PCbutton.src='images/PC_normal.png'"><img src="images/PC_normal.png" alt="Planning Control" name="PCbutton" /></a>
+<a href="/likitomi/pcdetail/?user={{user}}&page=CR" onmouseover="document.CRbutton.src='images/CR_black.png'" onmouseout="document.CRbutton.src='images/CR_normal.png'"><img src="images/CR_normal.png" alt="Corrugator" name="CRbutton" /></a>
+<a href="/likitomi/pcdetail/?user={{user}}&page=CV" onmouseover="document.CVbutton.src='images/CV_black.png'" onmouseout="document.CVbutton.src='images/CV_normal.png'"><img src="images/CV_normal.png" alt="Convertor" name="CVbutton" /></a>
+<a href="/likitomi/pcdetail/?user={{user}}&page=PT" onmouseover="document.PTbutton.src='images/PT_black.png'" onmouseout="document.PTbutton.src='images/PT_normal.png'"><img src="images/PT_normal.png" alt="Pad and Partitions" name="PTbutton" /></a>
+<a href="/likitomi/pcdetail/?user={{user}}&page=WH" onmouseover="document.WHbutton.src='images/WH_black.png'" onmouseout="document.WHbutton.src='images/WH_normal.png'"><img src="images/WH_normal.png" alt="Warehouse" name="WHbutton" /></a></center>
 </div> 
 	<div id="footer">
     <hr/>
