@@ -222,6 +222,7 @@ $(document).ready(function(){
 		var pcode = $('#map').contents().find('#pcode').val();
 		var width = $('#map').contents().find('#width').val();
 		var loss = $('#map').contents().find('#loss').val();
+		var lossarr = $('#map').contents().find('#lossarr').val();
 
 		var spcode = $('#spcodedd').val();
 		var swidth = $('#swidthdd').val();
@@ -235,7 +236,7 @@ $(document).ready(function(){
 		var clamping = $('#map').contents().find('#clamping').val();
 		var changed = $('#map').contents().find('#changed').val();
 		if (spcode != "" && swidth != ""){
-			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
+			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
 		}
 	});
 

@@ -40,12 +40,16 @@ color:dimgray;
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript" src="javascript/clamplift.js"></script>
+<script type="text/javascript" src="javascript/assigntag.js"></script>
+<script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$(window).load(function clampAll(){
 		$("#clampall").load("/maxclamp/");
 		setTimeout(clampAll, 2000);
 	});
+
+	$( "#asstag" ).button({icons: {primary: "ui-icon-plusthick"}});
 });
 </script>
 <script type="text/javascript">
@@ -124,14 +128,15 @@ function otherLoc()
 	div.appendChild(ldp);
 
 	var l = document.createElement('b');
-	l.innerHTML = 'Lane >'.fontsize(4);
+	l.innerHTML = 'Lane > '.fontsize(4);
 	ldp.appendChild(l);
 
 	var ilane = document.createElement('input');
 	ilane.id = 'ilane';
 	ilane.type = 'text';
-	ilane.size = '1';
+//	ilane.size = '1';
 	ilane.maxLength = '1';
+	ilane.style.width = '30px';
 	ilane.style.fontSize = '200%';
 	ilane.style.color = 'black';
 	ilane.style.textAlign = 'center';
@@ -139,14 +144,15 @@ function otherLoc()
 	ldp.appendChild(ilane);
 
 	var d = document.createElement('b');
-	d.innerHTML = '-'.fontsize(4);
+	d.innerHTML = ' - '.fontsize(4);
 	ldp.appendChild(d);
 
 	var iposition = document.createElement('input');
 	iposition.id = 'iposition';
 	iposition.type = 'text';
-	iposition.size = '2';
+//	iposition.size = '2';
 	iposition.maxLength = '2';
+	iposition.style.width = '50px';
 	iposition.style.fontSize = '200%';
 	iposition.style.color = 'black';
 	iposition.style.textAlign = 'center';
@@ -154,7 +160,7 @@ function otherLoc()
 	ldp.appendChild(iposition);
 
 	var p = document.createElement('b');
-	p.innerHTML = '< Position'.fontsize(4);
+	p.innerHTML = ' < Position'.fontsize(4);
 	ldp.appendChild(p);
 
 	var h = document.createElement('a');
@@ -488,6 +494,10 @@ function otherLoc()
 	<input id="atposition" type="hidden" value="{{ atposition }}" />
 	<input id="realtag" type="hidden" value="{{ realtag }}" />
 	<input id="actual" type="hidden" value="{{ actual_wt }}" />
+	<input id="spcodelist" type="hidden" value="{{ spcodelist }}" />
+	<input id="swidthlist" type="hidden" value="{{ swidthlist }}" />
+	<input id="tagidlist" type="hidden" value="{{ tagidquery }}" />
+	<input id="tag2write" type="hidden" value="{{ tag2write }}" />
 	{% if realtag %}
 		<div id="maxic">
 			<table style="width:100%; font-size:200%;">
@@ -495,7 +505,7 @@ function otherLoc()
 				<tr style="height:80px;"><td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td></tr>
 				<tr style="height:80px;"><td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td></tr>
 				<tr>
-					<td><p class="label">Location:</p></td><td><p class="var">{{lane}}-{{position}}</p></td>
+					<td><p class="label">Location:</p></td><td><p class="var">{% if lane != '' and position != 0 %}{{lane}}-{{position}}{% endif %}</p></td>
 					<td style="text-align:center; width:96px; height:80px;" >
 						{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="80px" src="images/clamplift/changeloc.png"></a>{% endif %}</td>
 				</tr>
@@ -547,6 +557,19 @@ function otherLoc()
 		<input type="hidden" value="{{ rightlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
+
+	<form id="frm6" action="/maxclamp/assigntag/" method="get">
+		<input id="atagid" type="hidden" value="" name="atagid" />
+		<input id="apcode" type="hidden" value="" name="apcode" />
+		<input id="asize" type="hidden" value="" name="asize" />
+		<input id="alane" type="hidden" value="" name="alane" />
+		<input id="aposition" type="hidden" value="" name="aposition" />
+		<input id="aweight" type="hidden" value="" name="aweight" />
+		<input id="oldtagid" type="hidden" value="" name="oldtagid" />
+	</form>
 	</div>
+
+	<button id="asstag" style="font-size:80%; position:absolute; bottom:0px;" onclick="javascript:assignTag()">Assign Tag</button>
+
 </body>
 </html>
