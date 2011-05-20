@@ -424,6 +424,7 @@ $(document).ready(function(){
 			{% endif %}
 		{% endfor %}
 	<td class="map">|</td></tr>
+
 	<tr><td class="map">E</td>
 		{% for pos in pose %}
 			{% if pos %}
@@ -448,7 +449,7 @@ $(document).ready(function(){
 					</tr></table></td>
 				{% else %}
 					{% if atlane == '3' and atposition == pos %}
-						<td id="locdown" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}>{{pos}}</td>
+						<td id="locdown" style="cursor:pointer;" {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
 					{% else %}
 						<td {% if pos in buff %}class="buff"{% else %}class="gray"{% endif %}></td>
 					{% endif %}

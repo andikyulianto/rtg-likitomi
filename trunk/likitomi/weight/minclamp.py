@@ -8,13 +8,36 @@ import socket
 
 def minclamp(request):
 	try:
+
+# Query tag ID, paper code, and size for assigning tag #
+		tagidquery = PaperRoll.objects.values_list('id')
+		tagidlist = list(tagidquery)
+		scursor1 = connection.cursor()
+		scursor1.execute("""
+			SELECT DISTINCT paper_code
+			FROM weight_paperroll
+			ORDER BY paper_code""")
+		spcode = scursor1.fetchall()
+		spcodelist = list()
+		for pcode in spcode:
+			spcodelist.append(pcode[0])
+		scursor2 = connection.cursor()
+		scursor2.execute("""
+			SELECT DISTINCT width
+			FROM weight_paperroll
+			ORDER BY width""")
+		swidth = scursor2.fetchall()
+		swidthlist = list()
+		for width in swidth:
+			swidthlist.append(width[0])
+
 # RFID: paper roll and location tags #
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'}
+		operating_mode = 'real' # Operating mode = {'real', 'fake'}
 
 		if operating_mode == 'real':
 
-#			HOST = '192.41.170.55' # CSIM network
-			HOST = '192.168.101.55' # Likitomi network
+			HOST = '192.41.170.55' # CSIM network
+#			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
 #			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
@@ -43,6 +66,28 @@ def minclamp(request):
 				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
 					loclist.append(tag)
 
+#			tag2writelist = list()
+#			for tag in tagdata:
+#				if "BBBB" not in tag:
+#					if "AAAA" in tag:
+#						tag2writelist.append(tag)
+#						taglist = list()
+#						replist = list()
+#						for id1 in tag2writelist:
+#							id2 = id1.replace("(","")
+#							id2 = id2.replace(")","")
+#							id3 = id2.split(", ")
+#							for id4 in id3:
+#								id5 = id4.split("=")
+#								if id5[0]=="tag_id": taglist.append(id5[1])
+#								elif id5[0]=="repeat": replist.append(id5[1])
+#							repintlist = list()
+#							for rep in replist:
+#								repintlist.append(int(rep))
+#							if max(repintlist) in repintlist:
+#								n = repintlist.index(max(repintlist))
+#							oldtagid = taglist[n][6:30]
+
 			cnt = 0
 
 			tagid_A = list()
@@ -58,7 +103,6 @@ def minclamp(request):
 					id5 = id4.split("=")
 					if id5[0]=="tag_id":tagid_A.append(id5[1])
 					elif id5[0]=="type":type_A.append(id5[1])
-
 					elif id5[0]=="antenna": antenna_A.append(id5[1])
 					elif id5[0]=="repeat": repeat_A.append(id5[1])
 					cnt= cnt+1
@@ -138,6 +182,7 @@ def minclamp(request):
 #			tagsplt = tagid_A[n].split("AAAA")
 #			realtag = int(tagsplt[1][0:4])
 			realtag = tagid_A[n][7:11]
+			tag2write = tagid_A[n][6:30]
 
 			soc.close()
 
@@ -148,11 +193,11 @@ def minclamp(request):
 #			atlocation = 'Scale'
 
 			# MINCLAMP #
-			atlane = '2'
-			atposition = '2'
+			atlane = '3'
+			atposition = '8'
 			atlocation = 'Stock'
 
-			realtag = 67
+			realtag = '0067'
 
 # Query database from realtag #
 		if realtag:
@@ -323,15 +368,136 @@ def minchangeloc(request):
 
 	return HttpResponseRedirect('/minclamp/')
 
+@transaction.commit_manually
+def minassigntag(request):
+	try:
+		if 'atagid' in request.GET and request.GET['atagid']:
+			atagid = int(request.GET['atagid'])
+		else:
+			return HttpResponseRedirect('/minclamp/')
+		if len(str(atagid)) == 1: stratagid = '000'+str(atagid)
+		if len(str(atagid)) == 2: stratagid = '00'+str(atagid)
+		if len(str(atagid)) == 3: stratagid = '0'+str(atagid)
+
+		if 'apcode' in request.GET and request.GET['apcode']:
+			apcode = request.GET['apcode']
+		else:
+			return HttpResponseRedirect('/minclamp/')
+
+		if 'asize' in request.GET and request.GET['asize']:
+			asize = int(request.GET['asize'])
+		else:
+			return HttpResponseRedirect('/minclamp/')
+
+		if 'aweight' in request.GET and request.GET['aweight']:
+			aweight = int(request.GET['aweight'])
+		else:
+			return HttpResponseRedirect('/minclamp/')
+
+		if 'alane' in request.GET and request.GET['alane']:
+			alane = request.GET['alane']
+		else:
+			alane = ''
+
+		if 'aposition' in request.GET and request.GET['aposition']:
+			aposition = int(request.GET['aposition'])
+		else:
+			aposition = 0
+
+		if 'oldtagid' in request.GET and request.GET['oldtagid']:
+			oldtagid = request.GET['oldtagid']
+		else:
+			return HttpResponseRedirect('/minclamp/')
+
+		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
+#		HOST = '192.168.1.55' # My own local network: Linksys
+#		HOST = '192.168.2.88' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+
+#		## soc.send('setup.operating_mode = standby\r\n')
+#		soc.send('tag.db.scan_tags(100)\r\n')
+#		datum = soc.recv(128)
+##		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id=30069AAAA000000000000000)\r\n')
+#		if datum.find("ok") > -1:
+#			soc.send('tag.read_id()\r\n')
+#			data = soc.recv(8192)
+#			tagdata = data.split("\r\n")
+#		tag2writelist = list()
+#		for tag in tagdata:
+#			if "BBBB" not in tag:
+#				if "AAAA" in tag:
+#					tag2writelist.append(tag)
+#					taglist = list()
+#					replist = list()
+#					for id1 in tag2writelist:
+#						id2 = id1.replace("(","")
+#						id2 = id2.replace(")","")
+#						id3 = id2.split(", ")
+#						for id4 in id3:
+#							id5 = id4.split("=")
+#							if id5[0]=="tag_id": taglist.append(id5[1])
+#							elif id5[0]=="repeat": replist.append(id5[1])
+#						repintlist = list()
+#						for rep in replist:
+#							repintlist.append(int(rep))
+#						if max(repintlist) in repintlist:
+#							n = repintlist.index(max(repintlist))
+#						oldtagid = taglist[n][6:30]
+#						soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
+#				else:
+#					soc.send('tag.write_id(3'+stratagid+'AAAA000000000000000)\r\n')
+
+		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
+		response = soc.recv(128)
+		soc.close()
+
+		if response.find('ok') != -1:
+			p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+			p.save()
+			transaction.commit()
+			return HttpResponseRedirect('/minclamp/')
+		else:
+			return render_to_response('intmed.html', locals())
+
+	except:
+		pass
+
 def maxclamp(request):
 	try:
+
+# Query tag ID, paper code, and size for assigning tag #
+		tagidquery = PaperRoll.objects.values_list('id')
+		tagidlist = list(tagidquery)
+		scursor1 = connection.cursor()
+		scursor1.execute("""
+			SELECT DISTINCT paper_code
+			FROM weight_paperroll
+			ORDER BY paper_code""")
+		spcode = scursor1.fetchall()
+		spcodelist = list()
+		for pcode in spcode:
+			spcodelist.append(pcode[0])
+		scursor2 = connection.cursor()
+		scursor2.execute("""
+			SELECT DISTINCT width
+			FROM weight_paperroll
+			ORDER BY width""")
+		swidth = scursor2.fetchall()
+		swidthlist = list()
+		for width in swidth:
+			swidthlist.append(width[0])
+
 # RFID: paper roll and location tags #
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'}
+		operating_mode = 'real' # Operating mode = {'real', 'fake'}
 
 		if operating_mode == 'real':
 
-#			HOST = '192.41.170.55' # CSIM network
-			HOST = '192.168.101.55' # Likitomi network
+			HOST = '192.41.170.55' # CSIM network
+#			HOST = '192.168.101.55' # Likitomi network
 #			HOST = '192.168.1.55' # My own local network: Linksys
 #			HOST = '192.168.2.88' # In Likitomi factory
 			PORT = 50007
@@ -376,7 +542,6 @@ def maxclamp(request):
 
 					if id5[0]=="tag_id":tagid_A.append(id5[1])
 					elif id5[0]=="type":type_A.append(id5[1])
-
 					elif id5[0]=="antenna": antenna_A.append(id5[1])
 					elif id5[0]=="repeat": repeat_A.append(id5[1])
 					cnt= cnt+1
@@ -457,6 +622,7 @@ def maxclamp(request):
 #			tagsplt = tagid_A[n].split("AAAA")
 #			realtag = int(tagsplt[1][0:4])
 			realtag = tagid_A[n][7:11]
+			tag2write = tagid_A[n][6:30]
 
 			soc.close()
 
@@ -468,10 +634,10 @@ def maxclamp(request):
 
 			# MAXCLAMP #
 			atlane = '2'
-			atposition = '2'
+			atposition = '4'
 			atlocation = 'Stock'
 
-			realtag = 67
+			realtag = 68
 
 # Query database from realtag #
 		if realtag:
@@ -642,3 +808,102 @@ def maxchangeloc(request):
 	p.save()
 
 	return HttpResponseRedirect('/maxclamp/')
+
+@transaction.commit_manually
+def maxassigntag(request):
+	try:
+		if 'atagid' in request.GET and request.GET['atagid']:
+			atagid = int(request.GET['atagid'])
+		else:
+			return HttpResponseRedirect('/maxclamp/')
+		if len(str(atagid)) == 1: stratagid = '000'+str(atagid)
+		if len(str(atagid)) == 2: stratagid = '00'+str(atagid)
+		if len(str(atagid)) == 3: stratagid = '0'+str(atagid)
+
+		if 'apcode' in request.GET and request.GET['apcode']:
+			apcode = request.GET['apcode']
+		else:
+			return HttpResponseRedirect('/maxclamp/')
+
+		if 'asize' in request.GET and request.GET['asize']:
+			asize = int(request.GET['asize'])
+		else:
+			return HttpResponseRedirect('/maxclamp/')
+
+		if 'aweight' in request.GET and request.GET['aweight']:
+
+			aweight = int(request.GET['aweight'])
+		else:
+			return HttpResponseRedirect('/maxclamp/')
+
+		if 'alane' in request.GET and request.GET['alane']:
+			alane = request.GET['alane']
+		else:
+			alane = ''
+
+		if 'aposition' in request.GET and request.GET['aposition']:
+			aposition = int(request.GET['aposition'])
+		else:
+			aposition = 0
+
+		if 'oldtagid' in request.GET and request.GET['oldtagid']:
+			oldtagid = request.GET['oldtagid']
+		else:
+			return HttpResponseRedirect('/maxclamp/')
+
+		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
+#		HOST = '192.168.1.55' # My own local network: Linksys
+#		HOST = '192.168.2.88' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+
+#		## soc.send('setup.operating_mode = standby\r\n')
+#		soc.send('tag.db.scan_tags(100)\r\n')
+#		datum = soc.recv(128)
+##		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id=30069AAAA000000000000000)\r\n')
+#		if datum.find("ok") > -1:
+#			soc.send('tag.read_id()\r\n')
+#			data = soc.recv(8192)
+#			tagdata = data.split("\r\n")
+#		tag2writelist = list()
+#		for tag in tagdata:
+#			if "BBBB" not in tag:
+#				if "AAAA" in tag:
+#					tag2writelist.append(tag)
+#					taglist = list()
+#					replist = list()
+#					for id1 in tag2writelist:
+#						id2 = id1.replace("(","")
+#						id2 = id2.replace(")","")
+#						id3 = id2.split(", ")
+#						for id4 in id3:
+#							id5 = id4.split("=")
+#							if id5[0]=="tag_id": taglist.append(id5[1])
+#							elif id5[0]=="repeat": replist.append(id5[1])
+#						repintlist = list()
+#						for rep in replist:
+#							repintlist.append(int(rep))
+#						if max(repintlist) in repintlist:
+#							n = repintlist.index(max(repintlist))
+#						oldtagid = taglist[n][6:30]
+#						soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
+#				else:
+#					soc.send('tag.write_id(3'+stratagid+'AAAA000000000000000)\r\n')
+
+		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
+		response = soc.recv(128)
+		soc.close()
+
+		if response.find('ok') != -1:
+			p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+			p.save()
+			transaction.commit()
+			return HttpResponseRedirect('/maxclamp/')
+		else:
+			return render_to_response('intmed.html', locals())
+
+	except:
+		pass

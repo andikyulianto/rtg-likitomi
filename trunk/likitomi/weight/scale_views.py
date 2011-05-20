@@ -196,7 +196,7 @@ def scale(request):
 
 		if operating_mode == 'fake':
 
-			realtag = 67
+			realtag = 55
 
 # Query database #
 		if realtag != 'None':
