@@ -147,6 +147,7 @@ class Products_model extends Model
 	function insertProduct($products)
 	{
 		$this->db->trans_start();
+		echo $products;
 		$this->db->insert($this->tableName, $products); 
 		
 		$product_id = $this->db->insert_id();
@@ -166,7 +167,6 @@ class Products_model extends Model
 		$this->db->trans_start();
 		$this->db->where('product_id', $product_id);
 		$this->db->update($this->tableName, $products); 
-		
 		$this->db->trans_complete();	
 		if ($this->db->trans_status() === FALSE)
 		{

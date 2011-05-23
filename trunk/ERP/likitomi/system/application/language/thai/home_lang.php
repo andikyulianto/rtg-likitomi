@@ -4,11 +4,14 @@
 $lang['partners'] 		= "คู่ค้า";
 $lang['papers'] 		= "ลูกกระดาษ";
 $lang['products'] 		= "สินค้า";
-$lang['salesorder'] 	= "Sales Order";
+$lang['salesorder'] 	= "ใบสั่งสินค้า";
 $lang['planning'] 		= "แผนงาน";
 $lang['reportplanning'] = "รายงาน แผนงาน";
 $lang['warehouse'] 		= "คลังสินค้า";
-$lang['translation'] 	= "แปล";
+$lang['translator'] 	= "แปล";
+$lang['clampliftmanger'] = "จัดการรถ clamplift";
+$lang['english'] = "ภาษาอังกฤษ";
+$lang['thai'] = "ภาษาไทย";
 
 //Buttons
 $lang['edit'] 		= "Edit";

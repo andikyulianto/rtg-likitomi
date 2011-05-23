@@ -71,6 +71,7 @@ class Products extends Controller {
 		echo json_encode($item);
 	}
 	
+	
 	function getNames()
 	{
 		$product_type = ($this->input->post('product_type'))?$this->input->post('product_type'):'All';
@@ -87,9 +88,11 @@ class Products extends Controller {
 		$this->load->view('products/productlist',$data);
 	}
 	
+	
 	function perPage(){
 		return 30;
 	}
+
 	
 	function getDetails()
 	{
@@ -143,6 +146,7 @@ class Products extends Controller {
 		}	
 	}
 
+
 	function productData($productsall)
 	{
 		$product_data =  array();
@@ -159,14 +163,51 @@ class Products extends Controller {
 		$product_data['qty_set']=$productsall[11];
 		return $product_data;
 	}
+	function search()
+	{
+		$searchkeyword = ($this->input->post('search'))?$this->input->post('search'):'';
+		
+		$data['searchkeyword'] = $searchkeyword;
+		$page=($this->input->post('page'))?$this->input->post('page'):'0';
+		$data['resultProducts'] = $this->Products_model->getLimitedNames($searchkeyword,$this->perPage(),$page);
+		$data['totalRec'] = $this->Products_model->getTotalDataByCode($searchkeyword);
+		$data['perPage'] = $this->perPage();
+		$data['page'] = $page;
+		$data['action'] = "search";
+		$data['product_class'] = $this;
+		$data['product_type'] =$searchkeyword;
+		$this->load->view('products/productlist',$data);
+	}
+		
+		
+	// Highlight value based on basic search keywords
+	function ew_Highlight($src, $bkw) {
+		$outstr = "";
+		if (strlen($src) > 0 && (strlen($bkw) > 0)) {
+			$x=0;
+			$wrky = stripos($src, $bkw);
+			if ($wrky !== FALSE) {
+				$outstr .= substr($src, $x, $wrky) .
+					"<span class=\"ewHighlightSearch\">" .
+					substr($src, $wrky, strlen($bkw)) . "</span>";
+				$x = $wrky + strlen($bkw);
+				$outstr .= substr($src, $x, strlen($src));
+			}			
+		} else {
+			$outstr = $src;
+		}
+		return $outstr;
+	}
+	
+
 	function saveDetail()
 	{
 		$products = array();
 		$products['product_code'] = ($this->input->post('product_code'))?$this->input->post('product_code'):'';
 		$products['product_name'] = ($this->input->post('product_name'))?$this->input->post('product_name'):'';
 		$products['partner_id'] = ($this->input->post('partner_id'))?$this->input->post('partner_id'):'';
-		$products['product_type'] = ($this->input->post('product_type'))?$this->input->post('product_type'):'';
-		$products['customer_part_no'] = ($this->input->post('customer_part_no'))?$this->input->post('customer_part_no'):'';
+//		$products['product_type'] = ($this->input->post('product_type'))?$this->input->post('product_type'):'';
+//		$products['customer_part_no'] = ($this->input->post('customer_part_no'))?$this->input->post('customer_part_no'):'';
 		$products['ink_1'] = ($this->input->post('ink_1'))?$this->input->post('ink_1'):'';
 		$products['ink_2'] = ($this->input->post('ink_2'))?$this->input->post('ink_2'):'';
 		$products['ink_3'] = ($this->input->post('ink_3'))?$this->input->post('ink_3'):'';
@@ -192,6 +233,8 @@ class Products extends Controller {
 		$products['code_rd'] = ($this->input->post('code_rd'))?$this->input->post('code_rd'):'';
 		$products['sketch'] = ($this->input->post('sketch'))?$this->input->post('sketch'):'';
 		$products['sketch_large'] = ($this->input->post('sketch_large'))?$this->input->post('sketch_large'):'';
+		$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
+		$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 		$products['remark'] = ($this->input->post('remark'))?$this->input->post('remark'):'';
 		$products['isdeleted'] 				= '0';
 		$products['created_on'] 			= date("Y-m-d G:i:s");
@@ -231,8 +274,8 @@ class Products extends Controller {
 			$products['product_code'] = ($this->input->post('product_code'))?$this->input->post('product_code'):'';
 			$products['product_name'] = ($this->input->post('product_name'))?$this->input->post('product_name'):'';
 			$products['partner_id'] = ($this->input->post('partner_id'))?$this->input->post('partner_id'):'';
-			$products['product_type'] = ($this->input->post('product_type'))?$this->input->post('product_type'):'';
-			$products['customer_part_no'] = ($this->input->post('customer_part_no'))?$this->input->post('customer_part_no'):'';
+//			$products['product_type'] = ($this->input->post('product_type'))?$this->input->post('product_type'):'';
+//			$products['customer_part_no'] = ($this->input->post('customer_part_no'))?$this->input->post('customer_part_no'):'';
 			$products['ink_1'] = ($this->input->post('ink_1'))?$this->input->post('ink_1'):'';
 			$products['ink_2'] = ($this->input->post('ink_2'))?$this->input->post('ink_2'):'';
 			$products['ink_3'] = ($this->input->post('ink_3'))?$this->input->post('ink_3'):'';
@@ -258,6 +301,8 @@ class Products extends Controller {
 			$products['code_rd'] = ($this->input->post('code_rd'))?$this->input->post('code_rd'):'';
 			$products['sketch'] = ($this->input->post('sketch'))?$this->input->post('sketch'):'';
 			$products['sketch_large'] = ($this->input->post('sketch_large'))?$this->input->post('sketch_large'):'';
+			$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
+			$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 			$products['remark'] = ($this->input->post('remark'))?$this->input->post('remark'):'';
 			$products['isdeleted'] 				= '0';
 			$products['modified_on'] 			= date("Y-m-d G:i:s");
@@ -306,42 +351,7 @@ class Products extends Controller {
 		}
 	}
 	
-	function search()
-	{
-		$searchkeyword = ($this->input->post('search'))?$this->input->post('search'):'';
-		
-		$data['searchkeyword'] = $searchkeyword;
-		$page=($this->input->post('page'))?$this->input->post('page'):'0';
-		$data['resultProducts'] = $this->Products_model->getLimitedNames($searchkeyword,$this->perPage(),$page);
-		$data['totalRec'] = $this->Products_model->getTotalDataByCode($searchkeyword);
-		$data['perPage'] = $this->perPage();
-		$data['page'] = $page;
-		$data['action'] = "search";
-		$data['product_class'] = $this;
-		$data['product_type'] =$searchkeyword;
-		$this->load->view('products/productlist',$data);
-	}
-		
-		
-	// Highlight value based on basic search keywords
-	function ew_Highlight($src, $bkw) {
-		$outstr = "";
-		if (strlen($src) > 0 && (strlen($bkw) > 0)) {
-			$x=0;
-			$wrky = stripos($src, $bkw);
-			if ($wrky !== FALSE) {
-				$outstr .= substr($src, $x, $wrky) .
-					"<span class=\"ewHighlightSearch\">" .
-					substr($src, $wrky, strlen($bkw)) . "</span>";
-				$x = $wrky + strlen($bkw);
-				$outstr .= substr($src, $x, strlen($src));
-			}			
-		} else {
-			$outstr = $src;
-		}
-		return $outstr;
-	}
-	
+
 	function fileUpload()
 	{
 		$productid_file=($this->input->post('productid_file'))?$this->input->post('productid_file'):'0';
@@ -364,5 +374,6 @@ class Products extends Controller {
 	{
 		
 	}
+
 }
 ?>

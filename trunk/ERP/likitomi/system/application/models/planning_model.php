@@ -7,7 +7,7 @@ class Planning_model extends Model
 	var $totalPlanning 	= "total_planning";
 	var $planning 		= "planning";
 	var $status 		= "status";
-	var $fakeTotalPlan 	= "fake_status_tracking";
+	var $fakeTotalPlan 	= "status_tracking";
 
 	function Planning_model()
 	{
@@ -123,7 +123,7 @@ class Planning_model extends Model
 		return $query;
 	}
 	//add save total_plan 
-	function savetotalplan($rowData,$choosendate)
+	function savetotalplan($rowData,$choosendate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
 	{	
 		$param = array( "date" => $choosendate,
 			"delivery_id" => $rowData->delivery_id,
@@ -135,8 +135,8 @@ class Planning_model extends Model
 			"BL" => $rowData->BL,
 			"CM" => $rowData->CM,
 			"CL" => $rowData->CL,
- 			"corrugator_date" => substr($rowData->corrugator_date,0,10)." ".$rowData->corrugator_time.":00",
-			"converter_date" => substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00",
+ 			"corrugator_date" => substr($rowData->corrugator_date,0,10)." ".$time_start_cr,
+			"converter_date" => substr($rowData->converter_date,0,10)." ".$time_start_cv,
 			//"patchpartition_date" => substr($rowData->patchpartition_date,0,10)." ".$rowData->patchpartition_time.":00",
 			//"warehouse_date" => substr($rowData->warehouse_date,0,10)." ".$rowData->warehouse_time.":00",
 			//"next_process" => $rowData->next_process
@@ -313,6 +313,7 @@ class Planning_model extends Model
 				."AND pd.product_code = d.product_code "
 				."AND pd.isdeleted =0 "
 				."ORDER BY pc.next_process";
+				//."AND pc.next_process='2CL'";
 		$query = $this->db->query($sql);
 		return $query;
 	}
@@ -360,7 +361,7 @@ class Planning_model extends Model
 		$sql = 	 "SELECT tp.autoid, d.sales_order, so.purchase_order_no, d.product_code, pt.partner_name, pc.product_name, pc.p_width_inch,pc.slit, "  
 				."pc.t_length, pd.flute, pc.cut,d.qty, pc.qty_allowance, date_format(d.delivery_date,'%d/%m') as delivery_date, date_format(tp.corrugator_date,'%d/%m') as corrugator_date, "
 				."date_format(tp.corrugator_date,'%H:%i') as corrugator_time,date_format(tp.converter_date,'%d/%m') as converter_date,date_format(tp.converter_date,'%H:%i') as converter_time, "  
-				."d.remarks as D_remarks, pc.remark PC_remarks, so.remarks SO_remarks  "
+				."d.remarks as D_remarks, pc.remark PC_remarks, so.remarks SO_remarks , pc.next_process as machine "
 				."FROM total_planning tp, delivery d, product_catalog pc, sales_order so, partners pt, products pd "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "

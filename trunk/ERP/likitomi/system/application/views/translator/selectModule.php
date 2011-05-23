@@ -9,7 +9,7 @@ foreach ( $masterModules as $masterModule ) {
 	echo form_submit('langModule', $masterModule );
 	
 	if ( ! in_array( $masterModule, $slaveModules ) ) {
-		echo $slaveLang . " module not found";
+		//echo $slaveLang . " module not found";
 	}
 	
 	echo form_close();

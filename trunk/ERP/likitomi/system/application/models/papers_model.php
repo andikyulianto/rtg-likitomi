@@ -11,7 +11,7 @@ class Papers_model extends Model
 	
 	function getTotalData()
 	{
-		$this->db->where('isdeleted',0);
+	//	$this->db->where('isdeleted',0);
 		$this->db->from($this->tableName); 
 		return $this->db->count_all_results();	
     }
@@ -21,7 +21,7 @@ class Papers_model extends Model
 		$this->db->where('isdeleted',0);
 		$this->db->select('paper_grade');
 		$this->db->group_by('paper_grade'); 
-		$this->db->from($this->tableName); 
+	//	$this->db->from($this->tableName); 
 		$query = $this->db->get($this->tableName);
 		return $query->num_rows();
 	}

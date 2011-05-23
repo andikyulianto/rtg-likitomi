@@ -8,7 +8,7 @@ require('../../class/BCGDrawing.php');
 include('../../class/BCGcode39.barcode.php'); 
 
 // Loading Font
-$font = new BCGFont('../../class/font/Arial.ttf', 18);
+$font = new BCGFont('../../class/font/Arial.ttf', 8);
  
 // The arguments are R, G, B for color.
 $color_black = new BCGColor(0, 0, 0);
@@ -19,9 +19,9 @@ $code->setScale(1); // Resolution
 $code->setThickness(30); // Thickness
 $code->setForegroundColor($color_black); // Color of bars
 $code->setBackgroundColor($color_white); // Color of spaces
-$code->setFont($font); // Font (or 0)
+$code->setFont(0); // Font (or 0)
 //$code->parse($_GET['text']); // Text
-$code->parse("hello");
+//$code->parse("hello");
 
 /* Here is the list of the arguments
 1 - Filename (empty : display on screen)

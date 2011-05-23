@@ -214,9 +214,10 @@ class Planning extends Controller {
 		$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
 		$time_stop_pt = $time_start_pt +round( 30) * 0.0006949;
 		$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
+		//$rowData['time_start_cr'] = $time_start_cr;
 			//print_r($rowData);
 			//print_r($key->row_array(0));
-			$this->Planning_model->savetotalplan($rowData,$choosendate);
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to fake_table for status tracking
 			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
 			$time_start_cr = $time_stop_cr;
@@ -312,16 +313,16 @@ class Planning extends Controller {
 
 
 // Including all required classes
-require('class/BCGFont.php');
-require('class/BCGColor.php');
-require('class/BCGDrawing.php'); 
+require('barcodegen/class/BCGFont.php');
+require('barcodegen/class/BCGColor.php');
+require('barcodegen/class/BCGDrawing.php'); 
 
 // Including the barcode technology
-include('class/BCGcode39.barcode.php'); 
+include('barcodegen/class/BCGcode39.barcode.php'); 
 
 // Loading Font
-$font = new BCGFont('class/font/Arial.ttf', 18);
- 
+//$font = new BCGFont('barcodegen/class/font/Arial.ttf', 8);
+ $font = new BCGFont('barcodegen/class/font/Arial.ttf',-1);
 // The arguments are R, G, B for color.
 $color_black = new BCGColor(0, 0, 0);
 $color_white = new BCGColor(255, 255, 255); 

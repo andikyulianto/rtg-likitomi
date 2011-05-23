@@ -113,9 +113,9 @@
 		<td class='blankTbl'></td>
 		<td><?=round($used_bl)?></td>
 		<td><?=round($used_bm)?></td>
-		<td>ACTUAL</td>
-		<td><?=round($used_bl_lkg)?></td>
-		<td><?=round($used_bm_lkg)?></td>	
+		<td bgcolor="AliceBlue">ACTUAL</td>
+		<td bgcolor="AliceBlue"><?=round($used_bl_lkg)?></td>
+		<td bgcolor="AliceBlue"><?=round($used_bm_lkg)?></td>	
 		<td>+LOSS</td>
 		<td><?=round($used_bl_mkg)?></td>
 		<td><?=round($used_bm_mkg)?></td>
@@ -127,7 +127,7 @@
 		<!--MO number; Barcode will be added here--> 
 		<!--<td><?=$key->autoid?></td>-->
 		<?php $path = "/planning/barcode/".$key->autoid."/"; ?> 
-		<td ><img src=<?php echo site_url($path)?>/><br> <?=$key->autoid ?></td> 
+		<td ><img src=<?php echo site_url($path)?> /><br> <?=$key->autoid ?></td> 
 
 		
 		<td><?=$key->DF?></td>
@@ -137,9 +137,9 @@
 		<td><?=round($used_df)?></td>
 		<td><?=round($used_cl)?></td>
 		<td><?=round($used_cm)?></td>
-		<td><?=round($used_df_lkg)?></td>
-		<td><?=round($used_cl_lkg)?></td>
-		<td><?=round($used_cm_lkg)?></td>
+		<td bgcolor="AliceBlue"><?=round($used_df_lkg)?></td>
+		<td bgcolor="AliceBlue"><?=round($used_cl_lkg)?></td>
+		<td bgcolor="AliceBlue"><?=round($used_cm_lkg)?></td>
 		<td><?=round($used_df_mkg)?></td>
 		<td><?=round($used_cl_mkg)?></td>
 		<td><?=round($used_cm_mkg)?></td>
