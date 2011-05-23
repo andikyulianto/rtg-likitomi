@@ -408,7 +408,6 @@
         }
 		row.selected = !row.selected;
 		sel_SetColor(row);
-		alert("Hello")
 		postTable(table.id);
 	}
 	
@@ -440,7 +439,6 @@
 		//alert(inspect(Ext.get('searchContainerDiv')));
 		//alert(Ext.get('searchContainerDiv'));
 		loadMask = new Ext.LoadMask(Ext.get('searchContainerDiv'), { msg: "Loading..." });
-		//alert(tblName);
 		if(loadMask!=null)loadMask.show();
 		var delivery_date_all = "";
 		var sales_order_all = "";

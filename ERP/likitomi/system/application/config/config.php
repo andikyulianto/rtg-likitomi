@@ -77,11 +77,11 @@ $config['language']	= "english";
 | that require a character set to be provided.
 |
 */
-$config['charset'] = "TIS-620";
+$config['charset'] = "UTF-8";
 
 /*
 |--------------------------------------------------------------------------
-| Enable/Disable System Hooks
+| Enable/Disable System HooksUnknown encoding
 |--------------------------------------------------------------------------
 |
 | If you would like to use the "hooks" feature you must enable it by

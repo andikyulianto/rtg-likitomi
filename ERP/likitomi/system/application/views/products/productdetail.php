@@ -22,7 +22,7 @@ echo "</div>";
 	</tr>
 </table>
 <br/>
-
+<!--
 <div id='boxcontainer'>
 <table>
 	<tr>
@@ -34,6 +34,7 @@ echo "</div>";
 	</table>
 </div>
 <br/>
+-->
 <table class='tblFixedBorder' cellspacing=2 cellpadding=2>
 	<tr>
         <td class='tblProdViewLabel'>Code</td>
@@ -210,6 +211,13 @@ foreach($resultProducts as $prod){
 	</tr>
 </table>
 </div>
+<br>
+<div id='boxcontainer'>
+Additional value for PC
+<table><tr><td class='tblDetailViewLabel'>Blank +</td><td><?=$resultProductCatalog->add_blank?></td>
+	<td class='tblDetailViewLabel'>T Length +</td><td><?=$resultProductCatalog->add_t_length?></td></tr>
+</table>
+</div>
 <br/>
 
 <div id='boxcontainer'>
@@ -235,8 +243,8 @@ if($action=='edit'){
 	$product_code = $resultProductCatalog->product_code;
 	$product_name = $resultProductCatalog->product_name;
 	$partner_id = $resultProductCatalog->partner_id;
-	$product_type = $resultProductCatalog->product_type;
-	$customer_part_no = $resultProductCatalog->customer_part_no;
+//	$product_type = $resultProductCatalog->product_type;
+//	$customer_part_no = $resultProductCatalog->customer_part_no;
 	$ink_1 = $resultProductCatalog->ink_1;
 	$ink_2 = $resultProductCatalog->ink_2;
 	$ink_3 = $resultProductCatalog->ink_3;
@@ -262,6 +270,8 @@ if($action=='edit'){
 	$code_rd = $resultProductCatalog->code_rd;
 	$sketch = $resultProductCatalog->sketch;
 	$sketch_large = $resultProductCatalog->sketch_large;
+	$add_blank = $resultProductCatalog->add_blank;
+	$add_t_length = $resultProductCatalog->add_t_length;
 	$remark = $resultProductCatalog->remark;
 	$isdeleted = $resultProductCatalog->isdeleted;
 	$created_on = $resultProductCatalog->created_on;
@@ -313,8 +323,8 @@ if($action=='add'){
 	$product_name = "";
 	$partner_id = "";
 	$customer_name = "";
-	$product_type = "";
-	$customer_part_no = "";
+//	$product_type = "";
+//	$customer_part_no = "";
 	$ink_1 = "";
 	$ink_2 = "";
 	$ink_3 = "";
@@ -338,7 +348,10 @@ if($action=='add'){
 	$next_process = "";
 	$code_pd = "";
 	$code_rd = "";
-	$sketch = "";$sketch_large = "";
+	$sketch = "";
+	$sketch_large = "";
+	$add_blank = "";
+	$add_t_length = "";
 	$remark = "";
 	$isdeleted = "";
 	$created_on = "";
@@ -373,7 +386,7 @@ if($action=='add'){
 			<table>
             <tr>
                 <td class='tblDetailViewLabel'>Code</td>
-                <td><input type='text' id='x_product_code' value='<?=$product_code?>' <?php if($salesCount>0)echo 'disabled';?>></td>
+                <td><input type='text' id='x_product_code' value='<?=$product_code?>' <?php if($salesCount>0);?>></td>
             </tr>
             <tr>
                 <td class='tblDetailViewLabel'>Name</td>
@@ -399,11 +412,11 @@ if($action=='add'){
 		</td>
 	</tr>
 </table>
-<br/>
+<br/><!--
 <div id='boxcontainer'>
 <table>
 	<tr>
-        <td class='tblDetailViewLabel'>Part No.</td>
+       <td class='tblDetailViewLabel'>Part No.</td>
 		<td><input type='text' id='x_customer_part_no' value='<?=$customer_part_no?>'></td>
 		<td class='tblDetailViewLabel'>Product Type</td>
         <td><input type='text' id='x_product_type' value='<?=$product_type?>'></td>
@@ -411,7 +424,7 @@ if($action=='add'){
 	</table>
 </div>
 <br/>
-
+-->
 <table style='border: 1px solid #C8C8C8;' cellspacing=2 cellpadding=2 id='tblProductLine'>
 	<tr>
         <td class='tblProdViewLabel'>Code</td>
@@ -471,18 +484,18 @@ for($i=0;$i<$trows;$i++){
 <table>
 	<tr>
 		<td class='tblDetailViewLabel'>Joint Type</td>
-			<select id='x_joint_type'>
+		<td><select id='x_joint_type' style="width:97%" >
 				<option value=""></option>
                 <option value="Glue" <?php if($joint_type=='Glue')echo 'selected'; ?>>Glue</option>
                 <option value="Red Stitch" <?php if($joint_type=='Red Stitch')echo 'selected'; ?>>Red Stitch</option>
 				<option value="White Stitch" <?php if($joint_type=='White Stitch')echo 'selected'; ?>>White Stitch</option>
-            </select>
+            </select></td>
 		<td class='tblDetailViewLabel'>Joint Details</td>
 		<td><input type='text' id='x_joint_details' value='<?=$joint_details?>'></td>
 	</tr>
 	<tr>
 		<td class='tblDetailViewLabel'>Box Style</td>
-		<td><select id='x_box_style'>
+		<td><select id='x_box_style' style="width:97%" >
 				<option value=""></option>
 	            <option value="RSC" <?php if($box_style=='RSC')echo 'selected'; ?>>RSC</option>
 				<option value="Tray" <?php if($box_style=='Tray')echo 'selected'; ?>>Tray</option>
@@ -609,6 +622,13 @@ for($i=0;$i<$trows;$i++){
 <?php echo ($scoreline_f+$scoreline_d+$scoreline_f2)?>
 		</td>		
 	</tr>
+</table>
+</div>
+<br>
+<div id='boxcontainer'>
+Additional value for PC
+<table><tr><td class='tblDetailViewLabel'>Blank +</td><td><input type='text' id='x_add_blank' value='<?=$add_blank?>'></td>
+	<td class='tblDetailViewLabel'>T Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>'></td></tr>
 </table>
 </div>
 <br/>

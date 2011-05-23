@@ -8,7 +8,10 @@ $lang['salesorder'] 	= "Sales Order";
 $lang['planning'] 		= "Planning";
 $lang['reportplanning'] = "Report Planning";
 $lang['warehouse'] 		= "Warehouse";
-$lang['translation'] 	= "Translation";
+$lang['translator'] 	= "Translation";
+$lang['clampliftmanger'] = "Clamplift Manager";
+$lang['english'] = "English";
+$lang['thai'] = "Thai";
 
 //Buttons
 $lang['edit'] 		= "Edit";
