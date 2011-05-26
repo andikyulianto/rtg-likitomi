@@ -213,9 +213,45 @@ foreach($resultProducts as $prod){
 </div>
 <br>
 <div id='boxcontainer'>
+Process<br><br>
+<table width="500px"><tr>
+<td><input type="checkbox" id='x_checkbox_cr' <?php if($resultProductCatalog->req_cr=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> CR </td>
+<td><input type="checkbox" id='x_checkbox_2cl' <?php if($resultProductCatalog->req_2cl=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 2CL </td>
+<td><input type="checkbox" id='x_checkbox_gh' <?php if($resultProductCatalog->req_gh=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Glue Handdle </td>
+<td><input type="checkbox" id='x_checkbox_rd' <?php if($resultProductCatalog->req_rd=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> RD </td>
+<td><input type="checkbox" id='x_checkbox_wh' <?php if($resultProductCatalog->req_wh=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> WH </td>
+</tr> 
+<tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_3cm' <?php if($resultProductCatalog->req_3cm=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 3CM </td>
+<td><input type="checkbox" id='x_checkbox_hs' <?php if($resultProductCatalog->req_hs=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> HS </td>
+<td><input type="checkbox" id='x_checkbox_ss' <?php if($resultProductCatalog->req_ss=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> SS </td>
+<td>
+</tr><tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_3cs' <?php if($resultProductCatalog->req_3cs=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 3CS </td>
+<td><input type="checkbox" id='x_checkbox_fg' <?php if($resultProductCatalog->req_fg=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> FG </td>
+<td><input type="checkbox" id='x_checkbox_remove' <?php if($resultProductCatalog->req_remove=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Remove Scraps </td>
+</tr><tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_4cd' <?php if($resultProductCatalog->req_4cd=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 4CD </td>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_foam' <?php if($resultProductCatalog->req_foam=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Foam </td>
+</tr><tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_3cl' <?php if($resultProductCatalog->req_3cl=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 3CL </td>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_tape' <?php if($resultProductCatalog->req_tape=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Tape </td>
+</tr>
+</table>
+<br>
+</div>
+<br>
+<div id='boxcontainer'>
 Additional value for PC
 <table><tr><td class='tblDetailViewLabel'>Blank +</td><td><?=$resultProductCatalog->add_blank?></td>
-	<td class='tblDetailViewLabel'>T Length +</td><td><?=$resultProductCatalog->add_t_length?></td></tr>
+	<td class='tblDetailViewLabel'>T Length +</td><td><?=$resultProductCatalog->add_t_length?></td>
+	<td class='tblDetailViewLabel'>Amount +</td></tr>
 </table>
 </div>
 <br/>
@@ -273,6 +309,21 @@ if($action=='edit'){
 	$add_blank = $resultProductCatalog->add_blank;
 	$add_t_length = $resultProductCatalog->add_t_length;
 	$remark = $resultProductCatalog->remark;
+	$req_cr = $resultProductCatalog->req_cr;
+	$req_2cl = $resultProductCatalog->req_2cl;
+	$req_3cm = $resultProductCatalog->req_3cm;
+	$req_3cs = $resultProductCatalog->req_3cs;
+	$req_4cd = $resultProductCatalog->req_4cd;
+	$req_3cl = $resultProductCatalog->req_3cl;
+	$req_gh = $resultProductCatalog->req_gh;
+	$req_fg = $resultProductCatalog->req_fg;
+	$req_rd = $resultProductCatalog->req_rd;
+	$req_ss = $resultProductCatalog->req_ss;
+	$req_hs = $resultProductCatalog->req_hs;
+	$req_remove = $resultProductCatalog->req_remove;
+	$req_foam = $resultProductCatalog->req_foam;
+	$req_tape = $resultProductCatalog->req_tape;
+	$req_wh = $resultProductCatalog->req_wh;
 	$isdeleted = $resultProductCatalog->isdeleted;
 	$created_on = $resultProductCatalog->created_on;
 	$created_by = $resultProductCatalog->created_by;
@@ -358,6 +409,21 @@ if($action=='add'){
 	$created_by = "";
 	$modified_on = "";
 	$modified_by = "";
+	$req_cr = "1";
+	$req_2cl = "0";
+	$req_3cm = "0";
+	$req_3cs = "0";
+	$req_4cd = "0";
+	$req_3cl = "0";
+	$req_gh = "0";
+	$req_fg = "0";
+	$req_rd = "0";
+	$req_ss = "0";
+	$req_hs = "0";
+	$req_remove = "0";
+	$req_foam = "0";
+	$req_tape = "0";
+	$req_wh = "1";
 	$cmd = "saveData()";
 	$btntitle = $this->lang->line('save');	
 	for($i=0;$i<$trows;$i++){
@@ -624,13 +690,51 @@ for($i=0;$i<$trows;$i++){
 	</tr>
 </table>
 </div>
+<div id='boxcontainer'>
+Process<br><br>
+<table width="500px"><tr>
+<td><input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked'; else echo ''; ?> > CR </td>
+<td><input type="checkbox" id='x_checkbox_2cl' <?php if($req_2cl=='1') echo 'checked'; else echo ''; ?>> 2CL </td>
+<td><input type="checkbox" id='x_checkbox_gh' <?php if($req_gh=='1') echo 'checked'; else echo ''; ?>> Glue Handdle </td>
+<td><input type="checkbox" id='x_checkbox_rd' <?php if($req_rd=='1') echo 'checked'; else echo ''; ?>> RD </td>
+<td><input type="checkbox" id='x_checkbox_wh' <?php if($req_wh=='1') echo 'checked'; else echo ''; ?>> WH </td>
+</tr> 
+<tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_3cm' <?php if($req_3cm=='1') echo 'checked'; else echo ''; ?>> 3CM </td>
+<td><input type="checkbox" id='x_checkbox_hs' <?php if($req_hs=='1') echo 'checked'; else echo ''; ?>> HS </td>
+<td><input type="checkbox" id='x_checkbox_ss' <?php if($req_ss=='1') echo 'checked'; else echo ''; ?>> SS </td>
+<td>
+</tr><tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_3cs' <?php if($req_3cs=='1') echo 'checked'; else echo ''; ?>> 3CS </td>
+<td><input type="checkbox" id='x_checkbox_fg' <?php if($req_fg=='1') echo 'checked'; else echo ''; ?>> FG </td>
+<td><input type="checkbox" id='x_checkbox_remove' <?php if($req_remove=='1') echo 'checked'; else echo ''; ?>> Remove Scraps </td>
+</tr><tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_4cd' <?php if($req_4cd=='1') echo 'checked'; else echo ''; ?>> 4CD </td>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_foam' <?php if($req_foam=='1') echo 'checked'; else echo ''; ?>> Foam </td>
+</tr><tr>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_3cl' <?php if($req_3cl=='1') echo 'checked'; else echo ''; ?>> 3CL </td>
+<td></td>
+<td><input type="checkbox" id='x_checkbox_tape' <?php if($req_tape=='1') echo 'checked'; else echo ''; ?>> Tape </td>
+</tr>
+</table>
+<br>
+</div>
 <br>
 <div id='boxcontainer'>
-Additional value for PC
+Additional values for CV<br>
 <table><tr><td class='tblDetailViewLabel'>Blank +</td><td><input type='text' id='x_add_blank' value='<?=$add_blank?>'></td>
-	<td class='tblDetailViewLabel'>T Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>'></td></tr>
+	<td class='tblDetailViewLabel'>T Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>'></td>
+	<td class='tblDetailViewLabel'>Amount +</td></tr>
 </table>
 </div>
+<br/>
+
+
 <br/>
 <div  style="width:100%"><center>
 <input type="button" value="<?=$btntitle?>" onclick="<?=$cmd?>;">  
