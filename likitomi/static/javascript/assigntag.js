@@ -47,7 +47,7 @@ function assignTag()
 
 // ID //
 	var id = document.createElement('b');
-	id.innerHTML = '<br />Tag ID:'.fontsize(4);
+	id.innerHTML = '<br />Tag ID: '.fontsize(4);
 	div.appendChild(id);
 
 	var id_box = document.createElement('input');
@@ -117,7 +117,7 @@ function assignTag()
 
 // Weight //
 	var weight = document.createElement('b');
-	weight.innerHTML = '<br /><br />Weight:'.fontsize(4);
+	weight.innerHTML = '<br /><br />Weight: '.fontsize(4);
 	div.appendChild(weight);
 
 	var weight_box = document.createElement('input');
@@ -133,7 +133,7 @@ function assignTag()
 
 // Location //
 	var location = document.createElement('b');
-	location.innerHTML = '<br /><br />Location:'.fontsize(4);
+	location.innerHTML = '<br /><br />Location: '.fontsize(4);
 	div.appendChild(location);
 
 	var lane_box = document.createElement('input');

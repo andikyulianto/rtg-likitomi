@@ -394,11 +394,10 @@ cxt.fillRect(0,0,175,50);
 			<div id="pbody" class="greenbg"><iframe id="showplan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" style="visibility:hidden; width:398px; height:254px;" marginheight="0" marginwidth="0" scrolling="no"></iframe></div>
 		</div>
 	</div>
-
-<!--LAYOUT-->
+<!--LAYOUT-->{% url weight.inventory.inventory as inventory_url %}
 	<div id="layout" style="top:42px; left:400px; width:398px; height:551px;">
 		<div style="top:0px; right:0px;"><button id="maglay">Layout</button></div> <!--Magnifying Button-->
-		<iframe id="map" name="map" src="/inventory/" frameborder="0" style="width:100%; height:500px; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
+		<iframe id="map" name="map" src="{{ inventory_url }}" frameborder="0" style="width:100%; height:500px; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
 	</div>
 
 <!--CLAMPLIFT-->
