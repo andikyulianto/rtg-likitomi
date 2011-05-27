@@ -32,7 +32,7 @@ def minclamp(request):
 			swidthlist.append(width[0])
 
 # RFID: paper roll and location tags #
-		operating_mode = 'real' # Operating mode = {'real', 'fake'}
+		operating_mode = 'fake' # Operating mode = {'real', 'fake'}
 
 		if operating_mode == 'real':
 
@@ -197,7 +197,7 @@ def minclamp(request):
 			atposition = '8'
 			atlocation = 'Stock'
 
-			realtag = '0067'
+			realtag = '0064'
 
 # Query database from realtag #
 		if realtag:
