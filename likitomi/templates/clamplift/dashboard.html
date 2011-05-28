@@ -103,6 +103,11 @@ $(document).ready(function(){
 // PLAN //
 	startTime();
 
+	var showplan_url = $('#showplan_url').val();
+	var required_url = $('#required_url').val();
+	var detail_url = $('#detail_url').val();
+	var inventory_url = $('#inventory_url').val();
+
 	$("#opdate").change(function(){
 		var opdate = $("#opdate").val();
 		if (opdate == ""){
@@ -111,17 +116,17 @@ $(document).ready(function(){
 		}
 		else {
 			$("#showplan").css("visibility","visible");
-			$("#showplan").attr("src", "/showplan/?opdate="+opdate);
+			$("#showplan").attr("src", showplan_url+"?opdate="+opdate);
 			$("#magplan").removeAttr("disabled");
 			var status = $("#status").val();
 			if (status == "min"){
-				$("#showplan").attr("src", "/showplan/?opdate="+opdate);
+				$("#showplan").attr("src", showplan_url+"?opdate="+opdate);
 			}
 			else if (status == "req"){
-				$("#showplan").attr("src", "/required/?opdate="+opdate);
+				$("#showplan").attr("src", required_url+"?opdate="+opdate);
 			}
 			else if (status == "det"){
-				$("#showplan").attr("src", "/detail/?opdate="+opdate);
+				$("#showplan").attr("src", detail_url+"?opdate="+opdate);
 			}
 		}
 	});
@@ -157,7 +162,7 @@ $(document).ready(function(){
 		$("#reqhead").show();
 		$("#dethead").hide();
 		var opdate = $("#opdate").val();
-		$("#showplan").attr("src","/required/?opdate="+opdate);
+		$("#showplan").attr("src",required_url+"?opdate="+opdate);
 		$("#showplan").css({"width":"800px","height":"338px"});
 //		$("#phead, #pbody").animate({"width":"200px"}, function(){$(this).animate({"width":"800px"});});
 		$("#status").val("req");
@@ -172,7 +177,7 @@ $(document).ready(function(){
 		$("#dethead").hide();
 		$("#reqhead").show();
 		var opdate = $("#opdate").val();
-		$("#showplan").attr("src","/required/?opdate="+opdate);
+		$("#showplan").attr("src",required_url+"?opdate="+opdate);
 		$("#status").val("req");
 	});
 
@@ -180,7 +185,7 @@ $(document).ready(function(){
 		$("#reqhead").hide();
 		$("#dethead").show();
 		var opdate = $("#opdate").val();
-		$("#showplan").attr("src","/detail/?opdate="+opdate);
+		$("#showplan").attr("src",detail_url+"?opdate="+opdate);
 		$("#status").val("det");
 	});
 
@@ -236,7 +241,7 @@ $(document).ready(function(){
 		var clamping = $('#map').contents().find('#clamping').val();
 		var changed = $('#map').contents().find('#changed').val();
 		if (spcode != "" && swidth != ""){
-			top.map.location = "/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
+			top.map.location = inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
 		}
 	});
 
@@ -256,7 +261,7 @@ $(document).ready(function(){
 		$("#dethead").hide();
 		$("#radio").hide();
 		var opdate = $("#opdate").val();
-		$("#showplan").attr("src","/showplan/?opdate="+opdate);
+		$("#showplan").attr("src",showplan_url+"?opdate="+opdate);
 		$("#showplan").css({"width":"398px","height":"254px"});
 		$("#status").val("min");
 		$("#upper").parent().css("left","185px");
@@ -301,7 +306,14 @@ cxt.fillRect(0,0,175,50);
 </head>
 
 <body style="background-color:black;">
-
+<input id='showplan_url' type='hidden' value='{% url weight.showplan.showplan %}' />
+<input id='required_url' type='hidden' value='{% url weight.showplan.required %}' />
+<input id='detail_url' type='hidden' value='{% url weight.showplan.detail %}' />
+<input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
+{% url weight.showplan.showplan as showplan_url %}
+{% url weight.inventory.inventory as inventory_url %}
+{% url weight.minclamp.minclamp as minclamp_url %}
+{% url weight.minclamp.maxclamp as maxclamp_url %}
 <!--PLAN-->
 	<div id="plan" class="greenbg" style="top:0px; left:0px; width:398px; height:403px;">
 <!--		<canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3;"></canvas>-->
@@ -391,10 +403,10 @@ cxt.fillRect(0,0,175,50);
 					<td>CUT</td>
 				</tr>
 			</table>
-			<div id="pbody" class="greenbg"><iframe id="showplan" src="/showplan/?opdate={% now "Y-m-d" %}" frameborder="0" style="visibility:hidden; width:398px; height:254px;" marginheight="0" marginwidth="0" scrolling="no"></iframe></div>
+			<div id="pbody" class="greenbg"><iframe id="showplan" src="{{ showplan_url }}?opdate={% now "Y-m-d" %}" frameborder="0" style="visibility:hidden; width:398px; height:254px;" marginheight="0" marginwidth="0" scrolling="no"></iframe></div>
 		</div>
 	</div>
-<!--LAYOUT-->{% url weight.inventory.inventory as inventory_url %}
+<!--LAYOUT-->
 	<div id="layout" style="top:42px; left:400px; width:398px; height:551px;">
 		<div style="top:0px; right:0px;"><button id="maglay">Layout</button></div> <!--Magnifying Button-->
 		<iframe id="map" name="map" src="{{ inventory_url }}" frameborder="0" style="width:100%; height:500px; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
@@ -404,8 +416,8 @@ cxt.fillRect(0,0,175,50);
 	<div id="clamplift" class="redbg" style="top:405px; left:0px; width:398px; height:188px;">
 		<div class="redbg" style="top:0px; right:0px;"><button id="magclamp">Clamplift</button></div> <!--Magnifying Button-->
 		<input id="clampsta" value="minsta" type="hidden" />
-		<iframe id="minclamp" src="/minclamp/" frameborder="0" style="width:100%; height:100%; margin-height:35px; margin-left:0px;" scrolling="no"></iframe>
-		<iframe id="maxclamp" src="/maxclamp/" frameborder="0" style="width:100%; height:100%; margin-height:0px; margin-left:0px;" scrolling="no"></iframe>
+		<iframe id="minclamp" src="{{ minclamp_url }}" frameborder="0" style="width:100%; height:100%; margin-height:35px; margin-left:0px;" scrolling="no"></iframe>
+		<iframe id="maxclamp" src="{{ maxclamp_url }}" frameborder="0" style="width:100%; height:100%; margin-height:0px; margin-left:0px;" scrolling="no"></iframe>
 	</div>
 
 <!--SEARCH-->

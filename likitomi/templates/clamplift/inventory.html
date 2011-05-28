@@ -55,6 +55,7 @@ padding-right:0px;
 <script type="text/javascript">
 $(document).ready(function(){
 //	$("#values").hide();
+	var inventory_url = $('#inventory_url').val();
 
 	$(window).load(function loadMap(){
 		var pcode = $("#pcode").val();
@@ -80,10 +81,10 @@ $(document).ready(function(){
 		if (enal == atlane && position == atposition && clamping == "no" && changed == "no" && lane != undefined){
 			var clamping = "yes";
 			var changed = "no";
-			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+			$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 		else {
-			$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
+			$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 
 		setTimeout(loadMap, 2000);
@@ -105,7 +106,7 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
+		$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
 	});
 
 	$("#locdown").click(function(){
@@ -124,7 +125,7 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load("/inventory/?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
+		$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
 	});
 
 });
@@ -147,7 +148,7 @@ $(document).ready(function(){
 {% load twelfth %}
 {% load thirteenth %}
 <div id="inventory">
-
+<input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
 <!--<div id="values">-->
 <!--	<div id="pcode">{{ pcode }}</div>-->
 <!--	<div id="width">{{ width }}</div>-->

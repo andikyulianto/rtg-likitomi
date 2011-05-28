@@ -33,14 +33,16 @@ color:dimgray;
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	var scale_url = $('#scale_url').val();
 	$(window).load(function scale(){
-		$("#scale").load("/scale/");
-		setTimeout(scale, 1000);
+		$("#scale").load(scale_url);
+		setTimeout(scale, 2000);
 	});
 });
 </script>
 </head>
 <body>
+<input id='scale_url' type='hidden' value='{% url weight.scale_views.scale %}' />
 <div id="scale">
 
 	<center><table height="30%">

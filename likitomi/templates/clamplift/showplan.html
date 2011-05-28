@@ -16,6 +16,7 @@ vertical-align:middle;
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	var inventory_url = $('#inventory_url').val();
 	$(".cell").click(function(){
 		var i = 0;
 		for (i=0;i<=100;i++){
@@ -63,7 +64,7 @@ $(document).ready(function(){
 		var clamping = $('#map', top.document).contents().find('#clamping').val();
 		var changed = $('#map', top.document).contents().find('#changed').val();
 //		top.map.location = "/inventory/?pcode="+hicode+"&width="+hiwidth+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
-		var msrc = "/inventory/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
+		var msrc = inventory_url+"?pcode="+hicode+"&width="+hiwidth+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
 		$("#map", top.document).attr("src",msrc);
 	});
 
@@ -72,6 +73,7 @@ $(document).ready(function(){
 </head>
 
 <body onload="window.scrollTo(0,{{scroll}})">
+<input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
 	<table style="font-size:90%;">
 		{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
 		<tr name="{{ n }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
