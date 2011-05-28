@@ -1023,8 +1023,6 @@ def inventory(request):
 				pos4.pop(ind)
 				pos4.insert(ind,vios)
 
-#		STlist = [[4L,1,1,1,1,1,1,1,1,1,1,1,1]]
-
 		if atlane == '1':
 			leftlane = 'B'
 			rightlane = 'A'

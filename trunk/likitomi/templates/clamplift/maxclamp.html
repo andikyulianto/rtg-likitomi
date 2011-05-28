@@ -44,8 +44,10 @@ color:dimgray;
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	var maxclamp_url = $('#maxclamp_url').val();
+
 	$(window).load(function clampAll(){
-		$("#clampall").load("/maxclamp/");
+		$("#clampall").load(maxclamp_url);
 		setTimeout(clampAll, 2000);
 	});
 
@@ -485,6 +487,8 @@ function otherLoc()
 </script>
 </head>
 <body>
+<input id='maxclamp_url' type='hidden' value='{% url weight.minclamp.maxclamp %}' />
+{% url weight.minclamp.maxclamp as maxclamp_url %}
 	<div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -530,35 +534,35 @@ function otherLoc()
 		</div>
 	{% endif %}
 
-	<form id="frm1" action="/maxclamp/update/" method="get">
+	<form id="frm1" action="{{ maxclamp_url }}update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ actual_wt }}" name="actual_wt" />
 		<input id="temp" type="hidden" value="{{ temp_weight }}" name="temp_weight" />
 	</form>
 
-	<form id="frm2" action="/maxclamp/undo/" method="get">
+	<form id="frm2" action="{{ maxclamp_url }}undo/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 	</form>
 
-	<form id="frm3" action="/maxclamp/changeloc/" method="get">
+	<form id="frm3" action="{{ maxclamp_url }}changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input id="ilane" type="hidden" value="{{ lane }}" name="lane" />
 		<input id="ipos" type="hidden" value="{{ position }}" name="pos" />
 	</form>
 
-	<form id="frm4" action="/maxclamp/changeloc/" method="get">
+	<form id="frm4" action="{{ maxclamp_url }}changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ leftlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
 
-	<form id="frm5" action="/maxclamp/changeloc/" method="get">
+	<form id="frm5" action="{{ maxclamp_url }}changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ rightlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
 
-	<form id="frm6" action="/maxclamp/assigntag/" method="get">
+	<form id="frm6" action="{{ maxclamp_url }}assigntag/" method="get">
 		<input id="atagid" type="hidden" value="" name="atagid" />
 		<input id="apcode" type="hidden" value="" name="apcode" />
 		<input id="asize" type="hidden" value="" name="asize" />

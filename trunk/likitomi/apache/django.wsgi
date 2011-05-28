@@ -1,7 +1,7 @@
 import os
 import sys
-path1 = '/home/patipol/RTG-Likitomi'
-path2 = '/home/patipol/RTG-Likitomi/likitomi'
+path1 = '/home/patipol/rtg-likitomi'
+path2 = '/home/patipol/rtg-likitomi/likitomi'
 if path1 not in sys.path:
     sys.path.append(path1)
 if path2 not in sys.path:

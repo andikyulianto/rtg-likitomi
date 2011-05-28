@@ -15,11 +15,6 @@ from weight.views import dashboard
 from weight.showplan import showplan, required, detail
 from weight.inventory import inventory
 from weight.minclamp import minclamp, minupdate, minundo, minchangeloc, maxclamp, maxupdate, maxundo, maxchangeloc, minassigntag, maxassigntag
-#from weight.legend import legend
-#from weight.clamplift_views import clamplift, update, undo, changeloc
-#from weight.plan_views import plan, wholeplan
-#from weight.now import now
-#from weight.stock_views import stock, search
 from weight.longtry import orient, longtry
 
 # Uncomment the next two lines to enable the admin:
@@ -79,9 +74,6 @@ urlpatterns = patterns('',
 	(r'^scale/$', scale),
 	(r'^scale/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-#	(r'^index/$', index),
-#	(r'^index/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-
 	(r'^dashboard/$', dashboard),
 	(r'^dashboard/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
@@ -91,8 +83,6 @@ urlpatterns = patterns('',
 	(r'^required/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^detail/$', detail),
 	(r'^detail/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-	(r'^inventory/$', inventory),
-	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
 	(r'^minclamp/$', minclamp),
 	(r'^minclamp/update/$', minupdate),
@@ -111,39 +101,12 @@ urlpatterns = patterns('',
 	(r'^maxclamp/assigntag/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 	(r'^maxclamp/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-#	(r'^legend/$', legend),
-#	(r'^legend/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+	(r'^inventory/$', inventory),
+	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
 
-#	(r'^clamplift/$', clamplift),
-#	(r'^clamplift/update/$', update),
-#	(r'^clamplift/update/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^clamplift/undo/$', undo),
-#	(r'^clamplift/changeloc/$', changeloc),
-#	(r'^clamplift/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^clamplift/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-
-#	(r'^now/$', now),
-#	(r'^plan/$', plan),
-#	(r'^plan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^wholeplan/$', wholeplan),
-#	(r'^wholeplan/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^showreq/$', showreq),
-#	(r'^showreq/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^reqhead/$', reqhead),
-#	(r'^reqhead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^showdet/$', showdet),
-#	(r'^showdet/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^dethead/$', dethead),
-#	(r'^dethead/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^search/$', search),
-#	(r'^search/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^stock/$', stock),
-#	(r'^stock/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-
-	(r'^orient/$', orient),
-	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-
-	(r'^longtry/$', longtry),
+#	(r'^orient/$', orient),
+#	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
+#	(r'^longtry/$', longtry),
 
 	(r'^admin/', include(admin.site.urls)),
 )

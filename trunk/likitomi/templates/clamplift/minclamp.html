@@ -44,8 +44,10 @@ color:dimgray;
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	var minclamp_url = $('#minclamp_url').val();
+
 	$(window).load(function clampAll(){
-		$("#clampall").load("/minclamp/");
+		$("#clampall").load(minclamp_url);
 		setTimeout(clampAll, 2000);
 	});
 
@@ -485,6 +487,8 @@ function otherLoc()
 </script>
 </head>
 <body>
+<input id='minclamp_url' type='hidden' value='{% url weight.minclamp.minclamp %}' />
+{% url weight.minclamp.minclamp as minclamp_url %}
 	<div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -496,8 +500,9 @@ function otherLoc()
 	<input id="actual" type="hidden" value="{{ actual_wt }}" />
 	<input id="spcodelist" type="hidden" value="{{ spcodelist }}" />
 	<input id="swidthlist" type="hidden" value="{{ swidthlist }}" />
-	<input id="tagidlist" type="hidden" value="{{ tagidquery }}" />
+	<input id="tagidlist" type="text" value="{{ tagidlist }}" />
 	<input id="tag2write" type="hidden" value="{{ tag2write }}" />
+	<input id="avaitag" type="text" value="{{ avaitag }}" />
 	{% if realtag %}
 		<div id="minic">
 			<table style="width:100%;">
@@ -537,35 +542,35 @@ function otherLoc()
 		</div>
 	{% endif %}
 
-	<form id="frm1" action="/minclamp/update/" method="get">
+	<form id="frm1" action="{{ minclamp_url }}update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ actual_wt }}" name="actual_wt" />
 		<input id="temp" type="hidden" value="{{ temp_weight }}" name="temp_weight" />
 	</form>
 
-	<form id="frm2" action="/minclamp/undo/" method="get">
+	<form id="frm2" action="{{ minclamp_url }}undo/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 	</form>
 
-	<form id="frm3" action="/minclamp/changeloc/" method="get">
+	<form id="frm3" action="{{ minclamp_url }}changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input id="ilane" type="hidden" value="{{ lane }}" name="lane" />
 		<input id="ipos" type="hidden" value="{{ position }}" name="pos" />
 	</form>
 
-	<form id="frm4" action="/minclamp/changeloc/" method="get">
+	<form id="frm4" action="{{ minclamp_url }}changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ leftlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
 
-	<form id="frm5" action="/minclamp/changeloc/" method="get">
+	<form id="frm5" action="{{ minclamp_url }}changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ rightlane }}" name="lane" />
 		<input type="hidden" value="{{ atposition }}" name="pos" />
 	</form>
 
-	<form id="frm6" action="/minclamp/assigntag/" method="get">
+	<form id="frm6" action="{{ minclamp_url }}assigntag/" method="get">
 		<input id="atagid" type="hidden" value="" name="atagid" />
 		<input id="apcode" type="hidden" value="" name="apcode" />
 		<input id="asize" type="hidden" value="" name="asize" />
