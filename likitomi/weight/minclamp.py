@@ -10,9 +10,13 @@ def minclamp(request):
 	try:
 
 # Query tag ID, paper code, and size for assigning tag #
-		tagidquery = PaperRoll.objects.values_list('id')[0]
-		tagidlist = list(tagidquery)
-		avaitag = tagidlist[0]
+#		tagidquery = [1,2,3]
+		tagiddomain = range(1,10000)
+		tagidlist = PaperRoll.objects.values_list('id', flat=True).order_by('-id')
+		for tag in tagidlist:
+			tagiddomain.remove(tag)
+		avaitag = tagiddomain[0]
+
 		scursor1 = connection.cursor()
 		scursor1.execute("""
 			SELECT DISTINCT paper_code

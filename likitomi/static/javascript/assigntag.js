@@ -59,7 +59,7 @@ function assignTag()
 	id_box.style.fontSize = '200%';
 	id_box.style.color = 'black';
 	id_box.style.textAlign = 'center';
-	id_box.value = document.getElementById('tagidlist').value;
+	id_box.value = document.getElementById('avaitag').value;
 	div.appendChild(id_box);
 
 // Paper Code //
