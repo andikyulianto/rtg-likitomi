@@ -942,42 +942,41 @@ function assignTag()
 //		alert(document.getElementById('tag2write').value);
 		var pass = 0;
 		var messi = '';
-		if (idval != '') {
-			var idvalue = '('+idval+'L,)';
-			if (document.getElementById('tagidlist').value.search(idvalue) == -1) {
-				pass++;
-			} else {
-				messi += "\n- This tag ID is not available.";
+		if (idval != '' && weightval != ''){
+			if (positionval == '' || parseInt(positionval) <= 13){
+				var idvalue = '('+idval.toString()+'L,)';
+				var taglist = document.getElementById('tagidquery').value;
+				if (taglist.indexOf(idvalue) == -1){
+					submitTag();
+				} else {
+					var r = confirm("This tag ID is already used. Continuing assigning tag makes data on this tag be replaced by new entering data.");
+					if (r == true){
+						submitTag();
+					}
+					else {
+						pass++;
+					}
+				}
+				function submitTag(){
+					document.getElementById("atagid").value = idval;
+					document.getElementById("apcode").value = pcodeval;
+					document.getElementById("asize").value = sizeval;
+					document.getElementById("alane").value = laneval;
+					document.getElementById("aposition").value = positionval;
+					document.getElementById("aweight").value = weightval;
+					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
+					document.getElementById("frm6").submit();
+					id_box.value = document.getElementById('avaitag').value;
+					top.document.body.removeChild(top.document.getElementById('layer'));
+					top.document.body.removeChild(top.document.getElementById('box'));
+				}
+			} else if (parseInt(positionval) > 13){
+				alert("The submitted position is not in range (1-13).");
 			}
-//			alert(document.getElementById('tagidlist').value);
-		} else {
-			messi += "\n- Please enter tag ID.";
 		}
-		if (weightval != '') {
-			pass++;
-		} else {
-			messi += '\n- Please enter weight.';
-		}
-		if (parseInt(positionval) > 13) {
-			messi += '\n- The submitted position is not in range (1-13).';
-		}
-//		if (document.getElementById('tag2write').value.search('AAAA') != -1) {
-//			pass++;
-//		}
-		
-//		if (document.getElementById('tag2write').value.search('AAAA') != -1) {alert(document.getElementById('tag2write').value.search('AAAA'));}
-		if (pass >= 2) {
-			document.getElementById("atagid").value = idval;
-			document.getElementById("apcode").value = pcodeval;
-			document.getElementById("asize").value = sizeval;
-			document.getElementById("alane").value = laneval;
-			document.getElementById("aposition").value = positionval;
-			document.getElementById("aweight").value = weightval;
-			document.getElementById("oldtagid").value = document.getElementById('tag2write').value;
-			document.getElementById("frm6").submit();
-			top.document.body.removeChild(top.document.getElementById('layer'));
-			top.document.body.removeChild(top.document.getElementById('box'));
-		} else {
+		else {
+			if (idval == ''){ messi += '- Please enter tag ID.\n'; }
+			if (weightval == ''){ messi += '- Please enter weight.\n'; }
 			alert(messi);
 		}
 	}

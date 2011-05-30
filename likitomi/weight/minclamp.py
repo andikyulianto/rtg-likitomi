@@ -10,8 +10,8 @@ def minclamp(request):
 	try:
 
 # Query tag ID, paper code, and size for assigning tag #
-#		tagidquery = [1,2,3]
 		tagiddomain = range(1,10000)
+		tagidquery = PaperRoll.objects.values_list('id')
 		tagidlist = PaperRoll.objects.values_list('id', flat=True).order_by('-id')
 		for tag in tagidlist:
 			tagiddomain.remove(tag)
@@ -37,7 +37,7 @@ def minclamp(request):
 			swidthlist.append(width[0])
 
 # RFID: paper roll and location tags #
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'}
+		operating_mode = 'real' # Operating mode = {'real', 'fake'}
 
 		if operating_mode == 'real':
 
@@ -66,10 +66,14 @@ def minclamp(request):
 #					idlist.append(tag)
 #				if "BBBB" in tag:
 #					loclist.append(tag)
-				if "type=STG" in tag or "AAAA" in tag:
-					idlist.append(tag)
-				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
+#				if "type=STG" in tag or "AAAA" in tag:
+#					idlist.append(tag)
+#				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
+#					loclist.append(tag)
+				if "BBBB" in tag:
 					loclist.append(tag)
+				else:
+					idlist.append(tag)
 
 			cnt = 0
 
@@ -177,6 +181,7 @@ def minclamp(request):
 			atlocation = 'Stock'
 
 			realtag = '0064'
+			tag2write = '30064AAAA000000000000000'
 
 # Query database from realtag #
 		if realtag:
@@ -325,74 +330,71 @@ def minassigntag(request):
 		else:
 			aposition = 0
 
-		if 'oldtagid' in request.GET and request.GET['oldtagid']:
-			oldtagid = request.GET['oldtagid']
+		if 'atag2write' in request.GET and request.GET['atag2write']:
+			atag2write = request.GET['atag2write']
 		else:
 			return HttpResponseRedirect('/django/minclamp/')
 
-		HOST = '192.41.170.55' # CSIM network
-#		HOST = '192.168.101.55' # Likitomi network
-#		HOST = '192.168.1.55' # My own local network: Linksys
-#		HOST = '192.168.2.88' # In Likitomi factory
-		PORT = 50007
-		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		soc.settimeout(2)
-		soc.connect((HOST, PORT))
-
-#		## soc.send('setup.operating_mode = standby\r\n')
-#		soc.send('tag.db.scan_tags(100)\r\n')
-#		datum = soc.recv(128)
-##		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id=30069AAAA000000000000000)\r\n')
-#		if datum.find("ok") > -1:
-#			soc.send('tag.read_id()\r\n')
-#			data = soc.recv(8192)
-#			tagdata = data.split("\r\n")
-#		tag2writelist = list()
-#		for tag in tagdata:
-#			if "BBBB" not in tag:
-#				if "AAAA" in tag:
-#					tag2writelist.append(tag)
-#					taglist = list()
-#					replist = list()
-#					for id1 in tag2writelist:
-#						id2 = id1.replace("(","")
-#						id2 = id2.replace(")","")
-#						id3 = id2.split(", ")
-#						for id4 in id3:
-#							id5 = id4.split("=")
-#							if id5[0]=="tag_id": taglist.append(id5[1])
-#							elif id5[0]=="repeat": replist.append(id5[1])
-#						repintlist = list()
-#						for rep in replist:
-#							repintlist.append(int(rep))
-#						if max(repintlist) in repintlist:
-#							n = repintlist.index(max(repintlist))
-#						oldtagid = taglist[n][6:30]
-#						soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
-#				else:
-#					soc.send('tag.write_id(3'+stratagid+'AAAA000000000000000)\r\n')
-
-		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
-		response = soc.recv(128)
-		soc.close()
-
-		if response.find('ok') != -1:
-			p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
-			p.save()
+		if str(stratagid) == str(atag2write[1:5]):
+			r = PaperRoll(id=atagid)
+			r.paper_code = apcode
+			r.width = asize
+			r.wunit = 'inch'
+			r.initial_weight = aweight
+			r.temp_weight = 0
+			r.lane = alane
+			r.position = aposition
+			r.save()
 			transaction.commit()
 			return HttpResponseRedirect('/django/minclamp/')
 		else:
-			return render_to_response('intmed.html', locals())
+			HOST = '192.41.170.55' # CSIM network
+#			HOST = '192.168.101.55' # Likitomi network
+#			HOST = '192.168.1.55' # My own local network: Linksys
+#			HOST = '192.168.2.88' # In Likitomi factory
+			PORT = 50007
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+
+			soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+atag2write+')\r\n')
+			response = soc.recv(128)
+			soc.close()
+
+			if response.find('ok') != -1:
+				if atag2write.count('0') < 15:
+					p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+					p.save()
+					transaction.commit()
+				if atag2write.count('0') >= 15:
+					p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+					p.save()
+					tag2del = int(atag2write[1:5])
+					q = PaperRoll(id=tag2del)
+					q.delete()
+					transaction.commit()
+				return HttpResponseRedirect('/django/minclamp/')
+			else:
+				return render_to_response('intmed.html', locals())
 
 	except:
 		pass
 
+
+######################################################################################################################################################################
+### MAXCLAMP #########################################################################################################################################################
+######################################################################################################################################################################
 def maxclamp(request):
 	try:
 
 # Query tag ID, paper code, and size for assigning tag #
+		tagiddomain = range(1,10000)
 		tagidquery = PaperRoll.objects.values_list('id')
-		tagidlist = list(tagidquery)
+		tagidlist = PaperRoll.objects.values_list('id', flat=True).order_by('-id')
+		for tag in tagidlist:
+			tagiddomain.remove(tag)
+		avaitag = tagiddomain[0]
+
 		scursor1 = connection.cursor()
 		scursor1.execute("""
 			SELECT DISTINCT paper_code
@@ -413,7 +415,7 @@ def maxclamp(request):
 			swidthlist.append(width[0])
 
 # RFID: paper roll and location tags #
-		operating_mode = 'fake' # Operating mode = {'real', 'fake'}
+		operating_mode = 'real' # Operating mode = {'real', 'fake'}
 
 		if operating_mode == 'real':
 
@@ -555,6 +557,7 @@ def maxclamp(request):
 			atlocation = 'Stock'
 
 			realtag = '0064'
+			tag2write = '30064AAAA000000000000000'
 
 # Query database from realtag #
 		if realtag:
@@ -690,7 +693,6 @@ def maxassigntag(request):
 			return HttpResponseRedirect('/django/maxclamp/')
 
 		if 'aweight' in request.GET and request.GET['aweight']:
-
 			aweight = int(request.GET['aweight'])
 		else:
 			return HttpResponseRedirect('/django/maxclamp/')
@@ -705,64 +707,52 @@ def maxassigntag(request):
 		else:
 			aposition = 0
 
-		if 'oldtagid' in request.GET and request.GET['oldtagid']:
-			oldtagid = request.GET['oldtagid']
+		if 'atag2write' in request.GET and request.GET['atag2write']:
+			atag2write = request.GET['atag2write']
 		else:
 			return HttpResponseRedirect('/django/maxclamp/')
 
-		HOST = '192.41.170.55' # CSIM network
-#		HOST = '192.168.101.55' # Likitomi network
-#		HOST = '192.168.1.55' # My own local network: Linksys
-#		HOST = '192.168.2.88' # In Likitomi factory
-		PORT = 50007
-		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		soc.settimeout(2)
-		soc.connect((HOST, PORT))
-
-#		## soc.send('setup.operating_mode = standby\r\n')
-#		soc.send('tag.db.scan_tags(100)\r\n')
-#		datum = soc.recv(128)
-##		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id=30069AAAA000000000000000)\r\n')
-#		if datum.find("ok") > -1:
-#			soc.send('tag.read_id()\r\n')
-#			data = soc.recv(8192)
-#			tagdata = data.split("\r\n")
-#		tag2writelist = list()
-#		for tag in tagdata:
-#			if "BBBB" not in tag:
-#				if "AAAA" in tag:
-#					tag2writelist.append(tag)
-#					taglist = list()
-#					replist = list()
-#					for id1 in tag2writelist:
-#						id2 = id1.replace("(","")
-#						id2 = id2.replace(")","")
-#						id3 = id2.split(", ")
-#						for id4 in id3:
-#							id5 = id4.split("=")
-#							if id5[0]=="tag_id": taglist.append(id5[1])
-#							elif id5[0]=="repeat": replist.append(id5[1])
-#						repintlist = list()
-#						for rep in replist:
-#							repintlist.append(int(rep))
-#						if max(repintlist) in repintlist:
-#							n = repintlist.index(max(repintlist))
-#						oldtagid = taglist[n][6:30]
-#						soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
-#				else:
-#					soc.send('tag.write_id(3'+stratagid+'AAAA000000000000000)\r\n')
-
-		soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+oldtagid+')\r\n')
-		response = soc.recv(128)
-		soc.close()
-
-		if response.find('ok') != -1:
-			p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
-			p.save()
+		if str(stratagid) == str(atag2write[1:5]):
+			r = PaperRoll(id=atagid)
+			r.paper_code = apcode
+			r.width = asize
+			r.wunit = 'inch'
+			r.initial_weight = aweight
+			r.temp_weight = 0
+			r.lane = alane
+			r.position = aposition
+			r.save()
 			transaction.commit()
 			return HttpResponseRedirect('/django/maxclamp/')
 		else:
-			return render_to_response('intmed.html', locals())
+			HOST = '192.41.170.55' # CSIM network
+#			HOST = '192.168.101.55' # Likitomi network
+#			HOST = '192.168.1.55' # My own local network: Linksys
+#			HOST = '192.168.2.88' # In Likitomi factory
+			PORT = 50007
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+
+			soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+atag2write+')\r\n')
+			response = soc.recv(128)
+			soc.close()
+
+			if response.find('ok') != -1:
+				if atag2write.count('0') < 15:
+					p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+					p.save()
+					transaction.commit()
+				if atag2write.count('0') >= 15:
+					p = PaperRoll(id=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+					p.save()
+					tag2del = int(atag2write[1:5])
+					q = PaperRoll(id=tag2del)
+					q.delete()
+					transaction.commit()
+				return HttpResponseRedirect('/django/maxclamp/')
+			else:
+				return render_to_response('intmed.html', locals())
 
 	except:
 		pass
