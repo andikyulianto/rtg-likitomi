@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
 from weight.models import ClampliftPlan, PaperRoll, PaperHistory
+from django.core.cache import cache
 
 import socket
 
@@ -55,8 +56,12 @@ def minclamp(request):
 
 			if datum.find("ok") > -1:
 				soc.send('tag.read_id()\r\n')
-				data = soc.recv(8192)
-				tagdata = data.split("\r\n")
+				resp = soc.recv(8192)
+				if resp.find("tag_id") > -1:
+					cache.set('data', resp, 8) # Wait 8 seconds for 'data' to expire...
+
+			data = cache.get('data')
+			tagdata = data.split("\r\n")
 
 			idlist = list()
 			loclist = list()
@@ -433,8 +438,12 @@ def maxclamp(request):
 
 			if datum.find("ok") > -1:
 				soc.send('tag.read_id()\r\n')
-				data = soc.recv(8192)
-				tagdata = data.split("\r\n")
+				resp = soc.recv(8192)
+				if resp.find("tag_id") > -1:
+					cache.set('data', resp, 8) # Wait 8 seconds for 'data' to expire...
+
+			data = cache.get('data')
+			tagdata = data.split("\r\n")
 
 			idlist = list()
 			loclist = list()

@@ -967,8 +967,8 @@ function assignTag()
 					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
 					document.getElementById("frm6").submit();
 					id_box.value = document.getElementById('avaitag').value;
-					top.document.body.removeChild(top.document.getElementById('layer'));
-					top.document.body.removeChild(top.document.getElementById('box'));
+//					top.document.body.removeChild(top.document.getElementById('layer'));
+//					top.document.body.removeChild(top.document.getElementById('box'));
 				}
 			} else if (parseInt(positionval) > 13){
 				alert("The submitted position is not in range (1-13).");
