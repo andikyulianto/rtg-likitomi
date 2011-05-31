@@ -52,6 +52,10 @@ $(document).ready(function(){
 	});
 
 	$( "#asstag" ).button({icons: {primary: "ui-icon-plusthick"}});
+
+	if ($("#realtag").val() == '') {
+		$("#asstag").attr("disabled","disabled").removeAttr("onclick");
+	}
 });
 </script>
 <script type="text/javascript">
@@ -542,7 +546,10 @@ function otherLoc()
 				</tr>
 			</table>
 		</div>
+	{% else %}
+		<p class="var" id="big"># No ID tag in field. #</p>
 	{% endif %}
+
 
 	<form id="frm1" action="{{ minclamp_url }}update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
@@ -581,9 +588,10 @@ function otherLoc()
 		<input id="aweight" type="hidden" value="" name="aweight" />
 		<input id="atag2write" type="hidden" value="" name="atag2write" />
 	</form>
-	</div>
 
 	<button id="asstag" style="font-size:80%; position:absolute; bottom:0px;" onclick="javascript:assignTag()">Assign Tag</button>
+
+	</div>
 
 </body>
 </html>
