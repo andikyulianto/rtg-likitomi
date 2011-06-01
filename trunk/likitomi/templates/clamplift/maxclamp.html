@@ -52,6 +52,7 @@ $(document).ready(function(){
 	});
 
 	$( "#asstag" ).button({icons: {primary: "ui-icon-plusthick"}});
+	$( "#asstagpic" ).button({icons: {primary: "ui-icon-plusthick"}});
 
 	if ($("#realtag").val() == '') {
 		$("#asstag").attr("disabled","disabled").removeAttr("onclick");
@@ -491,8 +492,8 @@ function otherLoc()
 </script>
 </head>
 <body>
-<input id='maxclamp_url' type='hidden' value='{% url weight.minclamp.maxclamp %}' />
-{% url weight.minclamp.maxclamp as maxclamp_url %}
+<input id='maxclamp_url' type='hidden' value='{% url weight.maxclamp.maxclamp %}' />
+{% url weight.maxclamp.maxclamp as maxclamp_url %}
 	<div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -508,7 +509,9 @@ function otherLoc()
 	<input id="tagidlist" type="hidden" value="{{ tagidlist }}" />
 	<input id="tag2write" type="hidden" value="{{ tag2write }}" />
 	<input id="avaitag" type="hidden" value="{{ avaitag }}" />
+
 	{% if realtag %}
+		{% if writeMode == 'reused' %}
 		<div id="maxic">
 			<table style="width:100%; font-size:200%;">
 				<tr style="height:80px;"><td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td></tr>
@@ -538,6 +541,10 @@ function otherLoc()
 				</tr>
 			</table>
 		</div>
+		{% endif %}
+		{% if writeMode == 'new' %}
+			<p class="var" style="font-size:300%;">This tag ID is unknown.</p><p class="var" style="font-size:300%;">Push <button id="asstagpic" disabled="disabled" style="font-size:30%;">Assign Tag</button> button at the bottom left<br /> to assign new tag.</p>
+		{% endif %}
 	{% else %}
 		<p class="var" style="font-size:300%;"># No ID tag in field. #</p>
 	{% endif %}
@@ -580,7 +587,7 @@ function otherLoc()
 		<input id="atag2write" type="hidden" value="" name="atag2write" />
 	</form>
 
-	<button id="asstag" style="font-size:80%; position:absolute; bottom:0px;" onclick="javascript:assignTag()">Assign Tag</button>
+	<button id="asstag" style="font-size:100%; position:absolute; bottom:0px;" onclick="javascript:assignTag()">Assign Tag</button>
 
 	<div style="position:absolute; bottom:0px; right:5px; font-size:150%;">{% if lasttime %}<b class="label" style="font-weight:normal;">Data received at: </b><b class="var">{{ lasttime }}</b>{% endif %}</div>
 

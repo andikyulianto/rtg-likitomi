@@ -8,7 +8,7 @@ import datetime
 
 import socket
 
-def minclamp(request):
+def maxclamp(request):
 	try:
 
 # Query tag ID, paper code, and size for assigning tag #
@@ -75,14 +75,10 @@ def minclamp(request):
 #					idlist.append(tag)
 #				if "BBBB" in tag:
 #					loclist.append(tag)
-#				if "type=STG" in tag or "AAAA" in tag:
-#					idlist.append(tag)
-#				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
-#					loclist.append(tag)
-				if "BBBB" in tag:
-					loclist.append(tag)
-				else:
+				if "type=STG" in tag or "AAAA" in tag:
 					idlist.append(tag)
+				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
+					loclist.append(tag)
 
 			cnt = 0
 
@@ -98,6 +94,7 @@ def minclamp(request):
 				id3 = id2.split(", ")
 				for id4 in id3:
 					id5 = id4.split("=")
+
 					if id5[0]=="tag_id":tagid_A.append(id5[1])
 					elif id5[0]=="type":type_A.append(id5[1])
 					elif id5[0]=="antenna": antenna_A.append(id5[1])
@@ -134,6 +131,7 @@ def minclamp(request):
 						prelindex = tagid_B[cnt][25:27]
 						if prelindex == 'AB': lindex = 1
 						if prelindex == 'CD': lindex = 2
+
 						if prelindex == 'EF': lindex = 3
 						if prelindex == 'FF': lindex = 4
 						if prelindex == 'CC': lindex = 0
@@ -191,7 +189,7 @@ def minclamp(request):
 
 		if operating_mode == 'fake':
 
-			# MINCLAMP #
+			# MAXCLAMP #
 			atlane = '2'
 			atposition = '4'
 			atlocation = 'Stock'
@@ -240,39 +238,39 @@ def minclamp(request):
 	except: # Timeout #
 		pass
 
-	return render_to_response('minclamp.html', locals())
+	return render_to_response('maxclamp.html', locals())
 
 ### UPDATE ###
 @transaction.commit_manually
-def minupdate(request):
+def maxupdate(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 	else:
-		return HttpResponseRedirect('/django/minclamp/')
+		return HttpResponseRedirect('/django/maxclamp/')
 
 	if 'temp_weight' in request.GET and request.GET['temp_weight']:
 		temp_weight = request.GET['temp_weight']
 	else:
-		return HttpResponseRedirect('/django/minclamp/')
+		return HttpResponseRedirect('/django/maxclamp/')
 
 	if 'actual_wt' in request.GET and request.GET['actual_wt']:
 		actual_wt = request.GET['actual_wt']
 	else:
-		return HttpResponseRedirect('/django/minclamp/')
+		return HttpResponseRedirect('/django/maxclamp/')
 
 	p = PaperHistory(roll_id=realtag, before_wt=actual_wt, last_wt=temp_weight)
 	p.save()
 	transaction.commit()
 
-	return HttpResponseRedirect('/django/minclamp/')
+	return HttpResponseRedirect('/django/maxclamp/')
 
 ### UNDO ###
 @transaction.commit_manually
-def minundo(request):
+def maxundo(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 	else:
-		return HttpResponseRedirect('/django/minclamp/')
+		return HttpResponseRedirect('/django/maxclamp/')
 
 	p = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0]
 	p.delete()
@@ -280,9 +278,9 @@ def minundo(request):
 
 #	transaction.rollback()
 
-	return HttpResponseRedirect('/django/minclamp/')
+	return HttpResponseRedirect('/django/maxclamp/')
 
-def minchangeloc(request):
+def maxchangeloc(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 	else:
@@ -299,6 +297,7 @@ def minchangeloc(request):
 		ipos = ""
 
 	lquery = PaperRoll.objects.filter(id=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'temp_weight')[0]
+
 	lqlist = list(lquery)
 	paper_code = lqlist[0]
 	width = lqlist[1]
@@ -315,15 +314,15 @@ def minchangeloc(request):
 	p.position = ipos
 	p.save()
 
-	return HttpResponseRedirect('/django/minclamp/')
+	return HttpResponseRedirect('/django/maxclamp/')
 
 @transaction.commit_manually
-def minassigntag(request):
+def maxassigntag(request):
 	try:
 		if 'atagid' in request.GET and request.GET['atagid']:
 			atagid = int(request.GET['atagid'])
 		else:
-			return HttpResponseRedirect('/django/minclamp/')
+			return HttpResponseRedirect('/django/maxclamp/')
 		if len(str(atagid)) == 1: stratagid = '000'+str(atagid)
 		if len(str(atagid)) == 2: stratagid = '00'+str(atagid)
 		if len(str(atagid)) == 3: stratagid = '0'+str(atagid)
@@ -331,17 +330,17 @@ def minassigntag(request):
 		if 'apcode' in request.GET and request.GET['apcode']:
 			apcode = request.GET['apcode']
 		else:
-			return HttpResponseRedirect('/django/minclamp/')
+			return HttpResponseRedirect('/django/maxclamp/')
 
 		if 'asize' in request.GET and request.GET['asize']:
 			asize = int(request.GET['asize'])
 		else:
-			return HttpResponseRedirect('/django/minclamp/')
+			return HttpResponseRedirect('/django/maxclamp/')
 
 		if 'aweight' in request.GET and request.GET['aweight']:
 			aweight = int(request.GET['aweight'])
 		else:
-			return HttpResponseRedirect('/django/minclamp/')
+			return HttpResponseRedirect('/django/maxclamp/')
 
 		if 'alane' in request.GET and request.GET['alane']:
 			alane = request.GET['alane']
@@ -356,7 +355,7 @@ def minassigntag(request):
 		if 'atag2write' in request.GET and request.GET['atag2write']:
 			atag2write = request.GET['atag2write']
 		else:
-			return HttpResponseRedirect('/django/minclamp/')
+			return HttpResponseRedirect('/django/maxclamp/')
 
 		if str(stratagid) == str(atag2write[1:5]):
 			r = PaperRoll(id=atagid)
@@ -369,7 +368,7 @@ def minassigntag(request):
 			r.position = aposition
 			r.save()
 			transaction.commit()
-			return HttpResponseRedirect('/django/minclamp/')
+			return HttpResponseRedirect('/django/maxclamp/')
 		else:
 			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
@@ -396,7 +395,7 @@ def minassigntag(request):
 					q = PaperRoll(id=tag2del)
 					q.delete()
 					transaction.commit()
-				return HttpResponseRedirect('/django/minclamp/')
+				return HttpResponseRedirect('/django/maxclamp/')
 			else:
 				return render_to_response('intmed.html', locals())
 

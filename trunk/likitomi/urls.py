@@ -14,7 +14,8 @@ from weight.scale_views import scale
 from weight.views import dashboard
 from weight.showplan import showplan, required, detail
 from weight.inventory import inventory
-from weight.minclamp import minclamp, minupdate, minundo, minchangeloc, maxclamp, maxupdate, maxundo, maxchangeloc, minassigntag, maxassigntag
+from weight.minclamp import minclamp, minupdate, minundo, minchangeloc, minassigntag
+from weight.maxclamp import maxclamp, maxupdate, maxundo, maxchangeloc, maxassigntag
 from weight.longtry import orient, longtry
 
 # Uncomment the next two lines to enable the admin:
