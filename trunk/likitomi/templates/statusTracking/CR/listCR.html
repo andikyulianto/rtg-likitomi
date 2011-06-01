@@ -68,16 +68,16 @@
 			{% for item in items %}
 			<tr id="{{ item.stateCR}}">
 	<td>{% if cr == item.product.product_code %} > {% endif %}</td>
-	<td><div class="plan">{{item.plan_cr_start|time:"H:i"}}</div><div class="actual">
+	<td><div class="plan"><a href="/likitomi/line/cr/start/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cr_start|time:"H:i"}}</a></div><div class="actual">
 	{% if item.actual_cr_start != NULL %}
-				<a href="/likitomi/line/cr/start/?eID={{eID}}&pID={{item.plan_id}}">{{item.actual_cr_start|time:"H:i"}}</a>
+				{{item.actual_cr_start|time:"H:i"}}
 				{% else %}
 				&nbsp;
 				{% endif %} 
 	</div></td>
-	<td><div class="plan">{{item.plan_cr_end|time:"H:i" }}</div><div class="actual">
+	<td><div class="plan"><a href="/likitomi/line/cr/end/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cr_end|time:"H:i" }}</a></div><div class="actual">
 	{% if item.actual_cr_end != NULL %}
-				<a href="/likitomi/line/cr/end/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cr_end|time:"H:i" }}</a>
+				{{item.plan_cr_end|time:"H:i" }}
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
