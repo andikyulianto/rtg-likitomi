@@ -52,6 +52,7 @@ $(document).ready(function(){
 	});
 
 	$( "#asstag" ).button({icons: {primary: "ui-icon-plusthick"}});
+	$( "#asstagpic" ).button({icons: {primary: "ui-icon-plusthick"}});
 
 	if ($("#realtag").val() == '') {
 		$("#asstag").attr("disabled","disabled").removeAttr("onclick");
@@ -510,6 +511,7 @@ function otherLoc()
 	<input id="avaitag" type="hidden" value="{{ avaitag }}" />
 
 	{% if realtag %}
+		{% if writeMode == 'reused' %}
 		<div id="minic">
 			<table style="width:100%;">
 				<tr>
@@ -546,6 +548,10 @@ function otherLoc()
 				</tr>
 			</table>
 		</div>
+		{% endif %}
+		{% if writeMode == 'new' %}
+			<p class="var">This tag ID is unknown.</p><p class="var">Push <button id="asstagpic" disabled="disabled" style="font-size:80%;">Assign Tag</button> button at the bottom left<br /> to assign new tag.</p>
+		{% endif %}
 	{% else %}
 		<p class="var" id="big"># No ID tag in field. #</p>
 	{% endif %}
