@@ -120,7 +120,7 @@ class Products_model extends Model
 	function getProductDetails($parent_code_id)
 	{
 		$this->db->where('isdeleted',0);
-		$this->db->where('parent_code_id',$parent_code_id);
+		$this->db->where('parent_code_id',$parent_code);
 		$query = $this->db->get($this->tblProducts);
 		return $query->result();
 	}
