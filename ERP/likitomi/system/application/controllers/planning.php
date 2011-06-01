@@ -173,6 +173,13 @@ class Planning extends Controller {
 		//calculate time
 		$time_start_cr = (0.0006949*60)*8;
 		$time_start_cv = (0.0006949*60)*9;
+		$time_start_3CS = $time_start_cv;
+		$time_start_2CL = $time_start_cv;
+		$time_start_3CL = $time_start_cv;
+		$time_start_3CW = $time_start_cv;
+		$time_start_2CS = $time_start_cv;
+
+
 		//$time_start_pt = (0.0006949*60)*8;
 		//$time_start_wh = (0.0006949*60)*8;
 		foreach($gridData as $rowData)
@@ -199,21 +206,62 @@ class Planning extends Controller {
 		{
 			$time_stop_cr = $time_start_cr + $timeuseCR * 0.0006949;
 		}
+
+
 		//start stop time for CV
-		//print_r($key);
-		if(strpos($key['next_process'],'3CS'))
+		//print($key['next_process']);
+		if(strcmp($key['next_process'],'3CS'))
 			$speed = 120;
+		elseif(strcmp($key['next_process'],'2CL'))
+			$speed = 60;
+		elseif(strcmp($key['next_process'],'3CL'))
+			$speed = 60;
+		elseif(strcmp($key['next_process'],'3CW'))
+			$speed = 60;
+		elseif(strcmp($key['next_process'],'2CS'))
+			$speed = 60;
 		else
 			$speed = 0;
-		$time_stop_cv = $time_start_cv;
+		//echo $key['next_process']."". $speed ."<br>";
+		//$time_stop_cv = $time_start_cv;
 		if ($speed > 0)
 			$timeuseCV = $rowData->qty / $speed;
 		else
 			$timeuseCV = 0;
-		$time_stop_cv = $time_start_cv+ round($timeuseCV+30) * 0.0006949;
+
+
+		if(strcmp($key['next_process'],'3CS'))
+		{
+			$time_stop_3CS = $time_start_3CS+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_3CS;
+		}
+		elseif(strcmp($key['next_process'],'2CL'))
+		{
+			$time_stop_2CL = $time_start_2CL+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_2CL;
+		}
+		elseif(strcmp($key['next_process'],'3CL'))
+		{
+			$time_stop_3CL = $time_start_3CL+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_3CL;
+		}
+		elseif(strcmp($key['next_process'],'3CW'))
+		{
+			$time_stop_3CW = $time_start_3CW+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_3CW;
+		}
+		elseif(strcmp($key['next_process'],'2CS'))
+		{
+			$time_stop_2CS = $time_start_2CS+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_2CS;
+		}
+		else
+			$time_stop_cv = $time_stop_cv;
+		
 		$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
 		$time_stop_pt = $time_start_pt +round( 30) * 0.0006949;
 		$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
+
 		//$rowData['time_start_cr'] = $time_start_cr;
 			//print_r($rowData);
 			//print_r($key->row_array(0));
@@ -221,7 +269,40 @@ class Planning extends Controller {
 			//Save to fake_table for status tracking
 			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
 			$time_start_cr = $time_stop_cr;
+
+		if(strcmp($key['next_process'],'3CS'))
+		{
+			$time_stop_3CS = $time_start_3CS+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_3CS;
 		}
+		elseif(strcmp($key['next_process'],'2CL'))
+		{
+			$time_stop_2CL = $time_start_2CL+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_2CL;
+		}
+		elseif(strcmp($key['next_process'],'3CL'))
+		{
+			$time_stop_3CL = $time_start_3CL+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_3CL;
+		}
+		elseif(strcmp($key['next_process'],'3CW'))
+		{
+			$time_stop_3CW = $time_start_3CW+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_3CW;
+		}
+		elseif(strcmp($key['next_process'],'2CS'))
+		{
+			$time_stop_2CS = $time_start_2CS+ round($timeuseCV+30) * 0.0006949;
+			$time_stop_cv = $time_stop_2CS;
+		}
+		else
+			$time_stop_cv = $time_stop_cv;
+		
+		$time_start_2CL = $time_stop_2CL;
+		$time_start_3CL = $time_stop_3CL;
+		$time_start_3CW = $time_stop_3CW;
+		$time_start_2CS = $time_stop_2CS;
+/**/		}
 		echo "Data Saved as 	".$choosendate." Plan.";
 	}
 	
