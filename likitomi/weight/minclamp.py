@@ -58,7 +58,7 @@ def minclamp(request):
 				soc.send('tag.read_id()\r\n')
 				resp = soc.recv(8192)
 				if resp.find("tag_id") > -1:
-					cache.set('data', resp, 8) # Wait 8 seconds for 'data' to expire...
+					cache.set('data', resp, 10) # Wait 10 seconds for 'data' to expire...
 
 			data = cache.get('data')
 			tagdata = data.split("\r\n")
@@ -86,6 +86,7 @@ def minclamp(request):
 			type_A = list()
 			antenna_A = list()
 			repeat_A = list()
+			last_A = list()
 
 			for id1 in idlist:
 				id2 = id1.replace("(","")
@@ -97,6 +98,7 @@ def minclamp(request):
 					elif id5[0]=="type":type_A.append(id5[1])
 					elif id5[0]=="antenna": antenna_A.append(id5[1])
 					elif id5[0]=="repeat": repeat_A.append(id5[1])
+					elif id5[0]=="last": last_A.append(id5[1])
 					cnt= cnt+1
 
 			tagid_B = list()
@@ -174,6 +176,7 @@ def minclamp(request):
 #			tagsplt = tagid_A[n].split("AAAA")
 #			realtag = int(tagsplt[1][0:4])
 			realtag = tagid_A[n][7:11]
+			lasttime = last_A[n][11:19]
 			tag2write = tagid_A[n][6:30]
 
 			soc.close()
@@ -440,7 +443,7 @@ def maxclamp(request):
 				soc.send('tag.read_id()\r\n')
 				resp = soc.recv(8192)
 				if resp.find("tag_id") > -1:
-					cache.set('data', resp, 8) # Wait 8 seconds for 'data' to expire...
+					cache.set('data', resp, 10) # Wait 10 seconds for 'data' to expire...
 
 			data = cache.get('data')
 			tagdata = data.split("\r\n")
@@ -464,6 +467,7 @@ def maxclamp(request):
 			type_A = list()
 			antenna_A = list()
 			repeat_A = list()
+			last_A = list()
 
 			for id1 in idlist:
 				id2 = id1.replace("(","")
@@ -476,6 +480,7 @@ def maxclamp(request):
 					elif id5[0]=="type":type_A.append(id5[1])
 					elif id5[0]=="antenna": antenna_A.append(id5[1])
 					elif id5[0]=="repeat": repeat_A.append(id5[1])
+					elif id5[0]=="last": last_A.append(id5[1])
 					cnt= cnt+1
 
 			tagid_B = list()
@@ -554,6 +559,7 @@ def maxclamp(request):
 #			tagsplt = tagid_A[n].split("AAAA")
 #			realtag = int(tagsplt[1][0:4])
 			realtag = tagid_A[n][7:11]
+			lasttime = last_A[n][11:19]
 			tag2write = tagid_A[n][6:30]
 
 			soc.close()
