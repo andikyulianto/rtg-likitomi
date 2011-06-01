@@ -236,6 +236,7 @@ class Products extends Controller {
 		$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
 		$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 		$products['remark'] = ($this->input->post('remark'))?$this->input->post('remark'):'';
+		$products['req_cr'] = ($this->input->post('req_cr'))?$this->input->post('req_cr'):'';
 		$products['isdeleted'] 				= '0';
 		$products['created_on'] 			= date("Y-m-d G:i:s");
 		$products['created_by'] 			= $_SERVER['REMOTE_ADDR'];
@@ -304,6 +305,7 @@ class Products extends Controller {
 			$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
 			$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 			$products['remark'] = ($this->input->post('remark'))?$this->input->post('remark'):'';
+			$products['req_cr'] = ($this->input->post('req_cr'))?$this->input->post('req_cr'):'';
 			$products['isdeleted'] 				= '0';
 			$products['modified_on'] 			= date("Y-m-d G:i:s");
 			$products['modified_by'] 			= $_SERVER['REMOTE_ADDR'];
