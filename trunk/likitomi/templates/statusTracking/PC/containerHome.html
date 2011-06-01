@@ -136,17 +136,22 @@
 	});
 
 	$(document).ready(function() {
-		$('#resultTable').load('/likitomi/normalPlanRefresher/');
-		$('#dailyPlanUpdate').load('/likitomi/lastUpdate/');
-		//$('#monthlyPlan').load('/likitomi/monthlyPlan/');
+		var normalPlanRefresher_url = $('#normalPlanRefresher_url').val();
+		var lastUpdate_url = $('#lastUpdate_url').val();
+		$('#resultTable').load(normalPlanRefresher_url);
+		$('#dailyPlanUpdate').load(lastUpdate_url);
+		var monthlyPlan_url = $('#monthlyPlan_url').val();
+		//$('#monthlyPlan').load(monthlyPlan_url);
 	});
 	
 	var auto_refresh = setInterval(
 	function()
 	{	
 			//$div.fadeOut('fast').load('/likitomi/PCrefresher/').fadeIn("fast");
-			$('#resultTable').load('/likitomi/normalPlanRefresher/');
-			$('#dailyPlanUpdate').load('/likitomi/lastUpdate/');
+			var normalPlanRefresher_url = $('#normalPlanRefresher_url').val();
+			var lastUpdate_url = $('#lastUpdate_url').val();
+			$('#resultTable').load(normalPlanRefresher_url);
+			$('#dailyPlanUpdate').load(lastUpdate_url);
 			$('#finished').button('refresh');
 			$('#notProcess').attr('checked', 'yes').button('refresh');
 			$('#missing').attr('checked', 'yes').button('refresh');
@@ -174,13 +179,23 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
+
+<!--PATH SETTINGS START-->
+<input id='normalPlanRefresher_url' type='hidden' value='{% url statusTracking.home.normalPlanRefresher %}' />
+<input id='lastUpdate_url' type='hidden' value='{% url statusTracking.home.lastUpdate %}' />
+<input id='monthlyPlan_url' type='hidden' value='{% url statusTracking.home.monthlyPlan %}' />
+{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.section as home_url %}
+{% url statusTracking.detail.pcdetail as pcdetail_url %}
+<!--PATH SETTINGS END-->
+
 <div id="wrapper" style="width:100%">
     <div id="header" >
     	<!-- start Menu-->
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%"><a id="normalLink" href="/likitomi/home/?user={{user}}">Home</a></th>
+    				<th align="left" width="60%"><a id="normalLink" href="{{ home_url }}?user={{user}}">Home</a></th>
     				<th align="left" width="30%">
 						<form id="form_search" action="#">
 							<fieldset id="form_search_fieldset">
@@ -190,7 +205,7 @@ $(document).ready(function() {
 							</fieldset>
 						</form>
     				</th>
-    				<th align="right" width="10%"><a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+    				<th align="right" width="10%"><a id="normalLink" href="{{ likitomi_url }}"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
     			</tr>
     		</thead>
     	</table>

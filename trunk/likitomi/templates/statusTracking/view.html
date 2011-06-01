@@ -2,7 +2,7 @@
 {% block view %}
 <div id='loginDiv'>
 	<fieldset><legend accesskey="D" tabindex="1">{{content_header}}</legend>
-<form id="login_form" method="get" action="/likitomi/home/">
+<form id="login_form" method="get" action="{% url statusTracking.home.section %}">
 <!--USERNAME-->
 	<p><label for="user_name">{{la_user_name}}:</label>
 	<input type="text" size="20" maxlength="30" id="user_name" value="" name="eID">

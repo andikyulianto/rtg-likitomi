@@ -15,7 +15,7 @@ class SimpleTest(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
 	def test_general(self):
-		response = self.client.get('/likitomi/')
+		response = self.client.get('/django/likitomi/')
 		self.assertEqual(response.status_code,200)
 		self.assertEqual(response.context['title'],'Welcome to Likitomi Status Tracking System')
 		self.assertEqual(response.context['subcontent_header'],"Please scan or enter employee code")
