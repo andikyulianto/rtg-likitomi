@@ -1,11 +1,18 @@
 {% extends "PC/container.html"%}
 {% block view %}
+
+<!--PATH SETTINGS START-->
+{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.section as home_url %}
+{% url statusTracking.plan.totalPlanSelectedDate as totalPlanSelectedDate_url %}
+<!--PATH SETTINGS END-->
+
 <div id="wrapper">
-    <div id="header"><a href="/likitomi/home/?eID={{eID}}">HOME</a> >> Total Plan <br>
+    <div id="header"><a href="{{ home_url }}?eID={{eID}}">HOME</a> >> Total Plan <br>
     	<!-- start Menu-->
     <ul id="navlist">
-		<li><a href="/likitomi/plan/totalPlan/?eID={{eID}}">Total Plan</a></li>
-		<li><a href="/likitomi">Logout</a></li>
+		<li><a href="{{ totalPlanSelectedDate_url }}?eID={{eID}}">Total Plan</a></li>
+		<li><a href="{{ likitomi_url }}">Logout</a></li>
 	</ul>
 
 
@@ -39,7 +46,7 @@
 			termTo = $form.find( 'input[name="toTotal"]' ).val(),
 			url = $form.attr( 'action' );
 		    // Send the data using post and put the results in a div
-		$.post("/likitomi/plan/totalPlan/",{"from":termFrom,"to":termTo,"eID":eID}, function(data){
+		$.post("{{ totalPlanSelectedDate_url }}",{"from":termFrom,"to":termTo,"eID":eID}, function(data){
 			$( "#resultTotal" ).fadeOut('fast').html(data).fadeIn('fast');
 		}
 

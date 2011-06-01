@@ -1,12 +1,20 @@
 {% extends "CR/container.html" %}
 {% block view %}
+
+<!--PATH SETTINGS START-->
+{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.section as home_url %}
+{% url statusTracking.line.startCR as startCR_url %}
+{% url statusTracking.line.endCR as endCR_url %}
+<!--PATH SETTINGS END-->
+
 <div id="wrapper" style="width:100%">
     <div id="header" >
     	<!-- start Menu-->
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%"><a id="normalLink" href="/likitomi/home/?eID={{eID}}">Home</a> </th>
+    				<th align="left" width="60%"><a id="normalLink" href="{{ home_url }}?eID={{eID}}">Home</a> </th>
     				<th align="left" width="30%">
 						<form id="form_search" action="#">
 							<fieldset id="form_search_fieldset">
@@ -68,14 +76,14 @@
 			{% for item in items %}
 			<tr id="{{ item.stateCR}}">
 	<td>{% if cr == item.product.product_code %} > {% endif %}</td>
-	<td><div class="plan"><a href="/likitomi/line/cr/start/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cr_start|time:"H:i"}}</a></div><div class="actual">
+	<td><div class="plan"><a href="{{ startCR_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cr_start|time:"H:i"}}</a></div><div class="actual">
 	{% if item.actual_cr_start != NULL %}
 				{{item.actual_cr_start|time:"H:i"}}
 				{% else %}
 				&nbsp;
 				{% endif %} 
 	</div></td>
-	<td><div class="plan"><a href="/likitomi/line/cr/end/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cr_end|time:"H:i" }}</a></div><div class="actual">
+	<td><div class="plan"><a href="{{ endCR_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cr_end|time:"H:i" }}</a></div><div class="actual">
 	{% if item.actual_cr_end != NULL %}
 				{{item.plan_cr_end|time:"H:i" }}
 				{% else %}

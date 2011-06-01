@@ -1,12 +1,20 @@
 {% extends "CR/container.html" %}
 {% block view %}
+
+<!--PATH SETTINGS START-->
+{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.section as home_url %}
+{% url statusTracking.line.startPT as startPT_url %}
+{% url statusTracking.line.endPT as endPT_url %}
+<!--PATH SETTINGS END-->
+
 <div id="wrapper" style="width:100%">
     <div id="header" >
     	<!-- start Menu-->
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%"><a id="normalLink" href="/likitomi/home/?eID={{eID}}">Home</a> </th>
+    				<th align="left" width="60%"><a id="normalLink" href="{{ home_url }}?eID={{eID}}">Home</a> </th>
     				<th align="left" width="30%">
 						<form id="form_search" action="#">
 							<fieldset id="form_search_fieldset">
@@ -16,7 +24,7 @@
 							</fieldset>
 						</form>
     				</th>
-    				<th align="right" width="10%"><a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+    				<th align="right" width="10%"><a id="normalLink" href="{{ likitomi_url }}"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
     			</tr>
     		</thead>
     	</table>
@@ -61,8 +69,8 @@
 			{% for item in items %}
 	<tr id="{{ item.statePT}}">
 	<td rowspan=2>{% if pt == item.product.product_code %} > {% endif %}</th>
-	<td><a href="/likitomi/line/pt/start/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_start|time:"H:i"}}</a></th>
-	<td><a href="/likitomi/line/pt/end/?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_end|time:"H:i" }}</a></th>
+	<td><a href="{{ startPT_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_start|time:"H:i"}}</a></th>
+	<td><a href="{{ endPT_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_end|time:"H:i" }}</a></th>
 	<td>{{item.plan_amount}}</th>
 	<td rowspan=2>{{item.product.product_code}}</td>
 	<td rowspan=2>{{item.cv_machine}}</td>
