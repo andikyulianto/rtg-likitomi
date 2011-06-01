@@ -30,7 +30,7 @@ def set_username(user):
 ## this page is view process via desktop computer ##
 ####################################################
 def section(request):
-	user = request.GET['user']
+	eID = request.GET['eID']
 	today = todayDate()
 
 	title = str(today)
