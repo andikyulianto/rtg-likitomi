@@ -75,10 +75,14 @@ def maxclamp(request):
 #					idlist.append(tag)
 #				if "BBBB" in tag:
 #					loclist.append(tag)
-				if "type=STG" in tag or "AAAA" in tag:
-					idlist.append(tag)
-				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
+#				if "type=STG" in tag or "AAAA" in tag:
+#					idlist.append(tag)
+#				if "type=ISOC" and "AAAA" not in tag or "BBBB" in tag:
+#					loclist.append(tag)
+				if "BBBB" in tag:
 					loclist.append(tag)
+				else:
+					idlist.append(tag)
 
 			cnt = 0
 
