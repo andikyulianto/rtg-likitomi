@@ -7,6 +7,7 @@ class Employee:
 		cv = AuthGroup.objects.get(name="CV")
 		pt = AuthGroup.objects.get(name="PT")
 		wh = AuthGroup.objects.get(name="WH")
+
 		user = AuthUser.objects.get(username=name)
 		self.username = name
 		self.id = user.id

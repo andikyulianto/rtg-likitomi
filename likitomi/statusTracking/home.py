@@ -19,7 +19,7 @@ import calendar
 from employee import Employee
 
 
-username = ""
+user = ""
 def set_username(user):
 	global username
 	username = user
@@ -30,41 +30,39 @@ def set_username(user):
 ## this page is view process via desktop computer ##
 ####################################################
 def section(request):
-	eID = request.GET['eID']
+	try:
+		eID = request.GET['eID']
+		employee = AuthUser.objects.get(eid=eID)
+	except:
+		user = request.GET['user']
+		employee = Employee(user)
+		username = employee.username
+		set_username(user)
+		eID = employee.id
+#		task = employee.task
+
 	today = todayDate()
 
-	title = str(today)
-	is_enable_table = True
-	is_enable_desktop = True
+	task = employee.task
 
-#	employee = Employee.objects.get(eid=eID)
-	try:
-		employee = Employee(user)
-		set_username(user)
-#	group = AuthUserGroups.objects.get(user_id = user.id)
-	
-		eID = employee.id
-		task = employee.task
+	page =  task
 
-		page =  task
-		#section_title = employee.lastname
-		section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
-		if(page == "PC"):
-			return showPC(user,section_title)
-		elif(page == "GM"):
-			return showGM(user,section_title)
-		elif(page == "CR"):
-			return workCR(user,section_title)
-		elif(page == "CV"):
-			return workCV(user,section_title)
-		elif(page == "PT"):
-			return workPT(user,section_title)
-		elif(page == "WH"):
-			return workWH(user,section_title)
-		else :
-			return render_to_response('home.html', locals())
-	except:
-		msg = "Error"
+	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
+
+	if(page == "PC"):
+		return showPC(user,section_title)
+	elif(page == "GM"):
+		return showGM(user,section_title)
+	elif(page == "CR"):
+		return workCR(user,section_title)
+	elif(page == "CV"):
+		return workCV(user,section_title)
+	elif(page == "PT"):
+		return workPT(user,section_title)
+	elif(page == "WH"):
+		return workWH(user,section_title)
+	else :
+		return render_to_response('home.html', locals())
 	
 	return render_to_response('home.html', locals())
 
