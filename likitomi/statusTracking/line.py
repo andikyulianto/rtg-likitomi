@@ -11,7 +11,8 @@ from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate
 from statusTracking.config import getCVSpeed
-from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
+#from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
+from statusTracking.models import  StatusTracking, ProductCatalog, Products
 
 ###########################################
 ##                 for CR                ##

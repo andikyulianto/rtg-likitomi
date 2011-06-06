@@ -18,9 +18,9 @@ class Addresses(models.Model):
     address = models.CharField(max_length=750, blank=True)
     isdeleted = models.IntegerField(null=True, blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(max_length=90, blank=True)
+    modified_by = models.CharField(null=True,max_length=90, blank=True)
     class Meta:
         db_table = u'addresses'
 
@@ -54,7 +54,7 @@ class AuthPermission(models.Model):
         db_table = u'auth_permission'
 
 class AuthUser(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     username = models.CharField(unique=True, max_length=90)
     first_name = models.CharField(max_length=90)
     last_name = models.CharField(max_length=90)
@@ -69,7 +69,7 @@ class AuthUser(models.Model):
         db_table = u'auth_user'
 
 class AuthUserGroups(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user_id = models.IntegerField()
     group_id = models.IntegerField()
     class Meta:
@@ -284,10 +284,10 @@ class Planning(models.Model):
         db_table = u'planning'
 
 class ProductCatalog(models.Model):
-    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
+    product_id = models.IntegerField(primary_key=True)
+    product_code = models.CharField(unique=True, max_length=60, blank=True)
     product_name = models.CharField(max_length=765, blank=True)
-    partner =  models.ForeignKey(Partners,null=False)
-    #partner_id = models.CharField(max_length=765, blank=True)
+    partner_id = models.CharField(max_length=765, blank=True)
     cname = models.CharField(max_length=765, blank=True)
     product_type = models.CharField(max_length=60, blank=True)
     customer_part_no = models.CharField(max_length=60, blank=True)
@@ -299,36 +299,54 @@ class ProductCatalog(models.Model):
     joint_details = models.CharField(max_length=150, blank=True)
     box_style = models.CharField(max_length=150, blank=True)
     rope_color = models.CharField(max_length=765, blank=True)
-    pcs_bundle = models.IntegerField(null=True, blank=True)
+    pcs_bundle = models.IntegerField()
     level = models.CharField(max_length=30, blank=True)
-    p_width_mm = models.IntegerField(null=True, blank=True)
-    p_width_inch = models.IntegerField(null=True, blank=True)
+    p_width_mm = models.IntegerField()
+    p_width_inch = models.IntegerField()
     qty_allowance = models.CharField(max_length=60, blank=True)
-    scoreline_f = models.IntegerField(null=True, blank=True)
-    scoreline_d = models.IntegerField(null=True, blank=True)
-    scoreline_f2 = models.IntegerField(null=True, blank=True)
-    slit = models.IntegerField(null=True, blank=True)
-    blank = models.IntegerField(null=True, blank=True)
-    t_length = models.IntegerField(null=True, blank=True)
-    cut = models.IntegerField(null=True, blank=True)
+    scoreline_f = models.IntegerField()
+    scoreline_d = models.IntegerField()
+    scoreline_f2 = models.IntegerField()
+    slit = models.IntegerField()
+    blank = models.IntegerField()
+    t_length = models.IntegerField()
+    cut = models.IntegerField()
     next_process = models.CharField(max_length=300, blank=True)
     code_pd = models.CharField(max_length=300, blank=True)
     code_rd = models.CharField(max_length=300, blank=True)
     sketch = models.CharField(max_length=765, blank=True)
     sketch_large = models.CharField(max_length=765, blank=True)
+    add_blank = models.IntegerField()
+    add_t_length = models.IntegerField()
     remark = models.CharField(max_length=765, blank=True)
     isdeleted = models.IntegerField()
     created_on = models.DateTimeField(null=True, blank=True)
     created_by = models.CharField(max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
     modified_by = models.CharField(max_length=90, blank=True)
-    code = models.IntegerField(null=True, blank=True)
+    code = models.IntegerField()
+    req_cr = models.IntegerField()
+    req_2cl = models.IntegerField()
+    req_3cm = models.IntegerField()
+    req_3cs = models.IntegerField()
+    req_4cd = models.IntegerField()
+    req_3cl = models.IntegerField()
+    req_gh = models.IntegerField()
+    req_hs = models.IntegerField()
+    req_fg = models.IntegerField()
+    req_rd = models.IntegerField()
+    req_ss = models.IntegerField()
+    req_remove = models.IntegerField()
+    req_foam = models.IntegerField()
+    req_tape = models.IntegerField()
+    req_wh = models.IntegerField()
     class Meta:
         db_table = u'product_catalog'
 
 class Products(models.Model):
-    parent_code = models.ForeignKey(ProductCatalog,null=False)
-    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
+    auto_pid = models.IntegerField(primary_key=True)
+    parent_code_id = models.CharField(max_length=60, blank=True)
+    product_code = models.CharField(max_length=60, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     df = models.CharField(max_length=30, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=30, db_column='BM', blank=True) # Field name made lowercase.
@@ -348,13 +366,13 @@ class Products(models.Model):
     class Meta:
         db_table = u'products'
 
-
 class Reader(models.Model):
     id = models.IntegerField(primary_key=True)
     tagid = models.CharField(max_length=765)
     eventid = models.CharField(max_length=24, blank=True)
     class Meta:
         db_table = u'reader'
+
 
 class SalesOrder(models.Model):
     sales_order_id = models.IntegerField(primary_key=True)
@@ -413,28 +431,25 @@ class TotalPlanning(models.Model):
     autoid = models.IntegerField(primary_key=True)
     date = models.DateField()
     delivery_id = models.IntegerField()
-    p_width_mm = models.IntegerField(null=True, blank=True)
+    p_width_inch = models.IntegerField(null=True, blank=True)
     t_length = models.IntegerField(null=True, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     cut = models.IntegerField(null=True, blank=True)
     corrugator_date = models.DateTimeField(null=True, blank=True)
     converter_date = models.DateTimeField(null=True, blank=True)
-    patchpartition_date = models.DateTimeField(null=True, blank=True)
-    warehouse_date = models.DateTimeField(null=True, blank=True)
     df = models.CharField(max_length=21, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=21, db_column='BM', blank=True) # Field name made lowercase.
     bl = models.CharField(max_length=21, db_column='BL', blank=True) # Field name made lowercase.
     cm = models.CharField(max_length=21, db_column='CM', blank=True) # Field name made lowercase.
     cl = models.CharField(max_length=21, db_column='CL', blank=True) # Field name made lowercase.
-    p_width_inch = models.IntegerField(null=True, blank=True)
-    next_process = models.CharField(max_length=33, blank=True)
     class Meta:
         db_table = u'total_planning'
 
+
 class StatusTracking(models.Model):
     plan_id = models.IntegerField(primary_key=True)
-    product = models.ForeignKey(Products,null=False)
-    #product_id = models.CharField(max_length=33, blank=True)
+    #product = models.ForeignKey(Products,null=False)
+    product_id = models.CharField(max_length=33, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
     plan_cr_end = models.DateTimeField(null=True, blank=True)
@@ -465,16 +480,14 @@ class StatusTracking(models.Model):
     process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
     days_left = models.IntegerField(null=True, blank=True)
+
     def speed(self):
         return getCVSpeed(self.cv_machine)
-#    days_left = models.IntegerField(null=True, blank=True)
     def days_left(self):
-        import datetime
 #        self.days_left = 8
         self.days_left = int((self.plan_due - datetime.datetime.now()).days)
-        #super(FakeStatusTracking,self).save()
-
         return self.days_left
+
     def cr_time_used(self):
         return float((self.plan_cr_end - self.plan_cr_start).seconds)/60
     def cv_time_used(self):
@@ -519,6 +532,7 @@ class StatusTracking(models.Model):
 	else :
 		status = ''
 	return status
+
     class Meta:
         db_table = u'status_tracking'
 #    def set_days_left(self):
