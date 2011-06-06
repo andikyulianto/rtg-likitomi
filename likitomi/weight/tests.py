@@ -7,7 +7,8 @@ Replace these with more appropriate tests for your application.
 
 from django.test import TestCase
 
-from django.utils import unittest
+#from django.utils import unittest
+import unittest
 from django.test.client import Client
 from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 import datetime
