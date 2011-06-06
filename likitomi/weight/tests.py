@@ -6,7 +6,50 @@ Replace these with more appropriate tests for your application.
 """
 
 from django.test import TestCase
+
+from django.utils import unittest
+from django.test.client import Client
+from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 import datetime
+
+class AssignTagTestCase(unittest.TestCase):
+	def setUp(self):
+		self.client = Client()
+		PaperRoll.objects.create(id=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+
+	def testNewTag(self):
+		self.client.get('/django/minclamp/assigntag/', {'atagid': 2, 'apcode': 'CA125', 'asize': 36, 'aweight': 800, 'alane': 'B', 'aposition': 2, 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(PaperRoll.objects.filter(id=2).exists(), True)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('paper_code'), 'CA125')
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('width'), 36)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('wunit'), 'inch')
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('initial_weight'), 800)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('temp_weight'), 0)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('lane'), 'B')
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('position'), 2)
+
+	def testReuseTag(self):
+		self.client.get('/django/minclamp/assigntag/', {'atagid': 2, 'apcode': 'CA125', 'asize': 36, 'aweight': 800, 'alane': 'B', 'aposition': 2, 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(PaperRoll.objects.filter(id=2).exists(), True)
+		self.assertEqual(PaperRoll.objects.filter(id=1).exists(), False)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('paper_code'), 'CA125')
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('width'), 36)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('wunit'), 'inch')
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('initial_weight'), 800)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('temp_weight'), 0)
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('lane'), 'B')
+		self.assertEqual(PaperRoll.objects.filter(id=2).values('position'), 2)
+
+	def testUpdateTag(self):
+		self.client.get('/django/minclamp/assigntag/', {'atagid': 1, 'apcode': 'CA125', 'asize': 36, 'aweight': 800, 'alane': 'B', 'aposition': 2, 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(PaperRoll.objects.filter(id=1).exists(), True)
+		self.assertEqual(PaperRoll.objects.filter(id=1).values('paper_code'), 'CA125')
+		self.assertEqual(PaperRoll.objects.filter(id=1).values('width'), 36)
+		self.assertEqual(PaperRoll.objects.filter(id=1).values('wunit'), 'inch')
+		self.assertEqual(PaperRoll.objects.filter(id=1).values('initial_weight'), 800)
+		self.assertEqual(PaperRoll.objects.filter(id=1).values('temp_weight'), 0)
+		self.assertEqual(PaperRoll.objects.filter(id=1).values('lane'), 'B')
+		self.assertEqual(PaperRoll.objects.filter(id=1).values('position'), 2)
 
 class SimpleTest(TestCase):
     def test_basic_addition(self):
