@@ -92,15 +92,19 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-    'django.contrib.auth',
+#    'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.sites',
-    'django.contrib.messages',
+#    'django.contrib.sessions',
+#    'django.contrib.sites',
+#    'django.contrib.messages',
     'likitomi.statusTracking',
     'likitomi.weight',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
+)
+
+FIXTURE_DIRS = (
+   '/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/statusTracking/fixtures/',
 )
