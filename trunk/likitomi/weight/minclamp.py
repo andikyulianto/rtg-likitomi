@@ -399,6 +399,6 @@ def minassigntag(request):
 				return HttpResponseRedirect('/django/minclamp/')
 			else:
 				return render_to_response('intmed.html', locals())
-
+		return HttpResponseRedirect('/django/minclamp/')
 	except:
 		pass
