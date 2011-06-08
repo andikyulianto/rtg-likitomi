@@ -77,6 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'djangologging.middleware.LoggingMiddleware',
 )
 
 ROOT_URLCONF = 'likitomi.urls'
@@ -106,5 +107,5 @@ INSTALLED_APPS = (
 )
 
 FIXTURE_DIRS = (
-   '/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/statusTracking/fixtures/',
+#   '/home/fon/Django-123/projects/rtg-likitomi/likitomi/statusTracking/fixtures/',
 )
