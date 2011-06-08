@@ -17,6 +17,7 @@ from django.db.models import F
 from django.utils.safestring import mark_safe
 import calendar
 from employee import Employee
+import logging
 
 
 user = ""
@@ -40,12 +41,14 @@ def section(request):
 		set_username(user)
 		eID = employee.id
 #		task = employee.task
-
+	
 	today = todayDate()
 
 	task = employee.task
 
-	page =  task
+#	print "this is task " +str(task)
+
+	page =  str(task)
 
 	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
 
@@ -145,7 +148,7 @@ def showPC(user,title):
 	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
-	page ="totalPlanSelectedDate"
+	#page ="totalPlanSelectedDate"
 	#temp_contents = StatusTracking.objects.all()
 
 	items = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
