@@ -38,8 +38,8 @@ class ClampliftPlan(models.Model):
 	case = models.PositiveIntegerField()
 	cut = models.PositiveIntegerField()
 
-	def __str__(self):
-		return self.sheet_code
+#	def __str__(self):
+#		return self.sheet_code
 
 #	def __unicode__(self):
 #		return u'%s, %s' % (self.start_time, self.end_time)
@@ -51,16 +51,17 @@ class ClampliftPlan(models.Model):
 		list_display = ('case', 'cut')
 
 class PaperRoll(models.Model):
+	tarid = models.PositiveIntegerField(unique=True)
 	paper_code = models.CharField(max_length=6)
 	width = models.PositiveIntegerField()
 	wunit = models.CharField(max_length=4)
 	initial_weight = models.PositiveIntegerField()
-	temp_weight = models.PositiveIntegerField()
+	temp_weight = models.PositiveIntegerField(null=True)
 	lane = models.CharField(max_length=1)
-	position = models.PositiveIntegerField()
+	position = models.PositiveIntegerField(null=True)
 
-	def __unicode__(self):
-		return self.paper_code
+#	def __unicode__(self):
+#		return self.tarid
 
 class PaperHistory(models.Model):
 	roll_id = models.PositiveIntegerField()
@@ -68,5 +69,5 @@ class PaperHistory(models.Model):
 	last_wt = models.PositiveIntegerField()
 	timestamp = models.DateTimeField()
 
-	def __unicode__(self):
-		return self.roll_id
+#	def __unicode__(self):
+#		return self.roll_id
