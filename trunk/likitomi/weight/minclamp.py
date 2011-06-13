@@ -41,156 +41,187 @@ def minclamp(request):
 
 	if operating_mode == 'real':
 
-		HOST = '192.41.170.55' # CSIM network
-#		HOST = '192.168.101.55' # Likitomi network
-#		HOST = '192.168.1.55' # My own local network: Linksys
-#		HOST = '192.168.2.88' # In Likitomi factory
-		PORT = 50007
-		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		soc.settimeout(2)
-		soc.connect((HOST, PORT))
-		## soc.send('setup.operating_mode = standby\r\n')
-		soc.send('tag.db.scan_tags(100)\r\n')
-		datum = soc.recv(128)
+		try:
+			HOST = '192.41.170.55' # CSIM network
+#			HOST = '192.168.101.55' # Likitomi network
+#			HOST = '192.168.1.55' # My own local network: Linksys
+#			HOST = '192.168.2.88' # In Likitomi factory
+			PORT = 50007
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			## soc.send('setup.operating_mode = standby\r\n')
+			soc.send('tag.db.scan_tags(100)\r\n')
+			datum = soc.recv(32)
 
-		if datum.find("ok") > -1:
-			soc.send('tag.read_id()\r\n')
-			resp = soc.recv(8192)
-			if resp.find("tag_id") > -1:
-				cache.set('data', resp, 10) # Wait 10 seconds for 'data' to expire...
-				timestamp = datetime.now().strftime("%H:%M:%S")
-				cache.set('timestamp', timestamp, 10)
+			if datum.find("ok") > -1:
+				soc.send('tag.read_id()\r\n')
+				resp = soc.recv(8192)
+				if resp.find("tag_id") > -1:
+					cache.set('data', resp, 10) # Wait 10 seconds for 'data' to expire...
+					timestamp = datetime.now().strftime("%H:%M:%S")
+					cache.set('timestamp', timestamp, 10)
+
+			soc.close()
+		except:
+			error = 'Cannot connect to RFID reader'
 
 		data = cache.get('data')
 		lasttime = cache.get('timestamp')
-		tagdata = data.split("\r\n")
+		tagdata = str(data).split("\r\n")
 
-		idlist = list()
-		loclist = list()
+		if len(tagdata) > 0:
+			idlist = list()
+			loclist = list()
 
-		for tag in tagdata:
-			if "BBBB" in tag:
-				loclist.append(tag)
-			else:
-				idlist.append(tag)
+			for tag in tagdata:
+				if "BBBB" in tag:
+					loclist.append(tag)
+				else:
+					idlist.append(tag)
 
-		cnt = 0
-
-		tagid_A = list()
-		type_A = list()
-		antenna_A = list()
-		repeat_A = list()
-		last_A = list()
-
-		for id1 in idlist:
-			id2 = id1.replace("(","")
-			id2 = id2.replace(")","")
-			id3 = id2.split(", ")
-			for id4 in id3:
-				id5 = id4.split("=")
-				if id5[0]=="tag_id":tagid_A.append(id5[1])
-				elif id5[0]=="type":type_A.append(id5[1])
-				elif id5[0]=="antenna": antenna_A.append(id5[1])
-				elif id5[0]=="repeat": repeat_A.append(id5[1])
-				elif id5[0]=="last": last_A.append(id5[1])
-				cnt= cnt+1
-
-		tagid_B = list()
-		type_B = list()
-		antenna_B = list()
-		repeat_B = list()
-
-		for loc1 in loclist:
-			loc2 = loc1.replace("(","")
-			loc2 = loc2.replace(")","")
-			loc3 = loc2.split(", ")
-			for loc4 in loc3 :
-				loc5 = loc4.split("=")
-				if loc5[0]=="tag_id": tagid_B.append(loc5[1])
-				elif loc5[0]=="type": type_B.append(loc5[1])
-				elif loc5[0]=="antenna": antenna_B.append(loc5[1])
-				elif loc5[0]=="repeat": repeat_B.append(loc5[1])
-				cnt= cnt+1
-
-		lan = 0
-		pos = 0
-		totalCount = 0
-
-		if len(repeat_B) > 0 :
 			cnt = 0
-			for rep in repeat_B:
-				if type_B[cnt] == "ISOC":
-					prelindex = tagid_B[cnt][25:27]
-					if prelindex == 'AB': lindex = 1
-					if prelindex == 'CD': lindex = 2
-					if prelindex == 'EF': lindex = 3
-					if prelindex == 'FF': lindex = 4
-					if prelindex == 'CC': lindex = 0
-					if prelindex == 'DD': lindex = 5
-					pindex = int(tagid_B[cnt][27:30])
-					lan += float(lindex)*float(repeat_B[cnt])
-					pos += float(pindex)*float(repeat_B[cnt])
-					totalCount += float(repeat_B[cnt])
 
-				cnt = cnt+1
+			tagid_A = list()
+			type_A = list()
+			antenna_A = list()
+			repeat_A = list()
+			last_A = list()
 
-		if totalCount > 0:
-			L = int(round(lan/totalCount,0))
-			P = int(round(pos/totalCount,0))
-		else:
-			L = 0
-			P = 0
+			for id1 in idlist:
+				id2 = id1.replace("(","")
+				id2 = id2.replace(")","")
+				id3 = id2.split(", ")
+				for id4 in id3:
+					id5 = id4.split("=")
+					if id5[0]=="tag_id":tagid_A.append(id5[1])
+					elif id5[0]=="type":type_A.append(id5[1])
+					elif id5[0]=="antenna": antenna_A.append(id5[1])
+					elif id5[0]=="repeat": repeat_A.append(id5[1])
+					elif id5[0]=="last": last_A.append(id5[1])
+					cnt= cnt+1
 
-		atlane = str(L)
-		atposition = str(P)
-		atlocation = ''
+			tagid_B = list()
+			type_B = list()
+			antenna_B = list()
+			repeat_B = list()
 
-		if L == 0:
-			atlocation = 'CR'
-		if L == 5:
-			atlocation = 'Scale'
-		if L in range(1, 5):
-			atlocation = 'Stock'
+			for loc1 in loclist:
+				loc2 = loc1.replace("(","")
+				loc2 = loc2.replace(")","")
+				loc3 = loc2.split(", ")
+				for loc4 in loc3 :
+					loc5 = loc4.split("=")
+					if loc5[0]=="tag_id": tagid_B.append(loc5[1])
+					elif loc5[0]=="type": type_B.append(loc5[1])
+					elif loc5[0]=="antenna": antenna_B.append(loc5[1])
+					elif loc5[0]=="repeat": repeat_B.append(loc5[1])
+					cnt= cnt+1
 
-		if L == 0 and P == 0:
-			atlane = ""
-			atposition = ""
-			atlocation = ""
-			toperror = "[No location tag in field.]"
+			lan = 0
+			pos = 0
+			totalCount = 0
 
-		repeat_AA = list()
+			if len(repeat_B) > 0 :
+				cnt = 0
+				for rep in repeat_B:
+					if type_B[cnt] == "ISOC":
+						prelindex = tagid_B[cnt][25:27]
+						if prelindex == 'AB': lindex = 1
+						if prelindex == 'CD': lindex = 2
+						if prelindex == 'EF': lindex = 3
+						if prelindex == 'FF': lindex = 4
+						if prelindex == 'CC': lindex = 0
+						if prelindex == 'DD': lindex = 5
+						pindex = int(tagid_B[cnt][27:30])
+						lan += float(lindex)*float(repeat_B[cnt])
+						pos += float(pindex)*float(repeat_B[cnt])
+						totalCount += float(repeat_B[cnt])
 
-		for rep_A in repeat_A:
-			repeat_AA.append(int(rep_A))
+					cnt = cnt+1
 
-		if max(repeat_AA) in repeat_AA:
-			n = repeat_AA.index(max(repeat_AA))
+			if totalCount > 0:
+				L = int(round(lan/totalCount,0))
+				P = int(round(pos/totalCount,0))
+			else:
+				L = 0
+				P = 0
 
-		realtag = tagid_A[n][7:11]
-		tag2write = tagid_A[n][6:30]
-		if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
-			writeMode = 'new'
-		elif tag2write.count('0') >= 15:
-			writeMode = 'reused'
+			atlane = str(L)
+			atposition = str(P)
+			atlocation = ''
 
-		soc.close()
+			if L == 0:
+				atlocation = 'CR'
+			if L == 5:
+				atlocation = 'Scale'
+			if L in range(1, 5):
+				atlocation = 'Stock'
+
+			if L == 0 and P == 0:
+				atlane = ""
+				atposition = ""
+				atlocation = ""
+				toperror = "[No location tag in field.]"
+
+			repeat_AA = list()
+
+			for rep_A in repeat_A:
+				repeat_AA.append(int(rep_A))
+
+			if len(repeat_AA) > 0:
+				if max(repeat_AA) in repeat_AA:
+					n = repeat_AA.index(max(repeat_AA))
+					realtag = tagid_A[n][7:11]
+					tag2write = tagid_A[n][6:30]
+
+					if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
+						writeMode = 'new'
+					elif tag2write.count('0') >= 15:
+						writeMode = 'reused'
+
+# Query database from realtag #
+					if PaperRoll.objects.filter(tarid=realtag).exists() == True:
+						rtquery = PaperRoll.objects.get(tarid=realtag)
+						paper_roll_id = rtquery.tarid
+						paper_code = rtquery.paper_code
+						size = rtquery.width
+						unit = rtquery.wunit
+						initial_weight = rtquery.initial_weight
+						temp_weight = rtquery.temp_weight
+						lane = rtquery.lane
+						position = rtquery.position
+
+						hquery1 = PaperHistory.objects.filter(roll_id=realtag).exists()
+
+						if hquery1 == True:
+							hquery2 = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp').values_list('last_wt')[0]
+							hquery2list = list(hquery2)
+							actual_wt = hquery2list[0]
+						else:
+							actual_wt = initial_weight
+							undo_btn = ""
+					else:
+						realtag = 'unknown'
 
 	if operating_mode == 'fake':
 
 		atlane = '2'
-		atposition = '4'
+		atposition = '5'
 		atlocation = 'Stock'
 
-		realtag = '1223'
-		tag2write = '112233445566778899AABBCC'
+#		realtag = '1223'
+#		tag2write = '112233445566778899AABBCC'
+
+		realtag = '0065'
+		tag2write = '30065AAAA000000000000000'
+
 		if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
 			writeMode = 'new'
 		elif tag2write.count('0') >= 15:
 			writeMode = 'reused'
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-# Query database from realtag #
-	if realtag:
 		if PaperRoll.objects.filter(tarid=realtag).exists() == True:
 			rtquery = PaperRoll.objects.get(tarid=realtag)
 			paper_roll_id = rtquery.tarid
