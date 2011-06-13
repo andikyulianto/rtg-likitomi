@@ -77,7 +77,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'djangologging.middleware.LoggingMiddleware',
+#    'djangologging.middleware.LoggingMiddleware',
 )
 
 ROOT_URLCONF = 'likitomi.urls'

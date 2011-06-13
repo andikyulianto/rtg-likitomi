@@ -149,23 +149,6 @@ $(document).ready(function(){
 {% load thirteenth %}
 <div id="inventory">
 <input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
-<!--<div id="values">-->
-<!--	<div id="pcode">{{ pcode }}</div>-->
-<!--	<div id="width">{{ width }}</div>-->
-<!--	<div id="loss">{{ loss }}</div>-->
-<!--	<div id="spcode">{{ spcode }}</div>-->
-<!--	<div id="swidth">{{ swidth }}</div>-->
-<!--	<div id="cpcode">{{ cpcode }}</div>-->
-<!--	<div id="cwidth">{{ cwidth }}</div>-->
-<!--	<div id="lane">{{ lane }}</div>-->
-<!--	<div id="position">{{ position }}</div>-->
-<!--	<div id="atlane">{{ atlane }}</div>-->
-<!--	<div id="atposition">{{ atposition }}</div>-->
-<!--	<div id="clamping">{{ clamping }}</div>-->
-<!--	<div id="changed">{{ changed }}</div>-->
-<!--	<div id="realtag">{{ realtag }}</div>-->
-<!--	<div id="loc">{{ loc }}</div>-->
-<!--</div>-->
 
 <input id="pcode" type="hidden" value="{{ pcode }}" />
 <input id="width" type="hidden" value="{{ width }}" />
@@ -183,22 +166,6 @@ $(document).ready(function(){
 <input id="changed" type="hidden" value="{{ changed }}" />
 <input id="realtag" type="hidden" value="{{ realtag }}" />
 <input id="loc" type="hidden" value="{{ loc }}" />
-
-<!--H: {{Hlist}} => {{posh}}<br/>-->
-<!--4th: {{THlist}} => {{pos4}}<br/>-->
-<!--G: {{Glist}} => {{posg}}<br/>-->
-<!--F: {{Flist}} => {{posf}}<br/>-->
-<!--3rd: {{RDlist}} => {{pos3}}<br/>-->
-<!--E: {{Elist}} => {{pose}}<br/>-->
-<!--D: {{Dlist}} => {{posd}}<br/>-->
-<!--2nd: {{NDlist}} => {{pos2}}<br/>-->
-<!--C: {{Clist}} => {{posc}}<br/>-->
-<!--B: {{Blist}} => {{posb}}<br/>-->
-<!--1st: {{STlist}} => {{pos1}}<br/>-->
-<!--A: {{Alist}} => {{posa}}<br/>-->
-<!--PLAN: {{mlist}}<br/>SEARCH: {{mlist2}}<br/>CLAMPLIFT: {{mlist3}}<br/>-->
-<!--@{{atlane}}-{{atposition}} *** {{lane}}-{{position}}<br/>Clamping: {{clamping}}; Changed: {{changed}}<br/>-->
-<!--{{wlist}}-{{wlistpx}}<br/>{{wlist2}}--{{wlistpx2}}<br/>{{wlist3}}--{{wlistpx3}}-->
 
 <div style="float:right;"><table style="height:1px; width:390px;">
 	<tr>

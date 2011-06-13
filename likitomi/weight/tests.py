@@ -16,216 +16,240 @@ from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 from datetime import datetime
 import socket
 
-#### This part has to test manually because reading tag has to be set for testing ###
-#class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
-#	def setUp(self):
-#		self.client = Client()
-#		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
-
-#	def tearDown(self):
-#		PaperRoll.objects.filter(tarid=1).delete()
-#		PaperRoll.objects.filter(tarid=2).delete()
-## Write back tag ID #
-#		HOST = '192.41.170.55' # CSIM network
-##		HOST = '192.168.101.55' # Likitomi network
-##		HOST = '192.168.1.55' # My own local network: Linksys
-##		HOST = '192.168.2.88' # In Likitomi factory
-#		PORT = 50007
-#		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+### This part has to test manually because reading tag has to be set for testing ###
+class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
+	def setUp(self):
+		self.client = Client()
+		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+# Write tag ID to unknown #
+		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
+#		HOST = '192.168.1.55' # My own local network: Linksys
+#		HOST = '192.168.2.88' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #		soc.settimeout(2)
-#		soc.connect((HOST, PORT))
-#		soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+		soc.connect((HOST, PORT))
+		soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC)\r\n')
+		soc.close()
 
-#	def testNewTag_min(self):
-#		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
-#		self.assertEqual(response.status_code, 302)
-##		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, 'B')
-#		self.assertEqual(roll.position, 2)
-
-#	def testNewTag_max(self):
-#		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
-#		self.assertEqual(response.status_code, 302)
-##		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, 'B')
-#		self.assertEqual(roll.position, 2)
-
-#	def testNewTag_min_nolanpos(self):
-#		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, '')
-#		self.assertEqual(roll.position, None)
-
-#	def testNewTag_max_nolanpos(self):
-#		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, '')
-#		self.assertEqual(roll.position, None)
-
-#class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
-#	def setUp(self):
-#		self.client = Client()
-#		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
-
-#	def tearDown(self):
-#		PaperRoll.objects.filter(tarid=1).delete()
-#		PaperRoll.objects.filter(tarid=2).delete()
-## Write back tag ID #
-#		HOST = '192.41.170.55' # CSIM network
-##		HOST = '192.168.101.55' # Likitomi network
-##		HOST = '192.168.1.55' # My own local network: Linksys
-##		HOST = '192.168.2.88' # In Likitomi factory
-#		PORT = 50007
-#		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	def tearDown(self):
+		PaperRoll.objects.filter(tarid=1).delete()
+		PaperRoll.objects.filter(tarid=2).delete()
+# Write back tag ID #
+		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
+#		HOST = '192.168.1.55' # My own local network: Linksys
+#		HOST = '192.168.2.88' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #		soc.settimeout(2)
-#		soc.connect((HOST, PORT))
-#		soc.send('tag.write_id(new_tag_id=30001AAAA000000000000000, tag_id=30002AAAA000000000000000)\r\n')
+		soc.connect((HOST, PORT))
+		soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+		soc.close()
 
-#	def testReuseTag_min(self):
-#		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, 'B')
-#		self.assertEqual(roll.position, 2)
+	def testNewTag_min(self):
+		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 302)
+#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
 
-#	def testReuseTag_max(self):
-#		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, 'B')
-#		self.assertEqual(roll.position, 2)
+	def testNewTag_max(self):
+		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 302)
+#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
 
-#	def testReuseTag_min_nolanpos(self):
-#		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, '')
-#		self.assertEqual(roll.position, None)
+	def testNewTag_min_nolanpos(self):
+		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
 
-#	def testReuseTag_max_nolanpos(self):
-#		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-#		roll = PaperRoll.objects.get(tarid=2)
-#		self.assertEqual(roll.tarid, 2)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, '')
-#		self.assertEqual(roll.position, None)
+	def testNewTag_max_nolanpos(self):
+		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
 
-#class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
-#	def setUp(self):
-#		self.client = Client()
-#		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
+	def setUp(self):
+		self.client = Client()
+		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+# Write tag ID to '0001' #
+		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
+#		HOST = '192.168.1.55' # My own local network: Linksys
+#		HOST = '192.168.2.88' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		soc.send('tag.write_id(new_tag_id=30001AAAA000000000000000)\r\n')
+		soc.close()
 
-#	def tearDown(self):
-#		PaperRoll.objects.filter(tarid=1).delete()
-#		PaperRoll.objects.filter(tarid=2).delete()
+	def tearDown(self):
+		PaperRoll.objects.filter(tarid=1).delete()
+		PaperRoll.objects.filter(tarid=2).delete()
+# Write back tag ID #
+		HOST = '192.41.170.55' # CSIM network
+#		HOST = '192.168.101.55' # Likitomi network
+#		HOST = '192.168.1.55' # My own local network: Linksys
+#		HOST = '192.168.2.88' # In Likitomi factory
+		PORT = 50007
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		soc.send('tag.write_id(new_tag_id=30001AAAA000000000000000, tag_id=30002AAAA000000000000000)\r\n')
+		soc.close()
 
-#	def testUpdateTag_min(self):
-#		response = self.client.get('/minclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=1)
-#		self.assertEqual(roll.tarid, 1)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, 'B')
-#		self.assertEqual(roll.position, 2)
+	def testReuseTag_min(self):
+		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
 
-#	def testUpdateTag_max(self):
-#		response = self.client.get('/maxclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=1)
-#		self.assertEqual(roll.tarid, 1)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, 'B')
-#		self.assertEqual(roll.position, 2)
+	def testReuseTag_max(self):
+		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
 
-#	def testUpdateTag_min_nolanpos(self):
-#		response = self.client.get('/minclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=1)
-#		self.assertEqual(roll.tarid, 1)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, '')
-#		self.assertEqual(roll.position, None)
+	def testReuseTag_min_nolanpos(self):
+		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
 
-#	def testUpdateTag_max_nolanpos(self):
-#		response = self.client.get('/maxclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-#		roll = PaperRoll.objects.get(tarid=1)
-#		self.assertEqual(roll.tarid, 1)
-#		self.assertEqual(roll.paper_code, 'CA125')
-#		self.assertEqual(roll.width, 36)
-#		self.assertEqual(roll.wunit, 'inch')
-#		self.assertEqual(roll.initial_weight, 800)
-#		self.assertEqual(roll.lane, '')
-#		self.assertEqual(roll.position, None)
-#### End manual test ###
+	def testReuseTag_max_nolanpos(self):
+		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
+		roll = PaperRoll.objects.get(tarid=2)
+		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
+
+class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
+	def setUp(self):
+		self.client = Client()
+		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+
+	def tearDown(self):
+		PaperRoll.objects.filter(tarid=1).delete()
+		PaperRoll.objects.filter(tarid=2).delete()
+
+	def testUpdateTag_min(self):
+		response = self.client.get('/minclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
+		roll = PaperRoll.objects.get(tarid=1)
+		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
+
+	def testUpdateTag_max(self):
+		response = self.client.get('/maxclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
+		roll = PaperRoll.objects.get(tarid=1)
+		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
+
+	def testUpdateTag_min_nolanpos(self):
+		response = self.client.get('/minclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
+		roll = PaperRoll.objects.get(tarid=1)
+		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
+
+	def testUpdateTag_max_nolanpos(self):
+		response = self.client.get('/maxclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
+		roll = PaperRoll.objects.get(tarid=1)
+		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(roll.paper_code, 'CA125')
+		self.assertEqual(roll.width, 36)
+		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.initial_weight, 800)
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
+### End manual test ###
 
 class UpdateWeight(unittest.TestCase):
 	def setUp(self):
@@ -301,6 +325,28 @@ class ShowPlan(unittest.TestCase):
 
 	def testShowPlan(self):
 		response = self.client.get('/showplan/', {'opdate': '2010-03-30'})
+		self.assertEqual(response.status_code, 200)
+#		self.assertTemplateUsed(response, 'showplan.html')
+		self.assertEqual(response.context['opdate'],'2010-03-30')
+
+	def testRequiredPlan(self):
+		response = self.client.get('/required/', {'opdate': '2010-03-30'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(response.context['opdate'],'2010-03-30')
+
+	def testDetailPlan(self):
+		response = self.client.get('/detail/', {'opdate': '2010-03-30'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(response.context['opdate'],'2010-03-30')
+
+class Inventory(unittest.TestCase):
+	def setUp(self):
+		self.client = Client()
+
+	def testNormalInventory(self):
+		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'no', 'changed': 'no', 'realtag': '0067', 'loc': '',})
+		self.assertEqual(response.status_code, 200)
+#		self.assertEqual(response.context['pcode'],'HKS231')
 
 #class SimpleTest(TestCase):
 #    def test_basic_addition(self):

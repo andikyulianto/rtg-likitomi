@@ -546,7 +546,11 @@ function otherLoc()
 			<p class="var" style="font-size:300%;">This tag ID is unknown.</p><p class="var" style="font-size:300%;">Push <button id="asstagpic" disabled="disabled" style="font-size:30%;">Assign Tag</button> button at the bottom left<br /> to assign new tag.</p>
 		{% endif %}
 	{% else %}
-		<p class="var" style="font-size:300%;">No ID tag in field.</p>
+		{% if error %}
+			<br /><p class="var" style="font-size:300%;">{{ error }}</p>
+		{% else %}
+			<br /><p class="var" style="font-size:300%;">No ID tag in field.</p>
+		{% endif %}
 	{% endif %}
 
 	<form id="frm1" action="{{ maxclamp_url }}update/" method="get">
