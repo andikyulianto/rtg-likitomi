@@ -102,6 +102,7 @@ $(document).ready(function(){
 			{% ifequal digit5 "7" %}<img width="80px" src="images/clamplift/7.png">{% endifequal %}
 			{% ifequal digit5 "8" %}<img width="80px" src="images/clamplift/8.png">{% endifequal %}
 			{% ifequal digit5 "9" %}<img width="80px" src="images/clamplift/9.png">{% endifequal %}
+			{% if serror %}<p style="color:#00CC00;">{{ serror }}</p>{% endif %}
 <!--			{% ifequal digit6 "." %}<img width="10px" src="images/clamplift/dot.png">{% else %}<p id="inblack" align="center">{{ serror }}</p>{% endifequal %}-->
 <!--			{% ifequal digit7 "0" %}<img width="80px" src="images/clamplift/0.png">{% endifequal %}-->
 <!--			{% ifequal digit7 "1" %}<img width="80px" src="images/clamplift/1.png">{% endifequal %}-->
@@ -118,32 +119,36 @@ $(document).ready(function(){
 	</table></center>
 
 	<br />
-{% if realtag != "" %}
+{% if writeMode == 'reused' %}
 	<center><table id="whitesmoke">
 		<tr>
 			<td><p class="label">Paper Roll ID: </p></td>
-			<td>{%ifnotequal realtag "" %}<p class="var">{{ realtag }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td>{% ifnotequal realtag "" %}<p class="var">{{ realtag }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 		</tr>
 		<tr>
 			<td><p class="label">Paper Code: </p></td>
-			<td>{%ifnotequal paper_code "" %}<p id="big" class="var">{{ paper_code }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td>{% ifnotequal paper_code "" %}<p id="big" class="var">{{ paper_code }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 		</tr>
 		<tr>
 			<td><p class="label">Size: </p></td>
-			<td>{%ifnotequal size "" %}<p class="var">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td>{%ifnotequal uom "" %}<p class="unit">{{ uom }}</p>{% else %}{% endifnotequal %}</td>
+			<td>{% ifnotequal size "" %}<p class="var">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td>{% ifnotequal uom "" %}<p class="unit">{{ uom }}</p>{% else %}{% endifnotequal %}</td>
 		</tr>
 		<tr>
 			<td><p class="label">Previous Weight: </p></td>
-			<td>{%ifnotequal actual_wt "" %}<p class="var">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td>{% ifnotequal actual_wt "" %}<p class="var">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 			<td><p class="unit">kgs.</p></td>
 		</tr>
 		<tr>
 			<td><p class="label">Used Weight: </p></td>
-			<td>{%ifnotequal used_weight "" %}<p class="var">{{ used_weight }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td>{% ifnotequal used_weight "" %}<p class="var">{{ used_weight }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
 			<td><p class="unit">kgs.</p></td>
 		</tr>
 	</table></center>
+{% else %}
+	<center>
+		<p>This tag ID is unknown.</p>
+	</center>
 {% endif %}
 	<p align="center">{{ socror }}</p>
 
