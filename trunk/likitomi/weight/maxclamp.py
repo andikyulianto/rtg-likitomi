@@ -64,7 +64,7 @@ def maxclamp(request):
 
 			soc.close()
 		except:
-			error = 'Cannot connect to RFID reader'
+			socror = 'Cannot connect to RFID reader.'
 
 		data = cache.get('data')
 		lasttime = cache.get('timestamp')
@@ -162,7 +162,7 @@ def maxclamp(request):
 				atlane = ""
 				atposition = ""
 				atlocation = ""
-				toperror = "[No location tag in field.]"
+				toperror = "No location tag in field."
 
 			repeat_AA = list()
 

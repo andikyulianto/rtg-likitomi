@@ -16,7 +16,7 @@ from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 from datetime import datetime
 import socket
 
-### This part has to test manually because reading tag has to be set for testing ###
+### This part involves writing tag so unpredictable errors or failures may occur ###
 class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 	def setUp(self):
 		self.client = Client()
@@ -130,7 +130,7 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 #		soc.settimeout(2)
 		soc.connect((HOST, PORT))
-		soc.send('tag.write_id(new_tag_id=30001AAAA000000000000000, tag_id=30002AAAA000000000000000)\r\n')
+		soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
 		soc.close()
 
 	def testReuseTag_min(self):
@@ -249,7 +249,7 @@ class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
-### End manual test ###
+### End tag-involved part ###
 
 class UpdateWeight(unittest.TestCase):
 	def setUp(self):
@@ -342,11 +342,107 @@ class ShowPlan(unittest.TestCase):
 class Inventory(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
+		PaperRoll.objects.create(tarid=67, paper_code="CA125", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=3)
+
+	def tearDown(self):
+		PaperRoll.objects.filter(tarid=67).delete()
 
 	def testNormalInventory(self):
 		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'no', 'changed': 'no', 'realtag': '0067', 'loc': '',})
 		self.assertEqual(response.status_code, 200)
-#		self.assertEqual(response.context['pcode'],'HKS231')
+		self.assertEqual(response.context['pcode'],'HKS231')
+		self.assertEqual(response.context['width'],'56')
+		self.assertEqual(response.context['loss'],'529')
+		self.assertEqual(response.context['lossarr'],'529,529')
+		self.assertEqual(response.context['spcode'],'HCM97')
+		self.assertEqual(response.context['swidth'],'54')
+		self.assertEqual(response.context['cpcode'],'CA125')
+		self.assertEqual(response.context['cwidth'],'56')
+		self.assertEqual(response.context['lane'],'A')
+		self.assertEqual(response.context['position'],'3')
+		self.assertEqual(response.context['atlane'],'1')
+		self.assertEqual(response.context['atposition'],'13')
+		self.assertEqual(response.context['clamping'],'no')
+		self.assertEqual(response.context['changed'],'no')
+		self.assertEqual(response.context['realtag'],'0067')
+		self.assertEqual(response.context['loc'],'')
+
+	def testClamping(self):
+		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'yes', 'changed': 'no', 'realtag': '0067', 'loc': '',})
+		self.assertEqual(response.status_code, 200)
+		roll = PaperRoll.objects.get(tarid=67)
+		self.assertEqual(roll.lane, '1')
+		self.assertEqual(roll.position, 13)
+		self.assertEqual(response.context['pcode'],'HKS231')
+		self.assertEqual(response.context['width'],'56')
+		self.assertEqual(response.context['loss'],'529')
+		self.assertEqual(response.context['lossarr'],'529,529')
+		self.assertEqual(response.context['spcode'],'HCM97')
+		self.assertEqual(response.context['swidth'],'54')
+		self.assertEqual(response.context['cpcode'],'CA125')
+		self.assertEqual(response.context['cwidth'],'56')
+		self.assertEqual(response.context['lane'],'A')
+		self.assertEqual(response.context['position'],'3')
+		self.assertEqual(response.context['atlane'],'1')
+		self.assertEqual(response.context['atposition'],'13')
+		self.assertEqual(response.context['clamping'],'yes')
+		self.assertEqual(response.context['changed'],'no')
+		self.assertEqual(response.context['realtag'],'0067')
+		self.assertEqual(response.context['loc'],'')
+
+	def testLocUp(self):
+		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'no', 'changed': 'no', 'realtag': '0067', 'loc': 'up',})
+		self.assertEqual(response.status_code, 200)
+		roll = PaperRoll.objects.get(tarid=67)
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 13)
+		self.assertEqual(response.context['pcode'],'HKS231')
+		self.assertEqual(response.context['width'],'56')
+		self.assertEqual(response.context['loss'],'529')
+		self.assertEqual(response.context['lossarr'],'529,529')
+		self.assertEqual(response.context['spcode'],'HCM97')
+		self.assertEqual(response.context['swidth'],'54')
+		self.assertEqual(response.context['cpcode'],'CA125')
+		self.assertEqual(response.context['cwidth'],'56')
+		self.assertEqual(response.context['lane'],'A')
+		self.assertEqual(response.context['position'],'3')
+		self.assertEqual(response.context['atlane'],'1')
+		self.assertEqual(response.context['atposition'],'13')
+		self.assertEqual(response.context['clamping'],'no')
+		self.assertEqual(response.context['changed'],'no')
+		self.assertEqual(response.context['realtag'],'0067')
+		self.assertEqual(response.context['loc'],'up')
+
+	def testLocDown(self):
+		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'no', 'changed': 'no', 'realtag': '0067', 'loc': 'down',})
+		self.assertEqual(response.status_code, 200)
+		roll = PaperRoll.objects.get(tarid=67)
+		self.assertEqual(roll.lane, 'A')
+		self.assertEqual(roll.position, 13)
+		self.assertEqual(response.context['pcode'],'HKS231')
+		self.assertEqual(response.context['width'],'56')
+		self.assertEqual(response.context['loss'],'529')
+		self.assertEqual(response.context['lossarr'],'529,529')
+		self.assertEqual(response.context['spcode'],'HCM97')
+		self.assertEqual(response.context['swidth'],'54')
+		self.assertEqual(response.context['cpcode'],'CA125')
+		self.assertEqual(response.context['cwidth'],'56')
+		self.assertEqual(response.context['lane'],'A')
+		self.assertEqual(response.context['position'],'3')
+		self.assertEqual(response.context['atlane'],'1')
+		self.assertEqual(response.context['atposition'],'13')
+		self.assertEqual(response.context['clamping'],'no')
+		self.assertEqual(response.context['changed'],'no')
+		self.assertEqual(response.context['realtag'],'0067')
+		self.assertEqual(response.context['loc'],'down')
+
+class Scale(unittest.TestCase):
+	def setUp(self):
+		self.client = Client()
+
+	def testScale(self):
+		response = self.client.get('/scale/')
+		self.assertEqual(response.status_code, 200)
 
 #class SimpleTest(TestCase):
 #    def test_basic_addition(self):
