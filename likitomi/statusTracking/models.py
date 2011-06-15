@@ -448,7 +448,7 @@ class TotalPlanning(models.Model):
 
 class StatusTracking(models.Model):
     plan_id = models.IntegerField(primary_key=True)
-    #product = models.ForeignKey(Products,null=False)
+    product = models.ForeignKey(Products,null=False)
     product_id = models.CharField(max_length=33, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
@@ -484,8 +484,8 @@ class StatusTracking(models.Model):
     def speed(self):
         return getCVSpeed(self.cv_machine)
     def days_left(self):
-#        self.days_left = 8
-        self.days_left = int((self.plan_due - datetime.datetime.now()).days)
+        self.days_left = 8
+#        self.days_left = int((self.plan_due - datetime.datetime.now()).days)
         return self.days_left
 
     def cr_time_used(self):

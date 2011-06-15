@@ -78,6 +78,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 #    'djangologging.middleware.LoggingMiddleware',
+#    'testmaker.middleware.testmaker.TestMakerMiddleware',
 )
 
 ROOT_URLCONF = 'likitomi.urls'
@@ -93,7 +94,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
-#    'django.contrib.auth',
+    'django.contrib.auth',
     'django.contrib.contenttypes',
 #    'django.contrib.sessions',
 #    'django.contrib.sites',
