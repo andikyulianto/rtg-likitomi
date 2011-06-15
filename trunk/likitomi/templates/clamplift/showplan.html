@@ -33,11 +33,6 @@ $(document).ready(function(){
 		var hicode = $(this).attr("title");
 		var hiwidth = $(this).attr("id");
 		var loss = $(this).attr("lang");
-//		$("#legend", top.document).load("/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss);
-//		top.legend.location = "/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss;
-//		var lsrc = "/legend/?pcode="+hicode+"&width="+hiwidth+"&loss="+loss;
-//		$("#legend", top.document).attr("src",lsrc);
-//		$("#legend", top.document).show();
 
 		$("[title="+hicode+"][id="+hiwidth+"]").css({"background-color":"#4DA64D","color":"black"});
 		$("[title="+hicode+"][id="+hiwidth+"][lang="+loss+"]").css({"background-color":"#005A00","color":"white"});
@@ -48,10 +43,7 @@ $(document).ready(function(){
 			lossy[index] = $(this).attr("lang");
 		});
 
-//		var lossy = $("[title="+hicode+"][id="+hiwidth+"]").map(function() { return $(this).attr("lang"); }).get();
-
 		lossarr = [lossy];
-//		alert(lossarr);
 
 		var spcode = $('#map', top.document).contents().find('#spcode').val();
 		var swidth = $('#map', top.document).contents().find('#swidth').val();
@@ -63,7 +55,6 @@ $(document).ready(function(){
 		var atposition = $('#map', top.document).contents().find('#atposition').val();
 		var clamping = $('#map', top.document).contents().find('#clamping').val();
 		var changed = $('#map', top.document).contents().find('#changed').val();
-//		top.map.location = "/inventory/?pcode="+hicode+"&width="+hiwidth+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
 		var msrc = inventory_url+"?pcode="+hicode+"&width="+hiwidth+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
 		$("#map", top.document).attr("src",msrc);
 	});

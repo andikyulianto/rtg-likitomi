@@ -1,6 +1,8 @@
 ﻿<html>
 <head>
+
 <title>Likitomi: Scale Apps</title>
+
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
 <style type="text/css">
 td
@@ -30,6 +32,7 @@ text-align:left;
 color:dimgray;
 }
 </style>
+
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -40,11 +43,14 @@ $(document).ready(function(){
 	});
 });
 </script>
-</head>
-<body>
-<input id='scale_url' type='hidden' value='{% url weight.scale_views.scale %}' />
-<div id="scale">
 
+</head>
+
+<body>
+
+<input id='scale_url' type='hidden' value='{% url weight.scale_views.scale %}' />
+
+<div id="scale">
 	<center><table height="30%">
 		<tr>
 			<td style="width:500px; text-align:center; background-color:black;"><div>
@@ -103,7 +109,7 @@ $(document).ready(function(){
 			{% ifequal digit5 "8" %}<img width="80px" src="images/clamplift/8.png">{% endifequal %}
 			{% ifequal digit5 "9" %}<img width="80px" src="images/clamplift/9.png">{% endifequal %}
 			{% if serror %}<p style="color:#00CC00;">{{ serror }}</p>{% endif %}
-<!--			{% ifequal digit6 "." %}<img width="10px" src="images/clamplift/dot.png">{% else %}<p id="inblack" align="center">{{ serror }}</p>{% endifequal %}-->
+<!--			{% ifequal digit6 "." %}<img width="10px" src="images/clamplift/dot.png">{% endifequal %}-->
 <!--			{% ifequal digit7 "0" %}<img width="80px" src="images/clamplift/0.png">{% endifequal %}-->
 <!--			{% ifequal digit7 "1" %}<img width="80px" src="images/clamplift/1.png">{% endifequal %}-->
 <!--			{% ifequal digit7 "2" %}<img width="80px" src="images/clamplift/2.png">{% endifequal %}-->
@@ -117,41 +123,44 @@ $(document).ready(function(){
 			</div></td>
 		</tr>
 	</table></center>
-
 	<br />
-{% if writeMode == 'reused' %}
-	<center><table id="whitesmoke">
+{% if tagstatus == 'known' %}
+	<center><table>
 		<tr>
 			<td><p class="label">Paper Roll ID: </p></td>
-			<td>{% ifnotequal realtag "" %}<p class="var">{{ realtag }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td><p class="var">{{ realtag }}</p></td>
 		</tr>
 		<tr>
 			<td><p class="label">Paper Code: </p></td>
-			<td>{% ifnotequal paper_code "" %}<p id="big" class="var">{{ paper_code }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td><p id="big" class="var">{{ paper_code }}</p></td>
 		</tr>
 		<tr>
 			<td><p class="label">Size: </p></td>
-			<td>{% ifnotequal size "" %}<p class="var">{{ size }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
-			<td>{% ifnotequal uom "" %}<p class="unit">{{ uom }}</p>{% else %}{% endifnotequal %}</td>
+			<td><p class="var">{{ size }}</p></td>
+			<td><p class="unit">{{ uom }}</p></td>
 		</tr>
 		<tr>
 			<td><p class="label">Previous Weight: </p></td>
-			<td>{% ifnotequal actual_wt "" %}<p class="var">{{ actual_wt }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td><p class="var">{{ actual_wt }}</p></td>
 			<td><p class="unit">kgs.</p></td>
 		</tr>
 		<tr>
 			<td><p class="label">Used Weight: </p></td>
-			<td>{% ifnotequal used_weight "" %}<p class="var">{{ used_weight }}</p>{% else %}<p align="center">-</p>{% endifnotequal %}</td>
+			<td><p class="var">{{ used_weight }}</p></td>
 			<td><p class="unit">kgs.</p></td>
 		</tr>
 	</table></center>
-{% else %}
-	<center>
-		<p>This tag ID is unknown.</p>
-	</center>
 {% endif %}
-	<p align="center">{{ socror }}</p>
+
+{% if tagstatus == 'unknown' %}
+	<p align='center'>This tag ID is unknown.</p>
+{% endif %}
+
+{% if lasttime %}<p align='center' style='font-size:150%;'>Data received at: {{ lasttime }}</p>{% endif %}
+
+{% if socror %}<p align="center">{{ socror }}</p>{% endif %}
 
 </div>
+
 </body>
 </html>

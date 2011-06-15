@@ -1,12 +1,10 @@
-# Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
-from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 from django.core.cache import cache
 from datetime import datetime
-
 import socket
+from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 
 def maxclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
@@ -37,10 +35,10 @@ def maxclamp(request):
 		swidthlist.append(width[0])
 
 # RFID: paper roll and location tags #
-	operating_mode = 'real' # Operating mode = {'real', 'fake'}
+	rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
 
-	if operating_mode == 'real':
-
+	if rfid_mode == 'real':
+# Connect to RFID reader #
 		try:
 			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
@@ -53,15 +51,13 @@ def maxclamp(request):
 			## soc.send('setup.operating_mode = standby\r\n')
 			soc.send('tag.db.scan_tags(100)\r\n')
 			datum = soc.recv(32)
-
 			if datum.find("ok") > -1:
 				soc.send('tag.read_id()\r\n')
-				resp = soc.recv(8192)
-				if resp.find("tag_id") > -1:
-					cache.set('data', resp, 10) # Wait 10 seconds for 'data' to expire...
+				recv = soc.recv(8192)
+				if recv.find("tag_id") > -1:
+					cache.set('data', recv, 10) # Wait 10 seconds for 'data' to expire...
 					timestamp = datetime.now().strftime("%H:%M:%S")
 					cache.set('timestamp', timestamp, 10)
-
 			soc.close()
 		except:
 			socror = 'Cannot connect to RFID reader.'
@@ -86,7 +82,6 @@ def maxclamp(request):
 			type_A = list()
 			antenna_A = list()
 			repeat_A = list()
-			last_A = list()
 
 			for id1 in idlist:
 				id2 = id1.replace("(","")
@@ -98,8 +93,7 @@ def maxclamp(request):
 					elif id5[0]=="type":type_A.append(id5[1])
 					elif id5[0]=="antenna": antenna_A.append(id5[1])
 					elif id5[0]=="repeat": repeat_A.append(id5[1])
-					elif id5[0]=="last": last_A.append(id5[1])
-					cnt= cnt+1
+					cnt = cnt+1
 
 			tagid_B = list()
 			type_B = list()
@@ -116,7 +110,7 @@ def maxclamp(request):
 					elif loc5[0]=="type": type_B.append(loc5[1])
 					elif loc5[0]=="antenna": antenna_B.append(loc5[1])
 					elif loc5[0]=="repeat": repeat_B.append(loc5[1])
-					cnt= cnt+1
+					cnt = cnt+1
 
 			lan = 0
 			pos = 0
@@ -162,7 +156,6 @@ def maxclamp(request):
 				atlane = ""
 				atposition = ""
 				atlocation = ""
-				toperror = "No location tag in field."
 
 			repeat_AA = list()
 
@@ -176,11 +169,10 @@ def maxclamp(request):
 					tag2write = tagid_A[n][6:30]
 
 					if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
-						writeMode = 'new'
+						tagstatus = 'unknown'
 					elif tag2write.count('0') >= 15:
-						writeMode = 'reused'
+						tagstatus = 'known'
 
-# Query database from realtag #
 					if PaperRoll.objects.filter(tarid=realtag).exists() == True:
 						rtquery = PaperRoll.objects.get(tarid=realtag)
 						paper_roll_id = rtquery.tarid
@@ -192,35 +184,29 @@ def maxclamp(request):
 						lane = rtquery.lane
 						position = rtquery.position
 
-						hquery1 = PaperHistory.objects.filter(roll_id=realtag).exists()
-
-						if hquery1 == True:
-							hquery2 = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp').values_list('last_wt')[0]
-							hquery2list = list(hquery2)
-							actual_wt = hquery2list[0]
+						if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
+							actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
 						else:
-							actual_wt = initial_weight
-							undo_btn = ""
-					else:
-						realtag = 'unknown'
+							actual_wt = rtquery.initial_weight
 
-	if operating_mode == 'fake':
+	if rfid_mode == 'fake':
 
-		atlane = '2'
-		atposition = '5'
+#		atlocation = 'Scale'
+
+		atlane = 1
+		atposition = 4
 		atlocation = 'Stock'
 
-#		realtag = '1223'
 #		tag2write = '112233445566778899AABBCC'
-
-		realtag = '0065'
 		tag2write = '30065AAAA000000000000000'
+		realtag = tag2write[1:5]
+
+		lasttime = datetime.now().strftime("%H:%M:%S")
 
 		if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
-			writeMode = 'new'
+			tagstatus = 'unknown'
 		elif tag2write.count('0') >= 15:
-			writeMode = 'reused'
-		lasttime = datetime.now().strftime("%H:%M:%S")
+			tagstatus = 'known'
 
 		if PaperRoll.objects.filter(tarid=realtag).exists() == True:
 			rtquery = PaperRoll.objects.get(tarid=realtag)
@@ -233,17 +219,10 @@ def maxclamp(request):
 			lane = rtquery.lane
 			position = rtquery.position
 
-			hquery1 = PaperHistory.objects.filter(roll_id=realtag).exists()
-
-			if hquery1 == True:
-				hquery2 = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp').values_list('last_wt')[0]
-				hquery2list = list(hquery2)
-				actual_wt = hquery2list[0]
+			if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
+				actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
 			else:
-				actual_wt = initial_weight
-				undo_btn = ""
-		else:
-			realtag = 'unknown'
+				actual_wt = rtquery.initial_weight
 
 	return render_to_response('maxclamp.html', locals())
 
@@ -317,34 +296,36 @@ def maxassigntag(request):
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-
 	if stratagid and apcode and asize and aweight and atag2write:
 		if str(stratagid) == str(atag2write[1:5]):
 			PaperRoll.objects.filter(tarid=atagid).update(paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
 		else:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
-			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			soc.settimeout(2)
-			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+atag2write+')\r\n')
-			response = soc.recv(128)
-			soc.close()
+			try:
+				HOST = '192.41.170.55' # CSIM network
+#				HOST = '192.168.101.55' # Likitomi network
+#				HOST = '192.168.1.55' # My own local network: Linksys
+#				HOST = '192.168.2.88' # In Likitomi factory
+				PORT = 50007
+				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+				soc.settimeout(2)
+				soc.connect((HOST, PORT))
+				soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+atag2write+')\r\n')
+				response = soc.recv(128)
+				soc.close()
 
-			if response.find('ok') != -1:
-				if atag2write.count('0') < 15:
-					p = PaperRoll(tarid=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
-					p.save()
-				if atag2write.count('0') >= 15:
-					p = PaperRoll(tarid=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
-					p.save()
-					tag2del = int(atag2write[1:5])
-					q = PaperRoll.objects.filter(tarid=tag2del)
-					q.delete()
-			else:
-				return render_to_response('intmed.html', locals())
+				if response.find('ok') != -1:
+					if atag2write.count('0') < 15:
+						PaperRoll.objects.create(tarid=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+					if atag2write.count('0') >= 15:
+						PaperRoll.objects.create(tarid=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+						tag2del = int(atag2write[1:5])
+						PaperRoll.objects.filter(tarid=tag2del).delete()
+				else:
+					return render_to_response('writagror.html', locals())
+
+			except socket.timeout:
+				mode = 'max'
+				socror = 'Cannot connect to RFID reader'
+				return render_to_response('socror.html', locals())
 
 	return HttpResponseRedirect('/django/maxclamp/')

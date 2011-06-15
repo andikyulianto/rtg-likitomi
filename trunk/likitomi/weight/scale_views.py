@@ -1,24 +1,23 @@
-# Create your views here.
 from django.shortcuts import render_to_response
-from weight.models import PaperRoll, PaperHistory
-
+from django.core.cache import cache
 import serial
 import socket
 import random
 from datetime import datetime
-from django.core.cache import cache
+from weight.models import PaperRoll, PaperHistory
 
 def scale(request):
-# Connect serial port #
+
+# Setting scale mode and rfid mode = {'real', 'fake'} #
 	scale_mode = 'fake'
-	operating_mode = 'real' # Operating mode = {'real', 'fake'} #
+	rfid_mode = 'fake' 
 
-#	weight = 'None'
 	if scale_mode == 'real':
-
+# Connect to scale via serial port #
 		try:
 			ser = serial.Serial()
-			ser.port = '/dev/ttyUSB0'
+			ser.port = '/dev/ttyUSB0' # on GNU/Linux
+#			ser.port = 'COM3' # on Windows
 			ser.baudrate = 2400
 			ser.bytesize = 7
 			ser.parity = 'E'
@@ -30,6 +29,7 @@ def scale(request):
 			ser.close()
 		except serial.SerialException:
 			serror = "Cannot connect to scale"
+
 		if not serror:
 			a = output.rsplit(",")
 			if len(a) == 3:
@@ -46,39 +46,38 @@ def scale(request):
 							digit3 = digital[2:3]
 							digit4 = digital[3:4]
 							digit5 = digital[4:5]
-							digit6 = digital[5:6]
-							digit7 = digital[6:7]
+#							digit6 = digital[5:6]
+#							digit7 = digital[6:7]
 						if len(digital) == 6:
 							digit2 = digital[0:1]
 							digit3 = digital[1:2]
 							digit4 = digital[2:3]
 							digit5 = digital[3:4]
-							digit6 = digital[4:5]
-							digit7 = digital[5:6]
+#							digit6 = digital[4:5]
+#							digit7 = digital[5:6]
 						if len(digital) == 5:
 							digit3 = digital[0:1]
 							digit4 = digital[1:2]
 							digit5 = digital[2:3]
-							digit6 = digital[3:4]
-							digit7 = digital[4:5]
+#							digit6 = digital[3:4]
+#							digit7 = digital[4:5]
 						if len(digital) == 4:
 							digit4 = digital[0:1]
 							digit5 = digital[1:2]
-							digit6 = digital[2:3]
-							digit7 = digital[3:4]
+#							digit6 = digital[2:3]
+#							digit7 = digital[3:4]
 						if len(digital) == 3:
 							digit5 = digital[0:1]
-							digit6 = digital[1:2]
-							digit7 = digital[2:3]
+#							digit6 = digital[1:2]
+#							digit7 = digital[2:3]
 					else:
-						serror = "The weight is negative."
+						serror = "Negative value"
 				else:
-					serror = "The weight is overloaded."
+					serror = "Overload value"
 			else:
-				serror = "Data sent is not complete."
+				serror = "Incomplete data"
 
 	if scale_mode == 'fake':
-
 		output = "US,NT,+00325.5Kg\r\n"
 		weight = round(random.uniform(1,500),0)
 		digital = str(weight)
@@ -88,35 +87,33 @@ def scale(request):
 			digit3 = digital[2:3]
 			digit4 = digital[3:4]
 			digit5 = digital[4:5]
-			digit6 = digital[5:6]
-			digit7 = digital[6:7]
+#			digit6 = digital[5:6]
+#			digit7 = digital[6:7]
 		if len(digital) == 6:
 			digit2 = digital[0:1]
 			digit3 = digital[1:2]
 			digit4 = digital[2:3]
 			digit5 = digital[3:4]
-			digit6 = digital[4:5]
-			digit7 = digital[5:6]
+#			digit6 = digital[4:5]
+#			digit7 = digital[5:6]
 		if len(digital) == 5:
 			digit3 = digital[0:1]
 			digit4 = digital[1:2]
 			digit5 = digital[2:3]
-			digit6 = digital[3:4]
-			digit7 = digital[4:5]
+#			digit6 = digital[3:4]
+#			digit7 = digital[4:5]
 		if len(digital) == 4:
 			digit4 = digital[0:1]
 			digit5 = digital[1:2]
-			digit6 = digital[2:3]
-			digit7 = digital[3:4]
+#			digit6 = digital[2:3]
+#			digit7 = digital[3:4]
 		if len(digital) == 3:
 			digit5 = digital[0:1]
-			digit6 = digital[1:2]
-			digit7 = digital[2:3]
+#			digit6 = digital[1:2]
+#			digit7 = digital[2:3]
 
-# Connect RFID reader #
-#		realtag = 'None'
-	if operating_mode == 'real':
-
+	if rfid_mode == 'real':
+# Connect to RFID reader #
 		try:
 			HOST = '192.41.170.55' # CSIM network
 #			HOST = '192.168.101.55' # Likitomi network
@@ -129,18 +126,16 @@ def scale(request):
 			## soc.send('setup.operating_mode = standby\r\n')
 			soc.send('tag.db.scan_tags(100)\r\n')
 			datum = soc.recv(32)
-
 			if datum.find("ok") > -1:
 				soc.send('tag.read_id()\r\n')
-				resp = soc.recv(8192)
-				if resp.find("tag_id") > -1:
-					cache.set('data', resp, 10) # Wait 10 seconds for 'data' to expire...
+				recv = soc.recv(8192)
+				if recv.find("tag_id") > -1:
+					cache.set('data', recv, 10) # Wait 10 seconds for 'data' to expire...
 					timestamp = datetime.now().strftime("%H:%M:%S")
 					cache.set('timestamp', timestamp, 10)
-
 			soc.close()
-		except:
-			socror = 'Cannot connect to RFID reader.'
+		except socket.timeout:
+			socror = 'Cannot connect to RFID reader'
 
 		data = cache.get('data')
 		lasttime = cache.get('timestamp')
@@ -162,7 +157,6 @@ def scale(request):
 			type_A = list()
 			antenna_A = list()
 			repeat_A = list()
-			last_A = list()
 
 			for id1 in idlist:
 				id2 = id1.replace("(","")
@@ -174,8 +168,7 @@ def scale(request):
 					elif id5[0]=="type":type_A.append(id5[1])
 					elif id5[0]=="antenna": antenna_A.append(id5[1])
 					elif id5[0]=="repeat": repeat_A.append(id5[1])
-					elif id5[0]=="last": last_A.append(id5[1])
-					cnt= cnt+1
+					cnt = cnt+1
 
 			tagid_B = list()
 			type_B = list()
@@ -192,7 +185,7 @@ def scale(request):
 					elif loc5[0]=="type": type_B.append(loc5[1])
 					elif loc5[0]=="antenna": antenna_B.append(loc5[1])
 					elif loc5[0]=="repeat": repeat_B.append(loc5[1])
-					cnt= cnt+1
+					cnt = cnt+1
 
 			lan = 0
 			pos = 0
@@ -238,7 +231,6 @@ def scale(request):
 				atlane = ""
 				atposition = ""
 				atlocation = ""
-				toperror = "No location tag in field."
 
 			repeat_AA = list()
 
@@ -252,84 +244,55 @@ def scale(request):
 					tag2write = tagid_A[n][6:30]
 
 					if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
-						writeMode = 'new'
+						tagstatus = 'unknown'
 					elif tag2write.count('0') >= 15:
-						writeMode = 'reused'
+						tagstatus = 'known'
 
-# Query database from realtag #
 					if PaperRoll.objects.filter(tarid=realtag).exists() == True:
-						query1 = PaperRoll.objects.filter(tarid=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'lane', 'position')[0]
-
-						paper_code = query1[0]
-						size = query1[1]
-						uom = query1[2]
-						initial_weight = query1[3]
-						lane = query1[4]
-						position = query1[5]
-
-						query2 = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp').values_list('last_wt')
-						exists = PaperHistory.objects.filter(roll_id=realtag).exists()
+						query = PaperRoll.objects.get(tarid=realtag)
+						paper_code = query.paper_code
+						size = query.width
+						uom = query.wunit
 
 						int_weight = int(weight)
 
-						if exists == True:
-							actual_wt = int(list(query2)[0][0])
+						if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
+							actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
 						else:
-							actual_wt = initial_weight
+							actual_wt = query.initial_weight
 
-						if weight != 'None':
-							used_weight = actual_wt - int(weight)
+						used_weight = actual_wt - int(weight)
 
-# Update temp_weight to database #
-							p = PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
-						else:
-							used_weight = ""
+						PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
 
-	if operating_mode == 'fake':
+	if rfid_mode == 'fake':
 
-		atlane = '2'
-		atposition = '5'
-		atlocation = 'Stock'
-
-#		realtag = '1223'
 #		tag2write = '112233445566778899AABBCC'
-
-		realtag = '0065'
 		tag2write = '30065AAAA000000000000000'
+		realtag = tag2write[1:5]
 
 		if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
-			writeMode = 'new'
+			tagstatus = 'unknown'
 		elif tag2write.count('0') >= 15:
-			writeMode = 'reused'
+			tagstatus = 'known'
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
 		if PaperRoll.objects.filter(tarid=realtag).exists() == True:
-			query1 = PaperRoll.objects.filter(tarid=realtag).values_list('paper_code', 'width', 'wunit', 'initial_weight', 'lane', 'position')[0]
-
-			paper_code = query1[0]
-			size = query1[1]
-			uom = query1[2]
-			initial_weight = query1[3]
-			lane = query1[4]
-			position = query1[5]
-
-			query2 = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp').values_list('last_wt')
-			exists = PaperHistory.objects.filter(roll_id=realtag).exists()
+			query = PaperRoll.objects.get(tarid=realtag)
+			paper_code = query.paper_code
+			size = query.width
+			uom = query.wunit
 
 			int_weight = int(weight)
 
-			if exists == True:
-				actual_wt = int(list(query2)[0][0])
+			if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
+				actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
 			else:
-				actual_wt = initial_weight
+				actual_wt = query.initial_weight
 
-			if weight != 'None':
-				used_weight = actual_wt - int(weight)
+			used_weight = actual_wt - int(weight)
 
-# Update temp_weight to database #
-				p = PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
-			else:
-				used_weight = ""
+			PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
 
 	return render_to_response('scale.html', locals())
 
