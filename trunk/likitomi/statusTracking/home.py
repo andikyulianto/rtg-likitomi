@@ -17,7 +17,7 @@ from django.db.models import F
 from django.utils.safestring import mark_safe
 import calendar
 from employee import Employee
-import logging
+import loggingex
 
 
 user = ""
@@ -31,6 +31,10 @@ def set_username(user):
 ## this page is view process via desktop computer ##
 ####################################################
 def section(request):
+	FORMAT = "%(asctime)-15s %(clientip)s %(user)-8s %(message)s"
+	logging.basicConfig(format=FORMAT)
+	d = {'clientip': '192.168.0.1', 'user': 'fbloggs'}
+	logging.warning("Protocol problem: %s", "connection reset", extra=d)
 	try:
 		eID = request.GET['eID']
 		employee = AuthUser.objects.get(eid=eID)
@@ -41,11 +45,10 @@ def section(request):
 		set_username(user)
 		eID = employee.id
 #		task = employee.task
-	
 	today = todayDate()
-
+	
+	
 	task = employee.task
-
 #	print "this is task " +str(task)
 
 	page =  str(task)
@@ -66,17 +69,19 @@ def section(request):
 		return workWH(user,section_title)
 	else :
 		return render_to_response('home.html', locals())
-	
+	print "return home.html"
 	return render_to_response('home.html', locals())
 
 def showPC(user,title):
-	
+	#print "enter showPC"
+	logging.error("enter showPC")
 	today = todayDate()
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	global username
 	username = user
+	
 	#create items for PC
 	#extra = db_type(StatusTracking.objects.all())
 	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_code","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
@@ -85,7 +90,7 @@ def showPC(user,title):
 	item_plan_cv = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	item_plan_pt = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	item_plan_wh = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
-	
+	print StatusTracking
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)
@@ -151,32 +156,31 @@ def showPC(user,title):
 	#page ="totalPlanSelectedDate"
 	#temp_contents = StatusTracking.objects.all()
 
-	items = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	items= StatusTracking.objects.all() #filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
 
-
+	print "return PC/view.html"
 	return render_to_response('PC/view.html', locals())
 
 
 
 def normalPlanRefresher(request):
+	print "enter normalPlanRefresher"
 	today = todayDate()
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	global username
-	user = username	
-
+	username = user
+	
 	#create items for PC
 	#extra = db_type(StatusTracking.objects.all())
-	item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
+	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_code","actual_cr_start","actual_cr_end","days_left","plan_amount","actual_amount_cr").order_by('plan_cr_start')
 	#temp_contents = extra[0].days_left
-	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).values_list("plan_cr_start","plan_cr_end","product_id","actual_cr_start","actual_cr_end").order_by('plan_cr_start')
-	#item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year=
+	item_plan_cr = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	item_plan_cv = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	item_plan_pt = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
-	#bug here ordering (also in utility line67)
 	item_plan_wh = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
-	
+	print StatusTracking
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)
@@ -191,7 +195,6 @@ def normalPlanRefresher(request):
 	cvTwoCS = currentTimeProcess("2CS")
 	pt = currentTimeProcess("PT")
 	wh = currentTimeProcess("WH")
-
 	
 	#prepare list for CR
 	size = len(items_plan_cr)
@@ -227,15 +230,16 @@ def normalPlanRefresher(request):
 	endList = startList+getPCItemNum()
 	items_plan_wh=items_plan_wh[startList:endList]
 	#temp_contents = currentProcess("2CL")
-
+	print "return PC/PC.html"
 	return render_to_response('PC/PC.html', locals())
 
 def lastUpdate(request):
 ###########################################
 ############# not in process ##############
 ###########################################
+	print "enter lastUpdate"
 	today = todayDate()
-
+	print "PC/lastUpdate.html"
 	return render_to_response('PC/lastUpdate.html',locals())
 
 def monthlyPlan(request):
@@ -254,6 +258,7 @@ def monthlyPlan(request):
 	items = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
 	itemsNotProcess = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_wh_start__isnull=False).order_by('plan_due')
 	itemsMissing = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_due')
+	print "PC/monthlyPlan.html"
 	return render_to_response('PC/monthlyPlan.html',locals())
 
 ###################################################
@@ -273,10 +278,15 @@ def showGM(eID,title):
 ##             for CR              ##
 ## time and process are recordable ##
 #####################################
-def workCR(eID,title):
+def workCR(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	eID = eID
+	global username
+	username = user
+	today = todayDate()
+	employee = Employee(user)
+	eID = employee.id
+	page = "CR"
 	today = todayDate()
 	#create items for CR
 	if(currentProcess("CR")=='idle'):
@@ -293,10 +303,15 @@ def workCR(eID,title):
 ##             for CV              ##
 ## time and process are recordable ##
 #####################################
-def workCV(eID,title):
+def workCV(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+	global username
+	username = user
+	page = "CV"
 	today = todayDate()
+	employee = Employee(user)
+	eID = employee.id
 	cv = currentTimeProcess("CV")
 
 	#create items for CV
@@ -333,9 +348,15 @@ def workCV(eID,title):
 ##             for PT              ##
 ## time and process are recordable ##
 #####################################
-def workPT(eID,title):
+def workPT(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+	global username
+	username = user
+	page= "PT"
+	today = todayDate()
+	employee = Employee(user)
+	eID = employee.id
 	#create items for PT
 	today = todayDate()
 	pt = str(currentTimeProcess("PT"))
@@ -348,9 +369,15 @@ def workPT(eID,title):
 ## time and process are recordable ##
 #####################################
 
-def workWH(eID,title):
+def workWH(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
+	global username
+	page = "WH"
+	username = user
+	today = todayDate()
+	employee = Employee(user)
+	eID = employee.id
 	today = todayDate()
 	#create items for WH
 	wh = currentTimeProcess("WH")
