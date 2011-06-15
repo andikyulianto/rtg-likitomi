@@ -1,6 +1,7 @@
 <html>
 <head>
-<meta http-equiv="Refresh" content="1;url={% url weight.minclamp.minclamp %}" />
+{% if mode == 'min' %}<meta http-equiv="Refresh" content="1;url={% url weight.minclamp.minclamp %}" />{% endif %}
+{% if mode == 'max' %}<meta http-equiv="Refresh" content="1;url={% url weight.maxclamp.maxclamp %}" />{% endif %}
 </head>
 <body onload="var response = document.getElementById('response').value; alert('Error: Tag cannot be written. There are more than one tag in field.\n\n'+response);">
 <input id="response" type="hidden" value="{{ response }}" />

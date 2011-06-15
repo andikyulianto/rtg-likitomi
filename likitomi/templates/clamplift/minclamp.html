@@ -57,7 +57,6 @@ $(document).ready(function(){
 	if ($("#realtag").val() == '') {
 		$("#asstag").attr("disabled","disabled").removeAttr("onclick");
 	}
-
 });
 </script>
 <script type="text/javascript">
@@ -142,7 +141,6 @@ function otherLoc()
 	var ilane = document.createElement('input');
 	ilane.id = 'ilane';
 	ilane.type = 'text';
-//	ilane.size = '1';
 	ilane.maxLength = '1';
 	ilane.style.width = '30px';
 	ilane.style.fontSize = '200%';
@@ -158,7 +156,6 @@ function otherLoc()
 	var iposition = document.createElement('input');
 	iposition.id = 'iposition';
 	iposition.type = 'text';
-//	iposition.size = '2';
 	iposition.maxLength = '2';
 	iposition.style.width = '50px';
 	iposition.style.fontSize = '200%';
@@ -463,12 +460,8 @@ function otherLoc()
 		var lanebox = top.document.getElementById('ilane').value;
 		var posbox = top.document.getElementById('iposition').value;
 		if (parseInt(posbox) <= 13) {
-//			alert(lanebox);
-//			alert(posbox);
 			document.getElementById("ilane").value = lanebox;
 			document.getElementById("ipos").value = posbox;
-//			alert(document.getElementById("ilane").value);
-//			alert(document.getElementById("ipos").value);
 			document.getElementById("frm3").submit();
 			top.document.body.removeChild(top.document.getElementById('layer'));
 			top.document.body.removeChild(top.document.getElementById('box'));
@@ -508,12 +501,16 @@ function otherLoc()
 	div.appendChild(cancel);
 }
 </script>
+
 </head>
+
 <body>
+
 <input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
 <input id='minclamp_url' type='hidden' value='{% url weight.minclamp.minclamp %}' />
 {% url weight.minclamp.minclamp as minclamp_url %}
-	<div id="clampall">
+
+<div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
 	<input id="lane" type="hidden" value="{{ lane }}" />
@@ -529,55 +526,50 @@ function otherLoc()
 	<input id="tag2write" type="hidden" value="{{ tag2write }}" />
 	<input id="avaitag" type="hidden" value="{{ avaitag }}" />
 
-	{% if realtag %}
-		{% if writeMode == 'reused' %}
-		<div id="minic">
-			<table style="width:100%;">
-				<tr>
-					<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
-					<td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td>
-				</tr>
-			</table>
-			<table style="width:100%;">
-				<tr>
-					<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td>
-					<td><p class="label">Location:</p></td><td><p class="var">{% if lane != '' and position != 0 %}{{lane}}-{{position}}{% endif %}</p></td>
-					<td style="text-align:center; width:60px; height:50px;" >
-						{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="50px" src="images/clamplift/changeloc.png"></a>{% endif %}
-					</td>
-				</tr>
-			</table>
-			<table style="width:100%;">
-				<tr>
-					<td style="text-align:center; width:44px; height:50px;">
-						{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}
-					</td>
-					<td ><p class="label">Weight: </p></td><td ><p class="var">{{ actual_wt }}</p></td>
-					{% if atlocation == "Scale" and actual_wt > temp_weight %}
-					<td style="text-align:center;">>>></td>
-					<td ><p class="var">{{ temp_weight }}</p></td>
-					{% endif %}
-					<td ><p class="unit">kgs.</p></td>
-					<td style="text-align:center; width:44px; height:50px;">
-						{% if atlocation == "Scale" and actual_wt > temp_weight %}<a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a>{% endif %}
-					</td>
-					<td style="text-align:center; width:60px; height:50px;">
-						{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a>{% endif %}
-					</td>
-				</tr>
-			</table>
-		</div>
-		{% endif %}
-		{% if writeMode == 'new' %}
-			<p class="var">This tag ID is unknown.</p><p class="var">Push <button id="asstagpic" disabled="disabled" style="font-size:80%;">Assign Tag</button> button at the bottom left<br /> to assign new tag.</p>
-		{% endif %}
-	{% else %}
-		{% if error %}
-			<br /><p class="var" id="big">{{ socror }}</p>
-		{% else %}
-			<br /><p class="var" id="big">No ID tag in field.</p>
-		{% endif %}
-	{% endif %}
+{% if tagstatus == 'known' %}
+	<div id="minic">
+		<table style="width:100%;">
+			<tr>
+				<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
+				<td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td>
+			</tr>
+		</table>
+		<table style="width:100%;">
+			<tr>
+				<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td>
+				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != '' and position != 0 %}{{lane}}-{{position}}{% endif %}</p></td>
+				<td style="text-align:center; width:60px; height:50px;" >
+					{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="50px" src="images/clamplift/changeloc.png"></a>{% endif %}
+				</td>
+			</tr>
+		</table>
+		<table style="width:100%;">
+			<tr>
+				<td style="text-align:center; width:44px; height:50px;">
+					{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="50px" src="images/clamplift/undo.png"></a>{% endif %}
+				</td>
+				<td ><p class="label">Weight: </p></td><td ><p class="var">{{ actual_wt }}</p></td>
+				{% if atlocation == "Scale" and actual_wt > temp_weight %}
+				<td style="text-align:center;">>>></td>
+				<td ><p class="var">{{ temp_weight }}</p></td>
+				{% endif %}
+				<td ><p class="unit">kgs.</p></td>
+				<td style="text-align:center; width:44px; height:50px;">
+					{% if atlocation == "Scale" and actual_wt > temp_weight %}<a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a>{% endif %}
+				</td>
+				<td style="text-align:center; width:60px; height:50px;">
+					{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a>{% endif %}
+				</td>
+			</tr>
+		</table>
+	</div>
+{% endif %}
+
+{% if tagstatus == 'unknown' %}
+	<p class="var">This tag ID is unknown.</p><p class="var">Push <button id="asstagpic" disabled="disabled" style="font-size:80%;">Assign Tag</button> button at the bottom left<br /> to assign new tag.</p>
+{% endif %}
+
+{% if socror %}<br /><p class='var' align="center">{{ socror }}</p>{% endif %}
 
 	<form id="frm1" action="{{ minclamp_url }}update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
@@ -619,9 +611,8 @@ function otherLoc()
 
 	<button id="asstag" style="font-size:80%; position:absolute; bottom:0px;" onclick="javascript:assignTag()">Assign Tag</button>
 
-	<div style="position:absolute; bottom:0px; right:5px;">{% if lasttime %}<b class="label" style="font-weight:normal;">Data received at: </b><b class="var">{{ lasttime }}</b>{% endif %}</div>
+	{% if lasttime %}<div style="position:absolute; bottom:0px; right:5px;"><b class="label" style="font-weight:normal;">Data received at: </b><b class="var">{{ lasttime }}</b></div>{% endif %}
 
-	</div>
-
+</div>
 </body>
 </html>

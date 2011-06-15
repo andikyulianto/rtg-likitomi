@@ -5,7 +5,6 @@
 <title>Likitomi: Clamplift Apps</title>
 
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
-<link rel="stylesheet" type="text/css" href="css/jALDropDown1.7.3.css" />
 <style type="text/css">
 body
 {
@@ -74,7 +73,6 @@ background-color:white;
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
-<script type="text/javascript" src="javascript/jALDropDown1.7.3.js"></script>
 <script type="text/javascript">
 function startTime()
 {
@@ -112,7 +110,6 @@ $(document).ready(function(){
 		var opdate = $("#opdate").val();
 		if (opdate == ""){
 			$("#showplan").css("visibility","hidden");
-//			$("#magplan").attr("disabled","disabled");
 		}
 		else {
 			$("#showplan").css("visibility","visible");
@@ -277,28 +274,6 @@ $(document).ready(function(){
 		// SEARCH //
 		$("#search").animate({"width":"398px","height":"40px","top":"0px","left":"400px"});
 	});
-//	$("#plantab").click(function(){
-//		$("#layout, #clamplift, #search").hide();
-//		$("#plan").fadeIn().css({"width":"800px","height":"495px"});
-//	});
-//	$("#layouttab").click(function(){
-//		$("#plan, #clamplift, #search").hide();
-//		$("#layout").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
-//	});
-//	$("#clamplifttab").click(function(){
-//		$("#plan, #layout, #search").hide();
-//		$("#clamplift").fadeIn().css({"width":"800px","height":"495px","top":"0px","left":"0px"});
-//	});
-
-//	$("#opdate").jALDropdown({Action:{"ActionName":"disable"}});
-
-var c=document.getElementById("myCanvas");
-var cxt=c.getContext("2d");
-var grd=cxt.createLinearGradient(0,0,175,50);
-grd.addColorStop(0,"#FF0000");
-grd.addColorStop(1,"#00FF00");
-cxt.fillStyle=grd;
-cxt.fillRect(0,0,175,50);
 
 });
 </script>
@@ -306,6 +281,7 @@ cxt.fillRect(0,0,175,50);
 </head>
 
 <body style="background-color:black;">
+
 <input id='showplan_url' type='hidden' value='{% url weight.showplan.showplan %}' />
 <input id='required_url' type='hidden' value='{% url weight.showplan.required %}' />
 <input id='detail_url' type='hidden' value='{% url weight.showplan.detail %}' />
@@ -314,9 +290,9 @@ cxt.fillRect(0,0,175,50);
 {% url weight.inventory.inventory as inventory_url %}
 {% url weight.minclamp.minclamp as minclamp_url %}
 {% url weight.maxclamp.maxclamp as maxclamp_url %}
+
 <!--PLAN-->
 	<div id="plan" class="greenbg" style="top:0px; left:0px; width:398px; height:403px;">
-<!--		<canvas id="myCanvas" width="200" height="100" style="border:1px solid #c3c3c3;"></canvas>-->
 		<div id="clock" class="greenbg" style="top:0px; left:0px;"></div>
 		<div class="greenbg" style="top:0px; left:100px;">{% now "Y-m-d" %}</div>
 		<div class="greenbg" style="top:0px; left:200px;">

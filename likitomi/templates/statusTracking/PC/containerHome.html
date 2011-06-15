@@ -181,7 +181,7 @@ $(document).ready(function() {
 <body>
 
 <!--PATH SETTINGS START-->
-<input id='normalPlanRefresher_url' type='hidden' value='{% url statusTracking.home.normalPlanRefresher %}' />
+<input id='normalPlanRefresher_url' type='hidden' value='/django/likitomi/normalPlanRefresher/' />
 <input id='lastUpdate_url' type='hidden' value='{% url statusTracking.home.lastUpdate %}' />
 <input id='monthlyPlan_url' type='hidden' value='{% url statusTracking.home.monthlyPlan %}' />
 {% url statusTracking.general.login as likitomi_url %}
