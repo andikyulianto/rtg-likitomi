@@ -35,7 +35,7 @@ def minclamp(request):
 		swidthlist.append(width[0])
 
 # RFID: paper roll and location tags #
-	rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
+	rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 	if rfid_mode == 'real':
 # Connect to RFID reader #
@@ -321,6 +321,7 @@ def minassigntag(request):
 						tag2del = int(atag2write[1:5])
 						PaperRoll.objects.filter(tarid=tag2del).delete()
 				else:
+					mode = 'min'
 					return render_to_response('writagror.html', locals())
 
 			except socket.timeout:

@@ -35,7 +35,7 @@ def maxclamp(request):
 		swidthlist.append(width[0])
 
 # RFID: paper roll and location tags #
-	rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
+	rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 	if rfid_mode == 'real':
 # Connect to RFID reader #
@@ -60,7 +60,7 @@ def maxclamp(request):
 					cache.set('timestamp', timestamp, 10)
 			soc.close()
 		except:
-			socror = 'Cannot connect to RFID reader.'
+			socror = 'Cannot connect to RFID reader'
 
 		data = cache.get('data')
 		lasttime = cache.get('timestamp')
@@ -321,6 +321,7 @@ def maxassigntag(request):
 						tag2del = int(atag2write[1:5])
 						PaperRoll.objects.filter(tarid=tag2del).delete()
 				else:
+					mode = 'max'
 					return render_to_response('writagror.html', locals())
 
 			except socket.timeout:

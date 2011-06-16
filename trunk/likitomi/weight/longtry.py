@@ -7,6 +7,14 @@ def orient(request):
 	return render_to_response('orient.html', locals())
 
 def longtry(request):
-	p = ClampliftPlan.objects.values_list('start_time', 'end_time', 'sheet_code')
+#	query = ClampliftPlan.objects.filter(date='2010-03-30').values_list('start_time', 'sheet_code', 'paper_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
+
+#	qlist = list(query)
+#	nlist = list()
+#	for lst in qlist:
+#		nlst = list(lst)
+#		nlist.append(nlst)
+
+	query = ClampliftPlan.objects.filter(date='2010-03-30')
 
 	return render_to_response('longtry.html', locals())

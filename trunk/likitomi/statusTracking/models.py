@@ -449,7 +449,7 @@ class TotalPlanning(models.Model):
 class StatusTracking(models.Model):
     plan_id = models.IntegerField(primary_key=True)
     product = models.ForeignKey(Products,null=False)
-    product_id = models.CharField(max_length=33, blank=True)
+#    product_id = models.CharField(max_length=33, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
     plan_cr_end = models.DateTimeField(null=True, blank=True)
