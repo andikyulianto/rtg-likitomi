@@ -107,7 +107,7 @@ urlpatterns = patterns('',
 
 #	(r'^orient/$', orient),
 #	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root': 'static'}),
-#	(r'^longtry/$', longtry),
+	(r'^longtry/$', longtry),
 
 	(r'^admin/', include(admin.site.urls)),
 )

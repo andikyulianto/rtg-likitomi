@@ -20,10 +20,10 @@ def showplan(request):
 	for lst in qlist:
 		nlst = list(lst)
 		nlist.append(nlst)
-	c = 0
+	n = 0
 	for lst in nlist:
-		lst.append(c)
-		c = c + 1
+		lst.append(n)
+		n = n + 1
 	tdelta = list()
 	s_tdelta = list()
 	for tup in qlist:
@@ -51,10 +51,10 @@ def required(request):
 	for lst in qlist:
 		nlst = list(lst)
 		nlist.append(nlst)
-	c = 0
+	n = 0
 	for lst in nlist:
-		lst.append(c)
-		c = c + 1
+		lst.append(n)
+		n = n + 1
 	tdelta = list()
 	s_tdelta = list()
 	for tup in qlist:
@@ -82,10 +82,10 @@ def detail(request):
 	for lst in qlist:
 		nlst = list(lst)
 		nlist.append(nlst)
-	c = 0
+	n = 0
 	for lst in nlist:
-		lst.append(c)
-		c = c + 1
+		lst.append(n)
+		n = n + 1
 	tdelta = list()
 	s_tdelta = list()
 	for tup in qlist:

@@ -10,7 +10,7 @@ def scale(request):
 
 # Setting scale mode and rfid mode = {'real', 'fake'} #
 	scale_mode = 'fake'
-	rfid_mode = 'fake' 
+	rfid_mode = 'real' 
 
 	if scale_mode == 'real':
 # Connect to scale via serial port #

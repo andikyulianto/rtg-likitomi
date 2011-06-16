@@ -47,7 +47,7 @@ USE_L10N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = (
-	'/home/fon/Django-123/projects/rtg-likitomi/likitomi/static/'
+	'/home/fon/Django-123/projects/rtg-likitomi/likitomi/static/',
 #	'/home/patipol/rtg-likitomi/likitomi/static/'
 )
 
@@ -105,7 +105,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     'django.contrib.admindocs',
-#    'test_utils',
+    'test_utils',
 )
 
 FIXTURE_DIRS = (
