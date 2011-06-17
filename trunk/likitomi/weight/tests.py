@@ -65,7 +65,7 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 			soc.close()
 		except socket.timeout:
 			print 'RFIDConnectionError'
-		sleep(1)
+		sleep(2)
 
 	def testNewTag_min(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
@@ -167,7 +167,7 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 			soc.close()
 		except socket.timeout:
 			print 'RFIDConnectionError'
-		sleep(1)
+		sleep(2)
 
 	def testReuseTag_min(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
@@ -517,7 +517,7 @@ class Scale(unittest.TestCase):
 			soc.close()
 		except socket.timeout:
 			print 'RFIDConnectionError'
-		sleep(1)
+		sleep(2)
 
 	def testScale(self):
 		response = self.client.get('/scale/')
