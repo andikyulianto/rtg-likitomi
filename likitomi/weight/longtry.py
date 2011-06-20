@@ -1,20 +1,18 @@
 # Create your views here.
 from weight.models import ClampliftPlan
 from django.shortcuts import render_to_response
-import datetime
+from datetime import datetime
+
+# import the logging library
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 
 def orient(request):
 	return render_to_response('orient.html', locals())
 
 def longtry(request):
-#	query = ClampliftPlan.objects.filter(date='2010-03-30').values_list('start_time', 'sheet_code', 'paper_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
-
-#	qlist = list(query)
-#	nlist = list()
-#	for lst in qlist:
-#		nlst = list(lst)
-#		nlist.append(nlst)
-
-	query = ClampliftPlan.objects.filter(date='2010-03-30')
+	longtry = 'longtry'
 
 	return render_to_response('longtry.html', locals())

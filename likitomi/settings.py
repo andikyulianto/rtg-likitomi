@@ -5,7 +5,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
 	('fon', 'fon@cs.ait.ac.th'),
-	('patipol', 'patipol@cs.ait.ac.th'),
+	('patipol', 'pati.pik@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -111,3 +111,5 @@ INSTALLED_APPS = (
 FIXTURE_DIRS = (
 #   '/home/fon/Django-123/projects/rtg-likitomi/likitomi/statusTracking/fixtures/',
 )
+
+
