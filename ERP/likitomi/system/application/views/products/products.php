@@ -217,7 +217,7 @@
 			add_blank:Ext.get('x_add_blank').dom.value,
 			add_t_length:Ext.get('x_add_t_length').dom.value,
 			remark:Ext.get('x_remark').dom.value,
-			req_cr:Ext.get('x_req_cr').dom.value,
+			req_cr:Ext.get('x_checkbox_cr').dom.value,
 			productsall_0:productsall_0,
 			productsall_1:productsall_1,
 			productsall_2:productsall_2,

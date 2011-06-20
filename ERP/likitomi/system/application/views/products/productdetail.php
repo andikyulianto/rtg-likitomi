@@ -217,7 +217,7 @@ Process<br><br>
 <table width="500px"><tr>
 <td>
 
-<input type="checkbox" id='x_checkbox_cr' <?php if($resultProductCatalog->req_cr=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> CR </td>
+<input type="checkbox" id='x_req_cr' <?php if($resultProductCatalog->req_cr=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> CR </td>
 <td><input type="checkbox" id='x_checkbox_2cl' <?php if($resultProductCatalog->req_2cl=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 2CL </td>
 <td><input type="checkbox" id='x_checkbox_gh' <?php if($resultProductCatalog->req_gh=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Glue Handdle </td>
 <td><input type="checkbox" id='x_checkbox_rd' <?php if($resultProductCatalog->req_rd=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> RD </td>
@@ -253,7 +253,7 @@ Process<br><br>
 Additional value for PC
 <table><tr><td class='tblDetailViewLabel'>Blank +</td><td><?=$resultProductCatalog->add_blank?></td>
 	<td class='tblDetailViewLabel'>T Length +</td><td><?=$resultProductCatalog->add_t_length?></td>
-	<td class='tblDetailViewLabel'>Amount +</td></tr>
+	<td class='tblDetailViewLabel'>Amount +</td><td><?=$resultProductCatalog->add_amount?></td></tr>
 </table>
 </div>
 <br/>
@@ -310,6 +310,7 @@ if($action=='edit'){
 	$sketch_large = $resultProductCatalog->sketch_large;
 	$add_blank = $resultProductCatalog->add_blank;
 	$add_t_length = $resultProductCatalog->add_t_length;
+	$add_amount = $resultProductCatalog->add_amount;
 	$remark = $resultProductCatalog->remark;
 	$req_cr = $resultProductCatalog->req_cr;
 	$req_2cl = $resultProductCatalog->req_2cl;
@@ -405,6 +406,7 @@ if($action=='add'){
 	$sketch_large = "";
 	$add_blank = "";
 	$add_t_length = "";
+	$add_amount = "";
 	$remark = "";
 	$isdeleted = "";
 	$created_on = "";
@@ -694,10 +696,10 @@ for($i=0;$i<$trows;$i++){
 </div>
 <div id='boxcontainer'>
 Process<br><br>
-<table width="500px"><tr>
+<table width="500px><tr>
 <td>
-<!--<input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='0') echo 'checked'; else echo '';  ?> value=0>-->
-<input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked'; else echo 'value=0';  ?> value=1> CR </td>
+<!--<input type="checkbox" id='x_req_cr' <?php if($req_cr=='0') echo 'checked'; else echo '';  ?> value=0>-->
+<input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked value=1';  else echo 'value=0';  ?>> CR </td>
 <td><input type="checkbox" id='x_checkbox_2cl' <?php if($req_2cl=='1') echo 'checked'; else echo ''; ?>> 2CL </td>
 <td><input type="checkbox" id='x_checkbox_gh' <?php if($req_gh=='1') echo 'checked'; else echo ''; ?>> Glue Handdle </td>
 <td><input type="checkbox" id='x_checkbox_rd' <?php if($req_rd=='1') echo 'checked'; else echo ''; ?>> RD </td>
@@ -733,7 +735,7 @@ Process<br><br>
 Additional values for CV<br>
 <table><tr><td class='tblDetailViewLabel'>Blank +</td><td><input type='text' id='x_add_blank' value='<?=$add_blank?>'></td>
 	<td class='tblDetailViewLabel'>T Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>'></td>
-	<td class='tblDetailViewLabel'>Amount +</td></tr>
+	<td class='tblDetailViewLabel'>Amount +</td><td><input type='text' id='x_add_amount' value='<?=$add_amount?>'></td></tr>
 </table>
 </div>
 <br/>
