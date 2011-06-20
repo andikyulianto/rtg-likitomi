@@ -696,7 +696,7 @@ for($i=0;$i<$trows;$i++){
 </div>
 <div id='boxcontainer'>
 Process<br><br>
-<table width="500px><tr>
+<table width="500px"><tr>
 <td>
 <!--<input type="checkbox" id='x_req_cr' <?php if($req_cr=='0') echo 'checked'; else echo '';  ?> value=0>-->
 <input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked value=1';  else echo 'value=0';  ?>> CR </td>
