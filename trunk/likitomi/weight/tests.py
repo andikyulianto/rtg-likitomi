@@ -19,6 +19,62 @@ from time import sleep
 from weight.models import ClampliftPlan, PaperRoll, PaperHistory
 
 ### This part involves writing tag so unpredictable errors or failures may occur ###
+class Scale(unittest.TestCase):
+	def setUp(self):
+		self.client = Client()
+		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		try:
+# Write tag ID to unknown #
+			HOST = '192.41.170.55' # CSIM network
+#			HOST = '192.168.101.55' # Likitomi network
+#			HOST = '192.168.1.55' # My own local network: Linksys
+#			HOST = '192.168.2.88' # In Likitomi factory
+			PORT = 50007
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=30001AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print 'WriteTagError'
+			soc.close()
+		except socket.timeout:
+			print 'RFIDConnectionError'
+
+	def tearDown(self):
+		PaperRoll.objects.filter(tarid=1).delete()
+		try:
+# Write back tag ID #
+			HOST = '192.41.170.55' # CSIM network
+#			HOST = '192.168.101.55' # Likitomi network
+#			HOST = '192.168.1.55' # My own local network: Linksys
+#			HOST = '192.168.2.88' # In Likitomi factory
+			PORT = 50007
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30001AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print 'WriteBackError'
+			soc.close()
+		except socket.timeout:
+			print 'RFIDConnectionError'
+		sleep(2)
+
+	def testScale(self):
+		response = self.client.get('/scale/')
+		self.assertEqual(response.status_code, 200)
+		realtag = response.context['realtag']
+		weight = response.context['weight']
+		temp_weight = PaperRoll.objects.get(tarid=realtag).temp_weight
+		self.assertEqual(weight, temp_weight)
+#		print str(weight)+" = "+str(temp_weight)
+
 class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 	def setUp(self):
 		self.client = Client()
@@ -61,7 +117,7 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteTagError'
+				print 'WriteBackError'
 			soc.close()
 		except socket.timeout:
 			print 'RFIDConnectionError'
@@ -163,7 +219,7 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteTagError'
+				print 'WriteBackError'
 			soc.close()
 		except socket.timeout:
 			print 'RFIDConnectionError'
@@ -471,57 +527,6 @@ class Inventory(unittest.TestCase):
 		self.assertEqual(response.context['changed'],'no')
 		self.assertEqual(response.context['realtag'],'0067')
 		self.assertEqual(response.context['loc'],'down')
-
-class Scale(unittest.TestCase):
-	def setUp(self):
-		self.client = Client()
-		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
-		try:
-# Write tag ID to unknown #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
-			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			soc.settimeout(2)
-			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=30001AAAA000000000000000)\r\n')
-			response = soc.recv(128)
-			if response.find('ok') != -1:
-				pass
-			else:
-				print 'WriteTagError'
-			soc.close()
-		except socket.timeout:
-			print 'RFIDConnectionError'
-
-	def tearDown(self):
-		PaperRoll.objects.filter(tarid=1).delete()
-		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
-			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			soc.settimeout(2)
-			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30001AAAA000000000000000)\r\n')
-			response = soc.recv(128)
-			if response.find('ok') != -1:
-				pass
-			else:
-				print 'WriteTagError'
-			soc.close()
-		except socket.timeout:
-			print 'RFIDConnectionError'
-		sleep(2)
-
-	def testScale(self):
-		response = self.client.get('/scale/')
-		self.assertEqual(response.status_code, 200)
 
 
 

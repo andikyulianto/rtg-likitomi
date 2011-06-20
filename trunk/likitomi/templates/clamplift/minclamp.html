@@ -510,6 +510,7 @@ function otherLoc()
 <input id='minclamp_url' type='hidden' value='{% url weight.minclamp.minclamp %}' />
 {% url weight.minclamp.minclamp as minclamp_url %}
 
+
 <div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -566,7 +567,7 @@ function otherLoc()
 {% endif %}
 
 {% if tagstatus == 'unknown' %}
-	<p class="var">This tag ID is unknown.</p><p class="var">Push <button id="asstagpic" disabled="disabled" style="font-size:80%;">Assign Tag</button> button at the bottom left<br /> to assign new tag.</p>
+	<p class="var">This tag ID is unknown.</p><p class="var">Push <i>"Assign Tag"</i> button at the bottom left<br /> to assign new tag.</p>
 {% endif %}
 
 {% if socror %}<br /><p class='var' align="center">{{ socror }}</p>{% endif %}
@@ -609,10 +610,11 @@ function otherLoc()
 		<input id="atag2write" type="hidden" value="" name="atag2write" />
 	</form>
 
-	<button id="asstag" style="font-size:80%; position:absolute; bottom:0px;" onclick="javascript:assignTag()">Assign Tag</button>
-
 	{% if lasttime %}<div style="position:absolute; bottom:0px; right:5px;"><b class="label" style="font-weight:normal;">Data received at: </b><b class="var">{{ lasttime }}</b></div>{% endif %}
 
 </div>
+
+	<button id="asstag" style="font-size:80%; position:absolute; bottom:0px;" onclick="javascript:assignTag()">Assign Tag</button>
+
 </body>
 </html>
