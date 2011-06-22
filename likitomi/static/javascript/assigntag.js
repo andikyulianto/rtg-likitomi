@@ -958,6 +958,7 @@ function assignTag()
 					}
 				}
 				function submitTag(){
+					alert(55);
 					document.getElementById("atagid").value = idval;
 					document.getElementById("apcode").value = pcodeval;
 					document.getElementById("asize").value = sizeval;
@@ -966,7 +967,7 @@ function assignTag()
 					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
 					document.getElementById("frm6").submit();
-					id_box.value = document.getElementById('avaitag').value;
+//					id_box.value = document.getElementById('avaitag').value;
 					top.document.body.removeChild(top.document.getElementById('layer'));
 					top.document.body.removeChild(top.document.getElementById('box'));
 				}
