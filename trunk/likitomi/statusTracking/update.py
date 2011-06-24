@@ -12,8 +12,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from statusTracking.utility import todayDate
 from django.http import HttpResponseRedirect
-#from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
-from statusTracking.models import  StatusTracking, ProductCatalog, Products
+from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
 
 ################################################
 ## this page is will record to starting field ##

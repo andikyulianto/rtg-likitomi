@@ -11,8 +11,7 @@ from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate, currentTimeProcess, currentProcess
-#from statusTracking.models import AuthUser, StatusTracking
-from statusTracking.models import  StatusTracking
+from statusTracking.models import AuthUser, StatusTracking
 from datetime import date, datetime
 from employee import Employee
 import calendar

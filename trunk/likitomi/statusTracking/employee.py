@@ -1,6 +1,5 @@
 from statusTracking.models import AuthUser, AuthUserGroups,AuthGroup
 
-
 class Employee:
 	def __init__(self, name):
 		pc = AuthGroup.objects.get(name="PC")
