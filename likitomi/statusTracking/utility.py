@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from statusTracking.models import StatusTracking
+from statusTracking.models import AuthUser,StatusTracking
 from statusTracking.config import getPCItemNum
 
 ##########################################

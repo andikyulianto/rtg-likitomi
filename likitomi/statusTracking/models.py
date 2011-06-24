@@ -13,7 +13,7 @@ from statusTracking.config import getCVSpeed
 
 
 class Addresses(models.Model):
-    address_id = models.IntegerField(primary_key=True)
+    address_id = models.AutoField(primary_key=True)
     partner_id = models.IntegerField()
     address = models.CharField(max_length=750, blank=True)
     isdeleted = models.IntegerField(null=True, blank=True)
@@ -26,27 +26,27 @@ class Addresses(models.Model):
 
     
 class AuthGroup(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(unique=True, max_length=240)
     class Meta:
         db_table = u'auth_group'
 
 class AuthGroupPermissions(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     group_id = models.IntegerField()
     permission_id = models.IntegerField()
     class Meta:
         db_table = u'auth_group_permissions'
 
 class AuthMessage(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user_id = models.IntegerField()
     message = models.TextField()
     class Meta:
         db_table = u'auth_message'
 
 class AuthPermission(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150)
     content_type_id = models.IntegerField()
     codename = models.CharField(unique=True, max_length=255)
@@ -76,7 +76,7 @@ class AuthUserGroups(models.Model):
         db_table = u'auth_user_groups'
 
 class AuthUserUserPermissions(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user_id = models.IntegerField()
     permission_id = models.IntegerField()
     class Meta:
@@ -92,7 +92,7 @@ class CiSessions(models.Model):
         db_table = u'ci_sessions'
 
 class Delivery(models.Model):
-    delivery_id = models.IntegerField(primary_key=True)
+    delivery_id = models.AutoField(primary_key=True)
     sales_order = models.IntegerField()
     product_id = models.IntegerField(null=True, blank=True)
     product_code = models.CharField(max_length=60, blank=True)
@@ -106,21 +106,21 @@ class Delivery(models.Model):
     status = models.CharField(max_length=90, blank=True)
     remarks = models.TextField(blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(max_length=90, blank=True)
+    modified_by = models.CharField(null=True,max_length=90, blank=True)
     class Meta:
         db_table = u'delivery'
 
 class DeliveryHistory(models.Model):
-    histid = models.IntegerField(primary_key=True)
+    histid = models.AutoField(primary_key=True)
     delivery_id = models.IntegerField()
     field = models.CharField(max_length=90, blank=True)
     from_field = models.CharField(max_length=90, db_column='from', blank=True) # Field renamed because it was a Python reserved word. Field name made lowercase.
     to = models.CharField(max_length=90, blank=True)
     state = models.CharField(max_length=90, blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     class Meta:
         db_table = u'delivery_history'
 
@@ -136,7 +136,7 @@ class DeliveryHistory(models.Model):
 #        db_table = u'employee'
 
 class FaCountry(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     iso = models.CharField(max_length=6)
     name = models.CharField(max_length=240)
     iso3 = models.CharField(max_length=9, blank=True)
@@ -145,7 +145,7 @@ class FaCountry(models.Model):
         db_table = u'fa_country'
 
 #class FaUser(models.Model):
-#    id = models.IntegerField(primary_key=True)
+#    id = models.AutoField(primary_key=True)
 #    user_name = models.CharField(max_length=135)
 #    country_id = models.IntegerField(null=True, blank=True)
 #    password = models.CharField(max_length=150)
@@ -161,7 +161,7 @@ class FaCountry(models.Model):
 #        db_table = u'fa_user'
 
 class FaUserProfile(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=150, blank=True)
     surname = models.CharField(max_length=150, blank=True)
     phone = models.CharField(max_length=150, blank=True)
@@ -169,7 +169,7 @@ class FaUserProfile(models.Model):
         db_table = u'fa_user_profile'
 
 class FaUserTemp(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=135)
     country_id = models.IntegerField(null=True, blank=True)
     password = models.CharField(max_length=150)
@@ -187,7 +187,7 @@ class InchMm(models.Model):
         db_table = u'inch_mm'
 
 class PaperMovement(models.Model):
-    movement_id = models.IntegerField(primary_key=True)
+    movement_id = models.AutoField(primary_key=True)
     roll_id = models.IntegerField(null=True, blank=True)
     before_wt = models.FloatField(null=True, blank=True)
     actual_wt = models.FloatField(null=True, blank=True)
@@ -203,7 +203,7 @@ class PaperMovement(models.Model):
         db_table = u'paper_movement'
 
 class PaperRolldetails(models.Model):
-    paper_roll_detail_id = models.IntegerField(primary_key=True)
+    paper_roll_detail_id = models.AutoField(primary_key=True)
     paper_code = models.CharField(max_length=90, blank=True)
     supplier_id = models.IntegerField(null=True, blank=True)
     supplier_roll_id = models.CharField(max_length=90, blank=True)
@@ -216,15 +216,15 @@ class PaperRolldetails(models.Model):
     invoice_no = models.CharField(max_length=90, blank=True)
     invoice_date = models.DateField(null=True, blank=True)
     isdeleted = models.IntegerField()
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(max_length=90, blank=True)
+    modified_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
     class Meta:
         db_table = u'paper_rolldetails'
 
 class Papers(models.Model):
-    paper_id = models.IntegerField(primary_key=True)
+    paper_id = models.AutoField(primary_key=True)
     paper_code = models.CharField(unique=True, max_length=30)
     paper_name = models.CharField(max_length=765, blank=True)
     paper_grade = models.CharField(max_length=765, blank=True)
@@ -233,15 +233,15 @@ class Papers(models.Model):
     partner_sn_old = models.CharField(max_length=30)
     paper_remark = models.CharField(max_length=765, blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(max_length=90, blank=True)
+    modified_by = models.CharField(null=True,max_length=90, blank=True)
     isdeleted = models.IntegerField()
     class Meta:
         db_table = u'papers'
 
 class Partners(models.Model):
-    partner_id = models.IntegerField(primary_key=True)
+    partner_id = models.AutoField(primary_key=True)
     partner_code = models.CharField(max_length=60, blank=True)
     partner_supplier_code = models.CharField(max_length=150, blank=True)
     partner_name = models.CharField(max_length=765)
@@ -256,7 +256,7 @@ class Partners(models.Model):
     partner_contact_person = models.CharField(max_length=150, blank=True)
     partner_contact_title = models.CharField(max_length=60, blank=True)
     logo = models.CharField(max_length=765, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
     modified_by = models.CharField(max_length=90)
     modified_on = models.DateTimeField(null=True, blank=True)
@@ -267,7 +267,7 @@ class Partners(models.Model):
         db_table = u'partners'
 
 class PartnersPapers(models.Model):
-    tblppid = models.IntegerField(primary_key=True)
+    tblppid = models.AutoField(primary_key=True)
     partner_id = models.IntegerField()
     paper_id = models.IntegerField()
     paper_code = models.CharField(max_length=30)
@@ -276,7 +276,7 @@ class PartnersPapers(models.Model):
         db_table = u'partners_papers'
 
 class Planning(models.Model):
-    planning_id = models.IntegerField(primary_key=True)
+    planning_id = models.AutoField(primary_key=True)
     product_code = models.CharField(max_length=30, blank=True)
     mo = models.CharField(max_length=30, blank=True)
     sales_order_id = models.CharField(max_length=30, blank=True)
@@ -284,10 +284,10 @@ class Planning(models.Model):
         db_table = u'planning'
 
 class ProductCatalog(models.Model):
-    product_id = models.IntegerField(primary_key=True)
-    product_code = models.CharField(unique=True, max_length=60, blank=True)
+    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
     product_name = models.CharField(max_length=765, blank=True)
-    partner_id = models.CharField(max_length=765, blank=True)
+    partner =  models.ForeignKey(Partners,null=False)
+    #partner_id = models.CharField(max_length=765, blank=True)
     cname = models.CharField(max_length=765, blank=True)
     product_type = models.CharField(max_length=60, blank=True)
     customer_part_no = models.CharField(max_length=60, blank=True)
@@ -299,54 +299,36 @@ class ProductCatalog(models.Model):
     joint_details = models.CharField(max_length=150, blank=True)
     box_style = models.CharField(max_length=150, blank=True)
     rope_color = models.CharField(max_length=765, blank=True)
-    pcs_bundle = models.IntegerField()
+    pcs_bundle = models.IntegerField(null=True, blank=True)
     level = models.CharField(max_length=30, blank=True)
-    p_width_mm = models.IntegerField()
-    p_width_inch = models.IntegerField()
+    p_width_mm = models.IntegerField(null=True, blank=True)
+    p_width_inch = models.IntegerField(null=True, blank=True)
     qty_allowance = models.CharField(max_length=60, blank=True)
-    scoreline_f = models.IntegerField()
-    scoreline_d = models.IntegerField()
-    scoreline_f2 = models.IntegerField()
-    slit = models.IntegerField()
-    blank = models.IntegerField()
-    t_length = models.IntegerField()
-    cut = models.IntegerField()
+    scoreline_f = models.IntegerField(null=True, blank=True)
+    scoreline_d = models.IntegerField(null=True, blank=True)
+    scoreline_f2 = models.IntegerField(null=True, blank=True)
+    slit = models.IntegerField(null=True, blank=True)
+    blank = models.IntegerField(null=True, blank=True)
+    t_length = models.IntegerField(null=True, blank=True)
+    cut = models.IntegerField(null=True, blank=True)
     next_process = models.CharField(max_length=300, blank=True)
     code_pd = models.CharField(max_length=300, blank=True)
     code_rd = models.CharField(max_length=300, blank=True)
     sketch = models.CharField(max_length=765, blank=True)
     sketch_large = models.CharField(max_length=765, blank=True)
-    add_blank = models.IntegerField()
-    add_t_length = models.IntegerField()
     remark = models.CharField(max_length=765, blank=True)
     isdeleted = models.IntegerField()
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(max_length=90, blank=True)
-    code = models.IntegerField()
-    req_cr = models.IntegerField()
-    req_2cl = models.IntegerField()
-    req_3cm = models.IntegerField()
-    req_3cs = models.IntegerField()
-    req_4cd = models.IntegerField()
-    req_3cl = models.IntegerField()
-    req_gh = models.IntegerField()
-    req_hs = models.IntegerField()
-    req_fg = models.IntegerField()
-    req_rd = models.IntegerField()
-    req_ss = models.IntegerField()
-    req_remove = models.IntegerField()
-    req_foam = models.IntegerField()
-    req_tape = models.IntegerField()
-    req_wh = models.IntegerField()
+    modified_by = models.CharField(null=True,max_length=90, blank=True)
+    code = models.IntegerField(null=True, blank=True)
     class Meta:
         db_table = u'product_catalog'
 
 class Products(models.Model):
-    auto_pid = models.IntegerField(primary_key=True)
-    parent_code_id = models.CharField(max_length=60, blank=True)
-    product_code = models.CharField(max_length=60, blank=True)
+    parent_code = models.ForeignKey(ProductCatalog,null=False)
+    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     df = models.CharField(max_length=30, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=30, db_column='BM', blank=True) # Field name made lowercase.
@@ -360,22 +342,22 @@ class Products(models.Model):
     square_mp_box = models.IntegerField(null=True, blank=True)
     isdeleted = models.IntegerField()
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(max_length=90, blank=True)
+    modified_by = models.CharField(null=True,max_length=90, blank=True)
     class Meta:
         db_table = u'products'
 
+
 class Reader(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     tagid = models.CharField(max_length=765)
     eventid = models.CharField(max_length=24, blank=True)
     class Meta:
         db_table = u'reader'
 
-
 class SalesOrder(models.Model):
-    sales_order_id = models.IntegerField(primary_key=True)
+    sales_order_id = models.AutoField(primary_key=True)
     sales_order_no = models.IntegerField(null=True, blank=True)
     product_id = models.IntegerField(null=True, blank=True)
     sales_order_date = models.DateField(null=True, blank=True)
@@ -392,14 +374,14 @@ class SalesOrder(models.Model):
     salesman = models.CharField(max_length=60, blank=True)
     remarks = models.TextField(blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(max_length=90, blank=True)
+    created_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(max_length=90, blank=True)
+    modified_by = models.CharField(null=True,max_length=90, blank=True)
     class Meta:
         db_table = u'sales_order'
 
 class StockPlanning(models.Model):
-    stock_planning_id = models.IntegerField(primary_key=True)
+    stock_planning_id = models.AutoField(primary_key=True)
     delivery_id = models.IntegerField(null=True, blank=True)
     df = models.CharField(max_length=30, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=30, db_column='BM', blank=True) # Field name made lowercase.
@@ -414,7 +396,7 @@ class StockPlanning(models.Model):
         db_table = u'stock_planning'
 
 class SyncClamplift(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     opdate = models.DateField()
     sync = models.IntegerField()
     created_on = models.DateTimeField()
@@ -422,34 +404,37 @@ class SyncClamplift(models.Model):
         db_table = u'sync_clamplift'
 
 class Tagmap(models.Model):
-    tagid = models.IntegerField(primary_key=True)
+    tagid = models.AutoField(primary_key=True)
     eventid = models.IntegerField()
     class Meta:
         db_table = u'tagmap'
 
 class TotalPlanning(models.Model):
-    autoid = models.IntegerField(primary_key=True)
+    autoid = models.AutoField(primary_key=True)
     date = models.DateField()
     delivery_id = models.IntegerField()
-    p_width_inch = models.IntegerField(null=True, blank=True)
+    p_width_mm = models.IntegerField(null=True, blank=True)
     t_length = models.IntegerField(null=True, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     cut = models.IntegerField(null=True, blank=True)
     corrugator_date = models.DateTimeField(null=True, blank=True)
     converter_date = models.DateTimeField(null=True, blank=True)
+    patchpartition_date = models.DateTimeField(null=True, blank=True)
+    warehouse_date = models.DateTimeField(null=True, blank=True)
     df = models.CharField(max_length=21, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=21, db_column='BM', blank=True) # Field name made lowercase.
     bl = models.CharField(max_length=21, db_column='BL', blank=True) # Field name made lowercase.
     cm = models.CharField(max_length=21, db_column='CM', blank=True) # Field name made lowercase.
     cl = models.CharField(max_length=21, db_column='CL', blank=True) # Field name made lowercase.
+    p_width_inch = models.IntegerField(null=True, blank=True)
+    next_process = models.CharField(max_length=33, blank=True)
     class Meta:
         db_table = u'total_planning'
 
-
 class StatusTracking(models.Model):
-    plan_id = models.IntegerField(primary_key=True)
+    plan_id = models.AutoField(primary_key=True)
     product = models.ForeignKey(Products,null=False)
-#    product_id = models.CharField(max_length=33, blank=True)
+    #product_id = models.CharField(max_length=33, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
     plan_cr_end = models.DateTimeField(null=True, blank=True)
@@ -480,14 +465,16 @@ class StatusTracking(models.Model):
     process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
     days_left = models.IntegerField(null=True, blank=True)
-
     def speed(self):
         return getCVSpeed(self.cv_machine)
+#    days_left = models.IntegerField(null=True, blank=True)
     def days_left(self):
-        self.days_left = 8
-#        self.days_left = int((self.plan_due - datetime.datetime.now()).days)
-        return self.days_left
+        import datetime
+#        self.days_left = 8
+        self.days_left = int((self.plan_due - datetime.datetime.now()).days)
+        #super(FakeStatusTracking,self).save()
 
+        return self.days_left
     def cr_time_used(self):
         return float((self.plan_cr_end - self.plan_cr_start).seconds)/60
     def cv_time_used(self):
@@ -532,7 +519,6 @@ class StatusTracking(models.Model):
 	else :
 		status = ''
 	return status
-
     class Meta:
         db_table = u'status_tracking'
 #    def set_days_left(self):

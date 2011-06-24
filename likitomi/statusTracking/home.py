@@ -17,7 +17,7 @@ from django.db.models import F
 from django.utils.safestring import mark_safe
 import calendar
 from employee import Employee
-#import loggingex
+
 
 
 user = ""
@@ -31,10 +31,7 @@ def set_username(user):
 ## this page is view process via desktop computer ##
 ####################################################
 def section(request):
-#	FORMAT = "%(asctime)-15s %(clientip)s %(user)-8s %(message)s"
-#	logging.basicConfig(format=FORMAT)
-#	d = {'clientip': '192.168.0.1', 'user': 'fbloggs'}
-#	logging.warning("Protocol problem: %s", "connection reset", extra=d)
+
 	try:
 		eID = request.GET['eID']
 		employee = AuthUser.objects.get(eid=eID)
@@ -74,7 +71,6 @@ def section(request):
 
 def showPC(user,title):
 	#print "enter showPC"
-#	logging.error("enter showPC")
 	today = todayDate()
 	page = "PC"
 	is_enable_leftbutton = True
@@ -156,14 +152,7 @@ def showPC(user,title):
 	#page ="totalPlanSelectedDate"
 	#temp_contents = StatusTracking.objects.all()
 
-#	items= StatusTracking.objects.all() #filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
-	query = StatusTracking.objects.values_list('plan_cr_start')
-
-	qlist = list(query)
-	items = list()
-	for lst in qlist:
-		nlst = list(lst)
-		items.append(nlst)
+	items= StatusTracking.objects.all() #filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
 
 	print "return PC/view.html"
 	return render_to_response('PC/view.html', locals())
@@ -406,4 +395,5 @@ def display(request):
 	partner_code = ProductCatalog.objects.filter(product_code = productID).values_list("partner_id")[0][0]
 	partner = Partners.objects.filter(partner_id = partner_code).values_list("partner_name")[0][0]
 	return render_to_response('PC/productDetail.html',locals())
+
 
