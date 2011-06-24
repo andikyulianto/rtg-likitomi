@@ -112,6 +112,12 @@ FIXTURE_DIRS = (
 #   '/home/fon/Django-123/projects/rtg-likitomi/likitomi/statusTracking/fixtures/',
 )
 
+# Import the logging and traceback library
+import logging, traceback
+
+# Config log filename and logging level
+logging.basicConfig(filename='/home/patipol/rtg-likitomi/likitomi/static/logfile.log', level=logging.WARNING)
+
 #LOGGING = {
 #    'version': 1,
 #    'disable_existing_loggers': True,
