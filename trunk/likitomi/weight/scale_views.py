@@ -9,14 +9,14 @@ from weight.models import PaperRoll, PaperHistory
 def scale(request):
 
 # Setting scale mode and rfid mode = {'real', 'fake'} #
-	scale_mode = 'fake'
-	rfid_mode = 'real' 
+	scale_mode = 'real'
+	rfid_mode = 'fake' 
 
 	if scale_mode == 'real':
 # Connect to scale via serial port #
 		try:
 			ser = serial.Serial()
-			ser.port = '/dev/ttyUSB0' # on GNU/Linux
+			ser.port = '/dev/ttyUSB2' # on GNU/Linux
 #			ser.port = 'COM3' # on Windows
 			ser.baudrate = 2400
 			ser.bytesize = 7
@@ -31,51 +31,54 @@ def scale(request):
 			serror = "Cannot connect to scale"
 
 		if not serror:
-			a = output.rsplit(",")
-			if len(a) == 3:
-				if a[0] == 'US':
-					b = a[2]
-					if b[0:1] == '+':
-						c = b[-11:]
-						d = c[:-4]
-						weight = float(d)
-						digital = str(weight)
-						if len(digital) == 7:
-							digit1 = digital[0:1]
-							digit2 = digital[1:2]
-							digit3 = digital[2:3]
-							digit4 = digital[3:4]
-							digit5 = digital[4:5]
-#							digit6 = digital[5:6]
-#							digit7 = digital[6:7]
-						if len(digital) == 6:
-							digit2 = digital[0:1]
-							digit3 = digital[1:2]
-							digit4 = digital[2:3]
-							digit5 = digital[3:4]
-#							digit6 = digital[4:5]
-#							digit7 = digital[5:6]
-						if len(digital) == 5:
-							digit3 = digital[0:1]
-							digit4 = digital[1:2]
-							digit5 = digital[2:3]
-#							digit6 = digital[3:4]
-#							digit7 = digital[4:5]
-						if len(digital) == 4:
-							digit4 = digital[0:1]
-							digit5 = digital[1:2]
-#							digit6 = digital[2:3]
-#							digit7 = digital[3:4]
-						if len(digital) == 3:
-							digit5 = digital[0:1]
-#							digit6 = digital[1:2]
-#							digit7 = digital[2:3]
+			if output:
+				a = output.rsplit(",")
+				if len(a) == 3:
+					if a[0] == 'US':
+						b = a[2]
+						if b[0:1] == '+':
+							c = b[-11:]
+							d = c[:-4]
+							weight = float(d)
+							digital = str(weight)
+							if len(digital) == 7:
+								digit1 = digital[0:1]
+								digit2 = digital[1:2]
+								digit3 = digital[2:3]
+								digit4 = digital[3:4]
+								digit5 = digital[4:5]
+#								digit6 = digital[5:6]
+#								digit7 = digital[6:7]
+							if len(digital) == 6:
+								digit2 = digital[0:1]
+								digit3 = digital[1:2]
+								digit4 = digital[2:3]
+								digit5 = digital[3:4]
+#								digit6 = digital[4:5]
+#								digit7 = digital[5:6]
+							if len(digital) == 5:
+								digit3 = digital[0:1]
+								digit4 = digital[1:2]
+								digit5 = digital[2:3]
+								digit6 = digital[3:4]
+#								digit7 = digital[4:5]
+#							if len(digital) == 4:
+								digit4 = digital[0:1]
+								digit5 = digital[1:2]
+#								digit6 = digital[2:3]
+#								digit7 = digital[3:4]
+							if len(digital) == 3:
+								digit5 = digital[0:1]
+#								digit6 = digital[1:2]
+#								digit7 = digital[2:3]
+						else:
+							serror = "Negative value"
 					else:
-						serror = "Negative value"
+						serror = "Overload value"
 				else:
-					serror = "Overload value"
+					serror = "Incomplete data"
 			else:
-				serror = "Incomplete data"
+				serror = "No data received"
 
 	if scale_mode == 'fake':
 		output = "US,NT,+00325.5Kg\r\n"
@@ -283,16 +286,16 @@ def scale(request):
 			size = query.width
 			uom = query.wunit
 
-			int_weight = int(weight)
-
 			if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
 				actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
 			else:
 				actual_wt = query.initial_weight
 
-			used_weight = actual_wt - int(weight)
+			if not serror:
+				int_weight = int(weight)
+				used_weight = actual_wt - int(weight)
 
-			PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
+				PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
 
 	return render_to_response('scale.html', locals())
 
