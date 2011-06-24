@@ -217,7 +217,7 @@ Process<br><br>
 <table width="500px"><tr>
 <td>
 
-<input type="checkbox" id='x_req_cr' <?php if($resultProductCatalog->req_cr=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> CR </td>
+<input type="checkbox" id='x_checkbox_cr' <?php if($resultProductCatalog->req_cr=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> CR </td>
 <td><input type="checkbox" id='x_checkbox_2cl' <?php if($resultProductCatalog->req_2cl=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 2CL </td>
 <td><input type="checkbox" id='x_checkbox_gh' <?php if($resultProductCatalog->req_gh=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Glue Handdle </td>
 <td><input type="checkbox" id='x_checkbox_rd' <?php if($resultProductCatalog->req_rd=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> RD </td>
@@ -698,9 +698,8 @@ for($i=0;$i<$trows;$i++){
 Process<br><br>
 <table width="500px"><tr>
 <td>
-<!--<input type="checkbox" id='x_req_cr' <?php if($req_cr=='0') echo 'checked'; else echo '';  ?> value=0>-->
-<input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked value=1';  else echo 'value=0';  ?>> CR </td>
-<td><input type="checkbox" id='x_checkbox_2cl' <?php if($req_2cl=='1') echo 'checked'; else echo ''; ?>> 2CL </td>
+<input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked';  ?>> CR </td>
+<td><input type="checkbox" id='x_checkbox_2cl' <?php if($req_2cl=='1') echo 'checked'; ?>> 2CL </td>
 <td><input type="checkbox" id='x_checkbox_gh' <?php if($req_gh=='1') echo 'checked'; else echo ''; ?>> Glue Handdle </td>
 <td><input type="checkbox" id='x_checkbox_rd' <?php if($req_rd=='1') echo 'checked'; else echo ''; ?>> RD </td>
 <td><input type="checkbox" id='x_checkbox_wh' <?php if($req_wh=='1') echo 'checked'; else echo ''; ?>> WH </td>

@@ -180,7 +180,79 @@
 		productsall_0 = productData(0);
 		productsall_1 = productData(1);
 		productsall_2 = productData(2);
-		
+
+	//	Ext.Msg.alert('Message', Ext.get('x_checkbox_cr').dom.value)
+		if(Ext.get('x_checkbox_cr').dom.value=='on')
+			checkbox_cr = 1;
+		else
+			checkbox_cr = 0;
+	//	Ext.Msg.alert('Message', Ext.get('x_checkbox_2cl').dom.value)
+		if(Ext.get('x_checkbox_2cl').dom.value=='on')
+			checkbox_2cl = 1;
+		else
+			checkbox_2cl = 0;
+//		Ext.Msg.alert('Message',checkbox_2cl);
+		if(Ext.get('x_checkbox_gh').dom.value=='on')
+			checkbox_gh = 1;
+		else 
+			checkbox_gh = 0;
+		if(Ext.get('x_checkbox_rd').dom.value=='on')
+			checkbox_rd = 1;
+		else
+			checkbox_rd = 0;
+		if(Ext.get('x_checkbox_wh').dom.value=='on')
+			checkbox_wh = 1;
+		else
+			checkbox_wh = 0;
+
+
+		if(Ext.get('x_checkbox_3cm').dom.value=='on')
+			checkbox_3cm = 1;
+		else
+			checkbox_3cm = 0;
+		if(Ext.get('x_checkbox_hs').dom.value=='on')
+			checkbox_hs = 1;
+		else
+			checkbox_hs = 0;
+		if(Ext.get('x_checkbox_ss').dom.value=='on')
+			checkbox_ss = 1;
+		else
+			checkbox_ss = 0;
+
+
+		if(Ext.get('x_checkbox_3cs').dom.value=='on')
+			checkbox_3cs = 1;
+		else
+			checkbox_3cs = 0;
+		if(Ext.get('x_checkbox_fg').dom.value=='on')
+			checkbox_fg = 1;
+		else
+			checkbox_fg = 0;
+		if(Ext.get('x_checkbox_remove').dom.value=='on')
+			checkbox_remove = 1;
+		else
+			checkbox_remove = 0;
+
+
+		if(Ext.get('x_checkbox_4cd').dom.value=='on')
+			checkbox_4cd = 1;
+		else
+			checkbox_4cd = 0;
+		if(Ext.get('x_checkbox_foam').dom.value=='on')
+			checkbox_foam = 1;
+		else
+			checkbox_foam = 0;
+
+
+		if(Ext.get('x_checkbox_3cl').dom.value=='on')
+			checkbox_3cl = 1;
+		else
+			checkbox_3cl = 0;
+		if(Ext.get('x_checkbox_tape').dom.value=='on')
+			checkbox_tape = 1;
+		else
+			checkbox_tape = 0;
+
 		Ext.Ajax.request({
 		url: BASEURL + 'index.php/products/saveDetail/',
 		params : {
@@ -218,7 +290,21 @@
 			add_t_length:Ext.get('x_add_t_length').dom.value,
 			add_amount:Ext.get('x_add_amount').dom.value,
 			remark:Ext.get('x_remark').dom.value,
-			req_cr:Ext.get('x_checkbox_cr').dom.value,
+			req_cr:checkbox_cr,
+			req_2cl:checkbox_2cl,
+			req_gh:checkbox_gh,
+			req_rd:checkbox_rd,
+			req_wh:checkbox_wh,
+			req_3cm:checkbox_3cm,
+			req_hs:checkbox_hs,
+			req_ss:checkbox_ss,
+			req_3cs:checkbox_3cs,
+			req_fg:checkbox_fg,
+			req_remove:checkbox_remove,
+			req_4cd:checkbox_4cd,
+			req_foam:checkbox_foam,
+			req_3cl:checkbox_3cl,
+			req_tape:checkbox_tape,
 			productsall_0:productsall_0,
 			productsall_1:productsall_1,
 			productsall_2:productsall_2,
@@ -248,7 +334,78 @@
 		productsall_0 = productData(0);
 		productsall_1 = productData(1);
 		productsall_2 = productData(2);
-		
+	//	Ext.Msg.alert('Message', Ext.get('x_checkbox_cr').dom.value)
+		if(Ext.get('x_checkbox_cr').dom.value=='on')
+			checkbox_cr = 1;
+		else
+			checkbox_cr = 0;
+	//	Ext.Msg.alert('Message', Ext.get('x_checkbox_2cl').dom.value)
+		if(Ext.get('x_checkbox_2cl').dom.value=='on')
+			checkbox_2cl = 1;
+		else
+			checkbox_2cl = 0;
+//		Ext.Msg.alert('Message',checkbox_2cl);
+		if(Ext.get('x_checkbox_gh').dom.value=='on')
+			checkbox_gh = 1;
+		else 
+			checkbox_gh = 0;
+		if(Ext.get('x_checkbox_rd').dom.value=='on')
+			checkbox_rd = 1;
+		else
+			checkbox_rd = 0;
+		if(Ext.get('x_checkbox_wh').dom.value=='on')
+			checkbox_wh = 1;
+		else
+			checkbox_wh = 0;
+
+
+		if(Ext.get('x_checkbox_3cm').dom.value=='on')
+			checkbox_3cm = 1;
+		else
+			checkbox_3cm = 0;
+		if(Ext.get('x_checkbox_hs').dom.value=='on')
+			checkbox_hs = 1;
+		else
+			checkbox_hs = 0;
+		if(Ext.get('x_checkbox_ss').dom.value=='on')
+			checkbox_ss = 1;
+		else
+			checkbox_ss = 0;
+
+
+		if(Ext.get('x_checkbox_3cs').dom.value=='on')
+			checkbox_3cs = 1;
+		else
+			checkbox_3cs = 0;
+		if(Ext.get('x_checkbox_fg').dom.value=='on')
+			checkbox_fg = 1;
+		else
+			checkbox_fg = 0;
+		if(Ext.get('x_checkbox_remove').dom.value=='on')
+			checkbox_remove = 1;
+		else
+			checkbox_remove = 0;
+
+
+		if(Ext.get('x_checkbox_4cd').dom.value=='on')
+			checkbox_4cd = 1;
+		else
+			checkbox_4cd = 0;
+		if(Ext.get('x_checkbox_foam').dom.value=='on')
+			checkbox_foam = 1;
+		else
+			checkbox_foam = 0;
+
+
+		if(Ext.get('x_checkbox_3cl').dom.value=='on')
+			checkbox_3cl = 1;
+		else
+			checkbox_3cl = 0;
+		if(Ext.get('x_checkbox_tape').dom.value=='on')
+			checkbox_tape = 1;
+		else
+			checkbox_tape = 0;
+
 		Ext.Ajax.request({
 		url: BASEURL + 'index.php/products/updateDetail/',
 		params : {
@@ -287,7 +444,22 @@
 			add_t_length:Ext.get('x_add_t_length').dom.value,
 			add_amount:Ext.get('x_add_amount').dom.value,
 			remark:Ext.get('x_remark').dom.value,
-			req_cr:Ext.get('x_checkbox_cr').dom.value,
+			req_cr:checkbox_cr,
+			req_2cl:checkbox_2cl,
+			req_gh:checkbox_gh,
+			req_rd:checkbox_rd,
+			req_wh:checkbox_wh,
+			req_3cm:checkbox_3cm,
+			req_hs:checkbox_hs,
+			req_ss:checkbox_ss,
+			req_3cs:checkbox_3cs,
+			req_fg:checkbox_fg,
+			req_remove:checkbox_remove,
+			req_4cd:checkbox_4cd,
+			req_foam:checkbox_foam,
+			req_3cl:checkbox_3cl,
+			req_tape:checkbox_tape,
+
 			productsall_0:productsall_0,
 			productsall_1:productsall_1,
 			productsall_2:productsall_2,	
