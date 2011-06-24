@@ -76,7 +76,21 @@
 				<tr bgcolor="#cccccc"><th>CODE</th><th>MC</th><th>P.W</th><th>Lenght</th><th>F</th><th>PCS</th><th>ALW +\-</th><th>Date</th><th>Amount</th><th>Date</th><th>Amount</th><th>Time used</th><th>Date</th><th>Amount</th><th>Time used</th></tr>
 			</thead>
 			<tbody> 
-
+				{% for item in items %}
+				<tr class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ item.state}}"><td>{{item.plan_id}}</td><td>{{PO}}</td><td>{{item.product.product_code}}</td><td>{{item.cv_machine}}</td><td>{{item.product.parent_code.partner.partner_name}}</td><td>{{item.product.parent_code.product_name}}</td><td align="right">{{item.product.parent_code.p_width_inch}}</td><td  align="right">{{item.product.parent_code.t_length}}</td><td>{{item.product.flute}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.product.parent_code.qty_allowance}}</td><td>{{item.plan_due|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td>{{item.plan_cr_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cr_time_used}}</td>
+					{% if item.plan_cv_start != NULL %}
+					<td>{{item.plan_cv_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cv_time_used}}</td>
+					{% else %}
+					<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
+					{% endif %}
+					{% if item.actual_amount_wh >= item.plan_amount %}
+					<td align="right">{{item.actual_amount_wh}}</td>
+					{% else %}
+					<td align="right"><font color=red>{{item.actual_amount_wh}}</font></td>
+					{% endif %}
+					<td></td>
+				</tr>
+				{% endfor %}
 			</tbody>
 		</table>
 		<br>
@@ -100,3 +114,4 @@
 </div> <!-- content -->
 </div><!-- tabs -->
 {% endblock %}
+
