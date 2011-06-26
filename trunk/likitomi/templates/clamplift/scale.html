@@ -144,11 +144,11 @@ $(document).ready(function(){
 			<td><p class="var">{{ actual_wt }}</p></td>
 			<td><p class="unit">kgs.</p></td>
 		</tr>
-		<tr>
+		{% if used_weight %}<tr>
 			<td><p class="label">Used Weight: </p></td>
 			<td><p class="var">{{ used_weight }}</p></td>
 			<td><p class="unit">kgs.</p></td>
-		</tr>
+		</tr>{% endif %}
 	</table></center>
 {% endif %}
 
