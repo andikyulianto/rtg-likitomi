@@ -169,6 +169,7 @@ class Planning extends Controller {
 		$this->load->library('JSON');
 		$gridData = $this->json->decode($jsonData);	
 		$this->Planning_model->deleteAllPlanForToday($choosendate);
+		$this->Planning_model->deleteStatusTrackingPlanForToday($choosendate);
 
 		//calculate time
 		$time_start_cr = (0.0006949*60)*8;
@@ -179,6 +180,10 @@ class Planning extends Controller {
 		$time_start_3CW = $time_start_cv;
 		$time_start_2CS = $time_start_cv;
 
+		$time_stop_2CL=0;
+		$time_stop_3CL=0;
+		$time_stop_3CW=0;
+		$time_stop_2CS=0;
 
 		//$time_start_pt = (0.0006949*60)*8;
 		//$time_start_wh = (0.0006949*60)*8;
@@ -266,8 +271,8 @@ class Planning extends Controller {
 			//print_r($rowData);
 			//print_r($key->row_array(0));
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to fake_table for status tracking
-			$this->Planning_model->savetostatustracking($rowData,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
 			$time_start_cr = $time_stop_cr;
 
 		if(strcmp($key['next_process'],'3CS'))
