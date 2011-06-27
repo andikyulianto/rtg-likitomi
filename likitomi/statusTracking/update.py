@@ -21,7 +21,7 @@ from employee import Employee
 def startUpdate(request):
 	current_time = todayDate()
 	eID = request.GET['eID']
-	employee = AuthUser.objects.get(eid=eID)
+	employee = AuthUser.objects.get(id=eID)
 	username = employee.username
 	task = request.GET['task']
 	at = request.GET['at']
