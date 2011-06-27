@@ -20,6 +20,7 @@ from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Prod
 def startUpdate(request):
 	current_time = todayDate()
 	eID = request.GET['eID']
+	user= request.GET['user']
 	task = request.GET['task']
 	at = request.GET['at']
 	pID = request.GET['pID']
@@ -29,24 +30,24 @@ def startUpdate(request):
 	if (at=="CR"):
 		obj.actual_cr_start = current_time
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="CV"):
 		obj.actual_cv_start = current_time
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="PT"):
 		obj.actual_pt_start = current_time
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="WH"):
 		print current_time
 		obj.actual_wh_start = current_time
 		obj.actual_amount_wh = amount
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 #		return HttpResponseRedirect(path)
 	else:
 		return render_to_response('update.html', locals())
@@ -57,6 +58,7 @@ def startUpdate(request):
 def endUpdate(request):
 	current_time = todayDate()
 	eID = request.GET['eID']
+	user= request.GET['user']
 	task = request.GET['task']
 	at = request.GET['at']
 	amount = request.GET['amount']
@@ -66,25 +68,25 @@ def endUpdate(request):
 		obj.actual_cr_end = current_time
 		obj.actual_amount_cr = amount
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="CV"):
 		obj.actual_cv_end = current_time
 		obj.actual_amount_cv = amount
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="PT"):
 		obj.actual_pt_end = current_time
 		obj.actual_amount_pt = amount
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="WH"):
 		obj.actual_wh_start = current_time
 		obj.actual_amount_wh = amount
 		obj.save()
-		path = "/django/likitomi/home/?eID="+eID+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+user+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	else:
 		return render_to_response('update.html', locals())
