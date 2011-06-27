@@ -71,7 +71,7 @@ def endUpdate(request):
 		obj.actual_cr_end = current_time
 		obj.actual_amount_cr = amount
 		obj.save()
-		path = "/django/likitomi/home/?user="+username.+"&Enter=Enter"
+		path = "/django/likitomi/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="CV"):
 		obj.actual_cv_end = current_time
