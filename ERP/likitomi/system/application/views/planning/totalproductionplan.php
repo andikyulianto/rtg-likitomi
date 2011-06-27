@@ -50,8 +50,10 @@
 		$cnt++;
 		//FORMULA
                 if(($key->cut*1000000*$key->slit)!=0)
+		{
 		$sqm = ($key->p_width_inch*25.4*$key->t_length)/($key->cut*1000000*$key->slit);
 		$sqm = round($sqm,3);
+		}
 	?>
 	<tr class='tdView'>
 		<td><?=$key->sales_order?></td>

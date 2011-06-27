@@ -7,7 +7,7 @@ class Planning_model extends Model
 	var $totalPlanning 	= "total_planning";
 	var $planning 		= "planning";
 	var $status 		= "status";
-	var $fakeTotalPlan 	= "status_tracking";
+	var $statustracking 	= "status_tracking";
 
 	function Planning_model()
 	{
@@ -147,11 +147,12 @@ class Planning_model extends Model
 
 	}
 
-        function savetostatustracking($rowData,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
+        function savetostatustracking($rowData,$choosendate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
         {
 			//echo substr($rowData->corrugator_date,0,10)." ".substr($rowData->corrugator_date,11,5).":00";
 			//echo substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00";
 			//get amount
+			echo $choosendate;
 
 
 			$sql = "Select product_id,qty,delivery_date,delivery_time From delivery Where delivery_id =".$rowData->delivery_id;
@@ -170,7 +171,8 @@ class Planning_model extends Model
 			}
 			if($cv_machine == 'SHEET')
 			{
-				$param = array("product_id"=>$rowData->product_code,
+				$param = array("date" => $choosendate,
+						"product_id"=>$rowData->product_code,
 						"plan_amount" =>$amount,
 						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
@@ -185,7 +187,8 @@ class Planning_model extends Model
 			}
 			else
 			{
-			$param = array("product_id"=>$rowData->product_code,
+			$param = array("date" => $choosendate,
+						"product_id"=>$rowData->product_code,
 						"plan_amount" =>$amount,
 						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
@@ -199,7 +202,7 @@ class Planning_model extends Model
 				);
 			}
 						//print_r($param);
-			$this->db->insert($this->fakeTotalPlan, $param);
+			$this->db->insert($this->statustracking, $param);
 				
         }
 	function formatDate($day)
@@ -216,6 +219,12 @@ class Planning_model extends Model
 		//Delete All Records of the day.
 		$this->db->where('date',$today); 
 		$this->db->delete($this->totalPlanning);
+	}
+	function deleteStatusTrackingPlanForToday($today)
+	{
+		//Delete All Records of the day.
+		$this->db->where('date',$today); 
+		$this->db->delete($this->statustracking);
 	}
 	
 //	function getDeliveryDetails($delivery_id)
