@@ -1,6 +1,7 @@
 from django.shortcuts import render_to_response
 from django.core.cache import cache
-import sys, termios
+import sys
+#import termios
 import serial
 import socket
 import random
@@ -27,17 +28,19 @@ def scale(request):
 					try:
 						ser.port = '/dev/ttyUSB'+str(i)
 						ser.open()
-					except termios.error:
+						ser.flushInput()
+						output = ser.readline()
+					except:
 						serror = "Cannot connect to scale"
 			if sys.platform == 'win32': # on Windows
 				for i in range(8):
 					try:
 						ser.port = 'COM'+str(i)
 						ser.open()
-					except termios.error:
+						ser.flushInput()
+						output = ser.readline()
+					except:
 						serror = "Cannot connect to scale"
-			ser.flushInput()
-			output = ser.readline()
 			ser.close()
 		except serial.SerialException:
 			serror = "Cannot connect to scale"
