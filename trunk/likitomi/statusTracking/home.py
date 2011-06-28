@@ -24,6 +24,8 @@ user = ""
 def set_username(user):
 	global username
 	username = user
+#	return username
+def get_username():
 	return username
 
 ####################################################
@@ -165,8 +167,9 @@ def normalPlanRefresher(request):
 	page = "PC"
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	global username
-	username = user
+#	username = "PC"
+	username = get_username()
+#	username = user
 	
 	#create items for PC
 	#extra = db_type(StatusTracking.objects.all())
