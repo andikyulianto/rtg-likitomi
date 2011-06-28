@@ -10,111 +10,92 @@ function showDetail(sectionName,urlLink)
 	el.innerHTML="<iframe src='"+urlLink+"' align='left' scrolling='no' frameborder='0' width='100%' height='130px'></iframe>";
 }
 
+
+function HighLightTR(el, backColor,textColor){
 var preEl ;
 var orgBColor;
 var orgTColor;
-
-function HighLightCR(elstr, backColor,textColor){
-  if(typeof(preEl0)!='undefined') {
-     preEl0.bgColor=orgBColor;
-     preEl1.bgColor=orgBColor;
-     try{ChangeTextColor(preEl0,orgTColor);}catch(e){;}
-     try{ChangeTextColor(preEl1,orgTColor);}catch(e){;}
+  if(typeof(preEl)!='undefined') {
+     preEl.bgColor=orgBColor;
+     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
   }
-  var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
+  orgBColor = el.bgColor;
+  orgTColor = el.style.color;
+  el.bgColor=backColor;
 
-  orgBColor = el[0].bgColor;
-  orgBColor = el[1].bgColor;
-  orgTColor = el[0].style.color;
-  orgTColor = el[1].style.color;
-  el[0].bgColor=backColor;
-  el[1].bgColor=backColor;
-
-  try{ChangeTextColor(el[0],textColor);}catch(e){;}
-  try{ChangeTextColor(el[1],textColor);}catch(e){;}
-
-  preEl1 = el[1];
-  preEl0 = el[0];
-}
-function HighLightCV(elstr, backColor,textColor){
-  if(typeof(preEl2)!='undefined') {
-     preEl2.bgColor=orgBColor;
-     preEl3.bgColor=orgBColor;
-     try{ChangeTextColor(preEl2,orgTColor);}catch(e){;}
-     try{ChangeTextColor(preEl3,orgTColor);}catch(e){;}
-  }
-  var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
-
-  orgBColor = el[0].bgColor;
-  orgBColor = el[1].bgColor;
-  orgTColor = el[0].style.color;
-  orgTColor = el[1].style.color;
-  el[0].bgColor=backColor;
-  el[1].bgColor=backColor;
-
-  try{ChangeTextColor(el[0],textColor);}catch(e){;}
-  try{ChangeTextColor(el[1],textColor);}catch(e){;}
-
-  preEl2 = el[0];
-  preEl3 = el[1];
+  try{ChangeTextColor(el,textColor);}catch(e){;}
+  preEl = el;
 }
 
-function HighLightPT(elstr, backColor,textColor){
-  if(typeof(preEl4)!='undefined') {
-     preEl4.bgColor=orgBColor;
-     preEl5.bgColor=orgBColor;
-     try{ChangeTextColor(preEl4,orgTColor);}catch(e){;}
-     try{ChangeTextColor(preEl5,orgTColor);}catch(e){;}
-  }
-  var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
 
-  orgBColor = el[0].bgColor;
-  orgBColor = el[1].bgColor;
-  orgTColor = el[0].style.color;
-  orgTColor = el[1].style.color;
-  el[0].bgColor=backColor;
-  el[1].bgColor=backColor;
-
-  try{ChangeTextColor(el[0],textColor);}catch(e){;}
-  try{ChangeTextColor(el[1],textColor);}catch(e){;}
-
-  preEl4 = el[0];
-  preEl5 = el[1];
+function ChangeTextColor(a_obj,a_color){  ;
+   for (i=0;i<a_obj.cells.length;i++)
+    a_obj.cells(i).style.color=a_color;
 }
 
-function HighLightWH(elstr, backColor,textColor){
-  if(typeof(preEl6)!='undefined') {
-     preEl6.bgColor=orgBColor;
-     preEl7.bgColor=orgBColor;
-     try{ChangeTextColor(preEl6,orgTColor);}catch(e){;}
-     try{ChangeTextColor(preEl7,orgTColor);}catch(e){;}
+
+
+function HighLightCR(el, backColor,textColor){
+var preEl ;
+var orgBColor;
+var orgTColor;
+  if(typeof(preEl)!='undefined') {
+     preEl.bgColor=orgBColor;
+     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
   }
-  var el=document.getElementsByClassName(elstr);
-  //alert(el[0].innerHTML);
-  //alert(el[1].innerHTML);
-  //el = elstr;
+  orgBColor = el.bgColor;
+  orgTColor = el.style.color;
+  el.bgColor=backColor;
 
-  orgBColor = el[0].bgColor;
-  orgBColor = el[1].bgColor;
-  orgTColor = el[0].style.color;
-  orgTColor = el[1].style.color;
-  el[0].bgColor=backColor;
-  el[1].bgColor=backColor;
+  try{ChangeTextColor(el,textColor);}catch(e){;}
+  preEl = el;
+}
+function HighLightCV(el, backColor,textColor){
+var preEl ;
+var orgBColor;
+var orgTColor;
+    if(typeof(preEl)!='undefined') {
+     preEl.bgColor=orgBColor;
+     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+  }
+  orgBColor = el.bgColor;
+  orgTColor = el.style.color;
+  el.bgColor=backColor;
 
-  try{ChangeTextColor(el[0],textColor);}catch(e){;}
-  try{ChangeTextColor(el[1],textColor);}catch(e){;}
+  try{ChangeTextColor(el,textColor);}catch(e){;}
+  preEl = el;
+}
 
-  preEl6 = el[0];
-  preEl7 = el[1];
+function HighLightPT(el, backColor,textColor){
+var preEl ;
+var orgBColor;
+var orgTColor;
+   if(typeof(preEl)!='undefined') {
+     preEl.bgColor=orgBColor;
+     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+  }
+  orgBColor = el.bgColor;
+  orgTColor = el.style.color;
+  el.bgColor=backColor;
+
+  try{ChangeTextColor(el,textColor);}catch(e){;}
+  preEl = el;
+}
+
+function HighLightWH(el, backColor,textColor){
+var preEl ;
+var orgBColor;
+var orgTColor;
+  if(typeof(preEl)!='undefined') {
+     preEl.bgColor=orgBColor;
+     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+  }
+  orgBColor = el.bgColor;
+  orgTColor = el.style.color;
+  el.bgColor=backColor;
+
+  try{ChangeTextColor(el,textColor);}catch(e){;}
+  preEl = el;
 }
 function getElementsByClassName(oElm, strTagName, strClassName){
 	var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
@@ -158,13 +139,13 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 <!--PATH SETTINGS END-->
 
 	<center><div align='center' id="totalPlanDaily">
-<div class="CRarea" align="right">
-<button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{user}}&page=CR'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button> 
+<div class="CRarea" align="right"> 
+<button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=CR'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button> 
 
 		<!-- table CR --><center>Corrugator <br><table align=center width="90%">
 			<tr><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR"> 
-			<table align=center width="100%" id="crTable"><!-- table left -->
+			<table align=center width="100%" id="crTable" align="top"><!-- table left -->
 			<thead><tr bgcolor="#cccccc" width="100%">
 			<th width="5%"><div>Sch.</div><div>Act.</div></th>
 			<th width="15%"><div class="plan">IN</div><div class="actual">IN</div></th>
@@ -173,8 +154,9 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<th width="10%"> Product code </th>
 			<th width="10%"> Due</th></tr></thead>
 			<tbody> 
-			{% for CR_items in items_plan_cr %}
-			<tr onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">
+			{% for CR_items in items_plan_cr %}{{product}}
+			<!--<tr onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">-->
+			<tr onClick="HighLightCV(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');"  id="{{CR_items.stateCR}}">
 			<td>{% if cr == CR_items.product.product_code %} > {% endif %}</td>
 			<td><div class="plan">{{CR_items.plan_cr_start|time:"H:i"}}</div><div class="actual">
 			{% if CR_items.actual_cr_start != NULL %}
@@ -218,7 +200,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 </div> 
 
 <div class="CVarea" align="right">
-			<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{user}}&page=CV'" ><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+			<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=CV'" ><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 		<!--<a href="{{ pcdetail_url }}?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>-->
 		<center>Convertor <br><table align=center width="90%">
@@ -236,7 +218,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<th>From</th>
 			<th width="10%"> Due</th></tr></thead><tbody>
 			{% for CV_items in items_plan_cv %}
-			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightCV('{{rowcountCV}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPageCV','{{ display_url }}?product={{CV_items.product.product_code}}');" id="{{CV_items.stateCV}}">
+			<tr class="{% cycle 'rowCV1' 'rowCV2' 'rowCV3' as rowcountCV %}" onClick="HighLightCV(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCV','{{ display_url }}?product={{CV_items.product.product_code}}');" id="{{CV_items.stateCV}}">
 			<td>{% if cvThreeCL == CV_items.product.product_code or cvThreeCS == CV_items.product.product_code or cvTwoCL == CV_items.product.product_code %} > {% endif %} </td>
 			<td> <div class="plan">{{CV_items.plan_cv_start|time:"H:i"}}</div><div class="actual">
 			{% if CV_items.actual_cv_start != NULL %}
@@ -278,7 +260,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 </div>
 	<div class="PTarea" align="right">
 
-			<button style="height:30px" id="zoomPT" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{user}}&page=PT'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+			<button style="height:30px" id="zoomPT" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=PT'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 
 
@@ -299,7 +281,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<th width="10%"> Due</th></tr>
 			</thead><tbody>
 			{% for PT_items in items_plan_pt %}
-			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT('{{rowcountPT}}','#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','{{ display_url }}?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td> {% if pt == PT_items.product.product_code %} > {% endif %}</td>
+			<tr class="{% cycle 'rowPT1' 'rowPT2' 'rowPT3' as rowcountPT %}" onClick="HighLightPT(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPagePT','{{ display_url }}?product={{PT_items.product.product_code}}');" id="{{PT_items.statePT}}"><td> {% if pt == PT_items.product.product_code %} > {% endif %}</td>
 				<td><div class="plan"> {{PT_items.plan_pt_start|time:"H:i"}}</div><div class="actual">
 				{% if PT_items.actual_pt_start != NULL %}
 				{{PT_items.actual_pt_start|time:"H:i" }}
@@ -339,7 +321,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 		<!-- end pt table -->
 
 </div> <div class="WHarea" align="right">
-<button style="height:30px" id="zoomWH" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{user}}&page=WH'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
+<button style="height:30px" id="zoomWH" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=WH'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 
 <!-- start wh table--><center> Warehouse
@@ -356,7 +338,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<th width="15%">From</th>
 			<th width="10%"> Due</th></tr></thead><tbody>
 			{% for WH_items in items_plan_wh %}
-			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightWH('{{rowcountWH}}','#c9cc99','cc3333','{{product}}'); ; showDetail('loadPageWH','{{ display_url }}?product={{WH_items.product.product_code}}');" id="{{WH_items.state}}"><td> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
+			<tr class="{% cycle 'rowWH1' 'rowWH2' 'rowWH3' as rowcountWH %}" onClick="HighLightWH(this,'#c9cc99','cc3333','{{product}}'); ; showDetail('loadPageWH','{{ display_url }}?product={{WH_items.product.product_code}}');" id="{{WH_items.state}}"><td> {{num}}{% if wh == WH_items.plan_wh_start %} > {% endif %} </td>
 			<td><div class="plan">{{WH_items.plan_wh_start|time:"H:i"}}</div>
 			<div class="actual">{% if WH_items.actual_wh_start != NULL %}
 				{{WH_items.actual_wh_start|time:"H:i" }}

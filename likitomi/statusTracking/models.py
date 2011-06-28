@@ -464,7 +464,7 @@ class StatusTracking(models.Model):
     process3 = models.CharField(max_length=5, blank=True)
     process4 = models.CharField(max_length=5, blank=True)
     cv_machine = models.CharField(max_length=15, blank=True)
-    days_left = models.IntegerField(null=True, blank=True)
+#    days_left = models.IntegerField(null=True, blank=True)
     def speed(self):
         return getCVSpeed(self.cv_machine)
 #    days_left = models.IntegerField(null=True, blank=True)
