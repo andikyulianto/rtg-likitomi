@@ -142,10 +142,10 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 <div class="CRarea" align="right"> 
 <button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=CR'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button> 
 
-		<!-- table CR --><center>Corrugator <br><table align=center width="90%">
-			<tr><td width="50%">{# left #}<div id="result"></div>
+		<!-- table CR --><center>Corrugator <br><table width="90%">
+			<tr  valign="top"><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR"> 
-			<table align=center width="100%" id="crTable" align="top"><!-- table left -->
+			<table align=center width="100%" id="crTable"><!-- table left -->
 			<thead><tr bgcolor="#cccccc" width="100%">
 			<th width="5%"><div>Sch.</div><div>Act.</div></th>
 			<th width="15%"><div class="plan">IN</div><div class="actual">IN</div></th>
@@ -204,7 +204,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 
 		<!--<a href="{{ pcdetail_url }}?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>-->
 		<center>Convertor <br><table align=center width="90%">
-			<tr  height="5"><td width="57%">{# left #}
+			<tr  height="5" valign="top"><td width="57%">{# left #}
 			
 			<div id="linkCV">
 			<table align=center width="100%">
@@ -268,7 +268,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 		<!-- start pt table --><center> Pad and Partition <br>
 		<table align=center width="90%">
 			
-			<tr><td width="55%">{# left #}
+			<tr valign="top"><td width="55%">{# left #}
 			<div id="linkPT">
 			<table align=center width = 100%><span class="header">
 			<thead><tr width="100%" align=center bgcolor="#cccccc">
@@ -330,7 +330,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<td width="50%"> {# left #}
 			<div id="linkWH">
 			<table align=center width = 100%>
-			<thead><tr width="100%" align=center bgcolor="#cccccc">
+			<thead><tr width="100%" valign="top" bgcolor="#cccccc">
 			<th width="5%"><div>Sch.</div><div>Act.</div></th>
 			<th width="20%"><div class="plan">IN</div><div class="actual">IN</div></th>
 			<th width="15%"><div class="plan">Pcs<div class="actual">Pcs</td>
