@@ -23,7 +23,7 @@ class Planning_model extends Model
 		$query = $this->db->get($this->tableName);
 		//echo $this->db->last_query();	
 		return $query;
-	}
+	
 	
 	function getFilterResult($delivery_date_all,$sales_order_all,$lastmodified_all,$status_all)
 	{
@@ -104,6 +104,7 @@ class Planning_model extends Model
 		$query = $this->db->query($sql);
 		return $query;
 	}
+
 	function getProduct($product_code){
 		
 		$sql = 	 "SELECT * FROM ".$this->tblProducts." as p, ".$this->tblCatalog." as c   WHERE p.product_code ='".$product_code."' and p.product_code=c.product_code";

@@ -134,6 +134,45 @@ class Planning extends Controller {
 			//$deliveryList[$cnt]['next_process']	= "";
 			$deliveryList[$cnt]['sort']	= $cnt;
 			
+			//Add by Fon
+			$productProcess	= $this->Planning_model->getProductCat($delivery->product_id,$delivery->product_code);
+			if($productProcess->num_rows()>0){
+				$deliveryList[$cnt]['req_cr'] =$productProcess->row()->req_cr;
+				$deliveryList[$cnt]['req_2cl'] = $productProcess->row()->req_2cl;
+				$deliveryList[$cnt]['req_gh'] = $productProcess->row()->req_gh;
+				$deliveryList[$cnt]['req_rd'] = $productProcess->row()->req_rd;
+				$deliveryList[$cnt]['req_wh'] = $productProcess->row()->req_wh;
+				$deliveryList[$cnt]['req_3cm'] = $productProcess->row()->req_3cm;
+				$deliveryList[$cnt]['req_hs'] = $productProcess->row()->req_hs;
+				$deliveryList[$cnt]['req_ss'] = $productProcess->row()->req_ss;
+				$deliveryList[$cnt]['req_3cs'] = $productProcess->row()->req_3cs;
+				$deliveryList[$cnt]['req_fg'] = $productProcess->row()->req_fg;
+				$deliveryList[$cnt]['req_remove'] = $productProcess->row()->req_remove;
+				$deliveryList[$cnt]['req_4cd'] = $productProcess->row()->req_4cd;
+				$deliveryList[$cnt]['req_foam'] = $productProcess->row()->req_foam;
+				$deliveryList[$cnt]['req_3cl'] = $productProcess->row()->req_3cl;
+				$deliveryList[$cnt]['req_tape'] = $productProcess->row()->req_tape;
+
+
+			}else {
+				$deliveryList[$cnt]['req_cr'] ="";
+				$deliveryList[$cnt]['req_2cl'] = "";
+				$deliveryList[$cnt]['req_gh'] = "";
+				$deliveryList[$cnt]['req_rd'] = "";
+				$deliveryList[$cnt]['req_wh'] = "";
+				$deliveryList[$cnt]['req_3cm'] = "";
+				$deliveryList[$cnt]['req_hs'] = "";
+				$deliveryList[$cnt]['req_ss'] = "";
+				$deliveryList[$cnt]['req_3cs'] = "";
+				$deliveryList[$cnt]['req_fg'] = "";
+				$deliveryList[$cnt]['req_remove'] = "";
+				$deliveryList[$cnt]['req_4cd'] = "";
+				$deliveryList[$cnt]['req_foam'] = "";
+				$deliveryList[$cnt]['req_3cl'] = "";
+				$deliveryList[$cnt]['req_tape'] = "";
+			}
+
+
 			$cnt++;
 		}
 		
