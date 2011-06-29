@@ -116,7 +116,7 @@ FIXTURE_DIRS = (
 import logging, traceback
 
 # Config log filename and logging level
-logging.basicConfig(filename='/home/patipol/rtg-likitomi/likitomi/static/logfile.log', level=logging.WARNING)
+#logging.basicConfig(filename='/home/patipol/rtg-likitomi/likitomi/static/logfile.log', level=logging.WARNING)
 
 #LOGGING = {
 #    'version': 1,
