@@ -102,6 +102,7 @@ def showPT(User,section_title):
 	pt = str(currentTimeProcess("PT"))
 	item_plan = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	items = list(item_plan)
+	print str(items) +"show PT"
 	##monthlyPlan
 	datefrominMonth = datetime(today.year,today.month,1)
 	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])

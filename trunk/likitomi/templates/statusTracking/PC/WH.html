@@ -58,7 +58,8 @@
 	<td>{{item.po}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
-	<td>{% if item.process4 == 'WH' %}
+	<td>
+{% if item.process4 == 'WH' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'WH'%}
 		    {{ item.process2 }}
