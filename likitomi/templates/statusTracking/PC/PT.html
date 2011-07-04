@@ -36,7 +36,7 @@
 	<th>Next Process</th>
 	<th>Due</th>
 </tr></thead>
-			{% for item in items %}
+{% for item in items %}
 	<tr id="{{ item.statePT}}">
 	<td>{% if pt == item.product.product_code %} > {% endif %}</td>
 	<td><div class="plan">{{item.plan_pt_start|time:"H:i"}}</div><div class="actual">
@@ -65,7 +65,8 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
-	<td>{% if item.process4 == 'PT' %}
+	<td>
+{% if item.process4 == 'PT' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'PT'%}
 		    {{ item.process2 }}

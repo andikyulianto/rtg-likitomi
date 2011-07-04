@@ -10,11 +10,11 @@ function showDetail(sectionName,urlLink)
 	el.innerHTML="<iframe src='"+urlLink+"' align='left' scrolling='no' frameborder='0' width='100%' height='130px'></iframe>";
 }
 
-
-function HighLightTR(el, backColor,textColor){
 var preEl ;
 var orgBColor;
 var orgTColor;
+function HighLightTR(el, backColor,textColor){
+
   if(typeof(preEl)!='undefined') {
      preEl.bgColor=orgBColor;
      try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
@@ -34,22 +34,25 @@ function ChangeTextColor(a_obj,a_color){  ;
 }
 
 
-
+var preElCR ;
+var orgBColorCR;
+var orgTColorCR;
 function HighLightCR(el, backColor,textColor){
-var preEl ;
-var orgBColor;
-var orgTColor;
-  if(typeof(preEl)!='undefined') {
-     preEl.bgColor=orgBColor;
-     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+
+  if(typeof(preElCR)!='undefined') {
+     preElCR.bgColor=orgBColorCR;
+     try{ChangeTextColor(preElCR,orgTColorCR);}catch(e){;}
   }
-  orgBColor = el.bgColor;
-  orgTColor = el.style.color;
+  orgBColorCR = el.bgColor;
+  orgTColorCR = el.style.color;
   el.bgColor=backColor;
 
   try{ChangeTextColor(el,textColor);}catch(e){;}
-  preEl = el;
+  preElCR = el;
 }
+
+
+
 function HighLightCV(el, backColor,textColor){
 var preEl ;
 var orgBColor;

@@ -88,7 +88,7 @@ def showPC(user,title):
 	item_plan_cv = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	item_plan_pt = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	item_plan_wh = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
-	print StatusTracking
+	print str(item_plan_pt) + "item_plan_pt"
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)

@@ -309,6 +309,24 @@ class ProductCatalog(models.Model):
     scoreline_f2 = models.IntegerField(null=True, blank=True)
     slit = models.IntegerField(null=True, blank=True)
     blank = models.IntegerField(null=True, blank=True)
+    req_cr = models.IntegerField()
+    req_2cl = models.IntegerField()
+    req_3cm = models.IntegerField()
+    req_3cs = models.IntegerField()
+    req_4cd = models.IntegerField()
+    req_3cl = models.IntegerField()
+    req_gh = models.IntegerField()
+    req_hs = models.IntegerField()
+    req_fg = models.IntegerField()
+    req_rd = models.IntegerField()
+    req_ss = models.IntegerField()
+    req_remove = models.IntegerField()
+    req_foam = models.IntegerField()
+    req_tape = models.IntegerField()
+    req_wh = models.IntegerField()
+    add_blank = models.IntegerField()
+    add_t_length = models.IntegerField()
+    add_amount = models.IntegerField()
     t_length = models.IntegerField(null=True, blank=True)
     cut = models.IntegerField(null=True, blank=True)
     next_process = models.CharField(max_length=300, blank=True)
@@ -459,11 +477,44 @@ class StatusTracking(models.Model):
     actual_wh_start = models.DateTimeField(null=True, blank=True)
     actual_wh_end = models.DateTimeField(null=True, blank=True)
     actual_due = models.DateTimeField(null=True, blank=True)
-    process1 = models.CharField(max_length=5, blank=True)
-    process2 = models.CharField(max_length=5, blank=True)
-    process3 = models.CharField(max_length=5, blank=True)
-    process4 = models.CharField(max_length=5, blank=True)
+#    process1 = models.CharField(max_length=5, blank=True)
+#    process2 = models.CharField(max_length=5, blank=True)
+#    process3 = models.CharField(max_length=5, blank=True)
+#    process4 = models.CharField(max_length=5, blank=True)
+
     cv_machine = models.CharField(max_length=15, blank=True)
+    def process1(self):
+	if(self.product.parent_code.req_cr==1):
+	 	return "CR"
+	elif(self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1):
+	 	return "CV"
+	elif(self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1):
+	 	return "PT"
+	elif(self.product.parent_code.req_wh==1):
+	 	return "WH"
+	else:
+		return ""
+    def process2(self):
+	if(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1)):
+	 	return "CV"
+	elif(self.product.parent_code.req_cr==1 and not (self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1) and (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	 	return "PT"
+	elif(self.product.parent_code.req_cr==1 and not (self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 or self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	 	return "WH"
+	else:
+		return ""
+    def process3(self):
+	if(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1) and (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	 	return "PT"
+	elif(self.product.parent_code.req_cr==1 or (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 ) and not (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	 	return "WH"
+	else:
+		return ""
+    def process4(self):
+	if(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 ) and (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	 	return "WH"
+	else:
+		return ""
 #    days_left = models.IntegerField(null=True, blank=True)
     def speed(self):
         return getCVSpeed(self.cv_machine)

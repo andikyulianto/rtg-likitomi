@@ -284,12 +284,14 @@ $(document).ready(function() {
 	$('#resultTableDetail').dataTable({
 					"bJQueryUI": true,
 					"bAutoWidth": false,
-					"sPaginationType": "full_numbers"
+					"sPaginationType": "full_numbers",
+					"aaSorting": [[ 1, "asc" ]]
 				});
 	$('#resultTableDetailM').dataTable({
 					"bJQueryUI": true,
 					"bAutoWidth": false,
-					"sPaginationType": "full_numbers"
+					"sPaginationType": "full_numbers",
+					"aaSorting": [[ 1, "asc" ]]
 				});
 	} );
 	});
