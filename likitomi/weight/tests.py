@@ -38,10 +38,10 @@ class Scale(unittest.TestCase):
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteTagError'
+				print '\nWriteTagError'
 			soc.close()
 		except socket.timeout:
-			print 'RFIDConnectionError'
+			print '\nRFIDConnectionError'
 
 	def tearDown(self):
 		PaperRoll.objects.filter(tarid=1).delete()
@@ -60,10 +60,10 @@ class Scale(unittest.TestCase):
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteBackError'
+				print '\nWriteBackError'
 			soc.close()
 		except socket.timeout:
-			print 'RFIDConnectionError'
+			print '\nRFIDConnectionError'
 		sleep(2)
 
 	def testScale(self):
@@ -94,10 +94,10 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteTagError'
+				print '\nWriteTagError'
 			soc.close()
 		except socket.timeout:
-			print 'RFIDConnectionError'
+			print '\nRFIDConnectionError'
 
 	def tearDown(self):
 		PaperRoll.objects.filter(tarid=1).delete()
@@ -117,10 +117,10 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteBackError'
+				print '\nWriteBackError'
 			soc.close()
 		except socket.timeout:
-			print 'RFIDConnectionError'
+			print '\nRFIDConnectionError'
 		sleep(2)
 
 	def testNewTag_min(self):
@@ -196,10 +196,10 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteTagError'
+				print '\nWriteTagError'
 			soc.close()
 		except socket.timeout:
-			print 'RFIDConnectionError'
+			print '\nRFIDConnectionError'
 
 	def tearDown(self):
 		PaperRoll.objects.filter(tarid=1).delete()
@@ -219,10 +219,10 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 			if response.find('ok') != -1:
 				pass
 			else:
-				print 'WriteBackError'
+				print '\nWriteBackError'
 			soc.close()
 		except socket.timeout:
-			print 'RFIDConnectionError'
+			print '\nRFIDConnectionError'
 		sleep(2)
 
 	def testReuseTag_min(self):
@@ -541,6 +541,7 @@ class Inventory(unittest.TestCase):
 #Another way to test that 1 + 1 is equal to 2.
 
 #>>> 1 + 1 == 2
+
 #True
 #"""}
 
