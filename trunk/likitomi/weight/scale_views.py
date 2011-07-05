@@ -11,8 +11,8 @@ from weight.models import PaperRoll, PaperHistory
 def scale(request):
 
 # Setting scale mode and rfid mode = {'real', 'fake'} #
-	scale_mode = 'real'
-	rfid_mode = 'fake' 
+	scale_mode = 'fake'
+	rfid_mode = 'real'
 
 	if scale_mode == 'real':
 # Connect to scale via serial port #
@@ -306,7 +306,7 @@ def scale(request):
 			else:
 				actual_wt = query.initial_weight
 
-			if not serror:
+			if weight:
 				int_weight = int(weight)
 				used_weight = actual_wt - int(weight)
 
