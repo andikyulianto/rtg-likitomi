@@ -17,10 +17,11 @@ def inventory(request):
 
 	if 'loss' in request.GET and request.GET['loss']:
 		loss = request.GET['loss']
-		losspx = int(loss)/5
-		if losspx > 199:
-			losspx = 205
-		lossinv = 205-losspx
+		if loss != 'undefined':
+			losspx = int(loss)/5
+			if losspx > 199:
+				losspx = 205
+			lossinv = 205-losspx
 	else:
 		loss = ""
 
@@ -374,7 +375,7 @@ def inventory(request):
 ###################################################################################################################################################################
 # FROM SEARCH # ##################################################################################################################################################
 ###################################################################################################################################################################
-	if spcode and swidth and sswitch == "on":
+	if spcode != "undefined" and swidth != "undefined" and spcode != "" and swidth != "" and sswitch == "on":
 		query2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).values_list('tarid')
 		qexists2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).exists()
 
@@ -421,8 +422,8 @@ def inventory(request):
 				else:
 					for ls in Alist:
 						if ls[0] == pair[1]:
-							dex = Alist.index(ls)
-					Alist[dex].extend(zero4)
+							dexa = Alist.index(ls)
+					Alist[dexa].extend(zero4)
 				for ls in Alist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -442,8 +443,8 @@ def inventory(request):
 				else:
 					for ls in Blist:
 						if ls[0] == pair[1]:
-							dex = Blist.index(ls)
-					Blist[dex].extend(zero4)
+							dexb = Blist.index(ls)
+					Blist[dexb].extend(zero4)
 				for ls in Blist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -463,8 +464,8 @@ def inventory(request):
 				else:
 					for ls in Clist:
 						if ls[0] == pair[1]:
-							dex = Clist.index(ls)
-					Clist[dex].extend(zero4)
+							dexc = Clist.index(ls)
+					Clist[dexc].extend(zero4)
 				for ls in Clist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -484,8 +485,8 @@ def inventory(request):
 				else:
 					for ls in Dlist:
 						if ls[0] == pair[1]:
-							dex = Dlist.index(ls)
-					Dlist[dex].extend(zero4)
+							dexd = Dlist.index(ls)
+					Dlist[dexd].extend(zero4)
 				for ls in Dlist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -505,8 +506,8 @@ def inventory(request):
 				else:
 					for ls in Elist:
 						if ls[0] == pair[1]:
-							dex = Elist.index(ls)
-					Elist[dex].extend(zero4)
+							dexe = Elist.index(ls)
+					Elist[dexe].extend(zero4)
 				for ls in Elist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -526,8 +527,8 @@ def inventory(request):
 				else:
 					for ls in Flist:
 						if ls[0] == pair[1]:
-							dex = Flist.index(ls)
-					Flist[dex].extend(zero4)
+							dexf = Flist.index(ls)
+					Flist[dexf].extend(zero4)
 				for ls in Flist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -547,8 +548,8 @@ def inventory(request):
 				else:
 					for ls in Glist:
 						if ls[0] == pair[1]:
-							dex = Glist.index(ls)
-					Glist[dex].extend(zero4)
+							dexg = Glist.index(ls)
+					Glist[dexg].extend(zero4)
 				for ls in Glist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -568,8 +569,8 @@ def inventory(request):
 				else:
 					for ls in Hlist:
 						if ls[0] == pair[1]:
-							dex = Hlist.index(ls)
-					Hlist[dex].extend(zero4)
+							dexh = Hlist.index(ls)
+					Hlist[dexh].extend(zero4)
 				for ls in Hlist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -589,8 +590,8 @@ def inventory(request):
 				else:
 					for ls in THlist:
 						if ls[0] == pair[1]:
-							dex = THlist.index(ls)
-					THlist[dex].extend(zero4)
+							dex4 = THlist.index(ls)
+					THlist[dex4].extend(zero4)
 				for ls in THlist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -610,8 +611,8 @@ def inventory(request):
 				else:
 					for ls in RDlist:
 						if ls[0] == pair[1]:
-							dex = RDlist.index(ls)
-					RDlist[dex].extend(zero4)
+							dex3 = RDlist.index(ls)
+					RDlist[dex3].extend(zero4)
 				for ls in RDlist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -631,8 +632,8 @@ def inventory(request):
 				else:
 					for ls in NDlist:
 						if ls[0] == pair[1]:
-							dex = NDlist.index(ls)
-					NDlist[dex].extend(zero4)
+							dex2 = NDlist.index(ls)
+					NDlist[dex2].extend(zero4)
 				for ls in NDlist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -652,8 +653,8 @@ def inventory(request):
 				else:
 					for ls in STlist:
 						if ls[0] == pair[1]:
-							dex = STlist.index(ls)
-					STlist[dex].extend(zero4)
+							dex1 = STlist.index(ls)
+					STlist[dex1].extend(zero4)
 				for ls in STlist:
 					if pair[1] == ls[0]:
 						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
@@ -668,7 +669,7 @@ def inventory(request):
 ###################################################################################################################################################################
 # FROM CLAMPLIFT # ###############################################################################################################################################
 ###################################################################################################################################################################
-	if cpcode and cwidth and cswitch == "on":
+	if cpcode != "" and cwidth != "" and cpcode != "undefined" and cwidth != "undefined" and cswitch == "on":
 		query3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).values_list('tarid')
 		qexists3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).exists()
 
@@ -715,9 +716,11 @@ def inventory(request):
 				else:
 					for ls in Alist:
 						if ls[0] == pair[1]:
-							dex = Alist.index(ls)
-					if len(Alist[dex]) == 5: Alist[dex].extend(zero8)
-					if len(Alist[dex]) == 9: Alist[dex].extend(zero4)
+							try:
+								dexa = Alist.index(ls)
+								if len(Alist[dexa]) == 5: Alist[dexa].extend(zero8)
+								if len(Alist[dexa]) == 9: Alist[dexa].extend(zero4)
+							except: pass
 				for ls in Alist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -737,9 +740,11 @@ def inventory(request):
 				else:
 					for ls in Blist:
 						if ls[0] == pair[1]:
-							dex = Blist.index(ls)
-					if len(Blist[dex]) == 5: Blist[dex].extend(zero8)
-					if len(Blist[dex]) == 9: Blist[dex].extend(zero4)
+							try:
+								dexb = Blist.index(ls)
+								if len(Blist[dexb]) == 5: Blist[dexb].extend(zero8)
+								if len(Blist[dexb]) == 9: Blist[dexb].extend(zero4)
+							except: pass
 				for ls in Blist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -759,9 +764,11 @@ def inventory(request):
 				else:
 					for ls in Clist:
 						if ls[0] == pair[1]:
-							dex = Clist.index(ls)
-					if len(Clist[dex]) == 5: Clist[dex].extend(zero8)
-					if len(Clist[dex]) == 9: Clist[dex].extend(zero4)
+							try:
+								dexc = Clist.index(ls)
+								if len(Clist[dexc]) == 5: Clist[dexc].extend(zero8)
+								if len(Clist[dexc]) == 9: Clist[dexc].extend(zero4)
+							except: pass
 				for ls in Clist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -781,9 +788,11 @@ def inventory(request):
 				else:
 					for ls in Dlist:
 						if ls[0] == pair[1]:
-							dex = Dlist.index(ls)
-					if len(Dlist[dex]) == 5: Dlist[dex].extend(zero8)
-					if len(Dlist[dex]) == 9: Dlist[dex].extend(zero4)
+							try:
+								dexd = Dlist.index(ls)
+								if len(Dlist[dexd]) == 5: Dlist[dexd].extend(zero8)
+								if len(Dlist[dexd]) == 9: Dlist[dexd].extend(zero4)
+							except: pass
 				for ls in Dlist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -803,9 +812,11 @@ def inventory(request):
 				else:
 					for ls in Elist:
 						if ls[0] == pair[1]:
-							dex = Elist.index(ls)
-					if len(Elist[dex]) == 5: Elist[dex].extend(zero8)
-					if len(Elist[dex]) == 9: Elist[dex].extend(zero4)
+							try:
+								dexe = Elist.index(ls)
+								if len(Elist[dexe]) == 5: Elist[dexe].extend(zero8)
+								if len(Elist[dexe]) == 9: Elist[dexe].extend(zero4)
+							except: pass
 				for ls in Elist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -825,9 +836,11 @@ def inventory(request):
 				else:
 					for ls in Flist:
 						if ls[0] == pair[1]:
-							dex = Flist.index(ls)
-					if len(Flist[dex]) == 5: Flist[dex].extend(zero8)
-					if len(Flist[dex]) == 9: Flist[dex].extend(zero4)
+							try:
+								dexf = Flist.index(ls)
+								if len(Flist[dexf]) == 5: Flist[dexf].extend(zero8)
+								if len(Flist[dexf]) == 9: Flist[dexf].extend(zero4)
+							except: pass
 				for ls in Flist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -847,9 +860,11 @@ def inventory(request):
 				else:
 					for ls in Glist:
 						if ls[0] == pair[1]:
-							dex = Glist.index(ls)
-					if len(Glist[dex]) == 5: Glist[dex].extend(zero8)
-					if len(Glist[dex]) == 9: Glist[dex].extend(zero4)
+							try:
+								dexg = Glist.index(ls)
+								if len(Glist[dexg]) == 5: Glist[dexg].extend(zero8)
+								if len(Glist[dexg]) == 9: Glist[dexg].extend(zero4)
+							except: pass
 				for ls in Glist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -869,9 +884,11 @@ def inventory(request):
 				else:
 					for ls in Hlist:
 						if ls[0] == pair[1]:
-							dex = Hlist.index(ls)
-					if len(Hlist[dex]) == 5: Hlist[dex].extend(zero8)
-					if len(Hlist[dex]) == 9: Hlist[dex].extend(zero4)
+							try:
+								dexh = Hlist.index(ls)
+								if len(Hlist[dexh]) == 5: Hlist[dexh].extend(zero8)
+								if len(Hlist[dexh]) == 9: Hlist[dexh].extend(zero4)
+							except: pass
 				for ls in Hlist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -891,9 +908,11 @@ def inventory(request):
 				else:
 					for ls in THlist:
 						if ls[0] == pair[1]:
-							dex = THlist.index(ls)
-					if len(THlist[dex]) == 5: THlist[dex].extend(zero8)
-					if len(THlist[dex]) == 9: THlist[dex].extend(zero4)
+							try:
+								dex4 = THlist.index(ls)
+								if len(THlist[dex4]) == 5: THlist[dex4].extend(zero8)
+								if len(THlist[dex4]) == 9: THlist[dex4].extend(zero4)
+							except: pass
 				for ls in THlist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -913,9 +932,11 @@ def inventory(request):
 				else:
 					for ls in RDlist:
 						if ls[0] == pair[1]:
-							dex = RDlist.index(ls)
-					if len(RDlist[dex]) == 5: RDlist[dex].extend(zero8)
-					if len(RDlist[dex]) == 9: RDlist[dex].extend(zero4)
+							try:
+								dex3 = RDlist.index(ls)
+								if len(RDlist[dex3]) == 5: RDlist[dex3].extend(zero8)
+								if len(RDlist[dex3]) == 9: RDlist[dex3].extend(zero4)
+							except: pass
 				for ls in RDlist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -935,9 +956,11 @@ def inventory(request):
 				else:
 					for ls in NDlist:
 						if ls[0] == pair[1]:
-							dex = NDlist.index(ls)
-					if len(NDlist[dex]) == 5: NDlist[dex].extend(zero8)
-					if len(NDlist[dex]) == 9: NDlist[dex].extend(zero4)
+							try:
+								dex2 = NDlist.index(ls)
+								if len(NDlist[dex2]) == 5: NDlist[dex2].extend(zero8)
+								if len(NDlist[dex2]) == 9: NDlist[dex2].extend(zero4)
+							except: pass
 				for ls in NDlist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
@@ -945,8 +968,6 @@ def inventory(request):
 						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
 							ls[11] = ls[11] + 1
 						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
-
-
 							ls[10] = ls[10] + 1
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
@@ -959,9 +980,11 @@ def inventory(request):
 				else:
 					for ls in STlist:
 						if ls[0] == pair[1]:
-							dex = STlist.index(ls)
-					if len(STlist[dex]) == 5: STlist[dex].extend(zero8)
-					if len(STlist[dex]) == 9: STlist[dex].extend(zero4)
+							try:
+								dex1 = STlist.index(ls)
+								if len(STlist[dex1]) == 5: STlist[dex1].extend(zero8)
+								if len(STlist[dex1]) == 9: STlist[dex1].extend(zero4)
+							except: pass
 				for ls in STlist:
 					if pair[1] == ls[0]:
 						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
