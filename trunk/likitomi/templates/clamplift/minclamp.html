@@ -512,6 +512,7 @@ function otherLoc()
 
 
 
+
 <div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -570,6 +571,8 @@ function otherLoc()
 {% if tagstatus == 'unknown' %}
 	<p class="var">This tag ID is unknown.</p><p class="var">Push <i>"Assign Tag"</i> button at the bottom left<br /> to assign new tag.</p>
 {% endif %}
+
+{% if not tagstatus %}<br /><p class='var' align="center">No ID tag in field</p>{% endif %}
 
 {% if socror %}<br /><p class='var' align="center">{{ socror }}</p>{% endif %}
 
