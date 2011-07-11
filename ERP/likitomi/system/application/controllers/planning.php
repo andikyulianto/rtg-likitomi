@@ -103,6 +103,7 @@ class Planning extends Controller {
 			
 			$productflutes	= $this->Planning_model->getProductFlutes($delivery->product_id,$delivery->product_code);
 			if($productflutes->num_rows()>0){
+
 				$deliveryList[$cnt]['flute']		= $productflutes->row()->flute;
 				$deliveryList[$cnt]['DF']		= $productflutes->row()->DF;
 				$deliveryList[$cnt]['BM']		= $productflutes->row()->BM;
@@ -135,8 +136,9 @@ class Planning extends Controller {
 			$deliveryList[$cnt]['sort']	= $cnt;
 			
 			//Add by Fon
-			$productProcess	= $this->Planning_model->getProductCat($delivery->product_id,$delivery->product_code);
+/*			$productProcess	= $this->Planning_model->getProductCatProcess($delivery->product_id);
 			if($productProcess->num_rows()>0){
+				echo $productProcess;
 				$deliveryList[$cnt]['req_cr'] =$productProcess->row()->req_cr;
 				$deliveryList[$cnt]['req_2cl'] = $productProcess->row()->req_2cl;
 				$deliveryList[$cnt]['req_gh'] = $productProcess->row()->req_gh;
@@ -170,9 +172,10 @@ class Planning extends Controller {
 				$deliveryList[$cnt]['req_foam'] = "";
 				$deliveryList[$cnt]['req_3cl'] = "";
 				$deliveryList[$cnt]['req_tape'] = "";
+	
+
 			}
-
-
+*/
 			$cnt++;
 		}
 		
@@ -211,8 +214,8 @@ class Planning extends Controller {
 		$this->Planning_model->deleteStatusTrackingPlanForToday($choosendate);
 
 		//calculate time
-		$time_start_cr = (0.0006949*60)*8;
-		$time_start_cv = (0.0006949*60)*9;
+		$time_start_cr = (0.0006949*60)*8.34;
+		$time_start_cv = (0.0006949*60)*9.34;
 		$time_start_3CS = $time_start_cv;
 		$time_start_2CL = $time_start_cv;
 		$time_start_3CL = $time_start_cv;
@@ -305,7 +308,7 @@ class Planning extends Controller {
 		$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
 		$time_stop_pt = $time_start_pt +round( 30) * 0.0006949;
 		$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
-
+		//echo $rowData;
 		//$rowData['time_start_cr'] = $time_start_cr;
 			//print_r($rowData);
 			//print_r($key->row_array(0));
