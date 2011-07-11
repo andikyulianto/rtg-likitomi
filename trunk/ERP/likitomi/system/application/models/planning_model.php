@@ -24,7 +24,7 @@ class Planning_model extends Model
 		//echo $this->db->last_query();	
 		return $query;
 	
-	
+	}
 	function getFilterResult($delivery_date_all,$sales_order_all,$lastmodified_all,$status_all)
 	{
 		$filterQueryAll ="";
@@ -123,6 +123,16 @@ class Planning_model extends Model
 		$query = $this->db->query($sql);
 		return $query;
 	}
+	//Fon 
+
+		function getProductCatProcess($pid){
+		
+		$sql = 	 "SELECT product_code FROM ".$this->tblCatalog." WHERE `product_id` = ".$pid;
+		
+		$query = $this->db->query($sql);
+		return $query;
+	}
+
 	//add save total_plan 
 	function savetotalplan($rowData,$choosendate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
 	{	
@@ -164,13 +174,28 @@ class Planning_model extends Model
 				$product_id = $row->product_id;
 				$plan_due = $row->delivery_date." ".$row->delivery_time;
 			}
-			$sql = "select next_process from product_catalog where product_id=".$product_id;
+			$sql = "select * from product_catalog where product_id=".$product_id;
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
 			{
 				$cv_machine = $row->next_process;
+				$req_cr = $row->req_cr;
+				$req_2cl = $row->req_2cl;
+				$req_3cm = $row->req_3cm;
+				$req_3cs = $row->req_3cs;
+				$req_4cd = $row->req_4cd;
+				$req_3cl = $row->req_3cl;
+				$req_gh = $row->req_gh;
+				$req_hs = $row->req_hs;
+				$req_fg = $row->req_fg;
+				$req_rd = $row->req_rd;
+				$req_ss = $row->req_ss;
+				$req_remove = $row->req_remove;
+				$req_foam = $row->req_foam;
+				$req_tape = $row->req_tape;
+				$req_wh = $row->req_wh;
 			}
-			if($cv_machine == 'SHEET')
+/*			if($cv_machine == 'SHEET')
 			{
 				$param = array("date" => $choosendate,
 						"product_id"=>$rowData->product_code,
@@ -181,7 +206,96 @@ class Planning_model extends Model
 						"plan_cv_end" => NULL,
 						"plan_pt_start" => NULL,
 						"plan_pt_end" => NULL,
-						"plan_wh_start" => NULL,
+						"plan_wh_start" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
+						"plan_due"=>$plan_due,
+						"cv_machine" => $cv_machine
+				);
+			}
+*/
+			if($req_cr == 1 and $req_wh == 1 and $req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0 and $req_rd==0 and $req_ss==0 and $req_remove==0 and $req_foam==0 and $req_tape==0)
+			{
+				$param = array("date" => $choosendate,
+						"product_id"=>$rowData->product_code,
+						"plan_amount" =>$amount,
+						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
+						//"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
+						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => NULL,
+						"plan_cv_end" => NULL,
+						"plan_pt_start" => NULL,
+						"plan_pt_end" => NULL,
+						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
+						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
+						"plan_due"=>$plan_due,
+						"cv_machine" => $cv_machine
+				);
+			}
+			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1 or $req_rd==1 or $req_ss==1) and ($req_remove==0 and $req_foam==0 and $req_tape==0))
+			{
+				$param = array("date" => $choosendate,
+						"product_id"=>$rowData->product_code,
+						"plan_amount" =>$amount,
+/*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => substr($rowData->converter_date,0,10)." ".$time_start_cv.":00",
+						"plan_cv_end" => substr($rowData->converter_date,0,10)." ".$time_stop_cv.":00",
+*/
+						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => substr($choosendate,0,10)." ".$time_start_cv.":00",
+						"plan_cv_end" => substr($choosendate,0,10)." ".$time_stop_cv.":00",
+						"plan_pt_start" => NULL,
+						"plan_pt_end" => NULL,
+						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
+						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
+						"plan_due"=>$plan_due,
+						"cv_machine" => $cv_machine
+				);
+			}
+			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0 and $req_rd==0 and $req_ss==0) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
+			{
+				$param = array("date" => $choosendate,
+
+						"product_id"=>$rowData->product_code,
+						"plan_amount" =>$amount,
+						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
+						//"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
+						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => NULL,
+						"plan_cv_end" => NULL,
+/*						"plan_pt_start" => substr($rowData->converter_date,0,10)." ".$time_start_pt.":00",
+						"plan_pt_end" => substr($rowData->converter_date,0,10)." ".$time_stop_pt.":00",
+						"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
+*/
+						"plan_pt_start" => substr($choosendate,0,10)." ".$time_start_pt.":00",
+						"plan_pt_end" => substr($choosendate,0,10)." ".$time_stop_pt.":00",
+						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
+						"plan_due"=>$plan_due,
+						"cv_machine" => $cv_machine
+				);
+			}
+			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1 or $req_rd==1 or $req_ss==1) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
+			{
+				$param = array("date" => $choosendate,
+						"product_id"=>$rowData->product_code,
+						"plan_amount" =>$amount,
+/*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => substr($rowData->converter_date,0,10)." ".$time_start_cv.":00",
+						"plan_cv_end" => substr($rowData->converter_date,0,10)." ".$time_stop_cv.":00",
+						"plan_pt_start" => substr($rowData->converter_date,0,10)." ".$time_start_pt.":00",
+						"plan_pt_end" => substr($rowData->converter_date,0,10)." ".$time_stop_pt.":00",
+						"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
+*/
+						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => substr($choosendate,0,10)." ".$time_start_cv.":00",
+						"plan_cv_end" => substr($choosendate,0,10)." ".$time_stop_cv.":00",
+						"plan_pt_start" => substr($choosendate,0,10)." ".$time_start_pt.":00",
+						"plan_pt_end" => substr($choosendate,0,10)." ".$time_stop_pt.":00",
+						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
@@ -191,13 +305,17 @@ class Planning_model extends Model
 			$param = array("date" => $choosendate,
 						"product_id"=>$rowData->product_code,
 						"plan_amount" =>$amount,
-						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
+/*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
-						"plan_cv_start" => substr($rowData->converter_date,0,10)." ".$time_start_cv.":00",
-						"plan_cv_end" => substr($rowData->converter_date,0,10)." ".$time_stop_cv.":00",
-						"plan_pt_start" => substr($rowData->converter_date,0,10)." ".$time_start_pt.":00",
-						"plan_pt_end" => substr($rowData->converter_date,0,10)." ".$time_stop_pt.":00",
-						"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
+*/
+						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => NULL,
+						"plan_cv_end" => NULL,
+						"plan_pt_start" => NULL,
+						"plan_pt_end" => NULL,
+//						"plan_wh_start" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
+						"plan_wh_start" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
 						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
