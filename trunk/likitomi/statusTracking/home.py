@@ -248,7 +248,7 @@ def monthlyPlan(request):
 	today = todayDate()
 	datefrominMonth = datetime(today.year,today.month,1)
 	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
-	eID = "T101"
+#	eID = "T101"
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
 	page ="totalPlanSelectedDate"
@@ -280,9 +280,10 @@ def showGM(eID,title):
 def workCR(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	global username
+#	global username
 	username = user
 	today = todayDate()
+	
 	employee = Employee(user)
 	eID = employee.id
 	page = "CR"
@@ -296,6 +297,7 @@ def workCR(user,title):
 	item_plan = StatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	items = list(item_plan)
 	x = ''
+	print "woerkCR"+username
 	return render_to_response('CR/listCR.html', locals())
 #	return render_to_response('content_cr.html',locals())	
 #####################################	
@@ -305,7 +307,7 @@ def workCR(user,title):
 def workCV(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	global username
+#	global username
 	username = user
 	page = "CV"
 	today = todayDate()
@@ -350,7 +352,7 @@ def workCV(user,title):
 def workPT(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	global username
+#	global username
 	username = user
 	page= "PT"
 	today = todayDate()
@@ -371,7 +373,7 @@ def workPT(user,title):
 def workWH(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
-	global username
+#	global username
 	page = "WH"
 	username = user
 	today = todayDate()

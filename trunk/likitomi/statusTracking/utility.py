@@ -14,6 +14,7 @@ def todayDate():
 def returnall():
 	return list(StatusTracking.objects.all())
 
+
 ##########################################
 ## get current process for each section ##
 ##        return product code           ##

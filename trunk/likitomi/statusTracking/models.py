@@ -522,7 +522,7 @@ class StatusTracking(models.Model):
     def days_left(self):
         import datetime
 #        self.days_left = 8
-        self.days_left = int((self.plan_due - datetime.datetime.now()).days)
+        self.days_left = int((self.plan_due - datetime.datetime.now()).days)+1
         #super(FakeStatusTracking,self).save()
 
         return self.days_left
@@ -570,6 +570,11 @@ class StatusTracking(models.Model):
 	else :
 		status = ''
 	return status
+    def cut(self):
+	if self.product.parent_code.slit == 0 :
+		return self.plan_amount
+	else :
+		return self.plan_amount / self.product.parent_code.slit
     class Meta:
         db_table = u'status_tracking'
 #    def set_days_left(self):

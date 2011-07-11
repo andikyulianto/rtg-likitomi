@@ -24,7 +24,7 @@
 							</fieldset>
 						</form>
     				</th>
-    				<th align="right" width="10%"><a id="normalLink" href="{{ home_url }}"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+    				<th align="right" width="10%"><a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
     			</tr>
     		</thead>
     	</table>
@@ -68,16 +68,16 @@
 	{% for item in items %}
 	<tr id="{{ item.stateCV}}">
 	<td></th>
-	<td><div class="plan">{{item.plan_cv_start|time:"H:i"}}</div><div class="actual">
+	<td><div class="plan"><a href="{{ startCV_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cv_start|time:"H:i"}}</a></div><div class="actual">
 				{% if item.actual_cv_start != NULL %}
-				<a href="{{ startCV_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cv_start|time:"H:i"}}</a>
+				{{item.actual_cv_start|time:"H:i"}}
 				{% else %}
 				&nbsp;
 				{% endif %} 
 	</div></td>
-	<td><div class="plan">{{item.plan_cv_end|time:"H:i" }}</div><div class="actual">
+	<td><div class="plan"><a href="{{ endCV_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cv_end|time:"H:i" }}</a></div><div class="actual">
 				{% if item.actual_cv_end != NULL %}
-				<a href="{{ endCV_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cv_end|time:"H:i" }}</a>
+				{{item.actual_cv_end|time:"H:i" }}
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
@@ -93,7 +93,14 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
-	<td>{{item.cv_machine}}</td>
+	<td>{% if item.product.parent_code.req_2cl = 1 %} 2CL
+		{% else %}{% if item.product.parent_code.req_3cm = 1 %} 3CM
+		{% else %}{% if item.product.parent_code.req_3cs = 1 %} 3CS
+		{% else %}{% if item.product.parent_code.req_3cl = 1 %} 3CL
+		{% else %}{% if item.product.parent_code.req_4cd = 1 %} 3CD
+
+	 	{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}
+</td>
 	<td>{% if item.process4 == 'CV' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'CV'%}
