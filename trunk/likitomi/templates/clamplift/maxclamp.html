@@ -511,7 +511,6 @@ function otherLoc()
 {% url weight.maxclamp.maxclamp as maxclamp_url %}
 
 
-
 <div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -564,9 +563,9 @@ function otherLoc()
 	<p class="var" style='font-size:200%;'>This tag ID is unknown.</p><p class="var" style='font-size:200%;'>Push <i>"Assign Tag"</i> button at the bottom left<br /> to assign new tag.</p>
 {% endif %}
 
-{% if not tagstatus %}<br /><p class='var' align="center" style='font-size:200%;'>No ID tag in field</p>{% endif %}
+{% if not tagstatus and not socror %}<br /><p class='var' align="center" style='font-size:200%;'>No ID tag in field</p>{% endif %}
 
-{% if socror %}<br /><p class='var' align="center" style='font-size:200%;'>{{ socror }}</p>{% endif %}
+{% if socror and not tagstatus %}<br /><p class='var' align="center" style='font-size:200%;'>{{ socror }}</p>{% endif %}
 
 	<form id="frm1" action="{{ maxclamp_url }}update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
