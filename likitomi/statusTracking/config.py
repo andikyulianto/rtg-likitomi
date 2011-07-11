@@ -1,5 +1,6 @@
 ### pc ###
 item_num= 3
+path ="/likitomi"
 ####################################################
 ## return static setting for showing items for PC ##
 ####################################################
@@ -21,3 +22,6 @@ def getCVSpeed(machine):
 	else:
 		return 0
 
+
+def rootPath():
+	return path

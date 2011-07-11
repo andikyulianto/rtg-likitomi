@@ -14,7 +14,7 @@
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%"><a href="{{ home_url }}?eID={{eID}}">Home</a> >> <a href="{{ startWH_url }}?eID={{eID}}&pID={{pID}}">Start WH</a></th>
+    				<th align="left" width="60%"><a id="normalLink" href="{{ home_url }}?user={{username}}">Home</a> >> <a href="{{ startWH_url }}?eID={{eID}}&pID={{pID}}">Start WH</a></th>
     				<th align="left" width="30%">
 						<form id="form_search" action="#">
 							<fieldset id="form_search_fieldset">
@@ -25,6 +25,7 @@
 						</form>
     				</th>
     				<th align="right" width="10%"><a id="normalLink" href="{{ likitomi_url }}"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+
     			</tr>
     		</thead>
     	</table>

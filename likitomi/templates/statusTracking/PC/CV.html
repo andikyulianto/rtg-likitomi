@@ -66,7 +66,13 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
-	<td>{{item.cv_machine}}</td>
+	<td>{% if item.product.parent_code.req_2cl = 1 %} 2CL
+		{% else %}{% if item.product.parent_code.req_3cm = 1 %} 3CM
+		{% else %}{% if item.product.parent_code.req_3cs = 1 %} 3CS
+		{% else %}{% if item.product.parent_code.req_3cl = 1 %} 3CL
+		{% else %}{% if item.product.parent_code.req_4cd = 1 %} 3CD
+
+	 	{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}</td>
 	<td>{% if item.process4 == 'CV' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'CV'%}

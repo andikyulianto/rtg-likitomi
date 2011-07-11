@@ -14,7 +14,7 @@
     	<table width="100%">
     		<thead id="mainMenu">
     			<tr>
-    				<th align="left" width="60%"><a href="{{ home_url }}?eID={{eID}}">Home</a> >> <a href="{{ startCV_url }}?eID={{eID}}&pID={{pID}}">Start CV</a></th>
+    				<th align="left" width="60%"><a id="normalLink" href="{{ home_url }}?user={{username}}">Home</a> >> <a href="{{ startCV_url }}?eID={{eID}}&pID={{pID}}">Start CV</a></th>
     				<th align="left" width="30%">
 						<form id="form_search" action="#">
 							<fieldset id="form_search_fieldset">
@@ -37,6 +37,7 @@
 		<li><a href="#tabs-1">Daily Plan</a></li>
 	</ul>
 	<div id="tabs-1">
+
 <center>
 
 
@@ -76,7 +77,7 @@
         <td class="tblDetailViewLabel">start at :</td>
 		<td><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center" /></td>
 		<td class="tblDetailViewLabel">Amount of Plan :</td>
-		<td><input name="amount" type="text"  value='{{amount}}' style="text-align: center" /></td>
+		<td><input name="amount" type="text"  value='{{amount}}' style="text-align: center"  /></td>
 		<td> <input name="task" type="hidden" value="{{task}}">
 			<input name="eID" type="hidden" value="{{eID}}">
 			<input name="pID" type="hidden" value="{{pID}}">

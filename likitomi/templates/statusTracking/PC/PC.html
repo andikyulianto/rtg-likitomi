@@ -14,7 +14,6 @@ var preEl ;
 var orgBColor;
 var orgTColor;
 function HighLightTR(el, backColor,textColor){
-
   if(typeof(preEl)!='undefined') {
      preEl.bgColor=orgBColor;
      try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
@@ -38,7 +37,6 @@ var preElCR ;
 var orgBColorCR;
 var orgTColorCR;
 function HighLightCR(el, backColor,textColor){
-
   if(typeof(preElCR)!='undefined') {
      preElCR.bgColor=orgBColorCR;
      try{ChangeTextColor(preElCR,orgTColorCR);}catch(e){;}
@@ -53,52 +51,52 @@ function HighLightCR(el, backColor,textColor){
 
 
 
+var preElCV ;
+var orgBColorCV;
+var orgTColorCV;
 function HighLightCV(el, backColor,textColor){
-var preEl ;
-var orgBColor;
-var orgTColor;
-    if(typeof(preEl)!='undefined') {
-     preEl.bgColor=orgBColor;
-     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+  if(typeof(preElCV)!='undefined') {
+     preElCV.bgColor=orgBColorCV;
+     try{ChangeTextColor(preElCV,orgTColorCV);}catch(e){;}
   }
-  orgBColor = el.bgColor;
-  orgTColor = el.style.color;
+  orgBColorCV = el.bgColor;
+  orgTColorCV = el.style.color;
   el.bgColor=backColor;
 
   try{ChangeTextColor(el,textColor);}catch(e){;}
-  preEl = el;
+  preElCV = el;
 }
 
+var preElPT ;
+var orgBColorPT;
+var orgTColorPT;
 function HighLightPT(el, backColor,textColor){
-var preEl ;
-var orgBColor;
-var orgTColor;
-   if(typeof(preEl)!='undefined') {
-     preEl.bgColor=orgBColor;
-     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+  if(typeof(preElPT)!='undefined') {
+     preElPT.bgColor=orgBColorPT;
+     try{ChangeTextColor(preElPT,orgTColorPT);}catch(e){;}
   }
-  orgBColor = el.bgColor;
-  orgTColor = el.style.color;
+  orgBColorPT = el.bgColor;
+  orgTColorPT = el.style.color;
   el.bgColor=backColor;
 
   try{ChangeTextColor(el,textColor);}catch(e){;}
-  preEl = el;
+  preElPT = el;
 }
 
+var preElWH ;
+var orgBColorWH;
+var orgTColorWH;
 function HighLightWH(el, backColor,textColor){
-var preEl ;
-var orgBColor;
-var orgTColor;
-  if(typeof(preEl)!='undefined') {
-     preEl.bgColor=orgBColor;
-     try{ChangeTextColor(preEl,orgTColor);}catch(e){;}
+  if(typeof(preElWH)!='undefined') {
+     preElWH.bgColor=orgBColorWH;
+     try{ChangeTextColor(preElWH,orgTColorWH);}catch(e){;}
   }
-  orgBColor = el.bgColor;
-  orgTColor = el.style.color;
+  orgBColorWH = el.bgColor;
+  orgTColorWH = el.style.color;
   el.bgColor=backColor;
 
   try{ChangeTextColor(el,textColor);}catch(e){;}
-  preEl = el;
+  preElWH = el;
 }
 function getElementsByClassName(oElm, strTagName, strClassName){
 	var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getElementsByTagName(strTagName);
@@ -159,7 +157,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<tbody> 
 			{% for CR_items in items_plan_cr %}{{product}}
 			<!--<tr onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">-->
-			<tr onClick="HighLightCV(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');"  id="{{CR_items.stateCR}}">
+			<tr onClick="HighLightCR(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');"  id="{{CR_items.stateCR}}">
 			<td>{% if cr == CR_items.product.product_code %} > {% endif %}</td>
 			<td><div class="plan">{{CR_items.plan_cr_start|time:"H:i"}}</div><div class="actual">
 			{% if CR_items.actual_cr_start != NULL %}

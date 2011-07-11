@@ -24,6 +24,8 @@ def startCR(request):
 	
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -68,6 +70,8 @@ def endCR(request):
 	content_header = "Finish"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -116,6 +120,8 @@ def startCV(request):
 	content_header = "Load"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -146,6 +152,8 @@ def endCV(request):
 	content_header = "Finish"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -178,6 +186,8 @@ def startPT(request):
 	content_header = "Load"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -208,6 +218,8 @@ def endPT(request):
 	content_header = "Finish"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -241,6 +253,8 @@ def startWH(request):
 	content_header = "In"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
 	plan = StatusTracking.objects.get(plan_id = planID)
 	amount = str(plan.plan_amount)
 	today = todayDate()
