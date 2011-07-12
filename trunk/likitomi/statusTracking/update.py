@@ -39,8 +39,8 @@ def startUpdate(request):
 	elif (at=="CV"):
 		print at
 		obj.actual_cv_start = current_time
-		print current_time
-		#obj.save()
+#		print current_time
+		obj.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="PT"):
