@@ -510,6 +510,7 @@ function otherLoc()
 <input id='minclamp_url' type='hidden' value='{% url weight.minclamp.minclamp %}' />
 {% url weight.minclamp.minclamp as minclamp_url %}
 
+
 <div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -537,7 +538,11 @@ function otherLoc()
 		<table style="width:100%;">
 			<tr>
 				<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td>
-				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != '' and position != 0 %}{{lane}}-{{position}}{% endif %}</p></td>
+				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != '' and position != 0 %}
+					{% if lane == '0' %}CR{% endif %}
+					{% if lane == '5' %}Scale{% endif %}
+					{% if lane != '0' and lane != '5' %}{{lane}}-{{position}}{% endif %}
+				{% endif %}</p></td>
 				<td style="text-align:center; width:60px; height:50px;" >
 					{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="50px" src="images/clamplift/changeloc.png"></a>{% endif %}
 				</td>
@@ -551,11 +556,11 @@ function otherLoc()
 				<td ><p class="label">Weight: </p></td><td ><p class="var">{{ actual_wt }}</p></td>
 				{% if atlocation == "Scale" and actual_wt > temp_weight %}
 				<td style="text-align:center;">>>></td>
-				<td ><p class="var">{{ temp_weight }}</p></td>
+				<td><p class="var">{% if temp_weight != None %}{{ temp_weight }}{% endif %}{% if temp_weight == None %}-{% endif %}</p></td>
 				{% endif %}
-				<td ><p class="unit">kgs.</p></td>
+				<td><p class="unit">kgs.</p></td>
 				<td style="text-align:center; width:44px; height:50px;">
-					{% if atlocation == "Scale" and actual_wt > temp_weight %}<a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a>{% endif %}
+					{% if atlocation == "Scale" and actual_wt > temp_weight and temp_weight != None %}<a href="javascript:submit()"><img border="0" height="50px" src="images/clamplift/update.png"></a>{% endif %}
 				</td>
 				<td style="text-align:center; width:60px; height:50px;">
 					{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="50px" src="images/clamplift/manual.png"></a>{% endif %}
