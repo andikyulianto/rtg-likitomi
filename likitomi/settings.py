@@ -47,7 +47,7 @@ USE_L10N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = (
-	'/home/fon/Django-123/projects/rtg-likitomi/likitomi/static/'
+	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
 #	'/home/patipol/rtg-likitomi/likitomi/static/'
 )
 
@@ -84,8 +84,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'likitomi.urls'
 
 TEMPLATE_DIRS = (
-	"/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/statusTracking/",
-	"/home/fon/Django-123/projects/rtg-likitomi/likitomi/templates/clamplift/",
+	"/home/fon/Django/projects/rtg-likitomi/likitomi/templates/statusTracking/",
+	"/home/fon/Django/projects/rtg-likitomi/likitomi/templates/clamplift/",
 	"/home/patipol/rtg-likitomi/likitomi/templates/statusTracking/",
 	"/home/patipol/rtg-likitomi/likitomi/templates/clamplift/"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -109,7 +109,7 @@ INSTALLED_APPS = (
 )
 
 FIXTURE_DIRS = (
-#   '/home/fon/Django-123/projects/rtg-likitomi/likitomi/statusTracking/fixtures/',
+   '/home/fon/Django/projects/rtg-likitomi/likitomi/statusTracking/fixtures/',
 )
 
 # Import the logging and traceback library
