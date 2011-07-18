@@ -28,13 +28,24 @@
 					<td><p><a href="<?=base_url().'index.php/warehouse/'?>"><?=$this->lang->line('warehouse')?></a></p></td>
 					<td>&nbsp;</td>
 					<td><p><a href="<?=base_url().'index.php/clampliftmanger/'?>"><?=$this->lang->line('clampliftmanger')?></a></p></td>
+                                        
 				</tr>
 			</table>
 			<br/><br/>
 			<table><tr>
+                                        <td>&nbsp;</td>
+					<td><p><a href="http://localhost:8000/likitomi/"><?=$this->lang->line('statustracking')?></a></p></td>
+                                        <td>&nbsp;</td>
+					<td><p><a href="http://localhost:8000/dashboard/"><?=$this->lang->line('weighingdicator')?></a></p></td>
+
+
+				</tr>
+			</table>
+			<br/><br/>
+                        <table><tr>
 					<td>&nbsp;</td>
 					<td><p><a href="<?=base_url().'index.php/translator/'?>"><?=$this->lang->line('translator')?></a></p></td>
-				</tr>
+                        </tr>
 			</table>
 		</td>
 

@@ -10,6 +10,8 @@ $lang['reportplanning'] = "Report Planning";
 $lang['warehouse'] 		= "Warehouse";
 $lang['translator'] 	= "Translation";
 $lang['clampliftmanger'] = "Clamplift Manager";
+$lang['statustracking'] 	= "Status Tracking";
+$lang['weighingdicator'] = "Clamplift Apps";
 $lang['english'] = "English";
 $lang['thai'] = "Thai";
 
