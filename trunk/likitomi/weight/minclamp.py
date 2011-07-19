@@ -4,13 +4,13 @@ from django.db import connection, transaction
 from django.core.cache import cache
 from datetime import datetime
 import socket
-from weight.models import ClampliftPlan, PaperRoll, PaperHistory
+from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 
 def minclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
 	tagiddomain = range(1,10000)
-	tagidquery = PaperRoll.objects.values_list('tarid')
-	tagidlist = PaperRoll.objects.values_list('tarid', flat=True).order_by('-tarid')
+	tagidquery = PaperRolldetails.objects.values_list('paper_roll_detail_id')
+	tagidlist = PaperRolldetails.objects.values_list('paper_roll_detail_id', flat=True).order_by('-paper_roll_detail_id')
 	for tag in tagidlist:
 		if tag in tagiddomain: tagiddomain.remove(tag)
 	avaitag = tagiddomain[0]
@@ -18,7 +18,7 @@ def minclamp(request):
 	scursor1 = connection.cursor()
 	scursor1.execute("""
 		SELECT DISTINCT paper_code
-		FROM weight_paperroll
+		FROM paper_rolldetails
 		ORDER BY paper_code""")
 	spcode = scursor1.fetchall()
 	spcodelist = list()
@@ -26,9 +26,9 @@ def minclamp(request):
 		spcodelist.append(pcode[0])
 	scursor2 = connection.cursor()
 	scursor2.execute("""
-		SELECT DISTINCT width
-		FROM weight_paperroll
-		ORDER BY width""")
+		SELECT DISTINCT size
+		FROM paper_rolldetails
+		ORDER BY size""")
 	swidth = scursor2.fetchall()
 	swidthlist = list()
 	for width in swidth:
@@ -168,24 +168,25 @@ def minclamp(request):
 					realtag = tagid_A[n][7:11]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
+					if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
 						tagstatus = 'unknown'
 					elif tag2write.count('0') >= 15:
 						tagstatus = 'known'
 
-					if PaperRoll.objects.filter(tarid=realtag).exists() == True:
-						rtquery = PaperRoll.objects.get(tarid=realtag)
-						paper_roll_id = rtquery.tarid
+					if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
+						rtquery = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
+						paper_roll_id = rtquery.paper_roll_detail_id
 						paper_code = rtquery.paper_code
-						size = rtquery.width
-						unit = rtquery.wunit
+						size = rtquery.size
+						unit = rtquery.uom
 						initial_weight = rtquery.initial_weight
 						temp_weight = rtquery.temp_weight
 						lane = rtquery.lane
 						position = rtquery.position
+						if position == None: position = ''
 
-						if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
-							actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
+						if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
+							actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)
 						else:
 							actual_wt = rtquery.initial_weight
 
@@ -203,24 +204,24 @@ def minclamp(request):
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
+		if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
 			tagstatus = 'unknown'
 		elif tag2write.count('0') >= 15:
 			tagstatus = 'known'
 
-		if PaperRoll.objects.filter(tarid=realtag).exists() == True:
-			rtquery = PaperRoll.objects.get(tarid=realtag)
-			paper_roll_id = rtquery.tarid
+		if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
+			rtquery = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
+			paper_roll_id = rtquery.paper_roll_detail_id
 			paper_code = rtquery.paper_code
-			size = rtquery.width
-			unit = rtquery.wunit
+			size = rtquery.size
+			unit = rtquery.uom
 			initial_weight = rtquery.initial_weight
 			temp_weight = rtquery.temp_weight
 			lane = rtquery.lane
 			position = rtquery.position
 
-			if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
-				actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
+			if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
+				actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)
 			else:
 				actual_wt = rtquery.initial_weight
 
@@ -238,7 +239,7 @@ def minupdate(request):
 		actual_wt = request.GET['actual_wt']
 
 	now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-	p = PaperHistory(roll_id=realtag, before_wt=actual_wt, last_wt=temp_weight, timestamp=now)
+	p = PaperMovement(roll_id=realtag, before_wt=actual_wt, actual_wt=temp_weight, created_on=now)
 	p.save()
 
 	return HttpResponseRedirect('/django/minclamp/')
@@ -248,7 +249,7 @@ def minundo(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 
-	p = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0]
+	p = PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0]
 	p.delete()
 
 	return HttpResponseRedirect('/django/minclamp/')
@@ -263,7 +264,7 @@ def minchangeloc(request):
 	if 'pos' in request.GET and request.GET['pos']:
 		ipos = request.GET['pos']
 
-	PaperRoll.objects.filter(tarid=realtag).update(lane=ilane, position=ipos)
+	PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(lane=ilane, position=ipos)
 
 	return HttpResponseRedirect('/django/minclamp/')
 
@@ -298,7 +299,7 @@ def minassigntag(request):
 
 	if stratagid and apcode and asize and aweight and atag2write:
 		if str(stratagid) == str(atag2write[1:5]):
-			PaperRoll.objects.filter(tarid=atagid).update(paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+			PaperRolldetails.objects.filter(paper_roll_detail_id=atagid).update(paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 		else:
 			try:
 				HOST = '192.41.170.55' # CSIM network
@@ -315,11 +316,11 @@ def minassigntag(request):
 
 				if response.find('ok') != -1:
 					if atag2write.count('0') < 15:
-						PaperRoll.objects.create(tarid=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+						PaperRolldetails.objects.create(paper_roll_detail_id=atagid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 					if atag2write.count('0') >= 15:
-						PaperRoll.objects.create(tarid=atagid, paper_code=apcode, width=asize, wunit='inch', initial_weight=aweight, lane=alane, position=aposition)
+						PaperRolldetails.objects.create(paper_roll_detail_id=atagid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 						tag2del = int(atag2write[1:5])
-						PaperRoll.objects.filter(tarid=tag2del).delete()
+						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
 				else:
 					mode = 'min'
 					return render_to_response('writagror.html', locals())

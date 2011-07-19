@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
-from weight.models import PaperRoll, PaperHistory
+from weight.models import PaperRolldetails, PaperMovement
 
 def inventory(request):
 	if 'pcode' in request.GET and request.GET['pcode']:
@@ -142,8 +142,8 @@ def inventory(request):
 # FROM PLAN # ####################################################################################################################################################
 ###################################################################################################################################################################
 	if pcode and width and pswitch == "on":
-		query = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('tarid')
-		qexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
+		query = PaperRolldetails.objects.filter(paper_code=pcode, size=width).values_list('paper_roll_detail_id')
+		qexists = PaperRolldetails.objects.filter(paper_code=pcode, size=width).exists()
 
 		if qexists == True:
 			delist = list()
@@ -157,12 +157,12 @@ def inventory(request):
 				delist.append(totem)
 				rid = int(totem[0])
 				ridlist.append(rid)
-				exists = PaperHistory.objects.filter(roll_id=rid).exists()
+				exists = PaperMovement.objects.filter(roll_id=rid).exists()
 				elist.append(exists)
 				if exists == True:
-					weight = int(str(PaperHistory.objects.filter(roll_id=rid).order_by('-timestamp').values_list('last_wt')[0])[1:][:-3])
+					weight = int(str(PaperMovement.objects.filter(roll_id=rid).order_by('-created_on').values_list('actual_wt')[0])[1:][:-4])
 				else:
-					weight = int(str(PaperRoll.objects.filter(tarid=rid).values_list('initial_weight')[0])[1:][:-3])
+					weight = int(str(PaperRolldetails.objects.filter(paper_roll_detail_id=rid).values_list('initial_weight')[0])[1:][:-3])
 				wlist.append(weight)
 
 			for w in wlist:
@@ -171,11 +171,11 @@ def inventory(request):
 					wpx = 200
 				wlistpx.append(wpx)
 
-			initial_weight = int(str(PaperRoll.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
+			initial_weight = int(str(PaperRolldetails.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
 			initialpx = initial_weight/5 - 5
 
-		mquery = PaperRoll.objects.filter(paper_code=pcode, width=width).values_list('lane', 'position')
-		mexists = PaperRoll.objects.filter(paper_code=pcode, width=width).exists()
+		mquery = PaperRolldetails.objects.filter(paper_code=pcode, size=width).values_list('lane', 'position')
+		mexists = PaperRolldetails.objects.filter(paper_code=pcode, size=width).exists()
 		mstr = str(mquery)
 		mlist = list(mquery)
 
@@ -376,8 +376,8 @@ def inventory(request):
 # FROM SEARCH # ##################################################################################################################################################
 ###################################################################################################################################################################
 	if spcode != "undefined" and swidth != "undefined" and spcode != "" and swidth != "" and sswitch == "on":
-		query2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).values_list('tarid')
-		qexists2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).exists()
+		query2 = PaperRolldetails.objects.filter(paper_code=spcode, size=swidth).values_list('paper_roll_detail_id')
+		qexists2 = PaperRolldetails.objects.filter(paper_code=spcode, size=swidth).exists()
 
 		if qexists2 == True:
 			delist2 = list()
@@ -391,12 +391,12 @@ def inventory(request):
 				delist2.append(totem)
 				rid = int(totem[0])
 				ridlist2.append(rid)
-				exists = PaperHistory.objects.filter(roll_id=rid).exists()
+				exists = PaperMovement.objects.filter(roll_id=rid).exists()
 				elist2.append(exists)
 				if exists == True:
-					weight = int(str(PaperHistory.objects.filter(roll_id=rid).order_by('-timestamp').values_list('last_wt')[0])[1:][:-3])
+					weight = int(str(PaperMovement.objects.filter(roll_id=rid).order_by('-created_on').values_list('actual_wt')[0])[1:][:-4])
 				else:
-					weight = int(str(PaperRoll.objects.filter(tarid=rid).values_list('initial_weight')[0])[1:][:-3])
+					weight = int(str(PaperRolldetails.objects.filter(paper_roll_detail_id=rid).values_list('initial_weight')[0])[1:][:-3])
 				wlist2.append(weight)
 
 			for w in wlist2:
@@ -405,11 +405,11 @@ def inventory(request):
 					wpx = 200
 				wlistpx2.append(wpx)
 
-			initial_weight2 = int(str(PaperRoll.objects.filter(paper_code=spcode).values_list('initial_weight')[0])[1:][:-3])
+			initial_weight2 = int(str(PaperRolldetails.objects.filter(paper_code=spcode).values_list('initial_weight')[0])[1:][:-3])
 			initialpx2 = initial_weight2/5 - 5
 
-		mquery2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).values_list('lane', 'position')
-		mexists2 = PaperRoll.objects.filter(paper_code=spcode, width=swidth).exists()
+		mquery2 = PaperRolldetails.objects.filter(paper_code=spcode, size=swidth).values_list('lane', 'position')
+		mexists2 = PaperRolldetails.objects.filter(paper_code=spcode, size=swidth).exists()
 		mstr2 = str(mquery2)
 		mlist2 = list(mquery2)
 
@@ -694,8 +694,8 @@ def inventory(request):
 # FROM CLAMPLIFT # ###############################################################################################################################################
 ###################################################################################################################################################################
 	if cpcode != "" and cwidth != "" and cpcode != "undefined" and cwidth != "undefined" and cswitch == "on":
-		query3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).values_list('tarid')
-		qexists3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).exists()
+		query3 = PaperRolldetails.objects.filter(paper_code=cpcode, size=cwidth).values_list('paper_roll_detail_id')
+		qexists3 = PaperRolldetails.objects.filter(paper_code=cpcode, size=cwidth).exists()
 
 		if qexists3 == True:
 			delist3 = list()
@@ -709,12 +709,12 @@ def inventory(request):
 				delist3.append(totem)
 				rid = int(totem[0])
 				ridlist3.append(rid)
-				exists = PaperHistory.objects.filter(roll_id=rid).exists()
+				exists = PaperMovement.objects.filter(roll_id=rid).exists()
 				elist3.append(exists)
 				if exists == True:
-					weight = int(str(PaperHistory.objects.filter(roll_id=rid).order_by('-timestamp').values_list('last_wt')[0])[1:][:-3])
+					weight = int(str(PaperMovement.objects.filter(roll_id=rid).order_by('-created_on').values_list('actual_wt')[0])[1:][:-4])
 				else:
-					weight = int(str(PaperRoll.objects.filter(tarid=rid).values_list('initial_weight')[0])[1:][:-3])
+					weight = int(str(PaperRolldetails.objects.filter(paper_roll_detail_id=rid).values_list('initial_weight')[0])[1:][:-3])
 				wlist3.append(weight)
 
 			for w in wlist3:
@@ -723,11 +723,11 @@ def inventory(request):
 					wpx = 200
 				wlistpx3.append(wpx)
 
-			initial_weight3 = int(str(PaperRoll.objects.filter(paper_code=cpcode).values_list('initial_weight')[0])[1:][:-3])
+			initial_weight3 = int(str(PaperRolldetails.objects.filter(paper_code=cpcode).values_list('initial_weight')[0])[1:][:-3])
 			initialpx3 = initial_weight3/5 - 5
 
-		mquery3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).values_list('lane', 'position')
-		mexists3 = PaperRoll.objects.filter(paper_code=cpcode, width=cwidth).exists()
+		mquery3 = PaperRolldetails.objects.filter(paper_code=cpcode, size=cwidth).values_list('lane', 'position')
+		mexists3 = PaperRolldetails.objects.filter(paper_code=cpcode, size=cwidth).exists()
 		mstr3 = str(mquery3)
 		mlist3 = list(mquery3)
 
@@ -1086,10 +1086,10 @@ def inventory(request):
 	if loc == "up" or loc == "down":
 		if loc == 'up': plane = leftlane
 		if loc == 'down': plane = rightlane
-		PaperRoll.objects.filter(tarid=realtag).update(lane=plane, position=atposition)
+		PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(lane=plane, position=atposition)
 
 # AUTO CHANGE LOCATION #
 	if clamping == "yes" and changed == "no":
-		PaperRoll.objects.filter(tarid=realtag).update(lane=atlane,position=atposition)
+		PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(lane=atlane,position=atposition)
 
 	return render_to_response('inventory.html', locals())

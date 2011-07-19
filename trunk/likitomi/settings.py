@@ -47,8 +47,8 @@ USE_L10N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = (
-	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
-#	'/home/patipol/rtg-likitomi/likitomi/static/'
+#	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
+	'/home/patipol/rtg-likitomi/likitomi/static/'
 )
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
