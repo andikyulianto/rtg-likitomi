@@ -1,9 +1,13 @@
-{{msg}}
+<meta HTTP-EQUIV="REFRESH" content="3; url=/likitomi/">
+{% extends "container.html" %}
+{% block view %}
+<b><h1>{{msg}}</h1></b>
 <br>
-eID {{eID}}
+eID : {{eID}}
 <br>
-task {{task}}
+task : {{task}}
 <br>
-user {{user}}
+user : {{user}}
 <br>
 {{username}}
+{% endblock %}
