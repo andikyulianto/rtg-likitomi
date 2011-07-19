@@ -39,7 +39,13 @@ def section(request):
 		employee = AuthUser.objects.get(eid=eID)
 	except:
 		user = request.GET['user']
-		employee = Employee(user)
+		try:
+			employee = Employee(user)
+		except:
+			title = "Welcome to Likitomi Status Tracking System"
+			msg = "The user id is not found. Page will be redirected to login page"
+			return render_to_response('home.html', locals())
+		
 		username = employee.username
 		set_username(user)
 		eID = employee.id
