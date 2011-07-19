@@ -12,16 +12,16 @@ from django.db import connection, transaction
 #import cStringIO
 #import random
 #from datetime import datetime
-from weight.models import ClampliftPlan, PaperRoll, PaperHistory
+#from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 
 def dashboard(request):
 
 # Query date list for plan #
 	dcursor = connection.cursor()
 	dcursor.execute("""
-		SELECT DISTINCT date
-		FROM weight_clampliftplan
-		ORDER BY date DESC""")
+		SELECT DISTINCT opdate
+		FROM tbl_clamplift
+		ORDER BY opdate DESC""")
 	dquery = dcursor.fetchall()
 	dlen = len(dquery)
 	if len(dquery) == 1:
@@ -38,7 +38,7 @@ def dashboard(request):
 	scursor1 = connection.cursor()
 	scursor1.execute("""
 		SELECT DISTINCT paper_code
-		FROM weight_paperroll
+		FROM paper_rolldetails
 		ORDER BY paper_code""")
 	spcode = scursor1.fetchall()
 	spcodelist = list()
@@ -46,9 +46,9 @@ def dashboard(request):
 		spcodelist.append(pcode[0])
 	scursor2 = connection.cursor()
 	scursor2.execute("""
-		SELECT DISTINCT width
-		FROM weight_paperroll
-		ORDER BY width""")
+		SELECT DISTINCT size
+		FROM paper_rolldetails
+		ORDER BY size""")
 	swidth = scursor2.fetchall()
 	swidthlist = list()
 	for width in swidth:

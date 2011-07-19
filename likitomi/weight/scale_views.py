@@ -6,7 +6,7 @@ import serial
 import socket
 import random
 from datetime import datetime
-from weight.models import PaperRoll, PaperHistory
+from weight.models import PaperRolldetails, PaperMovement
 
 def scale(request):
 
@@ -261,27 +261,27 @@ def scale(request):
 					realtag = tagid_A[n][7:11]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
+					if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
 						tagstatus = 'unknown'
 					elif tag2write.count('0') >= 15:
 						tagstatus = 'known'
 
-					if PaperRoll.objects.filter(tarid=realtag).exists() == True:
-						query = PaperRoll.objects.get(tarid=realtag)
+					if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
+						query = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
 						paper_code = query.paper_code
-						size = query.width
-						uom = query.wunit
+						size = query.size
+						uom = query.uom
 
 						int_weight = int(weight)
 
-						if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
-							actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
+						if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
+							actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)
 						else:
 							actual_wt = query.initial_weight
 
 						used_weight = actual_wt - int(weight)
 
-						PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
+						PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(temp_weight=int_weight)
 
 	if rfid_mode == 'fake':
 
@@ -289,20 +289,20 @@ def scale(request):
 		tag2write = '30065AAAA000000000000000'
 		realtag = tag2write[1:5]
 
-		if tag2write.count('0') < 15 or PaperRoll.objects.filter(tarid=realtag).exists() == False:
+		if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
 			tagstatus = 'unknown'
 		elif tag2write.count('0') >= 15:
 			tagstatus = 'known'
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if PaperRoll.objects.filter(tarid=realtag).exists() == True:
-			query = PaperRoll.objects.get(tarid=realtag)
+		if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
+			query = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
 			paper_code = query.paper_code
 			size = query.width
 			uom = query.wunit
 
-			if PaperHistory.objects.filter(roll_id=realtag).exists() == True:
-				actual_wt = PaperHistory.objects.filter(roll_id=realtag).order_by('-timestamp')[0].last_wt
+			if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
+				actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)
 			else:
 				actual_wt = query.initial_weight
 
@@ -310,7 +310,7 @@ def scale(request):
 				int_weight = int(weight)
 				used_weight = actual_wt - int(weight)
 
-				PaperRoll.objects.filter(tarid=realtag).update(temp_weight=int_weight)
+				PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(temp_weight=int_weight)
 
 	return render_to_response('scale.html', locals())
 

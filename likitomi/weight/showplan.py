@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
-from weight.models import ClampliftPlan
+from weight.models import TblClamplift
 from datetime import date, time, datetime, timedelta
 
 def showplan(request):
@@ -12,7 +12,7 @@ def showplan(request):
 		opdate = date.today().strftime("%Y-%m-%d")
 
 	if opdate: 
-		query = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'paper_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
+		query = TblClamplift.objects.filter(opdate=opdate).values_list('start_time', 'product_code', 'p_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'used_df_mkg', 'used_bl_mkg', 'used_bm_mkg', 'used_cl_mkg', 'used_cm_mkg')
 
 	now = datetime.now()
 	qlist = list(query)
@@ -43,7 +43,7 @@ def required(request):
 	else:
 		opdate = date.today().strftime("%Y-%m-%d")
 
-	required = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'sono', 'ordno', 'flute', 'df', 'bl', 'bm', 'cl', 'cm', 'paper_width_mm', 'paper_width_inch', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
+	required = TblClamplift.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'sono', 'ordno', 'flute', 'df', 'bl', 'bm', 'cl', 'cm', 'paper_width_mm', 'paper_width_inch', 'loss_df', 'loss_bl', 'loss_bm', 'loss_cl', 'loss_cm')
 
 	now = datetime.now()
 	qlist = list(required)
@@ -74,7 +74,7 @@ def detail(request):
 	else:
 		opdate = date.today().strftime("%Y-%m-%d")
 
-	detail = ClampliftPlan.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'sono', 'ordno', 'customer_name', 'product', 'length_df', 'length_bl', 'length_bm', 'length_cl', 'length_cm', 'actual_df', 'actual_bl', 'actual_bm', 'actual_cl', 'actual_cm', 'sheet_length', 'case', 'cut')
+	detail = TblClamplift.objects.filter(date=opdate).values_list('start_time', 'sheet_code', 'sono', 'ordno', 'customer_name', 'product', 'length_df', 'length_bl', 'length_bm', 'length_cl', 'length_cm', 'actual_df', 'actual_bl', 'actual_bm', 'actual_cl', 'actual_cm', 'sheet_length', 'case', 'cut')
 
 	now = datetime.now()
 	qlist = list(detail)

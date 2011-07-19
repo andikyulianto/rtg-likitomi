@@ -1,5 +1,5 @@
 # Create your views here.
-from weight.models import ClampliftPlan
+from weight.models import TblClamplift
 from django.shortcuts import render_to_response
 from datetime import datetime
 
