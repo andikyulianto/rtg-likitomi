@@ -112,6 +112,8 @@ FIXTURE_DIRS = (
    '/home/fon/Django/projects/rtg-likitomi/likitomi/statusTracking/fixtures/',
 )
 
+SOUTH_TESTS_MIGRATE = False
+
 # Import the logging and traceback library
 import logging, traceback
 

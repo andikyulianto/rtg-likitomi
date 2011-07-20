@@ -222,7 +222,7 @@ from django.db import models
 #        db_table = u'inch_mm'
 
 class PaperMovement(models.Model):
-    movement_id = models.IntegerField(primary_key=True)
+    movement_id = models.AutoField(primary_key=True)
     roll_id = models.IntegerField(null=True, blank=True)
     before_wt = models.FloatField(null=True, blank=True)
     actual_wt = models.FloatField(null=True, blank=True)
@@ -234,8 +234,8 @@ class PaperMovement(models.Model):
     xpos = models.CharField(max_length=18, blank=True)
     ypos = models.CharField(max_length=18, blank=True)
     zpos = models.CharField(max_length=18, blank=True)
-    class Meta:
-        db_table = u'paper_movement'
+#    class Meta:
+#        db_table = u'paper_movement'
 
 class PaperRolldetails(models.Model):
     paper_roll_detail_id = models.IntegerField(primary_key=True)
@@ -253,13 +253,13 @@ class PaperRolldetails(models.Model):
     rfid_roll_id = models.CharField(max_length=765, blank=True)
     invoice_no = models.CharField(max_length=90, blank=True)
     invoice_date = models.DateField(null=True, blank=True)
-    isdeleted = models.IntegerField()
+    isdeleted = models.IntegerField(default=0)
     created_by = models.CharField(max_length=90, blank=True)
     created_on = models.DateTimeField(null=True, blank=True)
     modified_by = models.CharField(max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    class Meta:
-        db_table = u'paper_rolldetails'
+#    class Meta:
+#        db_table = u'paper_rolldetails'
 
 #class Papers(models.Model):
 #    paper_id = models.IntegerField(primary_key=True)
@@ -539,8 +539,8 @@ class TblClamplift(models.Model):
     cut = models.IntegerField()
     modified_by = models.CharField(max_length=150)
     modified_on = models.DateTimeField()
-    class Meta:
-        db_table = u'tbl_clamplift'
+#    class Meta:
+#        db_table = u'tbl_clamplift'
 
 #class TotalPlanning(models.Model):
 #    autoid = models.IntegerField(primary_key=True)
