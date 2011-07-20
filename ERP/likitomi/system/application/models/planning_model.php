@@ -163,7 +163,7 @@ class Planning_model extends Model
 			//echo substr($rowData->corrugator_date,0,10)." ".substr($rowData->corrugator_date,11,5).":00";
 			//echo substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00";
 			//get amount
-			echo $choosendate;
+			//echo $choosendate;
 
 
 			$sql = "Select product_id,qty,delivery_date,delivery_time From delivery Where delivery_id =".$rowData->delivery_id;
