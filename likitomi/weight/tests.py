@@ -16,13 +16,13 @@ import serial
 import socket
 from datetime import datetime
 from time import sleep
-from weight.models import ClampliftPlan, PaperRoll, PaperHistory
+from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 
 ### This part involves writing tag so unpredictable errors or failures may occur ###
 class Scale(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
-		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=1, paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
 # Write tag ID to unknown #
 			HOST = '192.41.170.55' # CSIM network
@@ -44,7 +44,7 @@ class Scale(unittest.TestCase):
 			print '\nRFIDConnectionError'
 
 	def tearDown(self):
-		PaperRoll.objects.filter(tarid=1).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		try:
 # Write back tag ID #
 			HOST = '192.41.170.55' # CSIM network
@@ -71,14 +71,14 @@ class Scale(unittest.TestCase):
 		self.assertEqual(response.status_code, 200)
 		realtag = response.context['realtag']
 		weight = response.context['weight']
-		temp_weight = PaperRoll.objects.get(tarid=realtag).temp_weight
+		temp_weight = PaperRolldetails.objects.get(paper_roll_detail_id=realtag).temp_weight
 		self.assertEqual(weight, temp_weight)
 #		print str(weight)+" = "+str(temp_weight)
 
 class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 	def setUp(self):
 		self.client = Client()
-		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=1, paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
 # Write tag ID to unknown #
 			HOST = '192.41.170.55' # CSIM network
@@ -100,8 +100,8 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 			print '\nRFIDConnectionError'
 
 	def tearDown(self):
-		PaperRoll.objects.filter(tarid=1).delete()
-		PaperRoll.objects.filter(tarid=2).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
 # Write back tag ID #
 			HOST = '192.41.170.55' # CSIM network
@@ -127,12 +127,12 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
 #		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
@@ -141,12 +141,12 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
 #		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
@@ -154,12 +154,12 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 	def testNewTag_min_nolanpos(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
@@ -167,12 +167,12 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 	def testNewTag_max_nolanpos(self):
 		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
@@ -180,7 +180,7 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 	def setUp(self):
 		self.client = Client()
-		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=1, paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
 # Write tag ID to '0001' #
 			HOST = '192.41.170.55' # CSIM network
@@ -202,8 +202,8 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 			print '\nRFIDConnectionError'
 
 	def tearDown(self):
-		PaperRoll.objects.filter(tarid=1).delete()
-		PaperRoll.objects.filter(tarid=2).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
 # Write back tag ID #
 			HOST = '192.41.170.55' # CSIM network
@@ -228,13 +228,13 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 	def testReuseTag_min(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), False)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
@@ -242,13 +242,13 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 	def testReuseTag_max(self):
 		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), False)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
@@ -256,13 +256,13 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 	def testReuseTag_min_nolanpos(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), False)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
@@ -270,13 +270,13 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 	def testReuseTag_max_nolanpos(self):
 		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=2).exists(), True)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), False)
-		roll = PaperRoll.objects.get(tarid=2)
-		self.assertEqual(roll.tarid, 2)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), False)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
@@ -284,21 +284,21 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
 	def setUp(self):
 		self.client = Client()
-		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=1, paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 
 	def tearDown(self):
-		PaperRoll.objects.filter(tarid=1).delete()
-		PaperRoll.objects.filter(tarid=2).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 
 	def testUpdateTag_min(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-		roll = PaperRoll.objects.get(tarid=1)
-		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=1)
+		self.assertEqual(roll.paper_roll_detail_id, 1)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
@@ -306,12 +306,12 @@ class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
 	def testUpdateTag_max(self):
 		response = self.client.get('/maxclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-		roll = PaperRoll.objects.get(tarid=1)
-		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=1)
+		self.assertEqual(roll.paper_roll_detail_id, 1)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
@@ -319,12 +319,12 @@ class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
 	def testUpdateTag_min_nolanpos(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-		roll = PaperRoll.objects.get(tarid=1)
-		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=1)
+		self.assertEqual(roll.paper_roll_detail_id, 1)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
@@ -332,12 +332,12 @@ class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
 	def testUpdateTag_max_nolanpos(self):
 		response = self.client.get('/maxclamp/assigntag/', {'atagid': '1', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperRoll.objects.filter(tarid=1).exists(), True)
-		roll = PaperRoll.objects.get(tarid=1)
-		self.assertEqual(roll.tarid, 1)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=1).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=1)
+		self.assertEqual(roll.paper_roll_detail_id, 1)
 		self.assertEqual(roll.paper_code, 'CA125')
-		self.assertEqual(roll.width, 36)
-		self.assertEqual(roll.wunit, 'inch')
+		self.assertEqual(roll.size, 36)
+		self.assertEqual(roll.uom, 'inch')
 		self.assertEqual(roll.initial_weight, 800)
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
@@ -346,68 +346,68 @@ class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
 class UpdateWeight(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
-		PaperHistory.objects.create(roll_id=1, before_wt=1200, last_wt=600, timestamp=datetime.now())
+		PaperMovement.objects.create(roll_id=1, before_wt=1200, actual_wt=600, created_on=datetime.now())
 
 	def tearDown(self):
-		PaperHistory.objects.filter(roll_id=1).delete()
+		PaperMovement.objects.filter(roll_id=1).delete()
 
 	def testUpdateWeight_min(self):
 		response = self.client.get('/minclamp/update/', {'realtag': '0001', 'temp_weight': 300, 'actual_wt': 600})
 		self.assertEqual(response.status_code, 302)
-		phist = PaperHistory.objects.get(roll_id=1, before_wt=600, last_wt=300)
+		phist = PaperMovement.objects.get(roll_id=1, before_wt=600, actual_wt=300)
 		self.assertEqual(phist.roll_id, 1)
 		self.assertEqual(phist.before_wt, 600)
-		self.assertEqual(phist.last_wt, 300)
+		self.assertEqual(phist.actual_wt, 300)
 
 	def testUpdateWeight_max(self):
 		response = self.client.get('/maxclamp/update/', {'realtag': '0001', 'temp_weight': 300, 'actual_wt': 600})
 		self.assertEqual(response.status_code, 302)
-		phist = PaperHistory.objects.get(roll_id=1, before_wt=600, last_wt=300)
+		phist = PaperMovement.objects.get(roll_id=1, before_wt=600, actual_wt=300)
 		self.assertEqual(phist.roll_id, 1)
 		self.assertEqual(phist.before_wt, 600)
-		self.assertEqual(phist.last_wt, 300)
+		self.assertEqual(phist.actual_wt, 300)
 
 class UndoWeight(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
-		PaperHistory.objects.create(roll_id=1, before_wt=1200, last_wt=900, timestamp='2011-06-07 15:41:19')
-		PaperHistory.objects.create(roll_id=1, before_wt=900, last_wt=600, timestamp='2011-06-08 15:41:19')
-		PaperHistory.objects.create(roll_id=1, before_wt=600, last_wt=300, timestamp='2011-06-08 16:41:19')
+		PaperMovement.objects.create(roll_id=1, before_wt=1200, actual_wt=900, created_on='2011-06-07 15:41:19')
+		PaperMovement.objects.create(roll_id=1, before_wt=900, actual_wt=600, created_on='2011-06-08 15:41:19')
+		PaperMovement.objects.create(roll_id=1, before_wt=600, actual_wt=300, created_on='2011-06-08 16:41:19')
 
 	def tearDown(self):
-		PaperRoll.objects.filter(tarid=1).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 
 	def testUndoWeight_min(self):
-		t = PaperHistory.objects.filter(roll_id=1).order_by('-timestamp')[0].timestamp
+		t = PaperMovement.objects.filter(roll_id=1).order_by('-created_on')[0].created_on
 		response = self.client.get('/minclamp/undo/', {'realtag': '0001'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperHistory.objects.filter(roll_id=1, timestamp=t).exists(), False)
+		self.assertEqual(PaperMovement.objects.filter(roll_id=1, created_on=t).exists(), False)
 
 	def testUndoWeight_max(self):
-		t = PaperHistory.objects.filter(roll_id=1).order_by('-timestamp')[0].timestamp
+		t = PaperMovement.objects.filter(roll_id=1).order_by('-created_on')[0].created_on
 		response = self.client.get('/maxclamp/undo/', {'realtag': '0001'})
 		self.assertEqual(response.status_code, 302)
-		self.assertEqual(PaperHistory.objects.filter(roll_id=1, timestamp=t).exists(), False)
+		self.assertEqual(PaperMovement.objects.filter(roll_id=1, created_on=t).exists(), False)
 
 class ChangeLocation(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
-		PaperRoll.objects.create(tarid=1, paper_code="HKS231", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=1, paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 
 	def tearDown(self):
-		PaperRoll.objects.filter(tarid=1).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 
 	def testChangeLocation_min(self):
 		response = self.client.get('/minclamp/changeloc/', {'realtag': '0001', 'lane': 'B', 'pos': '2'})
 		self.assertEqual(response.status_code, 302)
-		roll = PaperRoll.objects.get(tarid=1)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=1)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
 
 	def testChangeLocation_max(self):
 		response = self.client.get('/maxclamp/changeloc/', {'realtag': '0001', 'lane': 'B', 'pos': '2'})
 		self.assertEqual(response.status_code, 302)
-		roll = PaperRoll.objects.get(tarid=1)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=1)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 2)
 
@@ -434,10 +434,10 @@ class ShowPlan(unittest.TestCase):
 class Inventory(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
-		PaperRoll.objects.create(tarid=67, paper_code="CA125", width=56, wunit="inch", initial_weight=1200, temp_weight=600, lane="A", position=3)
+		PaperRolldetails.objects.create(paper_roll_detail_id=67, paper_code="CA125", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=3)
 
 	def tearDown(self):
-		PaperRoll.objects.filter(tarid=67).delete()
+		PaperRolldetails.objects.filter(paper_roll_detail_id=67).delete()
 
 	def testNormalInventory(self):
 		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'no', 'changed': 'no', 'realtag': '0067', 'loc': '',})
@@ -462,7 +462,7 @@ class Inventory(unittest.TestCase):
 	def testClamping(self):
 		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'yes', 'changed': 'no', 'realtag': '0067', 'loc': '',})
 		self.assertEqual(response.status_code, 200)
-		roll = PaperRoll.objects.get(tarid=67)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=67)
 		self.assertEqual(roll.lane, '1')
 		self.assertEqual(roll.position, 13)
 		self.assertEqual(response.context['pcode'],'HKS231')
@@ -485,7 +485,7 @@ class Inventory(unittest.TestCase):
 	def testLocUp(self):
 		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'no', 'changed': 'no', 'realtag': '0067', 'loc': 'up',})
 		self.assertEqual(response.status_code, 200)
-		roll = PaperRoll.objects.get(tarid=67)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=67)
 		self.assertEqual(roll.lane, 'B')
 		self.assertEqual(roll.position, 13)
 		self.assertEqual(response.context['pcode'],'HKS231')
@@ -508,7 +508,7 @@ class Inventory(unittest.TestCase):
 	def testLocDown(self):
 		response = self.client.get('/inventory/', {'pcode': 'HKS231', 'width': '56', 'loss': '529', 'lossarr': '529,529', 'spcode': 'HCM97', 'swidth': '54', 'cpcode': 'CA125', 'cwidth': '56', 'lane': 'A', 'position': '3', 'atlane': '1', 'atposition': '13', 'clamping': 'no', 'changed': 'no', 'realtag': '0067', 'loc': 'down',})
 		self.assertEqual(response.status_code, 200)
-		roll = PaperRoll.objects.get(tarid=67)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=67)
 		self.assertEqual(roll.lane, 'A')
 		self.assertEqual(roll.position, 13)
 		self.assertEqual(response.context['pcode'],'HKS231')
