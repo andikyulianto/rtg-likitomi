@@ -52,8 +52,13 @@ def section(request):
 #		task = employee.task
 	today = todayDate()
 	
-	
-	task = employee.task
+	try:
+		task = employee.task
+	except:
+		title = "Welcome to Likitomi Status Tracking System"
+		msg = "Job of "+ username+ " is not defined. Please contact your administrator"
+		return render_to_response('home.html', locals())
+
 #	print "this is task " +str(task)
 
 	page =  str(task)
@@ -94,7 +99,7 @@ def showPC(user,title):
 	item_plan_cv = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	item_plan_pt = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	item_plan_wh = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
-	print str(item_plan_pt) + "item_plan_pt"
+#	print str(item_plan_pt) + "item_plan_pt"
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)
@@ -113,24 +118,25 @@ def showPC(user,title):
 	#prepare list for CR
 	size = len(items_plan_cr)
 	if(currentProcess("CR")!='idle'):
-		pos = positionOfCurrentProcess("CR",currentProcess("CR")[0][0:8])
+		pos = positionOfCurrentProcess("CR",currentProcess("CR"))
 	else :
 		pos = size
 	#temp_contents = currentProcess("CV")
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_cr=items_plan_cr[startList:endList]
-	
+#	print itemCR
+
 	#prepare list for CV
 	size = len(items_plan_cv)
-	pos = positionOfCurrentProcess("CV",currentProcess("CV")[0][0:8])
+	pos = positionOfCurrentProcess("CV",currentProcess("CV"))
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_cv=items_plan_cv[startList:endList]
 	
 	#prepare list for PT
 	size = len(items_plan_pt)
-	pos = positionOfCurrentProcess("PT",currentProcess("PT")[0][0:8])
+	pos = positionOfCurrentProcess("PT",currentProcess("PT"))
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_pt=items_plan_pt[startList:endList]
@@ -139,7 +145,7 @@ def showPC(user,title):
 	size = len(items_plan_wh)
 	#pos =currentProcess("WH")[0][0]
 	#temp_contents = currentProcess("WH")[0][0]
-	pos = positionOfCurrentProcess("WH",currentProcess("WH")[0][0])
+	pos = positionOfCurrentProcess("WH",currentProcess("WH"))
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_wh=items_plan_wh[startList:endList]
@@ -185,7 +191,7 @@ def normalPlanRefresher(request):
 	item_plan_cv = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
 	item_plan_pt = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
 	item_plan_wh = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
-	print StatusTracking
+#	print StatusTracking
 	items_plan_cr = list(item_plan_cr)
 	items_plan_cv = list(item_plan_cv)
 	items_plan_pt = list(item_plan_pt)
@@ -204,24 +210,25 @@ def normalPlanRefresher(request):
 	#prepare list for CR
 	size = len(items_plan_cr)
 	if(currentProcess("CR")!='idle'):
-		pos = positionOfCurrentProcess("CR",currentProcess("CR")[0][0:8])
+		pos = positionOfCurrentProcess("CR",currentProcess("CR"))
 	else :
 		pos = size
 	#temp_contents = currentProcess("CV")
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_cr=items_plan_cr[startList:endList]
+
 	
 	#prepare list for CV
 	size = len(items_plan_cv)
-	pos = positionOfCurrentProcess("CV",currentProcess("CV")[0][0:8])
+	pos = positionOfCurrentProcess("CV",currentProcess("CV"))
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_cv=items_plan_cv[startList:endList]
 	
 	#prepare list for PT
 	size = len(items_plan_pt)
-	pos = positionOfCurrentProcess("PT",currentProcess("PT")[0][0:8])
+	pos = positionOfCurrentProcess("PT",currentProcess("PT"))
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_pt=items_plan_pt[startList:endList]
@@ -230,7 +237,7 @@ def normalPlanRefresher(request):
 	size = len(items_plan_wh)
 	#pos =currentProcess("WH")[0][0]
 	#temp_contents = currentProcess("WH")[0][0]
-	pos = positionOfCurrentProcess("WH",currentProcess("WH")[0][0])
+	pos = positionOfCurrentProcess("WH",currentProcess("WH"))
 	startList = returnStartingPoint(pos,size)
 	endList = startList+getPCItemNum()
 	items_plan_wh=items_plan_wh[startList:endList]

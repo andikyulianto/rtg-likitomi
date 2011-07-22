@@ -27,8 +27,10 @@
 		<br>
 		<div id="filterCriteria" align="center">
 			<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
-			<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
-			<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="notProcess" checked /><label for="notProcess">Unfinished</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="missing" checked /><label for="missing">Incompleted</label>
 		</div> <!-- end Filter -->
 		<br>
 	
@@ -54,8 +56,10 @@
 	
 		<div id="filterCriteriaMonthly" align="center">
 			<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
-			<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Not yet process</label>
-			<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Unfinished</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="missingM" checked /><label for="missingM">Incompleted</label>
 		</div> <!-- end Filter -->
 		<br>
 		<table id="totalPlanMonthly" width="100%">
@@ -83,11 +87,13 @@
 					{% else %}
 					<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
 					{% endif %}
-					{% if item.actual_amount_wh >= item.plan_amount %}
+					{% if item.actual_amount_wh == NULL %}
+					<td align="right"><font color=red>0</font></td>
+					{% else %}{% if item.actual_amount_wh >= item.plan_amount %}
 					<td align="right">{{item.actual_amount_wh}}</td>
 					{% else %}
 					<td align="right"><font color=red>{{item.actual_amount_wh}}</font></td>
-					{% endif %}
+					{% endif %}{% endif %}
 					<td></td>
 				</tr>
 				{% endfor %}

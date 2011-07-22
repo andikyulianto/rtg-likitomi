@@ -1,4 +1,4 @@
-## This is an auto-generated Django model module.
+## This is an pauto-generated Django model module.
 # You'll have to do the following manually to clean this up:
 #     * Rearrange models' order
 #     * Make sure each model has one field with primary_key=True
@@ -531,7 +531,7 @@ class StatusTracking(models.Model):
     def cv_time_used(self):
         return float((self.plan_cv_end - self.plan_cv_start).seconds)/60
     def state(self):
-	if self.actual_amount_wh == 0 :
+	if self.actual_amount_wh == None :
 		status = 'notProcess'
 	elif self.actual_amount_wh < self.plan_amount :
 		status = 'missing'
@@ -541,7 +541,7 @@ class StatusTracking(models.Model):
 		status = ''
 	return status
     def stateCR(self):
-	if self.actual_amount_cr == 0 :
+	if self.actual_amount_cr == None:
 		status = 'notProcess'
 	elif self.actual_amount_cr < self.plan_amount :
 		status = 'missing'
@@ -551,7 +551,7 @@ class StatusTracking(models.Model):
 		status = ''
 	return status
     def stateCV(self):
-	if self.actual_amount_cv == 0 :
+	if self.actual_amount_cv == None :
 		status = 'notProcess'
 	elif self.actual_amount_cv < self.plan_amount :
 		status = 'missing'
@@ -561,7 +561,7 @@ class StatusTracking(models.Model):
 		status = ''
 	return status
     def statePT(self):
-	if self.actual_amount_pt == 0 :
+	if self.actual_amount_pt == None :
 		status = 'notProcess'
 	elif self.actual_amount_pt < self.plan_amount :
 		status = 'missing'
