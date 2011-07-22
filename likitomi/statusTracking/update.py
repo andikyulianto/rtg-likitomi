@@ -51,6 +51,7 @@ def startUpdate(request):
 	elif (at=="WH"):
 		print current_time
 		obj.actual_wh_start = current_time
+		obj.actual_amount_wh = amount
 		obj.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)

@@ -268,10 +268,10 @@ class Testmaker(TestCase):
 		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui_bg_flat_75_ffffff_40x100.png', {})
 		self.assertEqual(r.status_code, 200)
 	def test_likitomipcdetailcsssmoothnessimagesui_bg_highlight_soft_75_cccccc_1x100png_130760007423(self):
-		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui_bg_highlight_soft_75_cccccc_1x100.png', {})
+		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui-bg_highlight_soft_75_cccccc_1x100.png', {})
 		self.assertEqual(r.status_code, 200)
 	def test_likitomipcdetailcsssmoothnessimagesui_bg_glass_65_ffffff_1x400png_130760007429(self):
-		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui_bg_glass_65_ffffff_1x400.png', {})
+		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui-bg_glass_65_ffffff_1x400.png', {})
 		self.assertEqual(r.status_code, 200)
 	def test_likitomipcdetailcsssmoothnessimagesui_bg_glass_75_e6e6e6_1x400png_130760007435(self):
 		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui_bg_glass_75_e6e6e6_1x400.png', {})
@@ -298,7 +298,7 @@ class Testmaker(TestCase):
 		r = self.client.get('/likitomi/pcdetail/images/WH_normal.png', {})
 		self.assertEqual(r.status_code, 200)
 	def test_likitomipcdetailcsssmoothnessimagesui_icons_888888_256x240png_130760007406(self):
-		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui_icons_888888_256x240.png', {})
+		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui-icons_888888_256x240.png', {})
 		self.assertEqual(r.status_code, 200)
 	def test_likitomipcdetailimagesdjgpng_130760007413(self):
 		r = self.client.get('/likitomi/pcdetail/images/djg.png', {})
@@ -322,11 +322,11 @@ class Testmaker(TestCase):
 		r = self.client.get('/likitomi/pcdetail/images/PC_normal.png', {})
 		self.assertEqual(r.status_code, 200)
 	def test_likitomipcdetailcsssmoothnessimagesui_bg_glass_75_dadada_1x400png_130760007458(self):
-		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui_bg_glass_75_dadada_1x400.png', {})
+		r = self.client.get('/likitomi/pcdetail/css/smoothness/images/ui-bg_glass_75_dadada_1x400.png', {})
 		self.assertEqual(r.status_code, 200)
 
 	def test_likitomihomecsssmoothnessimagesui_bg_glass_75_dadada_1x400png_130760007859(self):
-		r = self.client.get('/likitomi/home/css/smoothness/images/ui_bg_glass_75_dadada_1x400.png', {})
+		r = self.client.get('/likitomi/home/css/smoothness/images/ui-bg_glass_75_dadada_1x400.png', {})
 		self.assertEqual(r.status_code, 200)
 	def test_likitomipcdetail_130760009419(self):
 		r = self.client.get('/likitomi/pcdetail/', {'user': 'workerATPC', 'page': 'CV', })

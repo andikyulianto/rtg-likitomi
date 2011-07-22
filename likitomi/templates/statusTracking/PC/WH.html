@@ -36,7 +36,7 @@
 	<tr id="{{ item.state}}">
 	<td>{% if wh == item.plan_wh_start %} > {% endif %}</th>
 	<td><div class="plan">{{item.plan_wh_start|time:"H:i"}}</div><div class="actual">
-	{% if WH_items.actual_wh_start != NULL %}
+	{% if item.actual_wh_start != NULL %}
 	{{item.actual_wh_start|time:"H:i" }}
 				{% else %}
 				&nbsp;

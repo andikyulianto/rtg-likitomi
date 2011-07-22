@@ -143,7 +143,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 <div class="CRarea" align="right"> 
 <button style="height:30px" id="zoomCR" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=CR'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button> 
 
-		<!-- table CR --><center>Corrugator <br><table width="90%">
+		<!-- table CR --><center><H3>Corrugator </H3><br><table width="90%">
 			<tr  valign="top"><td width="50%">{# left #}<div id="result"></div>
 	<div id="linkCR"> 
 			<table align=center width="100%" id="crTable"><!-- table left -->
@@ -155,7 +155,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<th width="10%"> Product code </th>
 			<th width="10%"> Due</th></tr></thead>
 			<tbody> 
-			{% for CR_items in items_plan_cr %}{{product}}
+			{% for CR_items in items_plan_cr %}
 			<!--<tr onClick="HighLightCR('{{rowcountCR}}','#c9cc99','cc3333','{{product}}');showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');" id="{{CR_items.stateCR}}">-->
 			<tr onClick="HighLightCR(this,'#c9cc99','cc3333','{{product}}'); showDetail('loadPageCR','{{ display_url }}?product={{CR_items.product.product_code}}');"  id="{{CR_items.stateCR}}">
 			<td>{% if cr == CR_items.product.product_code %} > {% endif %}</td>
@@ -204,7 +204,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 			<button style="height:30px" id="zoomCV" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=CV'" ><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 		<!--<a href="{{ pcdetail_url }}?eID={{eID}}&page=CV"><center>Show full CV schedule</center></a><center>-->
-		<center>Convertor <br><table align=center width="90%">
+		<center><H3>Convertor </H3><br><table align=center width="90%">
 			<tr  height="5" valign="top"><td width="57%">{# left #}
 			
 			<div id="linkCV">
@@ -266,7 +266,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 
 
 <!--<a href="{{ pcdetail_url }}?eID={{eID}}&page=PT"><center>Show full PT schedule</center></a>-->
-		<!-- start pt table --><center> Pad and Partition <br>
+		<!-- start pt table --><center> <H3>Pad and Partition </H3> <br>
 		<table align=center width="90%">
 			
 			<tr valign="top"><td width="55%">{# left #}
@@ -325,7 +325,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 <button style="height:30px" id="zoomWH" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" role="button" aria-disabled="false" title="" onClick="window.location.href='{{ pcdetail_url }}?user={{username}}&page=WH'"><span class="ui-button-icon-primary ui-icon ui-icon-zoomin"></span><span class="ui-button-text"></span></button>
 
 
-<!-- start wh table--><center> Warehouse
+<!-- start wh table--><center> <H3>Warehouse </H3><br>
 		<table align="center" width="90%"> 
 
 			<td width="50%"> {# left #}
