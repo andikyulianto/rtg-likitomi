@@ -15,21 +15,12 @@ def maxclamp(request):
 		if tag in tagiddomain: tagiddomain.remove(tag)
 	avaitag = tagiddomain[0]
 
-	scursor1 = connection.cursor()
-	scursor1.execute("""
-		SELECT DISTINCT paper_code
-		FROM paper_rolldetails
-		ORDER BY paper_code""")
-	spcode = scursor1.fetchall()
+	spcode = PaperRolldetails.objects.values_list('paper_code').distinct().order_by('paper_code')
 	spcodelist = list()
 	for pcode in spcode:
 		spcodelist.append(pcode[0])
-	scursor2 = connection.cursor()
-	scursor2.execute("""
-		SELECT DISTINCT size
-		FROM paper_rolldetails
-		ORDER BY size""")
-	swidth = scursor2.fetchall()
+
+	swidth = PaperRolldetails.objects.values_list('size').distinct().order_by('size')
 	swidthlist = list()
 	for width in swidth:
 		swidthlist.append(width[0])
@@ -267,6 +258,7 @@ def maxchangeloc(request):
 	PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(lane=ilane, position=ipos)
 
 	return HttpResponseRedirect('/django/maxclamp/')
+
 
 def maxassigntag(request):
 	if 'atagid' in request.GET and request.GET['atagid']:
