@@ -1,0 +1,82 @@
+﻿<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<style type="text/css">
+body
+{
+font-family:"Times New Roman", Times, serif;
+}
+
+td
+{
+text-align:center;
+vertical-align:middle;
+}
+
+/* TAG */
+#numbtn
+{
+position: absolute;
+width: 50px;
+height: 50px;
+background-color: dimgray;
+border: 2px solid silver;
+}
+
+#lanebtn
+{
+position: absolute;
+width: 75px;
+height: 25px;
+background-color: slategray;
+border: 2px solid silver;
+}
+
+#confirm
+{
+position:absolute;
+bottom:10px;
+height:50px;
+width:80px;
+border:2px solid silver;
+background-color:dimgray;
+}
+</style>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/createnew.js"></script>
+<script type="text/javascript" src="javascript/assigntag.js"></script>
+<script type="text/javascript" src="javascript/writemore.js"></script>
+<script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$( "#createnew" ).button({icons: {primary: "ui-icon-tag"}});
+	$( ".asstag" ).button({icons: {primary: "ui-icon-link"}});
+	$( ".writemore" ).button({icons: {primary: "ui-icon-plus"}});
+});
+</script>
+</head>
+
+<body>
+<input id="avaitag" type="hidden" value="{{ avaitag }}" />
+<input id="spcodelist" type="hidden" value="{{ spcodelist }}" />
+<input id="swidthlist" type="hidden" value="{{ swidthlist }}" />
+
+	<div style="width:785px; height:580px;">
+	<table style="width:100%;">
+		{% for paper_roll_detail_id, rfid_roll_id, paper_code, size, initial_weight, lane, position, current_weight in nlist %}
+		<tr style="height:53px; background-color:{% if rfid_roll_id == "" %}lightyellow{% endif %}{% if rfid_roll_id != "" %}lightgray{% endif %};">
+			<td style="width:58px;">{{ paper_roll_detail_id }}</td>
+			<td style="width:67px;">{{ rfid_roll_id }}</td>
+			<td style="width:120px;">{{ paper_code }}</td>
+			<td style="width:67px;">{{ size }}</td>
+			<td style="width:67px;">{{ initial_weight }}</td>
+			<td style="width:67px;">{{ current_weight }}</td>
+			<td style="width:69px;">{{ lane }}</td>
+			<td style="width:69px;">{% if position != Null %}{{ position }}{% endif %}</td>
+			<td style="width:160px; background-color:white;">{% if rfid_roll_id == "" %}<button class="asstag" onclick="javascript:assignTag({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}');">Assign Tag</button>{% endif %}{% if rfid_roll_id != "" %}<button class="writemore" onclick="javascript:writeMore({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}')">Write More</button>{% endif %}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	</div>
+</body>
+</html>

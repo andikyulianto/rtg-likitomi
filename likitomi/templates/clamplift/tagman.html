@@ -1,0 +1,150 @@
+﻿<html>
+<title>Tag Management</title>
+<head>
+<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
+<style type="text/css">
+body
+{
+font-family:"Times New Roman", Times, serif;
+}
+
+td
+{
+text-align:center;
+vertical-align:middle;
+}
+
+div
+{
+position:absolute;
+}
+
+/* TAG */
+#numbtn
+{
+position: absolute;
+width: 50px;
+height: 50px;
+background-color: dimgray;
+border: 2px solid silver;
+}
+
+#lanebtn
+{
+position: absolute;
+width: 75px;
+height: 25px;
+background-color: slategray;
+border: 2px solid silver;
+}
+
+#confirm
+{
+position:absolute;
+bottom:10px;
+height:50px;
+width:80px;
+border:2px solid silver;
+background-color:dimgray;
+}
+</style>
+<script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/createnew.js"></script>
+<script type="text/javascript" src="javascript/assigntag.js"></script>
+<script type="text/javascript" src="javascript/writemore.js"></script>
+<script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$( "#createnew" ).button({icons: {primary: "ui-icon-tag"}});
+	$( ".asstag" ).button({icons: {primary: "ui-icon-link"}});
+	$( ".writemore" ).button({icons: {primary: "ui-icon-plus"}});
+
+	$("#uppest").click(function(){$("#showtaglist")[0].contentWindow.scrollTo(0,0);});
+	$("#upper").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,-275);});
+	$("#up").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,-55);});
+	$("#down").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,55);});
+	$("#downer").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,275);});
+	$("#downest").click(function(){$("#showtaglist")[0].contentWindow.scrollTo(0,9999);});
+
+	$( "#uppest" ).button({icons: {primary: "ui-icon-seek-start"}, text: false});
+	$( "#upper" ).button({icons: {primary: "ui-icon-seek-prev"}, text: false});
+	$( "#up" ).button({icons: {primary: "ui-icon-triangle-1-w"}, text: false});
+	$( "#downest" ).button({icons: {primary: "ui-icon-seek-end"}, text: false});
+	$( "#downer" ).button({icons: {primary: "ui-icon-seek-next"}, text: false});
+	$( "#down" ).button({icons: {primary: "ui-icon-triangle-1-e"}, text: false});
+
+});
+</script>
+</head>
+
+<body>
+<input id="avaitag" type="hidden" value="{{ avaitag }}" />
+<input id="spcodelist" type="hidden" value="{{ spcodelist }}" />
+<input id="swidthlist" type="hidden" value="{{ swidthlist }}" />
+<input id="tagidquery" type="hidden" value="{{ tagidquery }}" />
+<input id="tag2write" type="hidden" value="{{ tag2write }}" />
+
+<input id='showtaglist_url' type='hidden' value='{% url weight.tagman.showtaglist %}' />
+{% url weight.tagman.tagman as tagman_url %}
+{% url weight.tagman.showtaglist as showtaglist_url %}
+
+	<div style="width:785px; height:55px; top:50px; background-color:white;">
+	<table style="width:100%;">
+		<tr style="height:55px; color:white; background-color:black;">
+			<th style="width:58px;">Roll ID</th>
+			<th style="width:67px;">RFID</th>
+			<th style="width:120px;">Paper Code</th>
+			<th style="width:67px;">Size</th>
+			<th style="width:67px;">Initial Weight</th>
+			<th style="width:67px;">Current Weight</th>
+			<th style="width:69px;">Lane</th>
+			<th style="width:69px;">Position</th>
+			<th style="width:160px; background-color:white;"><button id="createnew" onclick="javascript:createNew()">Create New</button></th>
+		</tr>
+	</table>
+	<iframe id="showtaglist" src="{{ showtaglist_url }}" frameborder="0" style="visibility:visible; width:785px; height:442px;" marginheight="0" marginwidth="0" scrolling="no"></iframe>
+	</div>
+	<div style="top:0px; left:10px;"><button id="uppest">Top Most</button></div>
+	<div style="top:0px; left:377px;"><button id="upper">Seek Previous</button></div>
+	<div style="top:0px; left:742px;"><button id="up">Previous</button></div>
+	<div style="top:555px; left:10px;"><button id="downest">Bottom Most</button></div>
+	<div style="top:555px; left:377px;"><button id="downer">Seek Next</button></div>
+	<div style="top:555px; left:742px;"><button id="down">Next</button></div>
+
+	<form id="frm6" action="{{ tagman_url }}createnew/" method="get">
+		<input id="asupid" type="hidden" value="" name="asupid" />
+		<input id="arollid" type="hidden" value="" name="arollid" />
+		<input id="arfid" type="hidden" value="" name="arfid" />
+		<input id="apcode" type="hidden" value="" name="apcode" />
+		<input id="asize" type="hidden" value="" name="asize" />
+		<input id="alane" type="hidden" value="" name="alane" />
+		<input id="aposition" type="hidden" value="" name="aposition" />
+		<input id="aweight" type="hidden" value="" name="aweight" />
+		<input id="atag2write" type="hidden" value="" name="atag2write" />
+	</form>
+
+	<form id="frm7" action="{{ tagman_url }}assigntag/" method="get">
+<!--		<input id="asupid" type="hidden" value="" name="asupid" />-->
+<!--		<input id="arollid" type="hidden" value="" name="arollid" />-->
+		<input id="arfid" type="hidden" value="" name="arfid" />
+<!--		<input id="apcode" type="hidden" value="" name="apcode" />-->
+<!--		<input id="asize" type="hidden" value="" name="asize" />-->
+		<input id="alane" type="hidden" value="" name="alane" />
+		<input id="aposition" type="hidden" value="" name="aposition" />
+<!--		<input id="aweight" type="hidden" value="" name="aweight" />-->
+		<input id="atag2write" type="hidden" value="" name="atag2write" />
+	</form>
+
+	<form id="frm7" action="{{ tagman_url }}writemore/" method="get">
+<!--		<input id="asupid" type="hidden" value="" name="asupid" />-->
+<!--		<input id="arollid" type="hidden" value="" name="arollid" />-->
+		<input id="arfid" type="hidden" value="" name="arfid" />
+<!--		<input id="apcode" type="hidden" value="" name="apcode" />-->
+<!--		<input id="asize" type="hidden" value="" name="asize" />-->
+<!--		<input id="alane" type="hidden" value="" name="alane" />-->
+<!--		<input id="aposition" type="hidden" value="" name="aposition" />-->
+<!--		<input id="aweight" type="hidden" value="" name="aweight" />-->
+		<input id="atag2write" type="hidden" value="" name="atag2write" />
+	</form>
+</body>
+</html>
