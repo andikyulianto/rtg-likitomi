@@ -62,7 +62,7 @@ def section(request):
 #	print "this is task " +str(task)
 
 	page =  str(task)
-
+	print page
 	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
 
 	if(page == "PC"):
