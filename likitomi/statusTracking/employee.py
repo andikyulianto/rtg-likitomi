@@ -7,8 +7,9 @@ class Employee:
 		cv = AuthGroup.objects.get(name="CV")
 		pt = AuthGroup.objects.get(name="PT")
 		wh = AuthGroup.objects.get(name="WH")
-
+		gm = AuthGroup.objects.get(name="GM")
 		user = AuthUser.objects.get(username=name)
+		
 		self.username = name
 		self.id = user.id
 		self.firstname = user.first_name
@@ -24,4 +25,6 @@ class Employee:
 			self.task = "PT"
 		elif (AuthUserGroups.objects.filter(user_id = self.id, group_id = wh.id).count() > 0):
 			self.task = "WH"
+		elif (AuthUserGroups.objects.filter(user_id = self.id, group_id = gm.id).count() > 0):
+			self.task = "GM"
 

@@ -1,21 +1,107 @@
-{% extends "PC/container.html" %}
+{% extends "CR/container.html" %}
 {% block view %}
+<!--PATH SETTINGS START-->
+{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.section as home_url %}
+{% url statusTracking.line.startCR as startCR_url %}
+{% url statusTracking.line.endCR as endCR_url %}
+<!--PATH SETTINGS END-->
+<!-- 
+<div id="wrapper" style="width:100%">
+    <div id="header" >
 
+    	<table width="100%">
+    		<thead id="mainMenu">
+    			<tr>
+    				<th align="left" width="60%"><a id="normalLink" href="{{ home_url }}?user={{username}}">Home</a> </th>
+    				<th align="left" width="30%">
+						<form id="form_search" action="#">
+							<fieldset id="form_search_fieldset">
+								Search:&nbsp 
+								<input type="text" class="searchbox" name="search" id="key_search" /> 
+								<span class="loading">Loading ...</span>
+							</fieldset>
+						</form>
+    				</th>
+    				<th align="right" width="10%"><a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+    			</tr>
+    		</thead>
+    	</table>
 
+	</div>
+</div>
+-->
+<div id="content">
 <center>
 
 			
-			<table align=center class=tbltableMD><span class="header">
-			<tr width="100%" align=center  bgColor= "#cccccc">
-			<th>P.O.</th><th>S.O.</th><th>P.code</th><th>Amout</th><th>CR</th><th>CV</th><th>PT</th><th>WH</th><th>Due</th><th>Readiness</th>
-			</tr>
-			{% for product_code,plan_amount,actual_amount_cr,plan_cr_start,actual_amount_cv,plan_cv_start,actual_amount_pt,plan_pt_start,actual_amount_wh,plan_wh_start,plan_due in showGM_items %}
+	<table id="GMTable">
+		<thead><tr>
+			<h3><th width="10%">P.O.</th><th width="10%">S.O.</th><th>P.code</th><th>Amout</th><th  width="10%">CR</th><th width="10%">CV</th><th width="10%">PT</th><th width="10%">WH</th><th width="10%">Due</th><th>Readiness</th>
+			</h3>
+		</tr></thead>
+		<tbody>
+		{% for item in showGM_items %}
 			<tr align="center" class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
-			<td></td><td></td><td>{{product_code}}</td><td><center>{{plan_amount}}<center></td>{% if plan_cr_start != NULL %}<td>{{actual_amount_cr}}</td>{% else %}<td bgColor="black"></td>{% endif %}{% if plan_cv_start != NULL %}<td>{{actual_amount_cv}}</td>{% else %}<td bgColor="black"></td>{% endif %}{% if plan_pt_start != NULL %}<td>{{actual_amount_pt}}</td>{% else %}<td bgColor="black"></td>{% endif %}{% if plan_wh_start != NULL %}<td>{{actual_amount_wh}}</td>{% else %}<td bgColor="black"></td>{% endif %}<td>{{plan_due}}</td><td>{% if plan_amount <= actual_amount_wh %}<span class='name'><img alt='list' src='images/office/Package-Accept32.png' />{% else %}<img alt='list' src='images/office/Package-Warning32.png' />{% endif %}</span></td>
+			<td></td><td></td><td>{{item.product.product_code}}</td>
+			<td><center><b><h3>{{item.plan_amount}}</b></h3><center></td>
+			{% if item.plan_cr_start != NULL %}
+				<td>
+				{% if item.actual_amount_cr != NULL %}
+					{{item.actual_amount_cr}}
+				{% else %}
+					0
+				{% endif %}
+				</td>
+			{% else %}
+				<td bgColor="black"></td>
+			{% endif %}
+			{% if item.plan_cv_start != NULL %}
+				<td>
+				{% if item.actual_amount_cv != NULL %}
+					{{item.actual_amount_cv}}
+				{% else %}
+					0
+				{% endif %}
+				</td>
+			{% else %}
+				<td bgColor="black"></td>
+			{% endif %}
+			{% if item.plan_pt_start != NULL %}
+				<td>
+				{% if item.actual_amount_pt != NULL %}
+					{{item.actual_amount_pt}}
+				{% else %}
+					0
+				{% endif %}
+				</td>
+			{% else %}
+				<td bgColor="black"></td>
+			{% endif %}
+			{% if item.plan_wh_start != NULL %}
+				<td><h3>
+				{% if item.actual_amount_wh != NULL %}
+					{{item.actual_amount_wh}}
+				{% else %}
+					0
+				{% endif %}
+				</h3></td>
+			{% else %}
+				<td bgColor="black"></td>
+			{% endif %}
+			<td>{{item.days_left}}</td>
+			<td>
+			{% if item.plan_amount <= item.actual_amount_wh %}<span class='name'><img alt='list' src='images/office/Package-Accept32.png' />{% else %}<img alt='list' src='images/office/Package-Warning32.png' />
+			{% endif %}</span></td>
 			</tr>
 			{% endfor %}
+		</tbody>
 
-			</tr>
-			</table>
+	</table>
+	
+
+	
+</center>
 </div>
 {% endblock %}
+
