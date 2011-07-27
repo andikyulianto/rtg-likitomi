@@ -38,7 +38,7 @@ class PaperRolldetails(models.Model):
     uom = models.CharField(max_length=60, blank=True)
     lane = models.CharField(max_length=3)
     position = models.IntegerField(null=True, blank=True)
-    rfid_roll_id = models.CharField(max_length=765, blank=True, unique=True)
+    rfid_roll_id = models.CharField(max_length=255, blank=True, unique=True)
     invoice_no = models.CharField(max_length=90, blank=True)
     invoice_date = models.DateField(null=True, blank=True)
     isdeleted = models.IntegerField(default=0)
