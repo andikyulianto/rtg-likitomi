@@ -1459,6 +1459,10 @@ function createNew()
 		var supidval = top.document.getElementById('supid_box1').value+"/"+top.document.getElementById('supid_box2').value;
 		var idval = top.document.getElementById('id_box').value;
 		var rfidval = top.document.getElementById('rfid_box').value;
+		if (rfidval.toString().length == 1){ strrfidval = '000'+rfidval.toString()}
+		if (rfidval.toString().length == 2){ strrfidval = '00'+rfidval.toString()}
+		if (rfidval.toString().length == 3){ strrfidval = '0'+rfidval.toString()}
+		if (rfidval.toString().length == 4){ strrfidval = rfidval.toString()}
 		var pcodeval = top.document.getElementById('pcode_select').value;
 		var sizeval = top.document.getElementById('size_select').value;
 		var laneval = top.document.getElementById('lane_box').value;
@@ -1493,11 +1497,26 @@ function createNew()
 					document.getElementById("aposition").value = positionval;
 					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
-//					alert(document.getElementById("atag2write").value);
-					document.getElementById("frm6").submit();
-//					id_box.value = document.getElementById('avaitag').value;
-					top.document.body.removeChild(top.document.getElementById('layer'));
-					top.document.body.removeChild(top.document.getElementById('box'));
+					var tag2write = document.getElementById('tag2write').value;
+					if (tag2write.search("00000000000000") > -1) {
+						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
+						if (r == true){
+							document.getElementById("frm6").submit();
+							top.document.body.removeChild(top.document.getElementById('layer'));
+							top.document.body.removeChild(top.document.getElementById('box'));
+						}
+						else {
+							pass++;
+						}
+					}
+					else if (tag2write == ''){
+						alert("Writing on location tag is not allowed.");
+					}
+					else {
+						document.getElementById("frm6").submit();
+						top.document.body.removeChild(top.document.getElementById('layer'));
+						top.document.body.removeChild(top.document.getElementById('box'));
+					}
 				}
 			} else if (parseInt(positionval) > 13){
 				alert("The submitted position is not in range (1-13).");

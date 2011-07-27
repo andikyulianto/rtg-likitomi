@@ -1,4 +1,4 @@
-function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initial_weight, current_weight, lane, position)
+function locTag()
 {
 	var agent = navigator.userAgent;
 	var patt1 = /Chrome/;
@@ -42,127 +42,20 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	top.document.body.appendChild(div);
 
 	var mes = document.createElement('b');
-	mes.innerHTML = "<center>Please check the information.</center>".fontsize(4);
+	mes.innerHTML = "<center>Please enter lane and position.</center>".fontsize(4);
 	div.appendChild(mes);
 
-// Roll ID //
-	var id = document.createElement('b');
-	id.innerHTML = '<br />Roll ID: '.fontsize(4)+paper_roll_detail_id.toString().fontsize(4);
-	div.appendChild(id);
-
-//	var id_box = document.createElement('b');
-//	id_box.id = 'id_box';
-//	id_box.type = 'text';
-//	id_box.maxLength = '4';
-//	id_box.style.width = '90px';
-//	id_box.style.fontSize = '200%';
-//	id_box.style.color = 'black';
-//	id_box.style.textAlign = 'center';
-//	id_box.innerHTML = paper_roll_detail_id;
-//	div.appendChild(id_box);
-
-// RFID //
-	var id = document.createElement('b');
-	id.innerHTML = '<br /><br />RFID: '.fontsize(4);
-	div.appendChild(id);
-
-	var rfid_box = document.createElement('input');
-	rfid_box.id = 'rfid_box';
-	rfid_box.type = 'text';
-	rfid_box.maxLength = '4';
-	rfid_box.style.width = '90px';
-	rfid_box.style.fontSize = '200%';
-	rfid_box.style.color = 'black';
-	rfid_box.style.textAlign = 'center';
-	rfid_box.value = paper_roll_detail_id;
-	rfid_box.readOnly = true;
-	rfid_box.style.backgroundColor = 'lightgray';
-	div.appendChild(rfid_box);
-
-// Paper Code //
-	var pcode = document.createElement('b');
-	pcode.innerHTML = '<br /><br />Paper Code: '.fontsize(4)+paper_code.toString().fontsize(4);
-	div.appendChild(pcode);
-
-//	var pcode_box = document.createElement('div');
-//	pcode_box.style.backgroundColor = 'lightgray';
-//	pcode_box.style.position = 'absolute';
-//	pcode_box.style.height = '30px';
-//	pcode_box.style.top = '195px';
-//	pcode_box.style.left = '120px';
-//	div.appendChild(pcode_box);
-//	var pcode_form = document.createElement('form');
-//	pcode_box.appendChild(pcode_form);
-//	var pcode_select = document.createElement('select');
-//	pcode_select.id = 'pcode_select';
-//	pcode_select.style.height = '30px';
-//	pcode_form.appendChild(pcode_select);
-//	var i = 0;
-//	var spcodelist = document.getElementById('spcodelist').value;
-//	spcodelist = spcodelist.replace(/[\[\]\'u ]/g,'');
-//	var spcodearr = new Array();
-//	spcodearr = spcodelist.split(',');
-//	for (i=0;i<=spcodearr.length-1;i++){
-//		pcode_select.options[i] = new Option(spcodearr[i],spcodearr[i]);
-//	}
-
-// Size //
-	var size = document.createElement('b');
-	size.innerHTML = '<br /><br />Size: '.fontsize(4)+psize.toString().fontsize(4);
-	div.appendChild(size);
-
-//	var size_box = document.createElement('div');
-//	size_box.style.backgroundColor = 'lightgray';
-//	size_box.style.position = 'absolute';
-//	size_box.style.height = '30px';
-//	size_box.style.top = '235px';
-//	size_box.style.left = '60px';
-//	div.appendChild(size_box);
-//	var size_form = document.createElement('form');
-//	size_box.appendChild(size_form);
-//	var size_select = document.createElement('select');
-//	size_select.id = 'size_select';
-//	size_select.style.height = '30px';
-//	size_form.appendChild(size_select);
-//	var i = 0;
-//	var swidthlist = document.getElementById('swidthlist').value;
-//	swidthlist = swidthlist.replace(/[\[\]\L ]/g,'');
-//	var swidtharr = new Array();
-//	swidtharr = swidthlist.split(',');
-//	for (i=0;i<=swidtharr.length-1;i++){
-//		size_select.options[i] = new Option(swidtharr[i],swidtharr[i]);
-//	}
-
-// Weight //
-	var init_weight = document.createElement('b');
-	init_weight.innerHTML = '<br /><br />Initial Weight: '.fontsize(4)+initial_weight.toString().fontsize(4);
-	div.appendChild(init_weight);
-
-	var curr_weight = document.createElement('b');
-	curr_weight.innerHTML = '<br /><br />Current Weight: '.fontsize(4)+current_weight.toString().fontsize(4);
-	div.appendChild(curr_weight);
-
-//	var weight_box = document.createElement('input');
-//	weight_box.id = 'weight_box';
-//	weight_box.type = 'text';
-//	weight_box.maxLength = '4';
-//	weight_box.style.width = '90px';
-//	weight_box.style.fontSize = '150%';
-//	weight_box.style.color = 'black';
-//	weight_box.style.textAlign = 'center';
-//	div.appendChild(weight_box);
-
 // Location //
-	var location = document.createElement('b');
-	location.innerHTML = '<br /><br />Location: '.fontsize(4);
-	div.appendChild(location);
+	var lane = document.createElement('b');
+	lane.innerHTML = '<br />Lane > '.fontsize(5);
+	div.appendChild(lane);
 
 	var lane_box = document.createElement('input');
 	lane_box.id = 'lane_box';
 	lane_box.type = 'text';
 	lane_box.maxLength = '1';
-	lane_box.style.width = '30px';
-	lane_box.style.fontSize = '150%';
+	lane_box.style.width = '35px';
+	lane_box.style.fontSize = '200%';
 	lane_box.style.color = 'black';
 	lane_box.style.textAlign = 'center';
 	div.appendChild(lane_box);
@@ -173,110 +66,158 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	position_box.id = 'position_box';
 	position_box.type = 'text';
 	position_box.maxLength = '2';
-	position_box.style.width = '50px';
-	position_box.style.fontSize = '150%';
+	position_box.style.width = '55px';
+	position_box.style.fontSize = '200%';
 	position_box.style.color = 'black';
 	position_box.style.textAlign = 'center';
 	div.appendChild(position_box);
+
+	var position = document.createElement('b');
+	position.innerHTML = ' < Position'.fontsize(5);
+	div.appendChild(position);
 
 // Lane Pad //
 	var lanepad = document.createElement('div');
 	lanepad.id = 'lanepad';
 	lanepad.style.position = 'absolute';
-	lanepad.style.top = '0px';
-	lanepad.style.left = '180px';
+	lanepad.style.top = '40px';
+	lanepad.style.left = '10px';
 	lanepad.style.visibility = 'hidden';
 	div.appendChild(lanepad);
 
-	var h = document.createElement('a');
-	h.id = 'lanebtn';
-	h.style.top = '100px';
-	h.style.left = '50px';
-	h.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"H".fontsize(4).bold()+"</td></tr></table>";
-	h.onclick = function()
+	var four_lane = document.createElement('a');
+	four_lane.id = 'lanenumbtn';
+	four_lane.style.top = '100px';
+	four_lane.style.left = '50px';
+	four_lane.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"4".fontsize(6).bold()+"</td></tr></table>";
+	four_lane.onclick = function()
 	{
-		top.document.getElementById('lane_box').value = 'H';
+		top.document.getElementById('lane_box').value = '4';
 	}
-	lanepad.appendChild(h);
+	lanepad.appendChild(four_lane);
 
-	var g = document.createElement('a');
-	g.id = 'lanebtn';
-	g.style.top = '140px';
-	g.style.left = '50px';
-	g.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"G".fontsize(4).bold()+"</td></tr></table>";
-	g.onclick = function()
+	var three_lane = document.createElement('a');
+	three_lane.id = 'lanenumbtn';
+	three_lane.style.top = '170px';
+	three_lane.style.left = '50px';
+	three_lane.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"3".fontsize(6).bold()+"</td></tr></table>";
+	three_lane.onclick = function()
 	{
-		top.document.getElementById('lane_box').value = 'G';
+		top.document.getElementById('lane_box').value = '3';
 	}
-	lanepad.appendChild(g);
+	lanepad.appendChild(three_lane);
 
-	var f = document.createElement('a');
-	f.id = 'lanebtn';
-	f.style.top = '170px';
-	f.style.left = '50px';
-	f.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"F".fontsize(4).bold()+"</td></tr></table>";
-	f.onclick = function()
+	var two_lane = document.createElement('a');
+	two_lane.id = 'lanenumbtn';
+	two_lane.style.top = '240px';
+	two_lane.style.left = '50px';
+	two_lane.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"2".fontsize(6).bold()+"</td></tr></table>";
+	two_lane.onclick = function()
 	{
-		top.document.getElementById('lane_box').value = 'F';
+		top.document.getElementById('lane_box').value = '2';
 	}
-	lanepad.appendChild(f);
+	lanepad.appendChild(two_lane);
 
-	var e = document.createElement('a');
-	e.id = 'lanebtn';
-	e.style.top = '210px';
-	e.style.left = '50px';
-	e.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"E".fontsize(4).bold()+"</td></tr></table>";
-	e.onclick = function()
+	var one_lane = document.createElement('a');
+	one_lane.id = 'lanenumbtn';
+	one_lane.style.top = '310px';
+	one_lane.style.left = '50px';
+	one_lane.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"1".fontsize(6).bold()+"</td></tr></table>";
+	one_lane.onclick = function()
 	{
-		top.document.getElementById('lane_box').value = 'E';
+		top.document.getElementById('lane_box').value = '1';
 	}
-	lanepad.appendChild(e);
+	lanepad.appendChild(one_lane);
 
-	var d = document.createElement('a');
-	d.id = 'lanebtn';
-	d.style.top = '240px';
-	d.style.left = '50px';
-	d.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"D".fontsize(4).bold()+"</td></tr></table>";
-	d.onclick = function()
-	{
-		top.document.getElementById('lane_box').value = 'D';
-	}
-	lanepad.appendChild(d);
+//	var h = document.createElement('a');
+//	h.id = 'lanebtn';
+//	h.style.top = '100px';
+//	h.style.left = '50px';
+//	h.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"H".fontsize(4).bold()+"</td></tr></table>";
+//	h.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'H';
+//	}
+//	lanepad.appendChild(h);
 
-	var c = document.createElement('a');
-	c.id = 'lanebtn';
-	c.style.top = '280px';
-	c.style.left = '50px';
-	c.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"C".fontsize(4).bold()+"</td></tr></table>";
-	c.onclick = function()
-	{
-		top.document.getElementById('lane_box').value = 'C';
-	}
-	lanepad.appendChild(c);
+//	var g = document.createElement('a');
+//	g.id = 'lanebtn';
+//	g.style.top = '140px';
+//	g.style.left = '50px';
+//	g.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"G".fontsize(4).bold()+"</td></tr></table>";
+//	g.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'G';
+//	}
+//	lanepad.appendChild(g);
 
-	var b = document.createElement('a');
-	b.id = 'lanebtn';
-	b.style.top = '310px';
-	b.style.left = '50px';
-	b.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"B".fontsize(4).bold()+"</td></tr></table>";
-	b.onclick = function()
-	{
-		top.document.getElementById('lane_box').value = 'B';
-	}
-	lanepad.appendChild(b);
+//	var f = document.createElement('a');
+//	f.id = 'lanebtn';
+//	f.style.top = '170px';
+//	f.style.left = '50px';
+//	f.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"F".fontsize(4).bold()+"</td></tr></table>";
+//	f.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'F';
+//	}
+//	lanepad.appendChild(f);
 
-	var a = document.createElement('a');
-	a.id = 'lanebtn';
-	a.style.top = '350px';
-	a.style.left = '50px';
-	a.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"A".fontsize(4).bold()+"</td></tr></table>";
-	a.onclick = function()
-	{
-		top.document.getElementById('lane_box').value = 'A';
-	}
-	lanepad.appendChild(a);
+//	var e = document.createElement('a');
+//	e.id = 'lanebtn';
+//	e.style.top = '210px';
+//	e.style.left = '50px';
+//	e.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"E".fontsize(4).bold()+"</td></tr></table>";
+//	e.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'E';
+//	}
+//	lanepad.appendChild(e);
 
-	var current_input;
+//	var d = document.createElement('a');
+//	d.id = 'lanebtn';
+//	d.style.top = '240px';
+//	d.style.left = '50px';
+//	d.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"D".fontsize(4).bold()+"</td></tr></table>";
+//	d.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'D';
+//	}
+//	lanepad.appendChild(d);
+
+//	var c = document.createElement('a');
+//	c.id = 'lanebtn';
+//	c.style.top = '280px';
+//	c.style.left = '50px';
+//	c.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"C".fontsize(4).bold()+"</td></tr></table>";
+//	c.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'C';
+//	}
+//	lanepad.appendChild(c);
+
+//	var b = document.createElement('a');
+//	b.id = 'lanebtn';
+//	b.style.top = '310px';
+//	b.style.left = '50px';
+//	b.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"B".fontsize(4).bold()+"</td></tr></table>";
+//	b.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'B';
+//	}
+//	lanepad.appendChild(b);
+
+//	var a = document.createElement('a');
+//	a.id = 'lanebtn';
+//	a.style.top = '350px';
+//	a.style.left = '50px';
+//	a.innerHTML = "<table style='width:100%;'><tr><td style='cursor:pointer;'>"+"A".fontsize(4).bold()+"</td></tr></table>";
+//	a.onclick = function()
+//	{
+//		top.document.getElementById('lane_box').value = 'A';
+//	}
+//	lanepad.appendChild(a);
+
+//	var current_input;
 
 //	function idInput() {
 ////		console.log(this);
@@ -299,7 +240,7 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 //		numpad_weight.style.visibility = 'hidden';
 		numpad_pos.style.visibility = 'visible';
 		lanepad.style.visibility = 'hidden';
-		div.style.width = '420px';
+		div.style.width = '300px';
 	}
 	function laneInput() {
 		lanepad.style.visibility = 'visible';
@@ -327,8 +268,8 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	var numpad_pos = document.createElement('div');
 	numpad_pos.id = 'numpad';
 	numpad_pos.style.position = 'absolute';
-	numpad_pos.style.top = '10px';
-	numpad_pos.style.left = '30px';
+	numpad_pos.style.top = '40px';
+	numpad_pos.style.left = '-140px';
 	numpad_pos.style.visibility = 'hidden';
 	div.appendChild(numpad_pos);
 
@@ -535,11 +476,7 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	ok_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
 	ok_id.onclick = function()
 	{
-		var rfidval = top.document.getElementById('rfid_box').value;
-		if (rfidval.toString().length == 1){ strrfidval = '000'+rfidval.toString()}
-		if (rfidval.toString().length == 2){ strrfidval = '00'+rfidval.toString()}
-		if (rfidval.toString().length == 3){ strrfidval = '0'+rfidval.toString()}
-		if (rfidval.toString().length == 4){ strrfidval = rfidval.toString()}
+//		var rfidval = top.document.getElementById('rfid_box').value;
 //		var idval = top.document.getElementById('id_box').value;
 //		var pcodeval = top.document.getElementById('pcode_select').value;
 //		var sizeval = top.document.getElementById('size_select').value;
@@ -548,10 +485,12 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 //		var weightval = top.document.getElementById('weight_box').value;
 //		alert(idval+', '+pcodeval+', '+sizeval+', '+laneval+', '+positionval+', '+weightval);
 //		alert(document.getElementById('tag2write').value);
-//		var pass = 0;
-//		var messi = '';
-//		if (rfidval != ''){
-			if (positionval == '' || parseInt(positionval) <= 13){
+		var pass = 0;
+		var messi = '';
+//		alert(laneval);
+//		alert(positionval);
+		if (laneval != '' && positionval != ''){
+			if (parseInt(positionval) <= 13){
 				submitTag();
 //				var idvalue = '('+idval.toString()+'L,)';
 //				var taglist = document.getElementById('tagidquery').value;
@@ -567,20 +506,21 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 //					}
 //				}
 				function submitTag(){
-//					alert('Before Submit!');
-					document.getElementById("arfid").value = rfidval;
+//					document.getElementById("arfid2").value = rfidval;
 //					document.getElementById("atagid").value = idval;
 //					document.getElementById("apcode").value = pcodeval;
 //					document.getElementById("asize").value = sizeval;
-					document.getElementById("alane").value = laneval;
-					document.getElementById("aposition").value = positionval;
+					document.getElementById("alane2").value = laneval;
+					document.getElementById("aposition2").value = positionval;
 //					document.getElementById("aweight").value = weightval;
-					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
+//					alert(document.getElementById("alane2").value);
+//					alert(document.getElementById("aposition2").value);
+					document.getElementById("atag2write2").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
 					if (tag2write.search("00000000000000") > -1) {
-						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
+						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to location tag '"+laneval+" - "+positionval+"'.");
 						if (r == true){
-							document.getElementById("frm7").submit();
+							document.getElementById("frm9").submit();
 							top.document.body.removeChild(top.document.getElementById('layer'));
 							top.document.body.removeChild(top.document.getElementById('box'));
 						}
@@ -592,7 +532,7 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 						alert("Writing on location tag is not allowed.");
 					}
 					else {
-						document.getElementById("frm7").submit();
+						document.getElementById("frm9").submit();
 						top.document.body.removeChild(top.document.getElementById('layer'));
 						top.document.body.removeChild(top.document.getElementById('box'));
 					}
@@ -600,12 +540,12 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 			} else if (parseInt(positionval) > 13){
 				alert("The submitted position is not in range (1-13).");
 			}
-//		}
-//		else {
-//			if (idval == ''){ messi += '- Please enter tag ID.\n'; }
-//			if (weightval == ''){ messi += '- Please enter weight.\n'; }
-//			alert(messi);
-//		}
+		}
+		else {
+			if (laneval == ''){ messi += '- Please enter lane.\n'; }
+			if (positionval == ''){ messi += '- Please enter position.\n'; }
+			alert(messi);
+		}
 	}
 	div.appendChild(ok_id);
 

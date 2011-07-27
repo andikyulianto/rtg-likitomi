@@ -16,7 +16,7 @@ from weight.showplan import showplan, required, detail
 from weight.inventory import inventory
 from weight.minclamp import minclamp, minupdate, minundo, minchangeloc, minassigntag
 from weight.maxclamp import maxclamp, maxupdate, maxundo, maxchangeloc, maxassigntag
-from weight.tagman import tagman, showtaglist, createnew, assigntag, writemore
+from weight.tagman import tagman, showtaglist, createnew, assigntag, writemore, loctag
 from weight.longtry import orient, longtry
 
 # Uncomment the next two lines to enable the admin:
@@ -109,12 +109,14 @@ urlpatterns = patterns('',
 	(r'^tagman/$', tagman),
 	(r'^tagman/createnew/$', createnew),
 	(r'^tagman/createnew/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^tagman/assigntag/$', assigntag),
-	(r'^tagman/assigntag/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^tagman/writemore/$', writemore),
-	(r'^tagman/writemore/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^tagman/loctag/$', loctag),
+	(r'^tagman/loctag/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^tagman/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^showtaglist/$', showtaglist),
+	(r'^showtaglist/assigntag/$', assigntag),
+	(r'^showtaglist/assigntag/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^showtaglist/writemore/$', writemore),
+	(r'^showtaglist/writemore/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^showtaglist/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
 #	(r'^orient/$', orient),

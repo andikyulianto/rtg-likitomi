@@ -9,7 +9,10 @@ $lang['planning'] 		= "แผนงาน";
 $lang['reportplanning'] = "รายงาน แผนงาน";
 $lang['warehouse'] 		= "คลังสินค้า";
 $lang['translator'] 	= "แปล";
-$lang['clampliftmanger'] = "จัดการรถ clamplift";
+$lang['clampliftmanger'] = "แผนงานของแคลมป์ลิฟท์";
+$lang['statustracking'] 	= "ติดตามกระบวนการผลิต";
+$lang['weighingdicator'] = "จัดการรถแคลมป์ลิฟท์";
+$lang['tagman'] = "จัดการป้ายข้อมูล";
 $lang['english'] = "ภาษาอังกฤษ";
 $lang['thai'] = "ภาษาไทย";
 

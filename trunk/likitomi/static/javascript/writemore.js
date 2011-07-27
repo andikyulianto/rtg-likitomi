@@ -549,7 +549,7 @@ function writeMore(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 //		var messi = '';
 //		if (rfidval != ''){
 //			if (positionval == '' || parseInt(positionval) <= 13){
-				submitTag();
+		submitTag();
 //				var idvalue = '('+idval.toString()+'L,)';
 //				var taglist = document.getElementById('tagidquery').value;
 //				if (taglist.indexOf(idvalue) == -1){
@@ -563,22 +563,41 @@ function writeMore(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 //						pass++;
 //					}
 //				}
-				function submitTag(){
-					alert('Before Submit!');
-					document.getElementById("arfid").value = rfidval;
+		function submitTag(){
+//					alert('Before Submit!');
+			document.getElementById("arfid2").value = rfidval;
+			if (rfidval.toString().length == 1){ strrfidval = '000'+rfidval.toString()}
+			if (rfidval.toString().length == 2){ strrfidval = '00'+rfidval.toString()}
+			if (rfidval.toString().length == 3){ strrfidval = '0'+rfidval.toString()}
+			if (rfidval.toString().length == 4){ strrfidval = rfidval.toString()}
 //					document.getElementById("atagid").value = idval;
 //					document.getElementById("apcode").value = pcodeval;
 //					document.getElementById("asize").value = sizeval;
 //					document.getElementById("alane").value = laneval;
 //					document.getElementById("aposition").value = positionval;
 //					document.getElementById("aweight").value = weightval;
-					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
-//					alert(document.getElementById("atag2write").value);
+			document.getElementById("atag2write2").value = document.getElementById('tag2write').value;
+			var tag2write = document.getElementById('tag2write').value;
+			if (tag2write.search("00000000000000") > -1) {
+				var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
+				if (r == true){
 					document.getElementById("frm8").submit();
-//					id_box.value = document.getElementById('avaitag').value;
 					top.document.body.removeChild(top.document.getElementById('layer'));
 					top.document.body.removeChild(top.document.getElementById('box'));
 				}
+				else {
+					pass++;
+				}
+			}
+			else if (tag2write == ''){
+				alert("Writing on location tag is not allowed.");
+			}
+			else {
+				document.getElementById("frm8").submit();
+				top.document.body.removeChild(top.document.getElementById('layer'));
+				top.document.body.removeChild(top.document.getElementById('box'));
+			}
+		}
 //			} else if (parseInt(positionval) > 13){
 //				alert("The submitted position is not in range (1-13).");
 //			}

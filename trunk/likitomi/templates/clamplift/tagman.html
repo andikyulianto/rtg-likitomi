@@ -38,6 +38,15 @@ background-color: slategray;
 border: 2px solid silver;
 }
 
+#lanenumbtn
+{
+position: absolute;
+width: 210px;
+height: 50px;
+background-color: slategray;
+border: 2px solid silver;
+}
+
 #confirm
 {
 position:absolute;
@@ -52,6 +61,7 @@ background-color:dimgray;
 <script type="text/javascript" src="javascript/createnew.js"></script>
 <script type="text/javascript" src="javascript/assigntag.js"></script>
 <script type="text/javascript" src="javascript/writemore.js"></script>
+<script type="text/javascript" src="javascript/loctag.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -73,6 +83,8 @@ $(document).ready(function(){
 	$( "#downer" ).button({icons: {primary: "ui-icon-seek-next"}, text: false});
 	$( "#down" ).button({icons: {primary: "ui-icon-triangle-1-e"}, text: false});
 
+	$( "#writeloctag" ).button({icons: {primary: "ui-icon-arrow-4-diag"}});
+
 });
 </script>
 </head>
@@ -87,6 +99,8 @@ $(document).ready(function(){
 <input id='showtaglist_url' type='hidden' value='{% url weight.tagman.showtaglist %}' />
 {% url weight.tagman.tagman as tagman_url %}
 {% url weight.tagman.showtaglist as showtaglist_url %}
+
+<p style="position:absolute; top:-5px;left:65px; font-size:100%;">Now reading >>> {% if realtag and atlane and atposition %}more than 1 tag, cannot write.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}Roll ID: {{ realtag }}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }} - {{ atposition }}{% endif %}</b></p>
 
 	<div style="width:785px; height:55px; top:50px; background-color:white;">
 	<table style="width:100%;">
@@ -111,6 +125,8 @@ $(document).ready(function(){
 	<div style="top:555px; left:377px;"><button id="downer">Seek Next</button></div>
 	<div style="top:555px; left:742px;"><button id="down">Next</button></div>
 
+	<div style="top:0px; left:467px;"><button id="writeloctag" onclick="javascript:locTag()">Write Location Tag</button></div>
+
 	<form id="frm6" action="{{ tagman_url }}createnew/" method="get">
 		<input id="asupid" type="hidden" value="" name="asupid" />
 		<input id="arollid" type="hidden" value="" name="arollid" />
@@ -123,28 +139,17 @@ $(document).ready(function(){
 		<input id="atag2write" type="hidden" value="" name="atag2write" />
 	</form>
 
-	<form id="frm7" action="{{ tagman_url }}assigntag/" method="get">
+	<form id="frm9" action="{{ tagman_url }}loctag/" method="get">
 <!--		<input id="asupid" type="hidden" value="" name="asupid" />-->
 <!--		<input id="arollid" type="hidden" value="" name="arollid" />-->
-		<input id="arfid" type="hidden" value="" name="arfid" />
+<!--		<input id="arfid" type="hidden" value="" name="arfid" />-->
 <!--		<input id="apcode" type="hidden" value="" name="apcode" />-->
 <!--		<input id="asize" type="hidden" value="" name="asize" />-->
-		<input id="alane" type="hidden" value="" name="alane" />
-		<input id="aposition" type="hidden" value="" name="aposition" />
+		<input id="alane2" type="hidden" value="" name="alane2" />
+		<input id="aposition2" type="hidden" value="" name="aposition2" />
 <!--		<input id="aweight" type="hidden" value="" name="aweight" />-->
-		<input id="atag2write" type="hidden" value="" name="atag2write" />
+		<input id="atag2write2" type="hidden" value="" name="atag2write2" />
 	</form>
 
-	<form id="frm7" action="{{ tagman_url }}writemore/" method="get">
-<!--		<input id="asupid" type="hidden" value="" name="asupid" />-->
-<!--		<input id="arollid" type="hidden" value="" name="arollid" />-->
-		<input id="arfid" type="hidden" value="" name="arfid" />
-<!--		<input id="apcode" type="hidden" value="" name="apcode" />-->
-<!--		<input id="asize" type="hidden" value="" name="asize" />-->
-<!--		<input id="alane" type="hidden" value="" name="alane" />-->
-<!--		<input id="aposition" type="hidden" value="" name="aposition" />-->
-<!--		<input id="aweight" type="hidden" value="" name="aweight" />-->
-		<input id="atag2write" type="hidden" value="" name="atag2write" />
-	</form>
 </body>
 </html>

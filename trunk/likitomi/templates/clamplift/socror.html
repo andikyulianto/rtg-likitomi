@@ -1,7 +1,7 @@
 <html>
 <head>
-{% if mode == 'min' %}<meta http-equiv="Refresh" content="1;url={% url weight.minclamp.minclamp %}" />{% endif %}
-{% if mode == 'max' %}<meta http-equiv="Refresh" content="1;url={% url weight.maxclamp.maxclamp %}" />{% endif %}
+{% if mode == 'min' %}<meta http-equiv="Refresh" content="1;url={% url weight.tagman.tagman %}" />{% endif %}
+{% if mode == 'max' %}<meta http-equiv="Refresh" content="1;url={% url weight.tagman.showtaglist %}" />{% endif %}
 </head>
 <body onload="var socror = document.getElementById('socror').value; alert('Error: Tag cannot be written.\n\n'+socror);">
 <input id="socror" type="hidden" value="{{ socror }}" />
