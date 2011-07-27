@@ -118,7 +118,7 @@ if($action=='add'){
 					<th><?=$this->lang->line('unit')?></th>
 					<th><?=$this->lang->line('initial_weight')?>(Kg)</th>
 					<th><?=$this->lang->line('remarks')?></th>
-					<th><?=$this->lang->line('rfid_tag')?></th>					
+<!--					<th><?=$this->lang->line('rfid_tag')?></th>					-->
 				</tr>
 <?php
 			$cnt=0;
@@ -136,7 +136,7 @@ if($action=='edit'){
 					</select></td>
 					<td><input type='text' id='x_initial_weight_<?=$cnt?>' size='10'  value='<?=$row->initial_weight?>'/></td>
 					<td><input type='text' id='x_remarks_<?=$cnt?>' size='10' value='<?=$row->remarks?>'/></td>
-					<td><input type='text' id='x_rfid_roll_id_<?=$cnt?>'size='10' value='<?=$row->rfid_roll_id?>'/></td>	
+<!--					<td><input type='text' id='x_rfid_roll_id_<?=$cnt?>'size='10' value='<?=$row->rfid_roll_id?>'/></td>	-->
 				</tr>
 <?php
 }}
@@ -154,7 +154,7 @@ $cnt++;
 					</select></td>
 					<td><input type='text' id='x_initial_weight_<?=$i?>' size='10'  value=''/></td>
 					<td><input type='text' id='x_remarks_<?=$i?>' size='10' value=''/></td>
-					<td><input type='text' id='x_rfid_roll_id_<?=$i?>'size='10' value=''/></td>	
+<!--					<td><input type='text' id='x_rfid_roll_id_<?=$i?>'size='10' value=''/></td>	-->
 				</tr>
 <?php 
 }

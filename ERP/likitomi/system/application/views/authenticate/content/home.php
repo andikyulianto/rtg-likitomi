@@ -34,10 +34,11 @@
 			<br/><br/>
 			<table><tr>
                                         <td>&nbsp;</td>
-					<td><p><a href="http://localhost:8000/likitomi/"><?=$this->lang->line('statustracking')?></a></p></td>
+					<td><p><a href="http://localhost/django/likitomi/"><?=$this->lang->line('statustracking')?></a></p></td>
                                         <td>&nbsp;</td>
-					<td><p><a href="http://localhost:8000/dashboard/"><?=$this->lang->line('weighingdicator')?></a></p></td>
-
+					<td><p><a href="http://localhost/django/dashboard/"><?=$this->lang->line('weighingdicator')?></a></p></td>
+                                        <td>&nbsp;</td>
+					<td><p><a href="http://localhost/django/tagman/"><?=$this->lang->line('tagman')?></a></p></td>
 
 				</tr>
 			</table>
