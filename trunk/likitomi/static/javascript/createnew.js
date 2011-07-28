@@ -1479,7 +1479,7 @@ function createNew()
 				if (taglist.indexOf(idvalue) == -1){
 					submitTag();
 				} else {
-					var r = confirm("This tag ID is already used. Continuing assigning tag makes data on this tag be replaced by new entering data.");
+					var r = confirm("This RFID number is already used. Continuing assigning tag makes data for this RFID number be replaced by new entering data.");
 					if (r == true){
 						submitTag();
 					}
@@ -1498,7 +1498,7 @@ function createNew()
 					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
-					if (tag2write.search("00000000000000") > -1) {
+					if (tag2write.search("00000000000000") > -1 && tag2write.substring(1,5) != strrfidval) {
 						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
 						if (r == true){
 							document.getElementById("frm6").submit();

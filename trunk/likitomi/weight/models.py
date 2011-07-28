@@ -25,6 +25,7 @@ class PaperMovement(models.Model):
     class Meta:
         db_table = u'paper_movement'
 
+
 class PaperRolldetails(models.Model):
     paper_roll_detail_id = models.IntegerField(primary_key=True)
     paper_code = models.CharField(max_length=90, blank=True)
@@ -89,66 +90,3 @@ class TblClamplift(models.Model):
     modified_on = models.DateTimeField()
     class Meta:
         db_table = u'tbl_clamplift'
-
-
-#class WeightClampliftplan(models.Model):
-#    id = models.IntegerField(primary_key=True)
-#    date = models.DateField()
-#    start_time = models.TextField() # This field type is a guess.
-#    end_time = models.TextField() # This field type is a guess.
-#    sheet_code = models.CharField(max_length=18)
-#    customer_name = models.CharField(max_length=192)
-#    product = models.CharField(max_length=192)
-#    sono = models.CharField(max_length=15)
-#    ordno = models.CharField(max_length=18)
-#    flute = models.CharField(max_length=3)
-#    df = models.CharField(max_length=18)
-#    bl = models.CharField(max_length=18)
-#    bm = models.CharField(max_length=18)
-#    cl = models.CharField(max_length=18)
-#    cm = models.CharField(max_length=18)
-#    paper_width_mm = models.IntegerField()
-#    paper_width_inch = models.IntegerField()
-#    length_df = models.IntegerField()
-#    length_bl = models.IntegerField()
-#    length_bm = models.IntegerField()
-#    length_cl = models.IntegerField()
-#    length_cm = models.IntegerField()
-#    actual_df = models.IntegerField()
-#    actual_bl = models.IntegerField()
-#    actual_bm = models.IntegerField()
-#    actual_cl = models.IntegerField()
-#    actual_cm = models.IntegerField()
-#    loss_df = models.IntegerField()
-#    loss_bl = models.IntegerField()
-#    loss_bm = models.IntegerField()
-#    loss_cl = models.IntegerField()
-#    loss_cm = models.IntegerField()
-#    sheet_length = models.IntegerField()
-#    case = models.IntegerField()
-#    cut = models.IntegerField()
-#    class Meta:
-#        db_table = u'weight_clampliftplan'
-
-#class WeightPaperhistory(models.Model):
-#    id = models.IntegerField(primary_key=True)
-#    roll_id = models.IntegerField()
-#    before_wt = models.IntegerField()
-#    last_wt = models.IntegerField()
-#    timestamp = models.DateTimeField()
-#    class Meta:
-#        db_table = u'weight_paperhistory'
-
-#class WeightPaperroll(models.Model):
-#    id = models.IntegerField(primary_key=True)
-#    tarid = models.IntegerField(unique=True)
-#    paper_code = models.CharField(max_length=18)
-#    width = models.IntegerField()
-#    wunit = models.CharField(max_length=12)
-#    initial_weight = models.IntegerField()
-#    temp_weight = models.IntegerField(null=True, blank=True)
-#    lane = models.CharField(max_length=3)
-#    position = models.IntegerField(null=True, blank=True)
-#    class Meta:
-#        db_table = u'weight_paperroll'
-

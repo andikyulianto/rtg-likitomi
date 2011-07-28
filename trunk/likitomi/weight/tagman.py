@@ -515,14 +515,18 @@ def createnew(request):
 
 				if response.find('ok') != -1:
 					if atag2write.count('0') < 15:
-						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+						if PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).exists() == False:
+							PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+						else:
+							PaperRolldetails.objects.update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 					if atag2write.count('0') >= 15:
 						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 #						tag2del = int(atag2write[1:5])
 #						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
 				else:
 					mode = 'min'
-					return render_to_response('writagror.html', locals())
+#					return render_to_response('writagror.html', locals())
+					return HttpResponseRedirect('/django/tagman/')
 
 			except socket.timeout:
 				mode = 'min'
@@ -586,6 +590,7 @@ def assigntag(request):
 
 			if response.find('ok') != -1:
 				PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid, lane=alane, position=aposition)
+#				return render_to_response('totop.html')
 #					if atag2write.count('0') < 15:
 #						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 #					if atag2write.count('0') >= 15:
