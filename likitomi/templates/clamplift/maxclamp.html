@@ -51,7 +51,7 @@ $(document).ready(function(){
 		setTimeout(clampAll, 2000);
 	});
 
-	$( "#asstag" ).button({icons: {primary: "ui-icon-plusthick"}});
+	$( "#asstag" ).button({icons: {primary: "ui-icon-tag"}});
 	$( "#asstagpic" ).button({icons: {primary: "ui-icon-plusthick"}});
 
 //	if ($("#realtag").val() == '') {
@@ -616,7 +616,7 @@ function otherLoc()
 </div>
 
 	{% url weight.tagman.tagman as tagman_url %}
-	<button id="asstag" style="font-size:100%; position:absolute; bottom:0px;" onclick="top.location.href='{{ tagman_url }}'">Assign Tag</button>
+	<button id="asstag" style="font-size:100%; position:absolute; bottom:0px;" onclick="top.location.href='{{ tagman_url }}'">Tag Management</button>
 
 </body>
 </html>

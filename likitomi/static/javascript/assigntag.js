@@ -577,7 +577,7 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 //					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
-					if (tag2write.search("00000000000000") > -1) {
+					if (tag2write.search("00000000000000") > -1 && tag2write.substring(1,5) != strrfidval) {
 						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
 						if (r == true){
 							document.getElementById("frm7").submit();
