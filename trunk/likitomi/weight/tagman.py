@@ -507,7 +507,7 @@ def createnew(request):
 						if PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).exists() == False:
 							PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 						else:
-							PaperRolldetails.objects.update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+							PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 					if atag2write.count('0') >= 15:
 						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 #						tag2del = int(atag2write[1:5])

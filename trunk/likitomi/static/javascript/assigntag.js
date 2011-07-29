@@ -452,19 +452,28 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 //					document.getElementById("aweight").value = weightval;
 				document.getElementById("atag2write").value = document.getElementById('tag2write').value;
 				var tag2write = document.getElementById('tag2write').value;
-				if (tag2write.search("00000000000000") > -1 && tag2write.substring(1,5) != strrfidval) {
-					var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
-					if (r == true){
-						document.getElementById("frm7").submit();
-						top.document.body.removeChild(top.document.getElementById('layer'));
-						top.document.body.removeChild(top.document.getElementById('box'));
+				if (tag2write.search("00000000000000") > -1) {
+					if (tag2write.substring(1,5) != strrfidval){
+						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
+						if (r == true){
+							document.getElementById("frm7").submit();
+							top.document.body.removeChild(top.document.getElementById('layer'));
+							top.document.body.removeChild(top.document.getElementById('box'));
+						}
+						else {
+							pass++;
+						}
 					}
 					else {
-						pass++;
+						alert("This tag already has the ID trying to write.");
+						top.document.body.removeChild(top.document.getElementById('layer'));
+						top.document.body.removeChild(top.document.getElementById('box'));
 					}
 				}
 				else if (tag2write == ''){
 					alert("Writing on location tag is not allowed.");
+					top.document.body.removeChild(top.document.getElementById('layer'));
+					top.document.body.removeChild(top.document.getElementById('box'));
 				}
 				else {
 					document.getElementById("frm7").submit();

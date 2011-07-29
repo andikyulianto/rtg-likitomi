@@ -510,8 +510,6 @@ function otherLoc()
 <input id='minclamp_url' type='hidden' value='{% url weight.minclamp.minclamp %}' />
 {% url weight.minclamp.minclamp as minclamp_url %}
 
-
-
 <div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -572,7 +570,7 @@ function otherLoc()
 {% endif %}
 
 {% if tagstatus == 'unknown' %}
-	<p class="var">This tag ID is unknown.</p><p class="var">Push <i>"Assign Tag"</i> button at the bottom left<br /> to assign new tag.</p>
+	<p class="var">This tag ID is unknown.</p><p class="var">Push <i>"Tag Management"</i> button at the bottom left<br /> to manage tag.</p>
 {% endif %}
 
 {% if not tagstatus and not socror %}<br /><p class='var' align="center">No ID tag in field</p>{% endif %}

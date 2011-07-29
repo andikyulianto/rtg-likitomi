@@ -796,7 +796,7 @@ function createNew()
 	numpad_id.style.visibility = 'hidden';
 	div.appendChild(numpad_id);
 
-	var trig = 0;
+	var trigger = 0;
 
 	var one_id = document.createElement('a');
 	one_id.id = 'numbtn';
@@ -805,15 +805,15 @@ function createNew()
 	one_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"1".fontsize(6).bold()+"</td></tr></table>";
 	one_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '1';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '1';
 	}
 	numpad_id.appendChild(one_id);
@@ -825,15 +825,15 @@ function createNew()
 	two_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"2".fontsize(6).bold()+"</td></tr></table>";
 	two_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '2';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '2';
 	}
 	numpad_id.appendChild(two_id);
@@ -845,15 +845,15 @@ function createNew()
 	three_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"3".fontsize(6).bold()+"</td></tr></table>";
 	three_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '3';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '3';
 	}
 	numpad_id.appendChild(three_id);
@@ -865,15 +865,15 @@ function createNew()
 	four_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"4".fontsize(6).bold()+"</td></tr></table>";
 	four_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '4';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '4';
 	}
 	numpad_id.appendChild(four_id);
@@ -885,15 +885,15 @@ function createNew()
 	five_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"5".fontsize(6).bold()+"</td></tr></table>";
 	five_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '5';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '5';
 	}
 	numpad_id.appendChild(five_id);
@@ -905,15 +905,15 @@ function createNew()
 	six_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"6".fontsize(6).bold()+"</td></tr></table>";
 	six_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '6';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '6';
 	}
 	numpad_id.appendChild(six_id);
@@ -925,15 +925,15 @@ function createNew()
 	seven_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"7".fontsize(6).bold()+"</td></tr></table>";
 	seven_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '7';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '7';
 	}
 	numpad_id.appendChild(seven_id);
@@ -945,15 +945,15 @@ function createNew()
 	eight_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"8".fontsize(6).bold()+"</td></tr></table>";
 	eight_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '8';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '8';
 	}
 	numpad_id.appendChild(eight_id);
@@ -965,15 +965,15 @@ function createNew()
 	nine_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"9".fontsize(6).bold()+"</td></tr></table>";
 	nine_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '9';
-		if (top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '9';
 	}
 	numpad_id.appendChild(nine_id);
@@ -997,15 +997,15 @@ function createNew()
 	zero_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"0".fontsize(6).bold()+"</td></tr></table>";
 	zero_id.onclick = function()
 	{
-		if (trig == 0)
+		if (trigger == 0)
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
-			trig = 1;
+			trigger = 1;
 		}
-		if (top.document.getElementById('id_box').value != '' && top.document.getElementById('id_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('id_box').value != '' && top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '0';
-		if (top.document.getElementById('rfid_box').value != '' && top.document.getElementById('rfid_box').value.length < 4 && trig == 1)
+		if (top.document.getElementById('rfid_box').value != '' && top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '0';
 	}
 	numpad_id.appendChild(zero_id);
@@ -1482,19 +1482,29 @@ function createNew()
 					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
-					if (tag2write.search("00000000000000") > -1 && tag2write.substring(1,5) != strrfidval) {
-						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
-						if (r == true){
+					if (tag2write.search("00000000000000") > -1) {
+						if (tag2write.substring(1,5) != strrfidval){
+							var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
+							if (r == true){
+								document.getElementById("frm6").submit();
+								top.document.body.removeChild(top.document.getElementById('layer'));
+								top.document.body.removeChild(top.document.getElementById('box'));
+							}
+							else {
+								pass++;
+							}
+						}
+						else {
+							alert("This tag already has the ID trying to write.");
 							document.getElementById("frm6").submit();
 							top.document.body.removeChild(top.document.getElementById('layer'));
 							top.document.body.removeChild(top.document.getElementById('box'));
 						}
-						else {
-							pass++;
-						}
 					}
 					else if (tag2write == ''){
 						alert("Writing on location tag is not allowed.");
+						top.document.body.removeChild(top.document.getElementById('layer'));
+						top.document.body.removeChild(top.document.getElementById('box'));
 					}
 					else {
 						document.getElementById("frm6").submit();
