@@ -18,18 +18,19 @@ from datetime import datetime
 from time import sleep
 from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 
+HOST = '192.41.170.55' # CSIM network
+#HOST = '192.168.101.55' # Likitomi's meeting room
+#HOST = '192.168.1.55' # My own local network: Linksys
+
+#HOST = '192.168.2.88' # Likitomi's factory: IMPLEMENTATION!
+PORT = 50007
+
 ### This part involves writing tag so unpredictable errors or failures may occur ###
 class Scale(unittest.TestCase):
 	def setUp(self):
 		self.client = Client()
-		PaperRolldetails.objects.create(paper_roll_detail_id=1, paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=1, rfid_roll_id="0001", supplier_roll_id="29070001/54", paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
-# Write tag ID to unknown #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -46,12 +47,6 @@ class Scale(unittest.TestCase):
 	def tearDown(self):
 		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -75,17 +70,10 @@ class Scale(unittest.TestCase):
 		self.assertEqual(weight, temp_weight)
 #		print str(weight)+" = "+str(temp_weight)
 
-class TagCreateNew_unknown_nodup(unittest.TestCase): # Tag to be written is new #
+class TagCreateNew_unknown_nodup(unittest.TestCase): # Write to "UNKNOWN" tag, use "NEW" roll ID #
 	def setUp(self):
 		self.client = Client()
-#		PaperRolldetails.objects.create(paper_roll_detail_id=1, rfid_roll_id="0001", paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
-# Write tag ID to unknown #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -100,15 +88,8 @@ class TagCreateNew_unknown_nodup(unittest.TestCase): # Tag to be written is new 
 			print '\nRFIDConnectionError'
 
 	def tearDown(self):
-#		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -124,9 +105,8 @@ class TagCreateNew_unknown_nodup(unittest.TestCase): # Tag to be written is new 
 		sleep(2)
 
 	def testCreateNew(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		response = self.client.get('/tagman/createnew/', {'arollid':'2', 'arfid':'2','asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/tagman/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -140,9 +120,8 @@ class TagCreateNew_unknown_nodup(unittest.TestCase): # Tag to be written is new 
 		self.assertEqual(roll.position, 2)
 
 	def testCreateNew_nolanpos(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+		response = self.client.get('/tagman/createnew/', {'arollid':'2', 'arfid':'2','asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -155,17 +134,11 @@ class TagCreateNew_unknown_nodup(unittest.TestCase): # Tag to be written is new 
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
 
-class TagCreateNew_unknown_dup(unittest.TestCase): # Tag to be written is new #
+class TagCreateNew_unknown_dup(unittest.TestCase): # Write to "UNKNOWN" tag, use "EXISTING" roll ID #
 	def setUp(self):
 		self.client = Client()
-		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800, lane="B", position=2)
 		try:
-# Write tag ID to unknown #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -180,15 +153,8 @@ class TagCreateNew_unknown_dup(unittest.TestCase): # Tag to be written is new #
 			print '\nRFIDConnectionError'
 
 	def tearDown(self):
-#		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -204,9 +170,8 @@ class TagCreateNew_unknown_dup(unittest.TestCase): # Tag to be written is new #
 		sleep(2)
 
 	def testCreateNew(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		response = self.client.get('/tagman/createnew/', {'arollid':'2', 'arfid':'2','asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/tagman/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -220,9 +185,8 @@ class TagCreateNew_unknown_dup(unittest.TestCase): # Tag to be written is new #
 		self.assertEqual(roll.position, 2)
 
 	def testCreateNew_nolanpos(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+		response = self.client.get('/tagman/createnew/', {'arollid':'2', 'arfid':'2','asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -235,17 +199,10 @@ class TagCreateNew_unknown_dup(unittest.TestCase): # Tag to be written is new #
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
 
-class TagCreateNew_known_nodup(unittest.TestCase): # Tag to be written is new #
+class TagCreateNew_known_nodup(unittest.TestCase): # Write to "KNOWN" tag, use "NEW" roll ID #
 	def setUp(self):
 		self.client = Client()
-#		PaperRolldetails.objects.create(paper_roll_detail_id=1, rfid_roll_id="0001", paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
-# Write tag ID to unknown #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -260,16 +217,8 @@ class TagCreateNew_known_nodup(unittest.TestCase): # Tag to be written is new #
 			print '\nRFIDConnectionError'
 
 	def tearDown(self):
-#		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -285,9 +234,8 @@ class TagCreateNew_known_nodup(unittest.TestCase): # Tag to be written is new #
 		sleep(2)
 
 	def testCreateNew(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
+		response = self.client.get('/tagman/createnew/', {'arollid':'2', 'arfid':'2', 'asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/tagman/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -301,9 +249,8 @@ class TagCreateNew_known_nodup(unittest.TestCase): # Tag to be written is new #
 		self.assertEqual(roll.position, 2)
 
 	def testCreateNew_nolanpos(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
+		response = self.client.get('/tagman/createnew/', {'arollid':'2', 'arfid':'2', 'asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30001AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -316,17 +263,11 @@ class TagCreateNew_known_nodup(unittest.TestCase): # Tag to be written is new #
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
 
-class TagCreateNew_known_dup(unittest.TestCase): # Tag to be written is new #
+class TagCreateNew_known_dup(unittest.TestCase): # Write to "KNOWN" tag, use "EXISTING" roll ID #
 	def setUp(self):
 		self.client = Client()
-		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800, lane="B", position=2)
 		try:
-# Write tag ID to unknown #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -341,15 +282,8 @@ class TagCreateNew_known_dup(unittest.TestCase): # Tag to be written is new #
 			print '\nRFIDConnectionError'
 
 	def tearDown(self):
-#		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -365,9 +299,8 @@ class TagCreateNew_known_dup(unittest.TestCase): # Tag to be written is new #
 		sleep(2)
 
 	def testCreateNew(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30002AAAA000000000000000'})
+		response = self.client.get('/tagman/createnew/', {'arollid':2, 'arfid':2, 'asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '30002AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/tagman/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -381,9 +314,8 @@ class TagCreateNew_known_dup(unittest.TestCase): # Tag to be written is new #
 		self.assertEqual(roll.position, 2)
 
 	def testCreateNew_nolanpos(self):
-		response = self.client.get('/tagman/createnew/', {'asupid': '28070002/54', 'arollid':2, 'arfid':2, 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
+		response = self.client.get('/tagman/createnew/', {'arollid':2, 'arfid':2, 'asupid': '28070002/54', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.supplier_roll_id, '28070002/54')
@@ -396,17 +328,391 @@ class TagCreateNew_known_dup(unittest.TestCase): # Tag to be written is new #
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
 
-class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
+class TagAssignTag_unknown_nolanpos(unittest.TestCase): # Write to "UNKNOWN" tag "WITHOUT" lane and position #
+	def setUp(self):
+		self.client = Client()
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800)
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testAssignTag(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
+
+	def testAssignTag_nolanpos(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
+
+class TagAssignTag_unknown_lanpos(unittest.TestCase): # Write to "UNKNOWN" tag "WITH" lane and position #
+	def setUp(self):
+		self.client = Client()
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800, lane="B", position=2)
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testAssignTag(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
+
+	def testAssignTag_nolanpos(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
+
+class TagAssignTag_known_nolanpos(unittest.TestCase): # Write to "KNOWN" tag "WITHOUT" lane and position #
+	def setUp(self):
+		self.client = Client()
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800, lane="B", position=2)
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testAssignTag(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '30002AAAA000000000000000'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
+
+	def testAssignTag_nolanpos(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
+
+class TagAssignTag_known_lanpos(unittest.TestCase): # Write to "KNOWN" tag "WITH" lane and position #
+	def setUp(self):
+		self.client = Client()
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800, lane="B", position=2)
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testAssignTag(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '30002AAAA000000000000000'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, 'B')
+		self.assertEqual(roll.position, 2)
+
+	def testAssignTag_nolanpos(self):
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+		self.assertEqual(roll.lane, '')
+		self.assertEqual(roll.position, None)
+
+class TagWriteMore_unknown(unittest.TestCase): # Write to "UNKNOWN" tag #
+	def setUp(self):
+		self.client = Client()
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800, lane="B", position=2)
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testWriteMore(self):
+		response = self.client.get('/showtaglist/writemore/', {'arfid_more':'2', 'atag2write_more': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+
+class TagWriteMore_known(unittest.TestCase): # Write to "KNOWN" tag #
+	def setUp(self):
+		self.client = Client()
+		PaperRolldetails.objects.create(paper_roll_detail_id=2, rfid_roll_id="0002", supplier_roll_id="28070002/54", paper_code="CA125", size=36, uom="inch", initial_weight=1000, temp_weight=800, lane="B", position=2)
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testWriteMore(self):
+		response = self.client.get('/showtaglist/writemore/', {'arfid_more':'2', 'atag2write_more': '30002AAAA000000000000000'})
+		self.assertEqual(response.status_code, 200)
+		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+		self.assertEqual(roll.paper_roll_detail_id, 2)
+		self.assertEqual(roll.rfid_roll_id, '0002')
+
+class TagLocationTag_unknown(unittest.TestCase): # Write to "UNKNOWN" tag #
+	def setUp(self):
+		self.client = Client()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=3BBBB00000000000000CD002)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testLocationTag(self):
+		response = self.client.get('/tagman/loctag/', {'alane_loc': '2', 'aposition_loc': '2', 'atag2write_loc': '112233445566778899AABBCC'})
+		self.assertEqual(response.status_code, 302)
+
+class TagLocationTag_known(unittest.TestCase): # Write to "KNOWN" tag #
+	def setUp(self):
+		self.client = Client()
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=30002AAAA000000000000000)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteTagError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+
+	def tearDown(self):
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=112233445566778899AABBCC, tag_id=3BBBB00000000000000CD002)\r\n')
+			response = soc.recv(128)
+			if response.find('ok') != -1:
+				pass
+			else:
+				print '\nWriteBackError'
+			soc.close()
+		except socket.timeout:
+			print '\nRFIDConnectionError'
+		sleep(2)
+
+	def testLocationTag(self):
+		response = self.client.get('/tagman/loctag/', {'alane_loc': '2', 'aposition_loc': '2','atag2write_loc': '30002AAAA000000000000000'})
+		self.assertEqual(response.status_code, 302)
+
+class AssignNewTag(unittest.TestCase): # Reading tag is "UNKNOWN" #
 	def setUp(self):
 		self.client = Client()
 		PaperRolldetails.objects.create(paper_roll_detail_id=1, rfid_roll_id="0001", paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
-# Write tag ID to unknown #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -424,12 +730,6 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -447,7 +747,6 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 	def testNewTag_min(self):
 		response = self.client.get('/minclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.paper_roll_detail_id, 2)
@@ -461,7 +760,6 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 	def testNewTag_max(self):
 		response = self.client.get('/maxclamp/assigntag/', {'atagid': '2', 'apcode': 'CA125', 'asize': '36', 'aweight': '800', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 302)
-#		self.assertRedirects(response, '/minclamp/', status_code=302, target_status_code=200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.paper_roll_detail_id, 2)
@@ -498,17 +796,11 @@ class AssignNewTag(unittest.TestCase): # Reading tag is unknown #
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
 
-class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
+class ReuseTag(unittest.TestCase): # Reading tag is 'KNOWN' #
 	def setUp(self):
 		self.client = Client()
 		PaperRolldetails.objects.create(paper_roll_detail_id=1, rfid_roll_id="0001", paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)
 		try:
-# Write tag ID to '0001' #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -526,12 +818,6 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 		PaperRolldetails.objects.filter(paper_roll_detail_id=1).delete()
 		PaperRolldetails.objects.filter(paper_roll_detail_id=2).delete()
 		try:
-# Write back tag ID #
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -602,7 +888,7 @@ class ReuseTag(unittest.TestCase): # Reading tag is '0001' #
 		self.assertEqual(roll.lane, '')
 		self.assertEqual(roll.position, None)
 
-class UpdateTag(unittest.TestCase): # Reading tag is '0001' #
+class UpdateTag(unittest.TestCase): # Reading tag is 'KNOWN' #
 	def setUp(self):
 		self.client = Client()
 		PaperRolldetails.objects.create(paper_roll_detail_id=1, paper_code="HKS231", size=56, uom="inch", initial_weight=1200, temp_weight=600, lane="A", position=1)

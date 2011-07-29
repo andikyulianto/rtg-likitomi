@@ -175,7 +175,6 @@ function createNew()
 	var weight_box = document.createElement('input');
 	weight_box.id = 'weight_box';
 	weight_box.type = 'text';
-//	weight_box.size = '2';
 	weight_box.maxLength = '4';
 	weight_box.style.width = '90px';
 	weight_box.style.fontSize = '150%';
@@ -191,7 +190,6 @@ function createNew()
 	var lane_box = document.createElement('input');
 	lane_box.id = 'lane_box';
 	lane_box.type = 'text';
-//	lane_box.size = '1';
 	lane_box.maxLength = '1';
 	lane_box.style.width = '30px';
 	lane_box.style.fontSize = '150%';
@@ -204,7 +202,6 @@ function createNew()
 	var position_box = document.createElement('input');
 	position_box.id = 'position_box';
 	position_box.type = 'text';
-//	position_box.size = '1';
 	position_box.maxLength = '2';
 	position_box.style.width = '50px';
 	position_box.style.fontSize = '150%';
@@ -309,8 +306,6 @@ function createNew()
 	}
 	lanepad.appendChild(a);
 
-	var current_input;
-
 	function supidInput1() {
 		numpad_supid1.style.visibility = 'visible';
 		numpad_supid2.style.visibility = 'hidden';
@@ -330,8 +325,6 @@ function createNew()
 		div.style.width = '420px';
 	}
 	function idInput() {
-//		console.log(this);
-//		current_input = this;
 		numpad_supid1.style.visibility = 'hidden';
 		numpad_supid2.style.visibility = 'hidden';
 		numpad_id.style.visibility = 'visible';
@@ -385,13 +378,6 @@ function createNew()
 	lane_box.onfocus = function() { laneInput(); };
 	pcode_select.onfocus = function() { hidePads(); };
 	size_select.onfocus = function() { hidePads(); };
-
-//	id_box.addEventListener("focus", idInput);
-//	position_box.addEventListener("focus", positionInput);
-//	weight_box.addEventListener("focus", weightInput);
-//	lane_box.addEventListener("focus", laneInput);
-//	pcode_select.addEventListener("focus", hidePads);
-//	size_select.addEventListener("focus", hidePads);
 
 // Num Pad // Supplier Roll ID 1
 	var numpad_supid1 = document.createElement('div');
@@ -1468,8 +1454,6 @@ function createNew()
 		var laneval = top.document.getElementById('lane_box').value;
 		var positionval = top.document.getElementById('position_box').value;
 		var weightval = top.document.getElementById('weight_box').value;
-//		alert(supidval+', '+idval+', '+pcodeval+', '+sizeval+', '+laneval+', '+positionval+', '+weightval);
-//		alert(document.getElementById('tag2write').value);
 		var pass = 0;
 		var messi = '';
 		if (supidval != '/' && (supid1.length == 8 && supid2.length == 2) && idval != '' && weightval != ''){

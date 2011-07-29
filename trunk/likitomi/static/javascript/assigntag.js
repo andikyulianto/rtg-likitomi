@@ -50,17 +50,6 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	id.innerHTML = '<br />Roll ID: '.fontsize(4)+paper_roll_detail_id.toString().fontsize(4);
 	div.appendChild(id);
 
-//	var id_box = document.createElement('b');
-//	id_box.id = 'id_box';
-//	id_box.type = 'text';
-//	id_box.maxLength = '4';
-//	id_box.style.width = '90px';
-//	id_box.style.fontSize = '200%';
-//	id_box.style.color = 'black';
-//	id_box.style.textAlign = 'center';
-//	id_box.innerHTML = paper_roll_detail_id;
-//	div.appendChild(id_box);
-
 // RFID //
 	var id = document.createElement('b');
 	id.innerHTML = '<br /><br />RFID: '.fontsize(4);
@@ -84,54 +73,10 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	pcode.innerHTML = '<br /><br />Paper Code: '.fontsize(4)+paper_code.toString().fontsize(4);
 	div.appendChild(pcode);
 
-//	var pcode_box = document.createElement('div');
-//	pcode_box.style.backgroundColor = 'lightgray';
-//	pcode_box.style.position = 'absolute';
-//	pcode_box.style.height = '30px';
-//	pcode_box.style.top = '195px';
-//	pcode_box.style.left = '120px';
-//	div.appendChild(pcode_box);
-//	var pcode_form = document.createElement('form');
-//	pcode_box.appendChild(pcode_form);
-//	var pcode_select = document.createElement('select');
-//	pcode_select.id = 'pcode_select';
-//	pcode_select.style.height = '30px';
-//	pcode_form.appendChild(pcode_select);
-//	var i = 0;
-//	var spcodelist = document.getElementById('spcodelist').value;
-//	spcodelist = spcodelist.replace(/[\[\]\'u ]/g,'');
-//	var spcodearr = new Array();
-//	spcodearr = spcodelist.split(',');
-//	for (i=0;i<=spcodearr.length-1;i++){
-//		pcode_select.options[i] = new Option(spcodearr[i],spcodearr[i]);
-//	}
-
 // Size //
 	var size = document.createElement('b');
 	size.innerHTML = '<br /><br />Size: '.fontsize(4)+psize.toString().fontsize(4);
 	div.appendChild(size);
-
-//	var size_box = document.createElement('div');
-//	size_box.style.backgroundColor = 'lightgray';
-//	size_box.style.position = 'absolute';
-//	size_box.style.height = '30px';
-//	size_box.style.top = '235px';
-//	size_box.style.left = '60px';
-//	div.appendChild(size_box);
-//	var size_form = document.createElement('form');
-//	size_box.appendChild(size_form);
-//	var size_select = document.createElement('select');
-//	size_select.id = 'size_select';
-//	size_select.style.height = '30px';
-//	size_form.appendChild(size_select);
-//	var i = 0;
-//	var swidthlist = document.getElementById('swidthlist').value;
-//	swidthlist = swidthlist.replace(/[\[\]\L ]/g,'');
-//	var swidtharr = new Array();
-//	swidtharr = swidthlist.split(',');
-//	for (i=0;i<=swidtharr.length-1;i++){
-//		size_select.options[i] = new Option(swidtharr[i],swidtharr[i]);
-//	}
 
 // Weight //
 	var init_weight = document.createElement('b');
@@ -141,16 +86,6 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	var curr_weight = document.createElement('b');
 	curr_weight.innerHTML = '<br /><br />Current Weight: '.fontsize(4)+current_weight.toString().fontsize(4);
 	div.appendChild(curr_weight);
-
-//	var weight_box = document.createElement('input');
-//	weight_box.id = 'weight_box';
-//	weight_box.type = 'text';
-//	weight_box.maxLength = '4';
-//	weight_box.style.width = '90px';
-//	weight_box.style.fontSize = '150%';
-//	weight_box.style.color = 'black';
-//	weight_box.style.textAlign = 'center';
-//	div.appendChild(weight_box);
 
 // Location //
 	var location = document.createElement('b');
@@ -276,52 +211,18 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 	}
 	lanepad.appendChild(a);
 
-	var current_input;
-
-//	function idInput() {
-////		console.log(this);
-////		current_input = this;
-//		numpad_id.style.visibility = 'visible';
-//		numpad_weight.style.visibility = 'hidden';
-//		numpad_pos.style.visibility = 'hidden';
-//		lanepad.style.visibility = 'hidden';
-//		div.style.width = '420px';
-//	}
-//	function weightInput() {
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'visible';
-//		numpad_pos.style.visibility = 'hidden';
-//		lanepad.style.visibility = 'hidden';
-//		div.style.width = '420px';
-//	}
 	function positionInput() {
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'hidden';
 		numpad_pos.style.visibility = 'visible';
 		lanepad.style.visibility = 'hidden';
 		div.style.width = '420px';
 	}
 	function laneInput() {
 		lanepad.style.visibility = 'visible';
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'hidden';
 		numpad_pos.style.visibility = 'hidden';
 		div.style.width = '300px';
 	}
-//	function hidePads() {
-//		lanepad.style.visibility = 'hidden';
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'hidden';
-//		numpad_.style.visibility = 'hidden';
-//		div.style.width = '300px';
-//	}
-
-//	id_box.onfocus = function() { idInput(); };
 	position_box.onfocus = function() { positionInput(); };
-//	weight_box.onfocus = function() { weightInput(); };
 	lane_box.onfocus = function() { laneInput(); };
-//	pcode_select.onfocus = function() { hidePads(); };
-//	size_select.onfocus = function() { hidePads(); };
 
 // Num Pad // Position
 	var numpad_pos = document.createElement('div');
@@ -540,72 +441,40 @@ function assignTag(paper_roll_detail_id, rfid_roll_id, paper_code, psize, initia
 		if (rfidval.toString().length == 2){ strrfidval = '00'+rfidval.toString()}
 		if (rfidval.toString().length == 3){ strrfidval = '0'+rfidval.toString()}
 		if (rfidval.toString().length == 4){ strrfidval = rfidval.toString()}
-//		var idval = top.document.getElementById('id_box').value;
-//		var pcodeval = top.document.getElementById('pcode_select').value;
-//		var sizeval = top.document.getElementById('size_select').value;
 		var laneval = top.document.getElementById('lane_box').value;
 		var positionval = top.document.getElementById('position_box').value;
-//		var weightval = top.document.getElementById('weight_box').value;
-//		alert(idval+', '+pcodeval+', '+sizeval+', '+laneval+', '+positionval+', '+weightval);
-//		alert(document.getElementById('tag2write').value);
-//		var pass = 0;
-//		var messi = '';
-//		if (rfidval != ''){
-			if (positionval == '' || parseInt(positionval) <= 13){
-				submitTag();
-//				var idvalue = '('+idval.toString()+'L,)';
-//				var taglist = document.getElementById('tagidquery').value;
-//				if (taglist.indexOf(idvalue) == -1){
-//					submitTag();
-//				} else {
-//					var r = confirm("This tag ID is already used. Continuing assigning tag makes data on this tag be replaced by new entering data.");
-//					if (r == true){
-//						submitTag();
-//					}
-//					else {
-//						pass++;
-//					}
-//				}
-				function submitTag(){
-//					alert('Before Submit!');
-					document.getElementById("arfid").value = rfidval;
-//					document.getElementById("atagid").value = idval;
-//					document.getElementById("apcode").value = pcodeval;
-//					document.getElementById("asize").value = sizeval;
-					document.getElementById("alane").value = laneval;
-					document.getElementById("aposition").value = positionval;
+		if (positionval == '' || parseInt(positionval) <= 13){
+			submitTag();
+			function submitTag(){
+				document.getElementById("arfid").value = rfidval;
+				document.getElementById("alane").value = laneval;
+				document.getElementById("aposition").value = positionval;
 //					document.getElementById("aweight").value = weightval;
-					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
-					var tag2write = document.getElementById('tag2write').value;
-					if (tag2write.search("00000000000000") > -1 && tag2write.substring(1,5) != strrfidval) {
-						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
-						if (r == true){
-							document.getElementById("frm7").submit();
-							top.document.body.removeChild(top.document.getElementById('layer'));
-							top.document.body.removeChild(top.document.getElementById('box'));
-						}
-						else {
-							pass++;
-						}
-					}
-					else if (tag2write == ''){
-						alert("Writing on location tag is not allowed.");
-					}
-					else {
+				document.getElementById("atag2write").value = document.getElementById('tag2write').value;
+				var tag2write = document.getElementById('tag2write').value;
+				if (tag2write.search("00000000000000") > -1 && tag2write.substring(1,5) != strrfidval) {
+					var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
+					if (r == true){
 						document.getElementById("frm7").submit();
 						top.document.body.removeChild(top.document.getElementById('layer'));
 						top.document.body.removeChild(top.document.getElementById('box'));
 					}
+					else {
+						pass++;
+					}
 				}
-			} else if (parseInt(positionval) > 13){
-				alert("The submitted position is not in range (1-13).");
+				else if (tag2write == ''){
+					alert("Writing on location tag is not allowed.");
+				}
+				else {
+					document.getElementById("frm7").submit();
+					top.document.body.removeChild(top.document.getElementById('layer'));
+					top.document.body.removeChild(top.document.getElementById('box'));
+				}
 			}
-//		}
-//		else {
-//			if (idval == ''){ messi += '- Please enter tag ID.\n'; }
-//			if (weightval == ''){ messi += '- Please enter weight.\n'; }
-//			alert(messi);
-//		}
+		} else if (parseInt(positionval) > 13){
+			alert("The submitted position is not in range (1-13).");
+		}
 	}
 	div.appendChild(ok_id);
 
