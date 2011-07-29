@@ -6,6 +6,16 @@ from datetime import datetime
 import socket
 from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 
+HOST = '192.41.170.55' # CSIM network
+#HOST = '192.168.101.55' # Likitomi's meeting room
+#HOST = '192.168.1.55' # My own local network: Linksys
+
+#HOST = '192.168.2.88' # Likitomi's factory: IMPLEMENTATION!
+PORT = 50007
+
+# RFID: paper roll and location tags #
+rfid_mode = 'real' # RFID mode = {'real', 'fake'}
+
 def maxclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
 	tagiddomain = range(1,10000)
@@ -25,17 +35,9 @@ def maxclamp(request):
 	for width in swidth:
 		swidthlist.append(width[0])
 
-# RFID: paper roll and location tags #
-	rfid_mode = 'real' # RFID mode = {'real', 'fake'}
-
 	if rfid_mode == 'real':
 # Connect to RFID reader #
 		try:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -294,11 +296,6 @@ def maxassigntag(request):
 			PaperRolldetails.objects.filter(paper_roll_detail_id=atagid).update(paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 		else:
 			try:
-				HOST = '192.41.170.55' # CSIM network
-#				HOST = '192.168.101.55' # Likitomi network
-#				HOST = '192.168.1.55' # My own local network: Linksys
-#				HOST = '192.168.2.88' # In Likitomi factory
-				PORT = 50007
 				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				soc.settimeout(2)
 				soc.connect((HOST, PORT))

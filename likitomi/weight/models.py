@@ -37,7 +37,7 @@ class PaperRolldetails(models.Model):
     notes = models.CharField(max_length=765, blank=True)
     size = models.IntegerField(null=True, blank=True)
     uom = models.CharField(max_length=60, blank=True)
-    lane = models.CharField(max_length=3)
+    lane = models.CharField(max_length=3, blank=True)
     position = models.IntegerField(null=True, blank=True)
     rfid_roll_id = models.CharField(max_length=255, blank=True, unique=True)
     invoice_no = models.CharField(max_length=90, blank=True)

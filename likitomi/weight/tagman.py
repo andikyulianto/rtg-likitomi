@@ -7,6 +7,16 @@ from datetime import datetime
 import socket
 from weight.models import PaperRolldetails, PaperMovement
 
+HOST = '192.41.170.55' # CSIM network
+#HOST = '192.168.101.55' # Likitomi's meeting room
+#HOST = '192.168.1.55' # My own local network: Linksys
+
+#HOST = '192.168.2.88' # Likitomi's factory: IMPLEMENTATION!
+PORT = 50007
+
+# RFID: paper roll and location tags #
+rfid_mode = 'real' # RFID mode = {'real', 'fake'}
+
 def tagman(request):
 	tagiddomain = range(1,10000)
 	tagidquery = PaperRolldetails.objects.values_list('paper_roll_detail_id')
@@ -41,17 +51,9 @@ def tagman(request):
 			current_weight = PaperRolldetails.objects.get(paper_roll_detail_id=roll_id).initial_weight
 		lst.append(current_weight)
 
-# RFID: paper roll and location tags #
-	rfid_mode = 'real' # RFID mode = {'real', 'fake'}
-
 	if rfid_mode == 'real':
 # Connect to RFID reader #
 		try:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -268,17 +270,9 @@ def showtaglist(request):
 			current_weight = PaperRolldetails.objects.get(paper_roll_detail_id=roll_id).initial_weight
 		lst.append(current_weight)
 
-# RFID: paper roll and location tags #
-	rfid_mode = 'real' # RFID mode = {'real', 'fake'}
-
 	if rfid_mode == 'real':
 # Connect to RFID reader #
 		try:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -501,11 +495,6 @@ def createnew(request):
 			PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 		else:
 			try:
-				HOST = '192.41.170.55' # CSIM network
-#				HOST = '192.168.101.55' # Likitomi network
-#				HOST = '192.168.1.55' # My own local network: Linksys
-#				HOST = '192.168.2.88' # In Likitomi factory
-				PORT = 50007
 				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				soc.settimeout(2)
 				soc.connect((HOST, PORT))
@@ -525,7 +514,6 @@ def createnew(request):
 #						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
 				else:
 					mode = 'min'
-#					return render_to_response('writagror.html', locals())
 					return HttpResponseRedirect('/django/tagman/')
 
 			except socket.timeout:
@@ -536,26 +524,11 @@ def createnew(request):
 	return HttpResponseRedirect('/django/tagman/')
 
 def assigntag(request):
-#	if 'asupid' in request.GET and request.GET['asupid']:
-#		asupid = request.GET['asupid']
-
-#	if 'arollid' in request.GET and request.GET['arollid']:
-#		arollid = request.GET['arollid']
-
 	if 'arfid' in request.GET and request.GET['arfid']:
 		arfid = int(request.GET['arfid'])
 		if len(str(arfid)) == 1: strarfid = '000'+str(arfid)
 		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
 		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
-
-#	if 'apcode' in request.GET and request.GET['apcode']:
-#		apcode = request.GET['apcode']
-
-#	if 'asize' in request.GET and request.GET['asize']:
-#		asize = int(request.GET['asize'])
-
-#	if 'aweight' in request.GET and request.GET['aweight']:
-#		aweight = int(request.GET['aweight'])
 
 	if 'alane' in request.GET and request.GET['alane']:
 		alane = request.GET['alane']
@@ -571,15 +544,7 @@ def assigntag(request):
 		atag2write = request.GET['atag2write']
 
 	if strarfid and atag2write:
-#		if str(strarfid) == str(atag2write[1:5]):
-#			PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(lane=alane, position=aposition)
-#		else:
 		try:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
@@ -590,13 +555,6 @@ def assigntag(request):
 
 			if response.find('ok') != -1:
 				PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid, lane=alane, position=aposition)
-#				return render_to_response('totop.html')
-#					if atag2write.count('0') < 15:
-#						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-#					if atag2write.count('0') >= 15:
-#						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-#						tag2del = int(atag2write[1:5])
-#						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
 			else:
 				mode = 'max'
 				return render_to_response('writagror.html', locals())
@@ -606,71 +564,30 @@ def assigntag(request):
 			socror = 'Cannot connect to RFID reader'
 			return render_to_response('socror.html', locals())
 
-#	return HttpResponseRedirect('/django/showtaglist/')
 	return render_to_response('totop.html')
 
 def writemore(request):
-#	if 'asupid' in request.GET and request.GET['asupid']:
-#		asupid = request.GET['asupid']
+	if 'arfid_more' in request.GET and request.GET['arfid_more']:
+		arfid_more = int(request.GET['arfid_more'])
+		if len(str(arfid_more)) == 1: strarfid_more = '000'+str(arfid_more)
+		if len(str(arfid_more)) == 2: strarfid_more = '00'+str(arfid_more)
+		if len(str(arfid_more)) == 3: strarfid_more = '0'+str(arfid_more)
 
-#	if 'arollid' in request.GET and request.GET['arollid']:
-#		arollid = request.GET['arollid']
+	if 'atag2write_more' in request.GET and request.GET['atag2write_more']:
+		atag2write_more = request.GET['atag2write_more']
 
-	if 'arfid2' in request.GET and request.GET['arfid2']:
-		arfid2 = int(request.GET['arfid2'])
-		if len(str(arfid2)) == 1: strarfid2 = '000'+str(arfid2)
-		if len(str(arfid2)) == 2: strarfid2 = '00'+str(arfid2)
-		if len(str(arfid2)) == 3: strarfid2 = '0'+str(arfid2)
-
-#	if 'apcode' in request.GET and request.GET['apcode']:
-#		apcode = request.GET['apcode']
-
-#	if 'asize' in request.GET and request.GET['asize']:
-#		asize = int(request.GET['asize'])
-
-#	if 'aweight' in request.GET and request.GET['aweight']:
-#		aweight = int(request.GET['aweight'])
-
-#	if 'alane' in request.GET and request.GET['alane']:
-#		alane = request.GET['alane']
-#	else:
-#		alane = ''
-
-#	if 'aposition' in request.GET and request.GET['aposition']:
-#		aposition = int(request.GET['aposition'])
-#	else:
-#		aposition = None
-
-	if 'atag2write2' in request.GET and request.GET['atag2write2']:
-		atag2write2 = request.GET['atag2write2']
-
-	if strarfid2 and atag2write2:
-#		if str(strarfid) == str(atag2write[1:5]):
-#			PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(lane=alane, position=aposition)
-#		else:
+	if strarfid_more and atag2write_more:
 		try:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=3'+strarfid2+'AAAA000000000000000, tag_id='+atag2write2+', antenna=1 2)\r\n')
+			soc.send('tag.write_id(new_tag_id=3'+strarfid_more+'AAAA000000000000000, tag_id='+atag2write_more+', antenna=1 2)\r\n')
 
 			response = soc.recv(128)
 			soc.close()
 
 			if response.find('ok') != -1:
 				pass
-#				PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid)
-#					if atag2write.count('0') < 15:
-#						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-#					if atag2write.count('0') >= 15:
-#						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-#						tag2del = int(atag2write[1:5])
-#						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
 			else:
 				mode = 'max'
 				return render_to_response('writagror.html', locals())
@@ -680,79 +597,42 @@ def writemore(request):
 			socror = 'Cannot connect to RFID reader'
 			return render_to_response('socror.html', locals())
 
-#	return HttpResponseRedirect('/django/showtaglist/')
 	return render_to_response('totop.html')
 
 def loctag(request):
-#	if 'asupid' in request.GET and request.GET['asupid']:
-#		asupid = request.GET['asupid']
-
-#	if 'arollid' in request.GET and request.GET['arollid']:
-#		arollid = request.GET['arollid']
-
-#	if 'arfid2' in request.GET and request.GET['arfid2']:
-#		arfid2 = int(request.GET['arfid2'])
-#		if len(str(arfid2)) == 1: strarfid2 = '000'+str(arfid2)
-#		if len(str(arfid2)) == 2: strarfid2 = '00'+str(arfid2)
-#		if len(str(arfid2)) == 3: strarfid2 = '0'+str(arfid2)
-
-#	if 'apcode' in request.GET and request.GET['apcode']:
-#		apcode = request.GET['apcode']
-
-#	if 'asize' in request.GET and request.GET['asize']:
-#		asize = int(request.GET['asize'])
-
-#	if 'aweight' in request.GET and request.GET['aweight']:
-#		aweight = int(request.GET['aweight'])
-
-	if 'alane2' in request.GET and request.GET['alane2']:
-		alane2 = request.GET['alane2']
-		if alane2 == '1': letalane2 = 'AB'
-		if alane2 == '2': letalane2 = 'CD'
-		if alane2 == '3': letalane2 = 'EF'
-		if alane2 == '4': letalane2 = 'FF'
-		if alane2 == 'CR': letalane2 = 'CC'
-		if alane2 == 'Scale': letalane2 = 'DD'
+	if 'alane_loc' in request.GET and request.GET['alane_loc']:
+		alane_loc = request.GET['alane_loc']
+		if alane_loc == '1': letalane_loc = 'AB'
+		if alane_loc == '2': letalane_loc = 'CD'
+		if alane_loc == '3': letalane_loc = 'EF'
+		if alane_loc == '4': letalane_loc = 'FF'
+		if alane_loc == 'CR': letalane_loc = 'CC'
+		if alane_loc == 'Scale': letalane_loc = 'DD'
 	else:
-		alane2 = ''
+		alane_loc = ''
 
-	if 'aposition2' in request.GET and request.GET['aposition2']:
-		aposition2 = int(request.GET['aposition2'])
-		if len(str(aposition2)) == 1: straposition2 = '00'+str(aposition2)
-		if len(str(aposition2)) == 2: straposition2 = '0'+str(aposition2)
+	if 'aposition_loc' in request.GET and request.GET['aposition_loc']:
+		aposition_loc = int(request.GET['aposition_loc'])
+		if len(str(aposition_loc)) == 1: straposition_loc = '00'+str(aposition_loc)
+		if len(str(aposition_loc)) == 2: straposition_loc = '0'+str(aposition_loc)
 	else:
-		aposition2 = None
+		aposition_loc = None
 
-	if 'atag2write2' in request.GET and request.GET['atag2write2']:
-		atag2write2 = request.GET['atag2write2']
+	if 'atag2write_loc' in request.GET and request.GET['atag2write_loc']:
+		atag2write_loc = request.GET['atag2write_loc']
 
-	if alane2 and aposition2 and atag2write2:
-#		if str(strarfid) == str(atag2write[1:5]):
-#			PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(lane=alane, position=aposition)
-#		else:
+	if alane_loc and aposition_loc and atag2write_loc:
 		try:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=3BBBB00000000000000'+letalane2+straposition2+', tag_id='+atag2write2+', antenna=1 2)\r\n')
+			soc.send('tag.write_id(new_tag_id=3BBBB00000000000000'+letalane_loc+straposition_loc+', tag_id='+atag2write_loc+', antenna=1 2)\r\n')
 
 			response = soc.recv(128)
 			soc.close()
 
 			if response.find('ok') != -1:
 				pass
-#				PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid)
-#					if atag2write.count('0') < 15:
-#						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-#					if atag2write.count('0') >= 15:
-#						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-#						tag2del = int(atag2write[1:5])
-#						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
 			else:
 				mode = 'min'
 				return render_to_response('writagror.html', locals())

@@ -217,52 +217,19 @@ function locTag()
 //	}
 //	lanepad.appendChild(a);
 
-//	var current_input;
-
-//	function idInput() {
-////		console.log(this);
-////		current_input = this;
-//		numpad_id.style.visibility = 'visible';
-//		numpad_weight.style.visibility = 'hidden';
-//		numpad_pos.style.visibility = 'hidden';
-//		lanepad.style.visibility = 'hidden';
-//		div.style.width = '420px';
-//	}
-//	function weightInput() {
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'visible';
-//		numpad_pos.style.visibility = 'hidden';
-//		lanepad.style.visibility = 'hidden';
-//		div.style.width = '420px';
-//	}
 	function positionInput() {
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'hidden';
 		numpad_pos.style.visibility = 'visible';
 		lanepad.style.visibility = 'hidden';
 		div.style.width = '300px';
 	}
 	function laneInput() {
 		lanepad.style.visibility = 'visible';
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'hidden';
 		numpad_pos.style.visibility = 'hidden';
 		div.style.width = '300px';
 	}
-//	function hidePads() {
-//		lanepad.style.visibility = 'hidden';
-//		numpad_id.style.visibility = 'hidden';
-//		numpad_weight.style.visibility = 'hidden';
-//		numpad_.style.visibility = 'hidden';
-//		div.style.width = '300px';
-//	}
 
-//	id_box.onfocus = function() { idInput(); };
 	position_box.onfocus = function() { positionInput(); };
-//	weight_box.onfocus = function() { weightInput(); };
 	lane_box.onfocus = function() { laneInput(); };
-//	pcode_select.onfocus = function() { hidePads(); };
-//	size_select.onfocus = function() { hidePads(); };
 
 // Num Pad // Position
 	var numpad_pos = document.createElement('div');
@@ -476,46 +443,18 @@ function locTag()
 	ok_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
 	ok_id.onclick = function()
 	{
-//		var rfidval = top.document.getElementById('rfid_box').value;
-//		var idval = top.document.getElementById('id_box').value;
-//		var pcodeval = top.document.getElementById('pcode_select').value;
-//		var sizeval = top.document.getElementById('size_select').value;
 		var laneval = top.document.getElementById('lane_box').value;
 		var positionval = top.document.getElementById('position_box').value;
-//		var weightval = top.document.getElementById('weight_box').value;
-//		alert(idval+', '+pcodeval+', '+sizeval+', '+laneval+', '+positionval+', '+weightval);
-//		alert(document.getElementById('tag2write').value);
 		var pass = 0;
 		var messi = '';
-//		alert(laneval);
-//		alert(positionval);
 		if (laneval != '' && positionval != ''){
 			if (parseInt(positionval) <= 13){
 				submitTag();
-//				var idvalue = '('+idval.toString()+'L,)';
-//				var taglist = document.getElementById('tagidquery').value;
-//				if (taglist.indexOf(idvalue) == -1){
-//					submitTag();
-//				} else {
-//					var r = confirm("This tag ID is already used. Continuing assigning tag makes data on this tag be replaced by new entering data.");
-//					if (r == true){
-//						submitTag();
-//					}
-//					else {
-//						pass++;
-//					}
-//				}
 				function submitTag(){
-//					document.getElementById("arfid2").value = rfidval;
-//					document.getElementById("atagid").value = idval;
-//					document.getElementById("apcode").value = pcodeval;
-//					document.getElementById("asize").value = sizeval;
-					document.getElementById("alane2").value = laneval;
-					document.getElementById("aposition2").value = positionval;
+					document.getElementById("alane_loc").value = laneval;
+					document.getElementById("aposition_loc").value = positionval;
 //					document.getElementById("aweight").value = weightval;
-//					alert(document.getElementById("alane2").value);
-//					alert(document.getElementById("aposition2").value);
-					document.getElementById("atag2write2").value = document.getElementById('tag2write').value;
+					document.getElementById("atag2write_loc").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
 					if (tag2write.search("00000000000000") > -1) {
 						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to location tag '"+laneval+" - "+positionval+"'.");

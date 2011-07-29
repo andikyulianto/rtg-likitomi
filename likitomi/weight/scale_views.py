@@ -8,6 +8,13 @@ import random
 from datetime import datetime
 from weight.models import PaperRolldetails, PaperMovement
 
+HOST = '192.41.170.55' # CSIM network
+#HOST = '192.168.101.55' # Likitomi's meeting room
+#HOST = '192.168.1.55' # My own local network: Linksys
+
+#HOST = '192.168.2.88' # Likitomi's factory: IMPLEMENTATION!
+PORT = 50007
+
 def scale(request):
 
 # Setting scale mode and rfid mode = {'real', 'fake'} #
@@ -133,11 +140,6 @@ def scale(request):
 	if rfid_mode == 'real':
 # Connect to RFID reader #
 		try:
-			HOST = '192.41.170.55' # CSIM network
-#			HOST = '192.168.101.55' # Likitomi network
-#			HOST = '192.168.1.55' # My own local network: Linksys
-#			HOST = '192.168.2.88' # In Likitomi factory
-			PORT = 50007
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
