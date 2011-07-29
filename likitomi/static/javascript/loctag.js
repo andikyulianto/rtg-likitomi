@@ -469,6 +469,8 @@ function locTag()
 					}
 					else if (tag2write == ''){
 						alert("Writing on location tag is not allowed.");
+						top.document.body.removeChild(top.document.getElementById('layer'));
+						top.document.body.removeChild(top.document.getElementById('box'));
 					}
 					else {
 						document.getElementById("frm9").submit();

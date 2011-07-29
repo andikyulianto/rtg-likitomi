@@ -510,9 +510,6 @@ function otherLoc()
 <input id='maxclamp_url' type='hidden' value='{% url weight.maxclamp.maxclamp %}' />
 {% url weight.maxclamp.maxclamp as maxclamp_url %}
 
-
-
-
 <div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
 	<input id="cwidth" type="hidden" value="{{ size }}" />
@@ -566,7 +563,7 @@ function otherLoc()
 {% endif %}
 
 {% if tagstatus == 'unknown' %}
-	<p class="var" style='font-size:200%;'>This tag ID is unknown.</p><p class="var" style='font-size:200%;'>Push <i>"Assign Tag"</i> button at the bottom left<br /> to assign new tag.</p>
+	<p class="var" style='font-size:200%;'>This tag ID is unknown.</p><p class="var" style='font-size:200%;'>Push <i>"Tag Management"</i> button at the bottom left<br /> to manage tag.</p>
 {% endif %}
 
 {% if not tagstatus and not socror %}<br /><p class='var' align="center" style='font-size:200%;'>No ID tag in field</p>{% endif %}
