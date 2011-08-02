@@ -87,6 +87,32 @@ $(document).ready(function(){
 	$( "#refresh" ).button({icons: {primary: "ui-icon-refresh"}});
 	$( "#back" ).button({icons: {primary: "ui-icon-arrowreturnthick-1-w"}});
 
+	var showtaglist_url = $('#showtaglist_url').val();
+	$( "#searchbtn" ).button({icons: {primary: "ui-icon-search"}});
+
+	$("#searchbtn").click(function(){
+		$("#showtaglist")[0].contentWindow.scrollTo(0,0);
+		var spcode = $('#spcodedd').val();
+		var swidth = $('#swidthdd').val();
+		if (spcode != "" && swidth == "") {
+			$('#showtaglist').contents().find('tr').show();
+			$('#showtaglist').contents().find('tr[title!='+spcode+']').hide();
+		}
+		if (swidth != "" && spcode == "") {
+			$('#showtaglist').contents().find('tr').show();
+			$('#showtaglist').contents().find('tr[lang!='+swidth+']').hide();
+		}
+		if (spcode != "" && swidth != "") {
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[title='+spcode+'][lang='+swidth+']').show();
+		}
+		if (spcode == "" && swidth == "") {$('#showtaglist').contents().find('tr').show();}
+	});
+
+	if (!$("#realtag").val()) {
+		$("#createnew").attr("disabled","disabled").removeAttr("onclick");
+		$("#writeloctag").attr("disabled","disabled").removeAttr("onclick");
+	}
 });
 </script>
 </head>
@@ -97,13 +123,43 @@ $(document).ready(function(){
 <input id="swidthlist" type="hidden" value="{{ swidthlist }}" />
 <input id="tagidquery" type="hidden" value="{{ tagidquery }}" />
 <input id="tag2write" type="hidden" value="{{ tag2write }}" />
+<input id="realtag" type="hidden" value="{{ realtag }}" />
+<input id="tagstatus" type="hidden" value="{{ tagstatus }}" />
+<input id="atlane" type="hidden" value="{{ atlane }}" />
+<input id="atposition" type="hidden" value="{{ atposition }}" />
 
 <input id='showtaglist_url' type='hidden' value='{% url weight.tagman.showtaglist %}' />
 {% url weight.tagman.tagman as tagman_url %}
 {% url weight.tagman.showtaglist as showtaglist_url %}
 {% url weight.views.dashboard as dashboard_url %}
 
-<p style="position:absolute; top:0px;left:510px;">Now reading >>> </p><p style="position:absolute; top:-5px;left:630px; font-size:100%; {% if tagstatus == 'known' %}background-color:lightyellow;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: {{ realtag }}{% endif %}{% if tagstatus == 'unknown' %}unknown tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}{% endif %}</b></p>
+<p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: {{ realtag }}{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}{% endif %}</b></p>
+
+<div style="top:0px; left:500px;"><table style="margin-top:0px;">
+	<tr>
+		<td>
+			<form class="ui-menu">
+				<select id="spcodedd" style="height:30px;">
+					<option value="" selected="selected">Paper Code:</option>
+					{% for paper_code in spcodelist %}
+					<option value="{{ paper_code }}">{{ paper_code }}</option>
+					{% endfor %}
+				</select>
+			</form>
+		</td>
+		<td>
+			<form class="ui-menu">
+				<select id="swidthdd" style="height:30px;">
+					<option value="" selected="selected">Size:</option>
+					{% for size in swidthlist %}
+					<option value="{{ size }}">{{ size }}</option>
+					{% endfor %}
+				</select>
+			</form>
+		</td>
+		<td colspan="2"><button id="searchbtn" style="font-size:80%;">Search</button></td>
+	</tr>
+</table></div>
 
 	<div style="width:785px; height:55px; top:50px; background-color:white;">
 	<table style="width:100%;">
@@ -116,22 +172,22 @@ $(document).ready(function(){
 			<th style="width:67px;">Current Weight</th>
 			<th style="width:69px;">Lane</th>
 			<th style="width:69px;">Position</th>
-			<th style="width:160px; background-color:white;"><button id="createnew" onclick="javascript:createNew()">Create New</button></th>
+			<th style="width:160px; background-color:white;"><button id="createnew" style="font-size:80%;" onclick="javascript:createNew()">Create New</button></th>
 		</tr>
 	</table>
 	<iframe id="showtaglist" src="{{ showtaglist_url }}" frameborder="0" style="visibility:visible; width:785px; height:442px;" marginheight="0" marginwidth="0" scrolling="no"></iframe>
 	</div>
-	<div style="top:0px; left:310px;"><button id="uppest">Top Most</button></div>
-	<div style="top:0px; left:377px;"><button id="upper">Seek Previous</button></div>
-	<div style="top:0px; left:442px;"><button id="up">Previous</button></div>
-	<div style="top:555px; left:310px;"><button id="downest">Bottom Most</button></div>
-	<div style="top:555px; left:377px;"><button id="downer">Seek Next</button></div>
-	<div style="top:555px; left:442px;"><button id="down">Next</button></div>
+	<div style="top:555px; left:210px;"><button id="uppest">Top Most</button></div>
+	<div style="top:555px; left:260px;"><button id="upper">Seek Previous</button></div>
+	<div style="top:555px; left:310px;"><button id="up">Previous</button></div>
+	<div style="top:555px; left:480px;"><button id="downest">Bottom Most</button></div>
+	<div style="top:555px; left:430px;"><button id="downer">Seek Next</button></div>
+	<div style="top:555px; left:380px;"><button id="down">Next</button></div>
 
-	<div style="top:555px; left:560px;"><button id="writeloctag" onclick="javascript:locTag()">Write Location Tag</button></div>
+	<div style="top:560px; left:600px;"><button id="writeloctag" style="font-size:80%;" onclick="javascript:locTag()">Write Location Tag</button></div>
 
-	<div style="top:0px; left:10px;"><button id="refresh" onclick="window.location.href='{{ tagman_url }}'">Refresh</button></div>
-	<div style="top:555px; left:10px;"><button id="back" onclick="window.location.href='{{ dashboard_url }}'">Back</button></div>
+	<div style="top:8px; left:170px; font-size:80%;"><button id="refresh" onclick="window.location.href='{{ tagman_url }}'">Refresh</button></div>
+	<div style="top:560px; left:10px; font-size:80%;"><button id="back" onclick="window.location.href='{{ dashboard_url }}'">Back</button></div>
 
 	<form id="frm6" action="{{ tagman_url }}createnew/" method="get">
 		<input id="asupid" type="hidden" value="" name="asupid" />
