@@ -158,12 +158,12 @@ class Planning_model extends Model
 
 	}
 
-        function savetostatustracking($rowData,$choosendate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
+        function savetostatustracking($rowData,$choosendate,$realDate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
         {
 			//echo substr($rowData->corrugator_date,0,10)." ".substr($rowData->corrugator_date,11,5).":00";
 			//echo substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00";
 			//get amount
-			//echo $choosendate;
+			//echo "---".$choosendate;
 
 
 			$sql = "Select product_id,qty,delivery_date,delivery_time From delivery Where delivery_id =".$rowData->delivery_id;
@@ -219,14 +219,14 @@ class Planning_model extends Model
 						"plan_amount" =>$amount,
 						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						//"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
-						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
-						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cr_start" =>substr($realDate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($realDate,0,10)." ".$time_stop_cr.":00",
 						"plan_cv_start" => NULL,
 						"plan_cv_end" => NULL,
 						"plan_pt_start" => NULL,
 						"plan_pt_end" => NULL,
 						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
-						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
+						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
@@ -241,37 +241,37 @@ class Planning_model extends Model
 						"plan_cv_start" => substr($rowData->converter_date,0,10)." ".$time_start_cv.":00",
 						"plan_cv_end" => substr($rowData->converter_date,0,10)." ".$time_stop_cv.":00",
 */
-						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
-						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
-						"plan_cv_start" => substr($choosendate,0,10)." ".$time_start_cv.":00",
-						"plan_cv_end" => substr($choosendate,0,10)." ".$time_stop_cv.":00",
+						"plan_cr_start" =>substr($realDate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($realDate,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => substr($realDate,0,10)." ".$time_start_cv.":00",
+						"plan_cv_end" => substr($realDate,0,10)." ".$time_stop_cv.":00",
 						"plan_pt_start" => NULL,
 						"plan_pt_end" => NULL,
 						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
-						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
+						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
 			}
 			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0 and $req_rd==0 and $req_ss==0) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
 			{
-				$param = array("date" => $choosendate,
+				$param = array("date" => $realDate,
 
 						"product_id"=>$rowData->product_code,
 						"plan_amount" =>$amount,
 						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						//"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
-						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
-						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cr_start" =>substr($realDate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($realDate,0,10)." ".$time_stop_cr.":00",
 						"plan_cv_start" => NULL,
 						"plan_cv_end" => NULL,
 /*						"plan_pt_start" => substr($rowData->converter_date,0,10)." ".$time_start_pt.":00",
 						"plan_pt_end" => substr($rowData->converter_date,0,10)." ".$time_stop_pt.":00",
 						"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
 */
-						"plan_pt_start" => substr($choosendate,0,10)." ".$time_start_pt.":00",
-						"plan_pt_end" => substr($choosendate,0,10)." ".$time_stop_pt.":00",
-						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
+						"plan_pt_start" => substr($realDate,0,10)." ".$time_start_pt.":00",
+						"plan_pt_end" => substr($realDate,0,10)." ".$time_stop_pt.":00",
+						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
@@ -289,13 +289,13 @@ class Planning_model extends Model
 						"plan_pt_end" => substr($rowData->converter_date,0,10)." ".$time_stop_pt.":00",
 						"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
 */
-						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
-						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
-						"plan_cv_start" => substr($choosendate,0,10)." ".$time_start_cv.":00",
-						"plan_cv_end" => substr($choosendate,0,10)." ".$time_stop_cv.":00",
-						"plan_pt_start" => substr($choosendate,0,10)." ".$time_start_pt.":00",
-						"plan_pt_end" => substr($choosendate,0,10)." ".$time_stop_pt.":00",
-						"plan_wh_start" => substr($choosendate,0,10)." ".$time_start_wh.":00",
+						"plan_cr_start" =>substr($realDate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($realDate,0,10)." ".$time_stop_cr.":00",
+						"plan_cv_start" => substr($realDate,0,10)." ".$time_start_cv.":00",
+						"plan_cv_end" => substr($realDate,0,10)." ".$time_stop_cv.":00",
+						"plan_pt_start" => substr($realDate,0,10)." ".$time_start_pt.":00",
+						"plan_pt_end" => substr($realDate,0,10)." ".$time_stop_pt.":00",
+						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
@@ -308,14 +308,14 @@ class Planning_model extends Model
 /*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
 */
-						"plan_cr_start" =>substr($choosendate,0,10)." ".$time_start_cr.":00",
-						"plan_cr_end" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_cr_start" =>substr($realDate,0,10)." ".$time_start_cr.":00",
+						"plan_cr_end" => substr($realDate,0,10)." ".$time_stop_cr.":00",
 						"plan_cv_start" => NULL,
 						"plan_cv_end" => NULL,
 						"plan_pt_start" => NULL,
 						"plan_pt_end" => NULL,
 //						"plan_wh_start" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
-						"plan_wh_start" => substr($choosendate,0,10)." ".$time_stop_cr.":00",
+						"plan_wh_start" => substr($realDate,0,10)." ".$time_stop_cr.":00",
 						"plan_due"=>$plan_due,
 						"cv_machine" => $cv_machine
 				);
