@@ -216,16 +216,16 @@ class Planning extends Controller {
 		//calculate time
 		$time_start_cr = (0.0006949*60)*8.34;
 		$time_start_cv = (0.0006949*60)*9.34;
-		$time_start_3CS = $time_start_cv;
-		$time_start_2CL = $time_start_cv;
+		$time_start_3cs = $time_start_cv;
+		$time_start_2cl = $time_start_cv;
 		$time_start_3CL = $time_start_cv;
-		$time_start_3CW = $time_start_cv;
-		$time_start_2CS = $time_start_cv;
+		$time_start_3cm = $time_start_cv;
+		$time_start_4cd = $time_start_cv;
 
-		$time_stop_2CL=0;
+		$time_stop_2cl=0;
 		$time_stop_3CL=0;
-		$time_stop_3CW=0;
-		$time_stop_2CS=0;
+		$time_stop_3cm=0;
+		$time_stop_4cd=0;
 
 		//$time_start_pt = (0.0006949*60)*8;
 		//$time_start_wh = (0.0006949*60)*8;
@@ -239,6 +239,7 @@ class Planning extends Controller {
 			$cut2 	= $case/$key['slit'];
 			$metre	= ($key['t_length']*$cut2)/1000;
 			$timeuseCR = 0;
+			$realDate = $choosendate;
 		if((strtoupper($key['flute'])=="B")||(strtoupper($key['flute'])=="C"))
 		{
 			$timeuseCR = ($metre/120)+4;
@@ -253,102 +254,277 @@ class Planning extends Controller {
 		{
 			$time_stop_cr = $time_start_cr + $timeuseCR * 0.0006949;
 		}
+		if($key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd'])
+		{
+			//start stop time for CV
+	#		print($key['req_3cm']);
+			if($key['req_3cs'])
+				$speed = 120;
+			elseif($key['req_2cl'])
+				$speed = 60;
+			elseif($key['req_3cl'])
+				$speed = 60;
+			elseif($key['req_3cm'])
+				$speed = 60;
+			elseif($key['req_4cd'])
+				$speed = 60;
+			else
+				$speed = 0;
+			//echo $key['next_process']."". $speed ."<br>";
+			//$time_stop_cv = $time_start_cv;
+			if ($speed > 0)
+				$timeuseCV = $rowData->qty / $speed;
+			else
+				$timeuseCV = 0;
 
-
-		//start stop time for CV
-		//print($key['next_process']);
-		if(strcmp($key['next_process'],'3CS'))
-			$speed = 120;
-		elseif(strcmp($key['next_process'],'2CL'))
-			$speed = 60;
-		elseif(strcmp($key['next_process'],'3CL'))
-			$speed = 60;
-		elseif(strcmp($key['next_process'],'3CW'))
-			$speed = 60;
-		elseif(strcmp($key['next_process'],'2CS'))
-			$speed = 60;
-		else
-			$speed = 0;
-		//echo $key['next_process']."". $speed ."<br>";
-		//$time_stop_cv = $time_start_cv;
-		if ($speed > 0)
-			$timeuseCV = $rowData->qty / $speed;
-		else
-			$timeuseCV = 0;
-
-
-		if(strcmp($key['next_process'],'3CS'))
-		{
-			$time_stop_3CS = $time_start_3CS+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_3CS;
-		}
-		elseif(strcmp($key['next_process'],'2CL'))
-		{
-			$time_stop_2CL = $time_start_2CL+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_2CL;
-		}
-		elseif(strcmp($key['next_process'],'3CL'))
-		{
-			$time_stop_3CL = $time_start_3CL+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_3CL;
-		}
-		elseif(strcmp($key['next_process'],'3CW'))
-		{
-			$time_stop_3CW = $time_start_3CW+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_3CW;
-		}
-		elseif(strcmp($key['next_process'],'2CS'))
-		{
-			$time_stop_2CS = $time_start_2CS+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_2CS;
-		}
-		else
-			$time_stop_cv = $time_stop_cv;
 		
-		$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
-		$time_stop_pt = $time_start_pt +round( 30) * 0.0006949;
-		$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
+		
+		
+		
+		
+			if($key['req_3cs'])
+			{
+				$time_start_3cs = $time_stop_cr;
+				$time_stop_3cs = $time_start_3cs+ round($timeuseCV+30) * 0.0006949;
+				$time_stop_cv = $time_stop_3cs;
+			}
+			elseif($key['req_2cl'])
+			{
+				$time_start_2cl = $time_stop_cr;
+				$time_stop_2cl = $time_start_2cl+ round($timeuseCV+30) * 0.0006949;
+				$time_stop_cv = $time_stop_2cl;
+			}
+			elseif($key['req_3cl'])
+			{
+				$time_start_3CL = $time_stop_cr;
+				$time_stop_3CL = $time_start_3CL+ round($timeuseCV+30) * 0.0006949;
+				$time_stop_cv = $time_stop_3CL;
+			}
+			elseif($key['req_3cm'])
+			{
+				$time_start_3cm = $time_stop_cr;
+				$time_stop_3cm = $time_start_3cm+ round($timeuseCV+30) * 0.0006949;
+				$time_stop_cv = $time_stop_3cm;
+			}
+			elseif($key['req_4cd'])
+			{
+				$time_start_4cd = $time_stop_cr;
+				$time_stop_4cd = $time_start_4cd+ round($timeuseCV+30) * 0.0006949;
+				$time_stop_cv = $time_stop_4cd;
+			}
+			else
+				$time_stop_cv = $time_start_cv;
+			$time_start_wh = $time_stop_cv;
+		}
+		else{
+			$time_stop_cv = NULL;
+			$time_start_cv= NULL;
+			$time_start_wh = $time_stop_cr;
+		}
+		if($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape'])
+		{
+			$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
+			$time_stop_pt = $time_start_pt +round(($key['req_rd']+ $key['req_ss']+$key['req_remove']+$key['req_foam']+$key['req_tape'])* 30) * 0.0006949;
+			$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
+		}
+		else
+		{
+			$time_start_pt = NULL;
+			$time_stop_pt = NULL;
+		}
+		
+
+		
 		//echo $rowData;
 		//$rowData['time_start_cr'] = $time_start_cr;
 			//print_r($rowData);
 			//print_r($key->row_array(0));
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
-			$time_start_cr = $time_stop_cr;
+			
+			
+#			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+#			//Save to  status tracking
+#			$this->Planning_model->savetostatustracking($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
 
-		if(strcmp($key['next_process'],'3CS'))
+
+#					echo $key['next_process'];
+
+			
+		if($key['req_3cs'])
 		{
-			$time_stop_3CS = $time_start_3CS+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_3CS;
+	//echo $rowData->product_code."-3cs ".$time_start_cr."<br>";
+			$time_stop_3cs = $time_start_3cs+ round($timeuseCV+30) * 0.0006949;
+			
+						//$choosendate,$realDate
+			$tempCRStart = $time_start_cr;
+			$tempCRStop = $time_stop_cr;
+	//		echo "print CR==".$time_start_cr."----";
+			if((double)$time_start_cr >= 1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_start_cr-=1;
+				(double)$time_stop_cr-=1;
+			
+			}
+			
+			
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cs),$this->formatDate($time_stop_3cs),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cs),$this->formatDate($time_stop_3cs),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+
+
+			$time_stop_cv = $time_stop_3cs;
 		}
-		elseif(strcmp($key['next_process'],'2CL'))
+		elseif($key['req_2cl'])
 		{
-			$time_stop_2CL = $time_start_2CL+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_2CL;
+			
+			$time_stop_2cl = $time_start_2cl+ round($timeuseCV+30) * 0.0006949;
+			//$choosendate,$realDate
+			$tempCRStart = $time_start_cr;
+			$tempCRStop = $time_stop_cr;
+	//		echo "print CR==".$time_start_cr."----";
+			if((double)$time_start_cr >= 1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_start_cr-=1;
+				(double)$time_stop_cr-=1;
+			
+			}
+	//		echo $rowData->product_code."req_2cl ".$time_start_cr." ".$choosendate."<br>";
+			
+			
+			
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_2cl),$this->formatDate($time_stop_2cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_2cl),$this->formatDate($time_stop_2cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			
+//			$choosendate = $tempDate;
+//			$time_start_cr=$tempCRStart;
+//			$time_stop_cr=$tempCRStop;
+			$time_stop_cv = $time_stop_2cl;
 		}
-		elseif(strcmp($key['next_process'],'3CL'))
+		elseif($key['req_3cl'])
 		{
+	//echo $rowData->product_code."-3cl".$time_start_cr." <br>";
 			$time_stop_3CL = $time_start_3CL+ round($timeuseCV+30) * 0.0006949;
+			
+						//$choosendate,$realDate
+			$tempCRStart = $time_start_cr;
+			$tempCRStop = $time_stop_cr;
+	//		echo "print CR==".$time_start_cr."----";
+			if((double)$time_start_cr >= 1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_start_cr-=1;
+				(double)$time_stop_cr-=1;
+			
+			}
+			
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3CL),$this->formatDate($time_stop_3CL),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3CL),$this->formatDate($time_stop_3CL),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+
+
 			$time_stop_cv = $time_stop_3CL;
 		}
-		elseif(strcmp($key['next_process'],'3CW'))
+		elseif($key['req_3cm'])
 		{
-			$time_stop_3CW = $time_start_3CW+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_3CW;
+	//echo $rowData->product_code."-3cm ".$time_start_cr."<br>";
+			$time_stop_3cm = $time_start_3cm+ round($timeuseCV+30) * 0.0006949;
+			
+						//$choosendate,$realDate
+			$tempCRStart = $time_start_cr;
+			$tempCRStop = $time_stop_cr;
+	//		echo "print CR==".$time_start_cr."----";
+			if((double)$time_start_cr >= 1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_start_cr-=1;
+				(double)$time_stop_cr-=1;
+			
+			}
+			
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cm),$this->formatDate($time_stop_3cm),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cm),$this->formatDate($time_stop_3cm),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+
+
+			$time_stop_cv = $time_stop_3cm;
 		}
-		elseif(strcmp($key['next_process'],'2CS'))
+		elseif($key['req_4cd'])
 		{
-			$time_stop_2CS = $time_start_2CS+ round($timeuseCV+30) * 0.0006949;
-			$time_stop_cv = $time_stop_2CS;
+	//echo $rowData->product_code."-4cd ".$time_stop_cr."<br>";
+			$time_stop_4cd = $time_start_4cd+ round($timeuseCV+30) * 0.0006949;
+			
+			//$choosendate,$realDate
+			$tempCRStart = $time_start_cr;
+			$tempCRStop = $time_stop_cr;
+	//		echo "print CR==".$time_start_cr."----";
+			if((double)$time_start_cr >= 1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_start_cr-=1;
+				(double)$time_stop_cr-=1;
+			
+			}
+			elseif ((double)$time_stop_cr >= 1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_stop_cr-=1;
+			}
+			
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_4cd),$this->formatDate($time_stop_4cd),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_4cd),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+
+
+			$time_stop_cv = $time_stop_4cd;
+		}
+		elseif($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape']){
+	//echo $rowData->product_code."-pt".$time_start_cr."<br>";
+	
+
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+
+		}
+		elseif(!($key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd']))
+		{
+	//echo $rowData->product_code."-not cv ".$time_stop_cr."<br>";
+			
+			if((double)$time_start_cr >=1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_start_cr-=1;
+				(double)$time_stop_cr-=1;
+			
+			}
+			elseif ((double)$time_stop_cr >= 1)
+			{
+				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
+				(double)$time_stop_cr-=1;
+			}
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+		}
+		elseif(!($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape']||$key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd']))
+		{
+	//echo $rowData->product_code."-not pt not cv ".$time_start_cr."<br>";
+			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,NULL,NULL,$this->formatDate($time_start_wh),$key);
+			//Save to  status tracking
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,NULL,NULL,$this->formatDate($time_start_wh));
 		}
 		else
-			$time_stop_cv = $time_stop_cv;
 		
-		$time_start_2CL = $time_stop_2CL;
+		$time_stop_cv = $time_stop_cv;
+		
+		$time_start_2cl = $time_stop_2cl;
 		$time_start_3CL = $time_stop_3CL;
-		$time_start_3CW = $time_stop_3CW;
-		$time_start_2CS = $time_stop_2CS;
+		$time_start_3cm = $time_stop_3cm;
+		$time_start_4cd = $time_stop_4cd;
+		
+		$time_start_cr = $time_stop_cr;
 /**/		}
 		echo "Data Saved as 	".$choosendate." Plan.";
 	}
