@@ -15,7 +15,7 @@ HOST = '192.41.170.55' # CSIM network
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'real' # RFID mode = {'real', 'fake'}
+rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
 
 def tagman(request):
 	tagiddomain = range(1,10000)
@@ -203,11 +203,11 @@ def tagman(request):
 
 #		atlocation = 'Scale'
 
-		atlane = 1
-		atposition = 4
-		atlocation = 'Stock'
+#		atlane = 1
+#		atposition = 4
+#		atlocation = 'Stock'
 
-#		tag2write = '112233445566778899AABBCC'
+		tag2write = '112233445566778899AABBCC'
 		tag2write = '30065AAAA000000000000000'
 		realtag = tag2write[1:5]
 
@@ -422,11 +422,11 @@ def showtaglist(request):
 
 #		atlocation = 'Scale'
 
-		atlane = 1
-		atposition = 4
-		atlocation = 'Stock'
+#		atlane = 1
+#		atposition = 4
+#		atlocation = 'Stock'
 
-#		tag2write = '112233445566778899AABBCC'
+		tag2write = '112233445566778899AABBCC'
 		tag2write = '30065AAAA000000000000000'
 		realtag = tag2write[1:5]
 
@@ -490,36 +490,36 @@ def createnew(request):
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-	if asupid and arollid and strarfid and apcode and asize and aweight and atag2write:
-		if str(strarfid) == str(atag2write[1:5]):
-			PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-		else:
-			try:
-				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-				soc.settimeout(2)
-				soc.connect((HOST, PORT))
-				soc.send('tag.write_id(new_tag_id=3'+strarfid+'AAAA000000000000000, tag_id='+atag2write+', antenna=1 2)\r\n')
-				response = soc.recv(128)
-				soc.close()
+#	if asupid and arollid and strarfid and apcode and asize and aweight and atag2write:
+	if str(strarfid) == str(atag2write[1:5]):
+		PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+	else:
+		try:
+			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			soc.settimeout(2)
+			soc.connect((HOST, PORT))
+			soc.send('tag.write_id(new_tag_id=3'+strarfid+'AAAA000000000000000, tag_id='+atag2write+', antenna=1 2)\r\n')
+			response = soc.recv(128)
+			soc.close()
 
-				if response.find('ok') != -1:
-					if atag2write.count('0') < 15:
-						if PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).exists() == False:
-							PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-						else:
-							PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-					if atag2write.count('0') >= 15:
+			if response.find('ok') != -1:
+				if atag2write.count('0') < 15:
+					if PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).exists() == False:
 						PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+					else:
+						PaperRolldetails.objects.filter(paper_roll_detail_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+				if atag2write.count('0') >= 15:
+					PaperRolldetails.objects.create(paper_roll_detail_id=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 #						tag2del = int(atag2write[1:5])
 #						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
-				else:
-					mode = 'min'
-					return HttpResponseRedirect('/django/tagman/')
-
-			except socket.timeout:
+			else:
 				mode = 'min'
-				socror = 'Cannot connect to RFID reader'
-				return render_to_response('socror.html', locals())
+				return HttpResponseRedirect('/django/tagman/')
+
+		except socket.timeout:
+			mode = 'min'
+			socror = 'Cannot connect to RFID reader'
+			return render_to_response('socror.html', locals())
 
 	return HttpResponseRedirect('/django/tagman/')
 
@@ -530,39 +530,39 @@ def assigntag(request):
 		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
 		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
 
-	if 'alane' in request.GET and request.GET['alane']:
-		alane = request.GET['alane']
-	else:
-		alane = ''
+#	if 'alane' in request.GET and request.GET['alane']:
+#		alane = request.GET['alane']
+#	else:
+#		alane = ''
 
-	if 'aposition' in request.GET and request.GET['aposition']:
-		aposition = int(request.GET['aposition'])
-	else:
-		aposition = None
+#	if 'aposition' in request.GET and request.GET['aposition']:
+#		aposition = int(request.GET['aposition'])
+#	else:
+#		aposition = None
 
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-	if strarfid and atag2write:
-		try:
-			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			soc.settimeout(2)
-			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=3'+strarfid+'AAAA000000000000000, tag_id='+atag2write+', antenna=1 2)\r\n')
+#	if strarfid and atag2write:
+	try:
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		soc.send('tag.write_id(new_tag_id=3'+strarfid+'AAAA000000000000000, tag_id='+atag2write+', antenna=1 2)\r\n')
 
-			response = soc.recv(128)
-			soc.close()
+		response = soc.recv(128)
+		soc.close()
 
-			if response.find('ok') != -1:
-				PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid, lane=alane, position=aposition)
-			else:
-				mode = 'max'
-				return render_to_response('writagror.html', locals())
-
-		except socket.timeout:
+		if response.find('ok') != -1:
+			PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid, lane=alane, position=aposition)
+		else:
 			mode = 'max'
-			socror = 'Cannot connect to RFID reader'
-			return render_to_response('socror.html', locals())
+			return render_to_response('writagror.html', locals())
+
+	except socket.timeout:
+		mode = 'max'
+		socror = 'Cannot connect to RFID reader'
+		return render_to_response('socror.html', locals())
 
 	return render_to_response('totop.html')
 
@@ -576,26 +576,26 @@ def writemore(request):
 	if 'atag2write_more' in request.GET and request.GET['atag2write_more']:
 		atag2write_more = request.GET['atag2write_more']
 
-	if strarfid_more and atag2write_more:
-		try:
-			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			soc.settimeout(2)
-			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=3'+strarfid_more+'AAAA000000000000000, tag_id='+atag2write_more+', antenna=1 2)\r\n')
+#	if strarfid_more and atag2write_more:
+	try:
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		soc.send('tag.write_id(new_tag_id=3'+strarfid_more+'AAAA000000000000000, tag_id='+atag2write_more+', antenna=1 2)\r\n')
 
-			response = soc.recv(128)
-			soc.close()
+		response = soc.recv(128)
+		soc.close()
 
-			if response.find('ok') != -1:
-				pass
-			else:
-				mode = 'max'
-				return render_to_response('writagror.html', locals())
-
-		except socket.timeout:
+		if response.find('ok') != -1:
+			pass
+		else:
 			mode = 'max'
-			socror = 'Cannot connect to RFID reader'
-			return render_to_response('socror.html', locals())
+			return render_to_response('writagror.html', locals())
+
+	except socket.timeout:
+		mode = 'max'
+		socror = 'Cannot connect to RFID reader'
+		return render_to_response('socror.html', locals())
 
 	return render_to_response('totop.html')
 
@@ -621,25 +621,25 @@ def loctag(request):
 	if 'atag2write_loc' in request.GET and request.GET['atag2write_loc']:
 		atag2write_loc = request.GET['atag2write_loc']
 
-	if alane_loc and aposition_loc and atag2write_loc:
-		try:
-			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			soc.settimeout(2)
-			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=3BBBB00000000000000'+letalane_loc+straposition_loc+', tag_id='+atag2write_loc+', antenna=1 2)\r\n')
+#	if alane_loc and aposition_loc and atag2write_loc:
+	try:
+		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		soc.settimeout(2)
+		soc.connect((HOST, PORT))
+		soc.send('tag.write_id(new_tag_id=3BBBB00000000000000'+letalane_loc+straposition_loc+', tag_id='+atag2write_loc+', antenna=1 2)\r\n')
 
-			response = soc.recv(128)
-			soc.close()
+		response = soc.recv(128)
+		soc.close()
 
-			if response.find('ok') != -1:
-				pass
-			else:
-				mode = 'min'
-				return render_to_response('writagror.html', locals())
-
-		except socket.timeout:
+		if response.find('ok') != -1:
+			pass
+		else:
 			mode = 'min'
-			socror = 'Cannot connect to RFID reader'
-			return render_to_response('socror.html', locals())
+			return render_to_response('writagror.html', locals())
+
+	except socket.timeout:
+		mode = 'min'
+		socror = 'Cannot connect to RFID reader'
+		return render_to_response('socror.html', locals())
 
 	return HttpResponseRedirect('/django/tagman/')

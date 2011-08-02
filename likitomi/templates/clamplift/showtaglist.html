@@ -52,6 +52,58 @@ $(document).ready(function(){
 	$( "#createnew" ).button({icons: {primary: "ui-icon-tag"}});
 	$( ".asstag" ).button({icons: {primary: "ui-icon-link"}});
 	$( ".writemore" ).button({icons: {primary: "ui-icon-plus"}});
+
+	$("tr").click(function(){
+		$("[class='']").css({"background-color":"lightblue","color":"black"});
+		$("[class!='']").css({"background-color":"lightgray","color":"black"});
+		$(this).css({"background-color":"lightyellow","color":"black"});
+		var new_rfid = $(this).attr("id");
+		$("[lang='btn']").html("");
+		var idlen = $(this).attr("id").toString().length;
+		var rfid = $(this).attr("id").toString();
+		if (idlen == 1) { var arfid = "000"+rfid; }
+		if (idlen == 2) { var arfid = "00"+rfid; }
+		if (idlen == 3) { var arfid = "0"+rfid; }
+		if (idlen == 4) { var arfid = rfid; }
+		var realtag = $("#realtag").val();
+		var atlane = $("#atlane").val();
+		var atposition = $("#atposition").val();
+		if ($("#tagstatus").val() == "unknown"){var tag2write = "New";}
+		if (!realtag && atlane && atposition) {var tag2write = "Location Tag";}
+		if (realtag) {var tag2write = realtag;}
+		if ($(this).attr("class") == "") {
+			$("[title="+new_rfid+"]").html("<b>"+tag2write+" >>> "+arfid+"</b><button class='asstag' style='font-size:75%;'>Assign Tag</button>");
+			$(".asstag").button({icons: {primary: "ui-icon-link"}});
+			$(".asstag").click(function(){
+				$("#arfid").val(arfid);
+				$("#atag2write").val($("#tag2write").val());
+//				alert($("#arfid").val());
+//				alert($("#atag2write").val());
+				if (tag2write && tag2write == "Location Tag"){
+//					alert("Writing on location tag is not allowed.");
+					$("#asstag").attr("disabled","disabled").removeAttr("onclick");
+				}
+				else{
+					$("#frm7").submit();
+				}
+			});
+		}
+		else if ($(this).attr("class") != "") {
+			$("[title="+new_rfid+"]").html("<b>"+tag2write+" >>> "+arfid+"</b><button class='writemore' style='font-size:75%;'>Write More</button>");
+			$( ".writemore" ).button({icons: {primary: "ui-icon-plus"}});
+			$(".writemore").click(function(){
+				$("#arfid_more").val(arfid);
+				$("#atag2write_more").val($("#tag2write").val());
+				if (tag2write && tag2write == "Location Tag"){
+//					alert("Writing on location tag is not allowed.");
+					$("#writemore").attr("disabled","disabled").removeAttr("onclick");
+				}
+				else{
+					$("#frm8").submit();
+				}
+			});
+		}
+	});
 });
 </script>
 </head>
@@ -62,13 +114,17 @@ $(document).ready(function(){
 <input id="swidthlist" type="hidden" value="{{ swidthlist }}" />
 <input id="tagidquery" type="hidden" value="{{ tagidquery }}" />
 <input id="tag2write" type="hidden" value="{{ tag2write }}" />
+<input id="realtag" type="hidden" value="{{ realtag }}" />
+<input id="tagstatus" type="hidden" value="{{ tagstatus }}" />
+<input id="atlane" type="hidden" value="{{ atlane }}" />
+<input id="atposition" type="hidden" value="{{ atposition }}" />
 
 {% url weight.tagman.showtaglist as showtaglist_url %}
 
 	<div style="width:785px; height:580px;">
 	<table style="width:100%;">
 		{% for paper_roll_detail_id, rfid_roll_id, paper_code, size, initial_weight, lane, position, current_weight in nlist %}
-		<tr style="height:53px; background-color:{% if rfid_roll_id == "" %}lightblue{% endif %}{% if rfid_roll_id != "" %}{% if rfid_roll_id == realtag %}lightyellow{% endif %}{% if rfid_roll_id != realtag %}lightgray{% endif %}{% endif %};">
+		<tr class="{{ rfid_roll_id }}" title="{{ paper_code }}" lang="{{ size }}" id="{{ paper_roll_detail_id }}" style="height:53px; background-color:{% if rfid_roll_id == "" %}lightblue{% endif %}{% if rfid_roll_id != "" %}{% if rfid_roll_id == realtag %}lightgray{% endif %}{% if rfid_roll_id != realtag %}lightgray{% endif %}{% endif %};">
 			<td style="width:58px;">{{ paper_roll_detail_id }}</td>
 			<td style="width:67px;">{{ rfid_roll_id }}</td>
 			<td style="width:120px;">{{ paper_code }}</td>
@@ -77,7 +133,8 @@ $(document).ready(function(){
 			<td style="width:67px;">{{ current_weight }}</td>
 			<td style="width:69px;">{{ lane }}</td>
 			<td style="width:69px;">{% if position != Null %}{{ position }}{% endif %}</td>
-			<td style="width:160px; background-color:white;">{% if rfid_roll_id == "" %}<button class="asstag" onclick="javascript:assignTag({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}');">Assign Tag</button>{% endif %}{% if rfid_roll_id != "" %}<button class="writemore" onclick="javascript:writeMore({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}')">Write More</button>{% endif %}</td>
+			<td title="{{ paper_roll_detail_id }}" lang="btn" style="width:160px; background-color:white;"></td>
+<!--			<td style="width:160px; background-color:white;">{% if rfid_roll_id == "" %}<button class="asstag" onclick="javascript:assignTag({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}');">Assign Tag</button>{% endif %}{% if rfid_roll_id != "" %}<button class="writemore" onclick="javascript:writeMore({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}')">Write More</button>{% endif %}</td>-->
 		</tr>
 		{% endfor %}
 	</table>
@@ -85,8 +142,8 @@ $(document).ready(function(){
 
 	<form id="frm7" action="{{ showtaglist_url }}assigntag/" method="get">
 		<input id="arfid" type="hidden" value="" name="arfid" />
-		<input id="alane" type="hidden" value="" name="alane" />
-		<input id="aposition" type="hidden" value="" name="aposition" />
+<!--		<input id="alane" type="hidden" value="" name="alane" />-->
+<!--		<input id="aposition" type="hidden" value="" name="aposition" />-->
 		<input id="atag2write" type="hidden" value="" name="atag2write" />
 	</form>
 
