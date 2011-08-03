@@ -70,7 +70,7 @@ $(document).ready(function(){
 		var atposition = $("#atposition").val();
 		if ($("#tagstatus").val() == "unknown"){var tag2write = "New";}
 		if (!realtag && atlane && atposition) {var tag2write = "Location Tag";}
-		if (realtag) {var tag2write = realtag;}
+		if (realtag && $("#tagstatus").val() == "known") {var tag2write = realtag;}
 		if ($(this).attr("class") == "") {
 			$("[title="+new_rfid+"]").html("<b>"+tag2write+" >>> "+arfid+"</b><button class='asstag' style='font-size:75%;'>Assign Tag</button>");
 			$(".asstag").button({icons: {primary: "ui-icon-link"}});

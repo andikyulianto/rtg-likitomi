@@ -1,4 +1,4 @@
-function locTag()
+function locTag(realtag, tagstatus)
 {
 	var agent = navigator.userAgent;
 	var patt1 = /Chrome/;
@@ -93,6 +93,7 @@ function locTag()
 	four_lane.onclick = function()
 	{
 		top.document.getElementById('lane_box').value = '4';
+		top.document.getElementById('tolane').value = '4';
 	}
 	lanepad.appendChild(four_lane);
 
@@ -104,6 +105,7 @@ function locTag()
 	three_lane.onclick = function()
 	{
 		top.document.getElementById('lane_box').value = '3';
+		top.document.getElementById('tolane').value = '3';
 	}
 	lanepad.appendChild(three_lane);
 
@@ -115,6 +117,7 @@ function locTag()
 	two_lane.onclick = function()
 	{
 		top.document.getElementById('lane_box').value = '2';
+		top.document.getElementById('tolane').value = '2';
 	}
 	lanepad.appendChild(two_lane);
 
@@ -126,6 +129,7 @@ function locTag()
 	one_lane.onclick = function()
 	{
 		top.document.getElementById('lane_box').value = '1';
+		top.document.getElementById('tolane').value = '1';
 	}
 	lanepad.appendChild(one_lane);
 
@@ -252,10 +256,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '1';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '1';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(one_pos);
 
@@ -269,10 +276,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '2';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '2';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(two_pos);
 
@@ -286,10 +296,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '3';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '3';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(three_pos);
 
@@ -303,10 +316,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '4';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '4';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(four_pos);
 
@@ -320,10 +336,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '5';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '5';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(five_pos);
 
@@ -337,10 +356,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '6';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '6';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(six_pos);
 
@@ -354,10 +376,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '7';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '7';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(seven_pos);
 
@@ -371,10 +396,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '8';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '8';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(eight_pos);
 
@@ -388,10 +416,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '9';
+		if (top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '9';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(nine_pos);
 
@@ -403,6 +434,7 @@ function locTag()
 	clr_pos.onclick = function()
 	{
 		top.document.getElementById('position_box').value = '';
+		top.document.getElementById('topos').value = '';
 	}
 	numpad_pos.appendChild(clr_pos);
 
@@ -416,10 +448,13 @@ function locTag()
 		if (trig == 0)
 		{
 			top.document.getElementById('position_box').value = '';
+			top.document.getElementById('topos').value = '';
 			trig = 1;
 		}
-		if (top.document.getElementById('position_box').value != '' && top.document.getElementById('position_box').value.length < 2 && trig == 1)
-		top.document.getElementById('position_box').value += '0';
+		if (top.document.getElementById('position_box').value != '' && top.document.getElementById('position_box').value.length < 2 && trig == 1){
+			top.document.getElementById('position_box').value += '0';
+			top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
+		}
 	}
 	numpad_pos.appendChild(zero_pos);
 
@@ -432,6 +467,7 @@ function locTag()
 	{
 		var len = top.document.getElementById('position_box').value.length;
 		top.document.getElementById('position_box').value = top.document.getElementById('position_box').value.substr(0,len-1);
+		top.document.getElementById('topos').value = top.document.getElementById('position_box').value;
 	}
 	numpad_pos.appendChild(bs_pos);
 
@@ -439,7 +475,7 @@ function locTag()
 
 	var ok_id = document.createElement('a');
 	ok_id.id = 'confirm';
-	ok_id.style.left = '70px';
+	ok_id.style.left = '10px';
 	ok_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
 	ok_id.onclick = function()
 	{
@@ -456,27 +492,27 @@ function locTag()
 //					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write_loc").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
-					if (tag2write.search("00000000000000") > -1) {
-						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to location tag '"+laneval+" - "+positionval+"'.");
-						if (r == true){
-							document.getElementById("frm9").submit();
-							top.document.body.removeChild(top.document.getElementById('layer'));
-							top.document.body.removeChild(top.document.getElementById('box'));
-						}
-						else {
-							pass++;
-						}
-					}
-					else if (tag2write == ''){
-						alert("Writing on location tag is not allowed.");
-						top.document.body.removeChild(top.document.getElementById('layer'));
-						top.document.body.removeChild(top.document.getElementById('box'));
-					}
-					else {
-						document.getElementById("frm9").submit();
-						top.document.body.removeChild(top.document.getElementById('layer'));
-						top.document.body.removeChild(top.document.getElementById('box'));
-					}
+//					if (tag2write.search("00000000000000") > -1) {
+//						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to location tag '"+laneval+" - "+positionval+"'.");
+//						if (r == true){
+//							document.getElementById("frm9").submit();
+//							top.document.body.removeChild(top.document.getElementById('layer'));
+//							top.document.body.removeChild(top.document.getElementById('box'));
+//						}
+//						else {
+//							pass++;
+//						}
+//					}
+//					else if (tag2write == ''){
+//						alert("Writing on location tag is not allowed.");
+//						top.document.body.removeChild(top.document.getElementById('layer'));
+//						top.document.body.removeChild(top.document.getElementById('box'));
+//					}
+//					else {
+					document.getElementById("frm9").submit();
+					top.document.body.removeChild(top.document.getElementById('layer'));
+					top.document.body.removeChild(top.document.getElementById('box'));
+//					}
 				}
 			} else if (parseInt(positionval) > 13){
 				alert("The submitted position is not in range (1-13).");
@@ -492,7 +528,7 @@ function locTag()
 
 	var cancel_id = document.createElement('a');
 	cancel_id.id = 'confirm';
-	cancel_id.style.right = '80px';
+	cancel_id.style.right = '10px';
 	cancel_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"Cancel".fontsize(4).bold()+"</td></tr></table>";
 	cancel_id.onclick = function()
 	{
@@ -500,4 +536,45 @@ function locTag()
 		top.document.body.removeChild(top.document.getElementById('box'));
 	}
 	div.appendChild(cancel_id);
+
+	var container = document.createElement('div');
+	container.style.position = "absolute";
+	container.style.bottom = "30px";
+	container.style.left = "105px";
+	div.appendChild(container);
+
+	var fromrfid = document.createElement('b');
+	if (tagstatus == 'unknown') {realtag = "New";}
+	fromrfid.innerHTML = realtag+" >>> ";
+	container.appendChild(fromrfid);
+
+	var tolane = document.createElement('input');
+	tolane.id = 'tolane';
+	tolane.type = 'text';
+	tolane.maxLength = '1';
+	tolane.style.width = '20px';
+	tolane.style.fontWeight = 'bold';
+	tolane.style.fontSize = '110%';
+	tolane.style.color = 'black';
+	tolane.style.textAlign = 'center';
+	tolane.readOnly = true;
+	tolane.style.backgroundColor = 'lightgray';
+	container.appendChild(tolane);
+
+	var dash = document.createElement('b');
+	dash.innerHTML = ' - ';
+	container.appendChild(dash);
+
+	var topos = document.createElement('input');
+	topos.id = 'topos';
+	topos.type = 'text';
+	topos.maxLength = '2';
+	topos.style.width = '30px';
+	topos.style.fontWeight = 'bold';
+	topos.style.fontSize = '110%';
+	topos.style.color = 'black';
+	topos.style.textAlign = 'center';
+	topos.readOnly = true;
+	topos.style.backgroundColor = 'lightgray';
+	container.appendChild(topos);
 }
