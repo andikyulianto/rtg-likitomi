@@ -15,7 +15,7 @@ HOST = '192.41.170.55' # CSIM network
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
+rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def tagman(request):
 	tagiddomain = range(1,10000)
@@ -554,7 +554,8 @@ def assigntag(request):
 		soc.close()
 
 		if response.find('ok') != -1:
-			PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid, lane=alane, position=aposition)
+#			PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid, lane=alane, position=aposition)
+			PaperRolldetails.objects.filter(paper_roll_detail_id=arfid).update(rfid_roll_id=strarfid)
 		else:
 			mode = 'max'
 			return render_to_response('writagror.html', locals())

@@ -133,7 +133,7 @@ $(document).ready(function(){
 {% url weight.tagman.showtaglist as showtaglist_url %}
 {% url weight.views.dashboard as dashboard_url %}
 
-<p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: {{ realtag }}{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}{% endif %}</b></p>
+<p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: {{ realtag }}{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}<p style="position:absolute; top:-5px; left:300px; font-size:70%;">Writing on a location tag<br />is not allowed!</p>{% endif %}</b></p>
 
 <div style="top:0px; left:500px;"><table style="margin-top:0px;">
 	<tr>
@@ -172,7 +172,7 @@ $(document).ready(function(){
 			<th style="width:67px;">Current Weight</th>
 			<th style="width:69px;">Lane</th>
 			<th style="width:69px;">Position</th>
-			<th style="width:160px; background-color:white;"><button id="createnew" style="font-size:80%;" onclick="javascript:createNew()">Create New</button></th>
+			<th style="width:160px; background-color:white;"><button id="createnew" style="font-size:80%;" onclick="javascript:createNew('{{ realtag }}', '{{ tagstatus }}')">Create New</button></th>
 		</tr>
 	</table>
 	<iframe id="showtaglist" src="{{ showtaglist_url }}" frameborder="0" style="visibility:visible; width:785px; height:442px;" marginheight="0" marginwidth="0" scrolling="no"></iframe>
@@ -184,7 +184,7 @@ $(document).ready(function(){
 	<div style="top:555px; left:430px;"><button id="downer">Seek Next</button></div>
 	<div style="top:555px; left:380px;"><button id="down">Next</button></div>
 
-	<div style="top:560px; left:600px;"><button id="writeloctag" style="font-size:80%;" onclick="javascript:locTag()">Write Location Tag</button></div>
+	<div style="top:560px; left:600px;"><button id="writeloctag" style="font-size:80%;" onclick="javascript:locTag('{{ realtag }}', '{{ tagstatus }}')">Write Location Tag</button></div>
 
 	<div style="top:8px; left:170px; font-size:80%;"><button id="refresh" onclick="window.location.href='{{ tagman_url }}'">Refresh</button></div>
 	<div style="top:560px; left:10px; font-size:80%;"><button id="back" onclick="window.location.href='{{ dashboard_url }}'">Back</button></div>

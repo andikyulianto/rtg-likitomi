@@ -364,24 +364,24 @@ class TagAssignTag_unknown_nolanpos(unittest.TestCase): # Write to "UNKNOWN" tag
 		sleep(2)
 
 	def testAssignTag(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, 'B')
-		self.assertEqual(roll.position, 2)
+#		self.assertEqual(roll.lane, 'B')
+#		self.assertEqual(roll.position, 2)
 
-	def testAssignTag_nolanpos(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
-		self.assertEqual(response.status_code, 200)
-		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
-		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
-		self.assertEqual(roll.paper_roll_detail_id, 2)
-		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, '')
-		self.assertEqual(roll.position, None)
+#	def testAssignTag_nolanpos(self):
+#		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+#		self.assertEqual(response.status_code, 200)
+#		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+#		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+#		self.assertEqual(roll.paper_roll_detail_id, 2)
+#		self.assertEqual(roll.rfid_roll_id, '0002')
+#		self.assertEqual(roll.lane, '')
+#		self.assertEqual(roll.position, None)
 
 class TagAssignTag_unknown_lanpos(unittest.TestCase): # Write to "UNKNOWN" tag "WITH" lane and position #
 	def setUp(self):
@@ -419,24 +419,24 @@ class TagAssignTag_unknown_lanpos(unittest.TestCase): # Write to "UNKNOWN" tag "
 		sleep(2)
 
 	def testAssignTag(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '112233445566778899AABBCC'})
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'atag2write': '112233445566778899AABBCC'})
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, 'B')
-		self.assertEqual(roll.position, 2)
+#		self.assertEqual(roll.lane, 'B')
+#		self.assertEqual(roll.position, 2)
 
-	def testAssignTag_nolanpos(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
-		self.assertEqual(response.status_code, 200)
-		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
-		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
-		self.assertEqual(roll.paper_roll_detail_id, 2)
-		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, '')
-		self.assertEqual(roll.position, None)
+#	def testAssignTag_nolanpos(self):
+#		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '112233445566778899AABBCC'})
+#		self.assertEqual(response.status_code, 200)
+#		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+#		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+#		self.assertEqual(roll.paper_roll_detail_id, 2)
+#		self.assertEqual(roll.rfid_roll_id, '0002')
+#		self.assertEqual(roll.lane, '')
+#		self.assertEqual(roll.position, None)
 
 class TagAssignTag_known_nolanpos(unittest.TestCase): # Write to "KNOWN" tag "WITHOUT" lane and position #
 	def setUp(self):
@@ -474,24 +474,24 @@ class TagAssignTag_known_nolanpos(unittest.TestCase): # Write to "KNOWN" tag "WI
 		sleep(2)
 
 	def testAssignTag(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '30002AAAA000000000000000'})
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'atag2write': '30002AAAA000000000000000'})
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, 'B')
-		self.assertEqual(roll.position, 2)
+#		self.assertEqual(roll.lane, 'B')
+#		self.assertEqual(roll.position, 2)
 
-	def testAssignTag_nolanpos(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
-		self.assertEqual(response.status_code, 200)
-		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
-		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
-		self.assertEqual(roll.paper_roll_detail_id, 2)
-		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, '')
-		self.assertEqual(roll.position, None)
+#	def testAssignTag_nolanpos(self):
+#		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
+#		self.assertEqual(response.status_code, 200)
+#		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+#		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+#		self.assertEqual(roll.paper_roll_detail_id, 2)
+#		self.assertEqual(roll.rfid_roll_id, '0002')
+#		self.assertEqual(roll.lane, '')
+#		self.assertEqual(roll.position, None)
 
 class TagAssignTag_known_lanpos(unittest.TestCase): # Write to "KNOWN" tag "WITH" lane and position #
 	def setUp(self):
@@ -529,24 +529,24 @@ class TagAssignTag_known_lanpos(unittest.TestCase): # Write to "KNOWN" tag "WITH
 		sleep(2)
 
 	def testAssignTag(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': 'B', 'aposition': '2', 'atag2write': '30002AAAA000000000000000'})
+		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'atag2write': '30002AAAA000000000000000'})
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
 		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
 		self.assertEqual(roll.paper_roll_detail_id, 2)
 		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, 'B')
-		self.assertEqual(roll.position, 2)
+#		self.assertEqual(roll.lane, 'B')
+#		self.assertEqual(roll.position, 2)
 
-	def testAssignTag_nolanpos(self):
-		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
-		self.assertEqual(response.status_code, 200)
-		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
-		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
-		self.assertEqual(roll.paper_roll_detail_id, 2)
-		self.assertEqual(roll.rfid_roll_id, '0002')
-		self.assertEqual(roll.lane, '')
-		self.assertEqual(roll.position, None)
+#	def testAssignTag_nolanpos(self):
+#		response = self.client.get('/showtaglist/assigntag/', {'arfid':'2', 'alane': '', 'aposition': '', 'atag2write': '30002AAAA000000000000000'})
+#		self.assertEqual(response.status_code, 200)
+#		self.assertEqual(PaperRolldetails.objects.filter(paper_roll_detail_id=2).exists(), True)
+#		roll = PaperRolldetails.objects.get(paper_roll_detail_id=2)
+#		self.assertEqual(roll.paper_roll_detail_id, 2)
+#		self.assertEqual(roll.rfid_roll_id, '0002')
+#		self.assertEqual(roll.lane, '')
+#		self.assertEqual(roll.position, None)
 
 class TagWriteMore_unknown(unittest.TestCase): # Write to "UNKNOWN" tag #
 	def setUp(self):
@@ -579,6 +579,7 @@ class TagWriteMore_unknown(unittest.TestCase): # Write to "UNKNOWN" tag #
 			else:
 				print '\nWriteBackError'
 			soc.close()
+
 		except socket.timeout:
 			print '\nRFIDConnectionError'
 		sleep(2)

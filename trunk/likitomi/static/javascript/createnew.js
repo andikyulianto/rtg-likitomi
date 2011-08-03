@@ -1,4 +1,4 @@
-function createNew()
+function createNew(realtag, tagstatus)
 {
 	var agent = navigator.userAgent;
 	var patt1 = /Chrome/;
@@ -809,12 +809,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '1';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '1';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(one_id);
 
@@ -829,12 +836,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '2';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '2';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(two_id);
 
@@ -849,12 +863,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '3';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '3';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(three_id);
 
@@ -869,12 +890,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '4';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '4';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(four_id);
 
@@ -889,12 +917,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '5';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '5';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(five_id);
 
@@ -909,12 +944,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '6';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '6';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(six_id);
 
@@ -929,12 +971,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '7';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '7';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(seven_id);
 
@@ -949,12 +998,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '8';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '8';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(eight_id);
 
@@ -969,12 +1025,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '9';
 		if (top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '9';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(nine_id);
 
@@ -987,6 +1050,7 @@ function createNew()
 	{
 		top.document.getElementById('id_box').value = '';
 		top.document.getElementById('rfid_box').value = '';
+		top.document.getElementById('torfid').value = '';
 	}
 	numpad_id.appendChild(clr_id);
 
@@ -1001,12 +1065,19 @@ function createNew()
 		{
 			top.document.getElementById('id_box').value = '';
 			top.document.getElementById('rfid_box').value = '';
+			top.document.getElementById('torfid').value = '';
 			trigger = 1;
 		}
 		if (top.document.getElementById('id_box').value != '' && top.document.getElementById('id_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('id_box').value += '0';
 		if (top.document.getElementById('rfid_box').value != '' && top.document.getElementById('rfid_box').value.length < 4 && trigger == 1)
 		top.document.getElementById('rfid_box').value += '0';
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(zero_id);
 
@@ -1021,6 +1092,12 @@ function createNew()
 		top.document.getElementById('id_box').value = top.document.getElementById('id_box').value.substr(0,len1-1);
 		var len2 = top.document.getElementById('rfid_box').value.length;
 		top.document.getElementById('rfid_box').value = top.document.getElementById('rfid_box').value.substr(0,len2-1);
+		var rfidlen = top.document.getElementById('rfid_box').value.length;
+		var plusthis = top.document.getElementById('rfid_box').value;
+		if (rfidlen == 1 && trigger == 1){top.document.getElementById('torfid').value = '000'+plusthis;}
+		if (rfidlen == 2 && trigger == 1){top.document.getElementById('torfid').value = '00'+plusthis;}
+		if (rfidlen == 3 && trigger == 1){top.document.getElementById('torfid').value = '0'+plusthis;}
+		if (rfidlen == 4 && trigger == 1){top.document.getElementById('torfid').value = plusthis;}
 	}
 	numpad_id.appendChild(bs_id);
 
@@ -1482,35 +1559,35 @@ function createNew()
 					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
-					if (tag2write.search("00000000000000") > -1) {
-						if (tag2write.substring(1,5) != strrfidval){
-							var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
-							if (r == true){
-								document.getElementById("frm6").submit();
-								top.document.body.removeChild(top.document.getElementById('layer'));
-								top.document.body.removeChild(top.document.getElementById('box'));
-							}
-							else {
-								pass++;
-							}
-						}
-						else {
-							alert("This tag already has the ID trying to write.");
-							document.getElementById("frm6").submit();
-							top.document.body.removeChild(top.document.getElementById('layer'));
-							top.document.body.removeChild(top.document.getElementById('box'));
-						}
-					}
-					else if (tag2write == ''){
-						alert("Writing on location tag is not allowed.");
-						top.document.body.removeChild(top.document.getElementById('layer'));
-						top.document.body.removeChild(top.document.getElementById('box'));
-					}
-					else {
-						document.getElementById("frm6").submit();
-						top.document.body.removeChild(top.document.getElementById('layer'));
-						top.document.body.removeChild(top.document.getElementById('box'));
-					}
+//					if (tag2write.search("00000000000000") > -1) {
+//						if (tag2write.substring(1,5) != strrfidval){
+//							var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
+//							if (r == true){
+//								document.getElementById("frm6").submit();
+//								top.document.body.removeChild(top.document.getElementById('layer'));
+//								top.document.body.removeChild(top.document.getElementById('box'));
+//							}
+//							else {
+//								pass++;
+//							}
+//						}
+//						else {
+//							alert("This tag already has the ID trying to write.");
+//							document.getElementById("frm6").submit();
+//							top.document.body.removeChild(top.document.getElementById('layer'));
+//							top.document.body.removeChild(top.document.getElementById('box'));
+//						}
+//					}
+//					else if (tag2write == ''){
+//						alert("Writing on location tag is not allowed.");
+//						top.document.body.removeChild(top.document.getElementById('layer'));
+//						top.document.body.removeChild(top.document.getElementById('box'));
+//					}
+//					else {
+					document.getElementById("frm6").submit();
+					top.document.body.removeChild(top.document.getElementById('layer'));
+					top.document.body.removeChild(top.document.getElementById('box'));
+//					}
 				}
 			} else if (parseInt(positionval) > 13){
 				alert("The submitted position is not in range (1-13).");
@@ -1519,7 +1596,7 @@ function createNew()
 		else {
 			if (supidval == '/'){ messi += '- Please enter supplier roll ID.\n'; }
 			if (1 < supidval.length && supidval.length < 11){ messi += '- Supplier roll ID is not complete.\n'; }
-			if (idval == ''){ messi += '- Please enter tag ID.\n'; }
+			if (idval == ''){ messi += '- Please enter roll ID.\n'; }
 			if (weightval == ''){ messi += '- Please enter weight.\n'; }
 			alert(messi);
 		}
@@ -1536,4 +1613,33 @@ function createNew()
 		top.document.body.removeChild(top.document.getElementById('box'));
 	}
 	div.appendChild(cancel_id);
+
+	var container = document.createElement('div');
+	container.style.position = "absolute";
+	container.style.bottom = "30px";
+	container.style.left = "165px";
+	div.appendChild(container);
+
+	var fromrfid = document.createElement('b');
+	if (tagstatus == 'unknown') {realtag = "New";}
+	fromrfid.innerHTML = realtag+" >>> ";
+	container.appendChild(fromrfid);
+
+	var torfid = document.createElement('input');
+	torfid.id = 'torfid';
+	torfid.type = 'text';
+	torfid.maxLength = '4';
+	torfid.style.width = '50px';
+	torfid.style.fontWeight = 'bold';
+	torfid.style.fontSize = '110%';
+	torfid.style.color = 'black';
+	torfid.style.textAlign = 'center';
+	torfid.value = document.getElementById('id_box').value;
+	if (torfid.value.toString().length == 1) {torfid.value = "000"+torfid.value.toString();}
+	if (torfid.value.toString().length == 2) {torfid.value = "00"+torfid.value.toString();}
+	if (torfid.value.toString().length == 3) {torfid.value = "0"+torfid.value.toString();}
+	if (torfid.value.toString().length == 4) {torfid.value = torfid.value.toString();}
+	torfid.readOnly = true;
+	torfid.style.backgroundColor = 'lightgray';
+	container.appendChild(torfid);
 }
