@@ -13,7 +13,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'likitomi',                      # Or path to database file if using sqlite3.
+        'NAME': 'likitomi',                   # Or path to database file if using sqlite3.
         'USER': 'root',                      # Not used with sqlite3.
         'PASSWORD': 'root',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -47,6 +47,7 @@ USE_L10N = True
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = (
+#	'D:/wamp/www/rtg-likitomi/likitomi/static/'
 #	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
 	'/home/patipol/rtg-likitomi/likitomi/static/'
 )
@@ -84,6 +85,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'likitomi.urls'
 
 TEMPLATE_DIRS = (
+	"D:/wamp/www/rtg-likitomi/likitomi/templates/statusTracking/",
+	"D:/wamp/www/rtg-likitomi/likitomi/templates/clamplift/"
 	"/home/fon/Django/projects/rtg-likitomi/likitomi/templates/statusTracking/",
 	"/home/fon/Django/projects/rtg-likitomi/likitomi/templates/clamplift/",
 	"/home/patipol/rtg-likitomi/likitomi/templates/statusTracking/",
@@ -118,6 +121,7 @@ SOUTH_TESTS_MIGRATE = False
 import logging, traceback
 
 # Config log filename and logging level
+#logging.basicConfig(filename='D:/wamp/www/rtg-likitomi/likitomi/static/logfile.log', level=logging.WARNING)
 #logging.basicConfig(filename='/home/patipol/rtg-likitomi/likitomi/static/logfile.log', level=logging.WARNING)
 
 #LOGGING = {
