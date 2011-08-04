@@ -1534,65 +1534,42 @@ function createNew(realtag, tagstatus)
 		var pass = 0;
 		var messi = '';
 		if (supidval != '/' && (supid1.length == 8 && supid2.length == 2) && idval != '' && weightval != ''){
-			if (positionval == '' || parseInt(positionval) <= 13){
-				var idvalue = '('+idval.toString()+'L,)';
-				var taglist = document.getElementById('tagidquery').value;
-				function submitTag(){
-					alert(55);
-					document.getElementById("asupid").value = supidval;
-					document.getElementById("arollid").value = idval;
-					document.getElementById("arfid").value = rfidval;
-					document.getElementById("apcode").value = pcodeval;
-					document.getElementById("asize").value = sizeval;
-					document.getElementById("alane").value = laneval;
-					document.getElementById("aposition").value = positionval;
-					document.getElementById("aweight").value = weightval;
-					document.getElementById("atag2write").value = document.getElementById('tag2write').value;
-					var tag2write = document.getElementById('tag2write').value;
-//					if (tag2write.search("00000000000000") > -1) {
-//						if (tag2write.substring(1,5) != strrfidval){
-//							var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to '"+strrfidval+"'.");
-//							if (r == true){
-//								document.getElementById("frm6").submit();
-//								top.document.body.removeChild(top.document.getElementById('layer'));
-//								top.document.body.removeChild(top.document.getElementById('box'));
-//							}
-//							else {
-//								pass++;
-//							}
-//						}
-//						else {
-//							alert("This tag already has the ID trying to write.");
-//							document.getElementById("frm6").submit();
-//							top.document.body.removeChild(top.document.getElementById('layer'));
-//							top.document.body.removeChild(top.document.getElementById('box'));
-//						}
-//					}
-//					else if (tag2write == ''){
-//						alert("Writing on location tag is not allowed.");
-//						top.document.body.removeChild(top.document.getElementById('layer'));
-//						top.document.body.removeChild(top.document.getElementById('box'));
-//					}
-//					else {
-					top.document.getElementById("frm6").submit();
-					top.document.body.removeChild(top.document.getElementById('layer'));
-					top.document.body.removeChild(top.document.getElementById('box'));
-//					}
-				}
-				if (taglist.indexOf(idvalue) == -1){
-					alert(54);
-					submitTag();
-				} else {
-					var r = confirm("This RFID number is already used. Continuing assigning tag makes data for this RFID number be replaced by new entering data.");
-					if (r == true){
+			if (laneval != '' && positionval != '') {
+				if (positionval == '' || parseInt(positionval) <= 13){
+					var idvalue = '('+idval.toString()+'L,)';
+					var taglist = document.getElementById('tagidquery').value;
+					function submitTag(){
+						document.getElementById("asupid").value = supidval;
+						document.getElementById("arollid").value = idval;
+						document.getElementById("arfid").value = rfidval;
+						document.getElementById("apcode").value = pcodeval;
+						document.getElementById("asize").value = sizeval;
+						document.getElementById("alane").value = laneval;
+						document.getElementById("aposition").value = positionval;
+						document.getElementById("aweight").value = weightval;
+						document.getElementById("atag2write").value = document.getElementById('tag2write').value;
+						var tag2write = document.getElementById('tag2write').value;
+						top.document.getElementById("frm6").submit();
+						top.document.body.removeChild(top.document.getElementById('layer'));
+						top.document.body.removeChild(top.document.getElementById('box'));
+					}
+					if (taglist.indexOf(idvalue) == -1){
 						submitTag();
+					} else {
+						var r = confirm("This RFID number is already used. Continuing assigning tag makes data for this RFID number be replaced by new entering data.");
+						if (r == true){
+							submitTag();
+						}
+						else {
+							pass++;
+						}
 					}
-					else {
-						pass++;
-					}
+				} else if (parseInt(positionval) > 13){
+					alert("The submitted position is not in range (1-13).");
 				}
-			} else if (parseInt(positionval) > 13){
-				alert("The submitted position is not in range (1-13).");
+			} else {
+				if (laneval == ''){alert("Please enter lane.");}
+				if (positionval == ''){alert("Please enter position.");}
 			}
 		}
 		else {
