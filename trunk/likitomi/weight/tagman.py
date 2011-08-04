@@ -7,8 +7,8 @@ from datetime import datetime
 import socket
 from weight.models import PaperRolldetails, PaperMovement
 
-HOST = '192.41.170.55' # CSIM network
-#HOST = '192.168.101.55' # Likitomi's meeting room
+#HOST = '192.41.170.55' # CSIM network
+HOST = '192.168.101.55' # Likitomi's meeting room
 #HOST = '192.168.1.55' # My own local network: Linksys
 
 #HOST = '192.168.2.88' # Likitomi's factory: IMPLEMENTATION!
@@ -207,7 +207,7 @@ def tagman(request):
 #		atposition = 4
 #		atlocation = 'Stock'
 
-		tag2write = '112233445566778899AABBCC'
+#		tag2write = '112233445566778899AABBCC'
 		tag2write = '30065AAAA000000000000000'
 		realtag = tag2write[1:5]
 
@@ -563,7 +563,7 @@ def assigntag(request):
 	except socket.timeout:
 		mode = 'max'
 		socror = 'Cannot connect to RFID reader'
-		return render_to_response('totop.html', locals())
+		return render_to_response('socror.html', locals())
 
 	return render_to_response('totop.html')
 
