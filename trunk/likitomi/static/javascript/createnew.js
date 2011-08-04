@@ -1537,18 +1537,8 @@ function createNew(realtag, tagstatus)
 			if (positionval == '' || parseInt(positionval) <= 13){
 				var idvalue = '('+idval.toString()+'L,)';
 				var taglist = document.getElementById('tagidquery').value;
-				if (taglist.indexOf(idvalue) == -1){
-					submitTag();
-				} else {
-					var r = confirm("This RFID number is already used. Continuing assigning tag makes data for this RFID number be replaced by new entering data.");
-					if (r == true){
-						submitTag();
-					}
-					else {
-						pass++;
-					}
-				}
 				function submitTag(){
+					alert(55);
 					document.getElementById("asupid").value = supidval;
 					document.getElementById("arollid").value = idval;
 					document.getElementById("arfid").value = rfidval;
@@ -1584,10 +1574,22 @@ function createNew(realtag, tagstatus)
 //						top.document.body.removeChild(top.document.getElementById('box'));
 //					}
 //					else {
-					document.getElementById("frm6").submit();
+					top.document.getElementById("frm6").submit();
 					top.document.body.removeChild(top.document.getElementById('layer'));
 					top.document.body.removeChild(top.document.getElementById('box'));
 //					}
+				}
+				if (taglist.indexOf(idvalue) == -1){
+					alert(54);
+					submitTag();
+				} else {
+					var r = confirm("This RFID number is already used. Continuing assigning tag makes data for this RFID number be replaced by new entering data.");
+					if (r == true){
+						submitTag();
+					}
+					else {
+						pass++;
+					}
 				}
 			} else if (parseInt(positionval) > 13){
 				alert("The submitted position is not in range (1-13).");

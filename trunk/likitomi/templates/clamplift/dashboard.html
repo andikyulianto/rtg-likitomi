@@ -30,7 +30,7 @@ border:0px solid black;
 button {height:30px;}
 
 /* PLAN */
-option {padding:10px;}
+option {padding:5px;}
 
 /* CLAMPLIFT */
 #numbtn
@@ -163,8 +163,12 @@ $(document).ready(function(){
 		$("#showplan").css({"width":"800px","height":"338px"});
 //		$("#phead, #pbody").animate({"width":"200px"}, function(){$(this).animate({"width":"800px"});});
 		$("#status").val("req");
-		$("#upper").parent().css("left","390px");
-		$("#downer").parent().css("left","390px");
+		$("#uppest").parent().css("left","240px");
+		$("#upper").parent().css("left","290px");
+		$("#up").parent().css("left","340px");
+		$("#down").parent().css("left","420px");
+		$("#downer").parent().css("left","470px");
+		$("#downest").parent().css("left","520px");
 		$("#reqbtn").attr("checked","checked").button("refresh");
 		$("#detbtn").removeAttr("checked").button("refresh");
 		$("#menutab").fadeIn();
@@ -261,8 +265,12 @@ $(document).ready(function(){
 		$("#showplan").attr("src",showplan_url+"?opdate="+opdate);
 		$("#showplan").css({"width":"398px","height":"254px"});
 		$("#status").val("min");
-		$("#upper").parent().css("left","185px");
-		$("#downer").parent().css("left","185px");
+		$("#uppest").parent().css("left","40px");
+		$("#upper").parent().css("left","90px");
+		$("#up").parent().css("left","140px");
+		$("#down").parent().css("left","220px");
+		$("#downer").parent().css("left","270px");
+		$("#downest").parent().css("left","320px");
 		// LAYOUT //
 		$("#layout").css({"width":"398px","height":"551px","top":"42px","left":"400px"});
 		$("#map").css("margin-top","35px");
@@ -294,11 +302,11 @@ $(document).ready(function(){
 <!--PLAN-->
 	<div id="plan" class="greenbg" style="top:0px; left:0px; width:398px; height:403px;">
 		<div id="clock" class="greenbg" style="top:0px; left:0px;"></div>
-		<div class="greenbg" style="top:0px; left:100px;">{% now "Y-m-d" %}</div>
+		<div class="greenbg" style="top:0px; left:120px;">{% now "Y-m-d" %}</div>
 		<div class="greenbg" style="top:0px; left:200px;">
 			<input id="status" value="min" type="hidden" />
 			<form>
-				<select id="opdate" name="opdate" style="height:30px;">
+				<select id="opdate" name="opdate" size="1" style="height:30px;">
 					<option value="" selected="selected">Date:</option>
 					{% for date in datelist %}
 					<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
@@ -311,13 +319,13 @@ $(document).ready(function(){
 			<input type="radio" id="detbtn" name="radio" /><label for="detbtn">Detail</label>
 		</div>
 		<div class="greenbg" style="top:0px; right:0px;"><button id="magplan">Plan</button></div> <!--Magnifying Button-->
-		<div class="greenbg" style="top:35px; left:0px;"><button id="uppest">Top Most</button></div>
-		<div class="greenbg" style="top:35px; left:185px;"><button id="upper">Seek Previous</button></div>
-		<div class="greenbg" style="top:35px; right:0px;"><button id="up">Previous</button></div>
-		<div class="greenbg" style="bottom:0px; left:0px;"><button id="downest">Bottom Most</button></div>
-		<div class="greenbg" style="bottom:0px; left:185px;"><button id="downer">Seek Next</button></div>
-		<div class="greenbg" style="bottom:0px; right:0px;"><button id="down">Next</button></div>
-		<div id="phead" class="greenbg" style="top:68px; left:0px;">
+		<div class="greenbg" style="bottom:0px; left:40px;"><button id="uppest">Top Most</button></div>
+		<div class="greenbg" style="bottom:0px; left:90px;"><button id="upper">Seek Previous</button></div>
+		<div class="greenbg" style="bottom:0px; left:140px;"><button id="up">Previous</button></div>
+		<div class="greenbg" style="bottom:0px; left:320px;"><button id="downest">Bottom Most</button></div>
+		<div class="greenbg" style="bottom:0px; left:270px;"><button id="downer">Seek Next</button></div>
+		<div class="greenbg" style="bottom:0px; left:220px;"><button id="down">Next</button></div>
+		<div id="phead" class="greenbg" style="top:50px; left:0px;">
 			<table id="minhead" style="font-size:100%;">
 				<tr style="background-color:black; color:white;">
 					<td rowspan='2' style="width:10px; background-color:#CCE6CC;"></td>
@@ -403,7 +411,7 @@ $(document).ready(function(){
 			<tr>
 				<td>
 					<form class="ui-menu">
-						<select id="spcodedd" style="height:30px;">
+						<select id="spcodedd" size="1" style="height:30px;">
 							<option value="" selected="selected">Paper Code:</option>
 							{% for paper_code in spcodelist %}
 							<option value="{{ paper_code }}">{{ paper_code }}</option>
@@ -413,7 +421,7 @@ $(document).ready(function(){
 				</td>
 				<td>
 					<form class="ui-menu">
-						<select id="swidthdd" style="height:30px;">
+						<select id="swidthdd" size="1" style="height:30px;">
 							<option value="" selected="selected">Size:</option>
 							{% for size in swidthlist %}
 							<option value="{{ size }}">{{ size }}</option>
