@@ -491,27 +491,9 @@ function locTag(realtag, tagstatus)
 //					document.getElementById("aweight").value = weightval;
 					document.getElementById("atag2write_loc").value = document.getElementById('tag2write').value;
 					var tag2write = document.getElementById('tag2write').value;
-//					if (tag2write.search("00000000000000") > -1) {
-//						var r = confirm("Roll ID tag '"+tag2write.substring(1,5)+"' will be changed to location tag '"+laneval+" - "+positionval+"'.");
-//						if (r == true){
-//							document.getElementById("frm9").submit();
-//							top.document.body.removeChild(top.document.getElementById('layer'));
-//							top.document.body.removeChild(top.document.getElementById('box'));
-//						}
-//						else {
-//							pass++;
-//						}
-//					}
-//					else if (tag2write == ''){
-//						alert("Writing on location tag is not allowed.");
-//						top.document.body.removeChild(top.document.getElementById('layer'));
-//						top.document.body.removeChild(top.document.getElementById('box'));
-//					}
-//					else {
 					document.getElementById("frm9").submit();
 					top.document.body.removeChild(top.document.getElementById('layer'));
 					top.document.body.removeChild(top.document.getElementById('box'));
-//					}
 				}
 				submitTag();
 			} else if (parseInt(positionval) > 13){
