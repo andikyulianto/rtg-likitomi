@@ -8,8 +8,8 @@ import random
 from datetime import datetime
 from weight.models import PaperRolldetails, PaperMovement
 
-HOST = '192.41.170.55' # CSIM network
-#HOST = '192.168.101.55' # Likitomi's meeting room
+#HOST = '192.41.170.55' # CSIM network
+HOST = '192.168.101.55' # Likitomi's meeting room
 #HOST = '192.168.1.55' # My own local network: Linksys
 
 #HOST = '192.168.2.88' # Likitomi's factory: IMPLEMENTATION!

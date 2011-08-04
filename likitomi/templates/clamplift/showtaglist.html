@@ -79,7 +79,7 @@ $(document).ready(function(){
 				$("#atag2write").val($("#tag2write").val());
 //				alert($("#arfid").val());
 //				alert($("#atag2write").val());
-				if (tag2write && tag2write == "Location Tag"){
+				if (tag2write && tag2write == "Location Tag" || !realtag){
 //					alert("Writing on location tag is not allowed.");
 					$("#asstag").attr("disabled","disabled").removeAttr("onclick");
 				}
@@ -94,7 +94,7 @@ $(document).ready(function(){
 			$(".writemore").click(function(){
 				$("#arfid_more").val(arfid);
 				$("#atag2write_more").val($("#tag2write").val());
-				if (tag2write && tag2write == "Location Tag"){
+				if (tag2write && tag2write == "Location Tag" || !realtag){
 //					alert("Writing on location tag is not allowed.");
 					$("#writemore").attr("disabled","disabled").removeAttr("onclick");
 				}
