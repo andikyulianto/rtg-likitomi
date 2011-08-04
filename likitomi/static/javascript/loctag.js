@@ -485,7 +485,6 @@ function locTag(realtag, tagstatus)
 		var messi = '';
 		if (laneval != '' && positionval != ''){
 			if (parseInt(positionval) <= 13){
-				submitTag();
 				function submitTag(){
 					document.getElementById("alane_loc").value = laneval;
 					document.getElementById("aposition_loc").value = positionval;
@@ -514,6 +513,7 @@ function locTag(realtag, tagstatus)
 					top.document.body.removeChild(top.document.getElementById('box'));
 //					}
 				}
+				submitTag();
 			} else if (parseInt(positionval) > 13){
 				alert("The submitted position is not in range (1-13).");
 			}

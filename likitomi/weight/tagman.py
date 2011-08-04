@@ -563,7 +563,7 @@ def assigntag(request):
 	except socket.timeout:
 		mode = 'max'
 		socror = 'Cannot connect to RFID reader'
-		return render_to_response('socror.html', locals())
+		return render_to_response('totop.html', locals())
 
 	return render_to_response('totop.html')
 
