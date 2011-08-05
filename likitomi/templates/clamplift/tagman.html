@@ -1,5 +1,5 @@
 ﻿<html>
-<title>Tag Management</title>
+<title>Likitomi: Tag Management</title>
 <head>
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
 <style type="text/css">
@@ -19,7 +19,7 @@ div
 position:absolute;
 }
 
-option {padding:5px;}
+option {padding:0px;}
 
 /* TAG */
 #numbtn
@@ -65,6 +65,8 @@ background-color:dimgray;
 <script type="text/javascript" src="javascript/writemore.js"></script>
 <script type="text/javascript" src="javascript/loctag.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript" src="javascript/ui.selectmenu.js"></script> 
+<link rel="Stylesheet" href="css/ui.selectmenu.css" type="text/css" /> 
 <script type="text/javascript">
 $(document).ready(function(){
 	$( "#createnew" ).button({icons: {primary: "ui-icon-tag"}});
@@ -92,6 +94,30 @@ $(document).ready(function(){
 	var showtaglist_url = $('#showtaglist_url').val();
 	$( "#searchbtn" ).button({icons: {primary: "ui-icon-search"}});
 
+	if (!$("#realtag").val()) {
+		$("#createnew").attr("disabled","disabled").removeAttr("onclick");
+		$("#writeloctag").attr("disabled","disabled").removeAttr("onclick");
+
+	$("select#spcodedd").selectmenu({maxHeight: 300, style: 'dropdown'});
+	$("select#swidthdd").selectmenu({style: 'dropdown'});
+
+	$( "#checkbox" ).buttonset();
+
+	function filterAll(){
+		$("#showtaglist")[0].contentWindow.scrollTo(0,0);
+		var spcode = $('#spcodedd').val();
+		var swidth = $('#swidthdd').val();
+		var notyet = $(":checkbox#notassfilt").attr("checked");
+		var already = $(":checkbox#assignfilt").attr("checked");
+		if (notyet == true && already == true) {var checksta = 'tt';}
+		if (notyet == true && already == false) {var checksta = 'tf';}
+		if (notyet == false && already == true) {var checksta = 'ft';}
+		if (notyet == false && already == false) {var checksta = 'ff';}
+	}
+
+	$("#searchbtn").click(function(){filterAll();});
+	$(":checkbox#notassfilt, :checkbox#assignfilt").change(function(){filterAll();});
+
 	$("#searchbtn").click(function(){
 		$("#showtaglist")[0].contentWindow.scrollTo(0,0);
 		var spcode = $('#spcodedd').val();
@@ -111,9 +137,24 @@ $(document).ready(function(){
 		if (spcode == "" && swidth == "") {$('#showtaglist').contents().find('tr').show();}
 	});
 
-	if (!$("#realtag").val()) {
-		$("#createnew").attr("disabled","disabled").removeAttr("onclick");
-		$("#writeloctag").attr("disabled","disabled").removeAttr("onclick");
+	$(":checkbox#notassfilt").change(function(){
+		if ($(this).attr("checked") == true){
+			$('#showtaglist').contents().find('tr[class=""]').show();
+			$('#showtaglist').contents().find('tr[class=None]').show();
+		}
+		else if ($(this).attr("checked") == false){
+			$('#showtaglist').contents().find('tr[class=""]').hide();
+			$('#showtaglist').contents().find('tr[class=None]').hide();
+		}
+	});
+	$(":checkbox#assignfilt").change(function(){
+		if ($(this).attr("checked") == true){
+			$('#showtaglist').contents().find('tr[class!=""][class!=None]').show();
+		}
+		else if ($(this).attr("checked") == false){
+			$('#showtaglist').contents().find('tr[class!=""][class!=None]').hide();
+		}
+	});
 	}
 });
 </script>
@@ -137,12 +178,17 @@ $(document).ready(function(){
 
 <p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: {{ realtag }}{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}<p style="position:absolute; top:-5px; left:300px; font-size:70%;">Writing on a location tag<br />is not allowed!</p>{% endif %}</b></p>
 
-<div style="top:0px; left:500px;"><table style="margin-top:0px;">
+<div id="checkbox" style="top:5px; left:315px;">
+	<input type="checkbox" id="notassfilt" name="checkbox" checked="checked" /><label for="notassfilt" style="font-size:80%;">Not yet</label>
+	<input type="checkbox" id="assignfilt" name="checkbox" /><label for="assignfilt" style="font-size:80%;">Assigned</label>
+</div>
+
+<div style="top:0px; left:515px;"><table style="margin-top:0px;">
 	<tr>
 		<td>
 			<form class="ui-menu">
-				<select id="spcodedd" style="height:30px;">
-					<option value="" selected="selected">Paper Code:</option>
+				<select id="spcodedd" style="width:90px;">
+					<option value="" selected="selected">Paper:</option>
 					{% for paper_code in spcodelist %}
 					<option value="{{ paper_code }}">{{ paper_code }}</option>
 					{% endfor %}
@@ -151,7 +197,7 @@ $(document).ready(function(){
 		</td>
 		<td>
 			<form class="ui-menu">
-				<select id="swidthdd" style="height:30px;">
+				<select id="swidthdd" style="width:70px;">
 					<option value="" selected="selected">Size:</option>
 					{% for size in swidthlist %}
 					<option value="{{ size }}">{{ size }}</option>
@@ -186,9 +232,9 @@ $(document).ready(function(){
 	<div style="top:555px; left:430px;"><button id="downer">Seek Next</button></div>
 	<div style="top:555px; left:380px;"><button id="down">Next</button></div>
 
-	<div style="top:560px; left:600px;"><button id="writeloctag" style="font-size:80%;" onclick="javascript:locTag('{{ realtag }}', '{{ tagstatus }}')">Write Location Tag</button></div>
+	<div style="top:560px; left:630px;"><button id="writeloctag" style="font-size:80%;" onclick="javascript:locTag('{{ realtag }}', '{{ tagstatus }}')">Write Location Tag</button></div>
 
-	<div style="top:8px; left:170px; font-size:80%;"><button id="refresh" onclick="window.location.href='{{ tagman_url }}'">Refresh</button></div>
+	<div style="top:5px; left:170px; font-size:80%;"><button id="refresh" onclick="window.location.href='{{ tagman_url }}'">Refresh</button></div>
 	<div style="top:560px; left:10px; font-size:80%;"><button id="back" onclick="window.location.href='{{ dashboard_url }}'">Back</button></div>
 
 	<form id="frm6" action="{{ tagman_url }}createnew/" method="get">

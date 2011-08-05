@@ -104,6 +104,8 @@ $(document).ready(function(){
 			});
 		}
 	});
+
+	$("tr[class!=''][class!=None]").hide();
 });
 </script>
 </head>
@@ -124,14 +126,14 @@ $(document).ready(function(){
 	<div style="width:785px; height:580px;">
 	<table style="width:100%;">
 		{% for paper_roll_detail_id, rfid_roll_id, paper_code, size, initial_weight, lane, position, current_weight in nlist %}
-		<tr class="{{ rfid_roll_id }}" title="{{ paper_code }}" lang="{{ size }}" id="{{ paper_roll_detail_id }}" style="height:53px; background-color:{% if rfid_roll_id == "" %}lightblue{% endif %}{% if rfid_roll_id != "" %}{% if rfid_roll_id == realtag %}lightgray{% endif %}{% if rfid_roll_id != realtag %}lightgray{% endif %}{% endif %};">
+		<tr class="{{ rfid_roll_id }}" title="{{ paper_code }}" lang="{{ size }}" id="{{ paper_roll_detail_id }}" style="height:53px; background-color: lightgray;">
 			<td style="width:58px;">{{ paper_roll_detail_id }}</td>
-			<td style="width:67px;">{{ rfid_roll_id }}</td>
+			<td style="width:67px;">{% if rfid_roll_id != None %}{{ rfid_roll_id }}{% else %}{% endif %}</td>
 			<td style="width:120px;">{{ paper_code }}</td>
 			<td style="width:67px;">{{ size }}</td>
 			<td style="width:67px;">{{ initial_weight }}</td>
 			<td style="width:67px;">{{ current_weight }}</td>
-			<td style="width:69px;">{{ lane }}</td>
+			<td style="width:69px;">{% if rfid_roll_id != None %}{{ lane }}{% else %}{% endif %}</td>
 			<td style="width:69px;">{% if position != Null %}{{ position }}{% endif %}</td>
 			<td title="{{ paper_roll_detail_id }}" lang="btn" style="width:160px; background-color:white;"></td>
 <!--			<td style="width:160px; background-color:white;">{% if rfid_roll_id == "" %}<button class="asstag" onclick="javascript:assignTag({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}');">Assign Tag</button>{% endif %}{% if rfid_roll_id != "" %}<button class="writemore" onclick="javascript:writeMore({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}')">Write More</button>{% endif %}</td>-->

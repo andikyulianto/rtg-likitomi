@@ -128,7 +128,7 @@ if($action=='edit'){
 ?>
 				<tr>
 					<td onClick="window.scrollBy(0,300)"><?=$cnt?></td>
-					<td><input type='text' id='x_supplier_roll_id_<?=$cnt?>' size='10' value='<?=$row->supplier_roll_id?>'/></td>
+					<td><input type='text' id='x_supplier_roll_id_<?=$cnt?>' size='14' value='<?=$row->supplier_roll_id?>'/></td>
 					<td><input type='text' id='x_size_<?=$cnt?>' size='4'  value='<?=$row->size?>'/></td>
 					<td><select id='x_unit_<?=$cnt?>' width='8'>	
 						<option value='mm' <?php if($row->uom=="mm") echo 'selected'?> >mm</option>
@@ -136,7 +136,7 @@ if($action=='edit'){
 					</select></td>
 					<td><input type='text' id='x_initial_weight_<?=$cnt?>' size='10'  value='<?=$row->initial_weight?>'/></td>
 					<td><input type='text' id='x_remarks_<?=$cnt?>' size='10' value='<?=$row->remarks?>'/></td>
-<!--					<td><input type='text' id='x_rfid_roll_id_<?=$cnt?>'size='10' value='<?=$row->rfid_roll_id?>'/></td>	-->
+					<input type='hidden' id='x_rfid_roll_id_<?=$cnt?>'size='10' value='<?=$row->rfid_roll_id?>'/>
 				</tr>
 <?php
 }}
@@ -146,7 +146,7 @@ $cnt++;
 ?>
 				<tr>
 					<td onClick="window.scrollBy(0,300)"><?=$i?></td>
-					<td><input type='text' id='x_supplier_roll_id_<?=$i?>' size='10' value=''/></td>
+					<td><input type='text' id='x_supplier_roll_id_<?=$i?>' size='14' value=''/></td>
 					<td><input type='text' id='x_size_<?=$i?>' size='4'  value=''/></td>
 					<td><select id='x_unit_<?=$i?>' width='8'>	
 						<option value='mm'>mm</option>
@@ -154,7 +154,7 @@ $cnt++;
 					</select></td>
 					<td><input type='text' id='x_initial_weight_<?=$i?>' size='10'  value=''/></td>
 					<td><input type='text' id='x_remarks_<?=$i?>' size='10' value=''/></td>
-<!--					<td><input type='text' id='x_rfid_roll_id_<?=$i?>'size='10' value=''/></td>	-->
+					<input type='hidden' id='x_rfid_roll_id_<?=$i?>'size='10' value=''/>
 				</tr>
 <?php 
 }

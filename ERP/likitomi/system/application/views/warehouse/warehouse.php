@@ -209,7 +209,7 @@
 				unit[i - 1] = document.getElementById('x_unit_' + i).value;
 				weight[i - 1] = document.getElementById('x_initial_weight_' + i).value;
 				remarks[i - 1] = document.getElementById('x_remarks_' + i).value;
-				rfidtag[i - 1] = document.getElementById('x_rfid_roll_id_' + i).value;
+//				rfidtag[i - 1] = document.getElementById('x_rfid_roll_id_' + i).value;
 			}		
 		}
 		var jsonArray = new Array(supplier_roll_id,size,unit,weight,remarks,rfidtag);
