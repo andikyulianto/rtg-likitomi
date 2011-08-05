@@ -300,8 +300,8 @@ def scale(request):
 		if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
 			query = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
 			paper_code = query.paper_code
-			size = query.width
-			uom = query.wunit
+			size = query.size
+			uom = query.uom
 
 			if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
 				actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)

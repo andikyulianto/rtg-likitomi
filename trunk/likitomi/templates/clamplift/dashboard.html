@@ -73,6 +73,8 @@ background-color:white;
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript" src="javascript/ui.selectmenu.js"></script> 
+<link rel="Stylesheet" href="css/ui.selectmenu.css" type="text/css" /> 
 <script type="text/javascript">
 function startTime()
 {
@@ -134,6 +136,8 @@ $(document).ready(function(){
 	$("#down").click(function(){$("#showplan")[0].contentWindow.scrollBy(0,84);});
 	$("#downer").click(function(){$("#showplan")[0].contentWindow.scrollBy(0,252);});
 	$("#downest").click(function(){$("#showplan")[0].contentWindow.scrollTo(0,9999);});
+
+	$("select#opdate").selectmenu({maxHeight: 300, style: 'dropdown'});
 
 // Buttons //
 	$( "#magplan" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
@@ -246,6 +250,9 @@ $(document).ready(function(){
 		}
 	});
 
+	$("select#spcodedd").selectmenu({maxHeight: 300, style: 'dropdown'});
+	$("select#swidthdd").selectmenu({style: 'dropdown'});
+
 // MENU TABS //
 	$("#menutab").hide();
 	$("#dashtab").click(function(){
@@ -301,13 +308,13 @@ $(document).ready(function(){
 
 <!--PLAN-->
 	<div id="plan" class="greenbg" style="top:0px; left:0px; width:398px; height:403px;">
-		<div id="clock" class="greenbg" style="top:0px; left:0px;"></div>
-		<div class="greenbg" style="top:0px; left:120px;">{% now "Y-m-d" %}</div>
-		<div class="greenbg" style="top:0px; left:200px;">
+		<div id="clock" class="greenbg" style="top:5px; left:5px;"></div>
+		<div class="greenbg" style="top:5px; left:100px;">{% now "Y-m-d" %}</div>
+		<div class="greenbg" style="top:0px; left:180px;">
 			<input id="status" value="min" type="hidden" />
 			<form>
-				<select id="opdate" name="opdate" size="1" style="height:30px;">
-					<option value="" selected="selected">Date:</option>
+				<select id="opdate" name="opdate" size="1" style="width:130px;">
+					<option value="" selected="selected">Select Date:</option>
 					{% for date in datelist %}
 					<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
 					{% endfor %}
@@ -319,12 +326,12 @@ $(document).ready(function(){
 			<input type="radio" id="detbtn" name="radio" /><label for="detbtn">Detail</label>
 		</div>
 		<div class="greenbg" style="top:0px; right:0px;"><button id="magplan">Plan</button></div> <!--Magnifying Button-->
-		<div class="greenbg" style="bottom:0px; left:40px;"><button id="uppest">Top Most</button></div>
-		<div class="greenbg" style="bottom:0px; left:90px;"><button id="upper">Seek Previous</button></div>
-		<div class="greenbg" style="bottom:0px; left:140px;"><button id="up">Previous</button></div>
-		<div class="greenbg" style="bottom:0px; left:320px;"><button id="downest">Bottom Most</button></div>
-		<div class="greenbg" style="bottom:0px; left:270px;"><button id="downer">Seek Next</button></div>
-		<div class="greenbg" style="bottom:0px; left:220px;"><button id="down">Next</button></div>
+		<div class="greenbg" style="bottom:5px; left:40px;"><button id="uppest">Top Most</button></div>
+		<div class="greenbg" style="bottom:5px; left:90px;"><button id="upper">Seek Previous</button></div>
+		<div class="greenbg" style="bottom:5px; left:140px;"><button id="up">Previous</button></div>
+		<div class="greenbg" style="bottom:5px; left:320px;"><button id="downest">Bottom Most</button></div>
+		<div class="greenbg" style="bottom:5px; left:270px;"><button id="downer">Seek Next</button></div>
+		<div class="greenbg" style="bottom:5px; left:220px;"><button id="down">Next</button></div>
 		<div id="phead" class="greenbg" style="top:50px; left:0px;">
 			<table id="minhead" style="font-size:100%;">
 				<tr style="background-color:black; color:white;">
@@ -411,7 +418,7 @@ $(document).ready(function(){
 			<tr>
 				<td>
 					<form class="ui-menu">
-						<select id="spcodedd" size="1" style="height:30px;">
+						<select id="spcodedd" size="1" style="width:125px;">
 							<option value="" selected="selected">Paper Code:</option>
 							{% for paper_code in spcodelist %}
 							<option value="{{ paper_code }}">{{ paper_code }}</option>
@@ -421,7 +428,7 @@ $(document).ready(function(){
 				</td>
 				<td>
 					<form class="ui-menu">
-						<select id="swidthdd" size="1" style="height:30px;">
+						<select id="swidthdd" size="1" style="width:70px;">
 							<option value="" selected="selected">Size:</option>
 							{% for size in swidthlist %}
 							<option value="{{ size }}">{{ size }}</option>

@@ -35,7 +35,7 @@ def tagman(request):
 	for width in swidth:
 		swidthlist.append(width[0])
 
-	query = PaperRolldetails.objects.values_list('paper_roll_detail_id', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('rfid_roll_id','paper_roll_detail_id')
+	query = PaperRolldetails.objects.values_list('paper_roll_detail_id', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('paper_roll_detail_id')
 
 	qlist = list(query)
 	nlist = list()
@@ -254,7 +254,7 @@ def showtaglist(request):
 	for width in swidth:
 		swidthlist.append(width[0])
 
-	query = PaperRolldetails.objects.values_list('paper_roll_detail_id', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('rfid_roll_id','paper_roll_detail_id')
+	query = PaperRolldetails.objects.values_list('paper_roll_detail_id', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('paper_roll_detail_id')
 
 	qlist = list(query)
 	nlist = list()
