@@ -48,8 +48,8 @@ USE_L10N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = (
 #	'D:/wamp/www/rtg-likitomi/likitomi/static/'
-#	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
-	'/home/patipol/rtg-likitomi/likitomi/static/'
+	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
+#	'/home/patipol/rtg-likitomi/likitomi/static/'
 )
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
@@ -78,6 +78,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.csrf.CsrfResponseMiddleware'
 #    'djangologging.middleware.LoggingMiddleware',
 #    'testmaker.middleware.testmaker.TestMakerMiddleware',
 )
@@ -86,11 +87,11 @@ ROOT_URLCONF = 'likitomi.urls'
 
 TEMPLATE_DIRS = (
 	"D:/wamp/www/rtg-likitomi/likitomi/templates/statusTracking/",
-	"D:/wamp/www/rtg-likitomi/likitomi/templates/clamplift/"
+	"D:/wamp/www/rtg-likitomi/likitomi/templates/clamplift/",
 	"/home/fon/Django/projects/rtg-likitomi/likitomi/templates/statusTracking/",
 	"/home/fon/Django/projects/rtg-likitomi/likitomi/templates/clamplift/",
 	"/home/patipol/rtg-likitomi/likitomi/templates/statusTracking/",
-	"/home/patipol/rtg-likitomi/likitomi/templates/clamplift/"
+	"/home/patipol/rtg-likitomi/likitomi/templates/clamplift/",
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

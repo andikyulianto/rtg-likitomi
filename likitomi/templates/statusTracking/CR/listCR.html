@@ -2,7 +2,7 @@
 {% block view %}
 
 <!--PATH SETTINGS START-->
-{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.logout_view as likitomi_url %}
 {% url statusTracking.home.section as home_url %}
 {% url statusTracking.line.startCR as startCR_url %}
 {% url statusTracking.line.endCR as endCR_url %}
@@ -24,7 +24,7 @@
 							</fieldset>
 						</form>
     				</th>
-    				<th align="right" width="10%"><a id="normalLink" href="/likitomi"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
+    				<th align="right" width="10%"><a id="normalLink" href="{{likitomi_url}}"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp</th>
     			</tr>
     		</thead>
     	</table>
@@ -62,10 +62,10 @@
 	<th>BL</th>
 	<th>CM</th>
 	<th>CL</th>
-	<th>Length</th>
 	<th>Width</th>
 	<th>Case</th>
 	<th>Cut</th>
+	<th>Length</th>
 	<th>Blank</th>
 	<th>Slit</th>
 	<th>Scoreline</th>
@@ -111,10 +111,10 @@
 	<td>{{item.product.bl}}</td>
 	<td>{{item.product.cm}}</td>
 	<td>{{item.product.cl}}</td>
-	<td>{{item.product.length_mm}}</td>
 	<td>{{item.product.width_mm}}</td>
-	<td>{{item.product.parent_code.case}}</td>
-	<td>{{item.product.parent_code.cut}}</td>
+	<td>{{item.plan_amount}}</td>
+	<td>{{item.cut}}</td>
+	<td>{{item.product.length_mm}}</td>
 	<td>{{item.product.parent_code.blank}}</td>
 	<td>{{item.product.parent_code.slit}}</td>
 	<td>{{item.product.parent_code.scoreline_f}}</td>

@@ -1,6 +1,9 @@
-<meta HTTP-EQUIV="REFRESH" content="3; url=/likitomi/">
+
+
 {% extends "container.html" %}
 {% block view %}
+{% url statusTracking.views.login_user as login_url %}
+<meta HTTP-EQUIV="REFRESH" content="3; url={{login_url}}">
 <b><h1>{{msg}}</h1></b>
 <br>
 eID : {{eID}}
@@ -9,5 +12,6 @@ task : {{task}}
 <br>
 user : {{user}}
 <br>
-{{username}}
+{{state}}
+<br>
 {% endblock %}

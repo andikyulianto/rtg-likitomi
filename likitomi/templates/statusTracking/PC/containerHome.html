@@ -184,7 +184,7 @@ $(document).ready(function() {
 <input id='normalPlanRefresher_url' type='hidden' value='{% url statusTracking.home.normalPlanRefresher %}' />
 <input id='lastUpdate_url' type='hidden' value='{% url statusTracking.home.lastUpdate %}' />
 <input id='monthlyPlan_url' type='hidden' value='{% url statusTracking.home.monthlyPlan %}' />
-{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.logout_view as likitomi_url %}
 {% url statusTracking.home.section as home_url %}
 {% url statusTracking.detail.pcdetail as pcdetail_url %}
 <!--PATH SETTINGS END-->

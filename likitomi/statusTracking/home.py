@@ -5,10 +5,12 @@
 # After logging in by using user ID 
 # This page will check the department and
 # return the personalised homepage for each person
-
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.core.context_processors import csrf
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import Template, Context
+from statusTracking.views import login_user
 from statusTracking.models import StatusTracking, ProductCatalog, Partners
 from statusTracking.utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
 from statusTracking.config import getPCItemNum
@@ -28,11 +30,35 @@ def set_username(user):
 def get_username():
 	return username
 
+def login_check(request):
+	username = password = ''
+	if request.POST:
+		username = request.POST.get('username')
+		password = request.POST.get('password')
+		
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			if user.is_active:
+				login(request, user)
+				flashmess = "You're successfully logged in!"
+				return HttpResponseRedirect('/likitomi/home/?user='+username+'&&flashmess='+flashmess)
+			else:
+				flashmess = "Your account is not active, please contact the site admin."
+		else:
+			flashmess = "Your username and/or password were incorrect."
+			return HttpResponseRedirect('/likitomi/?flashmess='+flashmess)
+	return HttpResponseRedirect('/likitomi/?flashmess='+flashmess)
+
+def logout_view(request):
+	logout(request)
+	flashmess = "You're successfully logged out!"
+	return HttpResponseRedirect('/likitomi/?flashmess='+flashmess)
 ####################################################
 ##                    for pc                      ##
 ## this page is view process via desktop computer ##
 ####################################################
 def section(request):
+
 
 	try:
 		eID = request.GET['eID']
@@ -43,13 +69,12 @@ def section(request):
 			employee = Employee(user)
 		except:
 			title = "Welcome to Likitomi Status Tracking System"
-			msg = "The user id is not found. Page will be redirected to login page"
+			msg = "Group is not found. Please contact Administrator for assigning group. Page will be redirected to login page"
 			return render_to_response('home.html', locals())
 		
 		username = employee.username
 		set_username(user)
 		eID = employee.id
-#		task = employee.task
 	today = todayDate()
 	
 	try:
@@ -59,7 +84,7 @@ def section(request):
 		msg = "Job of "+ username+ " is not defined. Please contact your administrator"
 		return render_to_response('home.html', locals())
 
-#	print "this is task " +str(task)
+
 
 	page =  str(task)
 	print page
