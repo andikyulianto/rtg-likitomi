@@ -92,6 +92,8 @@
 		    {{ item.process2 }}
 		{% else %}{% if item.process2 == 'WH' %}
 		    {{ item.process1 }}
+		{% else %}
+			CR <!-- need to fix here -->
 		{% endif %}{% endif %}{% endif %}</td>
 
 	<td>{{item.days_left}}</td></tr>

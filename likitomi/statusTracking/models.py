@@ -506,7 +506,7 @@ class StatusTracking(models.Model):
     def process3(self):
 	if(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1) and (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
 	 	return "PT"
-	elif(self.product.parent_code.req_cr==1 or (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 ) and not (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	elif(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 ) and not (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
 	 	return "WH"
 	else:
 		return ""
