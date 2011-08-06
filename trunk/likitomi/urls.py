@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.conf import settings
 from statusTracking.general import login
-from statusTracking.home import section,display,normalPlanRefresher,lastUpdate,monthlyPlan
+from statusTracking.home import login_check,logout_view,section,display,normalPlanRefresher,lastUpdate,monthlyPlan
 from statusTracking.detail import pcdetail
 from statusTracking.line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from statusTracking.update import startUpdate,endUpdate
@@ -24,8 +24,13 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	(r'^likitomi/$', login),
-	(r'^likitomi/home/$', section),	
+#	(r'^login/$', login),
+	(r'^likitomi/$', 'statusTracking.views.login_user'),
+	(r'^likitomi/auth/$', login_check),
+	(r'^likitomi/auth/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/logout/$', logout_view),
+	(r'^likitomi/logout/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/home/$', section),		
 	(r'^likitomi/home/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
         (r'^likitomi/normalPlanRefresher/$', normalPlanRefresher),      
         (r'^likitomi/normalPlanRefresher/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),

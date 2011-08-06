@@ -1,0 +1,25 @@
+{% extends "container.html" %}
+{% block view %}
+<div id='loginDiv'>
+	<fieldset><legend accesskey="D" tabindex="1">{{content_header}}</legend>
+
+<form id="login_form" method="post" action="{% url statusTracking.home.login_check %}">{% csrf_token %}
+		<br>
+		{% if next %}
+		<input type="hidden" name="next" value="{{ next }}" />
+		{% endif %}
+		Username:
+		<input type="text" name="username" value="{{ username}}" /><br /><br>
+		Password:
+		<input type="password" name="password" value="" /><br />
+		<br/>
+		<input type="submit" value="Login" />
+	</form>
+
+</fieldset>
+</div>
+<script>
+	document.getElementById('user_name').focus();
+</script>
+
+{% endblock %}
