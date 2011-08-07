@@ -419,8 +419,166 @@ class Test2 extends Toast
 
 		}
 	}
-
+	function test_3CSTime()
+	{
 	
+	$date =date("Y-m-d").' 00:00:00';
+	$machine = "3cs";
+	$result = $this->Test_model->getMachineTime($date,$machine);
+	for($i=0;$i<$result->num_rows;$i++)
+	{
+		if ($result->num_rows() > 0)
+		{
+		   $row = $result->row_array($i); 
+//			print_r($row);
+//			print "<br>";
+		   //echo "current : ".$row['plan_cv_end']."";
+		   $test = $row['plan_cv_start'];
+		   if($i!=0)
+		   {
+		   	$prev = $result->previous_row();
+		   	//print "prev".$prev->plan_cv_end;
+		   	$expect = $prev->plan_cv_end;
+		   	$this->_assert_true($test>$expect);
+		   	if(!$this->_assert_true($test>$expect))
+		   		print "3CSTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
+		   }
+		//   else
+		//   	print "3CSTime: Current".$test." Previous:Null ".$row['product_id']."<br>";
+
+		}
+
+
+	}
+	}
+	function test_2CLTime()
+	{
+	
+	$date =date("Y-m-d").' 00:00:00';
+	$machine = "2cl";
+	$result = $this->Test_model->getMachineTime($date,$machine);
+	for($i=0;$i<$result->num_rows;$i++)
+	{
+		if ($result->num_rows() > 0)
+		{
+		   $row = $result->row_array($i); 
+//			print_r($row);
+//			print "<br>";
+		   //echo "current : ".$row['plan_cv_end']."";
+		   $test = $row['plan_cv_start'];
+		   if($i!=0)
+		   {
+		   	$prev = $result->previous_row();
+		   	//print "prev".$prev->plan_cv_end;
+		   	$expect = $prev->plan_cv_end;
+		   	$this->_assert_true($test>$expect);
+		   	if(!$this->_assert_true($test>$expect))
+		   		print "2CLTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
+		   }
+		//   else
+		//   	print "3CSTime: Current".$test." Previous:Null ".$row['product_id']."<br>";
+
+		}
+
+
+	}
+	}
+	function test_3CLTime()
+	{
+	
+	$date =date("Y-m-d").' 00:00:00';
+	$machine = "3cl";
+	$result = $this->Test_model->getMachineTime($date,$machine);
+	for($i=0;$i<$result->num_rows;$i++)
+	{
+		if ($result->num_rows() > 0)
+		{
+		   $row = $result->row_array($i); 
+//			print_r($row);
+//			print "<br>";
+		   //echo "current : ".$row['plan_cv_end']."";
+		   $test = $row['plan_cv_start'];
+		   if($i!=0)
+		   {
+		   	$prev = $result->previous_row();
+		   	//print "prev".$prev->plan_cv_end;
+		   	$expect = $prev->plan_cv_end;
+		   	$this->_assert_true($test>$expect);
+		   	if(!$this->_assert_true($test>$expect))
+		   		print "3CLTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
+		   }
+		//   else
+		//   	print "3CSTime: Current".$test." Previous:Null ".$row['product_id']."<br>";
+
+		}
+
+
+	}
+	}
+	function test_3CMTime()
+	{
+	
+	$date =date("Y-m-d").' 00:00:00';
+	$machine = "3cm";
+	$result = $this->Test_model->getMachineTime($date,$machine);
+	for($i=0;$i<$result->num_rows;$i++)
+	{
+		if ($result->num_rows() > 0)
+		{
+		   $row = $result->row_array($i); 
+//			print_r($row);
+//			print "<br>";
+		   //echo "current : ".$row['plan_cv_end']."";
+		   $test = $row['plan_cv_start'];
+		   if($i!=0)
+		   {
+		   	$prev = $result->previous_row();
+		   	//print "prev".$prev->plan_cv_end;
+		   	$expect = $prev->plan_cv_end;
+		   	$this->_assert_true($test>$expect);
+		   	if(!$this->_assert_true($test>$expect))
+		   		print "3CMTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
+		   }
+		//   else
+		//   	print "3CSTime: Current".$test." Previous:Null ".$row['product_id']."<br>";
+
+		}
+
+
+	}
+	}
+	function test_4CDTime()
+	{
+	
+	$date =date("Y-m-d").' 00:00:00';
+	$machine = "4cd";
+	$result = $this->Test_model->getMachineTime($date,$machine);
+	for($i=0;$i<$result->num_rows;$i++)
+	{
+		if ($result->num_rows() > 0)
+		{
+		   $row = $result->row_array($i); 
+//			print_r($row);
+//			print "<br>";
+		   //echo "current : ".$row['plan_cv_end']."";
+		   $test = $row['plan_cv_start'];
+		   if($i!=0)
+		   {
+		   	$prev = $result->previous_row();
+		   	//print "prev".$prev->plan_cv_end;
+		   	$expect = $prev->plan_cv_end;
+		   	$this->_assert_true($test>$expect);
+		   	if(!$this->_assert_true($test>$expect))
+		   		print "4CDTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
+		   }
+		//   else
+		//   	print "3CSTime: Current".$test." Previous:Null ".$row['product_id']."<br>";
+
+		}
+
+
+	}
+	}
 
 }
 
