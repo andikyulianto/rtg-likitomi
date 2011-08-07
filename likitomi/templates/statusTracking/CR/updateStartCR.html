@@ -44,6 +44,7 @@
 	<table cellspacing="2" cellpadding="2" class="tblFixedBorder" width="630">
 	<tbody><tr>
         <td class="tblProdViewLabel">Sheet Code</td>
+        	<td class="tblProdViewLabel">MO</td>
 		<td class="tblProdViewLabel">Customer name</td>
 		<td class="tblProdViewLabel">Product</td>
 		<td class="tblProdViewLabel">Flute</td>
@@ -64,6 +65,7 @@
 	
 <tr>
 	<td class="tblProdView">{{product_code}}</td>
+	<td class="tblProdView">{{mo}}</td>
 	<td class="tblProdView">{{cname}}</td>
 	<td class="tblProdView">{{product_name}}</td>
 	<td class="tblProdView">{{flute}}</td>
@@ -90,7 +92,7 @@
         <td class="tblDetailViewLabel">start at :</td>
 		<td><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center" /></td>
 		<td class="tblDetailViewLabel">Amount of Plan :</td>
-		<td><input name="amount" type="text"  value='{{amount}}' style="text-align: center"  /></td>
+		<td><input name="amount" type="text"  value='{{amount}}' style="text-align: center" disabled /></td>
 		<td> <input name="task" type="hidden" value="{{task}}">
 			<input name="eID" type="hidden" value="{{eID}}">
 			<input name="pID" type="hidden" value="{{pID}}">

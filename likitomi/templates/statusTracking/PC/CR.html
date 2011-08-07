@@ -11,9 +11,11 @@
 	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate"><b>Last update: </b> {{today}}</div></td></tr></table>
 	<br>
 	<div id="filterCriteria" align="center">
-	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
-	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
-	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
+		<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="notProcess" checked /><label for="notProcess">Unfinished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="missing" checked /><label for="missing">Incompleted</label>
 
 	</div> <!-- end Filter -->
 	<br>
@@ -25,6 +27,7 @@
 	<th width="5%"><div class="plan">OUT</div><div class="actual">OUT</div></th>
 	<th width="5%"><div class="plan">Pcs</div><div class="actual">Pcs</div></th>
 	<th>Sheet Code</th>
+	<th> MO </th>
 	<th>Customer name</th>
 	<th>Product</th>
 	<th>Flute</th>
@@ -72,6 +75,7 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
+	<td> {{item.plan_id}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>{{item.product.flute}}</td>
@@ -107,9 +111,11 @@
 	
 
 	<div id="filterCriteriaMonthly" align="center">
-	<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
-	<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Not yet process</label>
-	<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
+		<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Unfinished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="missingM" checked /><label for="missingM">Incompleted</label>
 	</div> <!-- end Filter -->
 <br>
 <div id="resultDivLineCRM">
@@ -120,6 +126,7 @@
 	<th width="5%"><div class="plan">OUT</div><div class="actual">OUT</div></th>
 	<th width="5%"><div class="plan">Pcs</div><div class="actual">Pcs</div></th>
 	<th>Sheet Code</th>
+	<th>MO</th>
 	<th>Customer name</th>
 	<th>Product</th>
 	<th>Flute</th>
@@ -166,6 +173,7 @@
 		<font color="red">0</font>
 	{% endif %}</div></td>
 	<td>{{item.product.product_code}}</td>
+	<td> {{item.plan_id}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>{{item.product.flute}}</td>

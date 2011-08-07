@@ -31,10 +31,11 @@ def startCR(request):
 	is_enable_rightbutton = True
 	#plan = Employee.objects.get(eid=eID)
 	plan = StatusTracking.objects.get(plan_id = planID )
+	mo = plan.plan_id
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
-	cname = productCat.cname
+	cname = plan.product.parent_code.partner.partner_name
 	product = Products.objects.get(product_code = product_code)
 	flute = product.flute
 	df = product.df
@@ -44,7 +45,8 @@ def startCR(request):
 	cl = product.cl
 	width_mm = product.width_mm
 	length_mm = product.length_mm
-	cut = productCat.cut
+	case = plan.plan_amount
+	cut = plan.cut
 	blank = productCat.blank
 	slit = productCat.slit
 	scoreline = productCat.scoreline_d
@@ -78,9 +80,10 @@ def endCR(request):
 ###
 	plan = StatusTracking.objects.get(plan_id = planID )
 	product_code = plan.product_id
+	mo = plan.plan_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
-	cname = productCat.cname
+	cname = plan.product.parent_code.partner.partner_name
 	product = Products.objects.get(product_code = product_code)
 	flute = product.flute
 	df = product.df
@@ -90,7 +93,8 @@ def endCR(request):
 	cl = product.cl
 	width_mm = product.width_mm
 	length_mm = product.length_mm
-	cut = productCat.cut
+	case = plan.plan_amount
+	cut = plan.cut
 	blank = productCat.blank
 	slit = productCat.slit
 	scoreline = productCat.scoreline_d
@@ -126,17 +130,22 @@ def startCV(request):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	plan = StatusTracking.objects.get(plan_id = planID)
-
+	
 	product_code = plan.product_id
+	mo = plan.plan_id
+	po = plan.sale_order.purchase_order_no
+	so = plan.sale_order_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	color = productCat.rope_color
 	cv_machine = productCat.next_process
 	speed = getCVSpeed(cv_machine)
 	product_name = productCat.product_name
-	partner = productCat.cname
+	partner = plan.product.parent_code.partner.partner_name
 	product = Products.objects.get(product_code = product_code)
 	amount = plan.plan_amount
+#	plan_id = planID
 	pID = planID
+	time = plan.cv_time_used
 	current_date_time = todayDate()
 	task = "start"
 	at = "CV"
@@ -162,16 +171,19 @@ def endCV(request):
 	task = "end"
 	at = "CV"
 	current_date_time = todayDate()
-	##
+	mo = plan.plan_id
+	po = plan.sale_order.purchase_order_no
+	so = plan.sale_order_id
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	color = productCat.rope_color
 	cv_machine = productCat.next_process
 	speed = getCVSpeed(cv_machine)
 	product_name = productCat.product_name
-	partner = productCat.cname
+	partner = plan.product.parent_code.partner.partner_name
 	product = Products.objects.get(product_code = product_code)
 	amount = plan.plan_amount
+	time = plan.cv_time_used
 	pID = planID
 	##	
 	title = "Finished "+product_code+" in corvertor"
@@ -192,12 +204,11 @@ def startPT(request):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	plan = StatusTracking.objects.get(plan_id = planID)
-
+	mo = plan.plan_id
+	po = plan.sale_order.purchase_order_no
+	so = plan.sale_order_id
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
-	color = productCat.rope_color
-	cv_machine = productCat.next_process
-	speed = getCVSpeed(cv_machine)
 	product_name = productCat.product_name
 	partner = productCat.cname
 	product = Products.objects.get(product_code = product_code)
@@ -228,7 +239,9 @@ def endPT(request):
 	task = "end"
 	at = "PT"
 	current_date_time = todayDate()
-
+	mo = plan.plan_id
+	po = plan.sale_order.purchase_order_no
+	so = plan.sale_order_id
 
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
@@ -256,6 +269,9 @@ def startWH(request):
 	employee = AuthUser.objects.get(id=eID)
 	username = employee.username
 	plan = StatusTracking.objects.get(plan_id = planID)
+	mo = plan.plan_id
+	po = plan.sale_order.purchase_order_no
+	so = plan.sale_order_id
 	amount = str(plan.plan_amount)
 	today = todayDate()
 	is_enable_leftbutton = True
@@ -264,6 +280,7 @@ def startWH(request):
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
+	partner = productCat.cname
 	cname = productCat.cname
 	product = Products.objects.get(product_code = product_code)
 	amount = str(plan.plan_amount)
@@ -283,14 +300,29 @@ def endWH(request):
 	content_header = "Out"
 	eID = request.GET['eID']
 	planID = request.GET['pID']
+	employee = AuthUser.objects.get(id=eID)
+	username = employee.username
+	plan = StatusTracking.objects.get(plan_id = planID)
+	mo = plan.plan_id
+	po = plan.sale_order_id
+	so = plan.sale_order_id
+	amount = str(plan.plan_amount)
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	plan = StatusTracking.objects.get(plan_id = planID)
+	product_code = plan.product_id
+	productCat = ProductCatalog.objects.get(product_code = product_code)
+	product_name = productCat.product_name
+	partner = productCat.cname
+	cname = productCat.cname
+	product = Products.objects.get(product_code = product_code)
 	amount = str(plan.plan_amount)
+	pID = planID
+	current_date_time = todayDate()
 	task = "end"
 	at = "WH"
 	current_date_time = todayDate()
 	pID = planID
-	return render_to_response('updateEndWH.html',locals())
+	return render_to_response('WH/updateEndWH.html',locals())
 

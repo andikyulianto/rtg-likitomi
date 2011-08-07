@@ -1,0 +1,352 @@
+{% extends "PC/container.html"%}
+{% block view %}
+<div id="content">
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1">Production Detail and Information</a></li>
+		<li><a href="#tabs-2">CR</a></li>
+	{% if glue or hs or fg or req_2cl or req_3cm or req_3cs or req_4cd or req_3cl %} 
+		<li><a href="#tabs-3">CV</a></li>
+	{% endif %}
+	{% if rd or ss or remove or foam or tape %} 
+		<li><a href="#tabs-4">PT</a></li>
+	{% endif %}
+	</ul>
+	<div id="tabs-1">
+Product Information
+<div id="resultSODetail">
+	<center><table align='center' width="60%" class='tablesorter' border=1 id="resultTableSODetail">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th>SO.</th>
+	<th>PO.</th>
+	<th>MO.</th>
+	<th>Product code</th>
+	<th>Product name</th>
+	<th>Customer name</th>
+	<th>Delivery date</th>
+	<th>due (days)</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+	<td>{{so}}</td>
+	<td>{{po}}</td>
+	<td>{{mo}}</td>
+	<td>{{pcode}}</td>
+	<td>{{pname}}</td>
+	<td>{{customer}}</td>
+	<td>{{delivery}}</td>
+	<td>{{due}}</td>
+	</tr>
+	</tbody>
+	
+	
+	</table></center>
+
+</div>	
+Production Detail
+	<div id="resultSODetail">
+	<center><table align='center' width="60%" class='tablesorter' border=1 id="resultTableSODetail">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th></th>
+	<th colspan=2>CR</th>
+	<th colspan=2>CV</th>
+	<th colspan=2>PT</th>
+	<th colspan=2>WH</th>
+	</tr>
+	<tr bgcolor="#cccccc" width="100%">
+	<th width="5%"><div class="plan">Sch.</div><div class="actual">Act.</div></th>
+	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
+	<th width="5%"><div class="plan"> OUT</div><div class="actual">OUT</div></th>
+	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
+	<th width="5%"><div class="plan"> OUT</div><div class="actual">OUT</div></th>
+	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
+	<th width="5%"><div class="plan"> OUT</div><div class="actual">OUT</div></th>
+	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
+	<th width="5%"><div class="plan"> OUT</div><div class="actual">OUT</div></th>
+	</tr></thead>
+	<tbody>
+	</tbody>
+	<tr><td><b>Time</b></td>
+	<td width="5%"><div class="plan">{{plan_time_cr_in|time:"H:i"}}</div>
+		<div class="actual">{% if actual_time_cr_in != NULL %}
+				{{actual_time_cr_in|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td>
+	<td width="5%"><div class="plan">{{plan_time_cr_out|time:"H:i"}}</div>
+				<div class="actual">{% if actual_time_cr_out != NULL %}
+				{{actual_time_cr_out|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td>
+	<td width="5%"><div class="plan">{{plan_time_cv_in|time:"H:i"}}</div>
+				<div class="actual">{% if actual_time_cv_in != NULL %}
+				{{actual_time_cv_in|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td>
+	<td width="5%"><div class="plan">{{plan_time_cv_out|time:"H:i"}}</div>
+				<div class="actual">{% if actual_time_cv_out != NULL %}
+				{{actual_time_cv_out|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td>
+	<td width="5%"><div class="plan">{{plan_time_pt_in|time:"H:i"}}</div>
+				<div class="actual">{% if actual_time_pt_in != NULL %}
+				{{actual_time_pt_in|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td>
+	<td width="5%"><div class="plan">{{plan_time_pt_out|time:"H:i"}}</div>
+				<div class="actual">{% if actual_time_pt_out != NULL %}
+				{{actual_time_pt_out|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td>
+	<td width="5%"><div class="plan">{{plan_time_wh_in|time:"H:i"}}</div>
+				<div class="actual">{% if actual_time_wh_in != NULL %}
+				{{actual_time_wh_out|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td>
+	<td width="5%"><div class="plan">{{plan_time_wh_out|time:"H:i"}}</div>
+				<div class="actual">{% if actual_time_wh_out != NULL %}
+				{{actual_time_wh_out|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+		</div></td></tr>
+	<tr><td><b>Pcs.</b></td>
+	<td><b>Actual<br>{{plan_amount}}</b></td>
+	<td>{% if actual_amount_cr_out != NULL%}
+		{% if actual_amount_cr_out < plan_amount %}
+			<font color="red">{{actual_amount_cr_out}}</font>
+		{% else %}
+			{{actual_amount_cr_out}}
+		{% endif %}
+	{% else %}
+		{% if plan_time_cr_out != NULL %}
+			<font color="red">0</font>
+		{% else %}
+			
+		{% endif %}
+	{% endif %}</td>
+	<td>{% if actual_amount_cv_in != NULL%}
+		{% if actual_amount_cv_in < plan_amount %}
+			<font color="red">{{actual_amount_cv_in}}</font>
+		{% else %}
+			{{actual_amount_cv_in}}
+		{% endif %}
+	{% else %}
+		{% if plan_time_cv_in != NULL %}
+			<font color="red">0</font>
+		{% else %}
+			
+		{% endif %}
+	{% endif %}</td>
+	<td>{% if actual_amount_cv_out != NULL%}
+		{% if actual_amount_cv_out < plan_amount %}
+			<font color="red">{{actual_amount_cv_out}}</font>
+		{% else %}
+			{{actual_amount_cv_out}}
+		{% endif %}
+	{% else %}
+		{% if plan_time_cv_out != NULL %}
+			<font color="red">0</font>
+		{% else %}
+			
+		{% endif %}
+	{% endif %}</td>
+	<td>{% if actual_amount_pt_in != NULL%}
+		{% if actual_amount_pt_in < plan_amount %}
+			<font color="red">{{actual_amount_pt_in}}</font>
+		{% else %}
+			{{actual_amount_pt_in}}
+		{% endif %}
+	{% else %}
+		{% if plan_time_pt_in != NULL %}
+			<font color="red">0</font>
+		{% else %}
+			
+		{% endif %}
+	{% endif %}</td>
+	<td>{% if actual_amount_pt_out != NULL%}
+		{% if actual_amount_pt_out < plan_amount %}
+			<font color="red">{{actual_amount_pt_out}}</font>
+		{% else %}
+			{{actual_amount_pt_out}}
+		{% endif %}
+	{% else %}
+		{% if plan_time_pt_out != NULL %}
+			<font color="red">0</font>
+		{% else %}
+			
+		{% endif %}
+		
+	{% endif %}</td>
+	<td>{% if actual_amount_wh_in != NULL%}
+		{% if actual_amount_wh_in < plan_amount %}
+			<font color="red">{{actual_amount_wh_in}}</font>
+		{% else %}
+			{{actual_amount_wh_in}}
+		{% endif %}
+	{% else %}
+		{% if plan_time_wh_in != NULL %}
+			<font color="red">0</font>
+		{% else %}
+			
+		{% endif %}
+	{% endif %}</td>
+	<td>{% if actual_amount_wh_out != NULL%}
+		{% if actual_amount_wh_out < plan_amount %}
+			<font color="red">{{actual_amount_wh_out}}</font>
+		{% else %}
+			{{actual_amount_wh_out}}
+		{% endif %}
+	{% else %}
+		{% if plan_time_wh_out != NULL %}
+			<font color="red">0</font>
+		{% else %}
+			
+		{% endif %}
+	{% endif %}</td></tr>
+	</table></center>
+
+</div>	
+
+</div>
+<div id="tabs-2">
+
+<div id="resultDivLineCR">
+	<center><table align='center' width="80%" class='tablesorter' border=1 id="resultTable">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th>SO.</th>
+	<th>PO.</th>
+	<th>MO.</th>
+	<th>Product code</th>
+	<th>Flute</th>
+	<th>DF</th>
+	<th>BM</th>
+	<th>BL</th>
+	<th>CM</th>
+	<th>CL</th>
+	<th>Width</th>
+	<th>Case</th>
+	<th>Cut</th>
+	<th>Length</th>
+	<th>Blank</th>
+	<th>Slit</th>
+	<th>Scoreline</th>
+
+</tr></thead>
+
+
+
+<tbody>
+	<td>{{so}}</td>
+	<td>{{po}}</td>
+	<td>{{mo}}</td>
+	<td>{{pcode}}</td>
+	<td>{{flute}}</td>
+	<td>{{df}}</td>
+	<td>{{bm}}</td>
+	<td>{{bl}}</td>
+	<td>{{cm}}</td>
+	<td>{{cl}}</td>
+	<td>{{width}}</td>
+	<td>{{case}}</td>
+	<td>{{cut}}</td>
+	<td>{{length}}</td>
+	<td>{{blank}}</td>
+	<td>{{slit}}</td>
+	<td>{{scoreline}}</td>
+
+</tbody>
+			</table></center>
+</div>
+
+</div>
+{% if glue or hs or fg or req_2cl or req_3cm or req_3cs or req_4cd or req_3cl %} 
+<div id="tabs-3">
+<div id="resultDivLineCV">
+	<center><table align='center' width="50%"  class='tablesorter' border=1 id="resultTable">
+	
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th>SO.</th>
+	<th>PO.</th>
+	<th>MO.</th>
+	<th>Product code</th>
+	<th>Machine</th>
+	<th>Color</th>
+	<th>Time</th>
+	<th>Speed</th>
+	<th>Glue Handle</th>
+	<th>HS</th>
+	<th>FG</th>
+	</tr></thead>
+	<tbody>
+	<tr>
+	<td>{{so}}</td>
+	<td>{{po}}</td>
+	<td>{{mo}}</td>
+	<td>{{pcode}}</td>
+	<td>{{machine}}</td>
+	<td>{{color}}</td>
+	<td>{{time}}</td>
+	<td>{{speed}}</td>
+	<td>{% if glue %} YES {% endif %}</td>
+	<td>{% if hs %} YES {% endif %}</td>
+	<td>{% if fg %} YES {% endif %}</td>
+	
+	</tr>
+	
+</tbody>
+</table></center>
+
+</div>
+</div>
+{% endif %}
+{% if rd or ss or remove or foam or tape %} 
+<div id="tabs-4">
+<div id="resultDivLinePT">
+	<center><table align='center' width="50%"  class='tablesorter' border=1 id="resultTable"><span class="header">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th>SO.</th>
+	<th>PO.</th>
+	<th>MO.</th>
+	<th>Product code</th>
+	<th><b>RD</b></th>
+	<th><b>SS</b></th>
+	<th><b>Remove Scraps</b></th>
+	<th><b>Foam</b></th>
+	<th><b>Tape</b></th>
+
+</tr></thead>
+<tbody>
+	<td>{{so}}</td>
+	<td>{{po}}</td>
+	<td>{{mo}}</td>
+	<td>{{pcode}}</td>
+	<td>{% if rd %} YES {% endif %}</td>
+	<td>{% if ss %} YES {% endif %}</td>
+	<td>{% if remove %} YES {% endif %}</td>
+	<td>{% if foam %} YES {% endif %}</td>
+	<td>{% if tape %} YES {% endif %}</td>
+</tbody>
+			</table></center>
+</div>
+</div>
+{% endif %}
+</div>
+{% endblock %}
+{{user}}
+{{page}}
+{{pcode}}

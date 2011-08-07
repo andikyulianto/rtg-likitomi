@@ -53,13 +53,15 @@
 	<th><div class="plan">Sch.</div><div class="actual">Act.</div></th>
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">OUT </div><div class="actual">OUT</div></th>
-	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
+	<th width="5%">Pcs. In</th>
+	<th width="5%">Pcs. Out</th>
 	<th>Product code</th>
 	<th>Machine</th>
 	<th>From</th>
 	<th>Color</th>
 	<th>Time</th>
 	<th>Speed</th>
+	<th>Mo</th>
 	<th>Sale Order</th>
 	<th>P.Code</th>
 	<th>Customer</th>
@@ -69,7 +71,7 @@
 	</tr></thead>
 	{% for item in items %}
 	<tr id="{{ item.stateCV}}">
-	<td></th>
+	<td></td>
 	<td><div class="plan"><a href="{{ startCV_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_cv_start|time:"H:i"}}</a></div><div class="actual">
 				{% if item.actual_cv_start != NULL %}
 				{{item.actual_cv_start|time:"H:i"}}
@@ -84,6 +86,18 @@
 				&nbsp;
 				{% endif %} </div></td>
 	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_cv_in != NULL%}
+		{% if item.actual_amount_cv_in < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv_in}}</font>
+		{% else %}
+			{{item.actual_amount_cv_in}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</div></td>
+	
+		<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
 	{% if item.actual_amount_cv != NULL%}
 		{% if item.actual_amount_cv < item.plan_amount %}
 			<font color="red">{{item.actual_amount_cv}}</font>
@@ -93,7 +107,8 @@
 	{% else %}
 		<font color="red">0</font>
 	{% endif %}
-	</div></th>
+	</div></td>
+	
 	<td>{{item.product.product_code}}</td>
 	<td>{% if item.product.parent_code.req_2cl = 1 %} 2CL
 		{% else %}{% if item.product.parent_code.req_3cm = 1 %} 3CM
@@ -113,8 +128,9 @@
 	<td>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
 	<td>{{item.cv_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td>{{item.plan_id}}</td>
-	<td>{{item.po}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>

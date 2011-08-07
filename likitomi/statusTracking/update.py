@@ -22,14 +22,15 @@ from employee import Employee
 def startUpdate(request):
 	current_time = todayDate()
 	eID = request.GET['eID']
-	print "EID"+ eID
+
 	employee = AuthUser.objects.get(id=eID)
 	username = employee.username
 	task = request.GET['task']
 	at = request.GET['at']
 	pID = request.GET['pID']
-	if(at=="WH"):
+	if(at!="CR"):
 		amount = request.GET['amount']
+
 	obj = StatusTracking.objects.get(plan_id=pID)
 	if (at=="CR"):
 		obj.actual_cr_start = current_time
@@ -37,19 +38,19 @@ def startUpdate(request):
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="CV"):
-		print at
 		obj.actual_cv_start = current_time
-#		print current_time
+		obj.actual_amount_cv_in = int(amount)
+#		print "amount :"+ amount
 		obj.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="PT"):
 		obj.actual_pt_start = current_time
+		obj.actual_amount_pt_in = int(amount)
 		obj.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="WH"):
-		print current_time
 		obj.actual_wh_start = current_time
 		obj.actual_amount_wh = amount
 		obj.save()
@@ -69,6 +70,7 @@ def endUpdate(request):
 	task = request.GET['task']
 	at = request.GET['at']
 	amount = request.GET['amount']
+
 	pID = request.GET['pID']
 	obj = StatusTracking.objects.get(plan_id=pID)
 	if (at=="CR"):
@@ -90,10 +92,10 @@ def endUpdate(request):
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	elif (at=="WH"):
-		obj.actual_wh_start = current_time
-		obj.actual_amount_wh = amount
+		obj.actual_wh_end = current_time
+		obj.actual_amount_wh_out = amount
 		obj.save()
-		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
+		path = rootPath()+"/home/?user="+username+"&Enter=Enter#tabs-2"
 		return HttpResponseRedirect(path)
 	else:
 		return render_to_response('update.html', locals())

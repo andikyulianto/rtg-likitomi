@@ -1,0 +1,55 @@
+{% extends "CR/container.html" %}
+{% block view %}
+<!--PATH SETTINGS START-->
+{% url statusTracking.general.login as likitomi_url %}
+{% url statusTracking.home.section as home_url %}
+{% url statusTracking.line.startCR as startCR_url %}
+{% url statusTracking.line.endCR as endCR_url %}
+<!--PATH SETTINGS END-->
+
+<div id="content">
+<center>
+
+			
+	<table id="stockTable" width="100%">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th>SO.</th>
+	<th>PO.</th>
+	<th>MO.</th>
+	<th>Product code</th>
+	<th>Product name</th>
+	<th>Customer name</th>
+	<th>Delivery date</th>
+	<th>due (days)</th>
+	<th>Plan Amount </th>
+	<th>Actual Amount </th>
+	</tr>
+	</thead>
+	<tbody>
+	{% for item in items %}
+	{% if item.actual_amount_wh_out = NULL %}
+	<tr>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{pcode}}</td>
+	<td>{{item.product.parent_code.product_name}}</td>
+	<td>{{item.product.parent_code.partner.partner_name}}</td>
+	<td>{{item.plan_due}}</td>
+	<td>{{item.days_left}}</td>
+	<td>{{item.plan_amount}}</td>
+	<td>{% if item.actual_amount_wh == NULL%}<font color=red> 0 </font>{% else %} {{item.actual_amount_wh}} {% endif %}</td>
+	</tr>
+	{% endif %}
+	{% endfor %}
+	</tbody>
+	
+	
+	</table>
+	
+
+	
+</center>
+</div>
+{% endblock %}
+

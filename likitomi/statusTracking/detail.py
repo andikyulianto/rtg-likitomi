@@ -11,9 +11,10 @@ from django.shortcuts import render_to_response
 from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate, currentTimeProcess, currentProcess
-from statusTracking.models import AuthUser, StatusTracking
+from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
 from datetime import date, datetime
 from employee import Employee
+from statusTracking.config import getCVSpeed
 import calendar
 
 ##################################################
@@ -131,6 +132,128 @@ def showWH(User,section_title):
 	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
+	item_planOut = StatusTracking.objects.filter(plan_due__year=today.year, plan_due__month=today.month, plan_due__day=today.day).order_by('plan_due')
+	itemsOut = list(item_planOut)
 	item_planM = StatusTracking.objects.filter(plan_wh_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
 	itemsM = list(item_planM)
 	return render_to_response('PC/WH.html',locals())
+
+#####################################
+## production and products details ##
+#####################################
+def showDetail(request):
+	user = request.GET['user']
+#	page =request.GET['page']
+	socode = request.GET['socode']
+	plan = StatusTracking.objects.get(sale_order = socode )
+	
+	so = plan.sale_order_id
+	po = plan.sale_order.purchase_order_no
+	mo = plan.plan_id
+	pcode = plan.product_id
+	pname = plan.product.parent_code.product_name
+	customer =plan.product.parent_code.partner.partner_name
+	delivery = plan.plan_due
+	due = plan.days_left
+	
+	
+	plan_time_cr_in = plan.plan_cr_start
+	plan_time_cr_out = plan.plan_cr_end
+	plan_time_cv_in = plan.plan_cv_start
+	plan_time_cv_out = plan.plan_cv_end
+	plan_time_pt_in = plan.plan_pt_start
+	plan_time_pt_out = plan.plan_pt_end
+	plan_time_wh_in = plan.plan_wh_start
+	plan_time_wh_out = plan.plan_due
+	
+	actual_time_cr_in = plan.actual_cr_start
+	actual_time_cr_out = plan.actual_cr_end
+	actual_time_cv_in = plan.actual_cv_start
+	actual_time_cv_out = plan.actual_cv_end
+	actual_time_pt_in = plan.actual_pt_start
+	actual_time_pt_out = plan.actual_pt_end
+	actual_time_wh_in = plan.actual_wh_start
+	actual_time_wh_out = plan.actual_wh_end
+	
+	plan_amount = plan.plan_amount
+	actual_amount_cr_out = plan.actual_amount_cr
+	actual_amount_cv_in = plan.actual_amount_cv_in
+	actual_amount_cv_out = plan.actual_amount_cv
+	actual_amount_pt_in = plan.actual_amount_pt_in
+	actual_amount_pt_out = plan.actual_amount_pt
+	actual_amount_wh_in = plan.actual_amount_wh
+	actual_amount_wh_out = plan.actual_amount_wh_out
+	
+	
+	#CR
+	product_code = plan.product_id
+	productCat = ProductCatalog.objects.get(product_code = product_code)
+	product_name = productCat.product_name
+	cname = plan.product.parent_code.partner.partner_name
+	product = Products.objects.get(product_code = product_code)
+	flute = product.flute
+	df = product.df
+	bm = product.bm
+	bl = product.bl
+	cm = product.cm
+	cl = product.cl
+	width = product.width_mm
+	length = product.length_mm
+	case = plan.plan_amount
+	cut = plan.cut
+	blank = productCat.blank
+	slit = productCat.slit
+	scoreline = productCat.scoreline_d
+	
+	#CV
+	color = productCat.rope_color
+	req_2cl = productCat.req_2cl
+	req_3cm = productCat.req_3cm
+	req_3cs = productCat.req_3cs
+	req_4cd = productCat.req_4cd
+	req_3cl = productCat.req_3cl
+	if(productCat.req_2cl ):
+		machine = "2CL"
+	elif(productCat.req_3cm):
+		machine = "3CM"
+	elif(productCat.req_3cs):
+		machine = "3CS"
+	elif(productCat.req_4cd):
+		machine = "4CD"
+	elif(productCat.req_3cl):
+		machine = "3CL"
+	else :
+		machine =""
+	time = plan.cv_time_used
+	glue = productCat.req_gh
+	hs = productCat.req_hs
+	fg = productCat.req_fg
+	cv_machine = productCat.next_process
+	speed = getCVSpeed(cv_machine)
+		
+	#PT
+	rd = productCat.req_rd
+	ss = productCat.req_ss
+	remove = productCat.req_remove
+	foam = productCat.req_foam
+	tape = productCat.req_tape
+
+	
+	return render_to_response('showDetail.html',locals())
+#####################################
+## production and products details ##
+#####################################
+def showStock(request):
+	user = request.GET['user']
+#	page =request.GET['page']
+	pcode = request.GET['pcode']
+	item_plan = StatusTracking.objects.filter(product = pcode)
+	items = list(item_plan)
+#	plan = StatusTracking.objects.get(product = pcode )
+#	
+#	pcode = plan.product_id
+#	pname = plan.product.parent_code.product_name
+#	customer =plan.product.parent_code.partner.partner_name
+#	delivery = plan.plan_due
+#	due = plan.days_left
+	return render_to_response('stockDetail.html',locals())
