@@ -108,7 +108,7 @@ $(document).ready(function(){
 	var detail_url = $('#detail_url').val();
 	var inventory_url = $('#inventory_url').val();
 
-	$("#opdate").change(function(){
+	function loadPlan(){
 		var opdate = $("#opdate").val();
 		if (opdate == ""){
 			$("#showplan").css("visibility","hidden");
@@ -128,7 +128,16 @@ $(document).ready(function(){
 				$("#showplan").attr("src", detail_url+"?opdate="+opdate);
 			}
 		}
+	}
+
+	$("#opdate").change(function(){
+		loadPlan();
 	});
+
+	$("#refplan").click(function(){
+		loadPlan();
+	});
+	$( "#refplan" ).button({icons: {primary: "ui-icon-refresh"}, text: false});
 
 	$("#uppest").click(function(){$("#showplan")[0].contentWindow.scrollTo(0,0);});
 	$("#upper").click(function(){$("#showplan")[0].contentWindow.scrollBy(0,-252);});
@@ -137,7 +146,12 @@ $(document).ready(function(){
 	$("#downer").click(function(){$("#showplan")[0].contentWindow.scrollBy(0,252);});
 	$("#downest").click(function(){$("#showplan")[0].contentWindow.scrollTo(0,9999);});
 
-	$("select#opdate").selectmenu({maxHeight: 300, style: 'dropdown'});
+	$("select#opdate").selectmenu({maxHeight: 300, style: 'dropdown', width: 130});
+
+	$("#clock").click(function(){
+		var row = $("#showplan").contents().find("tr[id=chosen]");
+		$($("#showplan")[0].contentWindow || $("#showplan")[0].contentDocument).scrollTop(row.offset().top-2);
+	});
 
 // Buttons //
 	$( "#magplan" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
@@ -250,8 +264,8 @@ $(document).ready(function(){
 		}
 	});
 
-	$("select#spcodedd").selectmenu({maxHeight: 300, style: 'dropdown'});
-	$("select#swidthdd").selectmenu({style: 'dropdown'});
+	$("select#spcodedd").selectmenu({maxHeight: 300, style: 'dropdown', width: 125});
+	$("select#swidthdd").selectmenu({style: 'dropdown', width: 70});
 
 // MENU TABS //
 	$("#menutab").hide();
@@ -308,12 +322,12 @@ $(document).ready(function(){
 
 <!--PLAN-->
 	<div id="plan" class="greenbg" style="top:0px; left:0px; width:398px; height:403px;">
-		<div id="clock" class="greenbg" style="top:5px; left:5px;"></div>
-		<div class="greenbg" style="top:5px; left:100px;">{% now "Y-m-d" %}</div>
-		<div class="greenbg" style="top:0px; left:180px;">
+		<div id="clock" class="greenbg" style="top:5px; left:5px; background-color:white;"></div></u>
+		<div class="greenbg" style="top:5px; left:85px;">{% now "Y-m-d" %}</div>
+		<div class="greenbg" style="top:0px; left:165px;">
 			<input id="status" value="min" type="hidden" />
 			<form>
-				<select id="opdate" name="opdate" size="1" style="width:130px;">
+				<select id="opdate" name="opdate">
 					<option value="" selected="selected">Select Date:</option>
 					{% for date in datelist %}
 					<option value="{{ date }}" {% if opdate == date %}selected="selected"{% endif %}>{{ date }}</option>
@@ -321,6 +335,7 @@ $(document).ready(function(){
 				</select>
 			</form>
 		</div>
+		<div class="greenbg" style="top:0px; left:300px; font-size:80%;"><button id="refplan">Refresh</button></div>
 		<div id="radio" class="greenbg" style="top:0px; left:500px;">
 			<input type="radio" id="reqbtn" name="radio" checked="checked" /><label for="reqbtn">Required</label>
 			<input type="radio" id="detbtn" name="radio" /><label for="detbtn">Detail</label>
@@ -418,7 +433,7 @@ $(document).ready(function(){
 			<tr>
 				<td>
 					<form class="ui-menu">
-						<select id="spcodedd" size="1" style="width:125px;">
+						<select id="spcodedd">
 							<option value="" selected="selected">Paper Code:</option>
 							{% for paper_code in spcodelist %}
 							<option value="{{ paper_code }}">{{ paper_code }}</option>
@@ -428,7 +443,7 @@ $(document).ready(function(){
 				</td>
 				<td>
 					<form class="ui-menu">
-						<select id="swidthdd" size="1" style="width:70px;">
+						<select id="swidthdd">
 							<option value="" selected="selected">Size:</option>
 							{% for size in swidthlist %}
 							<option value="{{ size }}">{{ size }}</option>
