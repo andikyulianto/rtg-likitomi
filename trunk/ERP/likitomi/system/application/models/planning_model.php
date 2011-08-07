@@ -166,13 +166,14 @@ class Planning_model extends Model
 			//echo "---".$choosendate;
 
 
-			$sql = "Select product_id,qty,delivery_date,delivery_time From delivery Where delivery_id =".$rowData->delivery_id;
+			$sql = "Select product_id,qty,delivery_date,delivery_time,sales_order From delivery Where delivery_id =".$rowData->delivery_id;
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
 			{
 				$amount = $row->qty;
 				$product_id = $row->product_id;
 				$plan_due = $row->delivery_date." ".$row->delivery_time;
+				$sale_order = $row->sales_order;
 			}
 			$sql = "select * from product_catalog where product_id=".$product_id;
 			$query = $this->db->query($sql);
@@ -195,6 +196,7 @@ class Planning_model extends Model
 				$req_tape = $row->req_tape;
 				$req_wh = $row->req_wh;
 			}
+
 /*			if($cv_machine == 'SHEET')
 			{
 				$param = array("date" => $choosendate,
@@ -211,11 +213,12 @@ class Planning_model extends Model
 						"cv_machine" => $cv_machine
 				);
 			}
-*/
+*/			//print $time_start_cr.":00"."<br>";
 			if($req_cr == 1 and $req_wh == 1 and $req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0 and $req_rd==0 and $req_ss==0 and $req_remove==0 and $req_foam==0 and $req_tape==0)
 			{
 				$param = array("date" => $choosendate,
 						"product_id"=>$rowData->product_code,
+						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						//"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
@@ -235,6 +238,7 @@ class Planning_model extends Model
 			{
 				$param = array("date" => $choosendate,
 						"product_id"=>$rowData->product_code,
+						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 /*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
@@ -258,6 +262,7 @@ class Planning_model extends Model
 				$param = array("date" => $realDate,
 
 						"product_id"=>$rowData->product_code,
+						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						//"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
@@ -280,6 +285,7 @@ class Planning_model extends Model
 			{
 				$param = array("date" => $choosendate,
 						"product_id"=>$rowData->product_code,
+						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 /*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
@@ -304,6 +310,7 @@ class Planning_model extends Model
 			{
 			$param = array("date" => $choosendate,
 						"product_id"=>$rowData->product_code,
+						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 /*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
 						"plan_cr_end" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
@@ -547,6 +554,15 @@ class Planning_model extends Model
 		$this->db->where('delivery_id', $delivery_id);
 		$this->db->update($this->tableName, $projectdetails);
 		$this->db->last_query();
+	}
+	function getLastCVTime($date,$machine)
+	{
+//		$sql = 	 "SELECT * FROM ".$this->status." WHERE date ='".$date."'";
+//		return $sql;
+		$sql = "SELECT * FROM ".$this->statustracking." st, ".$this->tblCatalog." pc WHERE `date` = '".$date."' and  st.`product_id` = pc.product_code and pc.req_".$machine." = 1 ORDER BY plan_cv_end DESC LIMIT 1;";
+		
+		$query = $this->db->query($sql);
+		return $query;
 	}
 }
 ?>

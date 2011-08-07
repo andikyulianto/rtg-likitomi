@@ -237,7 +237,7 @@ class Planning extends Controller {
 			$query = $this->Planning_model->getProduct($rowData->product_code);
 			$key = $query->row_array(0);							//get the only one object
 			$case 	= $rowData->qty;
-			    if(($key['slit'])!=0)
+			if(($key['slit'])!=0)
 			$cut2 	= $case/$key['slit'];
 			$metre	= ($key['t_length']*$cut2)/1000;
 			$timeuseCR = 0;
@@ -280,9 +280,8 @@ class Planning extends Controller {
 				$timeuseCV = 0;
 
 		
-		
-		
-		
+
+
 		
 			if($key['req_3cs'])
 			{
@@ -292,7 +291,18 @@ class Planning extends Controller {
 			}
 			elseif($key['req_2cl'])
 			{
-				$time_start_2cl = $time_stop_cr;
+/*
+				if((double)$time_stop_cr<(double)$time_stop_2cl)
+				{
+					$time_start_2cl = $time_stop_2cl;
+//					print $rowData->product_code."--2CL "." $time_stop_cr $time_stop_2cl  $time_start_2cl "." --- $time_stop_2cl<br>";
+				}
+				else
+				{
+					$time_start_2cl = $time_stop_cr;
+//					print $rowData->product_code."--CR"." $time_stop_cr $time_stop_2cl  $time_start_2cl "." --- $time_stop_cr <br>";
+				}
+*/				$time_start_2cl = $time_stop_cr;
 				$time_stop_2cl = $time_start_2cl+ round($timeuseCV+30) * 0.0006949;
 				$time_stop_cv = $time_stop_2cl;
 			}
@@ -304,7 +314,17 @@ class Planning extends Controller {
 			}
 			elseif($key['req_3cm'])
 			{
-				$time_start_3cm = $time_stop_cr;
+/*				if($time_stop_cr<$time_stop_3cm)
+				{
+					$time_start_3cm = $time_stop_3cm;
+					print $rowData->product_code."--3CM "." $time_stop_cr $time_stop_3cm  $time_start_3cm "." --- $time_stop_3cm<br>";
+				}
+				else
+				{
+					$time_start_3cm = $time_stop_cr;
+					print $rowData->product_code."--3CM"." $time_stop_cr $time_stop_3cm  $time_start_3cm "." --- $time_stop_cr <br>";
+				}
+*/				$time_start_3cm = $time_stop_cr;
 				$time_stop_3cm = $time_start_3cm+ round($timeuseCV+30) * 0.0006949;
 				$time_stop_cv = $time_stop_3cm;
 			}
@@ -424,7 +444,10 @@ class Planning extends Controller {
 		}
 		elseif($key['req_2cl'])
 		{
-			
+			if((double)$time_stop_cr<(double)$time_stop_2cl)
+				$time_start_2cl = $time_stop_2cl;
+			else
+				$time_start_2cl = $time_stop_cr;
 			$time_stop_2cl = $time_start_2cl+ round($timeuseCV+30) * 0.0006949;
 			$tempCRStart = $time_start_cr;
 			$tempCRStop = $time_stop_cr;
@@ -549,7 +572,10 @@ class Planning extends Controller {
 		}
 		elseif($key['req_3cm'])
 		{
-
+			if((double)$time_stop_cr<(double)$time_stop_3cm)
+				$time_start_3cm = $time_stop_3cm;
+			else
+				$time_start_3cm = $time_stop_cr;
 			$time_stop_3cm = $time_start_3cm+ round($timeuseCV+30) * 0.0006949;
 			
 						//$choosendate,$realDate
@@ -741,8 +767,10 @@ class Planning extends Controller {
 		else
 		
 		$time_stop_cv = $time_stop_cv;
-		
-		$time_start_2cl = $time_stop_2cl;
+		if($time_stop_cr<$time_stop_2cl)
+			$time_start_2cl = $time_stop_2cl;
+		else
+			$time_start_2cl = $time_stop_cr;
 		$time_start_3cl = $time_stop_3cl;
 		$time_start_3cm = $time_stop_3cm;
 		$time_start_4cd = $time_stop_4cd;
@@ -750,6 +778,8 @@ class Planning extends Controller {
 		$time_start_cr = $time_stop_cr;
 			log_message('info', '-----------------');
 /**/		}
+
+		//save to statusTracking
 		echo "Data Saved as 	".$choosendate." Plan.";
 	}
 	
