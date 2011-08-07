@@ -97,6 +97,39 @@ height:50%;
 			});
 		});
 
+	$(document).ready(function() {
+		$("#finishedOut").click(function(){ 
+				if($("#finishedOut").attr("checked")==true)
+				{
+					$("#resultTableOut tr#normal").show();
+					
+				}
+				else
+				{
+					$("#resultTableOut tr#normal").hide();
+				}
+			});
+			$("#notProcessOut").click(function(){ 
+				if($("#notProcessOut").attr("checked")==true)
+				{
+					$("#resultTableOut tr#notProcess").show();
+				}
+				else
+				{
+					$("#resultTableOut tr#notProcess").hide();
+				}
+			});
+			$("#missingOut").click(function(){ 
+				if($("#missingOut").attr("checked")==true)
+				{
+					$("#resultTableOut tr#missing").show();
+				}
+				else
+				{
+					$("#resultTableOut tr#missing").hide();
+				}
+			});
+		});
 	$(function() {
 		$( "#tabs" ).tabs();
 	});
@@ -113,6 +146,15 @@ height:50%;
 	
 $(document).ready(function() {
 	$('#GMTable').dataTable({
+					"bJQueryUI": true,
+					"bAutoWidth": false,
+					"sPaginationType": "full_numbers"/*,
+					"aaSorting": [[ 1, "asc" ]]*/
+				});
+} );
+
+$(document).ready(function() {
+	$('#stockTable').dataTable({
 					"bJQueryUI": true,
 					"bAutoWidth": false,
 					"sPaginationType": "full_numbers"/*,

@@ -37,13 +37,13 @@
 			
 	<table id="GMTable">
 		<thead><tr>
-			<h3><th width="10%">P.O.</th><th width="10%">S.O.</th><th>P.code</th><th>Amout</th><th  width="10%">CR</th><th width="10%">CV</th><th width="10%">PT</th><th width="10%">WH</th><th width="10%">Due</th><th>Readiness</th>
+			<h3><th width="10%">P.O.</th><th width="10%">S.O.</th><th width="10%">M.O.</th><th>P.code</th><th>Amout</th><th  width="10%">CR</th><th width="10%">CV</th><th width="10%">PT</th><th width="10%">WH</th><th width="10%">Due</th><th>Readiness</th>
 			</h3>
 		</tr></thead>
 		<tbody>
 		{% for item in showGM_items %}
 			<tr align="center" class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
-			<td></td><td></td><td>{{item.product.product_code}}</td>
+			<td>{{item.sale_order.purchase_order_no}}</td><td>{{item.sale_order_id}}</td><td>{{item.plan_id}}</td><td>{{item.product.product_code}}</td>
 			<td><center><b><h3>{{item.plan_amount}}</b></h3><center></td>
 			{% if item.plan_cr_start != NULL %}
 				<td>
@@ -54,7 +54,7 @@
 				{% endif %}
 				</td>
 			{% else %}
-				<td bgColor="black"></td>
+				<td></td>
 			{% endif %}
 			{% if item.plan_cv_start != NULL %}
 				<td>
@@ -65,7 +65,7 @@
 				{% endif %}
 				</td>
 			{% else %}
-				<td bgColor="black"></td>
+				<td></td>
 			{% endif %}
 			{% if item.plan_pt_start != NULL %}
 				<td>
@@ -76,7 +76,7 @@
 				{% endif %}
 				</td>
 			{% else %}
-				<td bgColor="black"></td>
+				<td></td>
 			{% endif %}
 			{% if item.plan_wh_start != NULL %}
 				<td><h3>
@@ -87,7 +87,7 @@
 				{% endif %}
 				</h3></td>
 			{% else %}
-				<td bgColor="black"></td>
+				<td></td>
 			{% endif %}
 			<td>{{item.days_left}}</td>
 			<td>

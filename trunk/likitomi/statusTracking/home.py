@@ -422,6 +422,8 @@ def workWH(user,title):
 	wh = currentTimeProcess("WH")
 	item_plan = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start')
 	items = list(item_plan)
+	item_planOut = StatusTracking.objects.filter(plan_due__year=today.year, plan_due__month=today.month, plan_due__day=today.day).order_by('plan_due')
+	itemsOut = list(item_planOut)
 	return render_to_response('WH/listWH.html',locals())
 	
 

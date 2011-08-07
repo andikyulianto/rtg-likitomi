@@ -5,6 +5,7 @@
 {% url statusTracking.home.logout_view as likitomi_url %}
 {% url statusTracking.home.section as home_url %}
 {% url statusTracking.line.startWH as startWH_url %}
+{% url statusTracking.line.endWH as endWH_url %}
 <!--PATH SETTINGS END-->
 
 <div id="wrapper" style="width:100%">
@@ -33,7 +34,8 @@
 <div id="content">
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1">Daily Plan</a></li>
+	<li><a href="#tabs-1">Daily Plan (Stock In)</a></li>
+	<li><a href="#tabs-2">Daily Plan (Delivery Out)</a></li>
 	</ul>
 	<div id="tabs-1">
 
@@ -52,6 +54,7 @@
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>MO</th>
 	<th>Sale Order</th>
 	<th>P Code</th>
 	<th>Customer</th>
@@ -82,8 +85,9 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
-	<td>{{item.plan_id}}</td>
-	<td>{{item.po}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>{% if item.process4 == 'WH' %}
@@ -98,7 +102,78 @@
 
 	<td>{{item.days_left}}</td></tr>
 			{% endfor %}
-			</thead>
+			</tbody>
 			</table>
+</div>
+</div>
+<!-- out -->
+<div id="tabs-2">
+	<div id="filterCriteriaOut" align="center">
+	<input type="checkbox" id="finishedOut" checked /><label for="finishedOut">Finished</label>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" id="notProcessOut" checked /><label for="notProcessOut">Unfinished</label>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" id="missingOut" checked /><label for="missingOut">Incompleted</label>
+	</div>
+<br>
+<div id="resultDivLineWHOut">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableOut">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th><div>Sch.</div><div>Act.</div></th>
+	<th width="5%"><div class="plan"> OUT </div><div class="actual">OUT</div></th>
+	<th width="5%">Pcs.</div><div class="actual">Pcs.</div></th>
+	<th>Product code</th>
+	<th>MO</th>
+	<th>Sale Order</th>
+	<th>P Code</th>
+	<th>Customer</th>
+	<th>Product Name</th>
+	<th>From</th>
+	<th>Due</th>
+</tr></thead><tbody>
+	{% for item in itemsOut %}
+	<tr id="{{ item.stateDL}}" class="{% cycle 'odd' 'even' %}">
+	<td>{% if whOut == item.plan_due %}> {% endif %}</td>
+	<td><div class="plan"><a href="{{ endWH_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_due|time:"H:i"}}</a></div>
+	<div class="actual">
+		{% if item.actual_wh_end != NULL %}
+				{{item.actual_wh_end|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+	</div></td>
+	<td class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_wh_out != NULL%}
+		{% if item.actual_amount_wh_out < item.plan_amount %}
+			<font color="red">{{item.actual_amount_wh_out}}</font>
+		{% else %}
+			{{item.actual_amount_wh_out}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</div></td>
+	<td>{{item.product.product_code}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
+	<td>{{item.product.parent_code.partner.partner_name}}</td>
+	<td>{{item.product.parent_code.product_name}}</td>
+	<td>{% if item.process4 == 'WH' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'WH'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'WH' %}
+		    {{ item.process1 }}
+		{% else %}
+			CR <!-- need to fix here -->
+		{% endif %}{% endif %}{% endif %}</td>
+
+	<td>{{item.days_left}}</td></tr>
+			{% endfor %}
+			</tbody>
+			</table>
+
 </div>	
-{% endblock %}
+</div>
+</div>	{% endblock %}

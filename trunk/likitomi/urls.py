@@ -2,7 +2,7 @@ from django.conf.urls.defaults import *
 from django.conf import settings
 from statusTracking.general import login
 from statusTracking.home import login_check,logout_view,section,display,normalPlanRefresher,lastUpdate,monthlyPlan
-from statusTracking.detail import pcdetail
+from statusTracking.detail import pcdetail,showDetail, showStock
 from statusTracking.line import startCR,endCR, startCV,endCV,startPT,endPT,startWH,endWH
 from statusTracking.update import startUpdate,endUpdate
 from statusTracking.machine import machine_list
@@ -71,10 +71,14 @@ urlpatterns = patterns('',
 	(r'^likitomi/line/update/end/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/machine/list/$', machine_list),
 	(r'^likitomi/machine/list/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^likitomi/product/list/$', endUpdate),
-	(r'^likitomi/product/list/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+#	(r'^likitomi/product/list/$', endUpdate),
+#	(r'^likitomi/product/list/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/display/$', display),
 	(r'^likitomi/display/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/showDetail/$', showDetail),
+	(r'^likitomi/showDetail/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+	(r'^likitomi/showStock/$', showStock),
+	(r'^likitomi/showStock/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^likitomi/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
 # Weight #

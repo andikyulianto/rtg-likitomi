@@ -3,19 +3,21 @@
 <div id="content">
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1">Daily Plan</a></li>
-		<li><a href="#tabs-2">Monthly Plan</a></li>
+		<li><a href="#tabs-1">Daily Plan (Stock In)</a></li>
+		<li><a href="#tabs-2">Daily Plan (Delivery Out)</a></li>
+		<li><a href="#tabs-3">Monthly Plan</a></li>
 	</ul>
 	<div id="tabs-1">
 	<!--top bar -->
 	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate">Last update:  {{today}}</div></td></tr></table>
 	<br>
-	<div id="filterCriteria" align="center">
-	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
-	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
-	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
-
-	</div> <!-- end Filter -->
+		<div id="filterCriteria" align="center">
+			<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="notProcess" checked /><label for="notProcess">Unfinished</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="missing" checked /><label for="missing">Incompleted</label>
+		</div> <!-- end Filter -->
 	<br>
 <div id="resultDivLineWH">
 	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetail">
@@ -24,6 +26,7 @@
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>MO</th>
 	<th>Sale Order</th>
 	<th>P Code</th>
 	<th>Customer</th>
@@ -54,8 +57,9 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
-	<td>{{item.plan_id}}</td>
-	<td>{{item.po}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>
@@ -77,18 +81,90 @@
 </div>	
 
 </div>
-<!--END Menu and Topbar-->
+<!-- out -->
 <div id="tabs-2">
+	<div id="filterCriteriaOut" align="center">
+	<input type="checkbox" id="finishedOut" checked /><label for="finishedOut">Finished</label>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" id="notProcessOut" checked /><label for="notProcessOut">Unfinished</label>
+	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<input type="checkbox" id="missingOut" checked /><label for="missingOut">Incompleted</label>
+	</div>
+<br>
+<div id="resultDivLineWHOut">
+	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableOut">
+	<thead><tr bgcolor="#cccccc" width="100%">
+	<th><div>Sch.</div><div>Act.</div></th>
+	<th width="5%"><div class="plan"> OUT </div><div class="actual">OUT</div></th>
+	<th width="5%">Pcs.</div><div class="actual">Pcs.</div></th>
+	<th>Product code</th>
+	<th>MO</th>
+	<th>Sale Order</th>
+	<th>PO No</th>
+	<th>Customer</th>
+	<th>Product Name</th>
+	<th>From</th>
+	<th>Due</th>
+</tr></thead><tbody>
+	{% for item in itemsOut %}
+	<tr id="{{ item.stateDL}}" class="{% cycle 'odd' 'even' %}">
+	<td>{% if whOut == item.plan_due %}> {% endif %}</td>
+	<td><div class="plan"><a href="{{ endWH_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_due|time:"H:i"}}</a></div>
+	<div class="actual">
+		{% if item.actual_wh_end != NULL %}
+				{{item.actual_wh_end|time:"H:i"}}
+				{% else %}
+				&nbsp;
+				{% endif %} 
+	</div></td>
+	<td class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_wh_out != NULL%}
+		{% if item.actual_amount_wh_out < item.plan_amount %}
+			<font color="red">{{item.actual_amount_wh_out}}</font>
+		{% else %}
+			{{item.actual_amount_wh_out}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</div></td>
+	<td>{{item.product.product_code}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
+	<td>{{item.product.parent_code.partner.partner_name}}</td>
+	<td>{{item.product.parent_code.product_name}}</td>
+	<td>{% if item.process4 == 'WH' %}
+		    {{item.process3}}
+		{% else %}{% if item.process3 == 'WH'%}
+		    {{ item.process2 }}
+		{% else %}{% if item.process2 == 'WH' %}
+		    {{ item.process1 }}
+		{% else %}
+			CR <!-- need to fix here -->
+		{% endif %}{% endif %}{% endif %}</td>
+
+	<td>{{item.days_left}}</td></tr>
+			{% endfor %}
+			</tbody>
+			</table>
+
+</div>	
+</div>
+<!--END Menu and Topbar-->
+<div id="tabs-3">
 	<!--top bar-->
 	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Total plan of {{strThisMonth}}</h4></td><td align="right"><div id="dailyPlanUpdate">Last update:  {{today}}</div></td></tr></table>
 	<br>
 	
 
-	<div id="filterCriteriaMonthly" align="center">
-	<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
-	<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Not yet process</label>
-	<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
-	</div> <!-- end Filter -->
+<div id="filterCriteriaMonthly" align="center">
+			<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Unfinished</label>
+			 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="checkbox" id="missingM" checked /><label for="missingM">Incompleted</label>
+		</div> <!-- end Filter -->
 <br>
 <div id="resultDivLineWH">
 	<table align='center' width="100%" class='tablesorter' border=1 id="resultTableDetailM">
@@ -97,8 +173,9 @@
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>MO</th>
 	<th>Sale Order</th>
-	<th>P Code</th>
+	<th>PO NO</th>
 	<th>Customer</th>
 	<th>Product Name</th>
 	<th>From</th>
@@ -126,8 +203,9 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
-	<td>{{item.plan_id}}</td>
-	<td>{{item.po}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>{% if item.process4 == 'WH' %}

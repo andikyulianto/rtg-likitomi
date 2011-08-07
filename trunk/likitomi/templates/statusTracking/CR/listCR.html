@@ -52,8 +52,10 @@
 	<th><div>Sch.</div><div>Act.</div></th>
 	<th width="5%"><div class="plan">IN</div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">OUT</div><div class="actual">OUT</div></th>
-	<th width="5%"><div class="plan">Pcs</div><div class="actual">Pcs</div></th>
+
+	<th width="5%">Pcs Out</th>
 	<th>Sheet Code</th>
+	<th>MO</th>
 	<th>Customer name</th>
 	<th>Product</th>
 	<th>Flute</th>
@@ -91,6 +93,7 @@
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
+				
 	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
 	{% if item.actual_amount_cr != NULL%}
 		{% if item.actual_amount_cr < item.plan_amount %}
@@ -103,6 +106,7 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
+	<td> {{item.plan_id}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>{{item.product.flute}}</td>

@@ -11,9 +11,11 @@
 	<table width="100%"><tr><td  width="33%"></td><td width="33%" align="center"><h4>Daily plan of {{today|date:"l d F Y"}}</h4></td><td align="right"><div id="dailyPlanUpdate">Last update:  {{today}}</div></td></tr></table>
 	<br>
 	<div id="filterCriteria" align="center">
-	<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
-	<input type="checkbox" id="notProcess" checked /><label for="notProcess">Not yet process</label>
-	<input type="checkbox" id="missing" checked /><label for="missing">Missing in Pcs.</label>
+		<input type="checkbox" id="finished" checked /><label for="finished">Finished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="notProcess" checked /><label for="notProcess">Unfinished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="missing" checked /><label for="missing">Incompleted</label>
 
 	</div> <!-- end Filter -->
 	<br>
@@ -23,13 +25,16 @@
 	<th><div>Sch.</div><div>Act.</div></th>
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">OUT </div><div class="actual">OUT</div></th>
-	<th width="5%"><div class="plan">Pcs<div class="actual">Pcs</div></th>
+	<th width="5%">Pcs. In</th>
+	<th width="5%">Pcs. Out</th>
 	<th>Product code</th>
+
 	<th>Machine</th>
 	<th>From</th>
 	<th>Color</th>
 	<th>Time</th>
-	<th>Speed</th>
+	<th>Speed</th>	
+	<th>MO</th>
 	<th>Sale Order</th>
 	<th>P.Code</th>
 	<th>Customer</th>
@@ -54,6 +59,20 @@
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
+				
+	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_cv_in != NULL%}
+		{% if item.actual_amount_cv_in < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv_in}}</font>
+		{% else %}
+			{{item.actual_amount_cv_in}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</div></td>
+
+				
 	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
 	{% if item.actual_amount_cv != NULL%}
 		{% if item.actual_amount_cv < item.plan_amount %}
@@ -66,6 +85,7 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
+
 	<td>{% if item.product.parent_code.req_2cl = 1 %} 2CL
 		{% else %}{% if item.product.parent_code.req_3cm = 1 %} 3CM
 		{% else %}{% if item.product.parent_code.req_3cs = 1 %} 3CS
@@ -83,8 +103,9 @@
 	<td>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
 	<td>{{item.cv_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td>{{item.plan_id}}</td>
-	<td>{{item.po}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>
@@ -112,9 +133,11 @@
 	
 
 	<div id="filterCriteriaMonthly" align="center">
-	<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
-	<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Not yet process</label>
-	<input type="checkbox" id="missingM" checked /><label for="missingM">Missing in Pcs.</label>
+		<input type="checkbox" id="finishedM" checked /><label for="finishedM">Finished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="notProcessM" checked /><label for="notProcessM">Unfinished</label>
+		 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<input type="checkbox" id="missingM" checked /><label for="missingM">Incompleted</label>
 	</div> <!-- end Filter -->
 <br>
 <div id="resultDivLineCVM">
@@ -123,13 +146,16 @@
 	<th><div class="plan">Sch.</div><div class="actual">Act.</div></th>
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">OUT </div><div class="actual">OUT</div></th>
-	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
+	<th width="5%">Pcs. In</th>
+	<th width="5%">Pcs. Out</th>
 	<th>Product code</th>
+
 	<th>Machine</th>
 	<th>From</th>
 	<th>Color</th>
 	<th>Time</th>
-	<th>Speed</th>
+	<th>Speed</th>	
+	<th>MO</th>
 	<th>Sale Order</th>
 	<th>P.Code</th>
 	<th>Customer</th>
@@ -154,6 +180,18 @@
 				&nbsp;
 				{% endif %} </div></td>
 	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	{% if item.actual_amount_cv_in != NULL%}
+		{% if item.actual_amount_cv_in < item.plan_amount %}
+			<font color="red">{{item.actual_amount_cv_in}}</font>
+		{% else %}
+			{{item.actual_amount_cv_in}}
+		{% endif %}
+	{% else %}
+		<font color="red">0</font>
+	{% endif %}
+	</div></td>		
+		
+	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
 	{% if item.actual_amount_cv != NULL%}
 		{% if item.actual_amount_cv < item.plan_amount %}
 			<font color="red">{{item.actual_amount_cv}}</font>
@@ -165,6 +203,7 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
+
 	<td>{{item.cv_machine}}</td>
 	<td>{% if item.process4 == 'CV' %}
 		    {{item.process3}}
@@ -176,8 +215,9 @@
 	<td>{% if item.product.parent_code.rope_color != NULL %}{{item.product.parent_code.rope_color}}{% endif %}</td>
 	<td>{{item.cv_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td>{{item.plan_id}}</td>
-	<td>{{item.po}}</td>
+	<td> {{item.plan_id}}</td>
+	<td>{{item.sale_order_id}}</td>
+	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.parent_code.partner.partner_name}}</td>
 	<td>{{item.product.parent_code.product_name}}</td>
 	<td>

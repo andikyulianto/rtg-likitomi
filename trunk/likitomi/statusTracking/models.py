@@ -451,6 +451,7 @@ class TotalPlanning(models.Model):
 
 class StatusTracking(models.Model):
     plan_id = models.AutoField(primary_key=True)
+    sale_order = models.ForeignKey(SalesOrder,null=False)
     product = models.ForeignKey(Products,null=False)
     #product_id = models.CharField(max_length=33, blank=True)
     plan_amount = models.IntegerField(null=True, blank=True)
@@ -467,13 +468,16 @@ class StatusTracking(models.Model):
     actual_amount_cr = models.IntegerField(null=True, blank=True)
     actual_cr_start = models.DateTimeField(null=True, blank=True)
     actual_cr_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_cv_in = models.IntegerField(null=True, blank=True)
     actual_amount_cv = models.IntegerField(null=True, blank=True)
     actual_cv_start = models.DateTimeField(null=True, blank=True)
     actual_cv_end = models.DateTimeField(null=True, blank=True)
+    actual_amount_pt_in = models.IntegerField(null=True, blank=True)
     actual_amount_pt = models.IntegerField(null=True, blank=True)
     actual_pt_start = models.DateTimeField(null=True, blank=True)
     actual_pt_end = models.DateTimeField(null=True, blank=True)
     actual_amount_wh = models.IntegerField(null=True, blank=True)
+    actual_amount_wh_out = models.IntegerField(null=True, blank=True)
     actual_wh_start = models.DateTimeField(null=True, blank=True)
     actual_wh_end = models.DateTimeField(null=True, blank=True)
     actual_due = models.DateTimeField(null=True, blank=True)
@@ -566,6 +570,16 @@ class StatusTracking(models.Model):
 	elif self.actual_amount_pt < self.plan_amount :
 		status = 'missing'
 	elif self.actual_amount_pt >= self.plan_amount :
+		status = 'normal'
+	else :
+		status = ''
+	return status
+    def stateDL(self):
+	if self.actual_amount_wh_out == None :
+		status = 'notProcess'
+	elif self.actual_amount_wh_out < self.plan_amount :
+		status = 'missing'
+	elif self.actual_amount_wh_out >= self.plan_amount :
 		status = 'normal'
 	else :
 		status = ''

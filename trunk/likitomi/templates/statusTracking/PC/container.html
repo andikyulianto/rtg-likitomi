@@ -269,6 +269,38 @@ $("#finished").click(function(){
 		}
 	});
 
+$("#finishedOut").click(function(){ 
+		if($("#finishedOut").attr("checked")==true)
+		{
+		    $("#resultTableOut tr#normal").show();
+			
+		}
+		else
+		{
+		    $("#resultTableOut tr#normal").hide();
+		}
+	});
+	$("#notProcessOut").click(function(){ 
+		if($("#notProcessOut").attr("checked")==true)
+		{
+		    $("#resultTableOut tr#notProcess").show();
+		}
+		else
+		{
+		    $("#resultTableOut tr#notProcess").hide();
+		}
+	});
+	$("#missingOut").click(function(){ 
+		if($("#missingOut").attr("checked")==true)
+		{
+		    $("#resultTableOut tr#missing").show();
+		}
+		else
+		{
+		    $("#resultTableOut tr#missing").hide();
+		}
+	});
+
 
 
 
@@ -288,6 +320,12 @@ $(document).ready(function() {
 					"aaSorting": [[ 1, "asc" ]]*/
 				});
 	$('#resultTableDetailM').dataTable({
+					"bJQueryUI": true,
+					"bAutoWidth": false,
+					"sPaginationType": "full_numbers"/*,
+					"aaSorting": [[ 1, "asc" ]]*/
+				});
+	$('#resultTableOut').dataTable({
 					"bJQueryUI": true,
 					"bAutoWidth": false,
 					"sPaginationType": "full_numbers"/*,
