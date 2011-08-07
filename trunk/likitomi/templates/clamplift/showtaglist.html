@@ -72,7 +72,7 @@ $(document).ready(function(){
 		if ($("#tagstatus").val() == "unknown"){var tag2write = "New";}
 		if (!realtag && atlane && atposition) {var tag2write = "Location Tag";}
 		if (realtag && $("#tagstatus").val() == "known") {var tag2write = realtag;}
-		if ($(this).attr("class") == "") {
+		if ($(this).attr("class") == "" || $(this).attr("class") == "None") {
 			$("[title="+new_rfid+"]").html("<b>"+tag2write+" >>> "+arfid+"</b><button class='asstag' style='font-size:75%;'>Assign Tag</button>");
 			$(".asstag").button({icons: {primary: "ui-icon-link"}});
 			$(".asstag").click(function(){
@@ -89,7 +89,7 @@ $(document).ready(function(){
 				}
 			});
 		}
-		else if ($(this).attr("class") != "") {
+		else if ($(this).attr("class") != "" && $(this).attr("class") != "None") {
 			$("[title="+new_rfid+"]").html("<b>"+tag2write+" >>> "+arfid+"</b><button class='writemore' style='font-size:75%;'>Write More</button>");
 			$( ".writemore" ).button({icons: {primary: "ui-icon-plus"}});
 			$(".writemore").click(function(){
@@ -129,13 +129,13 @@ $(document).ready(function(){
 		{% for paper_roll_detail_id, rfid_roll_id, paper_code, size, initial_weight, lane, position, current_weight in nlist %}
 		<tr class="{{ rfid_roll_id }}" title="{{ paper_code }}" lang="{{ size }}" id="{{ paper_roll_detail_id }}" style="height:53px; background-color: lightgray;">
 			<td style="width:58px;">{{ paper_roll_detail_id }}</td>
-<!--			<td style="width:67px;">{% if rfid_roll_id != None %}{{ rfid_roll_id }}{% else %}{% endif %}</td>-->
-			<td style="width:67px;">{{ rfid_roll_id }}</td>
+			<td style="width:67px;">{% if rfid_roll_id != None %}{{ rfid_roll_id }}{% else %}{% endif %}</td>
+<!--			<td style="width:67px;">{{ rfid_roll_id }}</td>-->
 			<td style="width:120px;">{{ paper_code }}</td>
 			<td style="width:67px;">{{ size }}</td>
 			<td style="width:67px;">{{ initial_weight }}</td>
 			<td style="width:67px;">{{ current_weight }}</td>
-			<td style="width:69px;">{% if rfid_roll_id != None %}{{ lane }}{% else %}{% endif %}</td>
+			<td style="width:69px;">{% if lane != Null %}{{ lane }}{% else %}{% endif %}</td>
 			<td style="width:69px;">{% if position != Null %}{{ position }}{% endif %}</td>
 			<td title="{{ paper_roll_detail_id }}" lang="btn" style="width:160px; background-color:white;"></td>
 <!--			<td style="width:160px; background-color:white;">{% if rfid_roll_id == "" %}<button class="asstag" onclick="javascript:assignTag({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}');">Assign Tag</button>{% endif %}{% if rfid_roll_id != "" %}<button class="writemore" onclick="javascript:writeMore({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}')">Write More</button>{% endif %}</td>-->

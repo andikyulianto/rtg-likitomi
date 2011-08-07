@@ -14,7 +14,7 @@ HOST = '192.168.101.55' # Likitomi's meeting room
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'real' # RFID mode = {'real', 'fake'}
+rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
 
 def maxclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
@@ -185,11 +185,11 @@ def maxclamp(request):
 
 	if rfid_mode == 'fake':
 
-#		atlocation = 'Scale'
+		atlocation = 'Scale'
 
-		atlane = 1
-		atposition = 4
-		atlocation = 'Stock'
+#		atlane = 1
+#		atposition = 4
+#		atlocation = 'Stock'
 
 #		tag2write = '112233445566778899AABBCC'
 		tag2write = '30065AAAA000000000000000'

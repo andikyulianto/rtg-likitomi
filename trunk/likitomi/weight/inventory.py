@@ -180,7 +180,7 @@ def inventory(request):
 		mlist = list(mquery)
 
 		for ind,pair in enumerate(mlist):
-			if pair[0] == u'A':
+			if pair[0] == 'A':
 				posa.pop(pair[1]-1)
 				posa.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Alist):
@@ -196,7 +196,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'B':
+			elif pair[0] == 'B':
 				posb.pop(pair[1]-1)
 				posb.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Blist):
@@ -212,7 +212,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'C':
+			elif pair[0] == 'C':
 				posc.pop(pair[1]-1)
 				posc.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Clist):
@@ -228,7 +228,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'D':
+			elif pair[0] == 'D':
 				posd.pop(pair[1]-1)
 				posd.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Dlist):
@@ -244,7 +244,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'E':
+			elif pair[0] == 'E':
 				pose.pop(pair[1]-1)
 				pose.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Elist):
@@ -260,7 +260,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'F':
+			elif pair[0] == 'F':
 				posf.pop(pair[1]-1)
 				posf.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Flist):
@@ -276,7 +276,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'G':
+			elif pair[0] == 'G':
 				posg.pop(pair[1]-1)
 				posg.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Glist):
@@ -292,7 +292,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'H':
+			elif pair[0] == 'H':
 				posh.pop(pair[1]-1)
 				posh.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Hlist):
@@ -308,7 +308,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'4':
+			elif pair[0] == '4':
 				pos4.pop(pair[1]-1)
 				pos4.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(THlist):
@@ -324,7 +324,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'3':
+			elif pair[0] == '3':
 				pos3.pop(pair[1]-1)
 				pos3.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(RDlist):
@@ -340,7 +340,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'2':
+			elif pair[0] == '2':
 				pos2.pop(pair[1]-1)
 				pos2.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(NDlist):
@@ -356,7 +356,7 @@ def inventory(request):
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
 
-			elif pair[0] == u'1':
+			elif pair[0] == '1':
 				pos1.pop(pair[1]-1)
 				pos1.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(STlist):
@@ -414,7 +414,7 @@ def inventory(request):
 		mlist2 = list(mquery2)
 
 		for ind,pair in enumerate(mlist2):
-			if pair[0] == u'A':
+			if pair[0] == 'A':
 				posa.pop(pair[1]-1)
 				posa.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Alist):
@@ -437,7 +437,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'B':
+			elif pair[0] == 'B':
 				posb.pop(pair[1]-1)
 				posb.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Blist):
@@ -460,7 +460,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'C':
+			elif pair[0] == 'C':
 				posc.pop(pair[1]-1)
 				posc.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Clist):
@@ -483,7 +483,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'D':
+			elif pair[0] == 'D':
 				posd.pop(pair[1]-1)
 				posd.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Dlist):
@@ -506,7 +506,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'E':
+			elif pair[0] == 'E':
 				pose.pop(pair[1]-1)
 				pose.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Elist):
@@ -529,7 +529,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'F':
+			elif pair[0] == 'F':
 				posf.pop(pair[1]-1)
 				posf.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Flist):
@@ -552,7 +552,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'G':
+			elif pair[0] == 'G':
 				posg.pop(pair[1]-1)
 				posg.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Glist):
@@ -575,7 +575,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'H':
+			elif pair[0] == 'H':
 				posh.pop(pair[1]-1)
 				posh.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Hlist):
@@ -598,7 +598,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'4':
+			elif pair[0] == '4':
 				pos4.pop(pair[1]-1)
 				pos4.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(THlist):
@@ -621,7 +621,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'3':
+			elif pair[0] == '3':
 				pos3.pop(pair[1]-1)
 				pos3.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(RDlist):
@@ -644,7 +644,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'2':
+			elif pair[0] == '2':
 				pos2.pop(pair[1]-1)
 				pos2.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(NDlist):
@@ -667,7 +667,7 @@ def inventory(request):
 						elif 100 > wlist2[ind]:
 							ls[5] = ls[5] + 1
 
-			elif pair[0] == u'1':
+			elif pair[0] == '1':
 				pos1.pop(pair[1]-1)
 				pos1.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(STlist):
@@ -732,7 +732,7 @@ def inventory(request):
 		mlist3 = list(mquery3)
 
 		for ind,pair in enumerate(mlist3):
-			if pair[0] == u'A':
+			if pair[0] == 'A':
 				posa.pop(pair[1]-1)
 				posa.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Alist):
@@ -756,7 +756,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'B':
+			elif pair[0] == 'B':
 				posb.pop(pair[1]-1)
 				posb.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Blist):
@@ -780,7 +780,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'C':
+			elif pair[0] == 'C':
 				posc.pop(pair[1]-1)
 				posc.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Clist):
@@ -804,7 +804,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'D':
+			elif pair[0] == 'D':
 				posd.pop(pair[1]-1)
 				posd.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Dlist):
@@ -828,7 +828,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'E':
+			elif pair[0] == 'E':
 				pose.pop(pair[1]-1)
 				pose.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Elist):
@@ -852,7 +852,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'F':
+			elif pair[0] == 'F':
 				posf.pop(pair[1]-1)
 				posf.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Flist):
@@ -876,7 +876,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'G':
+			elif pair[0] == 'G':
 				posg.pop(pair[1]-1)
 				posg.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Glist):
@@ -900,7 +900,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'H':
+			elif pair[0] == 'H':
 				posh.pop(pair[1]-1)
 				posh.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(Hlist):
@@ -924,7 +924,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'4':
+			elif pair[0] == '4':
 				pos4.pop(pair[1]-1)
 				pos4.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(THlist):
@@ -948,7 +948,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'3':
+			elif pair[0] == '3':
 				pos3.pop(pair[1]-1)
 				pos3.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(RDlist):
@@ -972,7 +972,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'2':
+			elif pair[0] == '2':
 				pos2.pop(pair[1]-1)
 				pos2.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(NDlist):
@@ -996,7 +996,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-			elif pair[0] == u'1':
+			elif pair[0] == '1':
 				pos1.pop(pair[1]-1)
 				pos1.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
 				if str(pair[1]) not in str(STlist):
