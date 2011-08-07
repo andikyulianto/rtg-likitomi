@@ -65,8 +65,8 @@ background-color:dimgray;
 <script type="text/javascript" src="javascript/writemore.js"></script>
 <script type="text/javascript" src="javascript/loctag.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
-<script type="text/javascript" src="javascript/ui.selectmenu.js"></script> 
-<link rel="Stylesheet" href="css/ui.selectmenu.css" type="text/css" /> 
+<script type="text/javascript" src="javascript/ui.selectmenu.js"></script>
+<link rel="Stylesheet" href="css/ui.selectmenu.css" type="text/css" />
 <script type="text/javascript">
 $(document).ready(function(){
 	$( "#createnew" ).button({icons: {primary: "ui-icon-tag"}});
@@ -76,9 +76,9 @@ $(document).ready(function(){
 	$("#uppest").click(function(){$("#showtaglist")[0].contentWindow.scrollTo(0,0);});
 	$("#upper").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,-275);});
 	$("#up").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,-55);});
-	$("#down").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,55);});
-	$("#downer").click(function(){$("#showtaglist")[0].contentWindow.scrollBy(0,275);});
-	$("#downest").click(function(){$("#showtaglist")[0].contentWindow.scrollTo(0,9999);});
+	$("#down").click(function(){if ($("#showtaglist").contents().find("tr:visible").length > 8) {$("#showtaglist")[0].contentWindow.scrollBy(0,55);}});
+	$("#downer").click(function(){if ($("#showtaglist").contents().find("tr:visible").length > 8) {$("#showtaglist")[0].contentWindow.scrollBy(0,275);}});
+	$("#downest").click(function(){if ($("#showtaglist").contents().find("tr:visible").length > 8) {$("#showtaglist")[0].contentWindow.scrollTo(0,9999);}});
 
 	$( "#uppest" ).button({icons: {primary: "ui-icon-seek-start"}, text: false});
 	$( "#upper" ).button({icons: {primary: "ui-icon-seek-prev"}, text: false});
@@ -97,9 +97,10 @@ $(document).ready(function(){
 	if (!$("#realtag").val()) {
 		$("#createnew").attr("disabled","disabled").removeAttr("onclick");
 		$("#writeloctag").attr("disabled","disabled").removeAttr("onclick");
+	}
 
-	$("select#spcodedd").selectmenu({maxHeight: 300, style: 'dropdown'});
-	$("select#swidthdd").selectmenu({style: 'dropdown'});
+	$("select#spcodedd").selectmenu({maxHeight: 300, style: 'dropdown', width: 90});
+	$("select#swidthdd").selectmenu({style: 'dropdown', width: 70});
 
 	$( "#checkbox" ).buttonset();
 
@@ -107,55 +108,109 @@ $(document).ready(function(){
 		$("#showtaglist")[0].contentWindow.scrollTo(0,0);
 		var spcode = $('#spcodedd').val();
 		var swidth = $('#swidthdd').val();
+//		var swidth = parseInt($('#swidthdd').val());
+		if (spcode != "" && swidth == "") {var searchsta = 'c_';}
+		if (spcode == "" && swidth != "") {var searchsta = '_s';}
+		if (spcode != "" && swidth != "") {var searchsta = 'cs';}
+		if (spcode == "" && swidth == "") {var searchsta = '__';}
 		var notyet = $(":checkbox#notassfilt").attr("checked");
 		var already = $(":checkbox#assignfilt").attr("checked");
-		if (notyet == true && already == true) {var checksta = 'tt';}
-		if (notyet == true && already == false) {var checksta = 'tf';}
-		if (notyet == false && already == true) {var checksta = 'ft';}
-		if (notyet == false && already == false) {var checksta = 'ff';}
+		if (notyet == true && already == false) {var checksta = 'n_';}
+		if (notyet == false && already == true) {var checksta = '_a';}
+		if (notyet == true && already == true) {var checksta = 'na';}
+		if (notyet == false && already == false) {var checksta = '__';}
+		if (searchsta == 'c_' && checksta == 'n_'){
+//			alert(1);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class=None][title='+spcode+'],tr[class=""][title='+spcode+']').show();
+		}
+		if (searchsta == 'c_' && checksta == '_a'){
+//			alert(2);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class!=None][class!=""][title='+spcode+']').show();
+		}
+		if (searchsta == 'c_' && checksta == 'na'){
+//			alert(3);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[title='+spcode+']').show();
+		}
+		if (searchsta == 'c_' && checksta == '__'){
+//			alert(4);
+			$('#showtaglist').contents().find('tr').hide();
+		}
+		if (searchsta == '_s' && checksta == 'n_'){
+//			alert(5);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class=None][lang='+swidth+'],tr[class=""][lang='+swidth+']').show();
+		}
+		if (searchsta == '_s' && checksta == '_a'){
+//			alert(6);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class!=None][class!=""][lang='+swidth+']').show();
+		}
+		if (searchsta == '_s' && checksta == 'na'){
+//			alert(7);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[lang='+swidth+']').show();
+		}
+		if (searchsta == '_s' && checksta == '__'){
+//			alert(8);
+			$('#showtaglist').contents().find('tr').hide();
+		}
+		if (searchsta == 'cs' && checksta == 'n_'){
+//			alert(9);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class=None][title='+spcode+'][lang='+swidth+'],tr[class=""][title='+spcode+'][lang='+swidth+']').show();
+		}
+		if (searchsta == 'cs' && checksta == '_a'){
+//			alert(10);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class!=None][class!=""][title='+spcode+'][lang='+swidth+']').show();
+		}
+		if (searchsta == 'cs' && checksta == 'na'){
+//			alert(11);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[title='+spcode+'][name='+swidth+']').show();
+		}
+		if (searchsta == 'cs' && checksta == '__'){
+//			alert(12);
+			$('#showtaglist').contents().find('tr').hide();
+		}
+		if (searchsta == '__' && checksta == 'n_'){
+//			alert(13);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class=None],tr[class=""]').show();
+		}
+		if (searchsta == '__' && checksta == '_a'){
+//			alert(14);
+			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr[class!=None][class!=""]').show();
+		}
+		if (searchsta == '__' && checksta == 'na'){
+//			alert(15);
+//			$('#showtaglist').contents().find('tr').hide();
+			$('#showtaglist').contents().find('tr').show();
+		}
+		if (searchsta == '__' && checksta == '__'){
+//			alert(16);
+			$('#showtaglist').contents().find('tr').hide();
+		}
 	}
 
 	$("#searchbtn").click(function(){filterAll();});
 	$(":checkbox#notassfilt, :checkbox#assignfilt").change(function(){filterAll();});
 
-	$("#searchbtn").click(function(){
-		$("#showtaglist")[0].contentWindow.scrollTo(0,0);
-		var spcode = $('#spcodedd').val();
-		var swidth = $('#swidthdd').val();
-		if (spcode != "" && swidth == "") {
-			$('#showtaglist').contents().find('tr').show();
-			$('#showtaglist').contents().find('tr[title!='+spcode+']').hide();
+	$("#nowreading").click(function(){
+		var row = $("#showtaglist").contents().find("tr[class="+$(this).html()+"]");
+//		alert(row.is(":visible"));
+		if (row.is(":visible") == true){
+			$($("#showtaglist")[0].contentWindow || $("#showtaglist")[0].contentDocument).scrollTop(row.offset().top-2);
+			$("#showtaglist").contents().find("tr").css({"background-color":"lightgray","color":"black"});
+			$("#showtaglist").contents().find("[lang='btn']").html("");
+			row.css({"background-color": "lightblue"});
 		}
-		if (swidth != "" && spcode == "") {
-			$('#showtaglist').contents().find('tr').show();
-			$('#showtaglist').contents().find('tr[lang!='+swidth+']').hide();
-		}
-		if (spcode != "" && swidth != "") {
-			$('#showtaglist').contents().find('tr').hide();
-			$('#showtaglist').contents().find('tr[title='+spcode+'][lang='+swidth+']').show();
-		}
-		if (spcode == "" && swidth == "") {$('#showtaglist').contents().find('tr').show();}
 	});
 
-	$(":checkbox#notassfilt").change(function(){
-		if ($(this).attr("checked") == true){
-			$('#showtaglist').contents().find('tr[class=""]').show();
-			$('#showtaglist').contents().find('tr[class=None]').show();
-		}
-		else if ($(this).attr("checked") == false){
-			$('#showtaglist').contents().find('tr[class=""]').hide();
-			$('#showtaglist').contents().find('tr[class=None]').hide();
-		}
-	});
-	$(":checkbox#assignfilt").change(function(){
-		if ($(this).attr("checked") == true){
-			$('#showtaglist').contents().find('tr[class!=""][class!=None]').show();
-		}
-		else if ($(this).attr("checked") == false){
-			$('#showtaglist').contents().find('tr[class!=""][class!=None]').hide();
-		}
-	});
-	}
 });
 </script>
 </head>
@@ -176,7 +231,7 @@ $(document).ready(function(){
 {% url weight.tagman.showtaglist as showtaglist_url %}
 {% url weight.views.dashboard as dashboard_url %}
 
-<p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: {{ realtag }}{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}<p style="position:absolute; top:-5px; left:300px; font-size:70%;">Writing on a location tag<br />is not allowed!</p>{% endif %}</b></p>
+<p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: <b id="nowreading" style="background-color:lightblue;">{{ realtag }}</b>{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}<p style="position:absolute; top:-5px; left:300px; font-size:70%;">Writing on a location tag<br />is not allowed!</p>{% endif %}</b></p>
 
 <div id="checkbox" style="top:5px; left:315px;">
 	<input type="checkbox" id="notassfilt" name="checkbox" checked="checked" /><label for="notassfilt" style="font-size:80%;">Not yet</label>
@@ -187,7 +242,7 @@ $(document).ready(function(){
 	<tr>
 		<td>
 			<form class="ui-menu">
-				<select id="spcodedd" style="width:90px;">
+				<select id="spcodedd">
 					<option value="" selected="selected">Paper:</option>
 					{% for paper_code in spcodelist %}
 					<option value="{{ paper_code }}">{{ paper_code }}</option>
@@ -197,7 +252,7 @@ $(document).ready(function(){
 		</td>
 		<td>
 			<form class="ui-menu">
-				<select id="swidthdd" style="width:70px;">
+				<select id="swidthdd">
 					<option value="" selected="selected">Size:</option>
 					{% for size in swidthlist %}
 					<option value="{{ size }}">{{ size }}</option>
