@@ -170,7 +170,7 @@ class Planning_model extends Model
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
 			{
-				$amount = $row->qty;
+				$qty = $row->qty;
 				$product_id = $row->product_id;
 				$plan_due = $row->delivery_date." ".$row->delivery_time;
 				$sale_order = $row->sales_order;
@@ -179,6 +179,7 @@ class Planning_model extends Model
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
 			{
+				$amount  = $qty + $row->add_amount;
 				$cv_machine = $row->next_process;
 				$req_cr = $row->req_cr;
 				$req_2cl = $row->req_2cl;
