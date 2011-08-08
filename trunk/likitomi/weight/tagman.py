@@ -15,7 +15,7 @@ HOST = '192.168.101.55' # Likitomi's meeting room
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
+rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def tagman(request):
 	tagiddomain = range(1,10000)

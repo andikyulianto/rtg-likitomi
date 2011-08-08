@@ -3,7 +3,7 @@ class Clamplift_model extends Model
 {
 	var $tableName = 'tbl_clamplift';
 	var $tblSync	= 'sync_clamplift';
-	var $clampliftplan = "weight_clampliftplan";
+//	var $clampliftplan = "weight_clampliftplan";
 	var $DB1;
 	function Clamplift_model()
 	{
@@ -188,71 +188,71 @@ class Clamplift_model extends Model
 		echo "Data Saved for".$today;
 	}
 	
-	function deleteAndAddWeight($gridData,$today)
-	{
-		$this->db->trans_start();
-		$this->db->where('date',$today); 
-		$this->db->delete($this->clampliftplan);
+//	function deleteAndAddWeight($gridData,$today)
+//	{
+//		$this->db->trans_start();
+//		$this->db->where('date',$today); 
+//		$this->db->delete($this->clampliftplan);
 
-		foreach($gridData as $rowData)
-		{
-			if($rowData->product_code!="")
-			{
-				$prod = $this->getProductForClamplift($rowData->product_code);
-			} else {
-				$prod = $rowData;	
-			}
-			//$prod = $rowData; //Why I need this ?
-			$param = array( "date" => $today,
-					"start_time" => $rowData->start_time,
-					"end_time" => $rowData->stop_time,
-					"sheet_code" => $prod->product_code,
-					"product" => $prod->product_name,			
-					"customer_name" => $prod->partner_name,
-					"sono" => $rowData->sales_order,
-					"ordno" => $rowData->autoid,
-					"flute" => $rowData->flute,
-					"df" => $rowData->DF,
-					"bl" => $rowData->BL,
-					"cl" => $rowData->CL,
-					"bm" => $rowData->BM,
-					"cm" => $rowData->CM,
-					
-					"paper_width_mm" => $rowData->p_width_mm,
-					"paper_width_inch" => $rowData->p_width_inch,
-					"length_df" => $rowData->used_df,
-					"length_bl" => $rowData->used_bl,
-					"length_cl" => $rowData->used_cl,
-					"length_bm" => $rowData->used_bm,
-					"length_cm" => $rowData->used_cm,
-					
-					"actual_df" => $rowData->used_df_lkg,
-					"actual_bl" => $rowData->used_bl_lkg,
-					"actual_cl" => $rowData->used_cl_lkg,
-					"actual_bm" => $rowData->used_bm_lkg,
-					"actual_cm" => $rowData->used_cm_lkg,
-					
-					"loss_df" => $rowData->used_df_mkg,
-					"loss_bl" => $rowData->used_bl_mkg,
-					"loss_cl" => $rowData->used_cl_mkg,
-					"loss_bm" => $rowData->used_bm_mkg,
-					"loss_cm" => $rowData->used_cm_mkg,
-					
-					
-					"sheet_length" => $rowData->t_length,
-					"case" => $rowData->case,
-					"cut" => $rowData->cut,
-				);
-					
-			$this->db->insert($this->clampliftplan, $param);
-		}
-		$this->db->trans_complete();	
-		if ($this->db->trans_status() === FALSE)
-		{
-			echo " ERROR: COULDN'T SAVE DATA ";	
-		}
-		echo "Data Saved for".$today;
-	}
+//		foreach($gridData as $rowData)
+//		{
+//			if($rowData->product_code!="")
+//			{
+//				$prod = $this->getProductForClamplift($rowData->product_code);
+//			} else {
+//				$prod = $rowData;	
+//			}
+//			//$prod = $rowData; //Why I need this ?
+//			$param = array( "date" => $today,
+//					"start_time" => $rowData->start_time,
+//					"end_time" => $rowData->stop_time,
+//					"sheet_code" => $prod->product_code,
+//					"product" => $prod->product_name,			
+//					"customer_name" => $prod->partner_name,
+//					"sono" => $rowData->sales_order,
+//					"ordno" => $rowData->autoid,
+//					"flute" => $rowData->flute,
+//					"df" => $rowData->DF,
+//					"bl" => $rowData->BL,
+//					"cl" => $rowData->CL,
+//					"bm" => $rowData->BM,
+//					"cm" => $rowData->CM,
+//					
+//					"paper_width_mm" => $rowData->p_width_mm,
+//					"paper_width_inch" => $rowData->p_width_inch,
+//					"length_df" => $rowData->used_df,
+//					"length_bl" => $rowData->used_bl,
+//					"length_cl" => $rowData->used_cl,
+//					"length_bm" => $rowData->used_bm,
+//					"length_cm" => $rowData->used_cm,
+//					
+//					"actual_df" => $rowData->used_df_lkg,
+//					"actual_bl" => $rowData->used_bl_lkg,
+//					"actual_cl" => $rowData->used_cl_lkg,
+//					"actual_bm" => $rowData->used_bm_lkg,
+//					"actual_cm" => $rowData->used_cm_lkg,
+//					
+//					"loss_df" => $rowData->used_df_mkg,
+//					"loss_bl" => $rowData->used_bl_mkg,
+//					"loss_cl" => $rowData->used_cl_mkg,
+//					"loss_bm" => $rowData->used_bm_mkg,
+//					"loss_cm" => $rowData->used_cm_mkg,
+//					
+//					
+//					"sheet_length" => $rowData->t_length,
+//					"case" => $rowData->case,
+//					"cut" => $rowData->cut,
+//				);
+//					
+//			$this->db->insert($this->clampliftplan, $param);
+//		}
+//		$this->db->trans_complete();	
+//		if ($this->db->trans_status() === FALSE)
+//		{
+//			echo " ERROR: COULDN'T SAVE DATA ";	
+//		}
+//		echo "Data Saved for".$today;
+//	}
 	
 	function getProductForClamplift($product_code)
 	{
