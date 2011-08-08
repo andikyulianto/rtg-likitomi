@@ -181,7 +181,7 @@ class Clampliftmanger extends Controller {
 		$this->load->library('JSON');
 		$gridData = $this->json->decode($jsonData);	
 		$this->Clamplift_model->deleteAndAdd($gridData,$choosendate);
-		$this->Clamplift_model->deleteAndAddWeight($gridData,$choosendate);
+//		$this->Clamplift_model->deleteAndAddWeight($gridData,$choosendate);
 	}
 
 	function getGrade($machine)
