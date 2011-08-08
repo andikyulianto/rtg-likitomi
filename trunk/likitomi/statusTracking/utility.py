@@ -21,7 +21,7 @@ def returnall():
 ##########################################
 def currentProcess(machine):
 	today=todayDate()
-	print today
+#	print today
 	if(machine=="CR"):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id")

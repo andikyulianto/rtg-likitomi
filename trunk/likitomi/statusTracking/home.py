@@ -87,7 +87,7 @@ def section(request):
 
 
 	page =  str(task)
-	print page
+#	print page
 	section_title = "Homepage for " + employee.task + " Login as " + employee.firstname + " " + employee.lastname
 
 	if(page == "PC"):
@@ -104,7 +104,7 @@ def section(request):
 		return workWH(user,section_title)
 	else :
 		return render_to_response('home.html', locals())
-	print "return home.html"
+#	print "return home.html"
 	return render_to_response('home.html', locals())
 
 def showPC(user,title):
@@ -193,13 +193,13 @@ def showPC(user,title):
 
 	items= StatusTracking.objects.all() #filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
 
-	print "return PC/view.html"
+#	print "return PC/view.html"
 	return render_to_response('PC/view.html', locals())
 
 
 
 def normalPlanRefresher(request):
-	print "enter normalPlanRefresher"
+#	print "enter normalPlanRefresher"
 	today = todayDate()
 	page = "PC"
 	is_enable_leftbutton = True
@@ -267,16 +267,16 @@ def normalPlanRefresher(request):
 	endList = startList+getPCItemNum()
 	items_plan_wh=items_plan_wh[startList:endList]
 	#temp_contents = currentProcess("2CL")
-	print "return PC/PC.html"
+#	print "return PC/PC.html"
 	return render_to_response('PC/PC.html', locals())
 
 def lastUpdate(request):
 ###########################################
 ############# not in process ##############
 ###########################################
-	print "enter lastUpdate"
+#	print "enter lastUpdate"
 	today = todayDate()
-	print "PC/lastUpdate.html"
+#	print "PC/lastUpdate.html"
 	return render_to_response('PC/lastUpdate.html',locals())
 
 def monthlyPlan(request):
@@ -295,7 +295,7 @@ def monthlyPlan(request):
 	items = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
 	itemsNotProcess = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_wh_start__isnull=False).order_by('plan_due')
 	itemsMissing = StatusTracking.objects.filter(plan_cr_start__range=(datefrominMonth,datetoinMonth)).exclude(actual_amount_wh__gte=F('plan_amount')).exclude(actual_wh_start__isnull=True).order_by('plan_due')
-	print "PC/monthlyPlan.html"
+#	print "PC/monthlyPlan.html"
 	return render_to_response('PC/monthlyPlan.html',locals())
 
 ###################################################
@@ -335,7 +335,7 @@ def workCR(user,title):
 	item_plan = StatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start')
 	items = list(item_plan)
 	x = ''
-	print "woerkCR"+username
+#	print "woerkCR"+username
 	return render_to_response('CR/listCR.html', locals())
 #	return render_to_response('content_cr.html',locals())	
 #####################################	
