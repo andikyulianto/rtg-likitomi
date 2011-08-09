@@ -484,7 +484,7 @@ function locTag(realtag, tagstatus)
 		var pass = 0;
 		var messi = '';
 		if (laneval != '' && positionval != ''){
-			if (parseInt(positionval) <= 13){
+			if (parseInt(positionval) <= 13){ // Position are set here!
 				function submitTag(){
 					document.getElementById("alane_loc").value = laneval;
 					document.getElementById("aposition_loc").value = positionval;

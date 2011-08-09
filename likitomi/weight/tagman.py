@@ -181,8 +181,8 @@ def tagman(request):
 						tagstatus = 'unknown'
 					elif tag2write.count('0') >= 15:
 						tagstatus = 'known'
-
-					if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
+#					realtag = '0065'
+					if realtag and PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
 						rtquery = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
 						paper_roll_id = rtquery.paper_roll_detail_id
 						paper_code = rtquery.paper_code

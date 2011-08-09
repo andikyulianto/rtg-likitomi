@@ -459,7 +459,7 @@ function otherLoc()
 	{
 		var lanebox = top.document.getElementById('ilane').value;
 		var posbox = top.document.getElementById('iposition').value;
-		if (parseInt(posbox) <= 13) {
+		if (parseInt(posbox) <= 13) { // Position are set here!
 			document.getElementById("ilane").value = lanebox;
 			document.getElementById("ipos").value = posbox;
 			document.getElementById("frm3").submit();
@@ -509,6 +509,7 @@ function otherLoc()
 <input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
 <input id='maxclamp_url' type='hidden' value='{% url weight.maxclamp.maxclamp %}' />
 {% url weight.maxclamp.maxclamp as maxclamp_url %}
+
 
 <div id="clampall">
 	<input id="cpcode" type="hidden" value="{{ paper_code }}" />
