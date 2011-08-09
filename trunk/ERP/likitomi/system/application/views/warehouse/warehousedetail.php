@@ -11,7 +11,7 @@ if ($action=='view'){
 						<?=$resultInvoiceDetail[0]->invoice_no?>
 						<input type='hidden' id='x_invoice_no' value ='<?=$resultInvoiceDetail[0]->invoice_no?>'/>
 					</td>
-					<td width='50'> Invoice Date : </td><td class='viewLabel'><?=$resultInvoiceDetail[0]->invoice_date?></td>
+					<td width='50'> Invoice Date: </td><td class='viewLabel'><?=$resultInvoiceDetail[0]->invoice_date?></td>
 				</tr>
 				<tr>
 					<td width='80'> Supplier : </td><td class='viewLabel'><?=$thisClass->getSupplierById($resultInvoiceDetail[0]->supplier_id)?></td>
@@ -92,12 +92,12 @@ if($action=='add'){
 				<tr>
 					<td width='50'> Invoice : </td><td><input type='text' id='x_invoice_no' value ='<?=$invoice_no?>' 
 					<?php if($action=='edit') echo "disabled='disabled' class='nouse' "?>/></td>
-					<td width='50'> Invoice Date : </td><td><input type='text' id='x_invoice_date' value="<?=$invoice_date?>" 
+					<td width='50'> Invoice Date: </td><td><input type='text' id='x_invoice_date' size="12" value="<?=$invoice_date?>" 
 					<?php if($action=='edit') echo "disabled='disabled' class='nouse'  "?> size="10"/></td>
 				</tr>
 				<tr>
-					<td width='80'> Supplier : </td><td><input type="text" id="x_supplier" size="20" value='<?=$supplier_id?>'/></td>
-					<td width='80'> Paper Code : </td><td><input type="text" id="x_paper_code" class='combo_papers' size="9" value='<?=$paper_code?>'/></td>
+					<td width='80'> Supplier : </td><td><input type="text" id="x_supplier" size="40" value='<?=$supplier_id?>'/></td>
+					<td width='80'> Paper Code : </td><td><input type="text" id="x_paper_code" class='combo_papers' size="13" value='<?=$paper_code?>'/></td>
 				</tr>
 			</table>
 		</td>

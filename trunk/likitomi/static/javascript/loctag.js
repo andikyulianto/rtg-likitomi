@@ -540,7 +540,7 @@ function locTag(realtag, tagstatus)
 	div.appendChild(container);
 
 	var fromrfid = document.createElement('b');
-	if (tagstatus == 'unknown') {realtag = "New";}
+	if (tagstatus == 'unknown') {realtag = "New Tag";}
 	fromrfid.innerHTML = realtag+" >>> ";
 	container.appendChild(fromrfid);
 
