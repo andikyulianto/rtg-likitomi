@@ -201,7 +201,7 @@ $(document).ready(function(){
 	$(":checkbox#notassfilt, :checkbox#assignfilt").change(function(){filterAll();});
 
 	$("#nowreading").click(function(){
-		var row = $("#showtaglist").contents().find("tr[class="+$(this).html()+"]");
+		var row = $("#showtaglist").contents().find("tr[id="+$(this).html()+"]");
 //		alert(row.is(":visible"));
 		if (row.is(":visible") == true){
 			$($("#showtaglist")[0].contentWindow || $("#showtaglist")[0].contentDocument).scrollTop(row.offset().top-2);
@@ -231,7 +231,7 @@ $(document).ready(function(){
 {% url weight.tagman.showtaglist as showtaglist_url %}
 {% url weight.views.dashboard as dashboard_url %}
 
-<p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}Roll ID: <b id="nowreading" style="background-color:lightblue;">{{ realtag }}</b>{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}<!--<p style="position:absolute; top:-5px; left:300px; font-size:70%;">Writing on a location tag<br />is not allowed!</p>-->{% endif %}</b></p>
+<p style="position:absolute; top:-15px;left:10px;">Now Reading</p><p style="position:absolute; top:5px;left:10px; font-size:100%; {% if tagstatus == 'known' %}background-color:white;{% endif %}">{% if realtag and atlane and atposition %}more than 1 tag.{% endif %}<b style="font-size:150%;">{% if realtag and not atlane and not atposition %}{% if tagstatus == 'known' %}ID:<b id="nowreading" style="background-color:lightblue;">{{ realtag }}</b>{% endif %}{% if tagstatus == 'unknown' %}New Tag{% endif %}{% endif %}{% if not realtag and atlane and atposition %}Location: {{ atlane }}-{{ atposition }}<!--<p style="position:absolute; top:-5px; left:300px; font-size:70%;">Writing on a location tag<br />is not allowed!</p>-->{% endif %}{% if not realtag and not atlane and not atposition %}<b style="font-size:60%;">Cannot connect reader!</b>{% endif %}</b></p>
 
 <div id="checkbox" style="top:5px; left:315px;">
 	<input type="checkbox" id="notassfilt" name="checkbox" checked="checked" /><label for="notassfilt" style="font-size:80%;">Not yet</label>
@@ -267,15 +267,16 @@ $(document).ready(function(){
 	<div style="width:785px; height:55px; top:50px; background-color:white;">
 	<table style="width:100%;">
 		<tr style="height:55px; color:white; background-color:black;">
-			<th style="width:58px;">Roll ID</th>
-			<th style="width:67px;">RFID</th>
-			<th style="width:120px;">Paper Code</th>
-			<th style="width:67px;">Size</th>
+			<th style="width:140px;">Likitomi Roll ID</th>
+			<th style="width:55px;">RFID</th>
+			<th style="width:100px;">Paper Code</th>
+			<th style="width:50px;">Size</th>
 			<th style="width:67px;">Initial Weight</th>
 			<th style="width:67px;">Current Weight</th>
-			<th style="width:69px;">Lane</th>
-			<th style="width:69px;">Position</th>
-			<th style="width:160px; background-color:white;"><button id="createnew" style="font-size:80%;" onclick="javascript:createNew('{{ realtag }}', '{{ tagstatus }}')">Create New</button></th>
+			<th style="width:60px;">Lane</th>
+			<th style="width:60px;">Position</th>
+			<th style="width:140px; background-color:white;"></th>
+<!--			<th style="width:140px; background-color:white;"><button id="createnew" style="font-size:80%;" onclick="javascript:createNew('{{ realtag }}', '{{ tagstatus }}')">Create New</button></th>-->
 		</tr>
 	</table>
 	<iframe id="showtaglist" src="{{ showtaglist_url }}" frameborder="0" style="visibility:visible; width:785px; height:442px;" marginheight="0" marginwidth="0" scrolling="no"></iframe>

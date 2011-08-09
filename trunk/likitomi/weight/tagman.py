@@ -80,7 +80,7 @@ def tagman(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "BBBB" in tag:
+				if "3000000000000000000" in tag:
 					loclist.append(tag)
 				else:
 					idlist.append(tag)
@@ -174,12 +174,12 @@ def tagman(request):
 			if len(repeat_AA) > 0:
 				if max(repeat_AA) in repeat_AA:
 					n = repeat_AA.index(max(repeat_AA))
-					realtag = tagid_A[n][7:11]
+					realtag = tagid_A[n][20:30]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
+					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
 						tagstatus = 'unknown'
-					elif tag2write.count('0') >= 15:
+					elif tag2write.find('30000000000000') == 0:
 						tagstatus = 'known'
 #					realtag = '0065'
 					if realtag and PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
@@ -208,14 +208,14 @@ def tagman(request):
 #		atlocation = 'Stock'
 
 #		tag2write = '112233445566778899AABBCC'
-		tag2write = '30065AAAA000000000000000'
-		realtag = tag2write[1:5]
+		tag2write = '300000000000005408090065'
+		realtag = tag2write[14:24]
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
+		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
 			tagstatus = 'unknown'
-		elif tag2write.count('0') >= 15:
+		elif tag2write.find('30000000000000') == 0:
 			tagstatus = 'known'
 
 		if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
@@ -254,7 +254,7 @@ def showtaglist(request):
 	for width in swidth:
 		swidthlist.append(width[0])
 
-	query = PaperRolldetails.objects.values_list('paper_roll_detail_id', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('paper_roll_detail_id')
+	query = PaperRolldetails.objects.values_list('remarks', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('remarks')
 
 	qlist = list(query)
 	nlist = list()
@@ -267,7 +267,7 @@ def showtaglist(request):
 		if PaperMovement.objects.filter(roll_id=roll_id).exists() == True:
 			current_weight = int(PaperMovement.objects.filter(roll_id=roll_id).order_by('-created_on')[0].actual_wt)
 		else:
-			current_weight = PaperRolldetails.objects.get(paper_roll_detail_id=roll_id).initial_weight
+			current_weight = PaperRolldetails.objects.get(remarks=roll_id).initial_weight
 		lst.append(current_weight)
 
 	if rfid_mode == 'real':
@@ -299,7 +299,7 @@ def showtaglist(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "BBBB" in tag:
+				if "3000000000000000000" in tag:
 					loclist.append(tag)
 				else:
 					idlist.append(tag)
@@ -393,12 +393,12 @@ def showtaglist(request):
 			if len(repeat_AA) > 0:
 				if max(repeat_AA) in repeat_AA:
 					n = repeat_AA.index(max(repeat_AA))
-					realtag = tagid_A[n][7:11]
+					realtag = tagid_A[n][20:30]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
+					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
 						tagstatus = 'unknown'
-					elif tag2write.count('0') >= 15:
+					elif tag2write.find('30000000000000') == 0:
 						tagstatus = 'known'
 
 					if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
@@ -426,15 +426,15 @@ def showtaglist(request):
 #		atposition = 4
 #		atlocation = 'Stock'
 
-		tag2write = '112233445566778899AABBCC'
-		tag2write = '30065AAAA000000000000000'
-		realtag = tag2write[1:5]
+#		tag2write = '112233445566778899AABBCC'
+		tag2write = '300000000000005408090065'
+		realtag = tag2write[14:24]
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
+		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
 			tagstatus = 'unknown'
-		elif tag2write.count('0') >= 15:
+		elif tag2write.find('30000000000000') == 0:
 			tagstatus = 'known'
 
 		if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
@@ -464,9 +464,9 @@ def createnew(request):
 
 	if 'arfid' in request.GET and request.GET['arfid']:
 		arfid = int(request.GET['arfid'])
-		if len(str(arfid)) == 1: strarfid = '000'+str(arfid)
-		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
-		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
+#		if len(str(arfid)) == 1: strarfid = '000'+str(arfid)
+#		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
+#		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
 
 	if 'apcode' in request.GET and request.GET['apcode']:
 		apcode = request.GET['apcode']
@@ -498,7 +498,7 @@ def createnew(request):
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=3'+strarfid+'AAAA000000000000000, tag_id='+atag2write+', antenna=1 2)\r\n')
+			soc.send('tag.write_id(new_tag_id=30000000000000'+arfid+', tag_id='+atag2write+', antenna=1 2)\r\n')
 			response = soc.recv(128)
 			soc.close()
 
@@ -526,9 +526,9 @@ def createnew(request):
 def assigntag(request):
 	if 'arfid' in request.GET and request.GET['arfid']:
 		arfid = int(request.GET['arfid'])
-		if len(str(arfid)) == 1: strarfid = '000'+str(arfid)
-		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
-		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
+#		if len(str(arfid)) == 1: strarfid = '000'+str(arfid)
+#		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
+#		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
 
 #	if 'alane' in request.GET and request.GET['alane']:
 #		alane = request.GET['alane']
@@ -548,7 +548,7 @@ def assigntag(request):
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
 		soc.connect((HOST, PORT))
-		soc.send('tag.write_id(new_tag_id=3'+strarfid+'AAAA000000000000000, tag_id='+atag2write+', antenna=1 2)\r\n')
+		soc.send('tag.write_id(new_tag_id=30000000000000'+arfid+', tag_id='+atag2write+', antenna=1 2)\r\n')
 
 		response = soc.recv(128)
 		soc.close()
@@ -570,9 +570,9 @@ def assigntag(request):
 def writemore(request):
 	if 'arfid_more' in request.GET and request.GET['arfid_more']:
 		arfid_more = int(request.GET['arfid_more'])
-		if len(str(arfid_more)) == 1: strarfid_more = '000'+str(arfid_more)
-		if len(str(arfid_more)) == 2: strarfid_more = '00'+str(arfid_more)
-		if len(str(arfid_more)) == 3: strarfid_more = '0'+str(arfid_more)
+#		if len(str(arfid_more)) == 1: strarfid_more = '000'+str(arfid_more)
+#		if len(str(arfid_more)) == 2: strarfid_more = '00'+str(arfid_more)
+#		if len(str(arfid_more)) == 3: strarfid_more = '0'+str(arfid_more)
 
 	if 'atag2write_more' in request.GET and request.GET['atag2write_more']:
 		atag2write_more = request.GET['atag2write_more']
@@ -582,7 +582,7 @@ def writemore(request):
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
 		soc.connect((HOST, PORT))
-		soc.send('tag.write_id(new_tag_id=3'+strarfid_more+'AAAA000000000000000, tag_id='+atag2write_more+', antenna=1 2)\r\n')
+		soc.send('tag.write_id(new_tag_id=30000000000000'+arfid_more+', tag_id='+atag2write_more+', antenna=1 2)\r\n')
 
 		response = soc.recv(128)
 		soc.close()
@@ -627,7 +627,7 @@ def loctag(request):
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
 		soc.connect((HOST, PORT))
-		soc.send('tag.write_id(new_tag_id=3BBBB00000000000000'+letalane_loc+straposition_loc+', tag_id='+atag2write_loc+', antenna=1 2)\r\n')
+		soc.send('tag.write_id(new_tag_id=3000000000000000000'+letalane_loc+straposition_loc+', tag_id='+atag2write_loc+', antenna=1 2)\r\n')
 
 		response = soc.recv(128)
 		soc.close()

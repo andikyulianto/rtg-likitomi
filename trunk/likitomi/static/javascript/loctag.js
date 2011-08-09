@@ -31,9 +31,9 @@ function locTag(realtag, tagstatus)
 	div.id = 'box';
 	div.style.zIndex = '3';
 	div.style.position = (navigator.userAgent.indexOf('MSIE 6') > -1) ? 'absolute' : 'fixed';
-	div.style.top = '60px'; 
+	div.style.top = '30px'; 
 	div.style.left = '200px'; 
-	div.style.height = '450px';
+	div.style.height = '500px';
 	div.style.width = '300px';
 	div.style.backgroundColor = 'lightgray';
 	div.style.opacity = '1';
@@ -475,7 +475,7 @@ function locTag(realtag, tagstatus)
 
 	var ok_id = document.createElement('a');
 	ok_id.id = 'confirm';
-	ok_id.style.left = '10px';
+	ok_id.style.left = '30px';
 	ok_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"OK".fontsize(5).bold()+"</td></tr></table>";
 	ok_id.onclick = function()
 	{
@@ -483,21 +483,35 @@ function locTag(realtag, tagstatus)
 		var positionval = top.document.getElementById('position_box').value;
 		var pass = 0;
 		var messi = '';
+		function submitTag(){
+			document.getElementById("alane_loc").value = laneval;
+			document.getElementById("aposition_loc").value = positionval;
+			document.getElementById("atag2write_loc").value = document.getElementById('tag2write').value;
+			var tag2write = document.getElementById('tag2write').value;
+			document.getElementById("frm9").submit();
+			top.document.body.removeChild(top.document.getElementById('layer'));
+			top.document.body.removeChild(top.document.getElementById('box'));
+		}
 		if (laneval != '' && positionval != ''){
-			if (parseInt(positionval) <= 13){ // Position are set here!
-				function submitTag(){
-					document.getElementById("alane_loc").value = laneval;
-					document.getElementById("aposition_loc").value = positionval;
-//					document.getElementById("aweight").value = weightval;
-					document.getElementById("atag2write_loc").value = document.getElementById('tag2write').value;
-					var tag2write = document.getElementById('tag2write').value;
-					document.getElementById("frm9").submit();
-					top.document.body.removeChild(top.document.getElementById('layer'));
-					top.document.body.removeChild(top.document.getElementById('box'));
-				}
+			if (laneval == '1' && parseInt(positionval) <= 43){
 				submitTag();
-			} else if (parseInt(positionval) > 13){
-				alert("The submitted position is not in range (1-13).");
+			} else if (laneval == '1'){
+				alert("Position for lane '1' must be in range '1-43'.");
+			}
+			if (laneval == '2' && parseInt(positionval) <= 43){
+				submitTag();
+			} else if (laneval == '2'){
+				alert("Position for lane '2' must be in range '1-43'.");
+			}
+			if (laneval == '3' && 18 <= parseInt(positionval) && parseInt(positionval) <= 41){
+				submitTag();
+			} else if (laneval == '3'){
+				alert("Position for lane '3' must be in range '18-41'.");
+			}
+			if (laneval == '4' && 19 <= parseInt(positionval) && parseInt(positionval) <= 40){
+				submitTag();
+			} else if (laneval == '4'){
+				alert("Position for lane '4' must be in range '19-40'.");
 			}
 		}
 		else {
@@ -510,7 +524,7 @@ function locTag(realtag, tagstatus)
 
 	var cancel_id = document.createElement('a');
 	cancel_id.id = 'confirm';
-	cancel_id.style.right = '10px';
+	cancel_id.style.right = '30px';
 	cancel_id.innerHTML = "<table style='height:100%; width:100%;'><tr><td style='cursor:pointer;'>"+"Cancel".fontsize(4).bold()+"</td></tr></table>";
 	cancel_id.onclick = function()
 	{
@@ -521,8 +535,8 @@ function locTag(realtag, tagstatus)
 
 	var container = document.createElement('div');
 	container.style.position = "absolute";
-	container.style.bottom = "30px";
-	container.style.left = "105px";
+	container.style.bottom = "70px";
+	container.style.left = "80px";
 	div.appendChild(container);
 
 	var fromrfid = document.createElement('b');

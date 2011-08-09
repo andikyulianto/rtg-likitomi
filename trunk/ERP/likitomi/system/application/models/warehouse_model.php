@@ -155,7 +155,7 @@ class Warehouse_model extends Model
 				   'remarks'			=> $remarks[$i],
 				   'size'				=> $size[$i],
 				   'uom'				=> $unit[$i],
-				   'rfid_roll_id'		=> $rfidtagid[$i],
+//				   'rfid_roll_id'		=> $rfidtagid[$i],
 				   'invoice_no'			=> $invoice_no,
 				   'invoice_date'		=> $invoice_date,
 				   'isdeleted'			=> '0',
