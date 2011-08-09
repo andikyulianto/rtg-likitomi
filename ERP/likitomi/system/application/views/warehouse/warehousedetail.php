@@ -135,7 +135,7 @@ if($action=='edit'){
 						<option value='inch' <?php if($row->uom=="inch") echo 'selected'?> >inch</option>
 					</select></td>
 					<td><input type='text' id='x_initial_weight_<?=$cnt?>' size='10'  value='<?=$row->initial_weight?>'/></td>
-					<td><input type='text' id='x_remarks_<?=$cnt?>' size='10' value='<?=$row->remarks?>'/></td>
+					<td><input type='text' id='x_remarks_<?=$cnt?>' size='14' value='<?=$row->remarks?>'/></td>
 					<input type='hidden' id='x_rfid_roll_id_<?=$cnt?>'size='10' value='<?=$row->rfid_roll_id?>'/>
 				</tr>
 <?php
@@ -153,7 +153,7 @@ $cnt++;
 						<option value='inch' selected >inch</option>
 					</select></td>
 					<td><input type='text' id='x_initial_weight_<?=$i?>' size='10'  value=''/></td>
-					<td><input type='text' id='x_remarks_<?=$i?>' size='10' value=''/></td>
+					<td><input type='text' id='x_remarks_<?=$i?>' size='14' value=''/></td>
 					<input type='hidden' id='x_rfid_roll_id_<?=$i?>'size='10' value=''/>
 				</tr>
 <?php 

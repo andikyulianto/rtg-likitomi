@@ -33,7 +33,7 @@ class PaperRolldetails(models.Model):
     supplier_roll_id = models.CharField(max_length=90, blank=True)
     initial_weight = models.IntegerField(null=True, blank=True)
     temp_weight = models.IntegerField(null=True, blank=True)
-    remarks = models.CharField(max_length=750, blank=True)
+    remarks = models.CharField(max_length=750, blank=True, unique=True) # Act as Likitomi Roll ID
     notes = models.CharField(max_length=765, blank=True)
     size = models.IntegerField(null=True, blank=True)
     uom = models.CharField(max_length=60, blank=True)

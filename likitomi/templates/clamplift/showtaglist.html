@@ -62,10 +62,10 @@ $(document).ready(function(){
 		$("[lang='btn']").html("");
 		var idlen = $(this).attr("id").toString().length;
 		var rfid = $(this).attr("id").toString();
-		if (idlen == 1) { var arfid = "000"+rfid; }
-		if (idlen == 2) { var arfid = "00"+rfid; }
-		if (idlen == 3) { var arfid = "0"+rfid; }
-		if (idlen == 4) { var arfid = rfid; }
+//		if (idlen == 1) { var arfid = "000"+rfid; }
+//		if (idlen == 2) { var arfid = "00"+rfid; }
+//		if (idlen == 3) { var arfid = "0"+rfid; }
+//		if (idlen == 4) { var arfid = rfid; }
 		var realtag = $("#realtag").val();
 		var atlane = $("#atlane").val();
 		var atposition = $("#atposition").val();
@@ -73,10 +73,10 @@ $(document).ready(function(){
 		if (!realtag && atlane && atposition) {var tag2write = "Location Tag";}
 		if (realtag && $("#tagstatus").val() == "known") {var tag2write = realtag;}
 		if ($(this).attr("class") == "" || $(this).attr("class") == "None") {
-			$("[title="+new_rfid+"]").html("<b>"+tag2write+" >>> "+arfid+"</b><button class='asstag' style='font-size:75%;'>Assign Tag</button>");
+			$("[title="+new_rfid+"]").html("<b style='font-size:60%;'>"+tag2write+" >>> "+rfid+"</b><button class='asstag' style='font-size:75%;'>Assign Tag</button>");
 			$(".asstag").button({icons: {primary: "ui-icon-link"}});
 			$(".asstag").click(function(){
-				$("#arfid").val(arfid);
+				$("#arfid").val(rfid);
 				$("#atag2write").val($("#tag2write").val());
 //				alert($("#arfid").val());
 //				alert($("#atag2write").val());
@@ -90,10 +90,10 @@ $(document).ready(function(){
 			});
 		}
 		else if ($(this).attr("class") != "" && $(this).attr("class") != "None") {
-			$("[title="+new_rfid+"]").html("<b>"+tag2write+" >>> "+arfid+"</b><button class='writemore' style='font-size:75%;'>Write More</button>");
+			$("[title="+new_rfid+"]").html("<b style='font-size:60%;'>"+tag2write+" >>> "+rfid+"</b><button class='writemore' style='font-size:75%;'>Write More</button>");
 			$( ".writemore" ).button({icons: {primary: "ui-icon-plus"}});
 			$(".writemore").click(function(){
-				$("#arfid_more").val(arfid);
+				$("#arfid_more").val(rfid);
 				$("#atag2write_more").val($("#tag2write").val());
 				if (tag2write && tag2write == "Location Tag" || !realtag){
 //					alert("Writing on location tag is not allowed.");
@@ -128,16 +128,16 @@ $(document).ready(function(){
 	<table style="width:100%;">
 		{% for paper_roll_detail_id, rfid_roll_id, paper_code, size, initial_weight, lane, position, current_weight in nlist %}
 		<tr class="{{ rfid_roll_id }}" title="{{ paper_code }}" lang="{{ size }}" id="{{ paper_roll_detail_id }}" style="height:53px; background-color: lightgray;">
-			<td style="width:58px;">{{ paper_roll_detail_id }}</td>
-			<td style="width:67px;">{% if rfid_roll_id != None %}{{ rfid_roll_id }}{% else %}{% endif %}</td>
+			<td style="width:140px;">{{ paper_roll_detail_id }}</td>
+			<td style="width:55px;">{% if rfid_roll_id != None and rfid_roll_id != "" %}<img src="images/clamplift/rfid_tag.jpg" width="50px">{% else %}{% endif %}</td>
 <!--			<td style="width:67px;">{{ rfid_roll_id }}</td>-->
-			<td style="width:120px;">{{ paper_code }}</td>
-			<td style="width:67px;">{{ size }}</td>
+			<td style="width:100px;">{{ paper_code }}</td>
+			<td style="width:50px;">{{ size }}</td>
 			<td style="width:67px;">{{ initial_weight }}</td>
 			<td style="width:67px;">{{ current_weight }}</td>
-			<td style="width:69px;">{% if lane != Null %}{{ lane }}{% else %}{% endif %}</td>
-			<td style="width:69px;">{% if position != Null %}{{ position }}{% endif %}</td>
-			<td title="{{ paper_roll_detail_id }}" lang="btn" style="width:160px; background-color:white;"></td>
+			<td style="width:60px;">{% if lane != Null %}{{ lane }}{% else %}{% endif %}</td>
+			<td style="width:60px;">{% if position != Null %}{{ position }}{% endif %}</td>
+			<td title="{{ paper_roll_detail_id }}" lang="btn" style="width:140px; background-color:white;"></td>
 <!--			<td style="width:160px; background-color:white;">{% if rfid_roll_id == "" %}<button class="asstag" onclick="javascript:assignTag({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}');">Assign Tag</button>{% endif %}{% if rfid_roll_id != "" %}<button class="writemore" onclick="javascript:writeMore({{ paper_roll_detail_id }}, '{{ rfid_roll_id }}', '{{ paper_code }}', {{ size }}, {{ initial_weight }}, {{ current_weight }}, '{{ lane }}', '{{ position }}')">Write More</button>{% endif %}</td>-->
 		</tr>
 		{% endfor %}

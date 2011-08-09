@@ -22,7 +22,7 @@ $lang['supplier_roll_id']		= "Supplier Roll ID";
 $lang['size']					= "Size";
 $lang['unit']					= "Unit";
 $lang['initial_weight']			= "Initial Weight";
-$lang['remarks']				= "Remarks";
+$lang['remarks']				= "Likitomi Roll ID";
 $lang['notes']					= "Notes";
 $lang['rfid_tag']				= "RFID Tag";
 
