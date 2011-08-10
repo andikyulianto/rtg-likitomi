@@ -35,7 +35,12 @@ text-align:left;
 color:dimgray;
 }
 
-#big{font-size:150%;}
+#big{
+font-size:150%;
+color:black;
+text-align:left;
+font-weight:bold;
+}
 </style>
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
@@ -146,7 +151,7 @@ function otherLoc()
 	ilane.style.fontSize = '200%';
 	ilane.style.color = 'black';
 	ilane.style.textAlign = 'center';
-	ilane.value = '{{lane}}';
+	if (document.getElementById('lane').value != 'None'){ilane.value = document.getElementById('lane').value;}
 	ldp.appendChild(ilane);
 
 	var d = document.createElement('b');
@@ -161,7 +166,7 @@ function otherLoc()
 	iposition.style.fontSize = '200%';
 	iposition.style.color = 'black';
 	iposition.style.textAlign = 'center';
-	iposition.value = '{{position}}';
+	if (document.getElementById('position').value != 'None'){iposition.value = document.getElementById('position').value;}
 	ldp.appendChild(iposition);
 
 	var p = document.createElement('b');
@@ -459,7 +464,8 @@ function otherLoc()
 	{
 		var lanebox = top.document.getElementById('ilane').value;
 		var posbox = top.document.getElementById('iposition').value;
-		if (parseInt(posbox) <= 13) { // Position are set here!
+		var messi = '';
+		function submitLocation(){
 			document.getElementById("ilane").value = lanebox;
 			document.getElementById("ipos").value = posbox;
 			document.getElementById("frm3").submit();
@@ -482,9 +488,35 @@ function otherLoc()
 			var realtag = $('#realtag').val();
 			var inventory_url = $('#inventory_url').val();
 			top.map.location = inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
-		} else {
-			alert("The submitted position is not in range (1-13).");
-			top.document.getElementById('iposition').value = '{{position}}';
+		}
+		if (lanebox != '' && posbox != '' && lanebox != 1 && lanebox != 2 && lanebox != 3 && lanebox != 4){
+			if ((lanebox == 'A' || lanebox == 'B' || lanebox == 'C') && parseInt(posbox) <= 43){
+				submitLocation();
+			} else if (lanebox == 'A' || lanebox == 'B' || lanebox == 'C'){
+				alert("Position for lane '"+lanebox+"' must be in range '1-43'.");
+				if (document.getElementById('position') != None){top.document.getElementById('iposition').value = document.getElementById('position');}
+				else {top.document.getElementById('iposition').value = '';}
+			}
+			if ((lanebox == 'D' || lanebox == 'E') && 18 <= parseInt(posbox) && parseInt(posbox) <= 41){
+				submitLocation();
+			} else if (lanebox == 'D' || lanebox == 'E'){
+				alert("Position for lane '"+lanebox+"' must be in range '18-41'.");
+				if (document.getElementById('position') != None){top.document.getElementById('iposition').value = document.getElementById('position');}
+				else {top.document.getElementById('iposition').value = '';}
+			}
+			if ((lanebox == 'F' || lanebox == 'G' || lanebox == 'H') && 19 <= parseInt(posbox) && parseInt(posbox) <= 40){
+				submitLocation();
+			} else if (lanebox == 'F' || lanebox == 'G' || lanebox == 'H'){
+				alert("Position for lane '"+lanebox+"' must be in range '19-40'.");
+				if (document.getElementById('position') != None){top.document.getElementById('iposition').value = document.getElementById('position');}
+				else {top.document.getElementById('iposition').value = '';}
+			}
+		}
+		else {
+			if (lanebox == ''){ messi += '- Please enter lane.\n'; }
+			if (lanebox == 1 || lanebox == 2 || lanebox == 3 || lanebox == 4) { messi += '- Lane cannot be a number.\n';}
+			if (posbox == ''){ messi += '- Please enter position.\n'; }
+			alert(messi);
 		}
 	}
 	div.appendChild(ok);
@@ -539,7 +571,7 @@ function otherLoc()
 		<table style="width:100%;">
 			<tr>
 				<td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td>
-				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != '' and position != 0 %}
+				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != None and position != None %}
 					{% if lane == '0' %}CR{% endif %}
 					{% if lane == '5' %}Scale{% endif %}
 					{% if lane != '0' and lane != '5' %}{{lane}}-{{position}}{% endif %}

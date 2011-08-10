@@ -66,11 +66,11 @@ $(document).ready(function(){
 <body onload="window.scrollTo(0,{{scroll}})">
 <input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
 	<table style="font-size:90%;">
-		{% for start_time, sheet_code, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
+		{% for start_time, sheet_code, ordno, paper_width_inch, df, bl, bm, cl, cm, loss_df, loss_bl, loss_bm, loss_cl, loss_cm, n in nlist %}
 		<tr {% if n == chosen %}id="chosen"{% endif %} name="{{ n }}" class="{{ start_time|time:'H:i' }}" style="background-color:{% if n < chosen %}#F6F6F6{% endif %}{% if n == chosen %}white{% endif %}{% if n > chosen %}#F6F6F6{% endif %};">
 			<td class="infront" rowspan="2" style="width:10px; border:0px; background-color:#CCE6CC;">{% if n == chosen %}>{% endif %}</td>
 			<td rowspan='2' style="width:52px;">{{ start_time|time:"H:i" }}</td>
-			<td rowspan='2' style="width:70px;">{{ sheet_code }}</td>
+			<td rowspan='2' style="width:70px;">{{ sheet_code }}<br /><br />{{ ordno }}</td>
 			<td style="width:75px; height:40px;">{{ paper_width_inch }}</td>
 			{% if bl %} <!-- BL -->
 			<td class="cell" style="width:75px; height:40px;" title="{{bl}}" id="{{paper_width_inch}}" lang="{{loss_bl}}">{{ bl }}<br />({{ loss_bl }})</td>

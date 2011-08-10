@@ -12,7 +12,7 @@ def showplan(request):
 		opdate = date.today().strftime("%Y-%m-%d")
 
 	if opdate: 
-		query = TblClamplift.objects.filter(opdate=opdate).values_list('start_time', 'product_code', 'p_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'used_df_mkg', 'used_bl_mkg', 'used_bm_mkg', 'used_cl_mkg', 'used_cm_mkg')
+		query = TblClamplift.objects.filter(opdate=opdate).values_list('start_time', 'product_code', 'autoid', 'p_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'used_df_mkg', 'used_bl_mkg', 'used_bm_mkg', 'used_cl_mkg', 'used_cm_mkg')
 
 	now = datetime.now()
 	qlist = list(query)

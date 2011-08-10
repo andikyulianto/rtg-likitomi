@@ -14,13 +14,13 @@ HOST = '192.168.101.55' # Likitomi's meeting room
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'real' # RFID mode = {'real', 'fake'}
+rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
 
 def maxclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
 	tagiddomain = range(1,10000)
-	tagidquery = PaperRolldetails.objects.values_list('paper_roll_detail_id')
-	tagidlist = PaperRolldetails.objects.values_list('paper_roll_detail_id', flat=True).order_by('-paper_roll_detail_id')
+	tagidquery = PaperRolldetails.objects.values_list('likitomi_roll_id')
+	tagidlist = PaperRolldetails.objects.values_list('likitomi_roll_id', flat=True).order_by('-likitomi_roll_id')
 	for tag in tagidlist:
 		if tag in tagiddomain: tagiddomain.remove(tag)
 	avaitag = tagiddomain[0]
@@ -64,7 +64,7 @@ def maxclamp(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "BBBB" in tag:
+				if "3000000000000000000" in tag:
 					loclist.append(tag)
 				else:
 					idlist.append(tag)
@@ -158,17 +158,17 @@ def maxclamp(request):
 			if len(repeat_AA) > 0:
 				if max(repeat_AA) in repeat_AA:
 					n = repeat_AA.index(max(repeat_AA))
-					realtag = tagid_A[n][7:11]
+					realtag = tagid_A[n][20:30]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
+					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 						tagstatus = 'unknown'
-					elif tag2write.count('0') >= 15:
+					elif tag2write.find('30000000000000') == 0:
 						tagstatus = 'known'
 
-					if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
-						rtquery = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
-						paper_roll_id = rtquery.paper_roll_detail_id
+					if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+						rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
+						paper_roll_id = rtquery.likitomi_roll_id
 						paper_code = rtquery.paper_code
 						size = rtquery.size
 						unit = rtquery.uom
@@ -192,19 +192,19 @@ def maxclamp(request):
 #		atlocation = 'Stock'
 
 #		tag2write = '112233445566778899AABBCC'
-		tag2write = '30065AAAA000000000000000'
-		realtag = tag2write[1:5]
+		tag2write = '300000000000005408090065'
+		realtag = tag2write[14:24]
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
+		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 			tagstatus = 'unknown'
-		elif tag2write.count('0') >= 15:
+		elif tag2write.find('30000000000000') == 0:
 			tagstatus = 'known'
 
-		if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
-			rtquery = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
-			paper_roll_id = rtquery.paper_roll_detail_id
+		if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+			rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
+			paper_roll_id = rtquery.likitomi_roll_id
 			paper_code = rtquery.paper_code
 			size = rtquery.size
 			unit = rtquery.uom
@@ -257,7 +257,7 @@ def maxchangeloc(request):
 	if 'pos' in request.GET and request.GET['pos']:
 		ipos = request.GET['pos']
 
-	PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(lane=ilane, position=ipos)
+	PaperRolldetails.objects.filter(likitomi_roll_id=realtag).update(lane=ilane, position=ipos)
 
 	return HttpResponseRedirect('/django/maxclamp/')
 
@@ -265,9 +265,9 @@ def maxchangeloc(request):
 def maxassigntag(request):
 	if 'atagid' in request.GET and request.GET['atagid']:
 		atagid = int(request.GET['atagid'])
-		if len(str(atagid)) == 1: stratagid = '000'+str(atagid)
-		if len(str(atagid)) == 2: stratagid = '00'+str(atagid)
-		if len(str(atagid)) == 3: stratagid = '0'+str(atagid)
+#		if len(str(atagid)) == 1: stratagid = '000'+str(atagid)
+#		if len(str(atagid)) == 2: stratagid = '00'+str(atagid)
+#		if len(str(atagid)) == 3: stratagid = '0'+str(atagid)
 
 	if 'apcode' in request.GET and request.GET['apcode']:
 		apcode = request.GET['apcode']
@@ -291,25 +291,25 @@ def maxassigntag(request):
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-	if stratagid and apcode and asize and aweight and atag2write:
-		if str(stratagid) == str(atag2write[1:5]):
-			PaperRolldetails.objects.filter(paper_roll_detail_id=atagid).update(paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+	if atagid and apcode and asize and aweight and atag2write:
+		if str(atagid) == str(atag2write[20:30]):
+			PaperRolldetails.objects.filter(likitomi_roll_id=atagid).update(paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 		else:
 			try:
 				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				soc.settimeout(2)
 				soc.connect((HOST, PORT))
-				soc.send('tag.write_id(new_tag_id=3'+stratagid+'AAAA000000000000000, tag_id='+atag2write+')\r\n')
+				soc.send('tag.write_id(new_tag_id=30000000000000'+atagid+', tag_id='+atag2write+', antenna=1 2)\r\n')
 				response = soc.recv(128)
 				soc.close()
 
 				if response.find('ok') != -1:
-					if atag2write.count('0') < 15:
-						PaperRolldetails.objects.create(paper_roll_detail_id=atagid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-					if atag2write.count('0') >= 15:
-						PaperRolldetails.objects.create(paper_roll_detail_id=atagid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-						tag2del = int(atag2write[1:5])
-						PaperRolldetails.objects.filter(paper_roll_detail_id=tag2del).delete()
+					if atag2write.find('30000000000000') == -1:
+						PaperRolldetails.objects.create(likitomi_roll_id=atagid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+					if atag2write.find('30000000000000') == 0:
+						PaperRolldetails.objects.create(likitomi_roll_id=atagid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+						tag2del = int(atag2write[20:30])
+						PaperRolldetails.objects.filter(likitomi_roll_id=tag2del).delete()
 				else:
 					mode = 'max'
 					return render_to_response('writagror.html', locals())

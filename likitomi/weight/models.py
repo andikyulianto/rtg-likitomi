@@ -11,7 +11,7 @@ from django.db import models
 
 class PaperMovement(models.Model):
     movement_id = models.AutoField(primary_key=True)
-    roll_id = models.IntegerField(null=True, blank=True)
+    roll_id = models.CharField(max_length=255)
     before_wt = models.FloatField(null=True, blank=True)
     actual_wt = models.FloatField(null=True, blank=True)
     from_station = models.CharField(max_length=60, blank=True)
@@ -33,13 +33,14 @@ class PaperRolldetails(models.Model):
     supplier_roll_id = models.CharField(max_length=90, blank=True)
     initial_weight = models.IntegerField(null=True, blank=True)
     temp_weight = models.IntegerField(null=True, blank=True)
-    remarks = models.CharField(max_length=750, blank=True, unique=True) # Act as Likitomi Roll ID
+    remarks = models.CharField(max_length=750, blank=True)
     notes = models.CharField(max_length=765, blank=True)
     size = models.IntegerField(null=True, blank=True)
     uom = models.CharField(max_length=60, blank=True)
     lane = models.CharField(max_length=3, blank=True)
     position = models.IntegerField(null=True, blank=True)
     rfid_roll_id = models.CharField(max_length=255, blank=True, unique=True)
+    likitomi_roll_id = models.CharField(max_length=255, blank=True, unique=True)
     invoice_no = models.CharField(max_length=90, blank=True)
     invoice_date = models.DateField(null=True, blank=True)
     isdeleted = models.IntegerField(default=0)

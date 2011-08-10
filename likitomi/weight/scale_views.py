@@ -19,7 +19,7 @@ def scale(request):
 
 # Setting scale mode and rfid mode = {'real', 'fake'} #
 	scale_mode = 'fake'
-	rfid_mode = 'real'
+	rfid_mode = 'fake'
 
 	if scale_mode == 'real':
 # Connect to scale via serial port #
@@ -166,7 +166,7 @@ def scale(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "BBBB" in tag:
+				if "3000000000000000000" in tag:
 					loclist.append(tag)
 				else:
 					idlist.append(tag)
@@ -260,16 +260,16 @@ def scale(request):
 			if len(repeat_AA) > 0:
 				if max(repeat_AA) in repeat_AA:
 					n = repeat_AA.index(max(repeat_AA))
-					realtag = tagid_A[n][7:11]
+					realtag = tagid_A[n][20:30]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
+					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 						tagstatus = 'unknown'
-					elif tag2write.count('0') >= 15:
+					elif tag2write.find('30000000000000') == 0:
 						tagstatus = 'known'
 
-					if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
-						query = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
+					if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+						query = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
 						paper_code = query.paper_code
 						size = query.size
 						uom = query.uom
@@ -283,22 +283,23 @@ def scale(request):
 
 						used_weight = actual_wt - int(weight)
 
-						PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(temp_weight=int_weight)
+						PaperRolldetails.objects.filter(likitomi_roll_id=realtag).update(temp_weight=int_weight)
 
 	if rfid_mode == 'fake':
 
 #		tag2write = '112233445566778899AABBCC'
-		tag2write = '30065AAAA000000000000000'
-		realtag = tag2write[1:5]
+		tag2write = '300000000000005408090065'
+		realtag = tag2write[14:24]
 
-		if tag2write.count('0') < 15 or PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == False:
-			tagstatus = 'unknown'
-		elif tag2write.count('0') >= 15:
-			tagstatus = 'known'
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).exists() == True:
-			query = PaperRolldetails.objects.get(paper_roll_detail_id=realtag)
+		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
+			tagstatus = 'unknown'
+		elif tag2write.find('30000000000000') == 0:
+			tagstatus = 'known'
+
+		if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+			query = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
 			paper_code = query.paper_code
 			size = query.size
 			uom = query.uom
@@ -312,7 +313,7 @@ def scale(request):
 				int_weight = int(weight)
 				used_weight = actual_wt - int(weight)
 
-				PaperRolldetails.objects.filter(paper_roll_detail_id=realtag).update(temp_weight=int_weight)
+				PaperRolldetails.objects.filter(likitomi_roll_id=realtag).update(temp_weight=int_weight)
 
 	return render_to_response('scale.html', locals())
 

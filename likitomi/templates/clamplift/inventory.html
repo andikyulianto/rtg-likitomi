@@ -19,9 +19,9 @@ text-align:center;
 vertical-align:middle;
 }
 
-.map{border-width:0px; width:25px; height:25px;}
+.map{border-width:0px; height:25px; border: 0px solid black; width:50px;}
 
-.gray{background-color:lightgray; border-width:0px;}
+.gray{background-color:lightgray; border-width:0px; width:50px;}
 
 /* Green shades */
 .lkf1{background-color:#005A00; color:white; font-weight:bold; border-width:0px;}
@@ -211,7 +211,7 @@ $(document).ready(function(){
 	</tr>
 </table></div>
 
-<table style="height:400px; position:absolute; bottom:0px; right:0px;">
+<table style="height:400px; position:absolute; bottom:0px; right:0px; font-size:100%; width:100%;">
 	<tr><td class="map"></td>{% for pos in posall %}<td class="map">{{ pos }}</td>{% endfor %}</tr>
 
 	<tr><td class="map">H</td>
