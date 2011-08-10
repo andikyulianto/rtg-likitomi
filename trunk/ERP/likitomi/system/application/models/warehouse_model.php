@@ -137,26 +137,28 @@ class Warehouse_model extends Model
 		return $query->result();
 	}
 	
-	function insertWarehouseStock($supplier_id,$invoice_date,$invoice_no,$paper_code,$warehouse)
+	function insertWarehouseStock($supplier_id,$invoice_date,$invoice_no,$warehouse) //removed $paper_code
 	{
 		$supplier_roll_id 	= $warehouse[0];
-		$size				= $warehouse[1];
-		$unit				= $warehouse[2];
-		$weight				= $warehouse[3];
-		$remarks			= $warehouse[4];
-		$rfidtagid			= $warehouse[5];
-		$likitomi_roll_id	= $warehouse[6];
+		$paper_code 		= $warehouse[1]; //new paper_code
+		$size				= $warehouse[2];
+		$unit				= $warehouse[3];
+		$weight				= $warehouse[4];
+		$remarks			= $warehouse[5];
+		$rfidtagid			= $warehouse[6];
+		$likitomi_roll_id	= $warehouse[7];
 		
 		for($i=0;$i<count($size);$i++){
 			$data = array(
-	               'paper_code' 		=> $paper_code,
+//	               'paper_code' 		=> $paper_code, //old paper_code
 				   'supplier_id'		=> $supplier_id,
 				   'supplier_roll_id' 	=> $supplier_roll_id[$i],
-				   'initial_weight'		=> $weight[$i],
-				   'remarks'			=> $remarks[$i],
+				   'paper_code' 		=> $paper_code[$i], //new paper_code
 				   'size'				=> $size[$i],
 				   'uom'				=> $unit[$i],
-//				   'rfid_roll_id'		=> $rfidtagid[$i],
+				   'initial_weight'		=> $weight[$i],
+				   'remarks'			=> $remarks[$i],
+				   'rfid_roll_id'		=> $rfidtagid[$i],
 				   'likitomi_roll_id'	=> $likitomi_roll_id[$i],
 				   'invoice_no'			=> $invoice_no,
 				   'invoice_date'		=> $invoice_date,

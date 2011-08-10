@@ -157,16 +157,18 @@
 		         <?=$thisClass->getPapers();?>
 			]
 		});
-		combo_paper = new Ext.form.ComboBox({
-			store: paperStore,
-	    	displayField:'paper_code',
-		    typeAhead: true,
-		    mode: 'local',
-		    triggerAction: 'all',
-		    emptyText:'Select a Paper...',
-	    	selectOnFocus:true,
-			applyTo:'x_paper_code'
-		});
+		for(var i=1;i<=<?=$thisClass->getLimitInput();?>;i++){
+			combo_paper = new Ext.form.ComboBox({
+				store: paperStore,
+				displayField:'paper_code',
+				typeAhead: true,
+				mode: 'local',
+				triggerAction: 'all',
+				emptyText:'Select a Paper...',
+				selectOnFocus:true,
+				applyTo:'x_paper_code_'+i.toString()
+			});
+		}
 //		var paperCombo=Ext.select("input.combo_papers",true);
 //		paperCombo.each(function(el){			
 //			var combo  = new Ext.form.ComboBox({
@@ -184,6 +186,7 @@
 
 	function saveData(action){
 		var supplier_roll_id = new Array();
+		var paper_code = new Array(); //new paper_code
 		var size 		= new Array();
 		var unit 		= new Array();
 		var remarks 	= new Array();
@@ -197,24 +200,25 @@
 			document.getElementById('x_supplier').focus();
 			return false;
 		};
-		if((combo_paper.getValue()=="")){
-			alert('Select Paper Code');
-			window.scrollTo(100,0);
-			document.getElementById('x_paper_code').focus();
-			return false;
-		};
+//		if((combo_paper.getValue()=="")){
+//			alert('Select Paper Code');
+//			window.scrollTo(100,0);
+//			document.getElementById('x_paper_code').focus();
+//			return false;
+//		};
 		for(var i=1;i<=<?=$thisClass->getLimitInput();?>;i++){
 			if ((document.getElementById('x_size_' + i).value != "")) {
 				supplier_roll_id[i - 1] = document.getElementById('x_supplier_roll_id_' + i).value;
+				paper_code[i - 1] = document.getElementById('x_paper_code_' + i).value; //new paper_code
 				size[i - 1] = document.getElementById('x_size_' + i).value;
 				unit[i - 1] = document.getElementById('x_unit_' + i).value;
 				weight[i - 1] = document.getElementById('x_initial_weight_' + i).value;
 				remarks[i - 1] = document.getElementById('x_remarks_' + i).value;
-//				rfidtag[i - 1] = document.getElementById('x_rfid_roll_id_' + i).value;
+				rfidtag[i - 1] = document.getElementById('x_rfid_roll_id_' + i).value;
 				likitomi_roll_id[i - 1] = document.getElementById('x_likitomi_roll_id_' + i).value;
 			}		
 		}
-		var jsonArray = new Array(supplier_roll_id,size,unit,weight,remarks,rfidtag,likitomi_roll_id);
+		var jsonArray = new Array(supplier_roll_id,paper_code,size,unit,weight,remarks,rfidtag,likitomi_roll_id); //added paper_code
 		var JSONText = JSON.stringify(jsonArray);
 		
 		Ext.Ajax.request({
@@ -224,7 +228,7 @@
 				invoice_no 		: invoice_no,
 				invoice_date	: document.getElementById('x_invoice_date').value,
 				supplier_id		: combo_supplier.getValue(),
-				paper_code 		: combo_paper.getValue(),
+//				paper_code 		: combo_paper.getValue(), //old paper_code
 				stockjson		: JSONText,
 			},
 			success: function ( result, request ) {

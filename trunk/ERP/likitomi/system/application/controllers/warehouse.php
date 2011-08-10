@@ -129,7 +129,7 @@ class Warehouse extends Controller {
 		$supplier_id	= ($this->input->post('supplier_id'))?$this->input->post('supplier_id'):'0';
 		$invoice_date	= ($this->input->post('invoice_date'))?$this->input->post('invoice_date'):date('Y-m-d');
 		$invoice_no		= ($this->input->post('invoice_no'))?$this->input->post('invoice_no'):'0';
-		$paper_code		= ($this->input->post('paper_code'))?$this->input->post('paper_code'):'0';
+//		$paper_code		= ($this->input->post('paper_code'))?$this->input->post('paper_code'):'0'; //old paper code
 
 		//load JSON lib
 		$this->load->library('JSON');
@@ -138,7 +138,7 @@ class Warehouse extends Controller {
 			$cnt = $this->Warehouse_model->deleteWarehouseStock($invoice_no);
 		}
 		
-		$cnt = $this->Warehouse_model->insertWarehouseStock($supplier_id,$invoice_date,$invoice_no,$paper_code,$warehouse);
+		$cnt = $this->Warehouse_model->insertWarehouseStock($supplier_id,$invoice_date,$invoice_no,$warehouse); //removed $paper_code
 		echo $cnt ." Record";
 		echo ($cnt>1)?"s":"";
 		echo ($action == 'update')?" Updated":" Added";	
