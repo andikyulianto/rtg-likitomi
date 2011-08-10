@@ -189,6 +189,7 @@
 		var remarks 	= new Array();
 		var weight 		= new Array();
 		var rfidtag 	= new Array();
+		var likitomi_roll_id 	= new Array();
 		var invoice_no	= document.getElementById('x_invoice_no').value;
 		if((combo_supplier.getValue()=="")){
 			alert('Select Supplier');
@@ -210,9 +211,10 @@
 				weight[i - 1] = document.getElementById('x_initial_weight_' + i).value;
 				remarks[i - 1] = document.getElementById('x_remarks_' + i).value;
 //				rfidtag[i - 1] = document.getElementById('x_rfid_roll_id_' + i).value;
+				likitomi_roll_id[i - 1] = document.getElementById('x_likitomi_roll_id_' + i).value;
 			}		
 		}
-		var jsonArray = new Array(supplier_roll_id,size,unit,weight,remarks,rfidtag);
+		var jsonArray = new Array(supplier_roll_id,size,unit,weight,remarks,rfidtag,likitomi_roll_id);
 		var JSONText = JSON.stringify(jsonArray);
 		
 		Ext.Ajax.request({

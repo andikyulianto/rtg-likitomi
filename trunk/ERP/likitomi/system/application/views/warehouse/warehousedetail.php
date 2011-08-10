@@ -34,7 +34,8 @@ if ($action=='view'){
 					<th><?=$this->lang->line('initial_weight')?>(Kg)</th>
 					<th><?=$this->lang->line('remarks')?></th>
 					<th><?=$this->lang->line('notes')?></th>
-					<th><?=$this->lang->line('rfid_tag')?></th>					
+					<th><?=$this->lang->line('rfid_tag')?></th>
+					<th><?=$this->lang->line('likitomi_roll_id')?></th>
 				</tr>
 <?php
 			foreach($resultInvoiceDetail as $row){
@@ -46,7 +47,8 @@ if ($action=='view'){
 					<td><?=$row->initial_weight?> (Kg)</td>
 					<td><?=$row->remarks?></td>
 					<td><?=$row->notes?></td>
-					<td><?=$row->rfid_roll_id?></td>					
+					<td><?=$row->rfid_roll_id?></td>
+					<td><?=$row->likitomi_roll_id?></td>
 				</tr>
 <?
 }				
@@ -75,7 +77,7 @@ if($action=='add'){
 	$supplier_name = "";			$supplier_roll_id = "";
 	$initial_weight = "";		$remarks = "";
 	$notes = "";	$size = "";	$uom = "";
-	$rfid_roll_id = "";			$invoice_no = "";
+	$rfid_roll_id = "";	$likitomi_roll_id = "";			$invoice_no = "";
 	$invoice_date = date('Y-m-d');			
 	$isdeleted = "0";
 	$cmd = "saveData('save')";
@@ -119,6 +121,7 @@ if($action=='add'){
 					<th><?=$this->lang->line('initial_weight')?>(Kg)</th>
 					<th><?=$this->lang->line('remarks')?></th>
 <!--					<th><?=$this->lang->line('rfid_tag')?></th>					-->
+					<th><?=$this->lang->line('likitomi_roll_id')?></th>
 				</tr>
 <?php
 			$cnt=0;
@@ -137,6 +140,7 @@ if($action=='edit'){
 					<td><input type='text' id='x_initial_weight_<?=$cnt?>' size='10'  value='<?=$row->initial_weight?>'/></td>
 					<td><input type='text' id='x_remarks_<?=$cnt?>' size='14' value='<?=$row->remarks?>'/></td>
 					<input type='hidden' id='x_rfid_roll_id_<?=$cnt?>'size='10' value='<?=$row->rfid_roll_id?>'/>
+					<td><input type='text' id='x_likitomi_roll_id_<?=$cnt?>'size='14' value='<?=$row->likitomi_roll_id?>'/></td>
 				</tr>
 <?php
 }}
@@ -155,6 +159,7 @@ $cnt++;
 					<td><input type='text' id='x_initial_weight_<?=$i?>' size='10'  value=''/></td>
 					<td><input type='text' id='x_remarks_<?=$i?>' size='14' value=''/></td>
 					<input type='hidden' id='x_rfid_roll_id_<?=$i?>'size='10' value=''/>
+					<td><input type='text' id='x_likitomi_roll_id_<?=$i?>'size='14' value=''/></td>
 				</tr>
 <?php 
 }

@@ -145,6 +145,7 @@ class Warehouse_model extends Model
 		$weight				= $warehouse[3];
 		$remarks			= $warehouse[4];
 		$rfidtagid			= $warehouse[5];
+		$likitomi_roll_id	= $warehouse[6];
 		
 		for($i=0;$i<count($size);$i++){
 			$data = array(
@@ -156,6 +157,7 @@ class Warehouse_model extends Model
 				   'size'				=> $size[$i],
 				   'uom'				=> $unit[$i],
 //				   'rfid_roll_id'		=> $rfidtagid[$i],
+				   'likitomi_roll_id'	=> $likitomi_roll_id[$i],
 				   'invoice_no'			=> $invoice_no,
 				   'invoice_date'		=> $invoice_date,
 				   'isdeleted'			=> '0',

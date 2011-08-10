@@ -19,8 +19,8 @@ rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def tagman(request):
 	tagiddomain = range(1,10000)
-	tagidquery = PaperRolldetails.objects.values_list('remarks')
-	tagidlist = PaperRolldetails.objects.values_list('remarks', flat=True).order_by('-remarks')
+	tagidquery = PaperRolldetails.objects.values_list('likitomi_roll_id')
+	tagidlist = PaperRolldetails.objects.values_list('likitomi_roll_id', flat=True).order_by('-likitomi_roll_id')
 	for tag in tagidlist:
 		if tag in tagiddomain: tagiddomain.remove(tag)
 	avaitag = tagiddomain[0]
@@ -35,7 +35,7 @@ def tagman(request):
 	for width in swidth:
 		swidthlist.append(width[0])
 
-	query = PaperRolldetails.objects.values_list('remarks', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('remarks')
+	query = PaperRolldetails.objects.values_list('likitomi_roll_id', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('-likitomi_roll_id')
 
 	qlist = list(query)
 	nlist = list()
@@ -48,7 +48,7 @@ def tagman(request):
 		if PaperMovement.objects.filter(roll_id=roll_id).exists() == True:
 			current_weight = int(PaperMovement.objects.filter(roll_id=roll_id).order_by('-created_on')[0].actual_wt)
 		else:
-			current_weight = PaperRolldetails.objects.get(remarks=roll_id).initial_weight
+			current_weight = PaperRolldetails.objects.get(likitomi_roll_id=roll_id).initial_weight
 		lst.append(current_weight)
 
 	if rfid_mode == 'real':
@@ -177,14 +177,14 @@ def tagman(request):
 					realtag = tagid_A[n][20:30]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
+					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 						tagstatus = 'unknown'
 					elif tag2write.find('30000000000000') == 0:
 						tagstatus = 'known'
 
-					if realtag and PaperRolldetails.objects.filter(remarks=realtag).exists() == True:
-						rtquery = PaperRolldetails.objects.get(remarks=realtag)
-						paper_roll_id = rtquery.remarks
+					if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+						rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
+						likitomi_roll_id = rtquery.likitomi_roll_id
 						paper_code = rtquery.paper_code
 						size = rtquery.size
 						unit = rtquery.uom
@@ -213,14 +213,14 @@ def tagman(request):
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
+		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 			tagstatus = 'unknown'
 		elif tag2write.find('30000000000000') == 0:
 			tagstatus = 'known'
 
-		if realtag and PaperRolldetails.objects.filter(remarks=realtag).exists() == True:
-			rtquery = PaperRolldetails.objects.get(remarks=realtag)
-			paper_roll_id = rtquery.remarks
+		if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+			rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
+			likitomi_roll_id = rtquery.likitomi_roll_id
 			paper_code = rtquery.paper_code
 			size = rtquery.size
 			unit = rtquery.uom
@@ -238,8 +238,8 @@ def tagman(request):
 
 def showtaglist(request):
 	tagiddomain = range(1,10000)
-	tagidquery = PaperRolldetails.objects.values_list('remarks')
-	tagidlist = PaperRolldetails.objects.values_list('remarks', flat=True).order_by('-remarks')
+	tagidquery = PaperRolldetails.objects.values_list('likitomi_roll_id')
+	tagidlist = PaperRolldetails.objects.values_list('likitomi_roll_id', flat=True).order_by('-likitomi_roll_id')
 	for tag in tagidlist:
 		if tag in tagiddomain: tagiddomain.remove(tag)
 	avaitag = tagiddomain[0]
@@ -254,7 +254,7 @@ def showtaglist(request):
 	for width in swidth:
 		swidthlist.append(width[0])
 
-	query = PaperRolldetails.objects.values_list('remarks', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('remarks')
+	query = PaperRolldetails.objects.values_list('likitomi_roll_id', 'rfid_roll_id', 'paper_code', 'size', 'initial_weight', 'lane', 'position').order_by('-likitomi_roll_id')
 
 	qlist = list(query)
 	nlist = list()
@@ -267,7 +267,7 @@ def showtaglist(request):
 		if PaperMovement.objects.filter(roll_id=roll_id).exists() == True:
 			current_weight = int(PaperMovement.objects.filter(roll_id=roll_id).order_by('-created_on')[0].actual_wt)
 		else:
-			current_weight = PaperRolldetails.objects.get(remarks=roll_id).initial_weight
+			current_weight = PaperRolldetails.objects.get(likitomi_roll_id=roll_id).initial_weight
 		lst.append(current_weight)
 
 	if rfid_mode == 'real':
@@ -396,14 +396,14 @@ def showtaglist(request):
 					realtag = tagid_A[n][20:30]
 					tag2write = tagid_A[n][6:30]
 
-					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
+					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 						tagstatus = 'unknown'
 					elif tag2write.find('30000000000000') == 0:
 						tagstatus = 'known'
 
-					if realtag and PaperRolldetails.objects.filter(remarks=realtag).exists() == True:
-						rtquery = PaperRolldetails.objects.get(remarks=realtag)
-						paper_roll_id = rtquery.remarks
+					if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+						rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
+						likitomi_roll_id = rtquery.likitomi_roll_id
 						paper_code = rtquery.paper_code
 						size = rtquery.size
 						unit = rtquery.uom
@@ -432,14 +432,14 @@ def showtaglist(request):
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(remarks=realtag).exists() == False:
+		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 			tagstatus = 'unknown'
 		elif tag2write.find('30000000000000') == 0:
 			tagstatus = 'known'
 
-		if realtag and PaperRolldetails.objects.filter(remarks=realtag).exists() == True:
-			rtquery = PaperRolldetails.objects.get(remarks=realtag)
-			paper_roll_id = rtquery.remarks
+		if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+			rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
+			likitomi_roll_id = rtquery.likitomi_roll_id
 			paper_code = rtquery.paper_code
 			size = rtquery.size
 			unit = rtquery.uom
@@ -490,9 +490,9 @@ def createnew(request):
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-#	if asupid and arollid and strarfid and apcode and asize and aweight and atag2write:
-	if str(strarfid) == str(atag2write[1:5]):
-		PaperRolldetails.objects.filter(remarks=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+#	if asupid and arollid and arfid and apcode and asize and aweight and atag2write:
+	if str(arfid) == str(atag2write[1:5]):
+		PaperRolldetails.objects.filter(likitomi_roll_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 	else:
 		try:
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -503,15 +503,15 @@ def createnew(request):
 			soc.close()
 
 			if response.find('ok') != -1:
-				if atag2write.count('0') < 15:
-					if PaperRolldetails.objects.filter(remarks=arollid).exists() == False:
-						PaperRolldetails.objects.create(remarks=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+				if atag2write.find('30000000000000') == -1:
+					if PaperRolldetails.objects.filter(likitomi_roll_id=arollid).exists() == False:
+						PaperRolldetails.objects.create(likitomi_roll_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 					else:
-						PaperRolldetails.objects.filter(remarks=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-				if atag2write.count('0') >= 15:
-					PaperRolldetails.objects.create(remarks=arollid, rfid_roll_id=strarfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+						PaperRolldetails.objects.filter(likitomi_roll_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
+				if atag2write.find('30000000000000') == 0:
+					PaperRolldetails.objects.create(likitomi_roll_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 #						tag2del = int(atag2write[1:5])
-#						PaperRolldetails.objects.filter(remarks=tag2del).delete()
+#						PaperRolldetails.objects.filter(likitomi_roll_id=tag2del).delete()
 			else:
 				mode = 'min'
 				return HttpResponseRedirect('/django/tagman/')
@@ -543,7 +543,7 @@ def assigntag(request):
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-#	if strarfid and atag2write:
+#	if arfid and atag2write:
 	try:
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -554,8 +554,8 @@ def assigntag(request):
 		soc.close()
 
 		if response.find('ok') != -1:
-#			PaperRolldetails.objects.filter(remarks=arfid).update(rfid_roll_id=strarfid, lane=alane, position=aposition)
-			PaperRolldetails.objects.filter(remarks=arfid).update(rfid_roll_id=strarfid)
+#			PaperRolldetails.objects.filter(likitomi_roll_id=arfid).update(rfid_roll_id=arfid, lane=alane, position=aposition)
+			PaperRolldetails.objects.filter(likitomi_roll_id=arfid).update(rfid_roll_id=arfid)
 		else:
 			mode = 'max'
 			return render_to_response('writagror.html', locals())
@@ -577,7 +577,7 @@ def writemore(request):
 	if 'atag2write_more' in request.GET and request.GET['atag2write_more']:
 		atag2write_more = request.GET['atag2write_more']
 
-#	if strarfid_more and atag2write_more:
+#	if arfid_more and atag2write_more:
 	try:
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)

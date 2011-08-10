@@ -459,7 +459,8 @@ function otherLoc()
 	{
 		var lanebox = top.document.getElementById('ilane').value;
 		var posbox = top.document.getElementById('iposition').value;
-		if (parseInt(posbox) <= 13) { // Position are set here!
+		var messi = '';
+		function submitLocation(){
 			document.getElementById("ilane").value = lanebox;
 			document.getElementById("ipos").value = posbox;
 			document.getElementById("frm3").submit();
@@ -482,9 +483,41 @@ function otherLoc()
 			var realtag = $('#realtag').val();
 			var inventory_url = $('#inventory_url').val();
 			top.map.location = inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
-		} else {
-			alert("The submitted position is not in range (1-13).");
-			top.document.getElementById('iposition').value = '{{position}}';
+		}
+		if (lanebox != '' && posbox != ''){
+			if ((lanebox == 'A' || lanebox == 'B') && parseInt(posbox) <= 43){
+				submitLocation();
+			} else if (lanebox == 'A' || lanebox == 'B' ){
+				alert("Position for lane '"+lanebox+"' must be in range '1-43'.");
+				if (document.getElementById('position') != None){top.document.getElementById('iposition').value = document.getElementById('position');}
+				else {top.document.getElementById('iposition').value = '';}
+			}
+			if ((lanebox == 'C' || lanebox == 'D') && parseInt(posbox) <= 43){
+				submitLocation();
+			} else if (lanebox == 'C' || lanebox == 'D' ){
+				alert("Position for lane '"+lanebox+"' must be in range '1-43'.");
+				if (document.getElementById('position') != None){top.document.getElementById('iposition').value = document.getElementById('position');}
+				else {top.document.getElementById('iposition').value = '';}
+			}
+			if ((lanebox == 'E' || lanebox == 'F') && 18 <= parseInt(posbox) && parseInt(posbox) <= 41){
+				submitLocation();
+			} else if (lanebox == 'E' || lanebox == 'F' ){
+				alert("Position for lane '"+lanebox+"' must be in range '18-41'.");
+				if (document.getElementById('position') != None){top.document.getElementById('iposition').value = document.getElementById('position');}
+				else {top.document.getElementById('iposition').value = '';}
+			}
+			if ((lanebox == 'G' || lanebox == 'H') && 19 <= parseInt(posbox) && parseInt(posbox) <= 40){
+				submitLocation();
+			} else if (lanebox == 'G' || lanebox == 'H' ){
+				alert("Position for lane '"+lanebox+"' must be in range '19-40'.");
+				if (document.getElementById('position') != None){top.document.getElementById('iposition').value = document.getElementById('position');}
+				else {top.document.getElementById('iposition').value = '';}
+			}
+		}
+		else {
+			if (lanebox == ''){ messi += '- Please enter lane.\n'; }
+			if (posbox == ''){ messi += '- Please enter position.\n'; }
+			alert(messi);
 		}
 	}
 	div.appendChild(ok);
@@ -534,7 +567,7 @@ function otherLoc()
 			<tr style="height:80px;"><td><p class="label">P.Code: </p></td><td><p class="var" id="big">{{ paper_code }}</p></td></tr>
 			<tr style="height:80px;"><td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td></tr>
 			<tr>
-				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != '' and position != 0 %}
+				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != None and position != None %}
 					{% if lane == '0' %}CR{% endif %}
 					{% if lane == '5' %}Scale{% endif %}
 					{% if lane != '0' and lane != '5' %}{{lane}}-{{position}}{% endif %}
