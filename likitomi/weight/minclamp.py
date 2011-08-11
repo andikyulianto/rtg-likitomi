@@ -7,14 +7,15 @@ import socket
 from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 
 #HOST = '192.41.170.55' # CSIM network
-HOST = '192.168.101.55' # Likitomi's meeting room
+#HOST = '192.168.101.55' # Likitomi's meeting room
 #HOST = '192.168.1.55' # My own local network: Linksys
 
-#HOST = '192.168.2.88' # Likitomi's factory: IMPLEMENTATION!
+#HOST = '192.168.2.88' # Likitomi's factory: previous
+HOST = '192.168.101.20' # Likitomi's factory: current
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
+rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def minclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
@@ -113,14 +114,14 @@ def minclamp(request):
 				cnt = 0
 				for rep in repeat_B:
 					if type_B[cnt] == "ISOC":
-						prelindex = tagid_B[cnt][25:27]
+						prelindex = tagid_B[cnt][21:23]
 						if prelindex == 'AB': lindex = 1
 						if prelindex == 'CD': lindex = 2
 						if prelindex == 'EF': lindex = 3
 						if prelindex == 'FF': lindex = 4
 						if prelindex == 'CC': lindex = 0
 						if prelindex == 'DD': lindex = 5
-						pindex = int(tagid_B[cnt][27:30])
+						pindex = int(tagid_B[cnt][23:26])
 						lan += float(lindex)*float(repeat_B[cnt])
 						pos += float(pindex)*float(repeat_B[cnt])
 						totalCount += float(repeat_B[cnt])
@@ -158,8 +159,8 @@ def minclamp(request):
 			if len(repeat_AA) > 0:
 				if max(repeat_AA) in repeat_AA:
 					n = repeat_AA.index(max(repeat_AA))
-					realtag = tagid_A[n][20:30]
-					tag2write = tagid_A[n][6:30]
+					realtag = tagid_A[n][16:30]
+					tag2write = tagid_A[n][2:30]
 
 					if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
 						tagstatus = 'unknown'
@@ -299,7 +300,7 @@ def minassigntag(request):
 				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				soc.settimeout(2)
 				soc.connect((HOST, PORT))
-				soc.send('tag.write_id(new_tag_id=30000000000000'+atagid+', tag_id='+atag2write+', antenna=1 2)\r\n')
+				soc.send('tag.write_id(new_tag_id=30000000000000'+str(atagid)+', tag_id='+atag2write+', antenna=1 2)\r\n')
 				response = soc.recv(128)
 				soc.close()
 
