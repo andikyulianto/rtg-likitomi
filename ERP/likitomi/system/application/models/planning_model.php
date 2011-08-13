@@ -502,7 +502,7 @@ class Planning_model extends Model
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND d.sales_order = so.sales_order_id "
-				."AND pc.product_id = d.product_id "
+				."AND pc.product_code = d.product_code "
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "

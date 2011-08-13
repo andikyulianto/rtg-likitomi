@@ -200,3 +200,8 @@ if($totalRecDelivery>0){
 <br/>
 *: Can be Edited. To edit click on the value.
 <input type='hidden' id='remaining_amt' value='<?=($resultSales->amount_1-$qtyscheduled)?>' />
+<input type='hidden' id='remaining_amt2' value='<?=($resultSales->amount_2-$qtyscheduled)?>' />
+<input type='hidden' id='remaining_amt3' value='<?=($resultSales->amount_3-$qtyscheduled)?>' />
+<input type='hidden' id='product_code_1' value='<?=($resultSales->product_code_1)?>' />
+<input type='hidden' id='product_code_2' value='<?=($resultSales->product_code_2)?>' />
+<input type='hidden' id='product_code_3' value='<?=($resultSales->product_code_3)?>' />
