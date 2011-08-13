@@ -403,17 +403,51 @@ function salesOrderTips(){
 
 	function sumAmount(obj){
 		var remaining_amt = parseInt(document.getElementById('remaining_amt').value);
+		var remaining_amt2 = parseInt(document.getElementById('remaining_amt2').value);
+		var remaining_amt3 = parseInt(document.getElementById('remaining_amt3').value);
 		var current = parseInt(document.getElementById('x_qty').value);
-		
-		if(current>remaining_amt)
-		{
-			alert ('Delivery ('+current+') is More than planned');
-			return false;
+		var selected_product_code = document.getElementById('x_sel_product_code').value;
+		var product_code_1 = document.getElementById('product_code_1').value;
+		var product_code_2 = document.getElementById('product_code_2').value;
+		var product_code_3 = document.getElementById('product_code_3').value;
+		//alert(selected_product_code);
+		if(selected_product_code == product_code_1){
+			
+			if(current>remaining_amt)
+			{
+				alert ('Delivery ('+current+') is More than planned('+remaining_amt+')');
+				return false;
+			}
+			else 
+			{
+				saveDelivery(obj);
+				document.getElementById('remaining_amt').value= remaining_amt - current;
+			}
 		}
-		else 
-		{
-			saveDelivery(obj);
-			document.getElementById('remaining_amt').value= remaining_amt - current;
+		if(selected_product_code == product_code_2){
+			alert(selected_product_code+" "+product_code_2);
+			if(current>remaining_amt2)
+			{
+				alert ('Delivery ('+current+') is More than planned('+remaining_amt+')');
+				return false;
+			}
+			else 
+			{
+				saveDelivery(obj);
+				document.getElementById('remaining_amt2').value= remaining_amt2 - current;
+			}
+		}
+		if(selected_product_code == product_code_3){
+			if(current>remaining_amt3)
+			{
+				alert ('Delivery ('+current+') is More than planned');
+				return false;
+			}
+			else 
+			{
+				saveDelivery(obj);
+				document.getElementById('remaining_amt3').value= remaining_amt3 - current;
+			}
 		}
 		return true;
 	}
