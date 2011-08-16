@@ -300,7 +300,7 @@ def maxassigntag(request):
 				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				soc.settimeout(2)
 				soc.connect((HOST, PORT))
-				soc.send('tag.write_id(new_tag_id=30000000000000'+str(atagid)+', tag_id='+atag2write+', antenna=1 2)\r\n')
+				soc.send('tag.write_id(new_tag_id=30000000000000'+str(atagid)+', tag_id='+atag2write+', antenna=2 3)\r\n')
 				response = soc.recv(128)
 				soc.close()
 

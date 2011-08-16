@@ -500,7 +500,7 @@ def createnew(request):
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
 			soc.connect((HOST, PORT))
-			soc.send('tag.write_id(new_tag_id=30000000000000'+str(arfid)+', tag_id='+atag2write+', antenna=1 2)\r\n')
+			soc.send('tag.write_id(new_tag_id=30000000000000'+str(arfid)+', tag_id='+atag2write+', antenna=2 3)\r\n')
 			response = soc.recv(128)
 			soc.close()
 
@@ -550,7 +550,7 @@ def assigntag(request):
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
 		soc.connect((HOST, PORT))
-		soc.send('tag.write_id(new_tag_id=30000000000000'+str(arfid)+', tag_id='+atag2write+', antenna=1 2)\r\n')
+		soc.send('tag.write_id(new_tag_id=30000000000000'+str(arfid)+', tag_id='+atag2write+', antenna=2 3)\r\n')
 
 		response = soc.recv(128)
 		soc.close()
@@ -584,7 +584,7 @@ def writemore(request):
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
 		soc.connect((HOST, PORT))
-		soc.send('tag.write_id(new_tag_id=30000000000000'+str(arfid_more)+', tag_id='+atag2write_more+', antenna=1 2)\r\n')
+		soc.send('tag.write_id(new_tag_id=30000000000000'+str(arfid_more)+', tag_id='+atag2write_more+', antenna=2 3)\r\n')
 
 		response = soc.recv(128)
 		soc.close()
@@ -629,7 +629,7 @@ def loctag(request):
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
 		soc.connect((HOST, PORT))
-		soc.send('tag.write_id(new_tag_id=3000000000000000000'+letalane_loc+straposition_loc+', tag_id='+atag2write_loc+', antenna=1 2)\r\n')
+		soc.send('tag.write_id(new_tag_id=3000000000000000000'+letalane_loc+straposition_loc+', tag_id='+atag2write_loc+', antenna=2 3)\r\n')
 
 		response = soc.recv(128)
 		soc.close()

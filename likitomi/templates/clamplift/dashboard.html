@@ -210,6 +210,19 @@ $(document).ready(function(){
 
 // LAYOUT //
 	$( "#maglay" ).button({icons: {primary: "ui-icon-zoomin"}, text: false});
+	$( "#mapleft" ).button({icons: {primary: "ui-icon-arrowthick-1-w"}, text: false});
+	$( "#mapright" ).button({icons: {primary: "ui-icon-arrowthick-1-e"}, text: false});
+	$( "#pick" ).button({icons: {primary: "ui-icon-cart"}});
+	$("#mapleft").click(function(){
+		$("#map")[0].contentWindow.scrollTo(0,0);
+		$('#map', top.document).contents().find('#legend').css("left","0px");
+		$('#map', top.document).contents().find('#mappos').val("left");
+	});
+	$("#mapright").click(function(){
+		$("#map")[0].contentWindow.scrollTo(9999,0);
+		$('#map', top.document).contents().find('#legend').css("left","326px");
+		$('#map', top.document).contents().find('#mappos').val("right");
+	});
 	$("#maglay, #layouttab").click(function(){
 		$("#plan, #clamplift, #search").hide();
 //		$("#layout").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
@@ -217,6 +230,27 @@ $(document).ready(function(){
 		$("#maglay").hide();
 		$("#menutab").fadeIn();
 		$("#map").css("margin-top","0px");
+		$("#mapleft, #mapright").hide();
+		$('#map', top.document).contents().find('#legend').css("left","401px");
+		$('#map', top.document).contents().find('#mappos').val("center");
+	});
+	$("#pick").click(function(){
+		var pcode = $('#map').contents().find('#pcode').val();
+		var width = $('#map').contents().find('#width').val();
+		var loss = $('#map').contents().find('#loss').val();
+		var lossarr = $('#map').contents().find('#lossarr').val();
+		var spcode = $('#map').contents().find('#spcode').val();
+		var swidth = $('#map').contents().find('#swidth').val();
+		var cpcode = $('#map').contents().find('#cpcode').val();
+		var cwidth = $('#map').contents().find('#cwidth').val();
+		var lane = $('#map').contents().find('#lane').val();
+		var position = $('#map').contents().find('#position').val();
+		var atlane = $('#map').contents().find('#atlane').val();
+		var atposition = $('#map').contents().find('#atposition').val();
+		var clamping = "no"
+		var changed = "no"
+		var mappos = $('#map').contents().find('#mappos').val();
+		top.map.location = inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&mappos="+mappos;
 	});
 
 // CLAMPLIFT //
@@ -259,8 +293,9 @@ $(document).ready(function(){
 		var atposition = $('#map').contents().find('#atposition').val();
 		var clamping = $('#map').contents().find('#clamping').val();
 		var changed = $('#map').contents().find('#changed').val();
+		var mappos = $('#map').contents().find('#mappos').val();
 		if (spcode != "" && swidth != ""){
-			top.map.location = inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed;
+			top.map.location = inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&mappos="+mappos;
 		}
 	});
 
@@ -295,6 +330,9 @@ $(document).ready(function(){
 		// LAYOUT //
 		$("#layout").css({"width":"398px","height":"551px","top":"42px","left":"400px"});
 		$("#map").css("margin-top","35px");
+		$("#mapleft, #mapright").show();
+		$('#map', top.document).contents().find('#legend').css("left","0px");
+		$('#map', top.document).contents().find('#mappos').val("left");
 		// CLAMPLIFT //
 		$("#clamplift").css({"width":"398px","height":"188px","top":"405px","left":"0px"});
 		$("#clampsta").val("minsta");
@@ -412,10 +450,13 @@ $(document).ready(function(){
 			<div id="pbody" class="greenbg"><iframe id="showplan" src="{{ showplan_url }}?opdate={% now "Y-m-d" %}" frameborder="0" style="visibility:hidden; width:398px; height:254px;" marginheight="0" marginwidth="0" scrolling="no"></iframe></div>
 		</div>
 	</div>
+
 <!--LAYOUT-->
 	<div id="layout" style="top:42px; left:400px; width:398px; height:551px;">
 		<div style="top:0px; right:0px;"><button id="maglay">Layout</button></div> <!--Magnifying Button-->
-		<iframe id="map" name="map" src="{{ inventory_url }}" frameborder="0" style="width:100%; height:515px; margin-top:35px; margin-left:0px;" scrolling="auto"></iframe>
+		<iframe id="map" name="map" src="{{ inventory_url }}" frameborder="0" style="width:100%; height:495px; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
+		<button id="mapleft" style="height:25px; position:absolute; left:150px; bottom:3px;">Left</button><button id="mapright" style="height:25px; position:absolute; left:210px; bottom:3px;">Right</button>
+		<button id="pick" style="position:absolute; left:0px; top:3px; font-size:80%;">Pick</button>
 	</div>
 
 <!--CLAMPLIFT-->
