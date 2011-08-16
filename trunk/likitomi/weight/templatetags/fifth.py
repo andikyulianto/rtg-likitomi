@@ -4,5 +4,5 @@ register = template.Library()
 
 @register.filter
 def fifth(value):
-	result = value[4]
+	result = int(value[4])
 	return result

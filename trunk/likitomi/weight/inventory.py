@@ -18,10 +18,8 @@ def inventory(request):
 	if 'loss' in request.GET and request.GET['loss']:
 		loss = request.GET['loss']
 		if loss != 'undefined':
-			losspx = int(loss)/5
-			if losspx > 199:
-				losspx = 205
-			lossinv = 205-losspx
+			losspx = int(loss)/5.0
+			if losspx > 200: losspx = 208 # limited vertical line of required weight
 	else:
 		loss = ""
 
@@ -29,11 +27,11 @@ def inventory(request):
 		lossarr = request.GET['lossarr']
 		if lossarr != 'undefined':
 			lossplt = lossarr.split(",")
-			losslist = list()
+			losslistpx = list()
 			for u in lossplt:
-				i = int(u)/5
-				if i > 199: i = 205
-				losslist.append(i)
+				i = int(u)/5.0
+				if i > 200: i = 208 # limited vertical line of required weight
+				losslistpx.append(i)
 	else:
 		lossarr = ""
 
@@ -97,6 +95,11 @@ def inventory(request):
 	else:
 		loc = ""
 
+	if 'mappos' in request.GET and request.GET['mappos']:
+		mappos = request.GET['mappos']
+	else:
+		mappos = ""
+
 #	vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
 
 #	laneall = ['H','','G','F','','E','D','','C','B','','A']
@@ -116,32 +119,37 @@ def inventory(request):
 #	pos2 = ['1','2','3','4','5','6','','8','9','10','11','12','13']
 #	pos1 = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
 
-	posall = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
-	pos18_41 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '', '']
-	pos19_40 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '', '', '']
+#	posall = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
+	posall = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
+#	pos18_41 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '', '']
+	pos18_41 = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+#	pos19_40 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '', '', '']
+	pos19_40 = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
-	vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
+	vlane = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
 
 	laneall = ['H','','G','F','','E','D','','C','B','','A']
 
-	posh = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '', '', '']
-	posg = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '', '', '']
-	posf = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '', '', '']
-	pose = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '', '']
-	posd = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '', '']
-	posc = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
-	posb = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
-	posa = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
-	buff = ['1','2']
+	posh = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	posg = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	posf = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	pose = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	posd = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	posc = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
+	posb = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
+	posa = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
 
-	pos4 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '', '', '']
-	pos3 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '', '']
-	pos2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
-	pos1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
+##	buff = ['1','2']
+
+	pos4 = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	pos3 = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	pos2 = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
+	pos1 = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
 
 	Alist = list()
 	Blist = list()
 	Clist = list()
+
 	Dlist = list()
 	Elist = list()
 	Flist = list()
@@ -171,9 +179,12 @@ def inventory(request):
 		if qexists == True:
 			delist = list()
 			wlist = list()
+			recwlist = list()
 			ridlist = list()
 			elist = list()
 			wlistpx = list()
+			recwlistpx = list()
+			dis_wlistpx = list()
 
 			for item in query:
 				totem = list(item)
@@ -189,13 +200,29 @@ def inventory(request):
 				wlist.append(weight)
 
 			for w in wlist:
-				wpx = int(w)/5 - 5
-				if wpx > 194:
-					wpx = 200
+				wpx = int(w)/5.0
 				wlistpx.append(wpx)
+				if wpx > losspx: # How much more that required weight?
+					recwlistpx.append(wpx)
+				if w > int(loss): # How much more than required weight?
+					recwlist.append(w)
+
+			for wpx in wlistpx:
+				wpx = wpx-8
+				if wpx > 192: wpx = 202.0 # limited symbol out of area
+				dis_wlistpx.append(wpx)
+
+			recwlistpx.sort()
+			if len(recwlistpx) > 0:
+				bstchcpx = recwlistpx[0]
+				dis_bstchcpx = bstchcpx-8
+			else: bstchcpx = 400
+			recwlist.sort()
+			if len(recwlist) > 0: bstchc = recwlist[0]
+			else: bstchc = 2000
 
 			initial_weight = int(str(PaperRolldetails.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
-			initialpx = initial_weight/5 - 5
+			initialpx = initial_weight/5-5
 
 		mquery = PaperRolldetails.objects.filter(paper_code=pcode, size=width).values_list('lane', 'position')
 		mexists = PaperRolldetails.objects.filter(paper_code=pcode, size=width).exists()
@@ -204,8 +231,8 @@ def inventory(request):
 
 		for ind,pair in enumerate(mlist):
 			if pair[0] == 'A':
-				posa.pop(pair[1]-1)
-				posa.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				posa.pop(43-pair[1])
+				posa.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Alist):
 					Alist.append([pair[1],0,0,0,0])
 				for ls in Alist:
@@ -218,10 +245,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'B':
-				posb.pop(pair[1]-1)
-				posb.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				posb.pop(43-pair[1])
+				posb.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Blist):
 					Blist.append([pair[1],0,0,0,0])
 				for ls in Blist:
@@ -234,10 +270,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'C':
-				posc.pop(pair[1]-1)
-				posc.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				posc.pop(43-pair[1])
+				posc.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Clist):
 					Clist.append([pair[1],0,0,0,0])
 				for ls in Clist:
@@ -250,10 +295,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'D':
-				posd.pop(pair[1]-1)
-				posd.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				posd.pop(43-pair[1])
+				posd.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Dlist):
 					Dlist.append([pair[1],0,0,0,0])
 				for ls in Dlist:
@@ -266,10 +320,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'E':
-				pose.pop(pair[1]-1)
-				pose.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				pose.pop(43-pair[1])
+				pose.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Elist):
 					Elist.append([pair[1],0,0,0,0])
 				for ls in Elist:
@@ -282,10 +345,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'F':
-				posf.pop(pair[1]-1)
-				posf.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				posf.pop(43-pair[1])
+				posf.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Flist):
 					Flist.append([pair[1],0,0,0,0])
 				for ls in Flist:
@@ -298,10 +370,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'G':
-				posg.pop(pair[1]-1)
-				posg.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				posg.pop(43-pair[1])
+				posg.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Glist):
 					Glist.append([pair[1],0,0,0,0])
 				for ls in Glist:
@@ -314,10 +395,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'H':
-				posh.pop(pair[1]-1)
-				posh.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				posh.pop(43-pair[1])
+				posh.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Hlist):
 					Hlist.append([pair[1],0,0,0,0])
 				for ls in Hlist:
@@ -330,10 +420,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == '4':
-				pos4.pop(pair[1]-1)
-				pos4.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				pos4.pop(43-pair[1])
+				pos4.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(THlist):
 					THlist.append([pair[1],0,0,0,0])
 				for ls in THlist:
@@ -346,10 +445,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == '3':
-				pos3.pop(pair[1]-1)
-				pos3.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				pos3.pop(43-pair[1])
+				pos3.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(RDlist):
 					RDlist.append([pair[1],0,0,0,0])
 				for ls in RDlist:
@@ -362,10 +470,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == '2':
-				pos2.pop(pair[1]-1)
-				pos2.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				pos2.pop(43-pair[1])
+				pos2.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(NDlist):
 					NDlist.append([pair[1],0,0,0,0])
 				for ls in NDlist:
@@ -378,10 +495,19 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 			elif pair[0] == '1':
-				pos1.pop(pair[1]-1)
-				pos1.insert(pair[1]-1, float(str(wlist[ind])+"."+str(pair[1])))
+				pos1.pop(43-pair[1])
+				pos1.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(STlist):
 					STlist.append([pair[1],0,0,0,0])
 				for ls in STlist:
@@ -394,6 +520,15 @@ def inventory(request):
 							ls[2] = ls[2] + 1
 						elif 100 > wlist[ind]:
 							ls[1] = ls[1] + 1
+						if bstchc and wlist[ind] == bstchc:
+							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+								ls[4] = ls[4] + .0
+							elif 700 > wlist[ind] and wlist[ind] >= 400:
+								ls[3] = ls[3] + .0
+							elif 400 > wlist[ind] and wlist[ind] >= 100:
+								ls[2] = ls[2] + .0
+							elif 100 > wlist[ind]:
+								ls[1] = ls[1] + .0
 
 ###################################################################################################################################################################
 # FROM SEARCH # ##################################################################################################################################################
@@ -408,6 +543,7 @@ def inventory(request):
 			ridlist2 = list()
 			elist2 = list()
 			wlistpx2 = list()
+			dis_wlistpx2 = list()
 
 			for item in query2:
 				totem = list(item)
@@ -423,13 +559,16 @@ def inventory(request):
 				wlist2.append(weight)
 
 			for w in wlist2:
-				wpx = int(w)/5 - 5
-				if wpx > 194:
-					wpx = 200
+				wpx = int(w)/5.0
 				wlistpx2.append(wpx)
 
+			for wpx in wlistpx2:
+				wpx = wpx-8
+				if wpx > 192: wpx = 202.0 # limited symbol out of area
+				dis_wlistpx2.append(wpx)
+
 			initial_weight2 = int(str(PaperRolldetails.objects.filter(paper_code=spcode).values_list('initial_weight')[0])[1:][:-3])
-			initialpx2 = initial_weight2/5 - 5
+			initialpx2 = initial_weight2/5-5
 
 		mquery2 = PaperRolldetails.objects.filter(paper_code=spcode, size=swidth).values_list('lane', 'position')
 		mexists2 = PaperRolldetails.objects.filter(paper_code=spcode, size=swidth).exists()
@@ -438,8 +577,8 @@ def inventory(request):
 
 		for ind,pair in enumerate(mlist2):
 			if pair[0] == 'A':
-				posa.pop(pair[1]-1)
-				posa.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				posa.pop(43-pair[1])
+				posa.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Alist):
 					Alist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -461,8 +600,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'B':
-				posb.pop(pair[1]-1)
-				posb.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				posb.pop(43-pair[1])
+				posb.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Blist):
 					Blist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -484,8 +623,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'C':
-				posc.pop(pair[1]-1)
-				posc.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				posc.pop(43-pair[1])
+				posc.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Clist):
 					Clist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -507,8 +646,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'D':
-				posd.pop(pair[1]-1)
-				posd.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				posd.pop(43-pair[1])
+				posd.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Dlist):
 					Dlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -530,8 +669,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'E':
-				pose.pop(pair[1]-1)
-				pose.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				pose.pop(43-pair[1])
+				pose.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Elist):
 					Elist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -553,8 +692,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'F':
-				posf.pop(pair[1]-1)
-				posf.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				posf.pop(43-pair[1])
+				posf.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Flist):
 					Flist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -576,8 +715,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'G':
-				posg.pop(pair[1]-1)
-				posg.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				posg.pop(43-pair[1])
+				posg.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Glist):
 					Glist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -599,8 +738,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'H':
-				posh.pop(pair[1]-1)
-				posh.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				posh.pop(43-pair[1])
+				posh.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Hlist):
 					Hlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -622,8 +761,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '4':
-				pos4.pop(pair[1]-1)
-				pos4.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				pos4.pop(43-pair[1])
+				pos4.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(THlist):
 					THlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -645,8 +784,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '3':
-				pos3.pop(pair[1]-1)
-				pos3.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				pos3.pop(43-pair[1])
+				pos3.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(RDlist):
 					RDlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -668,8 +807,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '2':
-				pos2.pop(pair[1]-1)
-				pos2.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				pos2.pop(43-pair[1])
+				pos2.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(NDlist):
 					NDlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -691,8 +830,8 @@ def inventory(request):
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '1':
-				pos1.pop(pair[1]-1)
-				pos1.insert(pair[1]-1, float(str(wlist2[ind])+"."+str(pair[1])))
+				pos1.pop(43-pair[1])
+				pos1.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(STlist):
 					STlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -726,6 +865,7 @@ def inventory(request):
 			ridlist3 = list()
 			elist3 = list()
 			wlistpx3 = list()
+			dis_wlistpx3 = list()
 
 			for item in query3:
 				totem = list(item)
@@ -741,13 +881,16 @@ def inventory(request):
 				wlist3.append(weight)
 
 			for w in wlist3:
-				wpx = int(w)/5 - 5
-				if wpx > 194:
-					wpx = 200
+				wpx = int(w)/5.0
 				wlistpx3.append(wpx)
 
+			for wpx in wlistpx3:
+				wpx = wpx-8
+				if wpx > 192: wpx = 202.0 # limited symbol out of area
+				dis_wlistpx3.append(wpx)
+
 			initial_weight3 = int(str(PaperRolldetails.objects.filter(paper_code=cpcode).values_list('initial_weight')[0])[1:][:-3])
-			initialpx3 = initial_weight3/5 - 5
+			initialpx3 = initial_weight3/5-5
 
 		mquery3 = PaperRolldetails.objects.filter(paper_code=cpcode, size=cwidth).values_list('lane', 'position')
 		mexists3 = PaperRolldetails.objects.filter(paper_code=cpcode, size=cwidth).exists()
@@ -756,8 +899,8 @@ def inventory(request):
 
 		for ind,pair in enumerate(mlist3):
 			if pair[0] == 'A':
-				posa.pop(pair[1]-1)
-				posa.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				posa.pop(43-pair[1])
+				posa.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Alist):
 					Alist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -780,8 +923,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'B':
-				posb.pop(pair[1]-1)
-				posb.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				posb.pop(43-pair[1])
+				posb.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Blist):
 					Blist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -804,8 +947,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'C':
-				posc.pop(pair[1]-1)
-				posc.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				posc.pop(43-pair[1])
+				posc.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Clist):
 					Clist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -828,8 +971,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'D':
-				posd.pop(pair[1]-1)
-				posd.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				posd.pop(43-pair[1])
+				posd.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Dlist):
 					Dlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -852,8 +995,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'E':
-				pose.pop(pair[1]-1)
-				pose.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				pose.pop(43-pair[1])
+				pose.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Elist):
 					Elist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -877,8 +1020,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'F':
-				posf.pop(pair[1]-1)
-				posf.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				posf.pop(43-pair[1])
+				posf.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Flist):
 					Flist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -901,8 +1044,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'G':
-				posg.pop(pair[1]-1)
-				posg.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				posg.pop(43-pair[1])
+				posg.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Glist):
 					Glist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -925,8 +1068,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'H':
-				posh.pop(pair[1]-1)
-				posh.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				posh.pop(43-pair[1])
+				posh.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Hlist):
 					Hlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -949,8 +1092,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '4':
-				pos4.pop(pair[1]-1)
-				pos4.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				pos4.pop(43-pair[1])
+				pos4.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(THlist):
 					THlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -973,8 +1116,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '3':
-				pos3.pop(pair[1]-1)
-				pos3.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				pos3.pop(43-pair[1])
+				pos3.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(RDlist):
 					RDlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -997,8 +1140,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '2':
-				pos2.pop(pair[1]-1)
-				pos2.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				pos2.pop(43-pair[1])
+				pos2.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(NDlist):
 					NDlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1021,8 +1164,8 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '1':
-				pos1.pop(pair[1]-1)
-				pos1.insert(pair[1]-1, float(str(wlist3[ind])+"."+str(pair[1])))
+				pos1.pop(43-pair[1])
+				pos1.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
 				if str(pair[1]) not in str(STlist):
 					STlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1045,51 +1188,53 @@ def inventory(request):
 							ls[9] = ls[9] + 1
 
 # FLOATING VEHICLE #
+	if len(str(atposition)) == 1: catposition = "0"+atposition
+	else: catposition = atposition
 	for ind,item in enumerate(pos1):
-		if item == atposition and atlane == '1':
+		if item == catposition and atlane == '1':
 			pos1.pop(ind)
 			pos1.insert(ind,"*")
-		if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
+		if item.find(".") != -1 and str(43-ind) == str(atposition):
 			istr = str(item)
 			isplt = istr.split(".")
 			isplt[0] = "-"+isplt[0]
-			vios = float(isplt[0]+"."+isplt[1])
+			vios = isplt[0]+"."+isplt[1]
 			pos1.pop(ind)
 			pos1.insert(ind,vios)
 
 	for ind,item in enumerate(pos2):
-		if item == atposition and atlane == '2':
+		if item == catposition and atlane == '2':
 			pos2.pop(ind)
 			pos2.insert(ind,"*")
-		if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
+		if item.find(".") != -1 and str(43-ind) == str(atposition):
 			istr = str(item)
 			isplt = istr.split(".")
 			isplt[0] = "-"+isplt[0]
-			vios = float(isplt[0]+"."+isplt[1])
+			vios = isplt[0]+"."+isplt[1]
 			pos2.pop(ind)
 			pos2.insert(ind,vios)
 
 	for ind,item in enumerate(pos3):
-		if item == atposition and atlane == '3':
+		if item == catposition and atlane == '3':
 			pos3.pop(ind)
 			pos3.insert(ind,"*")
-		if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
+		if item.find(".") != -1 and str(43-ind) == str(atposition):
 			istr = str(item)
 			isplt = istr.split(".")
 			isplt[0] = "-"+isplt[0]
-			vios = float(isplt[0]+"."+isplt[1])
+			vios = isplt[0]+"."+isplt[1]
 			pos3.pop(ind)
 			pos3.insert(ind,vios)
 
 	for ind,item in enumerate(pos4):
-		if item == atposition and atlane == '4':
+		if item == catposition and atlane == '4':
 			pos4.pop(ind)
 			pos4.insert(ind,"*")
-		if str(type(item)) == str(type(1.68)) and str(ind+1) == atposition:
+		if item.find(".") != -1 and str(43-ind) == str(atposition):
 			istr = str(item)
 			isplt = istr.split(".")
 			isplt[0] = "-"+isplt[0]
-			vios = float(isplt[0]+"."+isplt[1])
+			vios = isplt[0]+"."+isplt[1]
 			pos4.pop(ind)
 			pos4.insert(ind,vios)
 

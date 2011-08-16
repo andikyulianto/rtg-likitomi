@@ -15,7 +15,7 @@ HOST = '192.168.101.20' # Likitomi's factory: current
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'real' # RFID mode = {'real', 'fake'}
+rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
 
 def minclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
@@ -189,7 +189,7 @@ def minclamp(request):
 #		atlocation = 'Scale'
 
 		atlane = 1
-		atposition = 2
+		atposition = 43
 		atlocation = 'Stock'
 
 #		tag2write = '112233445566778899AABBCC'
@@ -300,7 +300,7 @@ def minassigntag(request):
 				soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 				soc.settimeout(2)
 				soc.connect((HOST, PORT))
-				soc.send('tag.write_id(new_tag_id=30000000000000'+str(atagid)+', tag_id='+atag2write+', antenna=1 2)\r\n')
+				soc.send('tag.write_id(new_tag_id=30000000000000'+str(atagid)+', tag_id='+atag2write+', antenna=2 3)\r\n')
 				response = soc.recv(128)
 				soc.close()
 
