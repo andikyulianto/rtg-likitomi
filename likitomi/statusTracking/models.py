@@ -96,7 +96,8 @@ class Delivery(models.Model):
     sales_order = models.IntegerField()
     product_id = models.IntegerField(null=True, blank=True)
     product_code = models.CharField(max_length=60, blank=True)
-    doc_ref = models.CharField(max_length=90, blank=True)
+    doc_ref_in = models.CharField(max_length=90, blank=True)
+    doc_ref_out = models.CharField(max_length=90, blank=True)
     delivery_date = models.DateField(null=True, blank=True)
     delivery_time = models.TextField() # This field type is a guess.
     qty = models.IntegerField(null=True, blank=True)
@@ -345,8 +346,9 @@ class ProductCatalog(models.Model):
         db_table = u'product_catalog'
 
 class Products(models.Model):
-    parent_code = models.ForeignKey(ProductCatalog,null=False)
-    product_code = models.CharField(primary_key=True, max_length=60, blank=True)
+    auto_id = models.IntegerField(primary_key=True,max_length=8)
+    parent_code_id = models.CharField(max_length=60, blank=True)
+    product_code = models.CharField(max_length=60, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     df = models.CharField(max_length=30, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=30, db_column='BM', blank=True) # Field name made lowercase.
@@ -363,6 +365,7 @@ class Products(models.Model):
     created_by = models.CharField(null=True,max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
     modified_by = models.CharField(null=True,max_length=90, blank=True)
+    
     class Meta:
         db_table = u'products'
 
@@ -451,9 +454,11 @@ class TotalPlanning(models.Model):
 
 class StatusTracking(models.Model):
     plan_id = models.AutoField(primary_key=True)
+    delivery = models.ForeignKey(Delivery,null=True)
     sale_order = models.ForeignKey(SalesOrder,null=False)
-    product = models.ForeignKey(Products,null=False)
-    #product_id = models.CharField(max_length=33, blank=True)
+    #product = models.CharField(max_length=33, blank=True)
+    product_auto = models.ForeignKey(Products,null=False)
+    product = models.ForeignKey(ProductCatalog,null=False)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
     plan_cr_end = models.DateTimeField(null=True, blank=True)
@@ -488,34 +493,34 @@ class StatusTracking(models.Model):
 
     cv_machine = models.CharField(max_length=15, blank=True)
     def process1(self):
-	if(self.product.parent_code.req_cr==1):
+	if(self.product.req_cr==1):
 	 	return "CR"
-	elif(self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1):
+	elif(self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1):
 	 	return "CV"
-	elif(self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1):
+	elif(self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1):
 	 	return "PT"
-	elif(self.product.parent_code.req_wh==1):
+	elif(self.product.req_wh==1):
 	 	return "WH"
 	else:
 		return ""
     def process2(self):
-	if(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1)):
+	if(self.product.req_cr==1 and (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1)):
 	 	return "CV"
-	elif(self.product.parent_code.req_cr==1 and not (self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1) and (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	elif(self.product.req_cr==1 and not (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
 	 	return "PT"
-	elif(self.product.parent_code.req_cr==1 and not (self.product.parent_code.req_2cl==1 or self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 or self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	elif(self.product.req_cr==1 and not (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1 or self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
 	 	return "WH"
 	else:
 		return ""
     def process3(self):
-	if(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1) and (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	if(self.product.req_cr==1 and (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
 	 	return "PT"
-	elif(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 ) and not (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	elif(self.product.req_cr==1 and (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1 ) and not (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
 	 	return "WH"
 	else:
 		return ""
     def process4(self):
-	if(self.product.parent_code.req_cr==1 and (self.product.parent_code.req_3cm ==1 or self.product.parent_code.req_3cs==1 or self.product.parent_code.req_4cd==1 or self.product.parent_code.req_3cl==1 or self.product.parent_code.req_gh==1 or self.product.parent_code.req_hs==1 or self.product.parent_code.req_fg==1 or self.product.parent_code.req_rd==1 or self.product.parent_code.req_ss==1 ) and (self.product.parent_code.req_remove==1 or self.product.parent_code.req_foam==1 or self.product.parent_code.req_tape==1)):
+	if(self.product.req_cr==1 and (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1 ) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
 	 	return "WH"
 	else:
 		return ""
@@ -585,10 +590,10 @@ class StatusTracking(models.Model):
 		status = ''
 	return status
     def cut(self):
-	if self.product.parent_code.slit == 0 :
+	if self.product.slit == 0 :
 		return self.plan_amount
 	else :
-		return self.plan_amount / self.product.parent_code.slit
+		return self.plan_amount / self.product.slit
     class Meta:
         db_table = u'status_tracking'
 #    def set_days_left(self):

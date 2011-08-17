@@ -72,7 +72,7 @@
 	</span>	
 			{% for item in items %}
 	<tr id="{{ item.statePT}}">
-	<td>{% if pt == item.product.product_code %} > {% endif %}</td>
+	<td>{% if pt == item.product_auto.product_code %} > {% endif %}</td>
 	<td><div class="plan"><a href="{{ startPT_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_start|time:"H:i"}}</a></div>
 	<div class="actual">
 				{% if item.actual_pt_start != NULL %}
@@ -110,17 +110,17 @@
 		<font color="red">0</font>
 	{% endif %}
 	</div></td>
-	<td>{{item.product.product_code}}</td>
+	<td>{{item.product_auto.product_code}}</td>
 	<td> {{item.plan_id}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
-	<td>{{item.product.parent_code.partner.partner_name}}</td>
-	<td>{{item.product.parent_code.product_name}}</td>
-	<td>{% if item.product.parent_code.req_rd %} YES {% endif %}</td>
-	<td>{% if item.product.parent_code.req_ss %} YES {% endif %}</td>
-	<td>{% if item.product.parent_code.req_remove %} YES {% endif %}</td>
-	<td>{% if item.product.parent_code.req_foam %} YES {% endif %}</td>
-	<td>{% if item.product.parent_code.req_tape %} YES {% endif %}</td>
+	<td>{{item.product.partner.partner_name}}</td>
+	<td>{{item.product.product_name}}</td>
+	<td>{% if item.product.req_rd %} YES {% endif %}</td>
+	<td>{% if item.product.req_ss %} YES {% endif %}</td>
+	<td>{% if item.product.req_remove %} YES {% endif %}</td>
+	<td>{% if item.product.req_foam %} YES {% endif %}</td>
+	<td>{% if item.product.req_tape %} YES {% endif %}</td>
 	<td >{% if item.process4 == 'PT' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'PT'%}

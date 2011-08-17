@@ -50,6 +50,9 @@
 		<td class="tblProdViewLabel">P.Code</td>
 		<td class="tblProdViewLabel">Customer</td>
 		<td class="tblProdViewLabel">Product Name</td>
+		<td class="tblProdViewLabel">Qty. Allowance</td>
+		<td class="tblProdViewLabel">Ref. Doc. in</td>
+		<td class="tblProdViewLabel">Ref. Doc. out</td>
 		<td class="tblProdViewLabel">Expected Amount</td>
 	</tr>
 	
@@ -60,6 +63,9 @@
 	<td class="tblProdView">{{product_code}}</td>
 	<td class="tblProdView">{{partner}}</td>
 	<td class="tblProdView">{{product_name}}</td>
+	<td class="tblProdView">{{qty_allowance}}</td>
+	<td class="tblProdView">{{document_in}}</td>
+	<td class="tblProdView">{{document_out}}</td>
 	<td class="tblProdView">{{amount}}</td>
 </tr>
 </tbody></table>
@@ -73,6 +79,8 @@
 		<td><input name="end_time" type="text"  value="{{current_date_time}}" style="text-align: center"/></td>
 		<td class="tblDetailViewLabel">Amount of Plan :</td>
 		<td><input name="amount" type="text"  value='{{amount}}' style="text-align: center"  /></td>
+		<td class="tblDetailViewLabel">Ref document out:</td>
+		<td><input name="ref_out" type="text"  value='{{document_out}}' style="text-align: center"  /></td>
 		<td> <input name="task" type="hidden" value="{{task}}">
 			<input name="eID" type="hidden" value="{{eID}}">
 			<input name="pID" type="hidden" value="{{pID}}">

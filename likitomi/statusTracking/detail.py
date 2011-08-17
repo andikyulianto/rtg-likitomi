@@ -144,8 +144,8 @@ def showWH(User,section_title):
 def showDetail(request):
 	user = request.GET['user']
 #	page =request.GET['page']
-	socode = request.GET['socode']
-	plan = StatusTracking.objects.get(sale_order = socode )
+	mocode = request.GET['mocode']
+	plan = StatusTracking.objects.get(plan_id = mocode )
 	
 	so = plan.sale_order_id
 	po = plan.sale_order.purchase_order_no
@@ -246,8 +246,8 @@ def showDetail(request):
 def showStock(request):
 	user = request.GET['user']
 #	page =request.GET['page']
-	pcode = request.GET['pcode']
-	item_plan = StatusTracking.objects.filter(product = pcode)
+	socode = request.GET['socode']
+	item_plan = StatusTracking.objects.filter(sale_order = socode)
 	items = list(item_plan)
 #	plan = StatusTracking.objects.get(product = pcode )
 #	

@@ -26,9 +26,11 @@
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>Qty. Allowance</th>
+	<th>Doc. Ref.</th>
 	<th>MO</th>
 	<th>Sale Order</th>
-	<th>P Code</th>
+	<th>PO No</th>
 	<th>Customer</th>
 	<th>Product Name</th>
 	<th>From</th>
@@ -57,11 +59,13 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
+	<td>{{item.product.qty_allowance}}</td>
+	<td>{{item.delivery.doc_ref}}</td>
 	<td> {{item.plan_id}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
-	<td>{{item.product.parent_code.partner.partner_name}}</td>
-	<td>{{item.product.parent_code.product_name}}</td>
+	<td>{{item.product.partner.partner_name}}</td>
+	<td>{{item.product.product_name}}</td>
 	<td>
 {% if item.process4 == 'WH' %}
 		    {{item.process3}}
@@ -98,6 +102,8 @@
 	<th width="5%"><div class="plan"> OUT </div><div class="actual">OUT</div></th>
 	<th width="5%">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>Qty. Allowance</th>
+	<th>Doc. Ref.</th>
 	<th>MO</th>
 	<th>Sale Order</th>
 	<th>PO No</th>
@@ -129,11 +135,13 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
+	<td>{{item.product.qty_allowance}}</td>
+	<td>{{item.delivery.doc_ref}}</td>
 	<td> {{item.plan_id}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
-	<td>{{item.product.parent_code.partner.partner_name}}</td>
-	<td>{{item.product.parent_code.product_name}}</td>
+	<td>{{item.product.partner.partner_name}}</td>
+	<td>{{item.product.product_name}}</td>
 	<td>{% if item.process4 == 'WH' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'WH'%}
@@ -173,6 +181,8 @@
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>Qty. Allowance</th>
+	<th>Doc. Ref.</th>
 	<th>MO</th>
 	<th>Sale Order</th>
 	<th>PO NO</th>
@@ -203,11 +213,13 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
+	<td>{{item.product.qty_allowance}}</td>
+	<td>{{item.delivery.doc_ref}}</td>
 	<td> {{item.plan_id}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
-	<td>{{item.product.parent_code.partner.partner_name}}</td>
-	<td>{{item.product.parent_code.product_name}}</td>
+	<td>{{item.product.partner.partner_name}}</td>
+	<td>{{item.product.product_name}}</td>
 	<td>{% if item.process4 == 'WH' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'WH'%}

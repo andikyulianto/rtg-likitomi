@@ -3,8 +3,7 @@
 <!--PATH SETTINGS START-->
 {% url statusTracking.general.login as likitomi_url %}
 {% url statusTracking.home.section as home_url %}
-{% url statusTracking.line.startCR as startCR_url %}
-{% url statusTracking.line.endCR as endCR_url %}
+{% url statusTracking.detail.showDetail as showproduct_url %}
 <!--PATH SETTINGS END-->
 <!-- 
 <div id="wrapper" style="width:100%">
@@ -43,8 +42,11 @@
 		<tbody>
 		{% for item in showGM_items %}
 			<tr align="center" class="{% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}" id="{{ entry.id }}">
-			<td>{{item.sale_order.purchase_order_no}}</td><td>{{item.sale_order_id}}</td><td>{{item.plan_id}}</td><td>{{item.product.product_code}}</td>
-			<td><center><b><h3>{{item.plan_amount}}</b></h3><center></td>
+			<td>{{item.sale_order.purchase_order_no}}</td>
+			<td>{{item.sale_order_id}}</td>
+			<td><a href="{{ showproduct_url }}?user=GM&mocode={{item.plan_id}}">{{item.plan_id}}</td>
+			<td>{{item.product.product_code}}</td>
+			<td><center><b><h3>{{item.sale_order.amount_1}}</b></h3><center></td>
 			{% if item.plan_cr_start != NULL %}
 				<td>
 				{% if item.actual_amount_cr != NULL %}
@@ -91,7 +93,7 @@
 			{% endif %}
 			<td>{{item.days_left}}</td>
 			<td>
-			{% if item.plan_amount <= item.actual_amount_wh %}<span class='name'><img alt='list' src='images/office/Package-Accept32.png' />{% else %}<img alt='list' src='images/office/Package-Warning32.png' />
+			{% if item.sale_order.amount_1 <= item.actual_amount_wh %}<span class='name'><img alt='list' src='images/office/Package-Accept32.png' />{% else %}<img alt='list' src='images/office/Package-Warning32.png' />
 			{% endif %}</span></td>
 			</tr>
 			{% endfor %}
