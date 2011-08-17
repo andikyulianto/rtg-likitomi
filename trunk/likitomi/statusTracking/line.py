@@ -11,7 +11,7 @@ from django.template import Template, Context
 from django.db.models import Q
 from statusTracking.utility import todayDate
 from statusTracking.config import getCVSpeed
-from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
+from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products, Delivery
 
 ###########################################
 ##                 for CR                ##
@@ -272,6 +272,10 @@ def startWH(request):
 	mo = plan.plan_id
 	po = plan.sale_order.purchase_order_no
 	so = plan.sale_order_id
+	product_auto_id= plan.product_auto_id
+	dl_id = plan.delivery_id
+	dl = Delivery.objects.get(delivery_id = dl_id)
+	document_in = dl.doc_ref_in
 	amount = str(plan.plan_amount)
 	today = todayDate()
 	is_enable_leftbutton = True
@@ -280,9 +284,10 @@ def startWH(request):
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
+	qty_allowance = productCat.qty_allowance
 	partner = productCat.cname
 	cname = productCat.cname
-	product = Products.objects.get(product_code = product_code)
+	product = Products.objects.get(auto_id = product_auto_id)
 	amount = str(plan.plan_amount)
 	pID = planID
 	current_date_time = todayDate()
@@ -306,17 +311,24 @@ def endWH(request):
 	mo = plan.plan_id
 	po = plan.sale_order_id
 	so = plan.sale_order_id
+	product_auto_id= plan.product_auto_id
+	dl_id = plan.delivery_id
+	dl = Delivery.objects.get(delivery_id = dl_id)
+	document_in = dl.doc_ref_in
+	document_out = dl.doc_ref_out
 	amount = str(plan.plan_amount)
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	plan = StatusTracking.objects.get(plan_id = planID)
 	product_code = plan.product_id
+	product_auto_id = plan.product_auto_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
+	qty_allowance = productCat.qty_allowance
 	partner = productCat.cname
 	cname = productCat.cname
-	product = Products.objects.get(product_code = product_code)
+	product = Products.objects.get(auto_id = product_auto_id)
 	amount = str(plan.plan_amount)
 	pID = planID
 	current_date_time = todayDate()

@@ -13,7 +13,7 @@ from django.shortcuts import render_to_response
 from statusTracking.utility import todayDate
 from statusTracking.config import rootPath
 from django.http import HttpResponseRedirect
-from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
+from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products, Delivery
 from employee import Employee
 
 ################################################
@@ -28,10 +28,13 @@ def startUpdate(request):
 	task = request.GET['task']
 	at = request.GET['at']
 	pID = request.GET['pID']
+	ref_in = request.GET['ref_in']
 	if(at!="CR"):
 		amount = request.GET['amount']
 
 	obj = StatusTracking.objects.get(plan_id=pID)
+	dl_id = obj.delivery_id
+	dl = Delivery.objects.get(delivery_id = dl_id)
 	if (at=="CR"):
 		obj.actual_cr_start = current_time
 		obj.save()
@@ -53,7 +56,9 @@ def startUpdate(request):
 	elif (at=="WH"):
 		obj.actual_wh_start = current_time
 		obj.actual_amount_wh = amount
+		dl.doc_ref_in = ref_in
 		obj.save()
+		dl.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
 		return HttpResponseRedirect(path)
 	else:
@@ -70,9 +75,12 @@ def endUpdate(request):
 	task = request.GET['task']
 	at = request.GET['at']
 	amount = request.GET['amount']
+	ref_out = request.GET['ref_out']
 
 	pID = request.GET['pID']
 	obj = StatusTracking.objects.get(plan_id=pID)
+	dl_id = obj.delivery_id
+	dl = Delivery.objects.get(delivery_id = dl_id)
 	if (at=="CR"):
 		obj.actual_cr_end = current_time
 		obj.actual_amount_cr = amount
@@ -94,7 +102,9 @@ def endUpdate(request):
 	elif (at=="WH"):
 		obj.actual_wh_end = current_time
 		obj.actual_amount_wh_out = amount
+		dl.doc_ref_out = ref_out
 		obj.save()
+		dl.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter#tabs-2"
 		return HttpResponseRedirect(path)
 	else:

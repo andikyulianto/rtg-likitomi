@@ -44,22 +44,28 @@
 
 	<table cellspacing="2" cellpadding="2" class="tblFixedBorder" width="630">
 	<tbody><tr>
+		
 		<td class="tblProdViewLabel">MO</td>
 		<td class="tblProdViewLabel">Sale Order</td>
 		<td class="tblProdViewLabel">PO</td>
 		<td class="tblProdViewLabel">P.Code</td>
 		<td class="tblProdViewLabel">Customer</td>
 		<td class="tblProdViewLabel">Product Name</td>
+		<td class="tblProdViewLabel">Qty. Allowance</td>
+		<td class="tblProdViewLabel">Ref. Doc. in</td>
 		<td class="tblProdViewLabel">Expected Amount</td>
 	</tr>
 	
 <tr>
+	
 	<td class="tblProdView">{{mo}}</td>
 	<td class="tblProdView">{{so}}</td>
 	<td class="tblProdView">{{po}}</td>
 	<td class="tblProdView">{{product_code}}</td>
 	<td class="tblProdView">{{partner}}</td>
 	<td class="tblProdView">{{product_name}}</td>
+	<td class="tblProdView">{{qty_allowance}}</td>
+	<td class="tblProdView">{{document_in}}</td>
 	<td class="tblProdView">{{amount}}</td>
 </tr>
 </tbody></table>
@@ -73,6 +79,8 @@
 		<td><input name="start_time" type="text"  value="{{current_date_time}}" style="text-align: center"/></td>
 		<td class="tblDetailViewLabel">Amount of Plan :</td>
 		<td><input name="amount" type="text"  value='{{amount}}' style="text-align: center"  /></td>
+		<td class="tblDetailViewLabel">Ref document In:</td>
+		<td><input name="ref_in" type="text"  value='{{document_in}}' style="text-align: center"  /></td>
 		<td> <input name="task" type="hidden" value="{{task}}">
 			<input name="eID" type="hidden" value="{{eID}}">
 			<input name="pID" type="hidden" value="{{pID}}">

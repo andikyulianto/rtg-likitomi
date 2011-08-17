@@ -32,7 +32,7 @@ TIME_ZONE = 'Asia/Bangkok'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'tis-620'
+LANGUAGE_CODE = 'utf-8'
 
 SITE_ID = 1
 
@@ -48,8 +48,8 @@ USE_L10N = True
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = (
 #	'D:/wamp/www/rtg-likitomi/likitomi/static/'
-#	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
-	'/home/patipol/rtg-likitomi/likitomi/static/'
+	'/home/fon/Django/projects/rtg-likitomi/likitomi/static/'
+#	'/home/patipol/rtg-likitomi/likitomi/static/'
 )
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
