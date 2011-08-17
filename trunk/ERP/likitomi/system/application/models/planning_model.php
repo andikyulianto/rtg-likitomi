@@ -187,6 +187,35 @@ class Planning_model extends Model
 				$plan_due = $row->delivery_date." ".$row->delivery_time;
 				$sale_order = $row->sales_order;
 			}
+			//sale order
+			$sql = "Select product_code_1, product_code_2 From sales_order where sales_order_id=".$sale_order;
+			$query = $this->db->query($sql);
+			foreach ($query->result() as $row)
+			{
+				$product_code_1 = $row->product_code_1;
+				$product_code_2 = $row->product_code_2;
+			}
+			if($product_code_2 == "" || $product_code_2 == NULL || $rowData->product_code == $product_code_1)
+			{
+				//find product id in products
+				$sql = "Select auto_id From products where product_code='".$product_code_1."' and parent_code_id='".$product_code_1."'";
+				$query = $this->db->query($sql);
+				foreach ($query->result() as $row)
+				{
+					$auto_id = $row->auto_id;
+				}
+			}
+			else
+			{
+				$sql = "Select auto_id From products where product_code='".$product_code_2."' and parent_code_id='".$product_code_1."'";
+				$query = $this->db->query($sql);
+				foreach ($query->result() as $row)
+				{
+					$auto_id = $row->auto_id;
+				}
+			}
+			//echo $auto_id;
+			
 			$sql = "select * from product_catalog where product_id=".$product_id;
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
@@ -233,6 +262,7 @@ class Planning_model extends Model
 						"delivery_id"=>$rowData->delivery_id,
 						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
+						"product_auto_id"=>$auto_id,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
@@ -258,6 +288,7 @@ class Planning_model extends Model
 						"delivery_id"=>$rowData->delivery_id,
 						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
+						"product_auto_id"=>$auto_id,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 /*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
@@ -286,6 +317,7 @@ class Planning_model extends Model
 						"delivery_id"=>$rowData->delivery_id,
 						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
+						"product_auto_id"=>$auto_id,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 						//"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
@@ -314,6 +346,7 @@ class Planning_model extends Model
 						"delivery_id"=>$rowData->delivery_id,
 						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
+						"product_auto_id"=>$auto_id,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 /*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
@@ -344,6 +377,7 @@ class Planning_model extends Model
 						"delivery_id"=>$rowData->delivery_id,
 						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
+						"product_auto_id"=>$auto_id,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
 /*						"plan_cr_start" =>substr($rowData->corrugator_date,0,10)." ".$time_start_cr.":00",
