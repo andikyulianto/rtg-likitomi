@@ -241,35 +241,99 @@ class Planning extends Controller {
 
 		foreach($gridData as $rowData)
 		{
+			//initialize 
+			$mo_cr = "";
+			$mo_cv = "";
+			$mo_pt = "";
+			
 			// start stop time of CR 
 			$query = $this->Planning_model->getProduct($rowData->product_code);
 			$key = $query->row_array(0);							//get the only one object
-			
-			
+		////////////	
+		//create MO//
+		////////////
+		if($key['req_cr'])
+		{
+			$mo_cr_count = $mo_cr_count +1;
+			$mo_cr_running_process =$mo_cr_count;
 
-			if($key['req_cr'])
+			while(strlen($mo_cr_running_process)<3)
 			{
-				$mo_cr_count = $mo_cr_count +1;
-				$mo_cr_running_process =$mo_cr_count;
-
-				while(strlen($mo_cr_running_process)<3)
-				{
-					
-					$mo_cr_running_process ="0".$mo_cr_running_process;
-				}
+				
+				$mo_cr_running_process ="0".$mo_cr_running_process;
 			}
-			if($key['req_2cl']||$key['req_3cm']||$key['req_3cs']||$key['req_4cd']||$key['req_3cl']||$key['req_gh']||$key['req_hs']||$key['req_fg']||
-			$key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape'])
+		}
+		if($key['req_2cl']||$key['req_3cm']||$key['req_3cs']||$key['req_4cd']||$key['req_3cl']||$key['req_gh']||$key['req_hs']||$key['req_fg']||
+		$key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape'])
+		{
+			$mo_cv_count = $mo_cv_count +1;
+			$mo_cv_running_process =$mo_cv_count;
+			while(strlen($mo_cv_running_process)<2)
 			{
-				$mo_cv_count = $mo_cv_count +1;
-				$mo_cv_running_process =$mo_cv_count;
-				while(strlen($mo_cv_running_process)<2)
-				{
-					
-					$mo_cv_running_process ="0".$mo_cv_running_process;
-				}
-				//echo $mo_cv_running_process;
+				
+				$mo_cv_running_process ="0".$mo_cv_running_process;
 			}
+			$cc ="";
+			$ccpt="";
+			if($key['req_2cl'])
+			{
+				$cc .= "2L";
+			}
+			if($key['req_3cm'])
+			{
+				$cc .= "3M";
+			}
+			if($key['req_3cs'])
+			{
+				$cc .= "3S";
+			}
+			if($key['req_4cd'])
+			{
+				$cc .= "4D";
+			}
+			if($key['req_3cl'])
+			{
+				$cc.="3L";
+			}
+			if($key['req_gh'])
+			{
+				$cc.="GH";
+			}
+			if($key['req_hs'])
+			{
+				$cc.="HS";
+			}
+			if($key['req_fg'])
+			{
+				$cc.="FG";
+			}
+			if($key['req_rd'])
+			{
+				$ccpt.="RD";
+			}
+			if($key['req_ss'])
+			{
+				$ccpt.="SS";
+			}
+			if($key['req_remove']||$key['req_foam']||$key['req_tape'])
+			{
+				$ccpt.="RO";
+			}
+			//echo $mo_cv_running_process;
+		}
+		$mo_cr = $date_mo_code."".$mo_cr_running_process;
+		if($cc!="")
+			$mo_cv = $cc."".$date_mo_code."".$mo_cv_running_process;
+		else
+			$mo_cv = "";
+		if($ccpt!="")
+			$mo_pt = $ccpt."".$date_mo_code."".$mo_cv_running_process;
+		else
+			$mo_pt = "";
+		
+		//echo $mo_cr."   ".$mo_cv."   ".$mo_pt."<br>";
+		
+			/// end mo
 			
 			
 			
@@ -317,7 +381,7 @@ class Planning extends Controller {
 			else
 				$timeuseCV = 0;
 
-		
+			
 
 
 		
@@ -474,7 +538,7 @@ class Planning extends Controller {
 			
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cs),$this->formatDate($time_stop_3cs),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cs),$this->formatDate($time_stop_3cs),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cs),$this->formatDate($time_stop_3cs),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 			$time_start_cr = $tempCRStart ;
 			$time_stop_cr= $tempCRStop;
 
@@ -539,7 +603,7 @@ class Planning extends Controller {
 			
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_2cl),$this->formatDate($time_stop_2cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_2cl),$this->formatDate($time_stop_2cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_2cl),$this->formatDate($time_stop_2cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 			
 //			$choosendate = $tempDate;
 			$time_start_cr = $tempCRStart ;
@@ -602,7 +666,7 @@ class Planning extends Controller {
 //			echo $rowData->product_code."-3cl".$time_stop_cv." <br>";
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cl),$this->formatDate($time_stop_3cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cl),$this->formatDate($time_stop_3cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cl),$this->formatDate($time_stop_3cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 
 			$time_start_cr = $tempCRStart ;
 			$time_stop_cr= $tempCRStop;
@@ -667,7 +731,7 @@ class Planning extends Controller {
 //				echo $rowData->product_code."-3cm ".$time_stop_cr."<br>";
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cm),$this->formatDate($time_stop_3cm),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cm),$this->formatDate($time_stop_3cm),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cm),$this->formatDate($time_stop_3cm),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 
 			$time_start_cr = $tempCRStart ;
 			$time_stop_cr= $tempCRStop;
@@ -729,7 +793,7 @@ class Planning extends Controller {
 //			echo $rowData->product_code."-4cd time start wh".$time_start_wh."<br>";
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_4cd),$this->formatDate($time_stop_4cd),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_4cd),$this->formatDate($time_stop_4cd),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_4cd),$this->formatDate($time_stop_4cd),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 
 			$time_start_cr = $tempCRStart ;
 			$time_stop_cr= $tempCRStop;
@@ -744,7 +808,7 @@ class Planning extends Controller {
 
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 
 		}
 		elseif(!($key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd']))
@@ -780,7 +844,7 @@ class Planning extends Controller {
 			log_message('info', 'WH Start (Not in CV a):'.$time_start_wh.' choose date:'.$choosendate.' real date:'.$realDate);
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 			
 			
 			
@@ -796,7 +860,7 @@ class Planning extends Controller {
 //	echo $rowData->product_code."-not pt not cv ".$time_start_cr."<br>";
 			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,NULL,NULL,$this->formatDate($time_start_wh),$key);
 			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,NULL,NULL,$this->formatDate($time_start_wh));
+			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,NULL,NULL,$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 			
 			
 			$time_start_cr = $tempCRStart ;
@@ -815,8 +879,11 @@ class Planning extends Controller {
 		
 		$time_start_cr = $time_stop_cr;
 			log_message('info', '-----------------');
-/**/		}
+			
 
+
+/**/		}
+		
 		//save to statusTracking
 		echo "Data Saved as 	".$choosendate." Plan.";
 	}

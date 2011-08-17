@@ -158,14 +158,26 @@ class Planning_model extends Model
 
 	}
 
-        function savetostatustracking($rowData,$choosendate,$realDate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh)
+        function savetostatustracking($rowData,$choosendate,$realDate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh,$mo_cr,$mo_cv,$mo_pt)
         {
+        		if($mo_cr=="")
+        			$mo_cr=NULL;
+        		if($mo_cv=="")
+        			$mo_cv=NULL;
+        		if($mo_pt=="")
+        			$mo_pt=NULL;
 			//echo substr($rowData->corrugator_date,0,10)." ".substr($rowData->corrugator_date,11,5).":00";
 			//echo substr($rowData->converter_date,0,10)." ".$rowData->converter_time.":00";
 			//get amount
 			//echo "---".$choosendate;
 
-
+			$sql = "Select autoid From total_planning Where delivery_id =".$rowData->delivery_id." and date='".$choosendate."'";
+			$query = $this->db->query($sql);
+			foreach ($query->result() as $row)
+			{
+				$total_plan_id = $row->autoid;
+			}
+			
 			$sql = "Select product_id,qty,delivery_date,delivery_time,sales_order From delivery Where delivery_id =".$rowData->delivery_id;
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
@@ -218,6 +230,8 @@ class Planning_model extends Model
 			if($req_cr == 1 and $req_wh == 1 and $req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0 and $req_rd==0 and $req_ss==0 and $req_remove==0 and $req_foam==0 and $req_tape==0)
 			{
 				$param = array("date" => $choosendate,
+						"delivery_id"=>$rowData->delivery_id,
+						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
@@ -232,12 +246,17 @@ class Planning_model extends Model
 						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine
+						"cv_machine" => $cv_machine,
+						"mo_cr_code"=>$mo_cr,
+						"mo_cv_code"=>$mo_cv,
+						"mo_pt_code"=>$mo_pt
 				);
 			}
 			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1 or $req_rd==1 or $req_ss==1) and ($req_remove==0 and $req_foam==0 and $req_tape==0))
 			{
 				$param = array("date" => $choosendate,
+						"delivery_id"=>$rowData->delivery_id,
+						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
@@ -255,13 +274,17 @@ class Planning_model extends Model
 						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine
+						"cv_machine" => $cv_machine,
+						"mo_cr_code"=>$mo_cr,
+						"mo_cv_code"=>$mo_cv,
+						"mo_pt_code"=>$mo_pt
 				);
 			}
 			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0 and $req_rd==0 and $req_ss==0) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
 			{
 				$param = array("date" => $realDate,
-
+						"delivery_id"=>$rowData->delivery_id,
+						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
@@ -279,12 +302,17 @@ class Planning_model extends Model
 						"plan_pt_end" => substr($realDate,0,10)." ".$time_stop_pt.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine
+						"cv_machine" => $cv_machine,
+						"mo_cr_code"=>$mo_cr,
+						"mo_cv_code"=>$mo_cv,
+						"mo_pt_code"=>$mo_pt
 				);
 			}
 			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1 or $req_rd==1 or $req_ss==1) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
 			{
 				$param = array("date" => $choosendate,
+						"delivery_id"=>$rowData->delivery_id,
+						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
@@ -304,12 +332,17 @@ class Planning_model extends Model
 						"plan_pt_end" => substr($realDate,0,10)." ".$time_stop_pt.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine
+						"cv_machine" => $cv_machine,
+						"mo_cr_code"=>$mo_cr,
+						"mo_cv_code"=>$mo_cv,
+						"mo_pt_code"=>$mo_pt
 				);
 			}
 			else
 			{
 			$param = array("date" => $choosendate,
+						"delivery_id"=>$rowData->delivery_id,
+						"total_plan_id"=>$total_plan_id,
 						"product_id"=>$rowData->product_code,
 						"sale_order_id" =>$sale_order,
 						"plan_amount" =>$amount,
@@ -325,11 +358,18 @@ class Planning_model extends Model
 //						"plan_wh_start" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_stop_cr.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine
+						"cv_machine" => $cv_machine,
+						"mo_cr_code"=>$mo_cr,
+						"mo_cv_code"=>$mo_cv,
+						"mo_pt_code"=>$mo_pt
 				);
 			}
-						//print_r($param);
+			//add to status tracking
 			$this->db->insert($this->statustracking, $param);
+			
+			
+
+
 				
         }
 	function formatDate($day)
