@@ -9,6 +9,7 @@
 body
 {
 font-family:"Times New Roman", Times, serif;
+overflow:hidden;
 }
 
 div
@@ -215,13 +216,13 @@ $(document).ready(function(){
 	$( "#pick" ).button({icons: {primary: "ui-icon-cart"}});
 	$("#mapleft").click(function(){
 		$("#map")[0].contentWindow.scrollTo(0,0);
-		$('#map', top.document).contents().find('#legend').css("left","0px");
 		$('#map', top.document).contents().find('#mappos').val("left");
+		$('#map', top.document).contents().find('#legend').css("left","0px");
 	});
 	$("#mapright").click(function(){
 		$("#map")[0].contentWindow.scrollTo(9999,0);
-		$('#map', top.document).contents().find('#legend').css("left","326px");
 		$('#map', top.document).contents().find('#mappos').val("right");
+		$('#map', top.document).contents().find('#legend').css("left","334px");
 	});
 	$("#maglay, #layouttab").click(function(){
 		$("#plan, #clamplift, #search").hide();
@@ -233,6 +234,7 @@ $(document).ready(function(){
 		$("#mapleft, #mapright").hide();
 		$('#map', top.document).contents().find('#legend').css("left","401px");
 		$('#map', top.document).contents().find('#mappos').val("center");
+		$("#map")[0].contentWindow.scrollTo(9999,0);
 	});
 	$("#pick").click(function(){
 		var pcode = $('#map').contents().find('#pcode').val();
@@ -333,6 +335,7 @@ $(document).ready(function(){
 		$("#mapleft, #mapright").show();
 		$('#map', top.document).contents().find('#legend').css("left","0px");
 		$('#map', top.document).contents().find('#mappos').val("left");
+		$("#map")[0].contentWindow.scrollTo(0,0);
 		// CLAMPLIFT //
 		$("#clamplift").css({"width":"398px","height":"188px","top":"405px","left":"0px"});
 		$("#clampsta").val("minsta");
@@ -500,7 +503,7 @@ $(document).ready(function(){
 <!--MENU TABS-->
 	<div id="menutab" style="position:fixed; bottom:0px; left:0px; width:800px; height:100px; background-color:black;">
 		<div id="plantab" style="bottom:0px; left:0px; background-image:url('images/clamplift/plantab.png');"><center><h2>PLAN</h2></center></div>
-		<div id="layouttab" style="bottom:0px; left:180px; background-image:url('images/clamplift/layouttab.png');"><center><h2>LAYOUT</h2></center></div>
+		<div id="layouttab" style="bottom:0px; left:180px; background-image:url('images/clamplift/layouttab.png');"><center><h2>MAP</h2></center></div>
 		<div id="clamplifttab" style="bottom:0px; left:360px; background-image:url('images/clamplift/clamplifttab.png');"><center><h2>CLAMPLIFT</h2></center></div>
 <!--		<div id="searchtab" style="bottom:0px; left:450px;">Search</div>-->
 		<div id="dashtab" style="bottom:0px; left:540px; width:255px; height:95px; background-image:url('images/clamplift/dashtab.png');"><center><h2>DASHBOARD</h2></center></div>
