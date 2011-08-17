@@ -25,6 +25,7 @@ class Reportplanning extends Controller {
 	{
 		$script  = '<script type="text/javascript" src="'.base_url().'resources/javascript/ext/ext-base.js"></script>';
 		$script .= '<script type="text/javascript" src="'.base_url().'resources/javascript/ext-all.js"></script>';
+
 		return $script;
 	}	
 	
@@ -58,14 +59,7 @@ class Reportplanning extends Controller {
 		$data['plandate'] = $plandate;
 		$this->load->view('planning/keyin',$data);
 	}
-	function convertor()
-	{
-		$today  	= date('Y-m-d');
-		$plandate 	= ($this->input->post('plandate'))?$this->input->post('plandate'):$today;
-		$data['resultConvertor'] = $this->Planning_model->convertor($plandate);
-		$data['plandate'] = $plandate;
-		$this->load->view('planning/convertor',$data);
-	}
+
 	
 	function corrugatorclamplift()
 	{
@@ -83,6 +77,23 @@ class Reportplanning extends Controller {
 		$data['resultCorrugatorDaily'] = $this->Planning_model->corrugatordaily($plandate);
 		$data['plandate'] = $plandate;
 		$this->load->view('planning/corrugatordaily',$data);
+	}
+	function convertor()
+	{
+		$today  	= date('Y-m-d');
+		$plandate 	= ($this->input->post('plandate'))?$this->input->post('plandate'):$today;
+		$data['resultConvertor'] = $this->Planning_model->convertor($plandate);
+		$data['plandate'] = $plandate;
+		$this->load->view('planning/convertor',$data);
+	}
+	function partition()
+	{
+		$today  	= date('Y-m-d');
+		$plandate 	= ($this->input->post('plandate'))?$this->input->post('plandate'):$today;
+		$data['resultPartition'] = $this->Planning_model->partition($plandate);
+		$data['machine'] = $this->Planning_model->machine();
+		$data['plandate'] = $plandate;
+		$this->load->view('planning/partition',$data);
 	}
 	
 	function deliverydaily()

@@ -55,7 +55,8 @@
 		
 		$case 	= $key->qty;
                 if(($key->slit)!=0)
-		$cut2 	= $case/$key->slit;
+		//$cut2 	= $case/$key->slit;
+		$cut2 = ($key->ratio)*$case;
 		$used_df = ($key->t_length*$cut2)/1000;
 		$used_bl = ($key->BL=="")?"":($key->t_length*$cut2)/1000;
 		$used_cl = ($key->CL=="")?"":($key->t_length*$cut2)/1000;

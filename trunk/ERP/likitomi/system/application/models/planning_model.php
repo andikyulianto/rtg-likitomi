@@ -436,14 +436,14 @@ class Planning_model extends Model
 	}*/
 		function convertor($plandate)
 	{
-		$sql = 	 "SELECT pc.ink_1,pc.ink_2,pc.ink_3,pc.ink_4, d.sales_order,tp.autoid, pd.product_code, pt.partner_name, pc.product_name, d.qty, pd.flute,"
+		$sql = 	 "SELECT pc.ink_1,pc.ink_2,pc.ink_3,pc.ink_4, d.sales_order,tp.autoid, pd.product_code, pt.partner_name, pc.product_name, ((d.qty*pc.cv_ratio_2) div pc.cv_ratio_1) as qty, pd.flute,"
 				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM,pc.cut,pc.blank, pc.slit, pc.scoreline_f,  "
 				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date "
 				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so  "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND d.sales_order = so.sales_order_id "
-				."AND pc.product_id = d.product_id "
+				."AND pc.product_code = d.product_code "
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
@@ -453,16 +453,45 @@ class Planning_model extends Model
 		$query = $this->db->query($sql);
 		return $query;
 	}
+
+		function partition($plandate)
+	{
+		$sql = 	 "SELECT pc.ink_1,pc.ink_2,pc.ink_3,pc.ink_4, d.sales_order,tp.autoid, pd.product_code, pt.partner_name, pc.product_name, ((d.qty*pc.cv_ratio_2) div pc.cv_ratio_1) as qty, pd.flute, so.purchase_order_no,"
+				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM,pc.cut,pc.blank, pc.slit, pc.scoreline_f,  "
+				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date ,"
+				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
+				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape,pc.sketch,pc.scoreline_f,pc.scoreline_d,pc.scoreline_f2,pc.blank,pc.t_length,pd.flute "
+				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so  "
+				."WHERE tp.date='".$plandate."'"
+				."AND tp.delivery_id = d.delivery_id "
+				."AND d.sales_order = so.sales_order_id "
+				."AND pc.product_code = d.product_code "
+				."AND pt.partner_id = pc.partner_id "
+				."AND pc.product_code = pd.parent_code_id "
+				."AND pd.product_code = d.product_code "
+				."AND pd.isdeleted =0 "
+				."ORDER BY pc.next_process";
+				//."AND pc.next_process='2CL'";
+		$query = $this->db->query($sql);
+		return $query;
+	}
+			function machine()
+	{
+		$sql = 	 "SELECT * FROM machine where machine.is_working=1";
+				//."AND pc.next_process='2CL'";
+		$query = $this->db->query($sql);
+		return $query;
+	}
 	
 	function corrugatorclamplift($plandate)
 	{
-		$sql = 	 "SELECT tp.autoid, d.sales_order, d.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit,  d.qty,  "
-				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM, pc.p_width_inch,pc.t_length, pc.cut,pc.p_width_mm,  "
+		$sql = 	 "SELECT tp.autoid, d.sales_order, d.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty as qty,  "
+				."pc.cr_ratio_2 / pc.cr_ratio_1 as ratio, pd.DF, pd.BL,pd.CL, pd.BM, pd.CM, pc.p_width_inch,pc.t_length, pc.cut,pc.p_width_mm,  "
 				."d.remarks as D_remarks, pc.remark PC_remarks  "
 				."FROM total_planning tp, delivery d, products pd, product_catalog pc,partners pt  "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
-				."AND pc.product_id = d.product_id "
+				."AND pc.product_code = d.product_code "
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
@@ -474,15 +503,17 @@ class Planning_model extends Model
 	
 	function corrugatordaily($plandate)
 	{
-		$sql = 	 "SELECT tp.autoid, d.sales_order, pd.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty, "
+		$sql = 	 "SELECT tp.autoid, d.sales_order, pd.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty as qty, "
 				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM, pc.cut,pc.p_width_inch,pc.t_length,pc.p_width_mm,  "
-				."pc.blank, pc.slit, pc.scoreline_f, pc.scoreline_d, pc.scoreline_f2, pc.next_process,  "
+				."pc.cr_ratio_2 / pc.cr_ratio_1 as ratio, pc.blank, pc.slit, pc.scoreline_f, pc.scoreline_d, pc.scoreline_f2, pc.next_process,  "
+				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
+				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape, "
 				."date_format(d.delivery_date,'%d/%m') as delivery_date,pc.slit, pc.blank,  "
 				."d.remarks as D_remarks, pc.remark PC_remarks  "
 				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt  "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
-				."AND pc.product_id = d.product_id "
+				."AND pc.product_code = d.product_code "
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
@@ -495,7 +526,7 @@ class Planning_model extends Model
 	function totalproductionplan($plandate)
 	{
 		$sql = 	 "SELECT tp.autoid, d.sales_order, so.purchase_order_no, d.product_code, pt.partner_name, pc.product_name, pc.p_width_inch,pc.slit, "  
-				."pc.t_length, pd.flute, pc.cut,d.qty, pc.qty_allowance, date_format(d.delivery_date,'%d/%m') as delivery_date, date_format(tp.corrugator_date,'%d/%m') as corrugator_date, "
+				."pc.t_length, pd.flute, pc.cut,d.qty as qty,((d.qty*pc.cr_ratio_2) div pc.cr_ratio_1) as qty_cr,((d.qty*pc.cv_ratio_2) div pc.cv_ratio_1) as qty_cv, pc.qty_allowance, date_format(d.delivery_date,'%d/%m') as delivery_date, date_format(tp.corrugator_date,'%d/%m') as corrugator_date, "
 				."date_format(tp.corrugator_date,'%H:%i') as corrugator_time,date_format(tp.converter_date,'%d/%m') as converter_date,date_format(tp.converter_date,'%H:%i') as converter_time, "  
 				."d.remarks as D_remarks, pc.remark PC_remarks, so.remarks SO_remarks , pc.next_process as machine "
 				."FROM total_planning tp, delivery d, product_catalog pc, sales_order so, partners pt, products pd "
@@ -516,12 +547,12 @@ class Planning_model extends Model
 	{
 		$sql = 	"SELECT tp.autoid, d.sales_order, so.purchase_order_no, pd.product_code, pt.partner_name, pc.product_name, pd.flute, pc.cut,d.qty,pc.slit, "
 				."pc.qty_allowance, date_format(d.delivery_date,'%d/%m') as delivery_date, d.delivered_qty,pc.p_width_inch,pc.t_length, "
-				."d.remarks as D_remarks, pc.remark PC_remarks, so.remarks SO_remarks "
+				."d.remarks as D_remarks, pc.remark PC_remarks, so.remarks SO_remarks,d.total_production_qty "
 				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND d.sales_order = so.sales_order_id "
-				."AND pc.product_id = d.product_id "
+				."AND pc.product_code = d.product_code "
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
@@ -539,7 +570,7 @@ class Planning_model extends Model
 				 ."WHERE tp.date='".$plandate."' "
 				 ."AND tp.delivery_id = d.delivery_id "  
 				 ."AND d.sales_order = so.sales_order_id "  
-				 ."AND pc.product_id = d.product_id  "
+				 ."AND pc.product_code = d.product_code  "
 				 ."AND pt.partner_id = pc.partner_id  "
 				 ."AND pc.product_code = pd.parent_code_id "  
 				 ."AND pd.product_code = d.product_code  "

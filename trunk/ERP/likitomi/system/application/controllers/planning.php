@@ -221,6 +221,8 @@ class Planning extends Controller {
 		$time_start_3cl = $time_start_cv;
 		$time_start_3cm = $time_start_cv;
 		$time_start_4cd = $time_start_cv;
+		
+		
 
 		$time_stop_2cl=0;
 		$time_stop_3cl=0;
@@ -229,13 +231,49 @@ class Planning extends Controller {
 
 		//$time_start_pt = (0.0006949*60)*8;
 		//$time_start_wh = (0.0006949*60)*8;
-		
+
+
+			//count mo
+			$mo_cr_count = 0;
+			$mo_cv_count = 0;
+			
+			$date_mo_code = date('dm');
 
 		foreach($gridData as $rowData)
 		{
 			// start stop time of CR 
 			$query = $this->Planning_model->getProduct($rowData->product_code);
 			$key = $query->row_array(0);							//get the only one object
+			
+			
+
+			if($key['req_cr'])
+			{
+				$mo_cr_count = $mo_cr_count +1;
+				$mo_cr_running_process =$mo_cr_count;
+
+				while(strlen($mo_cr_running_process)<3)
+				{
+					
+					$mo_cr_running_process ="0".$mo_cr_running_process;
+				}
+			}
+			if($key['req_2cl']||$key['req_3cm']||$key['req_3cs']||$key['req_4cd']||$key['req_3cl']||$key['req_gh']||$key['req_hs']||$key['req_fg']||
+			$key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape'])
+			{
+				$mo_cv_count = $mo_cv_count +1;
+				$mo_cv_running_process =$mo_cv_count;
+				while(strlen($mo_cv_running_process)<2)
+				{
+					
+					$mo_cv_running_process ="0".$mo_cv_running_process;
+				}
+				//echo $mo_cv_running_process;
+			}
+			
+			
+			
+			
 			$case 	= $rowData->qty;
 			if(($key['slit'])!=0)
 			$cut2 	= $case/$key['slit'];

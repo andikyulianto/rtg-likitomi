@@ -72,10 +72,10 @@
 		<td><?=$key->delivery_date?></td>
 		<td><?=$key->qty?></td>
 		<td><?=$key->corrugator_date?></td>
-		<td><?=$key->qty?></td>
+		<td><?=$key->qty_cr?></td>
 		<td><?=$key->corrugator_time?></td>
 		<td><?=$key->converter_date?></td>
-		<td><?=$key->qty?></td>
+		<td><?=$key->qty_cv?></td>
 		<td><?=$key->converter_time?></td>
 		<td><?=$key->D_remarks?></td>
 		<td></td>

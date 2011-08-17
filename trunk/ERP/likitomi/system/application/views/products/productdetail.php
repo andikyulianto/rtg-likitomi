@@ -259,6 +259,16 @@ Additional value for PC
 <br/>
 
 <div id='boxcontainer'>
+amount of sheet production
+<table><tr><td class='tblDetailViewLabel'>CR</td><td><?=$resultProductCatalog->cr_ratio_1?>:<?=$resultProductCatalog->cr_ratio_2?></td>
+	<td class='tblDetailViewLabel'>CV</td><td><?=$resultProductCatalog->cv_ratio_1?>:<?=$resultProductCatalog->cv_ratio_2?></td></tr>
+	<tr><td class='tblDetailViewLabel'>PT</td><td><?=$resultProductCatalog->pt_ratio_1?>:<?=$resultProductCatalog->pt_ratio_2?></td>
+	<td></td><td></td></tr>
+</table>
+</div>
+<br/>
+
+<div id='boxcontainer'>
 <table>
 	<tr>
 		<td class='tblDetailViewLabel'><?=$this->lang->line('created_on')?></td>
@@ -311,6 +321,12 @@ if($action=='edit'){
 	$add_blank = $resultProductCatalog->add_blank;
 	$add_t_length = $resultProductCatalog->add_t_length;
 	$add_amount = $resultProductCatalog->add_amount;
+	$cr_ratio_1 = $resultProductCatalog->cr_ratio_1;
+	$cv_ratio_1 = $resultProductCatalog->cv_ratio_1;
+	$pt_ratio_1 = $resultProductCatalog->pt_ratio_1;
+	$cr_ratio_2 = $resultProductCatalog->cr_ratio_2;
+	$cv_ratio_2 = $resultProductCatalog->cv_ratio_2;
+	$pt_ratio_2 = $resultProductCatalog->pt_ratio_2;
 	$remark = $resultProductCatalog->remark;
 	$req_cr = $resultProductCatalog->req_cr;
 	$req_2cl = $resultProductCatalog->req_2cl;
@@ -407,6 +423,12 @@ if($action=='add'){
 	$add_blank = "";
 	$add_t_length = "";
 	$add_amount = "";
+	$cr_ratio_1 = "1";
+	$cv_ratio_1 = "1";
+	$pt_ratio_1 = "1";
+	$cr_ratio_2 = "1";
+	$cv_ratio_2 = "1";
+	$pt_ratio_2 = "1";
 	$remark = "";
 	$isdeleted = "";
 	$created_on = "";
@@ -694,6 +716,7 @@ for($i=0;$i<$trows;$i++){
 	</tr>
 </table>
 </div>
+<br>
 <div id='boxcontainer'>
 Process<br><br>
 <table width="500px"><tr>
@@ -731,21 +754,29 @@ Process<br><br>
 </div>
 <br>
 <div id='boxcontainer'>
-Additional values for CV<br>
-<table><tr><td class='tblDetailViewLabel'>Blank +</td><td><input type='text' id='x_add_blank' value='<?=$add_blank?>'></td>
-	<td class='tblDetailViewLabel'>T Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>'></td>
-	<td class='tblDetailViewLabel'>Amount +</td><td><input type='text' id='x_add_amount' value='<?=$add_amount?>'></td></tr>
+Additional values for CR<br>
+<table><tr><td class='tblDetailViewLabel'>Blank +</td><td><input type='text' id='x_add_blank' value='<?=$add_blank?>' size="7"></td>
+	<td class='tblDetailViewLabel'>T Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>' size="7"></td>
+	<td class='tblDetailViewLabel'>Amount +</td><td><input type='text' id='x_add_amount' value='<?=$add_amount?>' size="7"></td></tr>
 </table>
 </div>
 <br/>
 
+<div id='boxcontainer'>
+amount of sheet production
+<table><tr><td class='tblDetailViewLabel'>CR</td><td><input type='text' id='x_cr_ratio_1' value='<?=$cr_ratio_1?>' size="3"></td><td>:<input type='text' id='x_cr_ratio_2' value='<?=$cr_ratio_2?>' size="3"></td>
+	<td class='tblDetailViewLabel'>CV</td><td><input type='text' id='x_cv_ratio_1' value='<?=$cv_ratio_1?>' size="3"></td><td>:<input type='text' id='x_cv_ratio_2' value='<?=$cv_ratio_2?>' size="3"></tr>
+	<tr><td class='tblDetailViewLabel'>PT</td><td><input type='text' id='x_pt_ratio_1' value='<?=$pt_ratio_1?>' size="3"></td><td>:<input type='text' id='x_pt_ratio_2' value='<?=$pt_ratio_2?>' size="3"></td>
+	<td></td><td></td></tr>
+</table>
+</div>
+<br/>
 
 <br/>
 <div  style="width:100%"><center>
 <input type="button" value="<?=$btntitle?>" onclick="<?=$cmd?>;">  
 <input type="button" value="<?=$this->lang->line('cancel')?>" onclick='cancelData();'>
 </center></div>
-
 <?php
 } //End Edit and Add
 ?>  
