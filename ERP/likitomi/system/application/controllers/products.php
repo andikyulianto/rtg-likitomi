@@ -236,6 +236,12 @@ class Products extends Controller {
 		$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
 		$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 		$products['add_amount']=($this->input->post('add_amount'))?$this->input-post('add_amount'):'';
+		$products['cr_ratio_1'] = ($this->input->post('cr_ratio_1'))?$this->input->post('cr_ratio_1'):'';
+		$products['cv_ratio_1'] = ($this->input->post('cv_ratio_1'))?$this->input->post('cv_ratio_1'):'';
+		$products['pt_ratio_1'] = ($this->input->post('pt_ratio_1'))?$this->input->post('pt_ratio_1'):'';
+		$products['cr_ratio_2'] = ($this->input->post('cr_ratio_2'))?$this->input->post('cr_ratio_2'):'';
+		$products['cv_ratio_2'] = ($this->input->post('cv_ratio_2'))?$this->input->post('cv_ratio_2'):'';
+		$products['pt_ratio_2'] = ($this->input->post('pt_ratio_2'))?$this->input->post('pt_ratio_2'):'';
 		$products['remark'] = ($this->input->post('remark'))?$this->input->post('remark'):'';
 		$products['req_cr'] = ($this->input->post('req_cr'))?$this->input->post('req_cr'):'';
 		$products['req_2cl'] = ($this->input->post('req_2cl'))?$this->input->post('req_2cl'):'';
@@ -321,6 +327,12 @@ class Products extends Controller {
 			$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
 			$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 			$products['add_amount'] = ($this->input->post('add_amount'))?$this->input->post('add_amount'):'';
+			$products['cr_ratio_1'] = ($this->input->post('cr_ratio_1'))?$this->input->post('cr_ratio_1'):'';
+			$products['cv_ratio_1'] = ($this->input->post('cv_ratio_1'))?$this->input->post('cv_ratio_1'):'';
+			$products['pt_ratio_1'] = ($this->input->post('pt_ratio_1'))?$this->input->post('pt_ratio_1'):'';
+			$products['cr_ratio_2'] = ($this->input->post('cr_ratio_2'))?$this->input->post('cr_ratio_2'):'';
+			$products['cv_ratio_2'] = ($this->input->post('cv_ratio_2'))?$this->input->post('cv_ratio_2'):'';
+			$products['pt_ratio_2']=($this->input->post('pt_ratio_2'))?$this->input->post('pt_ratio_2'):'';
 			$products['remark'] = ($this->input->post('remark'))?$this->input->post('remark'):'';
 			$products['req_cr'] = ($this->input->post('req_cr'))?$this->input->post('req_cr'):'';
 			$products['req_2cl'] = ($this->input->post('req_2cl'))?$this->input->post('req_2cl'):'';

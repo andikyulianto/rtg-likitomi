@@ -56,7 +56,8 @@
 		
 		$case 	= $key->qty;
                 if(($key->slit)!=0)
-		$cut2 	= $case/$key->slit;
+		//$cut2 	= $case/$key->slit;
+		$cut2 = $case*($key->ratio);
 		$used_df = ($key->t_length*$cut2)/1000;
 		$used_bl = ($key->BL=="")?"":($key->t_length*$cut2)/1000;
 		$used_cl = ($key->CL=="")?"":($key->t_length*$cut2)/1000;
@@ -185,7 +186,37 @@
 		<td class='blankTbl'></td>
 		<td><?=round($cut2)?></td>
 		<td><?=round($mkg)?></td>
-		<td><?=$key->next_process?></td>
+		<td>
+		<?php 
+			if($key->req_2cl)
+				echo "2CL";
+			elseif($key->req_3cm)
+				echo "3CM";
+			elseif($key->req_3cs)
+				echo "3CS";
+			elseif($key->req_3cl)
+				echo "3CL";
+			elseif($key->req_4cd)
+				echo "4CD";
+			elseif($key->req_gh)
+				echo "GH";
+			elseif($key->req_hs)
+				echo "HS";
+			elseif($key->req_fg)
+				echo "FG";
+			elseif($key->req_rd)
+				echo "RD";
+			elseif($key->req_ss)
+				echo "SS";
+			elseif($key->req_remove)
+				echo "Remove Scraps";
+			elseif($key->req_foam)
+				echo "Foam";
+			elseif($key->req_tape)
+				echo "Tape";
+			else
+				echo "WH";
+		?></td>
 		<td><?=round($H)?></td><td><?=round($F)?></td><td><?=round($D)?></td><td><?=round($B)?></td><td></td>
 	</tr>
 	

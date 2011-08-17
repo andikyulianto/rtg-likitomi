@@ -289,6 +289,12 @@
 			add_blank:Ext.get('x_add_blank').dom.value,
 			add_t_length:Ext.get('x_add_t_length').dom.value,
 			add_amount:Ext.get('x_add_amount').dom.value,
+			cr_ratio_1:Ext.get('x_cr_ratio_1').dom.value,
+			cv_ratio_1:Ext.get('x_cv_ratio_1').dom.value,
+			pt_ratio_1:Ext.get('x_pt_ratio_1').dom.value,
+			cr_ratio_2:Ext.get('x_cr_ratio_2').dom.value,
+			cv_ratio_2:Ext.get('x_cv_ratio_2').dom.value,
+			pt_ratio_2:Ext.get('x_pt_ratio_2').dom.value,
 			remark:Ext.get('x_remark').dom.value,
 			req_cr:checkbox_cr,
 			req_2cl:checkbox_2cl,
@@ -334,7 +340,8 @@
 		productsall_0 = productData(0);
 		productsall_1 = productData(1);
 		productsall_2 = productData(2);
-	//	Ext.Msg.alert('Message', Ext.get('x_checkbox_cr').dom.value)
+
+	//Ext.Msg.alert('Message', Ext.get('x_pt_ratio_1').dom.value)
 		if(Ext.get('x_checkbox_cr').dom.value=='on')
 			checkbox_cr = 1;
 		else
@@ -443,6 +450,14 @@
 			add_blank:Ext.get('x_add_blank').dom.value,
 			add_t_length:Ext.get('x_add_t_length').dom.value,
 			add_amount:Ext.get('x_add_amount').dom.value,
+
+			cr_ratio_1:Ext.get('x_cr_ratio_1').dom.value,
+			cv_ratio_1:Ext.get('x_cv_ratio_1').dom.value,
+			pt_ratio_1:Ext.get('x_pt_ratio_1').dom.value,
+			cr_ratio_2:Ext.get('x_cr_ratio_2').dom.value,
+			cv_ratio_2:Ext.get('x_cv_ratio_2').dom.value,
+			pt_ratio_2:Ext.get('x_pt_ratio_2').dom.value,
+
 			remark:Ext.get('x_remark').dom.value,
 			req_cr:checkbox_cr,
 			req_2cl:checkbox_2cl,
@@ -470,7 +485,7 @@
 			updateCounter();
 		},
 		failure: function ( result, request) { 
-			Ext.MessageBox.alert('Failed', result.responseText); 
+			Ext.MessageBox.alert('Update Failed', result.responseText); 
 		} 
 		});
 		Ext.Ajax.on({

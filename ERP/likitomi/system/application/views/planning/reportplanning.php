@@ -51,6 +51,7 @@
 		document.getElementById('lnkCorrugator').className='';
 		//document.getElementById('lnkKeyIn').className='';
 		document.getElementById('lnkConvertor').className='';
+		document.getElementById('lnkPartition').className='';
 		document.getElementById('lnkDelivery').className='';
 		document.getElementById('lnkProductStatus').className='';
 	}
@@ -67,6 +68,7 @@
 		if(reportType=='lnkCorrugator') return "corrugatordaily/";
 		//if(reportType=='lnkKeyIn') return "keyin/";
 		if(reportType=='lnkConvertor') return "convertor/";
+		if(reportType=='lnkPartition') return "partition/";
 		if(reportType=='lnkDelivery') return "deliverydaily/";
 		if(reportType=='lnkProductStatus') return "productstatus/";
 	}
@@ -119,6 +121,7 @@
 		},
 	});
 	}
+
 </script>
 
 <input type='hidden' id='currentSelection' value=""/>
@@ -134,6 +137,7 @@
 							<li><a id ='lnkCorrugator' onclick='loadPlanReport("lnkCorrugator");' > Corr. Daily Plan </a></li>
 							<!--<li><a id='lnkKeyIn' onclick='loadPlanReport("lnkKeyIn");' > KeyIn </a></li> -->
 							<li><a id='lnkConvertor' onclick='loadPlanReport("lnkConvertor");' > Convertor </a></li>
+							<li><a id='lnkPartition' onclick='loadPlanReport("lnkPartition");' > Partition </a></li>
 							<li><a id='lnkDelivery' onclick='loadPlanReport("lnkDelivery");' > Delivery Plan </a></li>
 							<li><a id='lnkProductStatus' onclick='loadPlanReport("lnkProductStatus");' > Project Status </a></li>
 					</ul>

@@ -46,7 +46,7 @@
 		<td><?=$key->qty_allowance?></td>
 		<td><?=$key->delivery_date?></td>
 		<td><?=$key->delivered_qty?></td>
-		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+		<td><?=$key->total_production_qty?></td>
 		<td><?=$key->D_remarks?></td>
 		<td><?=$key->PC_remarks?></td>
 	</tr>
