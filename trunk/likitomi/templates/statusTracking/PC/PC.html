@@ -173,9 +173,9 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				&nbsp;
 				{% endif %} 
 			</div></td>
-			<td><div class="plan">{{CR_items.plan_amount}} 
+			<td><div class="plan">{{CR_items.plan_cr_amount}} 
 			<div class="actual">{% if CR_items.actual_amount_cr != NULL%}
-				 {% if CR_items.actual_amount_cr < CR_items.plan_amount %}
+				 {% if CR_items.actual_amount_cr < CR_items.plan_cr_amount %}
 					<font color="red">{{CR_items.actual_amount_cr}}</font>
 				{% else %}
 					{{CR_items.actual_amount_cr}}
@@ -235,9 +235,9 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				&nbsp;
 				{% endif %} 
 			</div></td>
-			<td> <div class="plan">{{CV_items.plan_amount}}</div><div class="actual">
+			<td> <div class="plan">{{CV_items.plan_cv_amount}}</div><div class="actual">
 			{% if CV_items.actual_amount_cv != NULL%}
-				 {% if CV_items.actual_amount_cv < plan_amount %}
+				 {% if CV_items.actual_amount_cv < plan_cv_amount %}
 					<font color="red">{{actual_amount_cv}}</font>
 				{% else %}
 					{{CV_items.actual_amount_cv}}
@@ -247,7 +247,7 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				{% endif %}
 			</div></td>
 			<td>{{CV_items.product.product_code}}</td>
-			<td>{{CV_items.cv_machine}}</td>
+			<td>{{CV_items.cv_machine_id}}</td>
 			<td>{% if CV_items.process2 == "CV" %} {{CV_items.process1}} {% endif %}{% if CV_items.process3 == "CV" %} {{CV_items.process2}} {% endif %}</td>
 			<td>{{CV_items.days_left}}</td>
 			{% endfor %}
@@ -297,9 +297,9 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				&nbsp;
 				{% endif %} 
 				</div></td>
-				<td><div class="plan"> {{PT_items.plan_amount}}</div><div class="actual">
+				<td><div class="plan"> {{PT_items.plan_pt_amount}}</div><div class="actual">
 				{% if PT_items.actual_amount_pt != NULL%}
-				 {% if PT_items.actual_amount_pt < PT_items.plan_amount %}
+				 {% if PT_items.actual_amount_pt < PT_items.plan_pt_amount %}
 				<font color="red">{{PT_items.actual_amount_pt}}</font>
 				{% else %}
 				{{PT_items.actual_amount_pt}}

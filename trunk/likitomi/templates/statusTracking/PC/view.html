@@ -106,7 +106,7 @@
 				&nbsp;
 				{% endif %} </td>
 				<td>{{item.product.product_code}}</td>
-				<td>{{item.cv_machine}}</td>
+				<td>{{item.cv_machine_id}}</td>
 				<td>{{item.product.partner.partner_name}}</td>
 				<td>{{item.product.product_name}}</td>
 				<td align="right">{{item.product.p_width_inch}}</td>
@@ -117,10 +117,10 @@
 				<td>{{item.plan_due|date:"d/m"}}</td>
 				<td align="right">{{item.plan_amount}}</td>
 				<td>{{item.plan_cr_start|date:"d/m"}}</td>
-				<td align="right">{{item.plan_amount}}</td>
+				<td align="right">{{item.plan_cr_amount}}</td>
 				<td align="right">{{item.cr_time_used}}</td>
 					{% if item.plan_cv_start != NULL %}
-					<td>{{item.plan_cv_start|date:"d/m"}}</td><td align="right">{{item.plan_amount}}</td><td align="right">{{item.cv_time_used}}</td>
+					<td>{{item.plan_cv_start|date:"d/m"}}</td><td align="right">{{item.plan_cv_amount}}</td><td align="right">{{item.cv_time_used}}</td>
 					{% else %}
 					<td bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td><td  bgColor=#EBDDE2></td>
 					{% endif %}

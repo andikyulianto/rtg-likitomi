@@ -85,9 +85,9 @@
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
-	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	<td><div class="plan">{{item.plan_cv_amount}}</div><div class="actual">
 	{% if item.actual_amount_cv_in != NULL%}
-		{% if item.actual_amount_cv_in < item.plan_amount %}
+		{% if item.actual_amount_cv_in < item.plan_cv_amount %}
 			<font color="red">{{item.actual_amount_cv_in}}</font>
 		{% else %}
 			{{item.actual_amount_cv_in}}
@@ -97,9 +97,9 @@
 	{% endif %}
 	</div></td>
 	
-		<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+		<td><div class="plan">{{item.plan_cv_amount}}</div><div class="actual">
 	{% if item.actual_amount_cv != NULL%}
-		{% if item.actual_amount_cv < item.plan_amount %}
+		{% if item.actual_amount_cv < item.plan_cv_amount %}
 			<font color="red">{{item.actual_amount_cv}}</font>
 		{% else %}
 			{{item.actual_amount_cv}}
@@ -128,7 +128,7 @@
 	<td>{% if item.product.rope_color != NULL %}{{item.product.rope_color}}{% endif %}</td>
 	<td>{{item.cv_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td> {{item.plan_id}}</td>
+	<td> {{item.mo_cv_code}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.partner.partner_name}}</td>

@@ -63,9 +63,9 @@
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
-	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	<td><div class="plan">{{item.plan_cr_amount}}</div><div class="actual">
 	{% if item.actual_amount_cr != NULL%}
-		{% if item.actual_amount_cr < item.plan_amount %}
+		{% if item.actual_amount_cr < item.plan_cr_amount %}
 			<font color="red">{{item.actual_amount_cr}}</font>
 		{% else %}
 			{{item.actual_amount_cr}}
@@ -162,9 +162,9 @@
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
-	<td><div class="plan">{{item.plan_amount}}<div><div class="actual">
+	<td><div class="plan">{{item.plan_cr_amount}}<div><div class="actual">
 	{% if item.actual_amount_cr != NULL%}
-		{% if item.actual_amount_cr < item.plan_amount %}
+		{% if item.actual_amount_cr < item.plan_cr_amount %}
 			<font color="red">{{item.actual_amount_cr}}</font>
 		{% else %}
 			{{item.actual_amount_cr}}

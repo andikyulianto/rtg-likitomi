@@ -115,7 +115,7 @@
 	{% for item in itemsOut %}
 	<tr id="{{ item.stateDL}}" class="{% cycle 'odd' 'even' %}">
 	<td>{% if whOut == item.plan_due %}> {% endif %}</td>
-	<td><div class="plan"><a href="{{ endWH_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_due|time:"H:i"}}</a></div>
+	<td><div class="plan">{{item.plan_due|time:"H:i"}}</div>
 	<div class="actual">
 		{% if item.actual_wh_end != NULL %}
 				{{item.actual_wh_end|time:"H:i"}}

@@ -42,37 +42,33 @@
 
 	<table cellspacing="2" cellpadding="2" class="tblFixedBorder" width="630">
 	<tbody><tr>
-        <td class="tblProdViewLabel">Product code</td>
-        	<td class="tblProdViewLabel">MO</td>
+        <td class="tblProdViewLabel">Color</td>
+		<td class="tblProdViewLabel">Time</td>
+		<td class="tblProdViewLabel">Speed</td>
+		<td class="tblProdViewLabel">MO</td>
 		<td class="tblProdViewLabel">Sale Order</td>
+		<td class="tblProdViewLabel">PO</td>
 		<td class="tblProdViewLabel">P.Code</td>
 		<td class="tblProdViewLabel">Customer</td>
 		<td class="tblProdViewLabel">Product Name</td>
-		<td class="tblProdViewLabel">RD</td>
-		<td class="tblProdViewLabel">SS</td>
-		<td class="tblProdViewLabel">Remove Scraps</td>
-		<td class="tblProdViewLabel">Foam</td>
-		<td class="tblProdViewLabel">Tape</td>
+		<td class="tblProdViewLabel">Expected Amount</td>
+		<!--<td class="tblProdViewLabel">Next Process</td>-->
 	</tr>
 	
 <tr>
-
-	
-	
-	<td class="tblProdView">{{plan.product.product_code}}</td>
+	<td class="tblProdView">{{color}}</td>
+	<td class="tblProdView">{{time}}</td>
+	<td class="tblProdView">{{speed}} pcs/min</td>
 	<td class="tblProdView">{{mo}}</td>
 	<td class="tblProdView">{{so}}</td>
 	<td class="tblProdView">{{po}}</td>
-	<td class="tblProdView">{{plan.product.parent_code.partner.partner_name}}</td>
-	<td class="tblProdView">{{plan.product.parent_code.product_name}}</td>
-	<td class="tblProdView">{% if plan.product.parent_code.req_rd %} YES {% endif %}</td>
-	<td class="tblProdView">{% if plan.product.parent_code.req_ss %} YES {% endif %}</td>
-	<td class="tblProdView">{% if plan.product.parent_code.req_remove %} YES {% endif %}</td>
-	<td class="tblProdView">{% if plan.product.parent_code.req_foam %} YES {% endif %}</td>
-	<td class="tblProdView">{% if plan.product.parent_code.req_tape %} YES {% endif %}</td>
+	<td class="tblProdView">{{product_code}}</td>
+	<td class="tblProdView">{{partner}}</td>
+	<td class="tblProdView">{{product_name}}</td>
+	<td class="tblProdView">{{amount}}</td>
+	<!--<td class="tblProdView">{{next_process}}</td>-->
 </tr>
 </tbody></table>
-
 
 <br><br>
 	<div id="boxcontainer" style="width:630px">

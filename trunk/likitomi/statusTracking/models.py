@@ -327,6 +327,12 @@ class ProductCatalog(models.Model):
     add_blank = models.IntegerField()
     add_t_length = models.IntegerField()
     add_amount = models.IntegerField()
+    cr_ratio_1 = models.IntegerField()
+    cv_ratio_1 = models.IntegerField()
+    pt_ratio_1 = models.IntegerField()
+    cr_ratio_2 = models.IntegerField()
+    cv_ratio_2 = models.IntegerField()
+    pt_ratio_2 = models.IntegerField()
     t_length = models.IntegerField(null=True, blank=True)
     cut = models.IntegerField(null=True, blank=True)
     next_process = models.CharField(max_length=300, blank=True)
@@ -607,8 +613,16 @@ class StatusTracking(models.Model):
 		return self.plan_amount
 	else :
 		return self.plan_amount / self.product.slit
+    def plan_cr_amount(self):
+	return self.plan_amount * self.product.cr_ratio_2 / self.product.cr_ratio_1
+    def plan_cv_amount(self):
+    	return self.plan_amount * self.product.cv_ratio_2 / self.product.cv_ratio_1
+    def plan_pt_amount(self):
+	return self.plan_amount * self.product.pt_ratio_2 / self.product.pt_ratio_1
+		
     class Meta:
         db_table = u'status_tracking'
+        
 #    def set_days_left(self):
 #        import datetime
  #       self.days_left = int((datetime.datetime.now() - self.plan_due))
