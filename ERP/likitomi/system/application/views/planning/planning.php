@@ -16,7 +16,7 @@
 	var sm = new Ext.grid.CheckboxSelectionModel();
 	var cm = new Ext.grid.ColumnModel([
 	sm,
-		{header: 'ID', 	dataIndex:'delivery_id', width:10, hidden:true},
+		{header: 'ID', 	dataIndex:'delivery_id', width:10, hidden:false},
 		{header: 'S.O',	dataIndex: 'sales_order', width:50},
 		{header: 'PO',	dataIndex: 'purchase_order_no',width:100},
 		{header: 'P.Code',dataIndex: 'product_code',width:100},
@@ -159,7 +159,7 @@
 	var smPreview = new Ext.grid.CheckboxSelectionModel();
 	var cmPreview = new Ext.grid.ColumnModel([
 	smPreview,
-		{header: 'ID', 	dataIndex:'delivery_id', width:10, hidden:true},
+		{header: 'ID', 	dataIndex:'delivery_id', width:10, hidden:false},
 		{header: 'S.O',	dataIndex: 'sales_order', width:50},
 		{header: 'PO',	dataIndex: 'purchase_order_no',width:100},
 		{header: 'P.Code',dataIndex: 'product_code',width:100},
@@ -357,7 +357,10 @@
 					deliveryid  =  records[i].get('delivery_id');
 					if(checkDuplicate(deliveryid))
 					{
-						selm.selectRow(i,true);
+						selm.selectRow(i,true); // checked status is here!
+//						selm.on("beforerowselect", function(){ // added by Patipol
+////							alert(selm.getSelections());
+//						});
 					}
 				}
 				
@@ -712,7 +715,11 @@
 									showStep(2);
 								},
 								failure: function ( result, request) { 
-									Ext.MessageBox.alert('Failed', result.responseText); 
+									Ext.MessageBox.show({
+										title: 'Failed',
+										msg: result.responseText,
+										width: 400
+									}); 
 								} 
 							});	
 						}
@@ -772,6 +779,7 @@
 	function resultGrid()
 	{
 		var grid = new Ext.grid.EditorGridPanel({
+			disableSelection: true, // added by Patipol
 			id:'resultGrid',
 			store: resultStore,
 			cm:cm,

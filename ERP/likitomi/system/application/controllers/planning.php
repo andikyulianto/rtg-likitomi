@@ -934,6 +934,7 @@ class Planning extends Controller {
 			}else {
 			$deliveryList[$cnt]['flute']			= "";
 			}
+			//$deliveryList[$cnt]['DF']			= $partnerproduct->DF;
 			$deliveryList[$cnt]['cut']			= $partnerproduct->cut;
 			
 			$deliveryList[$cnt]['delivery_date']= $delivery->delivery_date;
