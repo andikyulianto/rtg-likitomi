@@ -78,14 +78,14 @@ def showCV(User,section_title):
 	cvThreeCL = str(currentProcess("3CL"))[3:9]
 	cvTwoCL = str(currentProcess("2CL"))[3:9]
 	cvThreeCS = str(currentProcess("3CS"))[3:9]
-	item_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start')
+	item_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).filter(Q(cv_machine='3CS')|Q(cv_machine='2CL')|Q(cv_machine='4CD')|Q(cv_machine='3CM')|Q(cv_machine='3CL')).order_by('plan_cv_start')
 	items = list(item_plan)
 	##monthlyPlan
 	datefrominMonth = datetime(today.year,today.month,1)
 	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
-	item_planM = StatusTracking.objects.filter(plan_cv_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	item_planM = StatusTracking.objects.filter(plan_cv_start__range=(datefrominMonth,datetoinMonth)).filter(Q(cv_machine='3CS')|Q(cv_machine='2CL')|Q(cv_machine='4CD')|Q(cv_machine='3CM')|Q(cv_machine='3CL')).order_by('plan_due')
 	itemsM = list(item_planM)
 	return render_to_response('PC/CV.html', locals())
 #################################
@@ -101,7 +101,7 @@ def showPT(User,section_title):
 	page = "PT"
 	today = todayDate()
 	pt = str(currentTimeProcess("PT"))
-	item_plan = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).order_by('plan_pt_start')
+	item_plan = StatusTracking.objects.filter(plan_pt_start__year=today.year, plan_pt_start__month=today.month, plan_pt_start__day=today.day).filter(Q(cv_machine='SS')|Q(cv_machine='RD')|Q(cv_machine='Remove')|Q(cv_machine='Foam')|Q(cv_machine='Tape')).order_by('plan_pt_start')
 	items = list(item_plan)
 #	print str(items) +"show PT"
 	##monthlyPlan
@@ -109,7 +109,7 @@ def showPT(User,section_title):
 	datetoinMonth = datetime(today.year,today.month,calendar.monthrange(today.year,today.month)[1])
 	strThisMonth = today.strftime("%B")
 	thisMonth = today.month
-	item_planM = StatusTracking.objects.filter(plan_pt_start__range=(datefrominMonth,datetoinMonth)).order_by('plan_due')
+	item_planM = StatusTracking.objects.filter(plan_pt_start__range=(datefrominMonth,datetoinMonth)).filter(Q(cv_machine='SS')|Q(cv_machine='RD')|Q(cv_machine='Remove')|Q(cv_machine='Foam')|Q(cv_machine='Tape')).order_by('plan_due')
 	itemsM = list(item_planM)
 	return render_to_response('PC/PT.html', locals())
 #################################
