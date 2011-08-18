@@ -28,7 +28,8 @@ def startUpdate(request):
 	task = request.GET['task']
 	at = request.GET['at']
 	pID = request.GET['pID']
-	ref_in = request.GET['ref_in']
+	if(at=="WH"):
+		ref_in = request.GET['ref_in']
 	if(at!="CR"):
 		amount = request.GET['amount']
 
@@ -57,6 +58,7 @@ def startUpdate(request):
 		obj.actual_wh_start = current_time
 		obj.actual_amount_wh = amount
 		dl.doc_ref_in = ref_in
+		dl.total_production_qty = amount
 		obj.save()
 		dl.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter"
@@ -75,7 +77,8 @@ def endUpdate(request):
 	task = request.GET['task']
 	at = request.GET['at']
 	amount = request.GET['amount']
-	ref_out = request.GET['ref_out']
+	if(at=="WH"):
+		ref_out = request.GET['ref_out']
 
 	pID = request.GET['pID']
 	obj = StatusTracking.objects.get(plan_id=pID)
@@ -103,6 +106,7 @@ def endUpdate(request):
 		obj.actual_wh_end = current_time
 		obj.actual_amount_wh_out = amount
 		dl.doc_ref_out = ref_out
+		dl.delivered_qty = amount
 		obj.save()
 		dl.save()
 		path = rootPath()+"/home/?user="+username+"&Enter=Enter#tabs-2"

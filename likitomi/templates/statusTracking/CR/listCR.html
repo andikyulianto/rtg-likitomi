@@ -94,9 +94,9 @@
 				&nbsp;
 				{% endif %} </div></td>
 				
-	<td><div class="plan">{{item.plan_amount}}</div><div class="actual">
+	<td><div class="plan">{{item.plan_cr_amount}}</div><div class="actual">
 	{% if item.actual_amount_cr != NULL%}
-		{% if item.actual_amount_cr < item.plan_amount %}
+		{% if item.actual_amount_cr < item.plan_cr_amount %}
 			<font color="red">{{item.actual_amount_cr}}</font>
 		{% else %}
 			{{item.actual_amount_cr}}
@@ -106,7 +106,7 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product_auto.product_code}}</td>
-	<td> {{item.plan_id}}</td>
+	<td> {{item.mo_cr_code}}</td>
 	<td>{{item.product.partner.partner_name}}</td>
 	<td>{{item.product.product_name}}</td>
 	<td>{{item.product_auto.flute}}</td>
@@ -116,7 +116,7 @@
 	<td>{{item.product_auto.cm}}</td>
 	<td>{{item.product_auto.cl}}</td>
 	<td>{{item.product_auto.width_mm}}</td>
-	<td>{{item.plan_amount}}</td>
+	<td>{{item.plan_cr_amount}}</td>
 	<td>{{item.cut}}</td>
 	<td>{{item.product_auto.length_mm}}</td>
 	<td>{{item.product.blank}}</td>
