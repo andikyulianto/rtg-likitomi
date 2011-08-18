@@ -9,7 +9,6 @@
 
 from django.db import models
 from django.contrib.auth.models import User
-from statusTracking.config import getCVSpeed
 
 
 class Addresses(models.Model):
@@ -452,6 +451,13 @@ class TotalPlanning(models.Model):
     class Meta:
         db_table = u'total_planning'
 
+class Machine(models.Model):
+    machine_name = models.CharField(primary_key=True,max_length=10)
+    speed = models.IntegerField()
+    is_working = models.IntegerField()
+    class Meta:
+        db_table = u'machine'
+
 class StatusTracking(models.Model):
     plan_id = models.AutoField(primary_key=True)
     delivery = models.ForeignKey(Delivery,null=True)
@@ -491,31 +497,36 @@ class StatusTracking(models.Model):
 #    process3 = models.CharField(max_length=5, blank=True)
 #    process4 = models.CharField(max_length=5, blank=True)
 
-    cv_machine = models.CharField(max_length=15, blank=True)
+    cv_machine = models.ForeignKey(Machine,null=False)
+    mo_cr_code = models.CharField(max_length=10, blank=True)
+    mo_cv_code = models.CharField(max_length=10, blank=True)
+    mo_pt_code = models.CharField(max_length=10, blank=True)
     def process1(self):
 	if(self.product.req_cr==1):
 	 	return "CR"
-	elif(self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1):
+	elif(self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1):
 	 	return "CV"
-	elif(self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1):
+	elif(self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1 or self.product.req_rd==1 or self.product.req_ss==1):
 	 	return "PT"
 	elif(self.product.req_wh==1):
 	 	return "WH"
 	else:
 		return ""
     def process2(self):
-	if(self.product.req_cr==1 and (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1)):
+	if(self.product.req_cr==1 and (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1)):
 	 	return "CV"
-	elif(self.product.req_cr==1 and not (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
+	elif(self.product.req_cr==1 and not (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1 or self.product.req_rd==1 or self.product.req_ss==1)):
 	 	return "PT"
 	elif(self.product.req_cr==1 and not (self.product.req_2cl==1 or self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1 or self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
 	 	return "WH"
 	else:
 		return ""
     def process3(self):
-	if(self.product.req_cr==1 and (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
+	if(self.product.req_cr==1 and (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1  or self.product.req_rd==1 or self.product.req_ss==1)):
 	 	return "PT"
-	elif(self.product.req_cr==1 and (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1 or self.product.req_rd==1 or self.product.req_ss==1 ) and not (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1)):
+	elif(self.product.req_cr==1 and (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1) and not (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1  or self.product.req_rd==1 or self.product.req_ss==1 )):
+	 	return "WH"
+	elif(self.product.req_cr==1 and not (self.product.req_3cm ==1 or self.product.req_3cs==1 or self.product.req_4cd==1 or self.product.req_3cl==1 or self.product.req_gh==1 or self.product.req_hs==1 or self.product.req_fg==1) and (self.product.req_remove==1 or self.product.req_foam==1 or self.product.req_tape==1  or self.product.req_rd==1 or self.product.req_ss==1 )):
 	 	return "WH"
 	else:
 		return ""
@@ -526,7 +537,7 @@ class StatusTracking(models.Model):
 		return ""
 #    days_left = models.IntegerField(null=True, blank=True)
     def speed(self):
-        return getCVSpeed(self.cv_machine)
+        return self.cv_machine.speed
 #    days_left = models.IntegerField(null=True, blank=True)
     def days_left(self):
         import datetime
@@ -539,6 +550,8 @@ class StatusTracking(models.Model):
         return float((self.plan_cr_end - self.plan_cr_start).seconds)/60
     def cv_time_used(self):
         return float((self.plan_cv_end - self.plan_cv_start).seconds)/60
+    def pt_time_used(self):
+        return float((self.plan_pt_end - self.plan_pt_start).seconds)/60
     def state(self):
 	if self.actual_amount_wh == None :
 		status = 'notProcess'

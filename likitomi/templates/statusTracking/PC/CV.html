@@ -91,8 +91,11 @@
 		{% else %}{% if item.product.req_3cs = 1 %} 3CS
 		{% else %}{% if item.product.req_3cl = 1 %} 3CL
 		{% else %}{% if item.product.req_4cd = 1 %} 3CD
+		{% else %}{% if item.product.req_gh = 1 %} GH
+		{% else %}{% if item.product.req_hs = 1 %} HS
+		{% else %}{% if item.product.req_fg = 1 %} FG
 
-	 	{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}</td>
+	 	{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}{% endif %}</td>
 	<td>{% if item.process4 == 'CV' %}
 		    {{item.process3}}
 		{% else %}{% if item.process3 == 'CV'%}
@@ -103,7 +106,7 @@
 	<td>{% if item.product.rope_color != NULL %}{{item.product.rope_color}}{% endif %}</td>
 	<td>{{item.cv_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td> {{item.plan_id}}</td>
+	<td> {{item.mo_cv_code}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.partner.partner_name}}</td>
@@ -221,7 +224,7 @@
 	<td>{% if item.product.rope_color != NULL %}{{item.product.rope_color}}{% endif %}</td>
 	<td>{{item.cv_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td> {{item.plan_id}}</td>
+	<td> {{item.mo_cv_code}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.partner.partner_name}}</td>

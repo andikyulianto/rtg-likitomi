@@ -45,7 +45,7 @@
 {% for item in items %}
 <tr id="{{ item.statePT}}">
 	<td>{% if pt == item.product.product_code %} > {% endif %}</td>
-	<td><div class="plan"><a href="{{ startPT_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_start|time:"H:i"}}</a></div>
+	<td><div class="plan">{{item.plan_pt_start|time:"H:i"}}</div>
 	<div class="actual">
 				{% if item.actual_pt_start != NULL %}
 				{{item.actual_pt_start|time:"H:i"}}
@@ -53,7 +53,7 @@
 				&nbsp;
 				{% endif %} 
 	</div></td>
-	<td><div class="plan"><a href="{{ endPT_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_end|time:"H:i" }}</a></div><div class="actual">
+	<td><div class="plan">{{item.plan_pt_end|time:"H:i" }}</div><div class="actual">
 				{% if item.actual_pt_end != NULL %}
 				{{item.actual_pt_end|time:"H:i" }}
 				{% else %}
@@ -101,7 +101,7 @@
 	<td>{% if item.product.rope_color != NULL %}{{item.product.rope_color}}{% endif %}</td>
 	<td>{{item.pt_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td> {{item.plan_id}}</td>
+	<td> {{item.mo_pt_code}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.partner.partner_name}}</td>
@@ -110,9 +110,9 @@
 		{% if item.process1 == 'PT' and item.process2 != NULL %}
 		    {{item.process2}}
 		{% else %}{% if item.process2 == 'PT' and item.process3 != NULL %}
-		    {{ item.process3 }}
+		    {{item.process3}} 
 		{% else %}{% if item.process3 == 'PT' and item.process4 != NULL %}
-		    {{ item.process4 }}
+		    {{item.process4}}
 		{% else %}{% if item.process3 == NULL and item.process1 == NULL and item.process2 == NULL and item.process3 == NULL %}
 		
 		{% endif %}{% endif %}{% endif %}{% endif %}</td>
@@ -164,7 +164,7 @@
 			{% for item in itemsM %}
 	<tr id="{{ item.statePT}}">
 	<td>{% if pt == item.product.product_code %} > {% endif %}</td>
-	<td><div class="plan"><a href="{{ startPT_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_start|time:"H:i"}}</a></div>
+	<td><div class="plan">{{item.plan_pt_start|time:"H:i"}}</div>
 	<div class="actual">
 				{% if item.actual_pt_start != NULL %}
 				{{item.actual_pt_start|time:"H:i"}}
@@ -172,7 +172,7 @@
 				&nbsp;
 				{% endif %} 
 	</div></td>
-	<td><div class="plan"><a href="{{ endPT_url }}?eID={{eID}}&pID={{item.plan_id}}">{{item.plan_pt_end|time:"H:i" }}</a></div><div class="actual">
+	<td><div class="plan">{{item.plan_pt_end|time:"H:i" }}</div><div class="actual">
 				{% if item.actual_pt_end != NULL %}
 				{{item.actual_pt_end|time:"H:i" }}
 				{% else %}
@@ -220,7 +220,7 @@
 	<td>{% if item.product.rope_color != NULL %}{{item.product.rope_color}}{% endif %}</td>
 	<td>{{item.pt_time_used}}</td>
 	<td>{{item.speed}}</td>
-	<td> {{item.plan_id}}</td>
+	<td> {{item.mo_pt_code}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.product.partner.partner_name}}</td>
