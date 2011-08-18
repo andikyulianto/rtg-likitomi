@@ -11,11 +11,11 @@ from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 #HOST = '192.168.1.55' # My own local network: Linksys
 
 #HOST = '192.168.2.88' # Likitomi's factory: previous
-HOST = '192.168.101.20' # Likitomi's factory: current
+HOST = '192.168.1.20' # Likitomi's factory: current
 PORT = 50007
 
 # RFID: paper roll and location tags #
-rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
+rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def minclamp(request):
 # Query tag ID, paper code, and size for assigning tag #
