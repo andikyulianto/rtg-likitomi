@@ -110,6 +110,7 @@
 			renderer: Ext.util.Format.dateRenderer('Y-m-d'), 
 			editor: new Ext.form.DateField({
                 format: 'Y-m-d',
+                
 			}),
 			tooltip: 'Corrugator Date',
 			width:80,
@@ -119,6 +120,7 @@
 			dataIndex: 'corrugator_time',
 			editor: new Ext.form.TimeField({
                 format: 'H:i',
+                increment: 1,
 			}),
 			tooltip: 'Corrugator Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
@@ -138,8 +140,53 @@
 			header: 'Conv-Time*',
 			dataIndex: 'converter_time',
 			editor: new Ext.form.TimeField({
-                format:'H:i'
+                format:'H:i',
+                increment: 1,
             }),
+			//renderer: Ext.util.Format.dateRenderer('H:i'),
+			width:80,
+		},
+		{
+			header: 'Pad-Date',
+			dataIndex: 'padpartition_date',
+			renderer: Ext.util.Format.dateRenderer('Y-m-d'), 
+			editor: new Ext.form.DateField({
+                format: 'Y-m-d',
+                
+			}),
+			tooltip: 'Pad/Partition Date',
+			width:80,
+		},
+		{
+			header: 'Pad-Time*',
+			dataIndex: 'padpartition_time',
+			editor: new Ext.form.TimeField({
+                format: 'H:i',
+                increment: 1,
+			}),
+			tooltip: 'Pad/Partition Time',
+			//renderer: Ext.util.Format.dateRenderer('H:i'),
+			width:80,
+		},
+		{
+			header: 'WH-Date',
+			dataIndex: 'warehouse_date',
+			renderer: Ext.util.Format.dateRenderer('Y-m-d'), 
+			editor: new Ext.form.DateField({
+                format: 'Y-m-d',
+                
+			}),
+			tooltip: 'WH Date',
+			width:80,
+		},
+		{
+			header: 'WH-Time*',
+			dataIndex: 'warehouse_time',
+			editor: new Ext.form.TimeField({
+                format: 'H:i',
+                increment: 1,
+			}),
+			tooltip: 'WH Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
 			width:80,
 		},
@@ -262,6 +309,7 @@
 			dataIndex: 'corrugator_time',
 			editor: new Ext.form.TimeField({
                 format: 'H:i',
+                increment: 1,
 			}),
 			tooltip: 'Corrugator Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
@@ -281,8 +329,54 @@
 			header: 'Conv-Time*',
 			dataIndex: 'converter_time',
 			editor: new Ext.form.TimeField({
-                format:'H:i'
+                format:'H:i',
+                increment: 1,
             }),
+			//renderer: Ext.util.Format.dateRenderer('H:i'),
+			width:80,
+		},
+
+		{
+			header: 'Pad-Date',
+			dataIndex: 'padpartition_date',
+			renderer: Ext.util.Format.dateRenderer('Y-m-d'), 
+			editor: new Ext.form.DateField({
+                format: 'Y-m-d',
+                
+			}),
+			tooltip: 'Pad/Partition Date',
+			width:80,
+		},
+		{
+			header: 'Pad-Time*',
+			dataIndex: 'padpartition_time',
+			editor: new Ext.form.TimeField({
+                format: 'H:i',
+                increment: 1,
+			}),
+			tooltip: 'Pad/Partition Time',
+			//renderer: Ext.util.Format.dateRenderer('H:i'),
+			width:80,
+		},
+		{
+			header: 'WH-Date',
+			dataIndex: 'warehouse_date',
+			renderer: Ext.util.Format.dateRenderer('Y-m-d'), 
+			editor: new Ext.form.DateField({
+                format: 'Y-m-d',
+                
+			}),
+			tooltip: 'WH Date',
+			width:80,
+		},
+		{
+			header: 'WH-Time*',
+			dataIndex: 'warehouse_time',
+			editor: new Ext.form.TimeField({
+                format: 'H:i',
+                increment: 1,
+			}),
+			tooltip: 'WH Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
 			width:80,
 		},
@@ -329,13 +423,13 @@
 		{ name: 'modified_on'},
 		{ name: 'status'},
 		{ name: 'corrugator_date',	type: 'date', dateFormat: 'Y-m-d'},
-		{ name: 'corrugator_time',	type: 'date', },
+		{ name: 'corrugator_time',	type: 'date', dateFormat: 'H:i'},
 		{ name: 'converter_date',	type: 'date', dateFormat: 'Y-m-d'},
-		{ name: 'converter_time', 	type: 'date', },
+		{ name: 'converter_time', 	type: 'date', dateFormat: 'H:i'},
 		{ name: 'patchpartition_date',	type: 'date', dateFormat: 'Y-m-d'},
-		{ name: 'patchpartition_time',	type: 'date', },
+		{ name: 'patchpartition_time',	type: 'date', dateFormat: 'H:i'},
 		{ name: 'warehouse_date',	type: 'date', dateFormat: 'Y-m-d'},
-		{ name: 'warehouse_time', 	type: 'date', },
+		{ name: 'warehouse_time', 	type: 'date',dateFormat: 'H:i' },
 		//{ name: 'next_process'),
 		{ name: 'sort' },
 	]);

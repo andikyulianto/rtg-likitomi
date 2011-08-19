@@ -83,6 +83,7 @@ class Reportplanning extends Controller {
 		$today  	= date('Y-m-d');
 		$plandate 	= ($this->input->post('plandate'))?$this->input->post('plandate'):$today;
 		$data['resultConvertor'] = $this->Planning_model->convertor($plandate);
+		$data['machine'] = $this->Planning_model->machine();
 		$data['plandate'] = $plandate;
 		$this->load->view('planning/convertor',$data);
 	}

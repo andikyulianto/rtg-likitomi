@@ -186,7 +186,7 @@ class Products_model extends Model
 			{
 				$products_item['modified_on'] 	= date("Y-m-d G:i:s");
 				$products_item['modified_by']	= $_SERVER['REMOTE_ADDR'];
-				$this->db->where('auto_pid', $pid);
+				$this->db->where('auto_id', $pid);
 				$this->db->update($this->tblProducts, $products_item); 	
 				//echo $this->db->last_query();
 				return "Success";

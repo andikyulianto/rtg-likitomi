@@ -127,8 +127,8 @@
 		<td><?=$key->product_name?></td>
 		<!--MO number; Barcode will be added here--> 
 		<!--<td><?=$key->autoid?></td>-->
-		<?php $path = "/planning/barcode/".$key->autoid."/"; ?> 
-		<td ><img src=<?php echo site_url($path)?> /><br> <?=$key->autoid ?></td> 
+		<?php $path = "/planning/barcode/".$key->mo_cr_code."/"; ?> 
+		<td ><img src=<?php echo site_url($path)?> /><br> <?=$key->mo_cr_code ?></td> 
 
 		
 		<td><?=$key->DF?></td>

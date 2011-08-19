@@ -162,8 +162,8 @@
 	<td><?=round($key->qty/$speed)?></td>
 	<td><?=$speed?></td>	
 	<td><?php
-		$path = "/planning/barcode/".$key->autoid."/";
-		echo "<img src='".site_url($path)."' /><br>".$key->autoid;
+		$path = "/planning/barcode/".$key->mo_pt_code."/";
+		echo "<img src='".site_url($path)."' /><br>".$key->mo_pt_code;
 		?>
 	</td>
 	<td><?=$key->scoreline_f?></td>
