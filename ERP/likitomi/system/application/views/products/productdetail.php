@@ -357,7 +357,7 @@ if($action=='edit'){
 	$widthArray= array();$heightArray= array();$qtysetArray= array();
 	$cnt=0;
 	foreach($resultProducts as $prod){
-		//$idArray[$cnt] = $prod->auto_pid;
+		$idArray[$cnt] = $prod->auto_id;
 		$codeArray[$cnt] = $prod->product_code;
 		$fluteArray[$cnt] = $prod->flute;
 		$DFArray[$cnt] = $prod->DF;

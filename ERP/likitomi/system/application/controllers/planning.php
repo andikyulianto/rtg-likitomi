@@ -135,47 +135,7 @@ class Planning extends Controller {
 			//$deliveryList[$cnt]['next_process']	= "";
 			$deliveryList[$cnt]['sort']	= $cnt;
 			
-			//Add by Fon
-/*			$productProcess	= $this->Planning_model->getProductCatProcess($delivery->product_id);
-			if($productProcess->num_rows()>0){
-				echo $productProcess;
-				$deliveryList[$cnt]['req_cr'] =$productProcess->row()->req_cr;
-				$deliveryList[$cnt]['req_2cl'] = $productProcess->row()->req_2cl;
-				$deliveryList[$cnt]['req_gh'] = $productProcess->row()->req_gh;
-				$deliveryList[$cnt]['req_rd'] = $productProcess->row()->req_rd;
-				$deliveryList[$cnt]['req_wh'] = $productProcess->row()->req_wh;
-				$deliveryList[$cnt]['req_3cm'] = $productProcess->row()->req_3cm;
-				$deliveryList[$cnt]['req_hs'] = $productProcess->row()->req_hs;
-				$deliveryList[$cnt]['req_ss'] = $productProcess->row()->req_ss;
-				$deliveryList[$cnt]['req_3cs'] = $productProcess->row()->req_3cs;
-				$deliveryList[$cnt]['req_fg'] = $productProcess->row()->req_fg;
-				$deliveryList[$cnt]['req_remove'] = $productProcess->row()->req_remove;
-				$deliveryList[$cnt]['req_4cd'] = $productProcess->row()->req_4cd;
-				$deliveryList[$cnt]['req_foam'] = $productProcess->row()->req_foam;
-				$deliveryList[$cnt]['req_3cl'] = $productProcess->row()->req_3cl;
-				$deliveryList[$cnt]['req_tape'] = $productProcess->row()->req_tape;
 
-
-			}else {
-				$deliveryList[$cnt]['req_cr'] ="";
-				$deliveryList[$cnt]['req_2cl'] = "";
-				$deliveryList[$cnt]['req_gh'] = "";
-				$deliveryList[$cnt]['req_rd'] = "";
-				$deliveryList[$cnt]['req_wh'] = "";
-				$deliveryList[$cnt]['req_3cm'] = "";
-				$deliveryList[$cnt]['req_hs'] = "";
-				$deliveryList[$cnt]['req_ss'] = "";
-				$deliveryList[$cnt]['req_3cs'] = "";
-				$deliveryList[$cnt]['req_fg'] = "";
-				$deliveryList[$cnt]['req_remove'] = "";
-				$deliveryList[$cnt]['req_4cd'] = "";
-				$deliveryList[$cnt]['req_foam'] = "";
-				$deliveryList[$cnt]['req_3cl'] = "";
-				$deliveryList[$cnt]['req_tape'] = "";
-	
-
-			}
-*/
 			$cnt++;
 		}
 		
@@ -447,6 +407,7 @@ class Planning extends Controller {
 		}
 		if($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape'])
 		{
+			
 			if($key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd']){
 				$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
 			}
@@ -932,9 +893,23 @@ class Planning extends Controller {
 			if($productflutes->num_rows()>0){
 				$deliveryList[$cnt]['flute']		= $productflutes->row()->flute;
 			}else {
-			$deliveryList[$cnt]['flute']			= "";
+				$deliveryList[$cnt]['flute']			= "";
 			}
-			//$deliveryList[$cnt]['DF']			= $partnerproduct->DF;
+			$productsTbl = $this->Planning_model->getProduct($delivery->product_code);
+			if($productflutes->num_rows()>0){
+				$deliveryList[$cnt]['DF']			= $productsTbl->row()->DF;
+				$deliveryList[$cnt]['BM']			= $productsTbl->row()->BM;
+				$deliveryList[$cnt]['BL']			= $productsTbl->row()->BL;
+				$deliveryList[$cnt]['CM']			= $productsTbl->row()->CM;
+				$deliveryList[$cnt]['CL']			= $productsTbl->row()->CL;
+			}else {
+				$deliveryList[$cnt]['DF']			= "";
+				$deliveryList[$cnt]['BM']			= "";
+				$deliveryList[$cnt]['BL']			= "";
+				$deliveryList[$cnt]['CM']			= "";
+				$deliveryList[$cnt]['CL']			= "";
+			}
+
 			$deliveryList[$cnt]['cut']			= $partnerproduct->cut;
 			
 			$deliveryList[$cnt]['delivery_date']= $delivery->delivery_date;
@@ -949,6 +924,7 @@ class Planning extends Controller {
 			$deliveryList[$cnt]['patchpartition_time']	= substr($delivery->corrugator_date,11,5);
 			$deliveryList[$cnt]['warehouse_date']	= substr($delivery->converter_date,0,10);
 			$deliveryList[$cnt]['warehouse_time']	= substr($delivery->converter_date,11,5);
+			log_message('info', substr($delivery->corrugator_date,11,5));
 		//	$deliveryList[$cnt]['next_process'] = "";
 		/*	$productCat = $this->Planning_model->getProductCat($delivery->product_id,$delivery->product_code);
 			if($productCat->num_rows()>0){

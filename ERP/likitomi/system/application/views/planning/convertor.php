@@ -1,915 +1,196 @@
 <br>
-<?php 
-$array = array('COLOR','TIME','SPEED/TIME USE', 'SALE ORDER','ORDER NO.', 'P CODE /PD NO.','CUSTOMER','PRODUCT NAME','AMOUNT','DELIVERY DATE','NOTE','NEXT PROCESS'); 
-$count = count($array);
-//initialize for each machine
-$twoCLflag = 0;
-$threeCMflag = 0;
-$threeCSflag = 0;
-$threeCWflag = 0;
-$threeCMflag = 0;
-$twoCSflage = 0;
-$twoCLItems = 0;
-$threeCMItems = 0;
-$threeCSItems = 0;
-$j =0;
-
-foreach ($resultConvertor->result() as $key){
-echo $key->next_process;
-
-if($twoCLflag==0)
-{
-////////////////////////// '2CL' //////////////////////////
-if(!strcmp($key->next_process,'2CL'))
-{
-$twoCLflag++;
-$st = 25;
-$speed = 60;
-$machine_name = '2CL';
-$flute = 'B';
-//initial time start
-$firstTime = (0.0006949*60)*8+(0.0006949*0);
-$timeStart = $firstTime;
-
-?>
 <h2>
-	<div align=center>Convertor plan: <?=$plandate?></div>
+	<div align=center>Convertor Plan: <?=$plandate?></div>
 </h2>
-<table>
-	<tr class='tdLabel'>
-		<td>Machine</td>
-		<td>Item</td>
-		<?php  foreach ($resultConvertor->result() as $key) { 
-		if($key->next_process=='2CL'){?>
-		<td colspan='3'>Order<?=++$j?></td>
-		<?php } } ?>
-	</tr>
-	<tr class='tdView'>
-	<td rowspan='13'><?=$machine_name?></td>
-	</tr>
+<br>
+<center>
 
-	
+	<table>
+	<tdead><tr class='tdLabel'>
+	<td>Time In</td>
+	<td>Time Out</td>
+	<td>Pcs.</td>
+	<td>Product code</td>
+
+	<td>Machine</td>
+	<td>Color</td>
+	<td>Time</td>
+	<td>Speed</td>	
+	<td>MO</td>
+	<td colspan=3>Scroline</td>
+	<td>Blank</td>
+	<td>T.length</td>
+	<td>F</td>
+	<td>Sale Order</td>
+	<td>P.Code</td>
+	<td>Customer</td>
+	<td>Product Name</td>
+	<td>Delievery date</td>
+	<td>Sketch</td>
+</tr>
+</thead>
+<tbody>
 <?php
 
-//color
-	echo "<tr class='tdView'><td>".$array[0]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='2CL'){
-		if ($key->ink_1!= '') $result = $key->ink_1; 
-		else $result ='';
-		if ($key->ink_2!= '') $result = $result.','.$key->ink_2; 
-		if ($key->ink_3!= '') $result = $result.','.$key->ink_3;
-		if ($key->ink_4!= '') $result = $result.','.$key->ink_4;
-
-		echo "<td></td>	<td colspan='2'>".$result."</td>";
-	}}
-echo "</tr>";
-//time
-	echo "<tr class='tdView'><td>".$array[1]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='2CL'){
-		$timeuse = $key->qty / $speed;
-		
-		$timeStop = $timeStart + round($timeuse+30) * 0.0006949;
-
-		echo "<td>ST</td><td>".formatDate($timeStart)."</td><td>".formatDate($timeStop)."</td>" ;
-		$timeStart = $timeStop;
-	}}
-		
-		echo "</tr>";
-//speed
-	echo "<tr class='tdView'><td>".$array[2]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='2CL'){
-		$timeuse = $key->qty / $speed;
-		echo "<td>".$st."</td><td class='blankTbl'>".$speed."</td><td>".round($timeuse,2)."</td>" ;
-	}}
-		echo "</tr>";
-//sale order
-	echo "<tr class='tdView'><td>".$array[3]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td>".$key->sales_order."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Order No.
-	echo "<tr class='tdView'><td>".$array[4]."</td>";
-	$path = "/planning/barcode/".$key->autoid."/";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td><img src='".site_url($path)."' /><br>".$key->autoid."</td><td class='blankTbl'></td>" ;
-	}}
-		echo "</tr>";
-//P code / Po. No.
-	echo "<tr class='tdView'><td>".$array[5]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CL'){
-		echo "<td>".$flute."</td><td>".$key->product_code."</td><td>".substr($key->product_code,3,3)."</td>" ;
-	}}
-		echo "</tr>";
-//Customer
-	echo "<tr class='tdView'><td>".$array[6]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td>".$key->partner_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Product name
-	echo "<tr class='tdView'><td>".$array[7]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td>".$key->product_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Amount
-	echo "<tr class='tdView'><td>".$array[8]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td>".$key->qty."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Delivery date
-	echo "<tr class='tdView'><td>".$array[9]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td>".$key->delivery_date."</td><td></td>" ;
-	}}
-		echo "</tr>";
-
-//Note
-	echo "<tr class='tdView'><td>".$array[10]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//Note
-	echo "<tr class='tdView'><td>".$array[11]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CL'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//}
-
+	//assign constants of machine speed
+	foreach ($machine->result() as $key)
+	{
+			
+			if($key->machine_name == "2CL")
+				$speed_2cl = $key->speed;
+			if($key->machine_name == "3CM")
+				$speed_3cm = $key->speed;
+			if($key->machine_name == "3CS")
+				$speed_3cs = $key->speed;
+			if($key->machine_name == "3CL")
+				$speed_3cl = $key->speed;
+			if($key->machine_name == "4CD")
+				$speed_4cd = $key->speed;
+			if($key->machine_name == "GH")
+				$speed_gh = $key->speed;
+			if($key->machine_name == "HS")
+				$speed_hs = $key->speed;
+			if($key->machine_name == "FG")
+				$speed_fg = $key->speed;
+			if($key->machine_name == "RD")
+				$speed_rd = $key->speed;
+			if($key->machine_name == "SS")
+				$speed_ss = $key->speed;
+			if($key->machine_name == "remove")
+				$speed_remove = $key->speed;
+			if($key->machine_name == "foam")
+				$speed_foam = $key->speed;
+			if($key->machine_name == "tape")
+				$speed_tape = $key->speed;
+			
+			
+	}
 ?>
+<?php
+	foreach ($resultConvertor->result() as $key)
+	{
 
-
-</table>
-<br/>
-* Auto Generated
-
-<?php 
-} //end if
-} 
-////////////////////////// close if == '2CL' //////////////////////////
-
-////////////////////////// 3CM //////////////////////////
-$j=0;
-if(!strcmp($key->next_process,'3CM'))
-{
-if($threeCMflag==0)
-{
-$threeCMflag++;
-$st = 25;
-$speed = 60;
-$machine_name = '3CM';
-$firstTime = (0.0006949*60)*8+(0.0006949*0);
-$timeStart = $firstTime;
-$flute = 'B';
-
-?>
-<h2>
-	<div align=center>Convertor plan: <?=$plandate?></div>
-</h2>
-<table>
-	<tr class='tdLabel'>
-		<td>Machine</td>
-		<td>Item</td>
-		<?php foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){?>
-		<td colspan='3'>Order<?=++$j?></td>
-		<?php }} ?>
-	</tr>
-	<tr class='tdView'>
-	<td rowspan='13'><?=$machine_name?></td>
-	</tr>
+		$mch ="";
+		$speed =1;
+			if($key->req_2cl)
+			{
+				$mch = "2CL ";
+				$speed =$speed_2cl." ";
+			}	
+			if($key->req_3cm)
+			{
+				$mch = "3CM ";
+				$speed =$speed_3cm." ";
+			}
+			if($key->req_3cs)
+			{
+				$mch = "3CS ";
+				$speed =$speed_3cs." ";
+			}
+			if($key->req_3cl)
+			{
+				$mch = "3CL ";
+				$speed =$speed_3cl." ";
+			}
+			if($key->req_4cd)
+			{
+				$mch = "4CD ";
+				$speed =$speed_4cd." ";
+			}
+			if($key->req_gh)
+			{
+				$mch = "GH ";
+				$speed =$speed_gh." ";
+			}
+			if($key->req_hs)
+			{
+				$mch = "HS ";
+				$speed =$speed_hs." ";
+			}
+			if($key->req_fg)
+			{
+				$mch = "FG ";
+				$speed =$speed_fg." ";
+			}
+			if($key->req_rd)
+			{
+				$mch = "RD ";
+				$speed =$speed_rd." ";
+			}
+			if($key->req_ss)
+			{
+				$mch = "SS ";
+				$speed =$speed_ss." ";
+			}
+			if($key->req_remove)
+			{
+				$mch = "Remove Scraps ";
+				$speed =$speed_remove." ";
+			}
+			if($key->req_foam)
+			{
+				$mch = "Foam ";
+				$speed =$speed_foam." ";
+			}
+			if($key->req_tape)
+			{
+				$mch = "Tape ";
+				$speed =$speed_tape." ";
+			}
+			
 
 	
+?>
+<tr class='tdView'>
+	<td>Time In</td>
+	<td>Time Out</td>
+	<td><?=$key->qty?></td>
+	<td><?=$key->product_code?></td>
+
+	<td>
+	<?=$mch?>
+	</td>
+	<td><?php
+		if($key->ink_1!="")
+			echo $key->ink_1;
+		if($key->ink_2!="")
+			echo ",".$key->ink_2;
+		if($key->ink_3!="")
+			echo ",".$key->ink_3;
+		
+	?></td>
+	<td><?=round($key->qty/$speed)?></td>
+	<td><?=$speed?></td>	
+	<td><?php
+		$path = "/planning/barcode/".$key->mo_cv_code."/";
+		echo "<img src='".site_url($path)."' /><br>".$key->mo_cv_code;
+		?>
+	</td>
+	<td><?=$key->scoreline_f?></td>
+	<td><?=$key->scoreline_d?></td>
+	<td><?=$key->scoreline_f2?></td>
+	<td><?=$key->blank?></td>
+	<td><?=$key->t_length?></td>
+	<td><?=$key->flute?></td>
+	<td><?=$key->sales_order?></td>
+	<td><?=$key->purchase_order_no?></td>
+	<td><?=$key->partner_name?></td>
+	<td><?=$key->product_name?></td>
+	<td><?=$key->delivery_date?></td>
+	<td>
+	<?php if($key->sketch!="")
+		echo "<a href='".base_url()."".$key->sketch."'  target='_blank'>".$key->product_code."</a>";
+	?></td>
+</tr>
 <?php
-
-//color
-	echo "<tr class='tdView'><td>".$array[0]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){
-		if ($key->ink_1!= '') $result = $key->ink_1; 
-		else $result ='';
-		if ($key->ink_2!= '') $result = $result.','.$key->ink_2; 
-		if ($key->ink_3!= '') $result = $result.','.$key->ink_3;
-		if ($key->ink_4!= '') $result = $result.','.$key->ink_4;
-
-		echo "<td></td>	<td colspan='2'>".$result."</td>";
-	}}
-echo "</tr>";
-//time
-	echo "<tr class='tdView'><td>".$array[1]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){
-		$timeuse = $key->qty / $speed;
-		
-		$timeStop = $timeStart + round($timeuse+30) * 0.0006949;
-
-		echo "<td>ST</td><td>".formatDate($timeStart)."</td><td>".formatDate($timeStop)."</td>" ;
-		$timeStart = $timeStop;
-	}}
-		
-		echo "</tr>";
-//speed
-	echo "<tr class='tdView'><td>".$array[2]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){
-		$timeuse = $key->qty / $speed;
-		echo "<td>".$st."</td><td class='blankTbl'>".$speed."</td><td>".round($timeuse,2)."</td>" ;
-	}}
-		echo "</tr>";
-//sale order
-	echo "<tr class='tdView'><td>".$array[3]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td>".$key->sales_order."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Order No.
-	echo "<tr class='tdView'><td>".$array[4]."</td>";
-	$path = "/planning/barcode/".$key->autoid."/";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td><img src='".site_url($path)."' /><br>".$key->autoid."</td><td class='blankTbl'></td>" ;
-	}}
-		echo "</tr>";
-//P code / Po. No.
-	echo "<tr class='tdView'><td>".$array[5]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){
-		echo "<td>".$flute."</td><td>".$key->product_code."</td><td>".substr($key->product_code,3,3)."</td>" ;
-	}}
-		echo "</tr>";
-//Customer
-	echo "<tr class='tdView'><td>".$array[6]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td>".$key->partner_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Product name
-	echo "<tr class='tdView'><td>".$array[7]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td>".$key->product_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Amount
-	echo "<tr class='tdView'><td>".$array[8]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td>".$key->qty."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Delivery date
-	echo "<tr class='tdView'><td>".$array[9]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td>".$key->delivery_date."</td><td></td>" ;
-	}}
-		echo "</tr>";
-
-//Note
-	echo "<tr class='tdView'><td>".$array[10]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//Note
-	echo "<tr class='tdView'><td>".$array[11]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CM'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//}
-
+	}
 ?>
+</tbody>
+
+			</table>
+ </center>
+<br>
+<br>
+ 
 
 
-</table>
-<br/>
-* Auto Generated
-
-<?php 
-}//end if threeCMflag 
-}
-////////////////////////// close if == '3CM' //////////////////////////
-
-
-////////////////////////// 3CL //////////////////////////
-$j=0;
-if(!strcmp($key->next_process,'3CL'))
-{
-if($threeCLflag==0)
-{
-$threeCLflag++;
-$st = 25;
-$speed = 60;
-$machine_name = '3CL';
-$firstTime = (0.0006949*60)*8+(0.0006949*0);
-$timeStart = $firstTime;
-$flute = 'B';
-
-?>
-<h2>
-	<div align=center>Convertor plan: <?=$plandate?></div>
-</h2>
-<table>
-	<tr class='tdLabel'>
-		<td>Machine</td>
-		<td>Item</td>
-		<?php foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){?>
-		<td colspan='3'>Order<?=++$j?></td>
-		<?php }} ?>
-	</tr>
-	<tr class='tdView'>
-	<td rowspan='13'><?=$machine_name?></td>
-	</tr>
-
-	
-<?php
-
-//color
-	echo "<tr class='tdView'><td>".$array[0]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){
-		if ($key->ink_1!= '') $result = $key->ink_1; 
-		else $result ='';
-		if ($key->ink_2!= '') $result = $result.','.$key->ink_2; 
-		if ($key->ink_3!= '') $result = $result.','.$key->ink_3;
-		if ($key->ink_4!= '') $result = $result.','.$key->ink_4;
-
-		echo "<td></td>	<td colspan='2'>".$result."</td>";
-	}}
-echo "</tr>";
-//time
-	echo "<tr class='tdView'><td>".$array[1]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){
-		$timeuse = $key->qty / $speed;
-		
-		$timeStop = $timeStart + round($timeuse+30) * 0.0006949;
-
-		echo "<td>ST</td><td>".formatDate($timeStart)."</td><td>".formatDate($timeStop)."</td>" ;
-		$timeStart = $timeStop;
-	}}
-		
-		echo "</tr>";
-//speed
-	echo "<tr class='tdView'><td>".$array[2]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){
-		$timeuse = $key->qty / $speed;
-		echo "<td>".$st."</td><td class='blankTbl'>".$speed."</td><td>".round($timeuse,2)."</td>" ;
-	}}
-		echo "</tr>";
-//sale order
-	echo "<tr class='tdView'><td>".$array[3]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td>".$key->sales_order."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Order No.
-	echo "<tr class='tdView'><td>".$array[4]."</td>";
-	$path = "/planning/barcode/".$key->autoid."/";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td><img src='".site_url($path)."' /><br>".$key->autoid."</td><td class='blankTbl'></td>" ;
-	}}
-		echo "</tr>";
-//P code / Po. No.
-	echo "<tr class='tdView'><td>".$array[5]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){
-		echo "<td>".$flute."</td><td>".$key->product_code."</td><td>".substr($key->product_code,3,3)."</td>" ;
-	}}
-		echo "</tr>";
-//Customer
-	echo "<tr class='tdView'><td>".$array[6]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td>".$key->partner_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Product name
-	echo "<tr class='tdView'><td>".$array[7]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td>".$key->product_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Amount
-	echo "<tr class='tdView'><td>".$array[8]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td>".$key->qty."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Delivery date
-	echo "<tr class='tdView'><td>".$array[9]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td>".$key->delivery_date."</td><td></td>" ;
-	}}
-		echo "</tr>";
-
-//Note
-	echo "<tr class='tdView'><td>".$array[10]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//Note
-	echo "<tr class='tdView'><td>".$array[11]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CL'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//}
-
-?>
-
-
-</table>
-<br/>
-* Auto Generated
-
-<?php 
-}//end if threeCLflag 
-}
-////////////////////////// close if == '3CL' //////////////////////////
-
-
-////////////////////////// 3CS //////////////////////////
-if(!strcmp($key->next_process,'3CS'))
-{
-if($threeCSflag ==0)
-{
-$threeCSflag++;
-$st = 45;
-$speed = 120;
-$machine_name = '3CS';
-//initial time start
-$firstTime = (0.0006949*60)*8+(0.0006949*0);
-$timeStart = $firstTime;
-$flute = 'B';
-
-
-?>
-<h2>
-	<div align=center>Convertor plan: <?=$plandate?></div>
-</h2>
-<table>
-	<tr class='tdLabel'>
-		<td>Machine</td>
-		<td>Item</td>
-		<?php foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CS'){?>
-		<td colspan='3'>Order<?=++$j?></td>
-		<?php }} ?>
-	</tr>
-	<tr class='tdView'>
-	<td rowspan='13'><?=$machine_name?></td>
-	</tr>
-
-	
-<?php
-
-//color
-	echo "<tr class='tdView'><td>".$array[0]."</td>";
-	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CS'){
-		if ($key->ink_1!= '') $result = $key->ink_1; 
-		else $result ='';
-		if ($key->ink_2!= '') $result = $result.','.$key->ink_2; 
-		if ($key->ink_3!= '') $result = $result.','.$key->ink_3;
-		if ($key->ink_4!= '') $result = $result.','.$key->ink_4;
-
-		echo "<td></td>	<td colspan='2'>".$result."</td>";
-	}}
-echo "</tr>";
-//time
-	echo "<tr class='tdView'><td>".$array[1]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		$timeuse = $key->qty /$speed;
-		//time for preparation 30 mins
-		$timeStop = $timeStart + round($timeuse+30) * 0.0006949;
-		//echo $timeStop;
-		echo "<td>ST</td><td>".formatDate($timeStart)."</td><td>".formatDate($timeStop)."</td>" ;
-		$timeStart = $timeStop;
-	}}
-
-		echo "</tr>";
-//speed
-	echo "<tr class='tdView'><td>".$array[2]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		$timeuse = $key->qty / $speed;
-		echo "<td>".$st."</td><td class='blankTbl'>".$speed."</td><td>".round($timeuse,2)."</td>" ;
-	}}
-		echo "</tr>";
-//sale order
-	echo "<tr class='tdView'><td>".$array[3]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td>".$key->sales_order."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Order No.
-	echo "<tr class='tdView'><td>".$array[4]."</td>";
-	$path = "/planning/barcode/".$key->autoid."/";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td><img src='".site_url($path)."' /><br>".$key->autoid."</td><td class='blankTbl'></td>" ;
-	}}
-		echo "</tr>";
-//P code / Po. No.
-	echo "<tr class='tdView'><td>".$array[5]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td>".$flute."</td><td>".$key->product_code."</td><td>".substr($key->product_code,3,3)."</td>" ;
-	}}
-		echo "</tr>";
-//Customer
-	echo "<tr class='tdView'><td>".$array[6]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td>".$key->partner_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Product name
-	echo "<tr class='tdView'><td>".$array[7]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td>".$key->product_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Amount
-	echo "<tr class='tdView'><td>".$array[8]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td>".$key->qty."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Delivery date
-	echo "<tr class='tdView'><td>".$array[9]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td>".$key->delivery_date."</td><td></td>" ;
-	}}
-		echo "</tr>";
-
-//Note
-	echo "<tr class='tdView'><td>".$array[10]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//Note
-	echo "<tr class='tdView'><td>".$array[11]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CS'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//}
-
-?>
-
-
-</table>
-<br/>
-* Auto Generated
-
-<?php 
-}//end if threeCSflag 
-}
-////////////////////////// close if == '3CS' //////////////////////////
-$j=0;
-////////////////////////// 3CW //////////////////////////
-
-if(!strcmp($key->next_process,'3CW'))
-{
-if($threeCWflag ==0)
-{
-$threeCWflag++;
-$st = 25;
-$speed = 60;
-$machine_name = '3CW';
-$firstTime = (0.0006949*60)*8+(0.0006949*0);
-$timeStart = $firstTime;
-$flute = 'B';
-
-?>
-<h2>
-	<div align=center>Convertor plan: <?=$plandate?></div>
-</h2>
-<table>
-	<tr class='tdLabel'>
-		<td>Machine</td>
-		<td>Item</td>
-		<?php	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='3CW'){ ?>
-		<td colspan='3'>Order<?=++$j?></td>
-		<?php }} ?>
-	</tr>
-	<tr class='tdView'>
-	<td rowspan='13'><?=$machine_name?></td>
-	</tr>
-
-	
-<?php
-
-//color
-	echo "<tr class='tdView'><td>".$array[0]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		if ($key->ink_1!= '') $result = $key->ink_1; 
-		else $result ='';
-		if ($key->ink_2!= '') $result = $result.','.$key->ink_2; 
-		if ($key->ink_3!= '') $result = $result.','.$key->ink_3;
-		if ($key->ink_4!= '') $result = $result.','.$key->ink_4;
-
-		echo "<td></td>	<td colspan='2'>".$result."</td>";
-	}}
-echo "</tr>";
-//time
-	echo "<tr class='tdView'><td>".$array[1]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		$timeuse = $key->qty / $speed;
-		
-		$timeStop = $timeStart + round($timeuse+30) * 0.0006949;
-
-		echo "<td>ST</td><td>".formatDate($timeStart)."</td><td>".formatDate($timeStop)."</td>" ;
-		$timeStart = $timeStop;
-	}}
-		
-		echo "</tr>";
-//speed
-	echo "<tr class='tdView'><td>".$array[2]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		$timeuse = $key->qty / $speed;
-		echo "<td>".$st."</td><td class='blankTbl'>".$speed."</td><td>".round($timeuse,2)."</td>" ;
-	}}
-		echo "</tr>";
-//sale order
-	echo "<tr class='tdView'><td>".$array[3]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td>".$key->sales_order."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Order No.
-	echo "<tr class='tdView'><td>".$array[4]."</td>";
-	$path = "/planning/barcode/".$key->autoid."/";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td><img src='".site_url($path)."' /><br>".$key->autoid."</td><td class='blankTbl'></td>" ;
-	}}
-		echo "</tr>";
-//P code / Po. No.
-	echo "<tr class='tdView'><td>".$array[5]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td>".$flute."</td><td>".$key->product_code."</td><td>".substr($key->product_code,3,3)."</td>" ;
-	}}
-		echo "</tr>";
-//Customer
-	echo "<tr class='tdView'><td>".$array[6]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td>".$key->partner_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Product name
-	echo "<tr class='tdView'><td>".$array[7]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td>".$key->product_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Amount
-	echo "<tr class='tdView'><td>".$array[8]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td>".$key->qty."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Delivery date
-	echo "<tr class='tdView'><td>".$array[9]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td>".$key->delivery_date."</td><td></td>" ;
-	}}
-		echo "</tr>";
-
-//Note
-	echo "<tr class='tdView'><td>".$array[10]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//Note
-	echo "<tr class='tdView'><td>".$array[11]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='3CW'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//}
-
-?>
-
-
-</table>
-<br/>
-* Auto Generated
-
-<?php 
-} //end if flag 
-}
-////////////////////////// close if == '3CW' //////////////////////////
-$j=0;
-////////////////////////// 2CS //////////////////////////
-if(!strcmp($key->next_process,'2CS'))
-{
-if($twoCSflage ==0)
-{
-$twoCSflage++;
-
-$st = 25;
-$speed = 60;
-$machine_name = '2CS';
-$firstTime = (0.0006949*60)*8+(0.0006949*0);
-$timeStart = $firstTime;
-$flute = 'B';
-
-?>
-<h2>
-	<div align=center>Convertor plan: <?=$plandate?></div>
-</h2>
-<table>
-	<tr class='tdLabel'>
-		<td>Machine</td>
-		<td>Item</td>
-		<?php	foreach ($resultConvertor->result() as $key){
-		if($key->next_process=='2CS'){ ?>
-		<td colspan='3'>Order<?=++$j?></td>
-		<?php }} ?>
-	</tr>
-	<tr class='tdView'>
-	<td rowspan='13'><?=$machine_name?></td>
-	</tr>
-
-	
-<?php
-
-//color
-	echo "<tr class='tdView'><td>".$array[0]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		if ($key->ink_1!= '') $result = $key->ink_1; 
-		else $result ='';
-		if ($key->ink_2!= '') $result = $result.','.$key->ink_2; 
-		if ($key->ink_3!= '') $result = $result.','.$key->ink_3;
-		if ($key->ink_4!= '') $result = $result.','.$key->ink_4;
-
-		echo "<td></td>	<td colspan='2'>".$result."</td>";
-	}}
-echo "</tr>";
-//time
-	echo "<tr class='tdView'><td>".$array[1]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		$timeuse = $key->qty / $speed;
-		
-		$timeStop = $timeStart + round($timeuse+30) * 0.0006949;
-
-		echo "<td>ST</td><td>".formatDate($timeStart)."</td><td>".formatDate($timeStop)."</td>" ;
-		$timeStart = $timeStop;
-		}}
-		echo "</tr>";
-//speed
-	echo "<tr class='tdView'><td>".$array[2]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		$timeuse = $key->qty / $speed;
-		echo "<td>".$st."</td><td class='blankTbl'>".$speed."</td><td>".round($timeuse)."</td>" ;
-	}}
-		echo "</tr>";
-//sale order
-	echo "<tr class='tdView'><td>".$array[3]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td>".$key->sales_order."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Order No.
-	echo "<tr class='tdView'><td>".$array[4]."</td>";
-	$path = "/planning/barcode/".$key->autoid."/";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td><img src='".site_url($path)."' /><br>".$key->autoid."</td><td class='blankTbl'></td>" ;
-	}}
-		echo "</tr>";
-//P code / Po. No.
-	echo "<tr class='tdView'><td>".$array[5]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td>".$flute."</td><td>".$key->product_code."</td><td>".substr($key->product_code,3,3)."</td>" ;
-	}}
-		echo "</tr>";
-//Customer
-	echo "<tr class='tdView'><td>".$array[6]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td>".$key->partner_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Product name
-	echo "<tr class='tdView'><td>".$array[7]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td>".$key->product_name."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Amount
-	echo "<tr class='tdView'><td>".$array[8]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td>".$key->qty."</td><td></td>" ;
-	}}
-		echo "</tr>";
-//Delivery date
-	echo "<tr class='tdView'><td>".$array[9]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td>".$key->delivery_date."</td><td></td>" ;
-	}}
-		echo "</tr>";
-
-//Note
-	echo "<tr class='tdView'><td>".$array[10]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//Note
-	echo "<tr class='tdView'><td>".$array[11]."</td>";
-	foreach ($resultConvertor->result() as $key){
-	if($key->next_process=='2CS'){
-		echo "<td class='blankTbl'></td><td></td><td></td>" ;
-	}}
-		echo "</tr>";
-//} 
-
-?>
-
-
-</table>
-<br/>
-* Auto Generated
-
-<?php 
-} //end flag 
-}
-////////////////////////// close if == '2CS' //////////////////////////
-
-} // close outter foreach loop
-
-function formatDate($day)
-{
-	$hour  = floor($day*24); 
-	$min   = floor((($day*24)-$hour)*60); 
-	$time  = ($hour<10)?"0".$hour:$hour;//
-	$time .= ":";
-	$time .= ($min<10)?"0".$min:$min;
-	return $time;
-}
-?>

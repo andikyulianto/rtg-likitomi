@@ -160,6 +160,7 @@ class Planning_model extends Model
 
         function savetostatustracking($rowData,$choosendate,$realDate,$time_start_cr,$time_stop_cr,$time_start_cv,$time_stop_cv,$time_start_pt,$time_stop_pt,$time_start_wh,$mo_cr,$mo_cv,$mo_pt)
         {
+			
         		if($mo_cr=="")
         			$mo_cr=NULL;
         		if($mo_cv=="")
@@ -178,12 +179,13 @@ class Planning_model extends Model
 				$total_plan_id = $row->autoid;
 			}
 			
-			$sql = "Select product_id,qty,delivery_date,delivery_time,sales_order From delivery Where delivery_id =".$rowData->delivery_id;
+			$sql = "Select product_id,product_code,qty,delivery_date,delivery_time,sales_order From delivery Where delivery_id =".$rowData->delivery_id;
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
 			{
 				$qty = $row->qty;
 				$product_id = $row->product_id;
+				$product_code = $row->product_code;
 				$plan_due = $row->delivery_date." ".$row->delivery_time;
 				$sale_order = $row->sales_order;
 			}
@@ -216,12 +218,12 @@ class Planning_model extends Model
 			}
 			//echo $auto_id;
 			
-			$sql = "select * from product_catalog where product_id=".$product_id;
+			$sql = "select * from product_catalog where product_code='".$product_code."'";
 			$query = $this->db->query($sql);
 			foreach ($query->result() as $row)
 			{
-				$amount  = $qty + $row->add_amount;
-				$cv_machine = $row->next_process;
+				$amount  = $qty;// + $row->add_amount;
+				//$cv_machine = $row->next_process;
 				$req_cr = $row->req_cr;
 				$req_2cl = $row->req_2cl;
 				$req_3cm = $row->req_3cm;
@@ -238,6 +240,37 @@ class Planning_model extends Model
 				$req_tape = $row->req_tape;
 				$req_wh = $row->req_wh;
 			}
+			$cv_machine = "";
+			if($req_2cl)
+				$cv_machine = "2CL";
+			elseif($req_3cm)
+				$cv_machine = "3CM";
+			elseif($req_3cs)
+				$cv_machine = "3CS";
+			elseif($req_3cl)
+				$cv_machine = "3CL";
+			elseif($req_4cd)
+				$cv_machine = "4CD";
+			elseif($req_gh)
+				$cv_machine = "GH";
+			elseif($req_hs)
+				$cv_machine = "HS";
+			elseif($req_fg)
+				$cv_machine = "FG";
+			elseif($req_rd)
+				$cv_machine = "RD";
+			elseif($req_ss)
+				$cv_machine = "SS";
+			elseif($req_remove)
+				$cv_machine = "Remove";
+			elseif($req_foam)
+				$cv_machine = "Foam";
+			elseif($req_tape)
+				$cv_machine = "Tape";
+			else
+				$cv_machine = "";
+			
+
 
 /*			if($cv_machine == 'SHEET')
 			{
@@ -276,14 +309,15 @@ class Planning_model extends Model
 						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine,
+						"cv_machine_id" =>$cv_machine,
 						"mo_cr_code"=>$mo_cr,
 						"mo_cv_code"=>$mo_cv,
 						"mo_pt_code"=>$mo_pt
 				);
 			}
-			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1 or $req_rd==1 or $req_ss==1) and ($req_remove==0 and $req_foam==0 and $req_tape==0))
+			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1) and ($req_rd==0 and $req_ss==0 and $req_remove==0 and $req_foam==0 and $req_tape==0))
 			{
+				
 				$param = array("date" => $choosendate,
 						"delivery_id"=>$rowData->delivery_id,
 						"total_plan_id"=>$total_plan_id,
@@ -305,13 +339,13 @@ class Planning_model extends Model
 						//"plan_wh_start" => substr($rowData->converter_date,0,10)." ".$time_start_wh.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine,
+						"cv_machine_id" =>$cv_machine,
 						"mo_cr_code"=>$mo_cr,
 						"mo_cv_code"=>$mo_cv,
 						"mo_pt_code"=>$mo_pt
 				);
 			}
-			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0 and $req_rd==0 and $req_ss==0) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
+			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0) and ($req_remove==1 or $req_foam==1 or $req_tape==1 or $req_rd==1 or $req_ss==1))
 			{
 				$param = array("date" => $realDate,
 						"delivery_id"=>$rowData->delivery_id,
@@ -334,7 +368,7 @@ class Planning_model extends Model
 						"plan_pt_end" => substr($realDate,0,10)." ".$time_stop_pt.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine,
+						"cv_machine_id" =>$cv_machine,
 						"mo_cr_code"=>$mo_cr,
 						"mo_cv_code"=>$mo_cv,
 						"mo_pt_code"=>$mo_pt
@@ -365,7 +399,7 @@ class Planning_model extends Model
 						"plan_pt_end" => substr($realDate,0,10)." ".$time_stop_pt.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_start_wh.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine,
+						"cv_machine_id" =>$cv_machine,
 						"mo_cr_code"=>$mo_cr,
 						"mo_cv_code"=>$mo_cv,
 						"mo_pt_code"=>$mo_pt
@@ -392,7 +426,7 @@ class Planning_model extends Model
 //						"plan_wh_start" => substr($rowData->corrugator_date,0,10)." ".$time_stop_cr.":00",
 						"plan_wh_start" => substr($realDate,0,10)." ".$time_stop_cr.":00",
 						"plan_due"=>$plan_due,
-						"cv_machine" => $cv_machine,
+						"cv_machine_id" =>$cv_machine,
 						"mo_cr_code"=>$mo_cr,
 						"mo_cv_code"=>$mo_cv,
 						"mo_pt_code"=>$mo_pt
@@ -510,10 +544,12 @@ class Planning_model extends Model
 	}*/
 		function convertor($plandate)
 	{
-		$sql = 	 "SELECT pc.ink_1,pc.ink_2,pc.ink_3,pc.ink_4, d.sales_order,tp.autoid, pd.product_code, pt.partner_name, pc.product_name, ((d.qty*pc.cv_ratio_2) div pc.cv_ratio_1) as qty, pd.flute,"
+		$sql = 	 "SELECT pc.ink_1,pc.ink_2,pc.ink_3,pc.ink_4, d.sales_order,tp.autoid, pd.product_code, pt.partner_name, pc.product_name, ((d.qty*pc.cv_ratio_2) div pc.cv_ratio_1) as qty, pd.flute, so.purchase_order_no,"
 				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM,pc.cut,pc.blank, pc.slit, pc.scoreline_f,  "
-				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date "
-				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so  "
+				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date , st.mo_cv_code,"
+				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
+				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape,pc.sketch,pc.scoreline_f,pc.scoreline_d,pc.scoreline_f2,pc.blank,pc.t_length,pd.flute "
+				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so , status_tracking st "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND d.sales_order = so.sales_order_id "
@@ -521,7 +557,16 @@ class Planning_model extends Model
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
+				."AND tp.autoid = st.total_plan_id "
 				."AND pd.isdeleted =0 "
+				."AND (pc.req_2cl =1 "
+				."OR pc.req_3cm = 1 "
+				."OR pc.req_3cs = 1 "
+				."OR pc.req_4cd = 1 "
+				."OR pc.req_3cl = 1 "
+				."OR pc.req_gh = 1 "
+				."OR pc.req_hs = 1 "
+				."OR pc.req_fg = 1) "
 				."ORDER BY pc.next_process";
 				//."AND pc.next_process='2CL'";
 		$query = $this->db->query($sql);
@@ -532,10 +577,10 @@ class Planning_model extends Model
 	{
 		$sql = 	 "SELECT pc.ink_1,pc.ink_2,pc.ink_3,pc.ink_4, d.sales_order,tp.autoid, pd.product_code, pt.partner_name, pc.product_name, ((d.qty*pc.cv_ratio_2) div pc.cv_ratio_1) as qty, pd.flute, so.purchase_order_no,"
 				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM,pc.cut,pc.blank, pc.slit, pc.scoreline_f,  "
-				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date ,"
+				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date , st.mo_pt_code,"
 				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
 				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape,pc.sketch,pc.scoreline_f,pc.scoreline_d,pc.scoreline_f2,pc.blank,pc.t_length,pd.flute "
-				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so  "
+				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so ,status_tracking st "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND d.sales_order = so.sales_order_id "
@@ -543,7 +588,13 @@ class Planning_model extends Model
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
+				."AND tp.autoid = st.total_plan_id "
 				."AND pd.isdeleted =0 "
+				."AND (pc.req_remove =1 "
+				."OR pc.req_ss = 1 "
+				."OR pc.req_rd = 1 "
+				."OR pc.req_foam = 1 "
+				."OR pc.req_tape = 1) "
 				."ORDER BY pc.next_process";
 				//."AND pc.next_process='2CL'";
 		$query = $this->db->query($sql);
@@ -561,14 +612,15 @@ class Planning_model extends Model
 	{
 		$sql = 	 "SELECT tp.autoid, d.sales_order, d.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty as qty,  "
 				."pc.cr_ratio_2 / pc.cr_ratio_1 as ratio, pd.DF, pd.BL,pd.CL, pd.BM, pd.CM, pc.p_width_inch,pc.t_length, pc.cut,pc.p_width_mm,  "
-				."d.remarks as D_remarks, pc.remark PC_remarks  "
-				."FROM total_planning tp, delivery d, products pd, product_catalog pc,partners pt  "
+				."d.remarks as D_remarks, pc.remark PC_remarks, st.mo_cr_code "
+				."FROM total_planning tp, delivery d, products pd, product_catalog pc,partners pt, status_tracking st "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND pc.product_code = d.product_code "
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
+				."AND tp.autoid = st.total_plan_id "
 				."AND pd.isdeleted =0 "
 				."ORDER BY tp.autoid";
 		$query = $this->db->query($sql);
@@ -583,14 +635,15 @@ class Planning_model extends Model
 				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
 				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape, "
 				."date_format(d.delivery_date,'%d/%m') as delivery_date,pc.slit, pc.blank,  "
-				."d.remarks as D_remarks, pc.remark PC_remarks  "
-				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt  "
+				."d.remarks as D_remarks, pc.remark PC_remarks, st.mo_cr_code  "
+				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt , status_tracking st "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND pc.product_code = d.product_code "
 				."AND pt.partner_id = pc.partner_id "
 				."AND pc.product_code = pd.parent_code_id "
 				."AND pd.product_code = d.product_code "
+				."AND tp.autoid = st.total_plan_id "
 				."AND pd.isdeleted =0 "
 				."ORDER BY tp.autoid";
 		$query = $this->db->query($sql);
