@@ -1,4 +1,4 @@
-{% extends "CR/container.html" %}
+{% extends "GM/container.html" %}
 {% block view %}
 <!--PATH SETTINGS START-->
 {% url statusTracking.general.login as likitomi_url %}
@@ -22,34 +22,48 @@
 	<th>Delivery date</th>
 	<th>due (days)</th>
 	<th>Plan Amount </th>
-	<th>Actual Amount </th>
+	<th>In warehouse</th>
+	<th>Deliver</th>
 	</tr>
 	</thead>
 	<tbody>
 	{% for item in items %}
-	{% if item.actual_amount_wh_out = NULL %}
 	<tr>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{item.sale_order.purchase_order_no}}</td>
 	<td>{{item.sale_order_id}}</td>
 	<td>{{pcode}}</td>
-	<td>{{item.product.parent_code.product_name}}</td>
-	<td>{{item.product.parent_code.partner.partner_name}}</td>
+	<td>{{item.product.product_name}}</td>
+	<td>{{item.product.partner.partner_name}}</td>
 	<td>{{item.plan_due}}</td>
 	<td>{{item.days_left}}</td>
 	<td>{{item.plan_amount}}</td>
 	<td>{% if item.actual_amount_wh == NULL%}<font color=red> 0 </font>{% else %} {{item.actual_amount_wh}} {% endif %}</td>
+	<td>{% if item.actual_amount_wh_out == NULL%}<font color=red> 0 </font>{% else %} {{item.actual_amount_wh_out}}{% endif %}</td>
 	</tr>
-	{% endif %}
 	{% endfor %}
 	</tbody>
-	
+
 	
 	</table>
+
+
 	
 
 	
-</center>
+</center>	<table border=1 align="right">
+		<tr>
+	<td width = "70" align="right"> Total</td>
+
+	<td width="100">{{sum_plan.plan_amount}}</td>
+	<td width="110">{{sum_plan.actual_amount_wh_in}}</td>
+	<td width="60">{% if sum_plan.actual_amount_wh_out == NULL%}<font color=red> 0 </font>{% else %} {{sum_plan.actual_amount_wh_out}}{% endif %}</td>
+	</tr>
+
+
+	
+	
+	</table>
 </div>
 {% endblock %}
 

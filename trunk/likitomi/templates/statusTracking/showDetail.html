@@ -1,4 +1,4 @@
-{% extends "PC/container.html"%}
+{% extends "GM/container.html"%}
 {% block view %}
 <div id="content">
 <div id="tabs">
@@ -126,7 +126,7 @@ Production Detail
 		</div></td></tr>
 	<tr><td><b>Pcs.</b></td>
 	<td><b>Actual<br>{{plan_amount}}</b></td>
-	<td>{% if actual_amount_cr_out != NULL%}
+	<td> {% if actual_amount_cr_out != NULL%}
 		{% if actual_amount_cr_out < plan_amount %}
 			<font color="red">{{actual_amount_cr_out}}</font>
 		{% else %}
@@ -226,7 +226,7 @@ Production Detail
 <div id="tabs-2">
 
 <div id="resultDivLineCR">
-	<center><table align='center' width="80%" class='tablesorter' border=1 id="resultTable">
+	<center><table align='center' width="80%" class='tablesorter' border=1 id="resultTableCR">
 	<thead><tr bgcolor="#cccccc" width="100%">
 	<th>SO.</th>
 	<th>PO.</th>
@@ -277,7 +277,7 @@ Production Detail
 {% if glue or hs or fg or req_2cl or req_3cm or req_3cs or req_4cd or req_3cl %} 
 <div id="tabs-3">
 <div id="resultDivLineCV">
-	<center><table align='center' width="50%"  class='tablesorter' border=1 id="resultTable">
+	<center><table align='center' width="50%"  class='tablesorter' border=1 id="resultTableCV">
 	
 	<thead><tr bgcolor="#cccccc" width="100%">
 	<th>SO.</th>
@@ -317,7 +317,7 @@ Production Detail
 {% if rd or ss or remove or foam or tape %} 
 <div id="tabs-4">
 <div id="resultDivLinePT">
-	<center><table align='center' width="50%"  class='tablesorter' border=1 id="resultTable"><span class="header">
+	<center><table align='center' width="50%"  class='tablesorter' border=1 id="resultTablePT"><span class="header">
 	<thead><tr bgcolor="#cccccc" width="100%">
 	<th>SO.</th>
 	<th>PO.</th>
