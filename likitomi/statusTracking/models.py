@@ -6,9 +6,11 @@
 #
 # Also note: You'll have to insert the output of 'django-admin.py sqlcustom [appname]'
 # into your database.
-
+from __future__ import division
 from django.db import models
 from django.contrib.auth.models import User
+import math
+
 
 
 class Addresses(models.Model):
@@ -614,11 +616,11 @@ class StatusTracking(models.Model):
 	else :
 		return self.plan_amount / self.product.slit
     def plan_cr_amount(self):
-	return self.plan_amount * self.product.cr_ratio_2 / self.product.cr_ratio_1
+	return int(math.ceil(self.plan_amount * self.product.cr_ratio_2 / self.product.cr_ratio_1))
     def plan_cv_amount(self):
-    	return self.plan_amount * self.product.cv_ratio_2 / self.product.cv_ratio_1
+    	return int(math.ceil(self.plan_amount * self.product.cr_ratio_2 *self.product.cv_ratio_2 / self.product.cr_ratio_1 /self.product.cv_ratio_1))
     def plan_pt_amount(self):
-	return self.plan_amount * self.product.pt_ratio_2 / self.product.pt_ratio_1
+    	return  int(math.ceil(self.plan_amount * self.product.pt_ratio_2 / self.product.pt_ratio_1))
 		
     class Meta:
         db_table = u'status_tracking'

@@ -303,10 +303,11 @@ def monthlyPlan(request):
 ## this page is view process via mobile computer ##
 ###################################################
 #Note : not complete
-def showGM(eID,title):
+def showGM(user,title):
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
 	today= todayDate()
+	username= user
 	showGM_items = StatusTracking.objects.filter(plan_cr_start__year= today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day)
 	content_header = "Please select product item in order to view realtime progress"
 	return render_to_response('GM/GM.html',locals())

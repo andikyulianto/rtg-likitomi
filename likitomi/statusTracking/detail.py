@@ -9,7 +9,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import Template, Context
-from django.db.models import Q
+from django.db.models import Q, Sum
 from statusTracking.utility import todayDate, currentTimeProcess, currentProcess
 from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
 from datetime import date, datetime
@@ -151,8 +151,8 @@ def showDetail(request):
 	po = plan.sale_order.purchase_order_no
 	mo = plan.plan_id
 	pcode = plan.product_id
-	pname = plan.product.parent_code.product_name
-	customer =plan.product.parent_code.partner.partner_name
+	pname = plan.product.product_name
+	customer =plan.product.partner.partner_name
 	delivery = plan.plan_due
 	due = plan.days_left
 	
@@ -175,8 +175,8 @@ def showDetail(request):
 	actual_time_wh_in = plan.actual_wh_start
 	actual_time_wh_out = plan.actual_wh_end
 	
-	plan_amount = plan.plan_amount
-	actual_amount_cr_out = plan.actual_amount_cr
+	plan_amount = plan.plan_amount 
+	actual_amount_cr_out = plan.actual_amount_cr * plan.product.cr_ratio_1 / plan.product.cr_ratio_2
 	actual_amount_cv_in = plan.actual_amount_cv_in
 	actual_amount_cv_out = plan.actual_amount_cv
 	actual_amount_pt_in = plan.actual_amount_pt_in
@@ -189,8 +189,8 @@ def showDetail(request):
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
 	product_name = productCat.product_name
-	cname = plan.product.parent_code.partner.partner_name
-	product = Products.objects.get(product_code = product_code)
+	cname = plan.product.partner.partner_name
+	product = Products.objects.get(auto_id = plan.product_auto_id)
 	flute = product.flute
 	df = product.df
 	bm = product.bm
@@ -238,7 +238,7 @@ def showDetail(request):
 	foam = productCat.req_foam
 	tape = productCat.req_tape
 
-	
+	page = "GM"
 	return render_to_response('showDetail.html',locals())
 #####################################
 ## production and products details ##
@@ -246,14 +246,18 @@ def showDetail(request):
 def showStock(request):
 	user = request.GET['user']
 #	page =request.GET['page']
-	socode = request.GET['socode']
-	item_plan = StatusTracking.objects.filter(sale_order = socode)
-	items = list(item_plan)
-#	plan = StatusTracking.objects.get(product = pcode )
-#	
+#	socode = request.GET['socode']
+#	item_plan = StatusTracking.objects.filter(sale_order = socode)
+#	items = list(item_plan)
+	pcode = request.GET['pcode']
+	
+	plan = StatusTracking.objects.filter(product = pcode )
+	items = list(plan)
+	sum_plan = StatusTracking.objects.filter(product = pcode ).aggregate(plan_amount=Sum('plan_amount'),actual_amount_wh_in=Sum('actual_amount_wh'),actual_amount_wh_out=Sum('actual_amount_wh_out'))
+	items_sum = list(sum_plan)
 #	pcode = plan.product_id
-#	pname = plan.product.parent_code.product_name
-#	customer =plan.product.parent_code.partner.partner_name
+#	pname = plan.product.product_name
+#	customer =plan.product.partner.partner_name
 #	delivery = plan.plan_due
 #	due = plan.days_left
 	return render_to_response('stockDetail.html',locals())
