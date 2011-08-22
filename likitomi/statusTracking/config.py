@@ -1,6 +1,6 @@
 ### pc ###
 item_num= 3
-path ="/likitomi"
+path ="/django/likitomi"
 ####################################################
 ## return static setting for showing items for PC ##
 ####################################################

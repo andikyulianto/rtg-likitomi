@@ -1,5 +1,6 @@
 # Create your views here.
 from weight.models import TblClamplift
+from statusTracking.models import TotalPlanning, Delivery, Products, ProductCatalog, Partners, StatusTracking
 from django.shortcuts import render_to_response
 from datetime import datetime
 
@@ -16,6 +17,8 @@ def orient(request):
 	return render_to_response('orient.html', locals())
 
 def longtry(request):
+	query = TblClamplift.objects.filter(opdate="2011-08-20").values_list('start_time', 'product_code', 'autoid', 'p_width_inch', 'df', 'bl', 'bm', 'cl', 'cm', 'used_df_mkg', 'used_bl_mkg', 'used_bm_mkg', 'used_cl_mkg', 'used_cm_mkg')
+
 	logging.basicConfig(filename='/home/patipol/rtg-likitomi/likitomi/static/logfile.log', level=logging.DEBUG)
 
 	try:

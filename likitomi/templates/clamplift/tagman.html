@@ -225,7 +225,7 @@ $(document).ready(function(){
 <input id="tagstatus" type="hidden" value="{{ tagstatus }}" />
 <input id="atlane" type="hidden" value="{{ atlane }}" />
 <input id="atposition" type="hidden" value="{{ atposition }}" />
-
+<div style="position:absolute; right:0px;">{{tag2write}}</div>
 <input id='showtaglist_url' type='hidden' value='{% url weight.tagman.showtaglist %}' />
 {% url weight.tagman.tagman as tagman_url %}
 {% url weight.tagman.showtaglist as showtaglist_url %}
@@ -246,7 +246,7 @@ $(document).ready(function(){
 				{% if tagstatus == 'unknown' %}New Tag{% endif %}
 			{% endif %}
 			{% if atlane and atposition and not realtag %}
-				Location: {{ atlane }}-{{ atposition }}
+				Location: {% if atlocation == 'Scale' %}Scale{% endif %}{% if atlocation == 'CR' %}CR{% endif %}{% if atlocation != 'Scale' and atlocation != 'CR' %}{{ atlane }}-{{ atposition }}{% endif %}
 			{% endif %}
 			</b>
 		{% endif %}
@@ -312,7 +312,7 @@ $(document).ready(function(){
 
 	<div style="top:560px; left:630px;"><button id="writeloctag" style="font-size:80%;" onclick="javascript:locTag('{{ realtag }}', '{{ tagstatus }}')">Write Location Tag</button></div>
 
-	<div style="top:5px; left:170px; font-size:80%;"><button id="refresh" onclick="window.location.href='{{ tagman_url }}'">Refresh</button></div>
+	<div style="top:5px; left:175px; font-size:80%;"><button id="refresh" onclick="window.location.href='{{ tagman_url }}'">Refresh</button></div>
 	<div style="top:560px; left:10px; font-size:80%;"><button id="back" onclick="window.location.href='{{ dashboard_url }}'">Back</button></div>
 
 	<form id="frm6" action="{{ tagman_url }}createnew/" method="get">
