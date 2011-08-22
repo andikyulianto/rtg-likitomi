@@ -425,7 +425,7 @@ function salesOrderTips(){
 			}
 		}
 		if(selected_product_code == product_code_2){
-			alert(selected_product_code+" "+product_code_2);
+			//alert(selected_product_code+" "+product_code_2);
 			if(current>remaining_amt2)
 			{
 				alert ('Delivery ('+current+') is More than planned('+remaining_amt+')');

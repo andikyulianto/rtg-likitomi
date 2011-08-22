@@ -478,11 +478,11 @@ if($action=='add'){
 			<table>
             <tr>
                 <td class='tblDetailViewLabel'>Code</td>
-                <td><input type='text' id='x_product_code' value='<?=$product_code?>' <?php if($salesCount>0);?>></td>
+                <td><input type='text' id='x_product_code' value='<?=$product_code?>' <?php if($salesCount>0);?>>*</td>
             </tr>
             <tr>
                 <td class='tblDetailViewLabel'>Name</td>
-                <td><input type='text' id='x_product_name' value='<?=$product_name?>'></td>
+                <td><input type='text' id='x_product_name' value='<?=$product_name?>'>*</td>
             </tr>
              <tr>
                 <td class='tblDetailViewLabel'>Customer Name</td>
@@ -530,6 +530,7 @@ if($action=='add'){
 		<td class='tblProdViewLabel'>Width</td>
 		<td class='tblProdViewLabel'>Height</td>
 		<td class='tblProdViewLabel'>Qty/Set</td>
+		<td ></td>
 	</tr>
 <?php
 for($i=0;$i<$trows;$i++){
@@ -547,6 +548,7 @@ for($i=0;$i<$trows;$i++){
 		<td><input type='text' id='x_width_<?=$i?>' size='2' value="<?=$widthArray[$i]?>" /></td>
 		<td><input type='text' id='x_height_<?=$i?>' size='2' value="<?=$heightArray[$i]?>" /></td>
 		<td><input type='text' id='x_qty_set_<?=$i?>' size='2' value="<?=$qtysetArray[$i]?>" /></td>
+		<td><?php if($i==0) echo "*"; ?></td>
 	</tr>
 <?php
 }
@@ -718,7 +720,7 @@ for($i=0;$i<$trows;$i++){
 </div>
 <br>
 <div id='boxcontainer'>
-Process<br><br>
+Process*<br><br>
 <table width="500px"><tr>
 <td>
 <input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked';  ?>> CR </td>
