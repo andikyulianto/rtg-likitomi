@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.db import connection, transaction
 from weight.models import TblClamplift
+#from statusTracking.models import TotalPlanning, Delivery, Products, ProductCatalog, Partners, StatusTracking
 from datetime import date, time, datetime, timedelta
 
 def showplan(request):
