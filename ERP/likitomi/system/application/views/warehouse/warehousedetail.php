@@ -103,7 +103,7 @@ if($action=='add'){
 					<?php if($action=='edit') echo "disabled='disabled' class='nouse'  "?> size="10"/></td>
 				</tr>
 				<tr>
-					<td width='80'> Supplier : </td><td><input type="text" id="x_supplier" size="40" value='<?=$supplier_id?>'/></td>
+					<td width='80'> Supplier : </td><td><input type="text" id="x_supplier" size="40" value="<?=$supplier_id?>"/></td>
 					<td width='80'></td><td></td> <!--replaced old paper_code-->
 <!--					<td width='80'> Paper Code : </td><td><input type="text" id="x_paper_code" class='combo_papers' size="13" value='<?=$paper_code?>'/></td>--> <!--old paper_code-->
 				</tr>

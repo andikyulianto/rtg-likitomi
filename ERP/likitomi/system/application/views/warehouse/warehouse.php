@@ -151,6 +151,7 @@
 	
 	function makePaperCombo()
 	{
+		alert(document.getElementById("x_supplier").value);
 		var paperStore = new Ext.data.SimpleStore({
 		    fields: ['paper_code'],
 		    data : [

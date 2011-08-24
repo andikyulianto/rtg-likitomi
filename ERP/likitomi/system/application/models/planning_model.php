@@ -29,7 +29,7 @@ class Planning_model extends Model
 	{
 		$filterQueryAll ="";
 		$filter ="";
-		$interColumnConjunction = " AND "; // Filtering by intersection
+		$interColumnConjunction = " OR "; // Filtering by union or intersection
 		$sameColumnConjunction 	= " OR ";
 		//Delivery Date
 		for($i=0;$i<count($delivery_date_all)-1;$i++)

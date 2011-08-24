@@ -23,6 +23,13 @@ vertical-align:middle;
 
 .gray{background-color:lightgray; border-width:0px; width:50px;}
 
+/* Forloop.counter */
+.flc1{background-color:green; color:white; font-weight:bold; border-width:0px;}
+.flc2{background-color:maroon; color:white; font-weight:bold; border-width:0px;}
+.flc3{background-color:fuchsia; color:white; font-weight:bold; border-width:0px;}
+.flc4{background-color:purple; color:white; font-weight:bold; border-width:0px;}
+.flc5{background-color:orange; color:white; font-weight:bold; border-width:0px;}
+
 /* Green shades */
 .lkf1{background-color:#005A00; color:white; font-weight:bold; border-width:0px;}
 .lkf2{background-color:#008000; color:white; font-weight:bold; border-width:0px;}
@@ -183,7 +190,7 @@ $(document).ready(function(){
 <input id="loc" type="hidden" value="{{ loc }}" />
 <input id="mappos" type="hidden" value="{{ mappos }}"/>
 
-<div id="legend" style="position:absolute; top:0px; left:{% if mappos != '' %}{% if mappos == 'left' %}0{% endif %}{% if mappos == 'right' %}334{% endif %}{% if mappos == 'center' %}401{% endif %}{% else %}0{% endif %}px;"><table style="height:1px; width:390px;">
+<div id="legend" style="position:absolute; top:0px; left:{% if mappos != '' %}{% if mappos == 'left' %}0{% endif %}{% if mappos == 'right' %}326{% endif %}{% if mappos == 'center' %}410{% endif %}{% else %}0{% endif %}px;"><table style="height:1px; width:390px;">
 	<tr>
 		<td style="text-align:right;">Weight (kgs.)</td>
 		<td class="nomarpad" style="width:200px; background-image:url('images/clamplift/legend.png');"></td>
@@ -196,8 +203,11 @@ $(document).ready(function(){
 		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
 			{% for w in dis_wlistpx %}
 				{% if w == dis_bstchcpx %}<img src="images/clamplift/recroll.png" style="position:absolute; left:{{w}}px; z-index:4"{% else %}
-					{% if w >= losspx %}<img src="images/clamplift/lkf1daimond17.png" style="position:absolute; left:{{w}}px;"{% endif %}
-					{% if w < losspx %}<img src="images/clamplift/lkf4daimond17.png" style="position:absolute; left:{{w}}px;"{% endif %}
+					{% if forloop.counter == 1 %}<img src="images/clamplift/spades.png" style="position:absolute; left:{{w}}px;"{% endif %}
+					{% if forloop.counter == 2 %}<img src="images/clamplift/clubs.png" style="position:absolute; left:{{w}}px;"{% endif %}
+					{% if forloop.counter == 3 %}<img src="images/clamplift/hearts.png" style="position:absolute; left:{{w}}px;"{% endif %}
+					{% if forloop.counter == 4 %}<img src="images/clamplift/diams.png" style="position:absolute; left:{{w}}px;"{% endif %}
+					{% if forloop.counter == 5 %}<img src="images/clamplift/bull.png" style="position:absolute; left:{{w}}px;"{% endif %}
 				{% endif %}
 			/>{% endfor %}
 		</td>
@@ -236,10 +246,50 @@ $(document).ready(function(){
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '4' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Hlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -273,10 +323,50 @@ $(document).ready(function(){
 							{% if pos|tofloat < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
 							<tr>{% for ls in THlist %}
 								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -309,10 +399,50 @@ $(document).ready(function(){
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '4' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Glist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -344,10 +474,50 @@ $(document).ready(function(){
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '3' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Flist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -381,10 +551,50 @@ $(document).ready(function(){
 							{% if pos|tofloat < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
 							<tr>{% for ls in RDlist %}
 								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -417,10 +627,50 @@ $(document).ready(function(){
 					<td style="border:0px" {% if pos|getpos in buff %}class="buff"{% endif %}><table cellspacing="0" cellpadding="0" {% if atlane == '3' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Elist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -452,10 +702,50 @@ $(document).ready(function(){
 					<td style="border:0px" {% if pos|getpos in buff %}class="buff"{% endif %}><table cellspacing="0" cellpadding="0" {% if atlane == '2' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Dlist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -489,10 +779,50 @@ $(document).ready(function(){
 							{% if pos|tofloat < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
 							<tr>{% for ls in NDlist %}
 								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -525,10 +855,50 @@ $(document).ready(function(){
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '2' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Clist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -560,10 +930,50 @@ $(document).ready(function(){
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}id="locup" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Blist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -597,10 +1007,50 @@ $(document).ready(function(){
 							{% if pos|tofloat < 0 %}<tr><td colspan="12"><img style="width:20px; z-index:-1;" src="images/clamplift/clamplift.png" /></td></tr>{% endif %}
 							<tr>{% for ls in STlist %}
 								{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 									{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 									{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 									{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
@@ -633,10 +1083,50 @@ $(document).ready(function(){
 					<td style="border:0px"><table cellspacing="0" cellpadding="0" {% if atlane == '1' and atposition == pos|getpos %}id="locdown" style="cursor:pointer;"{% endif %}><tr>
 						{% for ls in Alist %}
 							{% if ls|first|stringformat:"s" == pos|getpos|stringformat:"s" %}
-								{% if ls|second != 0 %}<td class="{% if ls|isfloat2nd == 'yes' %}recroll{% else %}lkf4{% endif %}" style="width:{{ls|second}}%">{{ ls|second }}</td>{% else %}{% endif %}
-								{% if ls|third != 0 %}<td class="{% if ls|isfloat3rd == 'yes' %}recroll{% else %}lkf3{% endif %}" style="width:{{ls|third}}%">{{ ls|third }}</td>{% else %}{% endif %}
-								{% if ls|fourth != 0 %}<td class="{% if ls|isfloat4th == 'yes' %}recroll{% else %}lkf2{% endif %}" style="width:{{ls|fourth}}%">{{ ls|fourth }}</td>{% else %}{% endif %}
-								{% if ls|fifth != 0 %}<td class="{% if ls|isfloat5th == 'yes' %}recroll{% else %}lkf1{% endif %}" style="width:{{ls|fifth}}%">{{ ls|fifth }}</td>{% else %}{% endif %}
+								{% if ls|second != 0 %}
+									{% if ls|isfloat2nd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|third != 0 %}
+									{% if ls|isfloat3rd == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fourth != 0 %}
+									{% if ls|isfloat4th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
+								{% if ls|fifth != 0 %}
+									{% if ls|isfloat5th == 'yes' %}
+										<td class="recroll">&lowast;</td>
+									{% else %}<td class="
+										{% if forloop.counter == 1 %}flc1">&spades;{% endif %}
+										{% if forloop.counter == 2 %}flc1">&clubs;{% endif %}
+										{% if forloop.counter == 3 %}flc1">&hearts;{% endif %}
+										{% if forloop.counter == 4 %}flc1">&diams;{% endif %}
+										{% if forloop.counter == 5 %}flc1" style="font-size:150%;">&bull;{% endif %}
+									</td>{% endif %}
+								{% endif %}
 								{% if ls|sixth != 0 %}<td class="s4" style="width:{{ls|sixth}}%">{{ ls|sixth }}</td>{% else %}{% endif %}
 								{% if ls|seventh != 0 %}<td class="s3" style="width:{{ls|seventh}}%">{{ ls|seventh }}</td>{% else %}{% endif %}
 								{% if ls|eighth != 0 %}<td class="s2" style="width:{{ls|eighth}}%">{{ ls|eighth }}</td>{% else %}{% endif %}
