@@ -142,8 +142,10 @@
 	
 ?>
 <tr class='tdView'>
-	<td>Time In</td>
-	<td>Time Out</td>
+	<td><?php $time = strtotime($key->plan_pt_start); 
+	echo date('h:i',$time); ?></td>
+	<td><?php $time = strtotime($key->plan_pt_end); 
+	echo date('h:i',$time); ?></td>
 	<td><?=$key->qty?></td>
 	<td><?=$key->product_code?></td>
 
