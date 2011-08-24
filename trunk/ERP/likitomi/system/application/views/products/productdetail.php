@@ -35,19 +35,23 @@ echo "</div>";
 </div>
 <br/>
 -->
-<table class='tblFixedBorder' cellspacing=2 cellpadding=2>
+<table cellspacing=2 cellpadding=2>
 	<tr>
-        <td class='tblProdViewLabel'>Code</td>
-		<td class='tblProdViewLabel'>Flute</td>
+		<td class='tblProdViewLabel' rowspan=2>Code</td>
+		<td class='tblProdViewLabel' rowspan=2>Flute</td>
+		<td class='tblProdViewLabel' colspan=5>Board Combination</td>
+		<td class='tblProdViewLabel' rowspan=2>Paper width <br/> (inch)</td>
+		<td class='tblProdViewLabel' colspan=2>Product size</td>
+		<td class='tblProdViewLabel' rowspan=2>Qty/set</td></tr>
+	<tr>
+        
 		<td class='tblProdViewLabel'>DF</td>
 		<td class='tblProdViewLabel'>BM</td>
 		<td class='tblProdViewLabel'>BL</td>
 		<td class='tblProdViewLabel'>CM</td>
 		<td class='tblProdViewLabel'>CL</td>
+		<td class='tblProdViewLabel'>Blank</td>
 		<td class='tblProdViewLabel'>Length</td>
-		<td class='tblProdViewLabel'>Width</td>
-		<td class='tblProdViewLabel'>Height</td>
-		<td class='tblProdViewLabel'>Qty/Set</td>
 	</tr>
 <?php 
 foreach($resultProducts as $prod){
@@ -60,77 +64,16 @@ foreach($resultProducts as $prod){
 	<td class='tblProdView'><?=$prod->BL?></td>
 	<td class='tblProdView'><?=$prod->CM?></td>
 	<td class='tblProdView'><?=$prod->CL?></td>
-	<td class='tblProdView'><?=$prod->Length_mm?></td>
-	<td class='tblProdView'><?=$prod->Width_mm?></td>
-	<td class='tblProdView'><?=$prod->Height_mm?></td>
+	<td class='tblProdView'><?=$prod->paper_width?></td>
+	<td class='tblProdView'><?=$prod->blank?></td>
+	<td class='tblProdView'><?=$prod->length?></td>
 	<td class='tblProdView'><?=$prod->qty_set?></td>
 </tr>
 <?php }?>
 </table>
 <br/>
 
-<div id='boxcontainer'>
-<table>
-	<tr>
-        <td class='tblDetailViewLabel'>Ink Color 1</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_1?></td>
-		<td class='tblDetailViewLabel'>Ink Color 2</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Ink Color 3</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
-		<td class='tblDetailViewLabel'>Ink Color 4</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_4?></td>
-	</tr>
-	</table>
-</div>
-<br/>
 
-<div id='boxcontainer'>
-<table>
-	<tr>
-		<td class='tblDetailViewLabel'>Joint Type</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->joint_type?></td>
-		<td class='tblDetailViewLabel'>Joint Details</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->joint_details?></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Box Style</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->box_style?></td>
-		<td class='tblDetailViewLabel'>Rope Color</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->rope_color?></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>PCS/Bundle</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->pcs_bundle?></td>
-		<td class='tblDetailViewLabel'>Level</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->level?></td>
-	</tr>
-	</table>
-</div>
-<br/>
-
-<div id='boxcontainer'>
-<table >
-	<tr>
-		<td class='tblDetailViewLabel'>Paper Width (mm)</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->p_width_mm?></td>
-		<td class='tblDetailViewLabel' rowspan=3>Remark</td>
-		<td class='tblDetailView' rowspan=2><?=$resultProductCatalog->remark?></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Paper Width (inch)</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->p_width_inch?></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Qty. Allowance</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->qty_allowance?></td>
-	</tr>
-	
-</table>
-</div>
-<br/>
 
 <div id='boxcontainer'>
 <table>
@@ -142,13 +85,7 @@ foreach($resultProducts as $prod){
 		</td>
 		<td></td>
 	</tr>
-</table>
-</div>
-<br/>
-
-
-<div id='boxcontainer'>
-<table>
+	
 	<tr>
 		<td class='tblDetailViewLabel'>Sketch Large</td>
 		<td class='tblDetailView' nowrap>
@@ -161,57 +98,27 @@ foreach($resultProducts as $prod){
 </div>
 <br/>
 
+
 <div id='boxcontainer'>
+	Inner dimension
+	<br/>
+	<br/>
 <table>
 	<tr>
-		<td class='tblDetailViewLabel'>Code RD</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->code_rd?></td>
-		<td class='tblDetailViewLabel' rowspan=2>Next Process</td>
-		<td class='tblDetailView' rowspan=2><?=$resultProductCatalog->next_process?></td>
+		<td class='tblDetailViewLabel'>L :</td>
+		<td class='tblDetailView' nowrap></td>
+		<td class='tblDetailViewLabel'>W :</td>
+		<td class='tblDetailView' nowrap></td>		
+		<td class='tblDetailViewLabel'>H :</td>
+		<td class='tblDetailView' nowrap></td>
 	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Code PD</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->code_pd?></td>	
-	</tr>	
+	
+	
 </table>
 </div>
 <br/>
 
-<div id='boxcontainer'>
-<table>
-	<tr>
-		<td class='tblDetailViewLabel'>Scoreline F</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->scoreline_f?></td>
-		<td class='tblDetailViewLabel'>Cut</td>
-		<td><?=$resultProductCatalog->cut?></td>
-	</tr>
-	<tr>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Scoreline D</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->scoreline_d?></td>
-		<td class='tblDetailViewLabel'>Slit</td>
-		<td><?=$resultProductCatalog->slit?></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Scoreline F2</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->scoreline_f2?></td>
-		<td class='tblDetailViewLabel'>T. Length</td>
-		<td><?=$resultProductCatalog->t_length?></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Blank</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->blank?></td>
-		<td class='tblDetailViewLabel' colspan=2>
-			<?=$resultProductCatalog->scoreline_f?>+
-			<?=$resultProductCatalog->scoreline_d?>+
-			<?=$resultProductCatalog->scoreline_f2?>= 
-<?php echo ($resultProductCatalog->scoreline_f+$resultProductCatalog->scoreline_d+$resultProductCatalog->scoreline_f2)?>
-		</td>		
-	</tr>
-</table>
-</div>
-<br>
+
 <div id='boxcontainer'>
 Process<br><br>
 <table width="500px"><tr>
@@ -249,17 +156,179 @@ Process<br><br>
 <br>
 </div>
 <br>
+
 <div id='boxcontainer'>
-Additional value for PC
-<table><tr><td class='tblDetailViewLabel'>Blank +</td><td><?=$resultProductCatalog->add_blank?></td>
-	<td class='tblDetailViewLabel'>T Length +</td><td><?=$resultProductCatalog->add_t_length?></td>
-	<td class='tblDetailViewLabel'>Amount +</td><td><?=$resultProductCatalog->add_amount?></td></tr>
+<table>
+	<tr>
+		<td class='tblDetailViewLabel'>Scoreline F</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->scoreline_f?></td>
+		<td class='tblDetailViewLabel'>Cut</td>
+		<td><?=$resultProductCatalog->cut?></td>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Scoreline D</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->scoreline_d?></td>
+		<td class='tblDetailViewLabel'>Slit</td>
+		<td><?=$resultProductCatalog->slit?></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Scoreline F2</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->scoreline_f2?></td>
+	<!--	<td class='tblDetailViewLabel'>T. Length</td>
+		<td><?=$resultProductCatalog->t_length?></td>
+	-->
+	</tr>
+	<tr>
+	<!--	<td class='tblDetailViewLabel'>Blank</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->blank?></td>
+	-->
+		<td class='tblDetailViewLabel'><br/>
+			<?=$resultProductCatalog->scoreline_f?>+
+			<?=$resultProductCatalog->scoreline_d?>+
+			<?=$resultProductCatalog->scoreline_f2?>= </td>
+			<td class='tblDetailView'><br/>
+<?php echo ($resultProductCatalog->scoreline_f+$resultProductCatalog->scoreline_d+$resultProductCatalog->scoreline_f2)?>
+		</td>		
+	</tr>
 </table>
+</div>
+<br>
+
+
+
+<div id='boxcontainer'>
+<table>
+	<tr>
+        <td class='tblDetailViewLabel'>Ink Color 1</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_1?></td>
+		<td class='tblDetailViewLabel'>Ink Color 2</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?>
+
+		
+	</tr>
+
+	<tr>
+		<td class='tblDetailViewLabel'>Ink Color 3</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
+		<td class='tblDetailViewLabel'>Ink Color 4</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_4?>
+	</tr>
+	</table>
+	<br/><br/>
+	<table>
+	<tr>
+		<td class='tblDetailViewLabel'>Code RD</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->code_rd?></td>
+		<td class='tblDetailViewLabel'>Code PD</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->code_pd?></td>	
+	</tr>
+	
+	</table>
 </div>
 <br/>
 
 <div id='boxcontainer'>
-amount of sheet production
+<table>
+	<tr>
+		<td class='tblDetailViewLabel'>Joint Type</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->joint_type?></td>
+		<td class='tblDetailViewLabel'>Joint Details</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->joint_details?></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Box Style</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->box_style?></td>
+		<td class='tblDetailViewLabel'>Rope Color</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->rope_color?></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>PCS/Bundle</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->pcs_bundle?></td>
+		<td class='tblDetailViewLabel'>Level</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->level?></td>
+	</tr>
+	</table>
+</div>
+<br/>
+
+<div id='boxcontainer'>
+<table >
+	<!--<tr>
+		<td class='tblDetailViewLabel'>Paper Width (mm)</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->p_width_mm?></td>
+		<td class='tblDetailViewLabel' rowspan=3>Remark</td>
+		<td class='tblDetailView' rowspan=2><?=$resultProductCatalog->remark?></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Paper Width (inch)</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->p_width_inch?></td>
+	</tr>
+	<tr> -->
+		<td class='tblDetailViewLabel'>Qty. Allowance</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->qty_allowance?></td>
+	</tr>
+	
+</table>
+</div>
+<br/>
+
+
+
+
+
+
+<div id='boxcontainer'>
+Production Configuration for PC
+<br>
+</br>
+<table>
+	<tr>
+		
+		<td class='tblDetailViewLabel'>CR Length</td>
+		<td  class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
+
+		<td class='tblDetailViewLabel'>CR Blank</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
+	</tr>
+	<tr></tr>
+	
+	<tr>
+		<td class='tblDetailViewLabel'>CV Length</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
+
+		<td class='tblDetailViewLabel'>CV Blank</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
+	</tr>
+	
+	
+		<tr>
+		<td class='tblDetailViewLabel'>PT Length</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
+
+		<td class='tblDetailViewLabel'>PT Blank</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
+	</tr>
+	</table>
+
+</div>
+<br>
+
+
+<div id='boxcontainer'>
+For history
+<br/><br>
+<table><tr><td class='tblDetailViewLabel'>Extra Blank +</td><td class='tblDetailView'><?=$resultProductCatalog->add_blank?></td>
+	<td class='tblDetailViewLabel'>Extra Length +</td><td class='tblDetailView'><?=$resultProductCatalog->add_t_length?></td>
+</table>
+</div>
+<br/>
+
+
+<div id='boxcontainer'>
+Amount of sheet production
+<br/><br>
 <table><tr><td class='tblDetailViewLabel'>CR</td><td><?=$resultProductCatalog->cr_ratio_1?>:<?=$resultProductCatalog->cr_ratio_2?></td>
 	<td class='tblDetailViewLabel'>CV</td><td><?=$resultProductCatalog->cv_ratio_1?>:<?=$resultProductCatalog->cv_ratio_2?></td></tr>
 	<tr><td class='tblDetailViewLabel'>PT</td><td><?=$resultProductCatalog->pt_ratio_1?>:<?=$resultProductCatalog->pt_ratio_2?></td>
@@ -284,7 +353,7 @@ amount of sheet production
 ?>   
 
  <?php
- $trows =3;
+ $trows =2;
 if (($action=='edit')||($action=='add')){  //Edit  or Add
 if($action=='edit'){
 	$product_id = $resultProductCatalog->product_id;
@@ -353,8 +422,8 @@ if($action=='edit'){
 	$idArray = array();
 	$codeArray= array();$fluteArray= array();
 	$DFArray= array();$BMArray= array();$BLArray= array();
-	$CMArray= array();$CLArray= array();$lengthArray= array();
-	$widthArray= array();$heightArray= array();$qtysetArray= array();
+	$CMArray= array();$CLArray= array();$pwidthArray= array();
+	$blankArray= array();$lengthArray= array();$qtysetArray= array();
 	$cnt=0;
 	foreach($resultProducts as $prod){
 		$idArray[$cnt] = $prod->auto_id;
@@ -365,9 +434,9 @@ if($action=='edit'){
 		$BLArray[$cnt] = $prod->BL;
 		$CMArray[$cnt] = $prod->CM;
 		$CLArray[$cnt] = $prod->CL;
-		$lengthArray[$cnt] = $prod->Length_mm;
-		$widthArray[$cnt] = $prod->Width_mm;
-		$heightArray[$cnt] = $prod->Height_mm;
+		$pwidthArray[$cnt] = $prod->paper_width;
+		$blankArray[$cnt] = $prod->blank;
+		$lengthArray[$cnt] = $prod->length;
 		$qtysetArray[$cnt] = $prod->qty_set;
 		$cnt++;
 	}
@@ -380,9 +449,9 @@ if($action=='edit'){
 		$BLArray[$i] = "";
 		$CMArray[$i] = "";
 		$CLArray[$i] = "";
+		$pwidthArray[$i] = "";
+		$blankArray[$i] = "";
 		$lengthArray[$i] = "";
-		$widthArray[$i] = "";
-		$heightArray[$i] = "";
 		$qtysetArray[$i] = "";
 	}
 	echo "<div style='text-align:right;width:100%;'>ID: ".$product_id."</div><br/>";
@@ -461,9 +530,9 @@ if($action=='add'){
 		$BLArray[$i] = "";
 		$CMArray[$i] = "";
 		$CLArray[$i] = "";
+		$pwidthArray[$i] = "";
+		$blankArray[$i] = "";
 		$lengthArray[$i] = "";
-		$widthArray[$i] = "";
-		$heightArray[$i] = "";
 		$qtysetArray[$i] = "";
 	}
 	echo "<div style='text-align:right;width:100%;'>ID: Auto Generated</div><br/>";
@@ -517,19 +586,22 @@ if($action=='add'){
 </div>
 <br/>
 -->
-<table style='border: 1px solid #C8C8C8;' cellspacing=2 cellpadding=2 id='tblProductLine'>
+<table  cellspacing=2 cellpadding=2 id='tblProductLine'>
+			<tr>
+		<td class='tblProdViewLabel' rowspan=2>Code</td>
+		<td class='tblProdViewLabel' rowspan=2>Flute</td>
+		<td class='tblProdViewLabel' colspan=5>Board Combination</td>
+		<td class='tblProdViewLabel' rowspan=2>Paper width <br/> (inch)</td>
+		<td class='tblProdViewLabel' colspan=2>Product size</td>
+		<td class='tblProdViewLabel' rowspan=2>Qty/ <br/>set</td></tr>
 	<tr>
-        <td class='tblProdViewLabel'>Code</td>
-		<td class='tblProdViewLabel'>Flute</td>
 		<td class='tblProdViewLabel'>DF</td>
 		<td class='tblProdViewLabel'>BM</td>
 		<td class='tblProdViewLabel'>BL</td>
 		<td class='tblProdViewLabel'>CM</td>
 		<td class='tblProdViewLabel'>CL</td>
+		<td class='tblProdViewLabel'>Blank</td>
 		<td class='tblProdViewLabel'>Length</td>
-		<td class='tblProdViewLabel'>Width</td>
-		<td class='tblProdViewLabel'>Height</td>
-		<td class='tblProdViewLabel'>Qty/Set</td>
 		<td ></td>
 	</tr>
 <?php
@@ -544,92 +616,16 @@ for($i=0;$i<$trows;$i++){
 		<td><input type='text' id='x_BL_<?=$i?>' size='4' value="<?=$BLArray[$i]?>" /></td>
 		<td><input type='text' id='x_CM_<?=$i?>' size='4' value="<?=$CMArray[$i]?>" /></td>
 		<td><input type='text' id='x_CL_<?=$i?>' size='4' value="<?=$CLArray[$i]?>" /></td>
+		<td><input type='text' id='x_pwidth_<?=$i?>' size='7' value="<?=$pwidthArray[$i]?>" /></td>
+		<td><input type='text' id='x_blank_<?=$i?>' size='2' value="<?=$blankArray[$i]?>" /></td>
 		<td><input type='text' id='x_length_<?=$i?>' size='2' value="<?=$lengthArray[$i]?>" /></td>
-		<td><input type='text' id='x_width_<?=$i?>' size='2' value="<?=$widthArray[$i]?>" /></td>
-		<td><input type='text' id='x_height_<?=$i?>' size='2' value="<?=$heightArray[$i]?>" /></td>
-		<td><input type='text' id='x_qty_set_<?=$i?>' size='2' value="<?=$qtysetArray[$i]?>" /></td>
+		<td><input type='text' id='x_qty_set_<?=$i?>' size='1' value="<?=$qtysetArray[$i]?>" /></td>
 		<td><?php if($i==0) echo "*"; ?></td>
 	</tr>
 <?php
 }
 ?>
 </table>
-<br/>
-
-<div id='boxcontainer'>
-<table>
-	<tr>
-        <td class='tblDetailViewLabel'>Ink Color 1</td>
-		<td><input type='text' id='x_ink_1' value='<?=$ink_1?>'></td>
-		<td class='tblDetailViewLabel'>Ink Color 2</td>
-		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Ink Color 3</td>
-		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
-		<td class='tblDetailViewLabel'>Ink Color 4</td>
-		<td><input type='text' id='x_ink_4' value='<?=$ink_4?>'></td>
-	</tr>
-	</table>
-</div>
-<br/>
-
-<div id='boxcontainer'>
-<table>
-	<tr>
-		<td class='tblDetailViewLabel'>Joint Type</td>
-		<td><select id='x_joint_type' style="width:97%" >
-				<option value=""></option>
-                <option value="Glue" <?php if($joint_type=='Glue')echo 'selected'; ?>>Glue</option>
-                <option value="Red Stitch" <?php if($joint_type=='Red Stitch')echo 'selected'; ?>>Red Stitch</option>
-				<option value="White Stitch" <?php if($joint_type=='White Stitch')echo 'selected'; ?>>White Stitch</option>
-            </select></td>
-		<td class='tblDetailViewLabel'>Joint Details</td>
-		<td><input type='text' id='x_joint_details' value='<?=$joint_details?>'></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Box Style</td>
-		<td><select id='x_box_style' style="width:97%" >
-				<option value=""></option>
-	            <option value="RSC" <?php if($box_style=='RSC')echo 'selected'; ?>>RSC</option>
-				<option value="Tray" <?php if($box_style=='Tray')echo 'selected'; ?>>Tray</option>
-				<option value="Diecut" <?php if($box_style=='Diecut')echo 'selected'; ?>>Diecut</option>
-				<option value="Sleeve" <?php if($box_style=='Sleeve')echo 'selected'; ?>>Sleeve</option>
-				<option value="Half slot container" <?php if($box_style=='Half slot container')echo 'selected'; ?>>Half slot container</option>
-				<option value="Other" <?php if($box_style=='Other')echo 'selected'; ?>>Other</option>
-	        </select>
-		</td>
-		<td class='tblDetailViewLabel'>Rope Color</td>
-		<td><input type='text' id='x_rope_color' value='<?=$rope_color?>'></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>PCS/Bundle</td>
-		<td><input type='text' id='x_pcs_bundle' value='<?=$pcs_bundle?>'></td>
-		<td class='tblDetailViewLabel'>Level</td>
-		<td><input type='text' id='x_level' value='<?=$level?>'></td>
-	</tr>
-	</table>
-</div>
-<br/>
-
-<div id='boxcontainer'>
-<table>
-	<tr>
-		<td class='tblDetailViewLabel'>Paper Width (mm)</td>
-		<td><input type='text' id='x_p_width_mm' value='<?=$p_width_mm?>'></td>
-		<td class='tblDetailViewLabel' rowspan=3>Remark</td>
-		<td rowspan=2><textarea id='x_remark' row=3><?=$remark?></textarea></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Paper Width (inch)</td>
-		<td><input type='text' id='x_p_width_inch' value='<?=$p_width_inch?>'></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Qty. Allowance</td>
-		<td><input type='text' id='x_qty_allowance' value='<?=$qty_allowance?>'></td>
-	</tr>	
-</table>
-</div>
 <br/>
 
 <div id='boxcontainer'>
@@ -646,13 +642,9 @@ for($i=0;$i<$trows;$i++){
 			<input type='hidden' id='x_sketch' value="<?=$sketch?>">
 		</td>
 	</tr>
-</table>
-</div>
-<br/>
-
-<div id='boxcontainer'>
-<table>
+	<tr><td><br/><br/></td></tr>
 	<tr>
+
 		<td class='tblDetailViewLabel'>Sketch Large</td>
 		<td> 
 			<div id='prevSketch_large'>
@@ -669,56 +661,25 @@ for($i=0;$i<$trows;$i++){
 <br/>
 
 <div id='boxcontainer'>
+	Inner dimension
+	<br/>
+	<br/>
 <table>
 	<tr>
-		<td class='tblDetailViewLabel'>Code RD</td>
-		<td><input type='text' id='x_code_rd' value='<?=$code_rd?>'></td>
-		<td class='tblDetailViewLabel' rowspan=2>Next Process</td>
-		<td><input type='text' id='x_next_process' value='<?=$next_process?>'></td>
+		<td class='tblDetailViewLabel'>L :</td>
+		<td class='tblDetailView' nowrap></td>
+		<td class='tblDetailViewLabel'>W :</td>
+		<td class='tblDetailView' nowrap></td>		
+		<td class='tblDetailViewLabel'>H :</td>
+		<td class='tblDetailView' nowrap></td>
 	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Code PD</td>
-		<td><input type='text' id='x_code_pd' value='<?=$code_pd?>'></td>
-	</tr>	
+	
+	
 </table>
 </div>
 <br/>
 
-<div id='boxcontainer'>
-<table>
-	<tr>
-		<td class='tblDetailViewLabel'>Scoreline F</td>
-		<td><input type='text' id='x_scoreline_f' value='<?=$scoreline_f?>'></td>
-		<td class='tblDetailViewLabel'>Cut</td>
-		<td><input type='text' id='x_cut' value='<?=$cut?>'></td>
-	</tr>
-	<tr>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Scoreline D</td>
-		<td><input type='text' id='x_scoreline_d' value='<?=$scoreline_d?>'></td>
-		<td class='tblDetailViewLabel'>Slit</td>
-		<td><input type='text' id='x_slit' value='<?=$slit?>'></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Scoreline F2</td>
-		<td><input type='text' id='x_scoreline_f2' value='<?=$scoreline_f2?>'></td>
-		<td class='tblDetailViewLabel'>T. Length</td>
-		<td><input type='text' id='x_t_length' value='<?=$t_length?>'></td>
-	</tr>
-	<tr>
-		<td class='tblDetailViewLabel'>Blank</td>
-		<td><input type='text' id='x_blank' value='<?=$blank?>'></td>
-		<td class='tblDetailViewLabel' colspan=2>
-			<?=$scoreline_f?>+
-			<?=$scoreline_d?>+
-			<?=$scoreline_f2?>= 
-<?php echo ($scoreline_f+$scoreline_d+$scoreline_f2)?>
-		</td>		
-	</tr>
-</table>
-</div>
-<br>
+
 <div id='boxcontainer'>
 Process*<br><br>
 <table width="500px"><tr>
@@ -755,17 +716,179 @@ Process*<br><br>
 <br>
 </div>
 <br>
+
 <div id='boxcontainer'>
-Additional values for CR<br>
-<table><tr><td class='tblDetailViewLabel'>Blank +</td><td><input type='text' id='x_add_blank' value='<?=$add_blank?>' size="7"></td>
-	<td class='tblDetailViewLabel'>T Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>' size="7"></td>
-	<td class='tblDetailViewLabel'>Amount +</td><td><input type='text' id='x_add_amount' value='<?=$add_amount?>' size="7"></td></tr>
+<table>
+	<tr>
+		<td class='tblDetailViewLabel'>Scoreline F</td>
+		<td><input type='text' id='x_scoreline_f' value='<?=$scoreline_f?>'></td>
+		<td class='tblDetailViewLabel'>Cut</td>
+		<td><input type='text' id='x_cut' value='<?=$cut?>'></td>
+	</tr>
+	<tr>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Scoreline D</td>
+		<td><input type='text' id='x_scoreline_d' value='<?=$scoreline_d?>'></td>
+		<td class='tblDetailViewLabel'>Slit</td>
+		<td><input type='text' id='x_slit' value='<?=$slit?>'></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Scoreline F2</td>
+		<td><input type='text' id='x_scoreline_f2' value='<?=$scoreline_f2?>'></td>
+<!--		<td class='tblDetailViewLabel'>T. Length</td>
+		<td><input type='text' id='x_t_length' value='<?=$t_length?>'></td>-->
+	</tr>
+	<tr>
+<!--		<td class='tblDetailViewLabel'>Blank</td>
+		<td><input type='text' id='x_blank' value='<?=$blank?>'></td>-->
+		<td class='tblDetailViewLabel'>
+			<?=$scoreline_f?>+
+			<?=$scoreline_d?>+
+			<?=$scoreline_f2?>= 
+		</td>
+		<td class='tblDetailView'>
+<?php echo ($scoreline_f+$scoreline_d+$scoreline_f2)?>
+		</td>		
+	</tr>
+</table>
+</div>
+<br>
+
+<div id='boxcontainer'>
+<table>
+	<tr>
+        <td class='tblDetailViewLabel'>Ink Color 1</td>
+		<td><input type='text' id='x_ink_1' value='<?=$ink_1?>'></td>
+		<td class='tblDetailViewLabel'>Ink Color 2</td>
+		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Ink Color 3</td>
+		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
+		<td class='tblDetailViewLabel'>Ink Color 4</td>
+		<td><input type='text' id='x_ink_4' value='<?=$ink_4?>'></td>
+	</tr>
+	</table>
+	<br/>
+	<br/>
+	<table>
+	<tr>
+		<td class='tblDetailViewLabel'>Code RD</td>
+		<td><input type='text' id='x_code_rd' value='<?=$code_rd?>'></td>
+
+		<td class='tblDetailViewLabel'>Code PD</td>
+		<td><input type='text' id='x_code_pd' value='<?=$code_pd?>'></td>
+	</tr>	
 </table>
 </div>
 <br/>
 
 <div id='boxcontainer'>
-amount of sheet production
+<table>
+	<tr>
+		<td class='tblDetailViewLabel'>Joint Type</td>
+		<td><select id='x_joint_type' style="width:97%" >
+				<option value=""></option>
+                <option value="Glue" <?php if($joint_type=='Glue')echo 'selected'; ?>>Glue</option>
+                <option value="Red Stitch" <?php if($joint_type=='Red Stitch')echo 'selected'; ?>>Red Stitch</option>
+				<option value="White Stitch" <?php if($joint_type=='White Stitch')echo 'selected'; ?>>White Stitch</option>
+            </select></td>
+		<td class='tblDetailViewLabel'>Joint Details</td>
+		<td><input type='text' id='x_joint_details' value='<?=$joint_details?>'></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Box Style</td>
+		<td><select id='x_box_style' style="width:97%" >
+				<option value=""></option>
+	            <option value="RSC" <?php if($box_style=='RSC')echo 'selected'; ?>>RSC</option>
+				<option value="Tray" <?php if($box_style=='Tray')echo 'selected'; ?>>Tray</option>
+				<option value="Diecut" <?php if($box_style=='Diecut')echo 'selected'; ?>>Diecut</option>
+				<option value="Sleeve" <?php if($box_style=='Sleeve')echo 'selected'; ?>>Sleeve</option>
+				<option value="Half slot container" <?php if($box_style=='Half slot container')echo 'selected'; ?>>Half slot container</option>
+				<option value="Wrap around" <?php if($box_style=='Wrap around')echo 'selected'; ?>>Wrap around</option>
+				<option value="Other" <?php if($box_style=='Other')echo 'selected'; ?>>Other</option>
+	        </select>
+		</td>
+		<td class='tblDetailViewLabel'>Rope Color</td>
+		<td><input type='text' id='x_rope_color' value='<?=$rope_color?>'></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>PCS/Bundle</td>
+		<td><input type='text' id='x_pcs_bundle' value='<?=$pcs_bundle?>'></td>
+		<td class='tblDetailViewLabel'>Level</td>
+		<td><input type='text' id='x_level' value='<?=$level?>'></td>
+	</tr>
+	</table>
+</div>
+<br/>
+
+<div id='boxcontainer'>
+<table>
+	<tr>
+		<!--<td class='tblDetailViewLabel'>Paper Width (mm)</td>
+		<td><input type='text' id='x_p_width_mm' value='<?=$p_width_mm?>'></td>
+		<td class='tblDetailViewLabel' rowspan=3>Remark</td>
+		<td rowspan=2><textarea id='x_remark' row=3><?=$remark?></textarea></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>Paper Width (inch)</td>
+		<td><input type='text' id='x_p_width_inch' value='<?=$p_width_inch?>'></td>
+	</tr>-->
+	<tr>
+		<td class='tblDetailViewLabel'>Qty. Allowance</td>
+		<td><input type='text' id='x_qty_allowance' value='<?=$qty_allowance?>'></td>
+	</tr>	
+</table>
+</div>
+<br/>
+
+
+
+<div id='boxcontainer'>
+Production Configuration for PC
+<br>
+</br>
+<table>
+	<tr>
+		<td class='tblDetailViewLabel'>CR Length</td>
+		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
+
+		<td class='tblDetailViewLabel'>CR Blank</td>
+		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>CV Length</td>
+		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
+
+		<td class='tblDetailViewLabel'>CV Blank</td>
+		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>PT Length</td>
+		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
+
+		<td class='tblDetailViewLabel'>PT Blank</td>
+		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
+	</tr>
+	</table>
+</div>
+<br>
+
+
+<div id='boxcontainer'>
+For history<br><br/>
+<table><tr><td class='tblDetailViewLabel'>Extra Length +</td><td><input type='text' id='x_add_t_length' value='<?=$add_t_length?>' size="7"></td>
+<td class='tblDetailViewLabel'>Extra Blank +</td><td><input type='text' id='x_add_blank' value='<?=$add_blank?>' size="7"></td>
+	
+</table>
+</div>
+<br/>
+
+<div id='boxcontainer'>
+Amount of sheet production *
+<br/>
+<br/>
 <table><tr><td class='tblDetailViewLabel'>CR</td><td><input type='text' id='x_cr_ratio_1' value='<?=$cr_ratio_1?>' size="3"></td><td>:<input type='text' id='x_cr_ratio_2' value='<?=$cr_ratio_2?>' size="3"></td>
 	<td class='tblDetailViewLabel'>CV</td><td><input type='text' id='x_cv_ratio_1' value='<?=$cv_ratio_1?>' size="3"></td><td>:<input type='text' id='x_cv_ratio_2' value='<?=$cv_ratio_2?>' size="3"></tr>
 	<tr><td class='tblDetailViewLabel'>PT</td><td><input type='text' id='x_pt_ratio_1' value='<?=$pt_ratio_1?>' size="3"></td><td>:<input type='text' id='x_pt_ratio_2' value='<?=$pt_ratio_2?>' size="3"></td>
