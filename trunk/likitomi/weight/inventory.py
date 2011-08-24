@@ -185,6 +185,9 @@ def inventory(request):
 			wlistpx = list()
 			recwlistpx = list()
 			dis_wlistpx = list()
+			wtop5 = list()
+			idtop5 = list()
+			pxtop5 = list()
 
 			for item in query:
 				totem = list(item)
@@ -199,335 +202,356 @@ def inventory(request):
 					weight = int(str(PaperRolldetails.objects.filter(likitomi_roll_id=rid).values_list('initial_weight')[0])[1:][:-3])
 				wlist.append(weight)
 
-			for w in wlist:
+			for i,w in enumerate(wlist):
 				wpx = int(w)/5.0
 				wlistpx.append(wpx)
-				if wpx > losspx: # How much more that required weight?
+				if wpx > losspx+50: # How much more than +loss weight? 50?
 					recwlistpx.append(wpx)
-				if w > int(loss): # How much more than required weight?
+				if w > int(loss)+50: # How much more than +loss weight? 50?
 					recwlist.append(w)
+					wtop5.append(wlist[i])
+					idtop5.append(str(ridlist[i]))
+					pxtop5.append(int(w)/5.0)
 
-			for wpx in wlistpx:
+			while len(wtop5) > 5:
+				i = wtop5.index(max(wtop5))
+				wtop5.pop(i)
+				idtop5.pop(i)
+				pxtop5.pop(i)
+
+			for wpx in pxtop5:
 				wpx = wpx-8
 				if wpx > 192: wpx = 202.0 # limited symbol out of area
 				dis_wlistpx.append(wpx)
 
-			recwlistpx.sort()
-			if len(recwlistpx) > 0:
-				bstchcpx = recwlistpx[0]
+			if len(wtop5) > 0: bstchc = min(wtop5)
+			else: bstchc = 2000
+			if len(pxtop5) > 0:
+				bstchcpx = min(pxtop5)
 				dis_bstchcpx = bstchcpx-8
 			else: bstchcpx = 400
-			recwlist.sort()
-			if len(recwlist) > 0: bstchc = recwlist[0]
-			else: bstchc = 2000
+
+#			recwlistpx.sort()
+#			if len(recwlistpx) > 0:
+#				bstchcpx = recwlistpx[0]
+#				dis_bstchcpx = bstchcpx-8
+#			else: bstchcpx = 400
+#			recwlist.sort()
+#			if len(recwlist) > 0: bstchc = recwlist[0]
+#			else: bstchc = 2000
 
 			initial_weight = int(str(PaperRolldetails.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
 			initialpx = initial_weight/5-5
 
-		mquery = PaperRolldetails.objects.filter(paper_code=pcode, size=width).values_list('lane', 'position')
+		mquery = PaperRolldetails.objects.filter(paper_code=pcode, size=width).values_list('lane', 'position', 'likitomi_roll_id')
 		mexists = PaperRolldetails.objects.filter(paper_code=pcode, size=width).exists()
 		mstr = str(mquery)
 		mlist = list(mquery)
 
-		for ind,pair in enumerate(mlist):
+		top5list = list()
+		for i,m in enumerate(mlist):
+			if m[2] in idtop5:
+				top5list.append(m)
+
+		for ind,pair in enumerate(top5list):
 			if pair[0] == 'A':
 				posa.pop(43-pair[1])
-				posa.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				posa.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Alist):
 					Alist.append([pair[1],0,0,0,0])
 				for ls in Alist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'B':
 				posb.pop(43-pair[1])
-				posb.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				posb.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Blist):
 					Blist.append([pair[1],0,0,0,0])
 				for ls in Blist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'C':
 				posc.pop(43-pair[1])
-				posc.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				posc.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Clist):
 					Clist.append([pair[1],0,0,0,0])
 				for ls in Clist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'D':
 				posd.pop(43-pair[1])
-				posd.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				posd.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Dlist):
 					Dlist.append([pair[1],0,0,0,0])
 				for ls in Dlist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'E':
 				pose.pop(43-pair[1])
-				pose.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				pose.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Elist):
 					Elist.append([pair[1],0,0,0,0])
 				for ls in Elist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'F':
 				posf.pop(43-pair[1])
-				posf.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				posf.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Flist):
 					Flist.append([pair[1],0,0,0,0])
 				for ls in Flist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'G':
 				posg.pop(43-pair[1])
-				posg.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				posg.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Glist):
 					Glist.append([pair[1],0,0,0,0])
 				for ls in Glist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == 'H':
 				posh.pop(43-pair[1])
-				posh.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				posh.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Hlist):
 					Hlist.append([pair[1],0,0,0,0])
 				for ls in Hlist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == '4':
 				pos4.pop(43-pair[1])
-				pos4.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				pos4.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(THlist):
 					THlist.append([pair[1],0,0,0,0])
 				for ls in THlist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == '3':
 				pos3.pop(43-pair[1])
-				pos3.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				pos3.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(RDlist):
 					RDlist.append([pair[1],0,0,0,0])
 				for ls in RDlist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == '2':
 				pos2.pop(43-pair[1])
-				pos2.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				pos2.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(NDlist):
 					NDlist.append([pair[1],0,0,0,0])
 				for ls in NDlist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 			elif pair[0] == '1':
 				pos1.pop(43-pair[1])
-				pos1.insert(43-pair[1], str(wlist[ind])+"."+str(pair[1]))
+				pos1.insert(43-pair[1], str(wlist[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(STlist):
 					STlist.append([pair[1],0,0,0,0])
 				for ls in STlist:
 					if pair[1] == ls[0]:
-						if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 							ls[4] = ls[4] + 1
-						elif 700 > wlist[ind] and wlist[ind] >= 400:
+						elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 							ls[3] = ls[3] + 1
-						elif 400 > wlist[ind] and wlist[ind] >= 100:
+						elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 							ls[2] = ls[2] + 1
-						elif 100 > wlist[ind]:
+						elif 100 > wlist[ind+1]:
 							ls[1] = ls[1] + 1
-						if bstchc and wlist[ind] == bstchc:
-							if wlist[ind] == initial_weight or wlist[ind] >= 700:
+						if bstchc and wlist[ind+1] == bstchc:
+							if wlist[ind+1] == initial_weight or wlist[ind+1] >= 700:
 								ls[4] = ls[4] + .0
-							elif 700 > wlist[ind] and wlist[ind] >= 400:
+							elif 700 > wlist[ind+1] and wlist[ind+1] >= 400:
 								ls[3] = ls[3] + .0
-							elif 400 > wlist[ind] and wlist[ind] >= 100:
+							elif 400 > wlist[ind+1] and wlist[ind+1] >= 100:
 								ls[2] = ls[2] + .0
-							elif 100 > wlist[ind]:
+							elif 100 > wlist[ind+1]:
 								ls[1] = ls[1] + .0
 
 ###################################################################################################################################################################
@@ -578,7 +602,7 @@ def inventory(request):
 		for ind,pair in enumerate(mlist2):
 			if pair[0] == 'A':
 				posa.pop(43-pair[1])
-				posa.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				posa.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Alist):
 					Alist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -590,18 +614,18 @@ def inventory(request):
 							except: pass
 				for ls in Alist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'B':
 				posb.pop(43-pair[1])
-				posb.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				posb.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Blist):
 					Blist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -613,18 +637,18 @@ def inventory(request):
 							except: pass
 				for ls in Blist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'C':
 				posc.pop(43-pair[1])
-				posc.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				posc.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Clist):
 					Clist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -636,18 +660,18 @@ def inventory(request):
 							except: pass
 				for ls in Clist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'D':
 				posd.pop(43-pair[1])
-				posd.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				posd.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Dlist):
 					Dlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -659,18 +683,18 @@ def inventory(request):
 							except: pass
 				for ls in Dlist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'E':
 				pose.pop(43-pair[1])
-				pose.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				pose.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Elist):
 					Elist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -682,18 +706,18 @@ def inventory(request):
 							except: pass
 				for ls in Elist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'F':
 				posf.pop(43-pair[1])
-				posf.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				posf.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Flist):
 					Flist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -705,18 +729,18 @@ def inventory(request):
 							except: pass
 				for ls in Flist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'G':
 				posg.pop(43-pair[1])
-				posg.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				posg.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Glist):
 					Glist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -728,18 +752,18 @@ def inventory(request):
 							except: pass
 				for ls in Glist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == 'H':
 				posh.pop(43-pair[1])
-				posh.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				posh.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Hlist):
 					Hlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -751,18 +775,18 @@ def inventory(request):
 							except: pass
 				for ls in Hlist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '4':
 				pos4.pop(43-pair[1])
-				pos4.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				pos4.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(THlist):
 					THlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -774,18 +798,18 @@ def inventory(request):
 							except: pass
 				for ls in THlist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '3':
 				pos3.pop(43-pair[1])
-				pos3.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				pos3.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(RDlist):
 					RDlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -797,18 +821,18 @@ def inventory(request):
 							except: pass
 				for ls in RDlist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '2':
 				pos2.pop(43-pair[1])
-				pos2.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				pos2.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(NDlist):
 					NDlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -820,18 +844,18 @@ def inventory(request):
 							except: pass
 				for ls in NDlist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 			elif pair[0] == '1':
 				pos1.pop(43-pair[1])
-				pos1.insert(43-pair[1], str(wlist2[ind])+"."+str(pair[1]))
+				pos1.insert(43-pair[1], str(wlist2[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(STlist):
 					STlist.append([pair[1],0,0,0,0,0,0,0,0])
 				else:
@@ -843,13 +867,13 @@ def inventory(request):
 							except: pass
 				for ls in STlist:
 					if pair[1] == ls[0]:
-						if wlist2[ind] == initial_weight2 or wlist2[ind] >= 700:
+						if wlist2[ind+1] == initial_weight2 or wlist2[ind+1] >= 700:
 							ls[8] = ls[8] + 1
-						elif 700 > wlist2[ind] and wlist2[ind] >= 400:
+						elif 700 > wlist2[ind+1] and wlist2[ind+1] >= 400:
 							ls[7] = ls[7] + 1
-						elif 400 > wlist2[ind] and wlist2[ind] >= 100:
+						elif 400 > wlist2[ind+1] and wlist2[ind+1] >= 100:
 							ls[6] = ls[6] + 1
-						elif 100 > wlist2[ind]:
+						elif 100 > wlist2[ind+1]:
 							ls[5] = ls[5] + 1
 
 ###################################################################################################################################################################
@@ -900,7 +924,7 @@ def inventory(request):
 		for ind,pair in enumerate(mlist3):
 			if pair[0] == 'A':
 				posa.pop(43-pair[1])
-				posa.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				posa.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Alist):
 					Alist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -913,18 +937,18 @@ def inventory(request):
 							except: pass
 				for ls in Alist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'B':
 				posb.pop(43-pair[1])
-				posb.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				posb.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Blist):
 					Blist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -937,18 +961,18 @@ def inventory(request):
 							except: pass
 				for ls in Blist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'C':
 				posc.pop(43-pair[1])
-				posc.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				posc.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Clist):
 					Clist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -961,18 +985,18 @@ def inventory(request):
 							except: pass
 				for ls in Clist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'D':
 				posd.pop(43-pair[1])
-				posd.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				posd.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Dlist):
 					Dlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -985,18 +1009,18 @@ def inventory(request):
 							except: pass
 				for ls in Dlist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'E':
 				pose.pop(43-pair[1])
-				pose.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				pose.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Elist):
 					Elist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1010,18 +1034,18 @@ def inventory(request):
 
 				for ls in Elist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'F':
 				posf.pop(43-pair[1])
-				posf.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				posf.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Flist):
 					Flist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1034,18 +1058,18 @@ def inventory(request):
 							except: pass
 				for ls in Flist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'G':
 				posg.pop(43-pair[1])
-				posg.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				posg.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Glist):
 					Glist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1058,18 +1082,18 @@ def inventory(request):
 							except: pass
 				for ls in Glist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == 'H':
 				posh.pop(43-pair[1])
-				posh.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				posh.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(Hlist):
 					Hlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1082,18 +1106,18 @@ def inventory(request):
 							except: pass
 				for ls in Hlist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '4':
 				pos4.pop(43-pair[1])
-				pos4.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				pos4.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(THlist):
 					THlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1106,18 +1130,18 @@ def inventory(request):
 							except: pass
 				for ls in THlist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '3':
 				pos3.pop(43-pair[1])
-				pos3.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				pos3.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(RDlist):
 					RDlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1130,18 +1154,18 @@ def inventory(request):
 							except: pass
 				for ls in RDlist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '2':
 				pos2.pop(43-pair[1])
-				pos2.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				pos2.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(NDlist):
 					NDlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1154,18 +1178,18 @@ def inventory(request):
 							except: pass
 				for ls in NDlist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 			elif pair[0] == '1':
 				pos1.pop(43-pair[1])
-				pos1.insert(43-pair[1], str(wlist3[ind])+"."+str(pair[1]))
+				pos1.insert(43-pair[1], str(wlist3[ind+1])+"."+str(pair[1]))
 				if str(pair[1]) not in str(STlist):
 					STlist.append([pair[1],0,0,0,0,0,0,0,0,0,0,0,0])
 				else:
@@ -1178,13 +1202,13 @@ def inventory(request):
 							except: pass
 				for ls in STlist:
 					if pair[1] == ls[0]:
-						if wlist3[ind] == initial_weight3 or wlist3[ind] >= 700:
+						if wlist3[ind+1] == initial_weight3 or wlist3[ind+1] >= 700:
 							ls[12] = ls[12] + 1
-						elif 700 > wlist3[ind] and wlist3[ind] >= 400:
+						elif 700 > wlist3[ind+1] and wlist3[ind+1] >= 400:
 							ls[11] = ls[11] + 1
-						elif 400 > wlist3[ind] and wlist3[ind] >= 100:
+						elif 400 > wlist3[ind+1] and wlist3[ind+1] >= 100:
 							ls[10] = ls[10] + 1
-						elif 100 > wlist3[ind]:
+						elif 100 > wlist3[ind+1]:
 							ls[9] = ls[9] + 1
 
 # FLOATING VEHICLE #

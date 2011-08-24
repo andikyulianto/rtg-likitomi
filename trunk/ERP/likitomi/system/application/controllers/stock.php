@@ -111,6 +111,7 @@ class Stock extends Controller {
 		$data['resultStock'] = $this->Warehouse_model->getFilterResult($invoice_all,$papercode_all,$supplier_all,$invoicedate_all,$movement_all, $query_mode);
 		$data['thisClass'] = $this;
 		$this->load->view('warehouse/stockResult',$data);
+//		$this->load->view('warehouse/stockResult_new',$data);
 	}
 	
 	function getSupplierById($supplierid)
