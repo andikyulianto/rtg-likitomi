@@ -61,6 +61,7 @@ padding-right:0px;
 }
 </style>
 <script type="text/javascript" src="javascript/jquery.js"></script>
+<script type="text/javascript" src="javascript/aqFloater.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -143,6 +144,8 @@ $(document).ready(function(){
 		var changed = $("#changed").val("yes");
 	});
 
+	$('#legend').aqFloater({attach: 'ne', duration: 0, opacity: 1});
+
 });
 </script>
 </head>
@@ -190,7 +193,7 @@ $(document).ready(function(){
 <input id="loc" type="hidden" value="{{ loc }}" />
 <input id="mappos" type="hidden" value="{{ mappos }}"/>
 
-<div id="legend" style="position:absolute; top:0px; left:{% if mappos != '' %}{% if mappos == 'left' %}0{% endif %}{% if mappos == 'right' %}326{% endif %}{% if mappos == 'center' %}410{% endif %}{% else %}0{% endif %}px;"><table style="height:1px; width:390px;">
+<div id="legend"><table style="height:1px; width:390px;">
 	<tr>
 		<td style="text-align:right;">Weight (kgs.)</td>
 		<td class="nomarpad" style="width:200px; background-image:url('images/clamplift/legend.png');"></td>

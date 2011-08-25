@@ -75,6 +75,7 @@ background-color:white;
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
 <script type="text/javascript" src="javascript/ui.selectmenu.js"></script> 
+<script type="text/javascript" src="javascript/jquery.floatobject-1.4.js"></script> 
 <link rel="Stylesheet" href="css/ui.selectmenu.css" type="text/css" /> 
 <script type="text/javascript">
 function startTime()
@@ -216,13 +217,9 @@ $(document).ready(function(){
 	$( "#pick" ).button({icons: {primary: "ui-icon-cart"}});
 	$("#mapleft").click(function(){
 		$("#map")[0].contentWindow.scrollTo(0,0);
-		$('#map', top.document).contents().find('#mappos').val("left");
-		$('#map', top.document).contents().find('#legend').css("left","0px");
 	});
 	$("#mapright").click(function(){
 		$("#map")[0].contentWindow.scrollTo(9999,0);
-		$('#map', top.document).contents().find('#mappos').val("right");
-		$('#map', top.document).contents().find('#legend').css("left","326px");
 	});
 	$("#maglay, #layouttab").click(function(){
 		$("#plan, #clamplift, #search").hide();
@@ -232,8 +229,6 @@ $(document).ready(function(){
 		$("#menutab").fadeIn();
 		$("#map").css("margin-top","0px");
 		$("#mapleft, #mapright").hide();
-		$('#map', top.document).contents().find('#legend').css("left","410px");
-		$('#map', top.document).contents().find('#mappos').val("center");
 		$("#map")[0].contentWindow.scrollTo(9999,0);
 	});
 	$("#pick").click(function(){
@@ -333,8 +328,6 @@ $(document).ready(function(){
 		$("#layout").css({"width":"398px","height":"551px","top":"42px","left":"400px"});
 		$("#map").css("margin-top","35px");
 		$("#mapleft, #mapright").show();
-		$('#map', top.document).contents().find('#legend').css("left","0px");
-		$('#map', top.document).contents().find('#mappos').val("left");
 		$("#map")[0].contentWindow.scrollTo(0,0);
 		// CLAMPLIFT //
 		$("#clamplift").css({"width":"398px","height":"188px","top":"405px","left":"0px"});
@@ -454,7 +447,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 
-<!--LAYOUT-->
+<!--MAP-->
 	<div id="layout" style="top:42px; left:400px; width:398px; height:551px;">
 		<div style="top:0px; right:0px;"><button id="maglay">Layout</button></div> <!--Magnifying Button-->
 		<iframe id="map" name="map" src="{{ inventory_url }}" frameborder="0" style="width:100%; height:495px; margin-top:35px; margin-left:0px;" scrolling="no"></iframe>
