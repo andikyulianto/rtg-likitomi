@@ -57,16 +57,16 @@
                 if(($key->slit)!=0)
 		//$cut2 	= $case/$key->slit;
 		$cut2 = ($key->ratio)*$case;
-		$used_df = ($key->t_length*$cut2)/1000;
-		$used_bl = ($key->BL=="")?"":($key->t_length*$cut2)/1000;
-		$used_cl = ($key->CL=="")?"":($key->t_length*$cut2)/1000;
+		$used_df = ($key->length*$cut2)/1000;
+		$used_bl = ($key->BL=="")?"":($key->length*$cut2)/1000;
+		$used_cl = ($key->CL=="")?"":($key->length*$cut2)/1000;
 		
-		$used_bm = ($key->BM=="")?"":(($key->t_length*$cut2)/1000)*1.36;
-		$used_cm = ($key->CM=="")?"":(($key->t_length*$cut2)/1000)*1.48;
+		$used_bm = ($key->BM=="")?"":(($key->length*$cut2)/1000)*1.36;
+		$used_cm = ($key->CM=="")?"":(($key->length*$cut2)/1000)*1.48;
 		
-		$p_width_inch = $key->p_width_mm/25.6 ; //Adopted From Lotus File
+		//$p_width_inch = $key->p_width_mm/25.6 ; //Adopted From Lotus File
 		
-		$metre	= ($key->t_length*$cut2)/1000; 
+		$metre	= ($key->length*$cut2)/1000; 
 		$timeuse = 0;
 		if((strtoupper($key->flute)=="B")||(strtoupper($key->flute)=="C"))
 		{
@@ -86,12 +86,12 @@
 		}
 		//IF(A7>=(0.0006949*0*11.5),IF(A7<=(0.0006949*0*12.5),(A7)+(0.0006949*0),A7),A7)
 
-		$used_df_lkg = $key->p_width_mm  * $used_df * getGrade($key->DF) / 1000000;
-		$used_bl_lkg = $key->p_width_mm  * $used_bl * getGrade($key->BL) / 1000000; 
-		$used_cl_lkg = $key->p_width_mm  * $used_cl * getGrade($key->CL) / 1000000; 
+		$used_df_lkg = $key->paper_width_mm  * $used_df * getGrade($key->DF) / 1000000;
+		$used_bl_lkg = $key->paper_width_mm  * $used_bl * getGrade($key->BL) / 1000000; 
+		$used_cl_lkg = $key->paper_width_mm  * $used_cl * getGrade($key->CL) / 1000000; 
 		
-		$used_bm_lkg = $key->p_width_mm  * $used_bm * getGrade($key->BM) / 1000000; 
-		$used_cm_lkg = $key->p_width_mm  * $used_cm * getGrade($key->CM) / 1000000; 
+		$used_bm_lkg = $key->paper_width_mm  * $used_bm * getGrade($key->BM) / 1000000; 
+		$used_cm_lkg = $key->paper_width_mm  * $used_cm * getGrade($key->CM) / 1000000; 
 		
 		$used_df_mkg = $used_df_lkg * 1.03;
 		$used_bl_mkg = $used_bl_lkg * 1.03;
@@ -110,7 +110,7 @@
 		<td class='blankTbl'></td>
 		<td><?=$key->BL?></td>
 		<td><?=$key->BM?></td>
-		<td><?=$key->p_width_mm?></td>
+		<td><?=$key->paper_width_mm?></td>
 		<td class='blankTbl'></td>
 		<td><?=round($used_bl)?></td>
 		<td><?=round($used_bm)?></td>
@@ -120,7 +120,7 @@
 		<td>+LOSS</td>
 		<td><?=round($used_bl_mkg)?></td>
 		<td><?=round($used_bm_mkg)?></td>
-		<td><?=$key->t_length?></td>
+		<td><?=$key->length?></td>
 		<td><?=round($case)?></td>
 	</tr>
 	<tr class='tdView'>

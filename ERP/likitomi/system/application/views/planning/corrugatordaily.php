@@ -58,19 +58,20 @@
                 if(($key->slit)!=0)
 		//$cut2 	= $case/$key->slit;
 		$cut2 = $case*($key->ratio);
-		$used_df = ($key->t_length*$cut2)/1000;
-		$used_bl = ($key->BL=="")?"":($key->t_length*$cut2)/1000;
-		$used_cl = ($key->CL=="")?"":($key->t_length*$cut2)/1000;
+		$used_df = ($key->length*$cut2)/1000;
+		$used_bl = ($key->BL=="")?"":($key->length*$cut2)/1000;
+		$used_cl = ($key->CL=="")?"":($key->length*$cut2)/1000;
 		
-		$used_bm = ($key->BM=="")?"":(($key->t_length*$cut2)/1000)*1.36;
-		$used_cm = ($key->CM=="")?"":(($key->t_length*$cut2)/1000)*1.48;
+		$used_bm = ($key->BM=="")?"":(($key->length*$cut2)/1000)*1.36;
+		$used_cm = ($key->CM=="")?"":(($key->length*$cut2)/1000)*1.48;
 		
-		$p_width_inch = $key->p_width_mm/25.6 ; //Adopted From Lotus File
+		//$p_width_inch = $key->p_width_mm/25.6 ; //Adopted From Lotus File
+		$paper_width = $key->paper_width;
 		
-		$trim	= ($key->p_width_mm - $key->blank*$key->slit);
-		$metre	= ($key->t_length*$cut2)/1000; 
+		$trim	= ($key->paper_width_mm - $key->blank*$key->slit);
+		$metre	= ($key->length*$cut2)/1000; 
 		
-		$lkg	= $key->p_width_mm * $used_df * getGrade($key->DF) / 1000000;
+		$lkg	= $key->paper_width_mm * $used_df * getGrade($key->DF) / 1000000;
 		
 		if($used_cm =="")
 		{
@@ -78,11 +79,11 @@
 			{
 				$mkg = "";
 			}
-			else $mkg = $key->p_width_mm * $used_bm * getGrade($key->BM) / 1000000;
+			else $mkg = $key->paper_width_mm * $used_bm * getGrade($key->BM) / 1000000;
 		}
 		else 
 		{
-			$mkg = $key->p_width_mm * $used_cm * getGrade($key->CM) / 1000000;
+			$mkg = $key->paper_width_mm * $used_cm * getGrade($key->CM) / 1000000;
 			
 		}
 		
@@ -156,8 +157,8 @@
 		<td class='blankTbl'></td>
 		<td><?=round($used_bl)?></td>
 		<td><?=round($used_bm)?></td>
-		<td><?=$key->p_width_mm?></td>
-		<td><?=$key->t_length?></td>
+		<td><?=$key->paper_width_mm?></td>
+		<td><?=$key->length?></td>
 		<td><?=round($case)?></td>
 		<td rowspan="2"><?=$key->blank?></td>	
 		<td rowspan="2"><?=$key->slit?></td>
@@ -182,7 +183,7 @@
 		<td><?=round($used_df)?></td>
 		<td><?=round($used_cl)?></td>
 		<td><?=round($used_cm)?></td>
-		<td><?=round($p_width_inch)?></td>
+		<td><?=round($paper_width)?></td>
 		<td class='blankTbl'></td>
 		<td><?=round($cut2)?></td>
 		<td><?=round($mkg)?></td>

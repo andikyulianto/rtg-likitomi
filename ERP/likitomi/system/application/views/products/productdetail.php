@@ -40,7 +40,7 @@ echo "</div>";
 		<td class='tblProdViewLabel' rowspan=2>Code</td>
 		<td class='tblProdViewLabel' rowspan=2>Flute</td>
 		<td class='tblProdViewLabel' colspan=5>Board Combination</td>
-		<td class='tblProdViewLabel' rowspan=2>Paper width <br/> (inch)</td>
+		<td class='tblProdViewLabel' colspan=2>Paper width</td>
 		<td class='tblProdViewLabel' colspan=2>Product size</td>
 		<td class='tblProdViewLabel' rowspan=2>Qty/set</td></tr>
 	<tr>
@@ -50,10 +50,14 @@ echo "</div>";
 		<td class='tblProdViewLabel'>BL</td>
 		<td class='tblProdViewLabel'>CM</td>
 		<td class='tblProdViewLabel'>CL</td>
+		
+		<td class='tblProdViewLabel'>inch</td>
+		<td class='tblProdViewLabel'>mm</td>		
 		<td class='tblProdViewLabel'>Blank</td>
 		<td class='tblProdViewLabel'>Length</td>
 	</tr>
 <?php 
+$i = 0;
 foreach($resultProducts as $prod){
 ?>	
 <tr>
@@ -64,12 +68,16 @@ foreach($resultProducts as $prod){
 	<td class='tblProdView'><?=$prod->BL?></td>
 	<td class='tblProdView'><?=$prod->CM?></td>
 	<td class='tblProdView'><?=$prod->CL?></td>
+
 	<td class='tblProdView'><?=$prod->paper_width?></td>
+	<td class='tblProdView'><?=$prod->paper_width_mm?></td>
 	<td class='tblProdView'><?=$prod->blank?></td>
 	<td class='tblProdView'><?=$prod->length?></td>
 	<td class='tblProdView'><?=$prod->qty_set?></td>
 </tr>
-<?php }?>
+<?php 
+
+}?>
 </table>
 <br/>
 
@@ -106,11 +114,11 @@ foreach($resultProducts as $prod){
 <table>
 	<tr>
 		<td class='tblDetailViewLabel'>L :</td>
-		<td class='tblDetailView' nowrap></td>
+		<td class='tblDetailView' nowrap><?=$resultProductCatalog->inner_l?></td>
 		<td class='tblDetailViewLabel'>W :</td>
-		<td class='tblDetailView' nowrap></td>		
+		<td class='tblDetailView' nowrap><?=$resultProductCatalog->inner_w?></td>		
 		<td class='tblDetailViewLabel'>H :</td>
-		<td class='tblDetailView' nowrap></td>
+		<td class='tblDetailView' nowrap><?=$resultProductCatalog->inner_h?></td>
 	</tr>
 	
 	
@@ -121,32 +129,35 @@ foreach($resultProducts as $prod){
 
 <div id='boxcontainer'>
 Process<br><br>
-<table width="500px"><tr>
-<td>
-
-<input type="checkbox" id='x_checkbox_cr' <?php if($resultProductCatalog->req_cr=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> CR </td>
+<table width="500px">
+<tr>
+<td><input type="checkbox" id='x_checkbox_cr' <?php if($resultProductCatalog->req_cr=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> CR </td>
 <td><input type="checkbox" id='x_checkbox_2cl' <?php if($resultProductCatalog->req_2cl=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 2CL </td>
 <td><input type="checkbox" id='x_checkbox_gh' <?php if($resultProductCatalog->req_gh=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Glue Handle </td>
 <td><input type="checkbox" id='x_checkbox_rd' <?php if($resultProductCatalog->req_rd=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> RD </td>
 <td><input type="checkbox" id='x_checkbox_wh' <?php if($resultProductCatalog->req_wh=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> WH </td>
 </tr> 
+
 <tr>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_3cm' <?php if($resultProductCatalog->req_3cm=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 3CM </td>
 <td><input type="checkbox" id='x_checkbox_hs' <?php if($resultProductCatalog->req_hs=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> HS </td>
 <td><input type="checkbox" id='x_checkbox_ss' <?php if($resultProductCatalog->req_ss=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> SS </td>
-<td>
-</tr><tr>
+</tr>
+
+<tr>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_3cs' <?php if($resultProductCatalog->req_3cs=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 3CS </td>
 <td><input type="checkbox" id='x_checkbox_fg' <?php if($resultProductCatalog->req_fg=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> FG </td>
 <td><input type="checkbox" id='x_checkbox_remove' <?php if($resultProductCatalog->req_remove=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Remove Scraps </td>
-</tr><tr>
+</tr>
+<tr>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_4cd' <?php if($resultProductCatalog->req_4cd=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 4CD </td>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_foam' <?php if($resultProductCatalog->req_foam=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> Foam </td>
-</tr><tr>
+</tr>
+<tr>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_3cl' <?php if($resultProductCatalog->req_3cl=='1') echo 'checked'; else echo ''; ?> disabled="disabled"> 3CL </td>
 <td></td>
@@ -204,18 +215,17 @@ Process<br><br>
         <td class='tblDetailViewLabel'>Ink Color 1</td>
 		<td class='tblDetailView'><?=$resultProductCatalog->ink_1?></td>
 		<td class='tblDetailViewLabel'>Ink Color 2</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
+</tr>
 
-		
-	</tr>
-
-	<tr>
+<tr>
 		<td class='tblDetailViewLabel'>Ink Color 3</td>
 		<td class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
 		<td class='tblDetailViewLabel'>Ink Color 4</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_4?>
-	</tr>
-	</table>
+		<td class='tblDetailView'><?=$resultProductCatalog->ink_4?></td>
+</tr>
+
+</table>
 	<br/><br/>
 	<table>
 	<tr>
@@ -255,17 +265,19 @@ Process<br><br>
 
 <div id='boxcontainer'>
 <table >
-	<!--<tr>
+	<tr>
+	<!--	
 		<td class='tblDetailViewLabel'>Paper Width (mm)</td>
 		<td class='tblDetailView'><?=$resultProductCatalog->p_width_mm?></td>
+	-->
 		<td class='tblDetailViewLabel' rowspan=3>Remark</td>
 		<td class='tblDetailView' rowspan=2><?=$resultProductCatalog->remark?></td>
 	</tr>
-	<tr>
+	<!--<tr>
 		<td class='tblDetailViewLabel'>Paper Width (inch)</td>
 		<td class='tblDetailView'><?=$resultProductCatalog->p_width_inch?></td>
-	</tr>
-	<tr> -->
+	</tr>-->
+	<tr>
 		<td class='tblDetailViewLabel'>Qty. Allowance</td>
 		<td class='tblDetailView'><?=$resultProductCatalog->qty_allowance?></td>
 	</tr>
@@ -284,31 +296,84 @@ Production Configuration for PC
 <br>
 </br>
 <table>
-	<tr>
+<tr></tr>
+<tr>
+<td colspan=4>
+	
+		<table>
+			<tr>
+				<td class='tblProdViewLabel' rowspan=2></td>
+				<td class='tblProdViewLabel' colspan=5>Board Combination</td>
+				<td class='tblProdViewLabel' colspan=2>Paper width </td>
+				<td class='tblProdViewLabel' rowspan=2>slit</td>
+
+			<tr>
+				
+				<td class='tblProdViewLabel'>DF</td>
+				<td class='tblProdViewLabel'>BM</td>
+				<td class='tblProdViewLabel'>BL</td>
+				<td class='tblProdViewLabel'>CM</td>
+				<td class='tblProdViewLabel'>CL</td>
+				<td class='tblProdViewLabel'>inch</td>
+				<td class='tblProdViewLabel'>mm</td>
+				
+
+			</tr>
+			<tr>
+				<td class='tblProdView'>From Sale</td>
+				<td class='tblProdView'><?=$prod->DF?></td>
+				<td class='tblProdView'><?=$prod->BM?></td>
+				<td class='tblProdView'><?=$prod->BL?></td>
+				<td class='tblProdView'><?=$prod->CM?></td>
+				<td class='tblProdView'><?=$prod->CL?></td>
+				<td class='tblProdView'><?=$prod->paper_width?></td>
+				<td class='tblProdView'><?=$prod->paper_width_mm?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->slit?></td>
+				
+				
+
+			</tr>
+			<tr>
+				<td class='tblProdView'>For PC</td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_df?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_bm?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_bl?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_cm?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_cl?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_paper_width?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_paper_width_mm?></td>
+				<td class='tblProdView'><?=$resultProductCatalog->pc_slit?></td>
+			</tr>
+
+		</table>
+
+
+</td>
+<tr><td><br/><br/></td></tr>
+</tr>
+<tr>
 		
 		<td class='tblDetailViewLabel'>CR Length</td>
-		<td  class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
+		<td  class='tblDetailView'><?=$resultProductCatalog->cr_length?></td>
 
 		<td class='tblDetailViewLabel'>CR Blank</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
-	</tr>
-	<tr></tr>
-	
-	<tr>
+		<td class='tblDetailView'><?=$resultProductCatalog->cr_blank?></td>
+</tr>
+<tr>
 		<td class='tblDetailViewLabel'>CV Length</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
+		<td class='tblDetailView'><?=$resultProductCatalog->cv_length?></td>
 
 		<td class='tblDetailViewLabel'>CV Blank</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
+		<td class='tblDetailView'><?=$resultProductCatalog->cv_blank?></td>
 	</tr>
 	
 	
 		<tr>
 		<td class='tblDetailViewLabel'>PT Length</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_3?></td>
+		<td class='tblDetailView'><?=$resultProductCatalog->pt_length?></td>
 
 		<td class='tblDetailViewLabel'>PT Blank</td>
-		<td class='tblDetailView'><?=$resultProductCatalog->ink_2?></td>
+		<td class='tblDetailView'><?=$resultProductCatalog->pt_blank?></td>
 	</tr>
 	</table>
 
@@ -319,8 +384,13 @@ Production Configuration for PC
 <div id='boxcontainer'>
 For history
 <br/><br>
-<table><tr><td class='tblDetailViewLabel'>Extra Blank +</td><td class='tblDetailView'><?=$resultProductCatalog->add_blank?></td>
-	<td class='tblDetailViewLabel'>Extra Length +</td><td class='tblDetailView'><?=$resultProductCatalog->add_t_length?></td>
+<table>
+	<tr>
+		<td class='tblDetailViewLabel'>Extra Blank +</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->add_blank?></td>
+		<td class='tblDetailViewLabel'>Extra Length +</td>
+		<td class='tblDetailView'><?=$resultProductCatalog->add_t_length?></td>
+	</tr>
 </table>
 </div>
 <br/>
@@ -328,11 +398,20 @@ For history
 
 <div id='boxcontainer'>
 Amount of sheet production
-<br/><br>
-<table><tr><td class='tblDetailViewLabel'>CR</td><td><?=$resultProductCatalog->cr_ratio_1?>:<?=$resultProductCatalog->cr_ratio_2?></td>
-	<td class='tblDetailViewLabel'>CV</td><td><?=$resultProductCatalog->cv_ratio_1?>:<?=$resultProductCatalog->cv_ratio_2?></td></tr>
-	<tr><td class='tblDetailViewLabel'>PT</td><td><?=$resultProductCatalog->pt_ratio_1?>:<?=$resultProductCatalog->pt_ratio_2?></td>
-	<td></td><td></td></tr>
+<br/><br/>
+<table>
+	<tr>
+		<td class='tblDetailViewLabel'>CR</td>
+		<td><?=$resultProductCatalog->cr_ratio_1?>:<?=$resultProductCatalog->cr_ratio_2?></td>
+		<td class='tblDetailViewLabel'>CV</td>
+		<td><?=$resultProductCatalog->cv_ratio_1?>:<?=$resultProductCatalog->cv_ratio_2?></td>
+	</tr>
+	<tr>
+		<td class='tblDetailViewLabel'>PT</td>
+		<td><?=$resultProductCatalog->pt_ratio_1?>:<?=$resultProductCatalog->pt_ratio_2?></td>
+	<td></td>
+	<td></td>
+	</tr>
 </table>
 </div>
 <br/>
@@ -353,15 +432,25 @@ Amount of sheet production
 ?>   
 
  <?php
- $trows =2;
+ $trows =3;
 if (($action=='edit')||($action=='add')){  //Edit  or Add
 if($action=='edit'){
 	$product_id = $resultProductCatalog->product_id;
 	$product_code = $resultProductCatalog->product_code;
 	$product_name = $resultProductCatalog->product_name;
 	$partner_id = $resultProductCatalog->partner_id;
+	$inner_l = $resultProductCatalog->inner_l;
+	$inner_w = $resultProductCatalog->inner_w;
+	$inner_h = $resultProductCatalog->inner_h;
 //	$product_type = $resultProductCatalog->product_type;
 //	$customer_part_no = $resultProductCatalog->customer_part_no;
+	$cr_length = $resultProductCatalog->cr_length;
+	$cr_blank = $resultProductCatalog->cr_blank;
+	$cv_length = $resultProductCatalog->cv_length;
+	$cv_blank = $resultProductCatalog->cv_blank;
+	$pt_length = $resultProductCatalog->pt_length;
+	$pt_blank = $resultProductCatalog->pt_blank;
+	
 	$ink_1 = $resultProductCatalog->ink_1;
 	$ink_2 = $resultProductCatalog->ink_2;
 	$ink_3 = $resultProductCatalog->ink_3;
@@ -387,6 +476,14 @@ if($action=='edit'){
 	$code_rd = $resultProductCatalog->code_rd;
 	$sketch = $resultProductCatalog->sketch;
 	$sketch_large = $resultProductCatalog->sketch_large;
+	$pc_df = $resultProductCatalog->pc_df;
+	$pc_bl = $resultProductCatalog->pc_bl;
+	$pc_bm = $resultProductCatalog->pc_bm;
+	$pc_cl = $resultProductCatalog->pc_cl;
+	$pc_cm = $resultProductCatalog->pc_cm;
+	$pc_paper_width = $resultProductCatalog->pc_paper_width;
+	$pc_paper_width_mm = $resultProductCatalog->pc_paper_width_mm;
+	$pc_slit = $resultProductCatalog->pc_slit;
 	$add_blank = $resultProductCatalog->add_blank;
 	$add_t_length = $resultProductCatalog->add_t_length;
 	$add_amount = $resultProductCatalog->add_amount;
@@ -435,6 +532,7 @@ if($action=='edit'){
 		$CMArray[$cnt] = $prod->CM;
 		$CLArray[$cnt] = $prod->CL;
 		$pwidthArray[$cnt] = $prod->paper_width;
+		$pwidthmmArray[$cnt] = $prod->paper_width_mm;
 		$blankArray[$cnt] = $prod->blank;
 		$lengthArray[$cnt] = $prod->length;
 		$qtysetArray[$cnt] = $prod->qty_set;
@@ -450,6 +548,7 @@ if($action=='edit'){
 		$CMArray[$i] = "";
 		$CLArray[$i] = "";
 		$pwidthArray[$i] = "";
+		$pwidthmmArray[$i] = "";
 		$blankArray[$i] = "";
 		$lengthArray[$i] = "";
 		$qtysetArray[$i] = "";
@@ -464,10 +563,19 @@ if($action=='add'){
 	$customer_name = "";
 //	$product_type = "";
 //	$customer_part_no = "";
+	$inner_l = "";
+	$inner_w = "";
+	$inner_h = "";
 	$ink_1 = "";
 	$ink_2 = "";
 	$ink_3 = "";
 	$ink_4 = "";
+	$cr_length = "";
+	$cr_blank ="";
+	$cv_length = "";
+	$cv_blank = "";
+	$pt_length = "";
+	$pt_blank = "";
 	$joint_type = "";
 	$joint_details = "";
 	$box_style = "";
@@ -489,6 +597,14 @@ if($action=='add'){
 	$code_rd = "";
 	$sketch = "";
 	$sketch_large = "";
+	$pc_df = "";
+	$pc_bl = "";
+	$pc_bm = "";
+	$pc_cl = "";
+	$pc_cm = "";
+	$pc_paper_width = "";
+	$pc_paper_width_mm = "";
+	$pc_slit = "";
 	$add_blank = "";
 	$add_t_length = "";
 	$add_amount = "";
@@ -531,6 +647,7 @@ if($action=='add'){
 		$CMArray[$i] = "";
 		$CLArray[$i] = "";
 		$pwidthArray[$i] = "";
+		$pwidthmmArray[$i] = "";
 		$blankArray[$i] = "";
 		$lengthArray[$i] = "";
 		$qtysetArray[$i] = "";
@@ -573,7 +690,8 @@ if($action=='add'){
 		</td>
 	</tr>
 </table>
-<br/><!--
+<br/>
+<!--
 <div id='boxcontainer'>
 <table>
 	<tr>
@@ -587,19 +705,22 @@ if($action=='add'){
 <br/>
 -->
 <table  cellspacing=2 cellpadding=2 id='tblProductLine'>
-			<tr>
+	<tr>
 		<td class='tblProdViewLabel' rowspan=2>Code</td>
 		<td class='tblProdViewLabel' rowspan=2>Flute</td>
 		<td class='tblProdViewLabel' colspan=5>Board Combination</td>
-		<td class='tblProdViewLabel' rowspan=2>Paper width <br/> (inch)</td>
+		<td class='tblProdViewLabel' colspan=2>Paper width</td>
 		<td class='tblProdViewLabel' colspan=2>Product size</td>
-		<td class='tblProdViewLabel' rowspan=2>Qty/ <br/>set</td></tr>
+		<td class='tblProdViewLabel' rowspan=2>Qty/ <br/>set</td>
+	</tr>
 	<tr>
 		<td class='tblProdViewLabel'>DF</td>
 		<td class='tblProdViewLabel'>BM</td>
 		<td class='tblProdViewLabel'>BL</td>
 		<td class='tblProdViewLabel'>CM</td>
 		<td class='tblProdViewLabel'>CL</td>
+		<td class='tblProdViewLabel'>inch</td>
+		<td class='tblProdViewLabel'>mm</td>
 		<td class='tblProdViewLabel'>Blank</td>
 		<td class='tblProdViewLabel'>Length</td>
 		<td ></td>
@@ -616,13 +737,26 @@ for($i=0;$i<$trows;$i++){
 		<td><input type='text' id='x_BL_<?=$i?>' size='4' value="<?=$BLArray[$i]?>" /></td>
 		<td><input type='text' id='x_CM_<?=$i?>' size='4' value="<?=$CMArray[$i]?>" /></td>
 		<td><input type='text' id='x_CL_<?=$i?>' size='4' value="<?=$CLArray[$i]?>" /></td>
-		<td><input type='text' id='x_pwidth_<?=$i?>' size='7' value="<?=$pwidthArray[$i]?>" /></td>
-		<td><input type='text' id='x_blank_<?=$i?>' size='2' value="<?=$blankArray[$i]?>" /></td>
-		<td><input type='text' id='x_length_<?=$i?>' size='2' value="<?=$lengthArray[$i]?>" /></td>
+		<td><input type='text' id='x_real_paper_width_<?=$i?>' size='1' value="<?=$pwidthArray[$i]?>" /></td>
+		<td><input type='text' id='x_real_paper_width_mm_<?=$i?>' size='1' value="<?=$pwidthmmArray[$i]?>" /></td>
+		<td><input type='text' id='x_real_blank_<?=$i?>' size='2' value="<?=$blankArray[$i]?>" /></td>
+		<td><input type='text' id='x_real_length_<?=$i?>' size='2' value="<?=$lengthArray[$i]?>" /></td>
 		<td><input type='text' id='x_qty_set_<?=$i?>' size='1' value="<?=$qtysetArray[$i]?>" /></td>
 		<td><?php if($i==0) echo "*"; ?></td>
 	</tr>
 <?php
+if($i==0)
+{
+
+	$DF = $DFArray[0];
+	$BM = $BMArray[0];
+	$BL = $BLArray[0];
+	$CM = $CMArray[0];
+	$CL = $CLArray[0];
+	$paper_width = $pwidthArray[0];
+	$paper_width_mm = $pwidthmmArray[0];
+	
+}
 }
 ?>
 </table>
@@ -667,11 +801,11 @@ for($i=0;$i<$trows;$i++){
 <table>
 	<tr>
 		<td class='tblDetailViewLabel'>L :</td>
-		<td class='tblDetailView' nowrap></td>
+		<td class='tblDetailView'><input type='text' id='x_inner_l' value="<?=$inner_l?>"></td>
 		<td class='tblDetailViewLabel'>W :</td>
-		<td class='tblDetailView' nowrap></td>		
+		<td class='tblDetailView'><input type='text' id='x_inner_w' value="<?=$inner_w?>"></td>		
 		<td class='tblDetailViewLabel'>H :</td>
-		<td class='tblDetailView' nowrap></td>
+		<td class='tblDetailView'><input type='text' id='x_inner_h' value="<?=$inner_h?>"></td>
 	</tr>
 	
 	
@@ -682,7 +816,8 @@ for($i=0;$i<$trows;$i++){
 
 <div id='boxcontainer'>
 Process*<br><br>
-<table width="500px"><tr>
+<table width="500px">
+	<tr>
 <td>
 <input type="checkbox" id='x_checkbox_cr' <?php if($req_cr=='1') echo 'checked';  ?>> CR </td>
 <td><input type="checkbox" id='x_checkbox_2cl' <?php if($req_2cl=='1') echo 'checked'; ?>> 2CL </td>
@@ -695,18 +830,20 @@ Process*<br><br>
 <td><input type="checkbox" id='x_checkbox_3cm' <?php if($req_3cm=='1') echo 'checked'; else echo ''; ?>> 3CM </td>
 <td><input type="checkbox" id='x_checkbox_hs' <?php if($req_hs=='1') echo 'checked'; else echo ''; ?>> HS </td>
 <td><input type="checkbox" id='x_checkbox_ss' <?php if($req_ss=='1') echo 'checked'; else echo ''; ?>> SS </td>
-<td>
-</tr><tr>
+</tr>
+<tr>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_3cs' <?php if($req_3cs=='1') echo 'checked'; else echo ''; ?>> 3CS </td>
 <td><input type="checkbox" id='x_checkbox_fg' <?php if($req_fg=='1') echo 'checked'; else echo ''; ?>> FG </td>
 <td><input type="checkbox" id='x_checkbox_remove' <?php if($req_remove=='1') echo 'checked'; else echo ''; ?>> Remove Scraps </td>
-</tr><tr>
+</tr>
+<tr>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_4cd' <?php if($req_4cd=='1') echo 'checked'; else echo ''; ?>> 4CD </td>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_foam' <?php if($req_foam=='1') echo 'checked'; else echo ''; ?>> Foam </td>
-</tr><tr>
+</tr>
+<tr>
 <td></td>
 <td><input type="checkbox" id='x_checkbox_3cl' <?php if($req_3cl=='1') echo 'checked'; else echo ''; ?>> 3CL </td>
 <td></td>
@@ -826,15 +963,20 @@ Process*<br><br>
 <div id='boxcontainer'>
 <table>
 	<tr>
-		<!--<td class='tblDetailViewLabel'>Paper Width (mm)</td>
+<!--		
+		<td class='tblDetailViewLabel'>Paper Width (mm)</td>
 		<td><input type='text' id='x_p_width_mm' value='<?=$p_width_mm?>'></td>
+		-->
 		<td class='tblDetailViewLabel' rowspan=3>Remark</td>
-		<td rowspan=2><textarea id='x_remark' row=3><?=$remark?></textarea></td>
+		<td rowspan=3><textarea id='x_remark' row=3><?=$remark?></textarea></td>
+
 	</tr>
+	<!--
 	<tr>
 		<td class='tblDetailViewLabel'>Paper Width (inch)</td>
 		<td><input type='text' id='x_p_width_inch' value='<?=$p_width_inch?>'></td>
-	</tr>-->
+	</tr>
+-->
 	<tr>
 		<td class='tblDetailViewLabel'>Qty. Allowance</td>
 		<td><input type='text' id='x_qty_allowance' value='<?=$qty_allowance?>'></td>
@@ -851,25 +993,78 @@ Production Configuration for PC
 </br>
 <table>
 	<tr>
+<td colspan=4>
+			<table>
+			<tr>
+				<td class='tblProdViewLabel' rowspan=2></td>
+				<td class='tblProdViewLabel' colspan=5>Board Combination</td>
+				<td class='tblProdViewLabel' colspan=2>Paper width </td>
+				<td class='tblProdViewLabel' rowspan=2>Slit </td>
+
+			<tr>
+				<td class='tblProdViewLabel'>DF</td>
+				<td class='tblProdViewLabel'>BM</td>
+				<td class='tblProdViewLabel'>BL</td>
+				<td class='tblProdViewLabel'>CM</td>
+				<td class='tblProdViewLabel'>CL</td>
+				<td class='tblProdViewLabel'>inch</td>
+				<td class='tblProdViewLabel'>mm</td>
+
+
+			</tr>
+			<tr>
+				<td class='tblProdView'>From Sale*</td>
+
+				<td class='tblProdViewLabel'><?=$DF?></td>
+				<td class='tblProdViewLabel'><?=$BM?></td>
+				<td class='tblProdViewLabel'><?=$BL?></td>
+				<td class='tblProdViewLabel'><?=$CM?></td>
+				<td class='tblProdViewLabel'><?=$CL?></td>
+				<td class='tblProdViewLabel'><?=$paper_width?></td>
+				<td class='tblProdViewLabel'><?=$paper_width_mm?></td>
+				<td class='tblProdViewLabel'><?=$slit?></td>
+
+			</tr>
+			<tr>
+				<td class='tblProdView'>For PC</td>
+				<td><input type='text' id='x_pc_df' value='<?=$pc_df?>' size=4></td>
+				<td><input type='text' id='x_pc_bm' value='<?=$pc_bm?>' size=4></td>
+				<td><input type='text' id='x_pc_bl' value='<?=$pc_bl?>' size=4></td>
+				<td><input type='text' id='x_pc_cm' value='<?=$pc_cm?>' size=4></td>
+				<td><input type='text' id='x_pc_cl' value='<?=$pc_cl?>' size=4></td>
+				<td><input type='text' id='x_pc_paper_width' value='<?=$pc_paper_width?>' size=5></td>
+				<td><input type='text' id='x_pc_paper_width_mm' value='<?=$pc_paper_width_mm?>' size=5></td>
+				<td><input type='text' id='x_pc_slit' value='<?=$pc_slit?>' size=5></td>
+			</tr>
+
+		</table>
+
+
+
+</td>
+</tr>
+<tr><td colspan=4>*will retrieve from top box<br/><br/></td></tr>
+</tr>
+	<tr>
 		<td class='tblDetailViewLabel'>CR Length</td>
-		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
+		<td><input type='text' id='x_cr_length' value='<?=$cr_length?>'></td>
 
 		<td class='tblDetailViewLabel'>CR Blank</td>
-		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
+		<td><input type='text' id='x_cr_blank' value='<?=$cr_blank?>'></td>
 	</tr>
 	<tr>
 		<td class='tblDetailViewLabel'>CV Length</td>
-		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
+		<td><input type='text' id='x_cv_length' value='<?=$cv_length?>'></td>
 
 		<td class='tblDetailViewLabel'>CV Blank</td>
-		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
+		<td><input type='text' id='x_cv_blank' value='<?=$cv_blank?>'></td>
 	</tr>
 	<tr>
 		<td class='tblDetailViewLabel'>PT Length</td>
-		<td><input type='text' id='x_ink_3' value='<?=$ink_3?>'></td>
+		<td><input type='text' id='x_pt_length' value='<?=$pt_length?>'></td>
 
 		<td class='tblDetailViewLabel'>PT Blank</td>
-		<td><input type='text' id='x_ink_2' value='<?=$ink_2?>'></td>
+		<td><input type='text' id='x_pt_blank' value='<?=$pt_blank?>'></td>
 	</tr>
 	</table>
 </div>

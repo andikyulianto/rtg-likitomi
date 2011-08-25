@@ -48,6 +48,7 @@ class Reportplanning extends Controller {
 		
 		$data['resultTotalProductionPlan'] = $this->Planning_model->totalproductionplan($plandate);
 		$data['plandate'] = $plandate;
+		$data['machine'] = $this->Planning_model->machine();
 		$this->load->view('planning/totalproductionplan',$data);
 	}
 	
