@@ -17,9 +17,9 @@
 	<td>Time</td>
 	<td>Speed</td>	
 	<td>MO</td>
-	<td colspan=3>Scroline</td>
+<!--	<td colspan=3>Scroline</td> -->
+	<td>Length</td>
 	<td>Blank</td>
-	<td>T.length</td>
 	<td>F</td>
 	<td>Sale Order</td>
 	<td>P.Code</td>
@@ -168,11 +168,12 @@
 		echo "<img src='".site_url($path)."' /><br>".$key->mo_pt_code;
 		?>
 	</td>
-	<td><?=$key->scoreline_f?></td>
+<!--	<td><?=$key->scoreline_f?></td>
 	<td><?=$key->scoreline_d?></td>
 	<td><?=$key->scoreline_f2?></td>
-	<td><?=$key->blank?></td>
+	-->
 	<td><?=$key->t_length?></td>
+	<td><?=$key->blank?></td>
 	<td><?=$key->flute?></td>
 	<td><?=$key->sales_order?></td>
 	<td><?=$key->purchase_order_no?></td>

@@ -97,9 +97,9 @@ foreach ($productDetails as $prod) {
     <td><b><?=$prod->BL?></b></td>
     <td><b><?=$prod->CM?></b></td>
     <td><b><?=$prod->CL?></b></td> 
-    <td><b><?=$prod->Length_mm?></b></td>
-    <td><b><?=$prod->Width_mm?></b></td>
-    <td><b><?=$prod->Height_mm?></b></td>
+    <td><b><?=$resultProductCatalog->inner_l?></b></td>
+    <td><b><?=$resultProductCatalog->inner_w?></b></td>
+    <td><b><?=$resultProductCatalog->inner_h?></b></td>
     <td><b><?=$prod->qty_set?></b></td>
 </tr>
 <?php }
@@ -128,7 +128,7 @@ if($resultProductCatalog->ink_3!="")$inkCnt++;
 									<span class='dotted'>&nbsp;&nbsp;&nbsp;<b><?=$resultProductCatalog->pcs_bundle?></b>&nbsp;&nbsp;&nbsp;</span>PCS/ BUNDLE</td>
 								    <td rowspan="2" class='subtitle'>LEVEL<br/><br/><b><?=$resultProductCatalog->level?></b></td>
 								    <td colspan="2" rowspan="2" class='subtitle'>PAPER WIDTH <br/><br/>
-									<b><?=$resultProductCatalog->p_width_inch?>" / <?=$resultProductCatalog->slit?></b></td>
+									<b><?=$prod->paper_width?>" / <?=$resultProductCatalog->slit?></b></td>
 								</tr>	
 								<tr>
 								    <td><b><?=$resultProductCatalog->ink_1?></b></td>

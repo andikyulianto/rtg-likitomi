@@ -168,9 +168,10 @@
 			Ext.get('x_BL_'+i).dom.value+"|"+
 			Ext.get('x_CM_'+i).dom.value+"|"+
 			Ext.get('x_CL_'+i).dom.value+"|"+
-			Ext.get('x_length_'+i).dom.value+"|"+
-			Ext.get('x_width_'+i).dom.value+"|"+
-			Ext.get('x_height_'+i).dom.value+"|"+
+			Ext.get('x_real_paper_width_'+i).dom.value+"|"+
+			Ext.get('x_real_paper_width_mm_'+i).dom.value+"|"+
+			Ext.get('x_real_blank_'+i).dom.value+"|"+
+			Ext.get('x_real_length_'+i).dom.value+"|"+
 			Ext.get('x_qty_set_'+i).dom.value;
 		return productdata;
 	}
@@ -261,34 +262,50 @@
 			partner_id:Ext.get('x_partner_id').dom.value,
 //			product_type:Ext.get('x_product_type').dom.value,
 //			customer_part_no:Ext.get('x_customer_part_no').dom.value,
+			inner_l:Ext.get('x_inner_l').dom.value,
+			inner_w:Ext.get('x_inner_w').dom.value,
+			inner_h:Ext.get('x_inner_h').dom.value,
 			ink_1:Ext.get('x_ink_1').dom.value,
 			ink_2:Ext.get('x_ink_2').dom.value,
 			ink_3:Ext.get('x_ink_3').dom.value,
 			ink_4:Ext.get('x_ink_4').dom.value,
+			cr_length:Ext.get('x_cr_length').dom.value,
+			cr_blank:Ext.get('x_cr_blank').dom.value,
+			cv_length:Ext.get('x_cv_length').dom.value,
+			cv_blank:Ext.get('x_cv_blank').dom.value,
+			pt_blank:Ext.get('x_pt_blank').dom.value,
+			pt_length:Ext.get('x_pt_length').dom.value,
 			joint_type:Ext.get('x_joint_type').dom.value,
 			joint_details:Ext.get('x_joint_details').dom.value,
 			box_style:Ext.get('x_box_style').dom.value,
 			rope_color:Ext.get('x_rope_color').dom.value,
 			pcs_bundle:Ext.get('x_pcs_bundle').dom.value,
 			level:Ext.get('x_level').dom.value,
-			p_width_mm:Ext.get('x_p_width_mm').dom.value,
-			p_width_inch:Ext.get('x_p_width_inch').dom.value,
+		//	p_width_mm:Ext.get('x_p_width_mm').dom.value,
+		//	p_width_inch:Ext.get('x_p_width_inch').dom.value,
 			qty_allowance:Ext.get('x_qty_allowance').dom.value,
 			scoreline_f:Ext.get('x_scoreline_f').dom.value,
 			scoreline_d:Ext.get('x_scoreline_d').dom.value,
 			scoreline_f2:Ext.get('x_scoreline_f2').dom.value,
 			slit:Ext.get('x_slit').dom.value,
-			blank:Ext.get('x_blank').dom.value,
-			t_length:Ext.get('x_t_length').dom.value,
+		//	blank:Ext.get('x_blank').dom.value,
+		//	t_length:Ext.get('x_t_length').dom.value,
 			cut:Ext.get('x_cut').dom.value,
-			next_process:Ext.get('x_next_process').dom.value,
 			code_pd:Ext.get('x_code_pd').dom.value,
 			code_rd:Ext.get('x_code_rd').dom.value,
 			sketch:Ext.get('x_sketch').dom.value,
 			sketch_large:Ext.get('x_sketch_large').dom.value,
+			pc_df:Ext.get('x_pc_df').dom.value,
+			pc_bl:Ext.get('x_pc_bl').dom.value,
+			pc_bm:Ext.get('x_pc_bm').dom.value,
+			pc_cl:Ext.get('x_pc_cl').dom.value,
+			pc_cm:Ext.get('x_pc_cm').dom.value,
+			pc_paper_width:Ext.get('x_pc_paper_width').dom.value,
+			pc_paper_width_mm:Ext.get('x_pc_paper_width_mm').dom.value,
+			pc_slit:Ext.get('x_pc_slit').dom.value,
 			add_blank:Ext.get('x_add_blank').dom.value,
 			add_t_length:Ext.get('x_add_t_length').dom.value,
-			add_amount:Ext.get('x_add_amount').dom.value,
+		//	add_amount:Ext.get('x_add_amount').dom.value,
 			cr_ratio_1:Ext.get('x_cr_ratio_1').dom.value,
 			cv_ratio_1:Ext.get('x_cv_ratio_1').dom.value,
 			pt_ratio_1:Ext.get('x_pt_ratio_1').dom.value,
@@ -422,34 +439,51 @@
 			partner_id:Ext.get('x_partner_id').dom.value,
 //			product_type:Ext.get('x_product_type').dom.value,
 //			customer_part_no:Ext.get('x_customer_part_no').dom.value,
+			inner_l:Ext.get('x_inner_l').dom.value,
+			inner_w:Ext.get('x_inner_w').dom.value,
+			inner_h:Ext.get('x_inner_h').dom.value,
 			ink_1:Ext.get('x_ink_1').dom.value,
 			ink_2:Ext.get('x_ink_2').dom.value,
 			ink_3:Ext.get('x_ink_3').dom.value,
 			ink_4:Ext.get('x_ink_4').dom.value,
+			
+			cr_length:Ext.get('x_cr_length').dom.value,
+			cr_blank:Ext.get('x_cr_blank').dom.value,
+			cv_length:Ext.get('x_cv_length').dom.value,
+			cv_blank:Ext.get('x_cv_blank').dom.value,
+			pt_blank:Ext.get('x_pt_blank').dom.value,
+			pt_length:Ext.get('x_pt_length').dom.value,
 			joint_type:Ext.get('x_joint_type').dom.value,
 			joint_details:Ext.get('x_joint_details').dom.value,
 			box_style:Ext.get('x_box_style').dom.value,
 			rope_color:Ext.get('x_rope_color').dom.value,
 			pcs_bundle:Ext.get('x_pcs_bundle').dom.value,
 			level:Ext.get('x_level').dom.value,
-			p_width_mm:Ext.get('x_p_width_mm').dom.value,
-			p_width_inch:Ext.get('x_p_width_inch').dom.value,
+		//	p_width_mm:Ext.get('x_p_width_mm').dom.value,
+		//	p_width_inch:Ext.get('x_p_width_inch').dom.value,
 			qty_allowance:Ext.get('x_qty_allowance').dom.value,
 			scoreline_f:Ext.get('x_scoreline_f').dom.value,
 			scoreline_d:Ext.get('x_scoreline_d').dom.value,
 			scoreline_f2:Ext.get('x_scoreline_f2').dom.value,
 			slit:Ext.get('x_slit').dom.value,
-			blank:Ext.get('x_blank').dom.value,
-			t_length:Ext.get('x_t_length').dom.value,
+		//	blank:Ext.get('x_blank').dom.value,
+		//	t_length:Ext.get('x_t_length').dom.value,
 			cut:Ext.get('x_cut').dom.value,
-			next_process:Ext.get('x_next_process').dom.value,
 			code_pd:Ext.get('x_code_pd').dom.value,
 			code_rd:Ext.get('x_code_rd').dom.value,
 			sketch:Ext.get('x_sketch').dom.value,
 			sketch_large:Ext.get('x_sketch_large').dom.value,
+			pc_df:Ext.get('x_pc_df').dom.value,
+			pc_bl:Ext.get('x_pc_bl').dom.value,
+			pc_bm:Ext.get('x_pc_bm').dom.value,
+			pc_cl:Ext.get('x_pc_cl').dom.value,
+			pc_cm:Ext.get('x_pc_cm').dom.value,
+			pc_paper_width:Ext.get('x_pc_paper_width').dom.value,
+			pc_paper_width_mm:Ext.get('x_pc_paper_width_mm').dom.value,
+			pc_slit:Ext.get('x_pc_slit').dom.value,
 			add_blank:Ext.get('x_add_blank').dom.value,
 			add_t_length:Ext.get('x_add_t_length').dom.value,
-			add_amount:Ext.get('x_add_amount').dom.value,
+		//	add_amount:Ext.get('x_add_amount').dom.value,
 
 			cr_ratio_1:Ext.get('x_cr_ratio_1').dom.value,
 			cv_ratio_1:Ext.get('x_cv_ratio_1').dom.value,
@@ -740,14 +774,16 @@
 						document.getElementById('x_CM_'+rowIndex).value = values[5];
 						document.getElementById('x_CL_'+rowIndex).className = "inputUpdated";
 						document.getElementById('x_CL_'+rowIndex).value = values[6];
-						document.getElementById('x_length_'+rowIndex).className = "inputUpdated";
-						document.getElementById('x_length_'+rowIndex).value = values[7];
-						document.getElementById('x_width_'+rowIndex).className = "inputUpdated";
-						document.getElementById('x_width_'+rowIndex).value = values[8];
-						document.getElementById('x_height_'+rowIndex).className = "inputUpdated";
-						document.getElementById('x_height_'+rowIndex).value = values[9];
+						document.getElementById('x_real_paper_width_'+rowIndex).className = "inputUpdated";
+						document.getElementById('x_real_paper_width_'+rowIndex).value = values[7];
+						document.getElementById('x_real_paper_width_mm_'+rowIndex).className = "inputUpdated";
+						document.getElementById('x_real_paper_width_mm_'+rowIndex).value = values[11];
+						document.getElementById('x_real_blank_'+rowIndex).className = "inputUpdated";
+						document.getElementById('x_real_blank_'+rowIndex).value = values[9];
+						document.getElementById('x_real_length_'+rowIndex).className = "inputUpdated";
+						document.getElementById('x_real_length_'+rowIndex).value = values[10];
 						document.getElementById('x_qty_set_'+rowIndex).className = "inputUpdated";
-						document.getElementById('x_qty_set_'+rowIndex).value = values[10];
+						document.getElementById('x_qty_set_'+rowIndex).value = values[11];
 					}
 					
 				},

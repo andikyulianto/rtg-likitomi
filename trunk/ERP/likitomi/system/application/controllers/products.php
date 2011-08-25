@@ -137,9 +137,10 @@ class Products extends Controller {
 				.$resultProduct->BL."|"
 				.$resultProduct->CM."|"
 				.$resultProduct->CL."|"
-				.$resultProduct->Length_mm."|"
-				.$resultProduct->Width_mm."|"
-				.$resultProduct->Height_mm."|"
+				.$resultProduct->paper_width."|"
+				.$resultProduct->paper_width_mm."|"
+				.$resultProduct->blank."|"
+				.$resultProduct->length."|"
 				.$resultProduct->qty_set;				
 			}
 			else { echo "";}			
@@ -157,10 +158,11 @@ class Products extends Controller {
 		$product_data['BL']=$productsall[5];
 		$product_data['CM']=$productsall[6];
 		$product_data['CL']=$productsall[7];
-		$product_data['Length_mm']=$productsall[8];
-		$product_data['Width_mm']=$productsall[9];
-		$product_data['Height_mm']=$productsall[10];
-		$product_data['qty_set']=$productsall[11];
+		$product_data['paper_width']=$productsall[8];
+		$product_data['paper_width_mm']=$productsall[9];
+		$product_data['blank']=$productsall[10];
+		$product_data['length']=$productsall[11];
+		$product_data['qty_set']=$productsall[12];
 		return $product_data;
 	}
 	function search()
@@ -212,6 +214,15 @@ class Products extends Controller {
 		$products['ink_2'] = ($this->input->post('ink_2'))?$this->input->post('ink_2'):'';
 		$products['ink_3'] = ($this->input->post('ink_3'))?$this->input->post('ink_3'):'';
 		$products['ink_4'] = ($this->input->post('ink_4'))?$this->input->post('ink_4'):'';
+		$products['inner_l'] = ($this->input->post('inner_l'))?$this->input->post('inner_l'):'';
+		$products['inner_w'] = ($this->input->post('inner_w'))?$this->input->post('inner_w'):'';
+		$products['inner_h'] = ($this->input->post('inner_h'))?$this->input->post('inner_h'):'';
+		$products['cr_length'] = ($this->input->post('cr_length'))?$this->input->post('cr_length'):'';
+		$products['cr_blank'] = ($this->input->post('cr_blank'))?$this->input->post('cr_blank'):'';
+		$products['cv_length'] = ($this->input->post('cv_length'))?$this->input->post('cv_length'):'';
+		$products['cv_blank'] = ($this->input->post('cv_blank'))?$this->input->post('cv_blank'):'';
+		$products['pt_length'] = ($this->input->post('pt_length'))?$this->input->post('pt_length'):'';
+		$products['pt_blank'] = ($this->input->post('pt_blank'))?$this->input->post('pt_blank'):'';
 		$products['joint_type'] = ($this->input->post('joint_type'))?$this->input->post('joint_type'):'';
 		$products['joint_details'] = ($this->input->post('joint_details'))?$this->input->post('joint_details'):'';
 		$products['box_style'] = ($this->input->post('box_style'))?$this->input->post('box_style'):'';
@@ -233,6 +244,14 @@ class Products extends Controller {
 		$products['code_rd'] = ($this->input->post('code_rd'))?$this->input->post('code_rd'):'';
 		$products['sketch'] = ($this->input->post('sketch'))?$this->input->post('sketch'):'';
 		$products['sketch_large'] = ($this->input->post('sketch_large'))?$this->input->post('sketch_large'):'';
+		$products['pc_df'] = ($this->input->post('pc_df'))?$this->input->post('pc_df'):'';
+		$products['pc_bl'] = ($this->input->post('pc_bl'))?$this->input->post('pc_bl'):'';
+		$products['pc_bm'] = ($this->input->post('pc_bm'))?$this->input->post('pc_bm'):'';
+		$products['pc_cl'] = ($this->input->post('pc_cl'))?$this->input->post('pc_cl'):'';
+		$products['pc_cm'] = ($this->input->post('pc_cm'))?$this->input->post('pc_cm'):'';
+		$products['pc_paper_width'] = ($this->input->post('pc_paper_width'))?$this->input->post('pc_paper_width'):'';
+		$products['pc_paper_width_mm'] = ($this->input->post('pc_paper_width_mm'))?$this->input->post('pc_paper_width_mm'):'';
+		$products['pc_slit'] = ($this->input->post('pc_slit'))?$this->input->post('pc_slit'):'';
 		$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
 		$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 		$products['add_amount']=($this->input->post('add_amount'))?$this->input-post('add_amount'):'';
@@ -303,6 +322,15 @@ class Products extends Controller {
 			$products['ink_2'] = ($this->input->post('ink_2'))?$this->input->post('ink_2'):'';
 			$products['ink_3'] = ($this->input->post('ink_3'))?$this->input->post('ink_3'):'';
 			$products['ink_4'] = ($this->input->post('ink_4'))?$this->input->post('ink_4'):'';
+			$products['inner_l'] = ($this->input->post('inner_l'))?$this->input->post('inner_l'):'';
+			$products['inner_w'] = ($this->input->post('inner_w'))?$this->input->post('inner_w'):'';
+			$products['inner_h'] = ($this->input->post('inner_h'))?$this->input->post('inner_h'):'';
+			$products['cr_length'] = ($this->input->post('cr_length'))?$this->input->post('cr_length'):'';
+			$products['cr_blank'] = ($this->input->post('cr_blank'))?$this->input->post('cr_blank'):'';
+			$products['cv_length'] = ($this->input->post('cv_length'))?$this->input->post('cv_length'):'';
+			$products['cv_blank'] = ($this->input->post('cv_blank'))?$this->input->post('cv_blank'):'';
+			$products['pt_length'] = ($this->input->post('pt_length'))?$this->input->post('pt_length'):'';
+			$products['pt_blank'] = ($this->input->post('pt_blank'))?$this->input->post('pt_blank'):'';
 			$products['joint_type'] = ($this->input->post('joint_type'))?$this->input->post('joint_type'):'';
 			$products['joint_details'] = ($this->input->post('joint_details'))?$this->input->post('joint_details'):'';
 			$products['box_style'] = ($this->input->post('box_style'))?$this->input->post('box_style'):'';
@@ -325,6 +353,14 @@ class Products extends Controller {
 			$products['sketch'] = ($this->input->post('sketch'))?$this->input->post('sketch'):'';
 			$products['sketch_large'] = ($this->input->post('sketch_large'))?$this->input->post('sketch_large'):'';
 			$products['add_blank'] = ($this->input->post('add_blank'))?$this->input->post('add_blank'):'';
+			$products['pc_df'] = ($this->input->post('pc_df'))?$this->input->post('pc_df'):'';
+			$products['pc_bl'] = ($this->input->post('pc_bl'))?$this->input->post('pc_bl'):'';
+			$products['pc_bm'] = ($this->input->post('pc_bm'))?$this->input->post('pc_bm'):'';
+			$products['pc_cl'] = ($this->input->post('pc_cl'))?$this->input->post('pc_cl'):'';
+			$products['pc_cm'] = ($this->input->post('pc_cm'))?$this->input->post('pc_cm'):'';
+			$products['pc_paper_width'] = ($this->input->post('pc_paper_width'))?$this->input->post('pc_paper_width'):'';
+			$products['pc_paper_width_mm'] = ($this->input->post('pc_paper_width_mm'))?$this->input->post('pc_paper_width_mm'):'';
+			$products['pc_slit'] = ($this->input->post('pc_slit'))?$this->input->post('pc_slit'):'';
 			$products['add_t_length'] = ($this->input->post('add_t_length'))?$this->input->post('add_t_length'):'';
 			$products['add_amount'] = ($this->input->post('add_amount'))?$this->input->post('add_amount'):'';
 			$products['cr_ratio_1'] = ($this->input->post('cr_ratio_1'))?$this->input->post('cr_ratio_1'):'';
