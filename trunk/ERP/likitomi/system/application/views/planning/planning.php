@@ -118,9 +118,10 @@
 		{
 			header: 'Corr-Time*',
 			dataIndex: 'corrugator_time',
-			editor: new Ext.form.TimeField({
-                format: 'H:i',
-                increment: 1,
+			//renderer: Ext.util.Format.dateRenderer('Y-m-d'), 
+			editor: new Ext.form.TextField({
+                //format: 'Y-m-d',
+                
 			}),
 			tooltip: 'Corrugator Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
@@ -139,11 +140,12 @@
 		{
 			header: 'Conv-Time*',
 			dataIndex: 'converter_time',
-			editor: new Ext.form.TimeField({
-                format:'H:i',
-                increment: 1,
-            }),
-			//renderer: Ext.util.Format.dateRenderer('H:i'),
+			editor:new Ext.form.TimeField({
+                    increment:1,
+                    allowBlank:false,
+                    format:'H:i'
+                }),
+                renderer: Ext.util.Format.dateRenderer('H:i'),
 			width:80,
 		},
 		{

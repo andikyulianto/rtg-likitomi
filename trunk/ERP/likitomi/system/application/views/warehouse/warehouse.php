@@ -147,17 +147,82 @@
 		    selectOnFocus:true,
 			applyTo:'x_supplier'
 		});
+		combo_supplier.on('select', function() {
+			reloadStore();
+		}); // added by Patipol
 	}
-	
+
+	function reloadStore()
+	{
+		combo_paper.store.removeAll();
+		var supplier = document.getElementById("x_supplier").value;
+		if (supplier=="Select a Supplier...") {combo_paper.store.loadData([<?=$thisClass->getPapers(0);?>]);}
+		else if (supplier=="Siam Kraft Co. Ltd.") {combo_paper.store.loadData([<?=$thisClass->getPapers(11);?>]);}
+		else if (supplier=="Panjapol Fiber Container") {combo_paper.store.loadData([<?=$thisClass->getPapers(13);?>]);}
+		else if (supplier=="Panjapol Paper Industry Co. Ltd.") {combo_paper.store.loadData([<?=$thisClass->getPapers(16);?>]);}
+		else if (supplier=="Thai Cane Paper Public Company Limited") {combo_paper.store.loadData([<?=$thisClass->getPapers(12);?>]);}
+		else if (supplier=="Elite Kraft Paper") {combo_paper.store.loadData([<?=$thisClass->getPapers(367);?>]);}
+	}
+
 	function makePaperCombo()
 	{
-		alert(document.getElementById("x_supplier").value);
-		var paperStore = new Ext.data.SimpleStore({
-		    fields: ['paper_code'],
-		    data : [
-		         <?=$thisClass->getPapers();?>
-			]
-		});
+		var supplier = document.getElementById("x_supplier").value;
+		if (supplier=="Select a Supplier...") {var partner_id_old = 0;}
+		else if (supplier=="Siam Kraft Co. Ltd.") {var partner_id_old = 11;}
+		else if (supplier=="Panjapol Fiber Container") {var partner_id_old = 13;}
+		else if (supplier=="Panjapol Paper Industry Co. Ltd.") {var partner_id_old = 16;}
+		else if (supplier=="Thai Cane Paper Public Company Limited") {var partner_id_old = 12;}
+		else if (supplier=="Elite Kraft Paper") {var partner_id_old = 367;}
+
+		if (partner_id_old==11){ // Siam Kraft Co. Ltd.
+			var paperStore = new Ext.data.SimpleStore({
+				fields: ['paper_code'],
+				data : [
+				     <?=$thisClass->getPapers(11);?>
+				]
+			});
+		}
+		else if (partner_id_old==13){ // Panjapol Fiber Container
+			var paperStore = new Ext.data.SimpleStore({
+				fields: ['paper_code'],
+				data : [
+				     <?=$thisClass->getPapers(13);?>
+				]
+			});
+		}
+		else if (partner_id_old==16){ // Panjapol Paper Industry Co. Ltd.
+			var paperStore = new Ext.data.SimpleStore({
+				fields: ['paper_code'],
+				data : [
+				     <?=$thisClass->getPapers(16);?>
+				]
+			});
+		}
+		else if (partner_id_old==12){ // Thai Cane Paper Public Company Limited
+			var paperStore = new Ext.data.SimpleStore({
+				fields: ['paper_code'],
+				data : [
+				     <?=$thisClass->getPapers(12);?>
+				]
+			});
+		}
+		else if (partner_id_old==367){ // Elite Kraft Paper
+			var paperStore = new Ext.data.SimpleStore({
+				fields: ['paper_code'],
+				data : [
+				     <?=$thisClass->getPapers(367);?>
+				]
+			});
+		}
+		else if (partner_id_old==0){
+			var paperStore = new Ext.data.SimpleStore({
+				fields: ['paper_code'],
+				data : [
+				     <?=$thisClass->getPapers(0);?>
+				]
+			});
+		}
+
 		for(var i=1;i<=<?=$thisClass->getLimitInput();?>;i++){
 			combo_paper = new Ext.form.ComboBox({
 				store: paperStore,

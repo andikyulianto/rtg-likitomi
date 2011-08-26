@@ -75,10 +75,10 @@ class Warehouse extends Controller {
 		}
 	}
 	
-	function getPapers()
+	function getPapers($partner_id_old)
 	{
 		$this->load->model('Papers_model');
-		$result = $this->Papers_model->getPapersList('Supplier');
+		$result = $this->Papers_model->getPapersList($partner_id_old);
 		foreach ($result as $row)
 		{
 			echo "['".$row->paper_code."'],";
