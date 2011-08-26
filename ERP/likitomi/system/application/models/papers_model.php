@@ -164,9 +164,10 @@ class Papers_model extends Model
 		return $query->result();
 	}
 	
-	function getPapersList()
+	function getPapersList($partner_id_old)
 	{
 		$this->db->where('isdeleted',0);
+		$this->db->where('partner_id_old',$partner_id_old);
 		$this->db->select('paper_id,paper_code');
 		$this->db->order_by("lower(paper_code)", "asc"); 	
 		$query = $this->db->get($this->tableName);		
