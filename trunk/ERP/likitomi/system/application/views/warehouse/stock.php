@@ -2,7 +2,7 @@
 /**
  * @author sanjilshrestha
  */
-	var alltables = new Array("tblInvoice","tblPaperCode","tblSuppliers","tblInvoiceDate","tblMovementDate");
+	var alltables = new Array("tblInvoice","tblPaperCode","tblSuppliers","tblInvoiceDate","tblMovementDate","tblSize"); // added tblSize by Patipol
 	var LOADING_TEXT	= "<?=$this->lang->line('ajax_loading_warehouse')?>";
 	
 	window.onload = function() {
@@ -58,6 +58,7 @@
 		var supplier_all 	= new Array();
 		var invoicedate_all	= new Array();
 		var movement_all	= new Array();
+		var size_all		= new Array(); // added by Patipol
 		
 		var query_mode = 0;
 		if(document.getElementById('chkhistory').checked) query_mode=1;
@@ -106,6 +107,16 @@
 				movement_all[cnt++] = thisrow.cells[0].innerHTML;
 			}	
 		}
+		cnt = 0; // added by Patipol
+		var table = document.getElementById(alltables[5]);
+		for (var i = 0; i < table.rows.length; i++) 
+		{
+			var thisrow = table.rows[i];
+			if (thisrow.selected) {
+				size_all[cnt++] = thisrow.cells[0].innerHTML;
+			}	
+		}
+//		alert(size_all);
 		//Ajax Load
 		Ext.Ajax.request({
 			url: BASEURL + 'index.php/stock/filter/',
@@ -115,6 +126,7 @@
 				supplier_all 	: JSON.stringify(supplier_all),
 				invoicedate_all	: JSON.stringify(invoicedate_all),
 				movement_all	: JSON.stringify(movement_all),
+				size_all		: JSON.stringify(size_all), // added by Patipol
 				query_mode		: query_mode,
 			},
 			success: function ( result, request ) { 
@@ -170,6 +182,7 @@
 				<td></td><td align='center'><span class='spantitle'>Config</span></td>
 				<td></td><td align='center'><span class='spantitle'>Invoice</span></td>
 				<td></td><td align='center'><span class='spantitle'>Paper Code</span></td>
+				<td></td><td align='center'><span class='spantitle'>Size</span></td>
 				<td></td><td align='center'><span class='spantitle'>Suppliers</span></td>
 				<td></td><td align='center'><span class='spantitle'>Invoice Date</span></td>
 				<td></td><td align='center'><span class='spantitle'>Movement Date</span></td>
@@ -194,6 +207,12 @@
 				<td>
 					<div id='divcheckbox'>					
 						<?=tableTemplate("tblPaperCode",$paperCodeArray);?>
+					</div>
+				</td>
+				<td class='tblBlank'></td>
+				<td>
+					<div id='divcheckbox'>					
+						<?=tableTemplate("tblSize",$sizeArray);?>
 					</div>
 				</td>
 				<td class='tblBlank'></td>
