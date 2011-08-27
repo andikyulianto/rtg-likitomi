@@ -28,6 +28,7 @@ class Test_model extends Model
 		$query = $this->db->query($sql);
 		return $query;
 	}
+
 	function getMachineTime($date,$machine)
 	{
 		$sql = 	 "SELECT * FROM ".$this->status." WHERE date ='".$date."'";
