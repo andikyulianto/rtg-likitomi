@@ -697,7 +697,7 @@
 								corrugator_time		: records[i].get('corrugator_time'),
 								converter_date		: records[i].get('converter_date'),
 								converter_time		: records[i].get('converter_time'),
-								padpartition_date		: records[i].get('amopadpartition_date'),
+								padpartition_date		: records[i].get('padpartition_date'),
 								padpartition_time		: records[i].get('padpartition_time'),
 								warehouse_date		: records[i].get('warehouse_date'),
 								warehouse_time		: records[i].get('warehouse_time'),

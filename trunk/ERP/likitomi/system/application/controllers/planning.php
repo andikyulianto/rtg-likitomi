@@ -80,7 +80,6 @@ class Planning extends Controller {
 		$status_all		 	= explode("|",$this->input->post('status_all'));
 		
 		$resultDelivery = $this->Planning_model->getFilterResult($delivery_date_all,$sales_order_all,$lastmodified_all,$status_all);
-		//echo $this->Planning_model->getFilterResult($delivery_date_all,$sales_order_all,$lastmodified_all,$status_all);
 		$deliveryList = array();
 		$cnt=0;
 		$this->load->model('Salesorder_model');
@@ -120,9 +119,9 @@ class Planning extends Controller {
 				$deliveryList[$cnt]['CL']		= "";
 			}
 			$deliveryList[$cnt]['cut']			= $partnerproduct->cut;
-			echo $partnerproduct->pc_slit;
+			//echo $partnerproduct->pc_slit;
 			$deliveryList[$cnt]['delivery_date']= $delivery->delivery_date;
-			$deliveryList[$cnt]['qty']			= $delivery->qty/$partnerproduct->slit;
+			$deliveryList[$cnt]['qty']			= $delivery->qty/$partnerproduct->pc_slit;
 			$deliveryList[$cnt]['modified_on']	= $delivery->modified_on;
 			$deliveryList[$cnt]['status']		= $delivery->status;
 			$deliveryList[$cnt]['corrugator_date']	= date('Y-m-d');
@@ -187,7 +186,6 @@ class Planning extends Controller {
 
 		$time_stop_2cl=0;
 		$time_stop_3cl=0;
-		$time_stop_3cs=0;
 		$time_stop_3cm=0;
 		$time_stop_4cd=0;
 
@@ -871,13 +869,11 @@ class Planning extends Controller {
 		if($choosendate=='') return 'Error in date';	
 		
 		$resultDelivery = $this->Planning_model->loadplanbydate($choosendate);
-		
 		$deliveryList = array();
 		$cnt=0;
 		$this->load->model('Salesorder_model');
 		foreach($resultDelivery->result() as $delivery)
 		{
-			//echo "$resultDelivery :".$this->json->encode($delivery);
 			$deliveryList[$cnt]['delivery_id']	= $delivery->delivery_id;
 			$deliveryList[$cnt]['sales_order']	= $delivery->sales_order;
 			
@@ -886,7 +882,7 @@ class Planning extends Controller {
 			
 			$deliveryList[$cnt]['product_code']	= $delivery->product_code;
 			$partnerproduct = $this->Planning_model->getProduct_Partner($delivery->product_id);
-			echo $partnerproduct;
+			
 			$deliveryList[$cnt]['product_name'] = $partnerproduct->product_name;
 			$deliveryList[$cnt]['partner_name'] = $partnerproduct->partner_name;
 			
@@ -913,8 +909,9 @@ class Planning extends Controller {
 				$deliveryList[$cnt]['CM']			= "";
 				$deliveryList[$cnt]['CL']			= "";
 			}
+
 			$deliveryList[$cnt]['cut']			= $partnerproduct->cut;
-			//chnage amount here
+			
 			$deliveryList[$cnt]['delivery_date']= $delivery->delivery_date;
 			$deliveryList[$cnt]['qty']			= $delivery->amount_cr;
 			$deliveryList[$cnt]['modified_on']	= $delivery->modified_on;
