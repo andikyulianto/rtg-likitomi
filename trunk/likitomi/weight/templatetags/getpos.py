@@ -6,6 +6,9 @@ register = template.Library()
 @register.filter
 #@stringfilter
 def getpos(value):
+	"""
+	Returns the position from the list of ('lane', 'position', 'likitomi Roll ID').
+	"""
 	vstr = str(value)
 	split = vstr.split(".")
 	result = split[1]

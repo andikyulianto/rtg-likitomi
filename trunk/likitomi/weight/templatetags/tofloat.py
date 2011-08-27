@@ -6,6 +6,9 @@ register = template.Library()
 @register.filter
 #@stringfilter
 def tofloat(value):
+	"""
+	Converts a position in position list from string to float.
+	"""
 	result = float(value)
 	return result
 

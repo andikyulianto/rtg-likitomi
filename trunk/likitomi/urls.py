@@ -10,14 +10,14 @@ from statusTracking.machine import machine_list
 #from statusTracking.query import queryDateNotProcess, queryDateMissing
 
 # Weight #
-from weight.scale_views import scale
+from weight.scale import scale
 from weight.views import dashboard
 from weight.showplan import showplan, required, detail
 from weight.inventory import inventory
 from weight.minclamp import minclamp, minupdate, minundo, minchangeloc, minassigntag
 from weight.maxclamp import maxclamp, maxupdate, maxundo, maxchangeloc, maxassigntag
 from weight.tagman import tagman, showtaglist, createnew, assigntag, writemore, loctag
-from weight.longtry import orient, longtry
+#from weight.longtry import longtry
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -128,9 +128,10 @@ urlpatterns = patterns('',
 	(r'^showtaglist/writemore/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^showtaglist/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
-#	(r'^orient/$', orient),
-#	(r'^orient/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^longtry/$', longtry),
+#	(r'^longtry/$', longtry),
+#	(r'^longtry/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
+
+	(r'^admin/doc/', include('django.contrib.admindocs.urls')), # Django admin docs
 
 	(r'^admin/', include(admin.site.urls)),
 )

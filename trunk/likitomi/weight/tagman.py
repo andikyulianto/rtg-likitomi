@@ -1,24 +1,44 @@
-# Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.db import connection, transaction
 from django.core.cache import cache
 from datetime import datetime
+
 import socket
+
 from weight.models import PaperRolldetails, PaperMovement
 
-#HOST = '192.41.170.55' # CSIM network
-#HOST = '192.168.101.55' # Likitomi's meeting room
-#HOST = '192.168.1.55' # My own local network: Linksys
-
-HOST = '192.168.2.88' # Likitomi's factory: previous
-#HOST = '192.168.1.20' # Likitomi's factory: current
+# HOST and PORT settings for RFID reader connection
+HOST = '192.168.2.88' # Likitomi's factory
 PORT = 50007
 
-# RFID: paper roll and location tags #
 rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def tagman(request):
+	"""
+	Manage RFID tag including both paper roll ID tags and location tags.
+
+		Write an RFID tag for a particular paper roll.
+
+		Write an RFID tag for a particular location.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+		:model:`weight.PaperMovement`
+
+	``Special Modules``
+
+		socket: For making a connection to RFID reader.
+
+	**Template:**
+
+	:template:`templates/clamplift/tagman.html`
+
+	"""
+
 	tagiddomain = range(1,10000)
 	tagidquery = PaperRolldetails.objects.values_list('likitomi_roll_id')
 	tagidlist = PaperRolldetails.objects.values_list('likitomi_roll_id', flat=True).order_by('-likitomi_roll_id')
@@ -52,8 +72,8 @@ def tagman(request):
 			current_weight = PaperRolldetails.objects.get(likitomi_roll_id=roll_id).initial_weight
 		lst.append(current_weight)
 
-	if rfid_mode == 'real':
 # Connect to RFID reader #
+	if rfid_mode == 'real':
 		try:
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -67,7 +87,7 @@ def tagman(request):
 				if recv.find("tag_id") > -1:
 					cache.set('data', recv, 10) # Wait 10 seconds for 'data' to expire...
 					timestamp = datetime.now().strftime("%H:%M:%S")
-					cache.set('timestamp', timestamp, 10)
+					cache.set('timestamp', timestamp, 10) # Wait 10 seconds for 'timestamp' to expire...
 			soc.close()
 		except:
 			socror = 'Cannot connect to RFID reader'
@@ -81,9 +101,9 @@ def tagman(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "3000000000000000000" in tag:
+				if "3000000000000000000" in tag: # Pattern of location tag
 					loclist.append(tag)
-				else:
+				else: # This will append both paper roll ID tag and new (unknown) tag into "idlist"
 					idlist.append(tag)
 
 			cnt = 0
@@ -201,7 +221,7 @@ def tagman(request):
 						else:
 							actual_wt = rtquery.initial_weight
 
-	if rfid_mode == 'fake':
+	if rfid_mode == 'fake': # Fake mode just for running application without weighing indicator
 
 #		atlocation = 'Scale'
 
@@ -239,6 +259,31 @@ def tagman(request):
 	return render_to_response('tagman.html', locals())
 
 def showtaglist(request):
+	"""
+	Manage RFID tag including both paper roll ID tags and location tags.
+
+		Write an RFID tag for a particular paper roll.
+
+		Write an RFID tag for a particular location.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+		:model:`weight.PaperMovement`
+
+	``Special Modules``
+
+		socket: For making a connection to RFID reader.
+
+	**Template:**
+
+	:template:`templates/clamplift/tagman.html`
+
+	"""
+
 	tagiddomain = range(1,10000)
 	tagidquery = PaperRolldetails.objects.values_list('likitomi_roll_id')
 	tagidlist = PaperRolldetails.objects.values_list('likitomi_roll_id', flat=True).order_by('-likitomi_roll_id')
@@ -287,7 +332,7 @@ def showtaglist(request):
 				if recv.find("tag_id") > -1:
 					cache.set('data', recv, 10) # Wait 10 seconds for 'data' to expire...
 					timestamp = datetime.now().strftime("%H:%M:%S")
-					cache.set('timestamp', timestamp, 10)
+					cache.set('timestamp', timestamp, 10) # Wait 10 seconds for 'timestamp' to expire...
 			soc.close()
 		except:
 			socror = 'Cannot connect to RFID reader'
@@ -301,9 +346,9 @@ def showtaglist(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "3000000000000000000" in tag:
+				if "3000000000000000000" in tag: # Pattern of location tag
 					loclist.append(tag)
-				else:
+				else: # This will append both paper roll ID tag and new (unknown) tag into "idlist"
 					idlist.append(tag)
 
 			cnt = 0
@@ -466,9 +511,6 @@ def createnew(request):
 
 	if 'arfid' in request.GET and request.GET['arfid']:
 		arfid = int(request.GET['arfid'])
-#		if len(str(arfid)) == 1: strarfid = '000'+str(arfid)
-#		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
-#		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
 
 	if 'apcode' in request.GET and request.GET['apcode']:
 		apcode = request.GET['apcode']
@@ -492,7 +534,6 @@ def createnew(request):
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-#	if asupid and arollid and arfid and apcode and asize and aweight and atag2write:
 	if str(arfid) == str(atag2write[1:5]):
 		PaperRolldetails.objects.filter(likitomi_roll_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 	else:
@@ -512,8 +553,6 @@ def createnew(request):
 						PaperRolldetails.objects.filter(likitomi_roll_id=arollid).update(supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
 				if atag2write.find('30000000000000') == 0:
 					PaperRolldetails.objects.create(likitomi_roll_id=arollid, rfid_roll_id=arfid, supplier_roll_id=asupid, paper_code=apcode, size=asize, uom='inch', initial_weight=aweight, lane=alane, position=aposition)
-#						tag2del = int(atag2write[1:5])
-#						PaperRolldetails.objects.filter(likitomi_roll_id=tag2del).delete()
 			else:
 				mode = 'min'
 				return HttpResponseRedirect('/django/tagman/')
@@ -526,11 +565,25 @@ def createnew(request):
 	return HttpResponseRedirect('/django/tagman/')
 
 def assigntag(request):
+	"""
+	Assign RFID tag to a new paper roll ID.
+
+		Write an RFID tag for a particular paper roll using Likitomi roll ID.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+	``Special Modules``
+
+		socket: For making a connection to RFID reader.
+
+	"""
+
 	if 'arfid' in request.GET and request.GET['arfid']:
 		arfid = int(request.GET['arfid'])
-#		if len(str(arfid)) == 1: strarfid = '000'+str(arfid)
-#		if len(str(arfid)) == 2: strarfid = '00'+str(arfid)
-#		if len(str(arfid)) == 3: strarfid = '0'+str(arfid)
 
 #	if 'alane' in request.GET and request.GET['alane']:
 #		alane = request.GET['alane']
@@ -545,7 +598,6 @@ def assigntag(request):
 	if 'atag2write' in request.GET and request.GET['atag2write']:
 		atag2write = request.GET['atag2write']
 
-#	if arfid and atag2write:
 	try:
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -570,16 +622,29 @@ def assigntag(request):
 	return render_to_response('totop.html')
 
 def writemore(request):
+	"""
+	Assign RFID tag to an existing paper roll ID.
+
+		Write an RFID tag for a particular paper roll using Likitomi roll ID.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+	``Special Modules``
+
+		socket: For making a connection to RFID reader.
+
+	"""
+
 	if 'arfid_more' in request.GET and request.GET['arfid_more']:
 		arfid_more = int(request.GET['arfid_more'])
-#		if len(str(arfid_more)) == 1: strarfid_more = '000'+str(arfid_more)
-#		if len(str(arfid_more)) == 2: strarfid_more = '00'+str(arfid_more)
-#		if len(str(arfid_more)) == 3: strarfid_more = '0'+str(arfid_more)
 
 	if 'atag2write_more' in request.GET and request.GET['atag2write_more']:
 		atag2write_more = request.GET['atag2write_more']
 
-#	if arfid_more and atag2write_more:
 	try:
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -603,6 +668,19 @@ def writemore(request):
 	return render_to_response('totop.html')
 
 def loctag(request):
+	"""
+	Assign RFID tag to a location.
+
+		Write an RFID tag for a particular location by specifying lane and position.
+
+	**Context:**
+
+	``Special Modules``
+
+		socket: For making a connection to RFID reader.
+
+	"""
+
 	if 'alane_loc' in request.GET and request.GET['alane_loc']:
 		alane_loc = request.GET['alane_loc']
 		if alane_loc == '1': letalane_loc = 'AB'
@@ -624,7 +702,6 @@ def loctag(request):
 	if 'atag2write_loc' in request.GET and request.GET['atag2write_loc']:
 		atag2write_loc = request.GET['atag2write_loc']
 
-#	if alane_loc and aposition_loc and atag2write_loc:
 	try:
 		soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		soc.settimeout(2)
@@ -646,3 +723,4 @@ def loctag(request):
 		return render_to_response('socror.html', locals())
 
 	return HttpResponseRedirect('/django/tagman/')
+
