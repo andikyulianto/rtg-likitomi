@@ -1,21 +1,48 @@
-# Create your views here.
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.db import connection, transaction
+
 from weight.models import PaperRolldetails, PaperMovement
 
 def inventory(request):
-	if 'pcode' in request.GET and request.GET['pcode']:
+	"""
+	Displays the result of queried paper code and size from clamp-lift plan, search, and the current paper roll on clamp-lift vehicle.
+
+		Get the values from other sections.
+
+		Display the location including lane (y-axis) and position (x-axis) of queried paper code and size on the map.
+
+		Display the weight of paper rolls of queried paper code and size on the weight scale.
+
+		Display top 5 of the most suitable paper rolls for producing a particular product with the most reccommended paper roll and the vertical lines of required weight for the query from clamp-lift plan.
+
+		Display the amount of paper rolls in each location dividing by the weight range for the queries from searching and the current paper roll on the vehicle.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+		:model:`weight.PaperMovement`
+
+	**Template:**
+
+	:template:`templates/clamplift/inventory.html`
+
+	"""
+
+# Get all values from other sections
+	if 'pcode' in request.GET and request.GET['pcode']: # Paper code from clamp-lift plan
 		pcode = request.GET['pcode']
 	else:
 		pcode = ""
 
-	if 'width' in request.GET and request.GET['width']:
+	if 'width' in request.GET and request.GET['width']: # Paper size from clamp-lift plan
 		width = request.GET['width']
 	else:
 		width = ""
 
-	if 'loss' in request.GET and request.GET['loss']:
+	if 'loss' in request.GET and request.GET['loss']: # Required weight of selected paper code and size from clamp-lift plan
 		loss = request.GET['loss']
 		if loss != 'undefined':
 			losspx = int(loss)/5.0
@@ -23,7 +50,7 @@ def inventory(request):
 	else:
 		loss = ""
 
-	if 'lossarr' in request.GET and request.GET['lossarr']:
+	if 'lossarr' in request.GET and request.GET['lossarr']: # List of required weight of selected paper code and size with the similar ones in clamp-lift plan
 		lossarr = request.GET['lossarr']
 		if lossarr != 'undefined':
 			lossplt = lossarr.split(",")
@@ -35,95 +62,69 @@ def inventory(request):
 	else:
 		lossarr = ""
 
-	if 'spcode' in request.GET and request.GET['spcode']:
+	if 'spcode' in request.GET and request.GET['spcode']: # Paper code from searching
 		spcode = request.GET['spcode']
 	else:
 		spcode = ""
 
-	if 'swidth' in request.GET and request.GET['swidth']:
+	if 'swidth' in request.GET and request.GET['swidth']: # Paper size from searching
 		swidth = request.GET['swidth']
 	else:
 		swidth = ""
 
-	if 'cpcode' in request.GET and request.GET['cpcode']:
+	if 'cpcode' in request.GET and request.GET['cpcode']: # Paper code from the current paper roll on clamp-lift vehicle
 		cpcode = request.GET['cpcode']
 	else:
 		cpcode = ""
 
-	if 'cwidth' in request.GET and request.GET['cwidth']:
+	if 'cwidth' in request.GET and request.GET['cwidth']: # Paper size from the current paper roll on clamp-lift vehicle
 		cwidth = request.GET['cwidth']
 	else:
 		cwidth = ""
 
-	if 'lane' in request.GET and request.GET['lane']:
+	if 'lane' in request.GET and request.GET['lane']: # Latest lane of the current paper roll on clamp-lift vehicle
 		lane = request.GET['lane']
 	else:
 		lane = ""
 
-	if 'position' in request.GET and request.GET['position']:
+	if 'position' in request.GET and request.GET['position']: # Latest position of the current paper roll on clamp-lift vehicle
 		position = request.GET['position']
 	else:
 		position = ""
 
-	if 'atlane' in request.GET and request.GET['atlane']:
+	if 'atlane' in request.GET and request.GET['atlane']: # The current lane of the clamp-lift vehicle
 		atlane = request.GET['atlane']
 	else:
 		atlane = ""
 
-	if 'atposition' in request.GET and request.GET['atposition']:
+	if 'atposition' in request.GET and request.GET['atposition']: # The current position of the clamp-lift vehicle
 		atposition = request.GET['atposition']
 	else:
 		atposition = ""
 
-	if 'clamping' in request.GET and request.GET['clamping']:
+	if 'clamping' in request.GET and request.GET['clamping']: # Clamping status of the clamp-lift vehicle
 		clamping = request.GET['clamping']
 	else:
 		clamping = "no"
 
-	if 'changed' in request.GET and request.GET['changed']:
+	if 'changed' in request.GET and request.GET['changed']: # Change status of paper roll by clamp-lift driver
 		changed = request.GET['changed']
 	else:
 		changed = "no"
 
-	if 'realtag' in request.GET and request.GET['realtag']:
+	if 'realtag' in request.GET and request.GET['realtag']: # Likitomi roll ID of the current paper roll on the clamp-lift vehicle
 		realtag = request.GET['realtag']
 	else:
 		realtag = ""
 
-	if 'loc' in request.GET and request.GET['loc']:
+	if 'loc' in request.GET and request.GET['loc']: # Status for defining changing side of location on the map
 		loc = request.GET['loc']
 	else:
 		loc = ""
 
-	if 'mappos' in request.GET and request.GET['mappos']:
-		mappos = request.GET['mappos']
-	else:
-		mappos = ""
-
-#	vlane = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
-
-#	laneall = ['H','','G','F','','E','D','','C','B','','A']
-#	posall = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
-#	posh = ['','','3','4','5','6','','8','9','','','','']
-#	posg = ['','','3','4','5','6','','8','9','','','','']
-#	posf = ['','','3','4','5','6','','8','9','','','','']
-#	pose = ['1','2','3','4','5','6','','8','9','','','','']
-#	posd = ['1','2','3','4','5','6','','8','9','','','','']
-#	posc = ['1','2','3','4','5','6','','8','9','10','11','12','13']
-#	posb = ['1','2','3','4','5','6','','8','9','10','11','12','13']
-#	posa = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
-#	buff = ['1','2']
-
-#	pos4 = ['','','3','4','5','6','','8','9','','','','']
-#	pos3 = ['1','2','3','4','5','6','','8','9','','','','']
-#	pos2 = ['1','2','3','4','5','6','','8','9','10','11','12','13']
-#	pos1 = ['1','2','3','4','5','6','7','8','9','10','11','12','13']
-
-#	posall = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43']
+# Position specified for each lane
 	posall = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
-#	pos18_41 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '', '']
 	pos18_41 = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-#	pos19_40 = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '', '', '']
 	pos19_40 = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 
 	vlane = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
@@ -133,13 +134,13 @@ def inventory(request):
 	posh = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 	posg = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 	posf = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-	pose = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
-	posd = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	pose = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
+	posd = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 	posc = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
 	posb = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
 	posa = ['43', '42', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '17', '16', '15', '14', '13', '12', '11', '10', '09', '08', '07', '06', '05', '04', '03', '02', '01']
 
-##	buff = ['1','2']
+	buff = ['43','42']
 
 	pos4 = ['', '', '', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
 	pos3 = ['', '', '41', '40', '39', '38', '37', '36', '35', '34', '33', '32', '31', '30', '29', '28', '27', '26', '25', '24', '23', '22', '21', '20', '19', '18', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
@@ -230,15 +231,6 @@ def inventory(request):
 				bstchcpx = min(pxtop5)
 				dis_bstchcpx = bstchcpx-8
 			else: bstchcpx = 400
-
-#			recwlistpx.sort()
-#			if len(recwlistpx) > 0:
-#				bstchcpx = recwlistpx[0]
-#				dis_bstchcpx = bstchcpx-8
-#			else: bstchcpx = 400
-#			recwlist.sort()
-#			if len(recwlist) > 0: bstchc = recwlist[0]
-#			else: bstchc = 2000
 
 			initial_weight = int(str(PaperRolldetails.objects.filter(paper_code=pcode).values_list('initial_weight')[0])[1:][:-3])
 			initialpx = initial_weight/5-5
@@ -1211,7 +1203,7 @@ def inventory(request):
 						elif 100 > wlist3[ind]:
 							ls[9] = ls[9] + 1
 
-# FLOATING VEHICLE #
+# Floating vehicle
 	if len(str(atposition)) == 1: catposition = "0"+atposition
 	else: catposition = atposition
 	for ind,item in enumerate(pos1):
@@ -1286,3 +1278,4 @@ def inventory(request):
 		PaperRolldetails.objects.filter(likitomi_roll_id=realtag).update(lane=atlane,position=atposition)
 
 	return render_to_response('inventory.html', locals())
+

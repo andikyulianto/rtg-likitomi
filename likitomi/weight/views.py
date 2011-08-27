@@ -1,20 +1,28 @@
-# Create your views here.
-#from django.template.loader import get_template
-#from django.template import Template, Context
 from django.shortcuts import render_to_response
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.db import connection, transaction
-#import serial
-#import MySQLdb
-#import Image
-#import socket
-#import StringIO
-#import cStringIO
-#import random
-#from datetime import datetime
-from weight.models import TblClamplift, PaperRolldetails, PaperMovement
+
+from weight.models import TblClamplift, PaperRolldetails
 
 def dashboard(request):
+	"""
+	Dashboard of the Clamp-lift Application.
+
+		Query date list for clamp-lift plan.
+
+		Query paper code list and paper size list for search menu.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.TblClamplift`
+
+		:model:`weight.PaperRolldetails`
+
+	**Template:**
+
+	:template:`templates/clamplift/dashboard.html`
+
+	"""
 
 # Query date list for plan #
 	dquery = TblClamplift.objects.values_list('opdate').distinct().order_by('-opdate')

@@ -1,29 +1,54 @@
 from django.shortcuts import render_to_response
 from django.core.cache import cache
+from datetime import datetime
 import sys
-#import termios
+import random
+
 import serial
 import socket
-import random
-from datetime import datetime
+
 from weight.models import PaperRolldetails, PaperMovement
 
-#HOST = '192.41.170.55' # CSIM network
-#HOST = '192.168.101.55' # Likitomi's meeting room
-#HOST = '192.168.1.55' # My own local network: Linksys
-
-HOST = '192.168.2.88' # Likitomi's factory: previous
-#HOST = '192.168.1.20' # Likitomi's factory: current
+# HOST and PORT settings for RFID reader connection
+HOST = '192.168.2.88' # Likitomi's factory
 PORT = 50007
 
 def scale(request):
+	"""
+	Views of scale application.
 
-# Setting scale mode and rfid mode = {'real', 'fake'} #
+		Connect and retrieve the weight from weighing indicator via serial port.
+
+		Connect and retrieve the paper roll tag information from RFID reader.
+
+		Update the temporary weight of a particular paper roll.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+		:model:`weight.PaperMovement`
+
+	``Special Modules``
+
+		serial: For making a connection to weighing indicator.
+
+		socket: For making a connection to RFID reader.
+
+	**Template:**
+
+	:template:`templates/clamplift/scale.html`
+
+	"""
+
+# Setting scale mode and rfid mode = {'real', 'fake'}
 	scale_mode = 'fake'
 	rfid_mode = 'real'
 
+# Connect to scale via serial port
 	if scale_mode == 'real':
-# Connect to scale via serial port #
 		try:
 			ser = serial.Serial()
 			ser.baudrate = 2400
@@ -103,7 +128,7 @@ def scale(request):
 			else:
 				serror = "No data received"
 
-	if scale_mode == 'fake':
+	if scale_mode == 'fake': # Fake mode just for running application without weighing indicator
 		output = "US,NT,+00325.5Kg\r\n"
 		weight = round(random.uniform(1,500),0)
 		digital = str(weight)
@@ -138,8 +163,8 @@ def scale(request):
 #			digit6 = digital[1:2]
 #			digit7 = digital[2:3]
 
+# Connect to RFID reader
 	if rfid_mode == 'real':
-# Connect to RFID reader #
 		try:
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -153,7 +178,7 @@ def scale(request):
 				if recv.find("tag_id") > -1:
 					cache.set('data', recv, 10) # Wait 10 seconds for 'data' to expire...
 					timestamp = datetime.now().strftime("%H:%M:%S")
-					cache.set('timestamp', timestamp, 10)
+					cache.set('timestamp', timestamp, 10) # Wait 10 seconds for 'timestamp' to expire...
 			soc.close()
 		except socket.timeout:
 			socror = 'Cannot connect to RFID reader'
@@ -167,9 +192,9 @@ def scale(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "3000000000000000000" in tag:
+				if "3000000000000000000" in tag: # Pattern of location tag
 					loclist.append(tag)
-				else:
+				else: # This will append both paper roll ID tag and new (unknown) tag into "idlist"
 					idlist.append(tag)
 
 			cnt = 0
@@ -284,9 +309,10 @@ def scale(request):
 
 						used_weight = actual_wt - int(weight)
 
+# Update the weight from weighing indicator as temporary weight of the paper roll
 						PaperRolldetails.objects.filter(likitomi_roll_id=realtag).update(temp_weight=int_weight)
 
-	if rfid_mode == 'fake':
+	if rfid_mode == 'fake': # Fake mode just for running application without weighing indicator
 
 #		tag2write = '112233445566778899AABBCC'
 		tag2write = '300000000000005408090065'

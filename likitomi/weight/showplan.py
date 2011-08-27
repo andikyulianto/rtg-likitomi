@@ -1,12 +1,28 @@
-# Create your views here.
 from django.shortcuts import render_to_response
-from django.http import HttpResponseRedirect
-from django.db import connection, transaction
-from weight.models import TblClamplift
-#from statusTracking.models import TotalPlanning, Delivery, Products, ProductCatalog, Partners, StatusTracking
 from datetime import date, time, datetime, timedelta
 
+from weight.models import TblClamplift
+#from statusTracking.models import TotalPlanning, Delivery, Products, ProductCatalog, Partners, StatusTracking
+
 def showplan(request):
+	"""
+	Displays clamp-lift plan minimal version.
+
+		Retrieve the minimal clamp-lift plan by the date selected from dashboard.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.TblClamplift`
+
+	**Template:**
+
+	:template:`templates/clamplift/showplan.html`
+
+	"""
+
+# Get date for querying clamp-lift plan
 	if 'opdate' in request.GET and request.GET['opdate']:
 		opdate = request.GET['opdate']
 	else:
@@ -39,6 +55,24 @@ def showplan(request):
 	return render_to_response('showplan.html', locals())
 
 def required(request):
+	"""
+	Displays clamp-lift plan required set of detailed version.
+
+		Retrieve the detailed clamp-lift plan with required set by the date selected from dashboard.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.TblClamplift`
+
+	**Template:**
+
+	:template:`templates/clamplift/required.html`
+
+	"""
+
+# Get date for querying clamp-lift plan
 	if 'opdate' in request.GET and request.GET['opdate']:
 		opdate = request.GET['opdate']
 	else:
@@ -70,6 +104,24 @@ def required(request):
 	return render_to_response('required.html', locals())
 
 def detail(request):
+	"""
+	Displays clamp-lift plan detailed set of detailed version.
+
+		Retrieve the detailed clamp-lift plan with detailed set by the date selected from dashboard.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.TblClamplift`
+
+	**Template:**
+
+	:template:`templates/clamplift/detail.html`
+
+	"""
+
+# Get date for querying clamp-lift plan
 	if 'opdate' in request.GET and request.GET['opdate']:
 		opdate = request.GET['opdate']
 	else:
@@ -99,3 +151,4 @@ def detail(request):
 		scroll = chosen*84
 
 	return render_to_response('detail.html', locals())
+

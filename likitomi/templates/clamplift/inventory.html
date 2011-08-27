@@ -68,7 +68,6 @@ $(document).ready(function(){
 	var inventory_url = $('#inventory_url').val();
 
 	$(window).load(function loadMap(){
-		var mappos = $("#mappos").val();
 		var pcode = $("#pcode").val();
 		var width = $("#width").val();
 		var loss = $("#loss").val();
@@ -93,10 +92,10 @@ $(document).ready(function(){
 		if (enal == atlane && position == atposition && clamping == "no" && changed == "no" && lane != undefined){
 			var clamping = "yes";
 			var changed = "no";
-			$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&mappos="+mappos);
+			$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 		else {
-			$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&mappos="+mappos);
+			$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag);
 		}
 
 		setTimeout(loadMap, 2000);
@@ -118,7 +117,7 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up"+"&mappos="+mappos);
+		$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=up");
 		var clamping = $("#clamping").val("no");
 		var changed = $("#changed").val("yes");
 	});
@@ -139,7 +138,7 @@ $(document).ready(function(){
 		var clamping = "no";
 		var changed = "yes";
 		var realtag = $('#minclamp', top.document).contents().find('#realtag').val();
-		$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down"+"&mappos="+mappos);
+		$("#inventory").load(inventory_url+"?pcode="+pcode+"&width="+width+"&loss="+loss+"&lossarr="+lossarr+"&spcode="+spcode+"&swidth="+swidth+"&cpcode="+cpcode+"&cwidth="+cwidth+"&lane="+lane+"&position="+position+"&atlane="+atlane+"&atposition="+atposition+"&clamping="+clamping+"&changed="+changed+"&realtag="+realtag+"&loc=down");
 		var clamping = $("#clamping").val("no");
 		var changed = $("#changed").val("yes");
 	});
@@ -152,7 +151,6 @@ $(document).ready(function(){
 
 <body>
 {% load getpos %}
-{% load floor %}
 {% load second %}
 {% load third %}
 {% load fourth %}
@@ -191,7 +189,6 @@ $(document).ready(function(){
 <input id="changed" type="hidden" value="{{ changed }}" />
 <input id="realtag" type="hidden" value="{{ realtag }}" />
 <input id="loc" type="hidden" value="{{ loc }}" />
-<input id="mappos" type="hidden" value="{{ mappos }}"/>
 
 <div id="legend"><table style="height:1px; width:390px;">
 	<tr>

@@ -1,24 +1,49 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
-from django.db import connection, transaction
 from django.core.cache import cache
 from datetime import datetime
+
 import socket
-from weight.models import TblClamplift, PaperRolldetails, PaperMovement
 
-#HOST = '192.41.170.55' # CSIM network
-#HOST = '192.168.101.55' # Likitomi's meeting room
-#HOST = '192.168.1.55' # My own local network: Linksys
+from weight.models import PaperRolldetails, PaperMovement
 
-HOST = '192.168.2.88' # Likitomi's factory: previous
-#HOST = '192.168.1.20' # Likitomi's factory: current
+# HOST and PORT settings for RFID reader connection
+HOST = '192.168.2.88' # Likitomi's factory
 PORT = 50007
 
-# RFID: paper roll and location tags #
 rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def minclamp(request):
-# Query tag ID, paper code, and size for assigning tag #
+	"""
+	Displays the information of the current paper roll on clamp-lift vehicle with updating weight and location functions.
+
+		Connect and retrieve the paper roll tag information from RFID reader.
+
+		Display the information of the current paper roll on the clamp-lift vehicle including Likitomi roll ID, paper code, size, location, and weight.
+
+		Provide the function to update the weight when the clamp-lift vehicle is at scale.
+
+		Provide the function to update the location when the clamp-lift vehicle is in paper roll stock area.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+		:model:`weight.PaperMovement`
+
+	``Special Modules``
+
+		socket: For making a connection to RFID reader.
+
+	**Template:**
+
+	:template:`templates/clamplift/minclamp.html`
+
+	"""
+
+# Query tag ID, paper code, and size for assigning tag
 	tagiddomain = range(1,10000)
 	tagidquery = PaperRolldetails.objects.values_list('likitomi_roll_id')
 	tagidlist = PaperRolldetails.objects.values_list('likitomi_roll_id', flat=True).order_by('-likitomi_roll_id')
@@ -36,8 +61,8 @@ def minclamp(request):
 	for width in swidth:
 		swidthlist.append(width[0])
 
+# Connect to RFID reader
 	if rfid_mode == 'real':
-# Connect to RFID reader #
 		try:
 			soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			soc.settimeout(2)
@@ -51,7 +76,7 @@ def minclamp(request):
 				if recv.find("tag_id") > -1:
 					cache.set('data', recv, 10) # Wait 10 seconds for 'data' to expire...
 					timestamp = datetime.now().strftime("%H:%M:%S")
-					cache.set('timestamp', timestamp, 10)
+					cache.set('timestamp', timestamp, 10) # Wait 10 seconds for 'timestamp' to expire...
 			soc.close()
 		except:
 			socror = 'Cannot connect to RFID reader'
@@ -65,9 +90,9 @@ def minclamp(request):
 			loclist = list()
 
 			for tag in tagdata:
-				if "3000000000000000000" in tag:
+				if "3000000000000000000" in tag: # Pattern of location tag
 					loclist.append(tag)
-				else:
+				else: # This will append both paper roll ID tag and new (unknown) tag into "idlist"
 					idlist.append(tag)
 
 			cnt = 0
@@ -185,7 +210,7 @@ def minclamp(request):
 							actual_wt = rtquery.initial_weight
 							undo_btn = ""
 
-	if rfid_mode == 'fake':
+	if rfid_mode == 'fake': # Fake mode just for running application without weighing indicator
 
 #		atlocation = 'Scale'
 
@@ -224,6 +249,19 @@ def minclamp(request):
 
 ### UPDATE ###
 def minupdate(request):
+	"""
+	Update function for changing the weight of paper roll to the latest one from weighing indicator or manual input.
+
+		Add the record of changing weight of paper roll to :model:`weight.PaperMovement`.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperMovement`
+
+	"""
+
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 
@@ -241,6 +279,19 @@ def minupdate(request):
 
 ### UNDO ###
 def minundo(request):
+	"""
+	Undo function for rolling back the weight of paper roll to the previous one.
+
+		Delete the record of changing weight of paper roll in :model:`weight.PaperMovement`.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperMovement`
+
+	"""
+
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 
@@ -249,7 +300,21 @@ def minundo(request):
 
 	return HttpResponseRedirect('/django/minclamp/')
 
+### CHANGE LOC ###
 def minchangeloc(request):
+	"""
+	Changing location function for changing location directly on the map or by manually input.
+
+		Change the values of lane and position of the paper roll in :model:`weight.PaperRolldetails`.
+
+	**Context:**
+
+	``Models``
+
+		:model:`weight.PaperRolldetails`
+
+	"""
+
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 
@@ -267,9 +332,6 @@ def minchangeloc(request):
 def minassigntag(request):
 	if 'atagid' in request.GET and request.GET['atagid']:
 		atagid = int(request.GET['atagid'])
-#		if len(str(atagid)) == 1: stratagid = '000'+str(atagid)
-#		if len(str(atagid)) == 2: stratagid = '00'+str(atagid)
-#		if len(str(atagid)) == 3: stratagid = '0'+str(atagid)
 
 	if 'apcode' in request.GET and request.GET['apcode']:
 		apcode = request.GET['apcode']
@@ -322,3 +384,4 @@ def minassigntag(request):
 				return render_to_response('socror.html', locals())
 
 	return HttpResponseRedirect('/django/minclamp/')
+
