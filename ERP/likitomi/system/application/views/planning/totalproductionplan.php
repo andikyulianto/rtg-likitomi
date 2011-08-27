@@ -92,11 +92,11 @@
 		if(($key->slit)!=0)
 			$cut2 	= $case/$key->slit;
 		$metre	= ($key->cr_length*$cut2)/2000;
-		if((strtoupper($key->flute) =="B")||(strtoupper($key->flute)=="C"))
+		if((strtoupper($key->flute) =="B") or (strtoupper($key->flute)=="C"))
 		{
 			$timeuseCR = ($metre/120)+4;
 		}
-		else if((strtoupper($key->flute)=="BC")||(strtoupper($key->flute)=="W"))
+		else if((strtoupper($key->flute)=="BC") or (strtoupper($key->flute)=="W"))
 		{
 			$timeuseCR = ($metre/100)+4;
 		}

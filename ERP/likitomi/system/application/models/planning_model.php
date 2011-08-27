@@ -148,6 +148,7 @@ class Planning_model extends Model
 			"CL" => $rowData->CL,
  			"corrugator_date" => substr($rowData->corrugator_date,0,10)." ".$time_start_cr,
 			"converter_date" => substr($rowData->converter_date,0,10)." ".$time_start_cv,
+			"amount_cr" => $rowData->qty,
 			//"patchpartition_date" => substr($rowData->patchpartition_date,0,10)." ".$rowData->patchpartition_time.":00",
 			//"warehouse_date" => substr($rowData->warehouse_date,0,10)." ".$rowData->warehouse_time.":00",
 			//"next_process" => $rowData->next_process
@@ -546,9 +547,9 @@ class Planning_model extends Model
 	{
 		$sql = 	 "SELECT st.plan_cv_start, st.plan_cv_end, pc.ink_1,pc.ink_2,pc.ink_3,pc.ink_4, d.sales_order,tp.autoid, pd.product_code, pt.partner_name, pc.product_name, ((((d.qty*pc.cr_ratio_2) div pc.cr_ratio_1)*pc.cv_ratio_2) div pc.cv_ratio_1) as qty, pd.flute, so.purchase_order_no,"
 				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM,pc.cut,pc.cv_blank as blank, pc.slit, pc.scoreline_f,  "
-				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date , st.mo_cv_code,"
+				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date , st.mo_cv_code, "
 				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
-				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape,pc.sketch,pc.scoreline_f,pc.scoreline_d,pc.scoreline_f2,pc.cv_length as t_length,pd.flute "
+				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape,pc.sketch,pc.sketch_large,pc.scoreline_f,pc.scoreline_d,pc.scoreline_f2,pc.cv_length as t_length,pd.flute "
 				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so , status_tracking st "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
@@ -580,7 +581,7 @@ class Planning_model extends Model
 				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM,pc.cut,pc.pt_blank as blank, pc.slit, pc.scoreline_f,  "
 				."pc.next_process,date_format(d.delivery_date,'%d/%m') as delivery_date , st.mo_pt_code,"
 				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
-				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape,pc.sketch,pc.scoreline_f,pc.scoreline_d,pc.scoreline_f2,pc.pt_length as t_length,pd.flute "
+				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape,pc.sketch,pc.sketch_large,pc.scoreline_f,pc.scoreline_d,pc.scoreline_f2,pc.pt_length as t_length,pd.flute "
 				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt, sales_order so ,status_tracking st "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "

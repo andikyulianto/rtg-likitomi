@@ -897,11 +897,11 @@ class Planning extends Controller {
 			}
 			$productsTbl = $this->Planning_model->getProduct($delivery->product_code);
 			if($productflutes->num_rows()>0){
-				$deliveryList[$cnt]['DF']			= $productsTbl->row()->DF;
-				$deliveryList[$cnt]['BM']			= $productsTbl->row()->BM;
-				$deliveryList[$cnt]['BL']			= $productsTbl->row()->BL;
-				$deliveryList[$cnt]['CM']			= $productsTbl->row()->CM;
-				$deliveryList[$cnt]['CL']			= $productsTbl->row()->CL;
+				$deliveryList[$cnt]['DF']			= $delivery->DF;
+				$deliveryList[$cnt]['BM']			= $delivery->BM;
+				$deliveryList[$cnt]['BL']			= $delivery->BL;
+				$deliveryList[$cnt]['CM']			= $delivery->CM;
+				$deliveryList[$cnt]['CL']			= $delivery->CL;
 			}else {
 				$deliveryList[$cnt]['DF']			= "";
 				$deliveryList[$cnt]['BM']			= "";
