@@ -746,7 +746,7 @@
 		var allData ='';
 		if(product_code!=""){
 			var row= getParent(obj,'TR');
-			rowIndex = row.rowIndex-1;
+			rowIndex = row.rowIndex-2;
 			Ext.Ajax.request({
 				url: BASEURL + 'index.php/products/getProductLine/',
 				params : { 
@@ -777,7 +777,7 @@
 						document.getElementById('x_real_paper_width_'+rowIndex).className = "inputUpdated";
 						document.getElementById('x_real_paper_width_'+rowIndex).value = values[7];
 						document.getElementById('x_real_paper_width_mm_'+rowIndex).className = "inputUpdated";
-						document.getElementById('x_real_paper_width_mm_'+rowIndex).value = values[11];
+						document.getElementById('x_real_paper_width_mm_'+rowIndex).value = values[8];
 						document.getElementById('x_real_blank_'+rowIndex).className = "inputUpdated";
 						document.getElementById('x_real_blank_'+rowIndex).value = values[9];
 						document.getElementById('x_real_length_'+rowIndex).className = "inputUpdated";

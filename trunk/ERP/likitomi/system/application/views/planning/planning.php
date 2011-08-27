@@ -101,7 +101,14 @@
 			}),
 			width:40,
 		},
-		{header: 'Amount',dataIndex: 'qty',width:70,},
+		{
+			header: 'Amount',
+			dataIndex: 'qty',
+			editor: new Ext.form.TextField({
+				allowBlank: true
+			}),
+			width:70,
+		},
 		{header: 'Delivery',dataIndex: 'delivery_date',renderer: Ext.util.Format.dateRenderer('d/m'),width:65,},
 		{header: 'Status',dataIndex: 'status',width:65,},
 		{
@@ -293,7 +300,14 @@
 			}),
 			width:40,
 		},
-		{header: 'Amount',dataIndex: 'qty',width:70,},
+		{
+			header: 'Amount',
+			dataIndex: 'qty',
+			editor: new Ext.form.TextField({
+				allowBlank: true
+			}),
+			width:70,
+		},
 		{header: 'Delivery',dataIndex: 'delivery_date',renderer: Ext.util.Format.dateRenderer('d/m'),width:65,},
 		{header: 'Status',dataIndex: 'status',width:70,},
 		{

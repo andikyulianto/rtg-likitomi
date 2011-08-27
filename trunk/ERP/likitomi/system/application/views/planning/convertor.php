@@ -22,7 +22,6 @@
 	<td>Blank</td>
 	<td>F</td>
 	<td>Sale Order</td>
-	<td>P.Code</td>
 	<td>Customer</td>
 	<td>Product Name</td>
 	<td>Delievery date</td>
@@ -175,14 +174,17 @@
 	<td><?=$key->blank?></td>
 	<td><?=$key->flute?></td>
 	<td><?=$key->sales_order?></td>
-	<td><?=$key->purchase_order_no?></td>
 	<td><?=$key->partner_name?></td>
 	<td><?=$key->product_name?></td>
 	<td><?=$key->delivery_date?></td>
 	<td>
 	<?php if($key->sketch!="")
-		echo "<a href='".base_url()."".$key->sketch."'  target='_blank'>".$key->product_code."</a>";
-	?></td>
+		echo "<a href='".base_url()."".$key->sketch."'  target='_blank'>".$key->product_code." [M]"."</a>";
+	?>
+	<?php if($key->sketch_large!="")
+		echo "<a href='".base_url()."".$key->sketch_large."'  target='_blank'>".$key->product_code." [L]"."</a>";
+	?>
+	</td>
 </tr>
 <?php
 	}

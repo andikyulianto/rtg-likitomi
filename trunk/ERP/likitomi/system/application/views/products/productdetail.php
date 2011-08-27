@@ -402,7 +402,7 @@ Amount of sheet production
 <table>
 	<tr>
 		<td class='tblDetailViewLabel'>CR</td>
-		<td><?=$resultProductCatalog->cr_ratio_1?>:<?=$resultProductCatalog->cr_ratio_2?></td>
+		<td><?=$resultProductCatalog->cr_ratio_2?>:<?=$resultProductCatalog->cr_ratio_1?></td>
 		<td class='tblDetailViewLabel'>CV</td>
 		<td><?=$resultProductCatalog->cv_ratio_1?>:<?=$resultProductCatalog->cv_ratio_2?></td>
 	</tr>
