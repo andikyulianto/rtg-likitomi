@@ -11,9 +11,17 @@ class Warehouse_model extends Model
 	function getAll()
 	{
 		//ToDO
-		$this->db->limit(100);
+		$this->db->limit(100); // commented by Patipol
 		$query = $this->db->get($this->tableName);
 		//echo $this->db->last_query();
+		return $query;
+	}
+	
+	function getCount_NumRolls($paper_code,$size)
+	{
+		$this->db->where('paper_code',$paper_code);
+		$this->db->where('size',$size);
+		$query = $this->db->get($this->tableName);
 		return $query;
 	}
 	
@@ -24,7 +32,7 @@ class Warehouse_model extends Model
 		return $query;
 	}
 	
-	function getFilterResult($invoice_all,$papercode_all,$supplier_all,$invoicedate_all,$movement_all, $query_mode)
+	function getFilterResult($invoice_all,$papercode_all,$supplier_all,$invoicedate_all,$movement_all,$size_all, $query_mode)
 	{
 		$filterQueryAll ="";
 		$filter ="";
@@ -48,6 +56,18 @@ class Warehouse_model extends Model
 		{
 			if($i>0) $filter .= $sameColumnConjunction;
 			$filter .= "paper_code = '".$papercode_all[$i]."'";
+		}
+		if($filter!=""){
+			if($filterQueryAll!="") $filterQueryAll .= $interColumnConjunction;
+			$filterQueryAll .= "(".$filter.")";
+		}
+		
+		//Size
+		$filter ="";
+		for($i=0;$i<count($size_all);$i++)
+		{
+			if($i>0) $filter .= $sameColumnConjunction;
+			$filter .= "size = '".$size_all[$i]."'";
 		}
 		if($filter!=""){
 			if($filterQueryAll!="") $filterQueryAll .= $interColumnConjunction;
@@ -95,7 +115,7 @@ class Warehouse_model extends Model
 			$filterQueryAll = " WHERE ".$filterQueryAll."";
 		} 
 		
-		$sql = "SELECT * FROM ".$this->tableName.$filterQueryAll;
+		$sql = "SELECT * FROM ".$this->tableName.$filterQueryAll." ORDER BY `size`"; // added ORDER BY by Patipol
 		
 		/*Show History			
 		if ($query_mode==0){
@@ -186,5 +206,7 @@ class Warehouse_model extends Model
 		$query = $this->db->query($sql);
 		return $query;
 	}
+	
+
 }
 ?>

@@ -46,6 +46,7 @@ class Stock extends Controller {
 	{
 		$invoiceArray 		= array();
 		$paperCodeArray		= array();
+		$sizeArray			= array(); // added by Patipol
 		$suppliersArray		= array();
 		$invoiceDateArray	= array();
 		$movementDateArray	= array();
@@ -58,6 +59,7 @@ class Stock extends Controller {
 		{
 			$invoiceArray[$cnt]			= $stock->invoice_no;
 			$paperCodeArray[$cnt]		= $stock->paper_code;
+			$sizeArray[$cnt]			= $stock->size; // added by Patipol
 			$suppliersArray[$cnt]		= $stock->supplier_id;
 			$invoiceDateArray[$cnt]		= $stock->invoice_date;
 			
@@ -73,6 +75,7 @@ class Stock extends Controller {
 		
 		$invoiceArrayUnique 		= array_unique($invoiceArray);
 		$paperCodeArrayUnique		= array_unique($paperCodeArray);
+		$sizeArrayUnique			= array_unique($sizeArray); // added by Patipol
 		$suppliersArrayUnique		= array_unique($suppliersArray);
 		$invoiceDateArrayUnique		= array_unique($invoiceDateArray);
 		$movementDateArrayUnique	= array_unique($movementDateArray);
@@ -80,6 +83,7 @@ class Stock extends Controller {
 		//Sort Array
 		rsort($invoiceArrayUnique);
 		sort($paperCodeArrayUnique);
+		sort($sizeArrayUnique); // added by Patipol
 		rsort($suppliersArrayUnique);
 		rsort($invoiceDateArrayUnique);
 		rsort($movementDateArrayUnique);		
@@ -91,6 +95,7 @@ class Stock extends Controller {
 		$stockFilter =  array();
 		$stockFilter['invoiceArray']		= $invoiceArrayUnique;
 		$stockFilter['paperCodeArray']		= $paperCodeArrayUnique;
+		$stockFilter['sizeArray']			= $sizeArrayUnique; // added by Patipol
 		$stockFilter['suppliersArray']		= $supplierNameArray;
 		$stockFilter['invoiceDateArray']	= $invoiceDateArrayUnique;
 		$stockFilter['movementDateArray']	= $movementDateArrayUnique;
@@ -104,14 +109,15 @@ class Stock extends Controller {
 		$this->load->library('JSON');
 		$invoice_all 		= $this->json->decode($this->input->post('invoice_all'));
 		$papercode_all 		= $this->json->decode($this->input->post('papercode_all'));
+		$size_all 			= $this->json->decode($this->input->post('size_all')); // added by Patipol
 		$supplier_all 		= $this->json->decode($this->input->post('supplier_all'));
 		$invoicedate_all	= $this->json->decode($this->input->post('invoicedate_all'));
 		$movement_all		= $this->json->decode($this->input->post('movement_all'));
 		$query_mode 		= $this->input->post('query_mode');	
-		$data['resultStock'] = $this->Warehouse_model->getFilterResult($invoice_all,$papercode_all,$supplier_all,$invoicedate_all,$movement_all, $query_mode);
+		$data['resultStock'] = $this->Warehouse_model->getFilterResult($invoice_all,$papercode_all,$supplier_all,$invoicedate_all,$movement_all, $size_all, $query_mode); // added $size_all by Patipol
 		$data['thisClass'] = $this;
-		$this->load->view('warehouse/stockResult',$data);
-//		$this->load->view('warehouse/stockResult_new',$data);
+//		$this->load->view('warehouse/stockResult',$data);
+		$this->load->view('warehouse/stockResult_new',$data);
 	}
 	
 	function getSupplierById($supplierid)
@@ -130,6 +136,33 @@ class Stock extends Controller {
 			return $item->actual_wt;
 		}
 		else return 0;
+	}
+	
+	function getNumRolls($paper_code,$size)
+	{
+		$row = $this->Warehouse_model->getCount_NumRolls($paper_code,$size);
+		return $row->num_rows();
+	}
+	
+	function getSumWeight($paper_code,$size) // added by Patipol
+	{
+		$query = $this->db->query('SELECT paper_roll_detail_id,initial_weight FROM paper_rolldetails WHERE paper_code = "'.$paper_code.'" AND size = "'.$size.'"' );
+		$sum_weight = 0;
+		foreach ($query->result() as $row)
+		{
+			//echo $row['paper_roll_detail_id'];
+		$row2 = $this->Warehouse_model->getLatestWeight($row->paper_roll_detail_id);
+		if($row2->num_rows()>0)
+			{
+				$item = $row2->row();
+				$latestwt = $item->actual_wt;
+			}
+		else $latestwt = $row->initial_weight;
+		$sum_weight = $sum_weight + $latestwt;
+		}
+		
+		return $sum_weight;
+
 	}
 	
 	function getLatestMovement($rollid)
