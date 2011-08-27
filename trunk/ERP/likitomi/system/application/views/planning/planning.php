@@ -17,9 +17,9 @@
 	var cm = new Ext.grid.ColumnModel([
 	sm,
 		{header: 'ID', 	dataIndex:'delivery_id', width:10, hidden:false},
-		{header: 'S.O',	dataIndex: 'sales_order', width:50},
-		{header: 'PO',	dataIndex: 'purchase_order_no',width:100},
-		{header: 'P.Code',dataIndex: 'product_code',width:100},
+		{header: 'S.O',	dataIndex: 'sales_order', width:30},
+		//{header: 'PO',	dataIndex: 'purchase_order_no',width:100},
+		{header: 'P.Code',dataIndex: 'product_code',width:50},
 		{header: 'P.Name',dataIndex: 'product_name',width:190},
 		{header: 'Customer',dataIndex: 'partner_name',width:190},
 		{
@@ -29,7 +29,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'Paper width in inch',
-			width:70,
+			width:50,
 		},
 		{
 			header: 'Length *',
@@ -37,7 +37,7 @@
 			editor: new Ext.form.TextField({
 				allowBlank: false
 			}),
-			width:80,
+			width:50,
 		},
 		{
 			header: 'F *',
@@ -46,16 +46,16 @@
 				allowBlank: false
 			}),
 			tooltip: 'Flute type',
-			width:50,
+			width:20,
 		},
-		{
+	/*	{
 			header: 'DF',
 			dataIndex: 'DF',
 			editor: new Ext.form.TextField({
-				allowBlank: false
+				allowBlank: true
 			}),
 			tooltip: 'DF',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'BM',
@@ -64,7 +64,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'BM',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'BL',
@@ -73,7 +73,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'BL',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'CM',
@@ -82,7 +82,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'CM',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'CL',
@@ -91,7 +91,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'CL',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'Cut',
@@ -99,18 +99,18 @@
 			editor: new Ext.form.TextField({
 				allowBlank: false
 			}),
-			width:40,
-		},
+			width:10,
+		},*/
 		{
-			header: 'Amount',
+			header: 'Amount CR',
 			dataIndex: 'qty',
 			editor: new Ext.form.TextField({
 				allowBlank: true
 			}),
-			width:70,
+			width:50,
 		},
-		{header: 'Delivery',dataIndex: 'delivery_date',renderer: Ext.util.Format.dateRenderer('d/m'),width:65,},
-		{header: 'Status',dataIndex: 'status',width:65,},
+		{header: 'Delivery',dataIndex: 'delivery_date',renderer: Ext.util.Format.dateRenderer('d/m'),width:50,},
+		{header: 'Status',dataIndex: 'status',width:40,},
 		{
 			header: 'Corr-Date',
 			dataIndex: 'corrugator_date',
@@ -132,7 +132,7 @@
 			}),
 			tooltip: 'Corrugator Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Conv-Date*',
@@ -142,7 +142,7 @@
                 format: 'Y-m-d',
 			}),
 			tooltip: 'Corrugator Date',
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Conv-Time*',
@@ -153,7 +153,7 @@
                     format:'H:i'
                 }),
                 renderer: Ext.util.Format.dateRenderer('H:i'),
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Pad-Date',
@@ -164,7 +164,7 @@
                 
 			}),
 			tooltip: 'Pad/Partition Date',
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Pad-Time*',
@@ -175,7 +175,7 @@
 			}),
 			tooltip: 'Pad/Partition Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
-			width:80,
+			width:70,
 		},
 		{
 			header: 'WH-Date',
@@ -186,7 +186,7 @@
                 
 			}),
 			tooltip: 'WH Date',
-			width:80,
+			width:70,
 		},
 		{
 			header: 'WH-Time*',
@@ -197,7 +197,7 @@
 			}),
 			tooltip: 'WH Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Sort*',
@@ -205,7 +205,7 @@
 			editor: new Ext.form.TextField({
                 allowBlank: false
             }),
-			width:80,
+			width:70,
 		},
 		
 	]);
@@ -216,9 +216,9 @@
 	var cmPreview = new Ext.grid.ColumnModel([
 	smPreview,
 		{header: 'ID', 	dataIndex:'delivery_id', width:10, hidden:false},
-		{header: 'S.O',	dataIndex: 'sales_order', width:50},
-		{header: 'PO',	dataIndex: 'purchase_order_no',width:100},
-		{header: 'P.Code',dataIndex: 'product_code',width:100},
+		{header: 'S.O',	dataIndex: 'sales_order', width:30},
+	//	{header: 'PO',	dataIndex: 'purchase_order_no',width:100},
+		{header: 'P.Code',dataIndex: 'product_code',width:50},
 		{header: 'P.Name',dataIndex: 'product_name',width:190, hidden:true},
 		{header: 'Customer',dataIndex: 'partner_name',width:190, hidden:true},
 		{
@@ -228,7 +228,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'Paper width in inch',
-			width:60,
+			width:50,
 		},
 		{
 			header: 'Length *',
@@ -236,7 +236,7 @@
 			editor: new Ext.form.TextField({
 				allowBlank: false
 			}),
-			width:60,
+			width:50,
 		},
 		{
 			header: 'F *',
@@ -245,16 +245,16 @@
 				allowBlank: false
 			}),
 			tooltip: 'Flute type',
-			width:40,
+			width:20,
 		},
-		{
+	/*	{
 			header: 'DF',
 			dataIndex: 'DF',
 			editor: new Ext.form.TextField({
 				allowBlank: false
 			}),
 			tooltip: 'DF',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'BM',
@@ -263,7 +263,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'BM',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'BL',
@@ -272,7 +272,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'BL',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'CM',
@@ -281,7 +281,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'CM',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'CL',
@@ -290,7 +290,7 @@
 				allowBlank: false
 			}),
 			tooltip: 'CL',
-			width:100,
+			width:50,
 		},
 		{
 			header: 'Cut',
@@ -298,18 +298,18 @@
 			editor: new Ext.form.TextField({
 				allowBlank: false
 			}),
-			width:40,
-		},
+			width:30,
+		},*/
 		{
-			header: 'Amount',
+			header: 'Amount CR',
 			dataIndex: 'qty',
 			editor: new Ext.form.TextField({
 				allowBlank: true
 			}),
-			width:70,
+			width:50,
 		},
-		{header: 'Delivery',dataIndex: 'delivery_date',renderer: Ext.util.Format.dateRenderer('d/m'),width:65,},
-		{header: 'Status',dataIndex: 'status',width:70,},
+		{header: 'Delivery',dataIndex: 'delivery_date',renderer: Ext.util.Format.dateRenderer('d/m'),width:50,},
+		{header: 'Status',dataIndex: 'status',width:40,},
 		{
 			header: 'Corr-Date',
 			dataIndex: 'corrugator_date',
@@ -318,7 +318,7 @@
                 format: 'Y-m-d',
 			}),
 			tooltip: 'Corrugator Date',
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Corr-Time*',
@@ -329,7 +329,7 @@
 			}),
 			tooltip: 'Corrugator Time',
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Conv-Date*',
@@ -339,7 +339,7 @@
                 format: 'Y-m-d',
 			}),
 			tooltip: 'Corrugator Date',
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Conv-Time*',
@@ -349,7 +349,7 @@
                 increment: 1,
             }),
 			//renderer: Ext.util.Format.dateRenderer('H:i'),
-			width:80,
+			width:70,
 		},
 
 		{
@@ -361,7 +361,7 @@
                 
 			}),
 			tooltip: 'Pad/Partition Date',
-			width:80,
+			width:70,
 		},
 		{
 			header: 'Pad-Time*',
@@ -442,8 +442,8 @@
 		{ name: 'corrugator_time',	type: 'date', dateFormat: 'H:i'},
 		{ name: 'converter_date',	type: 'date', dateFormat: 'Y-m-d'},
 		{ name: 'converter_time', 	type: 'date', dateFormat: 'H:i'},
-		{ name: 'patchpartition_date',	type: 'date', dateFormat: 'Y-m-d'},
-		{ name: 'patchpartition_time',	type: 'date', dateFormat: 'H:i'},
+		{ name: 'padpartition_date',	type: 'date', dateFormat: 'Y-m-d'},
+		{ name: 'padpartition_time',	type: 'date', dateFormat: 'H:i'},
 		{ name: 'warehouse_date',	type: 'date', dateFormat: 'Y-m-d'},
 		{ name: 'warehouse_time', 	type: 'date',dateFormat: 'H:i' },
 		//{ name: 'next_process'),
@@ -697,8 +697,8 @@
 								corrugator_time		: records[i].get('corrugator_time'),
 								converter_date		: records[i].get('converter_date'),
 								converter_time		: records[i].get('converter_time'),
-								patchpartition_date		: records[i].get('patchpartition_date'),
-								patchpartition_time		: records[i].get('patchpartition_time'),
+								padpartition_date		: records[i].get('amopadpartition_date'),
+								padpartition_time		: records[i].get('padpartition_time'),
 								warehouse_date		: records[i].get('warehouse_date'),
 								warehouse_time		: records[i].get('warehouse_time'),
 								next_process		: records[i].get('next_process'),
