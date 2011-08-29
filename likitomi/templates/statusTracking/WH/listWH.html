@@ -64,6 +64,7 @@
 	<th>Product Name</th>
 	<th>From</th>
 	<th>Due</th>
+	<th>sketch</th>
 </tr></thead><tbody>
 	{% for item in items %}
 	<tr id="{{ item.state}}">
@@ -106,7 +107,13 @@
 			CR <!-- need to fix here -->
 		{% endif %}{% endif %}{% endif %}</td>
 
-	<td>{{item.days_left}}</td></tr>
+	<td>{{item.days_left}}</td>
+		<td>	{% if item.product.sketch != "" %}
+		<a href={{Path}}{{item.product.sketch}}  target='_blank'>{{item.product.product_code}} [M]</a><br/>
+	{% endif %}
+	{% if item.product.sketch_large != "" %}
+		<a href={{Path}}{{item.product.sketch_large}} target='_blank'>{{item.product.product_code}} [L]</a>
+	{% endif %}</td></tr>
 			{% endfor %}
 			</tbody>
 			</table>
@@ -140,6 +147,7 @@
 	<th>Product Name</th>
 	<th>From</th>
 	<th>Due</th>
+	<th>sketch</th>
 </tr></thead><tbody>
 	{% for item in itemsOut %}
 	<tr id="{{ item.stateDL}}" class="{% cycle 'odd' 'even' %}">
@@ -183,7 +191,13 @@
 			CR <!-- need to fix here -->
 		{% endif %}{% endif %}{% endif %}</td>
 
-	<td>{{item.days_left}}</td></tr>
+	<td>{{item.days_left}}</td>
+		<td>	{% if item.product.sketch != "" %}
+		<a href={{Path}}{{item.product.sketch}}  target='_blank'>{{item.product.product_code}} [M]</a><br/>
+	{% endif %}
+	{% if item.product.sketch_large != "" %}
+		<a href={{Path}}{{item.product.sketch_large}} target='_blank'>{{item.product.product_code}} [L]</a>
+	{% endif %}</td></tr>
 			{% endfor %}
 			</tbody>
 			</table>

@@ -74,6 +74,7 @@
 	<th>Next Process</th>
 	<th>Due</th>
 	<th>Remark</th>
+	<th>Sketch</th>
 </tr></thead>
 
 
@@ -137,6 +138,12 @@
 		{% endif %}{% endif %}{% endif %}{% endif %}
 	-->
 	</td>
+			<td>	{% if item.product.sketch != "" %}
+		<a href={{Path}}{{item.product.sketch}}  target='_blank'>{{item.product.product_code}} [M]</a><br/>
+	{% endif %}
+	{% if item.product.sketch_large != "" %}
+		<a href={{Path}}{{item.product.sketch_large}} target='_blank'>{{item.product.product_code}} [L]</a>
+	{% endif %}</td>
 	</tr>
 			{% endfor %}
 </tbody>
