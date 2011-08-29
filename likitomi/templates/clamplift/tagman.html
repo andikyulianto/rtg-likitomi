@@ -225,12 +225,12 @@ $(document).ready(function(){
 <input id="tagstatus" type="hidden" value="{{ tagstatus }}" />
 <input id="atlane" type="hidden" value="{{ atlane }}" />
 <input id="atposition" type="hidden" value="{{ atposition }}" />
-<div style="position:absolute; right:0px;">{{tag2write}}</div>
+
 <input id='showtaglist_url' type='hidden' value='{% url weight.tagman.showtaglist %}' />
 {% url weight.tagman.tagman as tagman_url %}
 {% url weight.tagman.showtaglist as showtaglist_url %}
 {% url weight.views.dashboard as dashboard_url %}
-<div style="position:absolute; right:0px;"></div>
+
 <p style="position:absolute; top:-15px;left:10px;">Now Reading</p>
 <p style="position:absolute; top:5px;left:10px;">
 {% if socror %}
@@ -242,7 +242,7 @@ $(document).ready(function(){
 		{% else %}
 			<b style="font-size:150%;">
 			{% if realtag and not atlane and not atposition %}
-				{% if tagstatus == 'known' %}ID:<b style="background-color:lightblue;">{{ realtag }}</b>{% endif %}
+				{% if tagstatus == 'known' %}ID:<b id="nowreading" style="background-color:lightblue;">{{ realtag }}</b>{% endif %}
 				{% if tagstatus == 'unknown' %}New Tag{% endif %}
 			{% endif %}
 			{% if atlane and atposition and not realtag %}

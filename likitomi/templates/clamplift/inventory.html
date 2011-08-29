@@ -199,7 +199,7 @@ $(document).ready(function(){
 		<td></td><td class="nomarpad" style="{% if not loss %}visibility:hidden;{% endif %} width:200px; text-align:left; position:absolute;">{% for pxl in losslistpx %}{% if pxl == losspx %}<img src="images/clamplift/solid_verticaline.png" style="position:absolute; top:0px; left:{{pxl}}px; z-index:2;" title="{{loss}}"/>{% else %}<img src="images/clamplift/dotted_verticaline.png" style="position:absolute; top:0px; left:{{pxl}}px; z-index:2;" title="{{loss}}"/>{% endif %}{% endfor %}</td>
 	</tr>
 	<tr style="{% if not pcode or pcode == 'undefined' %}visibility:hidden;{% endif %}">
-		<td style="text-align:left; background-image:url('images/clamplift/greengradient.png');">Product: {{pcode}}, {{width}}</td>
+		<td style="text-align:left; background-image:url('images/clamplift/greengradient.png');">Plan: {{pcode}}, {{width}}</td>
 		<td class="nomarpad" style="text-align:left; position:absolute; height:19px;">
 			{% for w in dis_wlistpx %}
 				{% if w == dis_bstchcpx %}<img src="images/clamplift/recroll.png" style="position:absolute; left:{{w}}px; z-index:4"{% else %}

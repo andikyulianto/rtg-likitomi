@@ -44,7 +44,7 @@ def scale(request):
 	"""
 
 # Setting scale mode and rfid mode = {'real', 'fake'}
-	scale_mode = 'fake'
+	scale_mode = 'real'
 	rfid_mode = 'real'
 
 # Connect to scale via serial port
@@ -130,7 +130,8 @@ def scale(request):
 
 	if scale_mode == 'fake': # Fake mode just for running application without weighing indicator
 		output = "US,NT,+00325.5Kg\r\n"
-		weight = round(random.uniform(1,500),0)
+#		weight = round(random.uniform(1,500),0)
+		weight = 482.0
 		digital = str(weight)
 		if len(digital) == 7:
 			digit1 = digital[0:1]
