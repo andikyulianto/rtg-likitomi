@@ -86,12 +86,12 @@
 		}
 		//IF(A7>=(0.0006949*0*11.5),IF(A7<=(0.0006949*0*12.5),(A7)+(0.0006949*0),A7),A7)
 
-		$used_df_lkg = $key->paper_width_mm  * $used_df * getGrade($key->DF) / 1000000;
-		$used_bl_lkg = $key->paper_width_mm  * $used_bl * getGrade($key->BL) / 1000000; 
-		$used_cl_lkg = $key->paper_width_mm  * $used_cl * getGrade($key->CL) / 1000000; 
+		$used_df_lkg = $key->mm  * $used_df * getGrade($key->DF) / 1000000;
+		$used_bl_lkg = $key->mm  * $used_bl * getGrade($key->BL) / 1000000; 
+		$used_cl_lkg = $key->mm  * $used_cl * getGrade($key->CL) / 1000000; 
 		
-		$used_bm_lkg = $key->paper_width_mm  * $used_bm * getGrade($key->BM) / 1000000; 
-		$used_cm_lkg = $key->paper_width_mm  * $used_cm * getGrade($key->CM) / 1000000; 
+		$used_bm_lkg = $key->mm  * $used_bm * getGrade($key->BM) / 1000000; 
+		$used_cm_lkg = $key->mm  * $used_cm * getGrade($key->CM) / 1000000; 
 		
 		$used_df_mkg = $used_df_lkg * 1.03;
 		$used_bl_mkg = $used_bl_lkg * 1.03;
@@ -110,7 +110,7 @@
 		<td class='blankTbl'></td>
 		<td><?=$key->BL?></td>
 		<td><?=$key->BM?></td>
-		<td><?=$key->paper_width_mm?></td>
+		<td><?=$key->mm?></td>
 		<td class='blankTbl'></td>
 		<td><?=round($used_bl)?></td>
 		<td><?=round($used_bm)?></td>

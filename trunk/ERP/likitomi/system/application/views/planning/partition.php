@@ -34,23 +34,7 @@
 	//assign constants of machine speed
 	foreach ($machine->result() as $key)
 	{
-			
-			if($key->machine_name == "2CL")
-				$speed_2cl = $key->speed;
-			if($key->machine_name == "3CM")
-				$speed_3cm = $key->speed;
-			if($key->machine_name == "3CS")
-				$speed_3cs = $key->speed;
-			if($key->machine_name == "3CL")
-				$speed_3cl = $key->speed;
-			if($key->machine_name == "4CD")
-				$speed_4cd = $key->speed;
-			if($key->machine_name == "GH")
-				$speed_gh = $key->speed;
-			if($key->machine_name == "HS")
-				$speed_hs = $key->speed;
-			if($key->machine_name == "FG")
-				$speed_fg = $key->speed;
+
 			if($key->machine_name == "RD")
 				$speed_rd = $key->speed;
 			if($key->machine_name == "SS")
@@ -71,46 +55,7 @@
 
 		$mch ="";
 		$speed =1;
-			if($key->req_2cl)
-			{
-				$mch = "2CL ";
-				$speed =$speed_2cl." ";
-			}	
-			if($key->req_3cm)
-			{
-				$mch = "3CM ";
-				$speed =$speed_3cm." ";
-			}
-			if($key->req_3cs)
-			{
-				$mch = "3CS ";
-				$speed =$speed_3cs." ";
-			}
-			if($key->req_3cl)
-			{
-				$mch = "3CL ";
-				$speed =$speed_3cl." ";
-			}
-			if($key->req_4cd)
-			{
-				$mch = "4CD ";
-				$speed =$speed_4cd." ";
-			}
-			if($key->req_gh)
-			{
-				$mch = "GH ";
-				$speed =$speed_gh." ";
-			}
-			if($key->req_hs)
-			{
-				$mch = "HS ";
-				$speed =$speed_hs." ";
-			}
-			if($key->req_fg)
-			{
-				$mch = "FG ";
-				$speed =$speed_fg." ";
-			}
+			
 			if($key->req_rd)
 			{
 				$mch = "RD ";

@@ -1084,7 +1084,7 @@ For history<br><br/>
 Amount of sheet production *
 <br/>
 <br/>
-<table><tr><td class='tblDetailViewLabel'>CR</td><td><input type='text' id='x_cr_ratio_1' value='<?=$cr_ratio_1?>' size="3"></td><td>:<input type='text' id='x_cr_ratio_2' value='<?=$cr_ratio_2?>' size="3"></td>
+<table><tr><td class='tblDetailViewLabel'>CR</td><td><input type='text' id='x_cr_ratio_2' value='<?=$cr_ratio_2?>' size="3"></td><td>:<input type='text' id='x_cr_ratio_1' value='<?=$cr_ratio_1?>' size="3"></td>
 	<td class='tblDetailViewLabel'>CV</td><td><input type='text' id='x_cv_ratio_1' value='<?=$cv_ratio_1?>' size="3"></td><td>:<input type='text' id='x_cv_ratio_2' value='<?=$cv_ratio_2?>' size="3"></tr>
 	<tr><td class='tblDetailViewLabel'>PT</td><td><input type='text' id='x_pt_ratio_1' value='<?=$pt_ratio_1?>' size="3"></td><td>:<input type='text' id='x_pt_ratio_2' value='<?=$pt_ratio_2?>' size="3"></td>
 	<td></td><td></td></tr>

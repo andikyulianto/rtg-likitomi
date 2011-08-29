@@ -316,7 +316,7 @@ class Planning_model extends Model
 						"mo_pt_code"=>$mo_pt
 				);
 			}
-			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1) and ($req_rd==0 and $req_ss==0 and $req_remove==0 and $req_foam==0 and $req_tape==0))
+			elseif($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1) and ($req_rd==0 and $req_ss==0 and $req_remove==0 and $req_foam==0 and $req_tape==0))
 			{
 				
 				$param = array("date" => $choosendate,
@@ -346,7 +346,7 @@ class Planning_model extends Model
 						"mo_pt_code"=>$mo_pt
 				);
 			}
-			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0) and ($req_remove==1 or $req_foam==1 or $req_tape==1 or $req_rd==1 or $req_ss==1))
+			elseif($req_cr == 1 and $req_wh == 1 and ($req_2cl == 0 and $req_3cm == 0 and $req_3cs == 0 and $req_4cd == 0 and $req_3cl ==0 and $req_gh ==0 and $req_hs == 0 and $req_fg ==0) and ($req_remove==1 or $req_foam==1 or $req_tape==1 or $req_rd==1 or $req_ss==1))
 			{
 				$param = array("date" => $realDate,
 						"delivery_id"=>$rowData->delivery_id,
@@ -375,7 +375,7 @@ class Planning_model extends Model
 						"mo_pt_code"=>$mo_pt
 				);
 			}
-			else if($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1 or $req_rd==1 or $req_ss==1) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
+			elseif($req_cr == 1 and $req_wh == 1 and ($req_2cl == 1 or $req_3cm == 1 or $req_3cs == 1 or $req_4cd == 1 or $req_3cl ==1 or $req_gh ==1 or $req_hs == 1 or $req_fg ==1 or $req_rd==1 or $req_ss==1) and ($req_remove==1 or $req_foam==1 or $req_tape==1))
 			{
 				$param = array("date" => $choosendate,
 						"delivery_id"=>$rowData->delivery_id,
@@ -612,65 +612,74 @@ class Planning_model extends Model
 	
 	function corrugatorclamplift($plandate)
 	{
-		$sql = 	 "SELECT tp.autoid, d.sales_order, d.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty as qty,  "
-				."pc.cr_ratio_2 / pc.cr_ratio_1 as ratio, pc.pc_df as DF, pc.pc_bl as BL,pc.pc_cl as CL, pc.pc_bm as BM, pc.pc_cm as CM, pc.pc_paper_width as p_width_inch, pc.cr_length as length, pc.cut,pc.p_width_mm,  "
-				."d.remarks as D_remarks, pc.remark PC_remarks, st.mo_cr_code,im.mm as paper_width_mm "
-				."FROM total_planning tp, delivery d, products pd, product_catalog pc,partners pt, status_tracking st,inch_mm im "
-				."WHERE tp.date='".$plandate."' "
+		$sql = 	 "SELECT * "
+				."FROM inch_mm mm RIGHT JOIN " 
+				."(SELECT tp.autoid, d.sales_order, d.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty as qty,  "
+				."pc.cr_ratio_2 / pc.cr_ratio_1 as ratio, pc.pc_df as DF, pc.pc_bl as BL,pc.pc_cl as CL, pc.pc_bm as BM, pc.pc_cm as CM, pc.pc_paper_width as p_width_inch, pc.cr_length as length, pc.cut, pc.pc_paper_width as paper_width_mm, "
+				."d.remarks as D_remarks, pc.remark PC_remarks, st.mo_cr_code "
+				."FROM total_planning tp, delivery d, sales_order so, product_catalog pc, partners pt, status_tracking st,products pd "
+				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
-				."AND pc.product_code = d.product_code "
-				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code_id "
-				."AND pd.product_code = d.product_code "
+				."AND d.sales_order = so.sales_order_id "
+				."AND d.product_code = pc.product_code "
+				."AND pc.partner_id = pt.partner_id "
 				."AND tp.autoid = st.total_plan_id "
-				."AND pc.pc_paper_width=im.inch "
+				."AND pd.auto_id = st.product_auto_id "
 				."AND pd.isdeleted =0 "
-				."ORDER BY tp.autoid";
+				."ORDER BY tp.autoid) tt "
+				."ON p_width_inch= mm.inch ";
+		//echo $sql;
 		$query = $this->db->query($sql);
 		return $query;
 	}
 	
 	function corrugatordaily($plandate)
 	{
-		$sql = 	 "SELECT tp.autoid, d.sales_order, pd.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty as qty, "
+		$sql = 	"SELECT * "
+				."FROM inch_mm mm RIGHT JOIN " 
+				."(SELECT tp.autoid, d.sales_order, pd.product_code, pt.partner_name, pc.product_name, pd.flute,pc.slit, d.qty as qty, "
 				."pd.DF, pd.BL,pd.CL, pd.BM, pd.CM, pc.cut,pc.p_width_inch,pc.t_length,  "
-				."pc.cr_ratio_2 / pc.cr_ratio_1 as ratio, pc.cr_blank as blank, pc.slit, pc.scoreline_f, pc.scoreline_d, pc.scoreline_f2, pc.next_process,  "
+				."pc.cr_ratio_2 / pc.cr_ratio_1 as ratio, pc.cr_blank as blank, pc.scoreline_f, pc.scoreline_d, pc.scoreline_f2, pc.next_process,  "
 				."pc.req_2cl as req_2cl, pc.req_3cm as req_3cm, pc.req_3cs as req_3cs, pc.req_4cd as req_4cd, pc.req_3cl as req_3cl, "
 				."pc.req_gh as req_gh, pc.req_hs as req_hs, pc.req_fg as req_fg, pc.req_rd as req_rd, pc.req_ss as req_ss, pc.req_remove as req_remove, pc.req_foam as req_foam, pc.req_tape as req_tape, "
-				."date_format(d.delivery_date,'%d/%m') as delivery_date,pc.slit,  "
-				."d.remarks as D_remarks, pc.remark PC_remarks, st.mo_cr_code, pc.cr_length as length, im.mm as paper_width_mm , pc.pc_paper_width as paper_width "
-				."FROM total_planning tp, delivery d, products pd, product_catalog pc, partners pt , status_tracking st,inch_mm im "
+				."date_format(d.delivery_date,'%d/%m') as delivery_date,  "
+				."d.remarks as D_remarks, pc.remark PC_remarks, st.mo_cr_code, pc.cr_length as length, pc.pc_paper_width as paper_width_mm , pc.pc_paper_width as paper_width "
+				."FROM total_planning tp, delivery d, sales_order so, product_catalog pc, partners pt, status_tracking st,products pd "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
-				."AND pc.product_code = d.product_code "
-				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code_id "
-				."AND pd.product_code = d.product_code "
+				."AND d.sales_order = so.sales_order_id "
+				."AND d.product_code = pc.product_code "
+				."AND pc.partner_id = pt.partner_id "
 				."AND tp.autoid = st.total_plan_id "
-				."AND pc.pc_paper_width=im.inch "
+				."AND pd.auto_id = st.product_auto_id "
 				."AND pd.isdeleted =0 "
-				."ORDER BY tp.autoid";
+				."ORDER BY tp.autoid) tt "
+				."ON paper_width= mm.inch ";
+				//echo $sql;
 		$query = $this->db->query($sql);
 		return $query;
 	}
 	
 	function totalproductionplan($plandate)
 	{
-		$sql = 	 "SELECT tp.autoid, d.sales_order, so.purchase_order_no, d.product_code, pt.partner_name, pc.product_name, pc.p_width_inch,pc.slit, "  
+		$sql = 	 "SELECT * "
+				."FROM inch_mm mm RIGHT JOIN "
+				."(SELECT tp.autoid, d.sales_order, so.purchase_order_no, d.product_code, pt.partner_name, pc.product_name, pc.p_width_inch,pc.slit, "  
 				."pc.cr_length, pd.flute, pc.cut,d.qty as qty,d.qty as qty_cr,d.qty as qty_cv, pc.qty_allowance, date_format(d.delivery_date,'%d/%m') as delivery_date, date_format(tp.corrugator_date,'%d/%m') as corrugator_date, "
 				."date_format(tp.converter_date,'%d/%m') as converter_date,date_format(tp.converter_date,'%H:%i') as converter_time, "  
-				."d.remarks as D_remarks, pc.remark PC_remarks, so.remarks SO_remarks , pc.req_2cl, pc.req_3cm, pc.req_3cs, pc.req_4cd, pc.req_3cl, pc.pc_paper_width, im.mm as paper_width_mm, pd.length "
-				."FROM total_planning tp, delivery d, product_catalog pc, sales_order so, partners pt, products pd, inch_mm im "
+				."d.remarks as D_remarks, pc.remark PC_remarks, so.remarks SO_remarks , pc.req_2cl, pc.req_3cm, pc.req_3cs, pc.req_4cd, pc.req_3cl, pc.pc_paper_width, pd.length "
+				."FROM total_planning tp, delivery d, sales_order so, product_catalog pc, partners pt, status_tracking st,products pd "
 				."WHERE tp.date='".$plandate."'"
 				."AND tp.delivery_id = d.delivery_id "
 				."AND d.sales_order = so.sales_order_id "
-				."AND pc.product_code = d.product_code "
-				."AND pt.partner_id = pc.partner_id "
-				."AND pc.product_code = pd.parent_code_id "
-				."AND pd.product_code = d.product_code "
-				."AND pc.pc_paper_width = im.inch "
+				."AND d.product_code = pc.product_code "
+				."AND pc.partner_id = pt.partner_id "
+				."AND tp.autoid = st.total_plan_id "
+				."AND pd.auto_id = st.product_auto_id "
 				."AND pd.isdeleted =0 "
-				."ORDER BY tp.autoid";
+				."ORDER BY tp.autoid) tt "
+				."ON pc_paper_width= mm.inch ";
+		//echo $sql;
 		$query = $this->db->query($sql);
 		return $query;
 	}

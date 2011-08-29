@@ -51,16 +51,6 @@
 				$speed_hs = $key->speed;
 			if($key->machine_name == "FG")
 				$speed_fg = $key->speed;
-			if($key->machine_name == "RD")
-				$speed_rd = $key->speed;
-			if($key->machine_name == "SS")
-				$speed_ss = $key->speed;
-			if($key->machine_name == "remove")
-				$speed_remove = $key->speed;
-			if($key->machine_name == "foam")
-				$speed_foam = $key->speed;
-			if($key->machine_name == "tape")
-				$speed_tape = $key->speed;
 			
 			
 	}
@@ -111,31 +101,7 @@
 				$mch = "FG ";
 				$speed =$speed_fg." ";
 			}
-			if($key->req_rd)
-			{
-				$mch = "RD ";
-				$speed =$speed_rd." ";
-			}
-			if($key->req_ss)
-			{
-				$mch = "SS ";
-				$speed =$speed_ss." ";
-			}
-			if($key->req_remove)
-			{
-				$mch = "Remove Scraps ";
-				$speed =$speed_remove." ";
-			}
-			if($key->req_foam)
-			{
-				$mch = "Foam ";
-				$speed =$speed_foam." ";
-			}
-			if($key->req_tape)
-			{
-				$mch = "Tape ";
-				$speed =$speed_tape." ";
-			}
+
 			
 
 	

@@ -139,14 +139,23 @@
 		<td><?=$key->sales_order?></td>
 		<td><?=$key->purchase_order_no?></td>
 		<td><?=$key->product_code?></td>
-		<?php if($key->req_2cl==1) echo "<td>2CL</td>" ?>
-		<?php if($key->req_3cm==1) echo "<td>3CM</td>" ?>
-		<?php if($key->req_3cs==1) echo "<td>3CS</td>" ?>
-		<?php if($key->req_3cl==1) echo "<td>3CL</td>" ?>
-		<?php if($key->req_4cd==1) echo "<td>4CD</td>" ?>
+		<?php 
+		if($key->req_2cl==1) 
+			echo "<td>2CL</td>" ;
+		elseif($key->req_3cm==1) 
+			echo "<td>3CM</td>" ;
+		elseif($key->req_3cs==1) 
+			echo "<td>3CS</td>" ;
+		elseif($key->req_3cl==1) 
+			echo "<td>3CL</td>" ;
+		elseif($key->req_4cd==1) 
+			echo "<td>4CD</td>" ;
+		else 
+			echo "<td></td>" ;
+		 ?>
 		<td nowrap><?=$key->partner_name?></td>
 		<td nowrap><?=$key->product_name?></td>
-		<td><?=$key->paper_width_mm?><br/><?=$key->pc_paper_width?></td>
+		<td><?=$key->mm?><br/><?=$key->pc_paper_width?></td>
 		<td><?=$key->length?></td>
 		<td><?=$key->flute?></td>
 		<!--<td><?=$key->cut?></td>-->
