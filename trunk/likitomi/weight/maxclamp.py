@@ -212,11 +212,11 @@ def maxclamp(request):
 
 	if rfid_mode == 'fake': # Fake mode just for running application without weighing indicator
 
-#		atlocation = 'Scale'
+		atlocation = 'Scale'
 
-		atlane = 1
-		atposition = 43
-		atlocation = 'Stock'
+#		atlane = 1
+#		atposition = 33
+#		atlocation = 'Stock'
 
 #		tag2write = '112233445566778899AABBCC'
 		tag2write = '300000000000005408090065'
@@ -244,6 +244,7 @@ def maxclamp(request):
 				actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)
 			else:
 				actual_wt = rtquery.initial_weight
+				undo_btn = ""
 
 	return render_to_response('maxclamp.html', locals())
 

@@ -8,6 +8,10 @@ ADMINS = (
 	('patipol', 'pati.pik@gmail.com'),
 )
 
+#ADMIN_FOR = (
+#	('foo', 'bar')
+#)
+
 MANAGERS = ADMINS
 
 DATABASES = {

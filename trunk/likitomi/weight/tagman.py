@@ -225,36 +225,36 @@ def tagman(request):
 
 #		atlocation = 'Scale'
 
-#		atlane = 1
-#		atposition = 4
-#		atlocation = 'Stock'
+		atlane = 1
+		atposition = 7
+		atlocation = 'Stock'
 
-		tag2write = '112233445566778899AABBCC'
-#		tag2write = '300000000000005408090065'
-		realtag = tag2write[14:24]
+#		tag2write = '112233445566778899AABBCC'
+#		tag2write = '300000000000005408270007'
+#		realtag = tag2write[14:24]
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
-		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
-			tagstatus = 'unknown'
-		elif tag2write.find('30000000000000') == 0:
-			tagstatus = 'known'
+#		if tag2write.find('30000000000000') == -1 or PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == False:
+#			tagstatus = 'unknown'
+#		elif tag2write.find('30000000000000') == 0:
+#			tagstatus = 'known'
 
-		if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
-			rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
-			likitomi_roll_id = rtquery.likitomi_roll_id
-			paper_code = rtquery.paper_code
-			size = rtquery.size
-			unit = rtquery.uom
-			initial_weight = rtquery.initial_weight
-			temp_weight = rtquery.temp_weight
-			lane = rtquery.lane
-			position = rtquery.position
+#		if realtag and PaperRolldetails.objects.filter(likitomi_roll_id=realtag).exists() == True:
+#			rtquery = PaperRolldetails.objects.get(likitomi_roll_id=realtag)
+#			likitomi_roll_id = rtquery.likitomi_roll_id
+#			paper_code = rtquery.paper_code
+#			size = rtquery.size
+#			unit = rtquery.uom
+#			initial_weight = rtquery.initial_weight
+#			temp_weight = rtquery.temp_weight
+#			lane = rtquery.lane
+#			position = rtquery.position
 
-			if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
-				actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)
-			else:
-				actual_wt = rtquery.initial_weight
+#			if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
+#				actual_wt = int(PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0].actual_wt)
+#			else:
+#				actual_wt = rtquery.initial_weight
 
 	return render_to_response('tagman.html', locals())
 
