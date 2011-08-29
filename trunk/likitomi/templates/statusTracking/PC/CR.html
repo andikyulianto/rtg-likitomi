@@ -63,9 +63,9 @@
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
-	<td><div class="plan">{{item.plan_cr_amount}}</div><div class="actual">
+	<td><div class="plan">{{item.total_plan.amount_cr}}</div><div class="actual">
 	{% if item.actual_amount_cr != NULL%}
-		{% if item.actual_amount_cr < item.plan_cr_amount %}
+		{% if item.actual_amount_cr < item.total_plan.amount_cr %}
 			<font color="red">{{item.actual_amount_cr}}</font>
 		{% else %}
 			{{item.actual_amount_cr}}
@@ -84,15 +84,15 @@
 	<td>{{item.product_auto.bl}}</td>
 	<td>{{item.product_auto.cm}}</td>
 	<td>{{item.product_auto.cl}}</td>
-	<td>{{item.product_auto.width_mm}}</td>
+	<td>{{item.product.pc_paper_width_mm}}</td>
 <!--	<td>{{item.product.case}}</td>
 	<td>{{item.product.cut}}</td>
 -->
 	<td>{{item.plan_amount}}</td>
 	<td>{{item.cut}}</td>
-	<td>{{item.product.t_length}}</td>
-	<td>{{item.product.blank}}</td>
-	<td>{{item.product.slit}}</td>
+	<td>{{item.product.cr_length}}</td>
+	<td>{{item.product.cr_blank}}</td>
+	<td>{{item.product.pc_slit}}</td>
 	<td>{{item.product.scoreline_f}}</td>
 	<td>{{item.process2}}</td>
 	<td >{{item.days_left}}</td>
@@ -162,9 +162,9 @@
 				{% else %}
 				&nbsp;
 				{% endif %} </div></td>
-	<td><div class="plan">{{item.plan_cr_amount}}<div><div class="actual">
+	<td><div class="plan">{{item.total_plan.amount_cr}}<div><div class="actual">
 	{% if item.actual_amount_cr != NULL%}
-		{% if item.actual_amount_cr < item.plan_cr_amount %}
+		{% if item.actual_amount_cr < item.total_plan.amount_cr %}
 			<font color="red">{{item.actual_amount_cr}}</font>
 		{% else %}
 			{{item.actual_amount_cr}}
@@ -182,12 +182,12 @@
 	<td>{{item.product_auto.bl}}</td>
 	<td>{{item.product_auto.cm}}</td>
 	<td>{{item.product_auto.cl}}</td>
-	<td>{{item.product_auto.width_mm}}</td>
+	<td>{{item.product.pc_paper_width_mm}}</td>
 	<td>{{item.plan_amount}}</td>
 	<td>{{item.cut}}</td>
-	<td>{{item.product.t_length}}</td>
-	<td>{{item.product.blank}}</td>
-	<td>{{item.product.slit}}</td>
+	<td>{{item.product.cr_length}}</td>
+	<td>{{item.product.cr_blank}}</td>
+	<td>{{item.product.pc_slit}}</td>
 	<td>{{item.product.scoreline_f}}</td>
 	<td>{{item.process2}}</td>
 	<td >{{item.days_left}}</td>

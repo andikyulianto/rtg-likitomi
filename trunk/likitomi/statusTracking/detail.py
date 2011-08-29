@@ -14,7 +14,7 @@ from statusTracking.utility import todayDate, currentTimeProcess, currentProcess
 from statusTracking.models import AuthUser, StatusTracking, ProductCatalog, Products
 from datetime import date, datetime
 from employee import Employee
-from statusTracking.config import getCVSpeed
+from statusTracking.config import getCVSpeed, ERPPath
 import calendar
 
 ##################################################
@@ -68,6 +68,7 @@ def showCR(User,section_title):
 ## display only today schedule ##
 #################################
 def showCV(User,section_title):
+	Path = ""
 	today = todayDate()
 	is_enable_leftbutton = True
 	is_enable_rightbutton = True
@@ -87,6 +88,7 @@ def showCV(User,section_title):
 	thisMonth = today.month
 	item_planM = StatusTracking.objects.filter(plan_cv_start__range=(datefrominMonth,datetoinMonth)).filter(Q(cv_machine='3CS')|Q(cv_machine='2CL')|Q(cv_machine='4CD')|Q(cv_machine='3CM')|Q(cv_machine='3CL')).order_by('plan_due')
 	itemsM = list(item_planM)
+	Path = ERPPath()
 	return render_to_response('PC/CV.html', locals())
 #################################
 ##            for PT           ##
@@ -111,6 +113,7 @@ def showPT(User,section_title):
 	thisMonth = today.month
 	item_planM = StatusTracking.objects.filter(plan_pt_start__range=(datefrominMonth,datetoinMonth)).filter(Q(cv_machine='SS')|Q(cv_machine='RD')|Q(cv_machine='Remove')|Q(cv_machine='Foam')|Q(cv_machine='Tape')).order_by('plan_due')
 	itemsM = list(item_planM)
+	Path = ERPPath()
 	return render_to_response('PC/PT.html', locals())
 #################################
 ##            for WH           ##

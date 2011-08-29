@@ -1,6 +1,8 @@
 ### pc ###
 item_num= 3
 path ="/django/likitomi"
+
+pathERP = "http://localhost/ERP/likitomi/"
 ####################################################
 ## return static setting for showing items for PC ##
 ####################################################
@@ -25,3 +27,5 @@ def getCVSpeed(machine):
 
 def rootPath():
 	return path
+def ERPPath():
+	return pathERP

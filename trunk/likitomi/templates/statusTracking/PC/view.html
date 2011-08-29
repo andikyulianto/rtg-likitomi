@@ -109,15 +109,15 @@
 				<td>{{item.cv_machine_id}}</td>
 				<td>{{item.product.partner.partner_name}}</td>
 				<td>{{item.product.product_name}}</td>
-				<td align="right">{{item.product.p_width_inch}}</td>
-				<td  align="right">{{item.product.t_length}}</td>
+				<td align="right">{{item.product.pc_paper_width_mm}}</td>
+				<td  align="right">{{item.product.cr_length}}</td>
 				<td>{{item.product_auto.flute}}</td>
 				<td align="right">{{item.plan_amount}}</td>
 				<td>{{item.product.qty_allowance}}</td>
 				<td>{{item.plan_due|date:"d/m"}}</td>
 				<td align="right">{{item.plan_amount}}</td>
 				<td>{{item.plan_cr_start|date:"d/m"}}</td>
-				<td align="right">{{item.plan_cr_amount}}</td>
+				<td align="right">{{item.plan_amount}}</td>
 				<td align="right">{{item.cr_time_used}}</td>
 					{% if item.plan_cv_start != NULL %}
 					<td>{{item.plan_cv_start|date:"d/m"}}</td><td align="right">{{item.plan_cv_amount}}</td><td align="right">{{item.cv_time_used}}</td>

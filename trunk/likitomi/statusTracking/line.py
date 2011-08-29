@@ -43,15 +43,15 @@ def startCR(request):
 	bl = product.bl
 	cm = product.cm
 	cl = product.cl
-	width_mm = product.width_mm
-	length_mm = product.length_mm
+	width_mm = productCat.pc_paper_width_mm
+	length_mm = productCat.cr_length
 	case = plan.plan_amount
 	cut = plan.cut
-	blank = productCat.blank
-	slit = productCat.slit
+	blank = productCat.cr_blank
+	slit = productCat.pc_slit
 	scoreline = productCat.scoreline_d
 	next_process = plan.process2
-	amount = plan.plan_cr_amount
+	amount = plan.total_plan.amount_cr
 	task = "start"
 	at = "CR"
 	current_date_time = todayDate()
@@ -91,15 +91,15 @@ def endCR(request):
 	bl = product.bl
 	cm = product.cm
 	cl = product.cl
-	width_mm = product.width_mm
-	length_mm = product.length_mm
+	width_mm = productCat.pc_paper_width_mm
+	length_mm = productCat.cr_length
 	case = plan.plan_amount
 	cut = plan.cut
-	blank = productCat.blank
-	slit = productCat.slit
+	blank = productCat.cr_blank
+	slit = productCat.pc_slit
 	scoreline = productCat.scoreline_d
 	next_process = plan.process2
-	amount = plan.plan_cr_amount
+	amount = plan.total_plan.amount_cr
 	task = "start"
 	at = "CR"
 	current_date_time = todayDate()
@@ -136,7 +136,8 @@ def startCV(request):
 	po = plan.sale_order.purchase_order_no
 	so = plan.sale_order_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
-	color = productCat.rope_color
+
+	color = plan.product.ink_1+" "+plan.product.ink_2+" "+plan.product.ink_3+" "+plan.product.ink_4
 	cv_machine = productCat.next_process
 	speed = plan.cv_machine.speed
 	product_name = productCat.product_name
@@ -147,6 +148,7 @@ def startCV(request):
 	pID = planID
 	time = plan.cv_time_used
 	current_date_time = todayDate()
+	
 	task = "start"
 	at = "CV"
 	title = "starting "+product_code+" in convertor"
@@ -176,7 +178,9 @@ def endCV(request):
 	so = plan.sale_order_id
 	product_code = plan.product_id
 	productCat = ProductCatalog.objects.get(product_code = product_code)
-	color = productCat.rope_color
+
+	color = plan.product.ink_1+" "+plan.product.ink_2+" "+plan.product.ink_3+" "+plan.product.ink_4
+	
 	cv_machine = productCat.next_process
 	speed = plan.cv_machine.speed
 	product_name = productCat.product_name

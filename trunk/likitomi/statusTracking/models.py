@@ -293,6 +293,15 @@ class ProductCatalog(models.Model):
     cname = models.CharField(max_length=765, blank=True)
     product_type = models.CharField(max_length=60, blank=True)
     customer_part_no = models.CharField(max_length=60, blank=True)
+    inner_l = models.IntegerField()
+    inner_w = models.IntegerField()
+    inner_h = models.IntegerField()
+    cr_length = models.IntegerField()
+    cr_blank = models.IntegerField()
+    cv_length = models.IntegerField()
+    cv_blank = models.IntegerField()
+    pt_length = models.IntegerField()
+    pt_blank = models.IntegerField()
     ink_1 = models.CharField(max_length=60, blank=True)
     ink_2 = models.CharField(max_length=60, blank=True)
     ink_3 = models.CharField(max_length=60, blank=True)
@@ -327,6 +336,14 @@ class ProductCatalog(models.Model):
     req_tape = models.IntegerField()
     req_wh = models.IntegerField()
     add_blank = models.IntegerField()
+    pc_df = models.CharField(max_length=21)
+    pc_bl = models.CharField(max_length=21)
+    pc_bm = models.CharField(max_length=21)
+    pc_cl = models.CharField(max_length=21)
+    pc_cm = models.CharField(max_length=21)
+    pc_paper_width = models.IntegerField()
+    pc_paper_width_mm = models.IntegerField()
+    pc_slit = models.IntegerField()
     add_t_length = models.IntegerField()
     add_amount = models.IntegerField()
     cr_ratio_1 = models.IntegerField()
@@ -345,12 +362,13 @@ class ProductCatalog(models.Model):
     remark = models.CharField(max_length=765, blank=True)
     isdeleted = models.IntegerField()
     created_on = models.DateTimeField(null=True, blank=True)
-    created_by = models.CharField(null=True,max_length=90, blank=True)
+    created_by = models.CharField(max_length=90, blank=True)
     modified_on = models.DateTimeField(null=True, blank=True)
-    modified_by = models.CharField(null=True,max_length=90, blank=True)
+    modified_by = models.CharField(max_length=90, blank=True)
     code = models.IntegerField(null=True, blank=True)
     class Meta:
         db_table = u'product_catalog'
+
 
 class Products(models.Model):
     auto_id = models.IntegerField(primary_key=True,max_length=8)
@@ -362,9 +380,9 @@ class Products(models.Model):
     bl = models.CharField(max_length=30, db_column='BL', blank=True) # Field name made lowercase.
     cm = models.CharField(max_length=30, db_column='CM', blank=True) # Field name made lowercase.
     cl = models.CharField(max_length=30, db_column='CL', blank=True) # Field name made lowercase.
-    length_mm = models.IntegerField(null=True, db_column='Length_mm', blank=True) # Field name made lowercase.
-    width_mm = models.IntegerField(null=True, db_column='Width_mm', blank=True) # Field name made lowercase.
-    height_mm = models.IntegerField(null=True, db_column='Height_mm', blank=True) # Field name made lowercase.
+    paper_width = models.IntegerField(null=True, blank=True) # Field name made lowercase.
+    blank = models.IntegerField(null=True, blank=True) # Field name made lowercase.
+    length = models.IntegerField(null=True, blank=True) # Field name made lowercase.
     qty_set = models.IntegerField(null=True, blank=True)
     square_mp_box = models.IntegerField(null=True, blank=True)
     isdeleted = models.IntegerField()
@@ -441,21 +459,20 @@ class TotalPlanning(models.Model):
     autoid = models.AutoField(primary_key=True)
     date = models.DateField()
     delivery_id = models.IntegerField()
-    p_width_mm = models.IntegerField(null=True, blank=True)
     t_length = models.IntegerField(null=True, blank=True)
     flute = models.CharField(max_length=12, blank=True)
     cut = models.IntegerField(null=True, blank=True)
     corrugator_date = models.DateTimeField(null=True, blank=True)
     converter_date = models.DateTimeField(null=True, blank=True)
-    patchpartition_date = models.DateTimeField(null=True, blank=True)
+    padpartition_date = models.DateTimeField(null=True, blank=True)
     warehouse_date = models.DateTimeField(null=True, blank=True)
     df = models.CharField(max_length=21, db_column='DF', blank=True) # Field name made lowercase.
     bm = models.CharField(max_length=21, db_column='BM', blank=True) # Field name made lowercase.
     bl = models.CharField(max_length=21, db_column='BL', blank=True) # Field name made lowercase.
     cm = models.CharField(max_length=21, db_column='CM', blank=True) # Field name made lowercase.
     cl = models.CharField(max_length=21, db_column='CL', blank=True) # Field name made lowercase.
+    amount_cr = models.IntegerField()
     p_width_inch = models.IntegerField(null=True, blank=True)
-    next_process = models.CharField(max_length=33, blank=True)
     class Meta:
         db_table = u'total_planning'
 
@@ -473,6 +490,7 @@ class StatusTracking(models.Model):
     #product = models.CharField(max_length=33, blank=True)
     product_auto = models.ForeignKey(Products,null=False)
     product = models.ForeignKey(ProductCatalog,null=False)
+    total_plan = models.ForeignKey(TotalPlanning,null=False)
     plan_amount = models.IntegerField(null=True, blank=True)
     plan_cr_start = models.DateTimeField(null=True, blank=True)
     plan_cr_end = models.DateTimeField(null=True, blank=True)
@@ -509,6 +527,12 @@ class StatusTracking(models.Model):
     mo_cr_code = models.CharField(max_length=10, blank=True)
     mo_cv_code = models.CharField(max_length=10, blank=True)
     mo_pt_code = models.CharField(max_length=10, blank=True)
+    def stock(self):
+    	if(self.actual_amount_wh != None):
+    		actual = self.actual_amount_wh 
+    	else :
+    		actual = 0
+    	return  actual - self.plan_amount 
     def process1(self):
 	if(self.product.req_cr==1):
 	 	return "CR"
@@ -555,7 +579,18 @@ class StatusTracking(models.Model):
 
         return self.days_left
     def cr_time_used(self):
-        return float((self.plan_cr_end - self.plan_cr_start).seconds)/60
+    	if(self.product.pc_slit==0):
+    		slit = 1
+    	else:
+    		slit = self.product.pc_slit
+    	case = self.plan_amount/slit
+    	cut2 	= case/slit
+    	metre	= (self.product.cr_length*cut2)/2000
+    	if(self.product_auto.flute =="B" or self.product_auto.flute=="C"):
+		timeuseCR = (metre/120)+4
+	if(self.product_auto.flute =="BC") or (self.product_auto.flute=="W"):
+		timeuseCR = (metre/100)+4
+        return timeuseCR
     def cv_time_used(self):
         return float((self.plan_cv_end - self.plan_cv_start).seconds)/60
     def pt_time_used(self):
@@ -611,10 +646,10 @@ class StatusTracking(models.Model):
 		status = ''
 	return status
     def cut(self):
-	if self.product.slit == 0 :
+	if self.product.pc_slit == 0 :
 		return self.plan_amount
 	else :
-		return self.plan_amount / self.product.slit
+		return self.plan_amount / self.product.pc_slit
     def plan_cr_amount(self):
 	return int(math.ceil(self.plan_amount * self.product.cr_ratio_2 / self.product.cr_ratio_1))
     def plan_cv_amount(self):

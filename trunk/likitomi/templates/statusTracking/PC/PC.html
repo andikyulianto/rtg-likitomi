@@ -173,9 +173,9 @@ var arrElements = (strTagName == "*" && document.all)? document.all : oElm.getEl
 				&nbsp;
 				{% endif %} 
 			</div></td>
-			<td><div class="plan">{{CR_items.plan_cr_amount}} 
+			<td><div class="plan">{{CR_items.total_plan.amount_cr}} 
 			<div class="actual">{% if CR_items.actual_amount_cr != NULL%}
-				 {% if CR_items.actual_amount_cr < CR_items.plan_cr_amount %}
+				 {% if CR_items.actual_amount_cr < CR_items.total_plan.amount_cr %}
 					<font color="red">{{CR_items.actual_amount_cr}}</font>
 				{% else %}
 					{{CR_items.actual_amount_cr}}
