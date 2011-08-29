@@ -68,10 +68,10 @@
 		//$p_width_inch = $key->p_width_mm/25.6 ; //Adopted From Lotus File
 		$paper_width = $key->paper_width;
 		
-		$trim	= ($key->paper_width_mm - $key->blank*$key->slit);
+		$trim	= ($key->mm - $key->blank*$key->slit);
 		$metre	= ($key->length*$cut2)/1000; 
 		
-		$lkg	= $key->paper_width_mm * $used_df * getGrade($key->DF) / 1000000;
+		$lkg	= $key->mm * $used_df * getGrade($key->DF) / 1000000;
 		
 		if($used_cm =="")
 		{
@@ -79,11 +79,11 @@
 			{
 				$mkg = "";
 			}
-			else $mkg = $key->paper_width_mm * $used_bm * getGrade($key->BM) / 1000000;
+			else $mkg = $key->mm * $used_bm * getGrade($key->BM) / 1000000;
 		}
 		else 
 		{
-			$mkg = $key->paper_width_mm * $used_cm * getGrade($key->CM) / 1000000;
+			$mkg = $key->mm * $used_cm * getGrade($key->CM) / 1000000;
 			
 		}
 		
@@ -157,7 +157,7 @@
 		<td class='blankTbl'></td>
 		<td><?=round($used_bl)?></td>
 		<td><?=round($used_bm)?></td>
-		<td><?=$key->paper_width_mm?></td>
+		<td><?=$key->mm?></td>
 		<td><?=$key->length?></td>
 		<td><?=round($case)?></td>
 		<td rowspan="2"><?=$key->blank?></td>	

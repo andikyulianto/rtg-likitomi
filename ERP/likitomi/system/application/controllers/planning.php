@@ -176,18 +176,36 @@ class Planning extends Controller {
 		//calculate time
 		$time_start_cr = (0.0006949*60)*8.34;
 		$time_start_cv = (0.0006949*60)*9.34;
+		$time_start_pt = (0.0006949*60)*9.34;
 		$time_start_3cs = $time_start_cv;
 		$time_start_2cl = $time_start_cv;
 		$time_start_3cl = $time_start_cv;
 		$time_start_3cm = $time_start_cv;
 		$time_start_4cd = $time_start_cv;
 		
-		
+		$time_start_rd  = $time_start_pt;
+		$time_start_ss = $time_start_pt;
+		$time_start_remove = $time_start_pt;
+		$time_start_foam = $time_start_pt;
+		$time_start_tape = $time_start_pt;
 
+		
+		$time_stop_cr = $time_start_cr;
+		$time_stop_cv = $time_start_cv;
+		$time_stop_pt = $time_start_pt;
 		$time_stop_2cl=0;
 		$time_stop_3cl=0;
 		$time_stop_3cm=0;
+		$time_stop_3cs=0;
 		$time_stop_4cd=0;
+		
+		$time_stop_rd = 0;
+		$time_stop_ss = 0;
+		$time_stop_remove = 0;
+		$time_stop_foam = 0;
+		$time_stope_tape =0;
+		
+		
 
 		//$time_start_pt = (0.0006949*60)*8;
 		//$time_start_wh = (0.0006949*60)*8;
@@ -201,6 +219,11 @@ class Planning extends Controller {
 
 		foreach($gridData as $rowData)
 		{
+			
+		////////////	
+		//create MO//
+		////////////
+
 			//initialize 
 			$mo_cr = "";
 			$mo_cv = "";
@@ -208,11 +231,7 @@ class Planning extends Controller {
 			
 			// start stop time of CR 
 			$query = $this->Planning_model->getProduct($rowData->product_code);
-			$key = $query->row_array(0);							//get the only one object
-		////////////	
-		//create MO//
-		////////////
-		if($key['req_cr'])
+			$key = $query->row_array(0);							//get the only one object		if($key['req_cr'])
 		{
 			$mo_cr_count = $mo_cr_count +1;
 			$mo_cr_running_process =$mo_cr_count;
@@ -294,16 +313,21 @@ class Planning extends Controller {
 		//echo $mo_cr."   ".$mo_cv."   ".$mo_pt."<br>";
 		
 			/// end mo
+			///////////////////////////////////
 			
 			
 			
 			
 			$case 	= $rowData->qty;
-			if(($key['slit'])!=0)
-			$cut2 	= $case/$key['slit'];
-			$metre	= ($key['t_length']*$cut2)/1000;
+			if(($key['pc_slit'])!=0)
+			$cut2 	= $case/$key['pc_slit'];
+			//echo $key['pc_slit'];
+			$metre	= ($key['cr_length']*$cut2)/1000;
 			$timeuseCR = 0;
 			$realDate = $choosendate;
+		/////////////////////////////
+		//calculate time use in CR //
+		////////////////////////////
 		if((strtoupper($key['flute'])=="B")||(strtoupper($key['flute'])=="C"))
 		{
 			$timeuseCR = ($metre/120)+4;
@@ -313,12 +337,26 @@ class Planning extends Controller {
 			$timeuseCR = ($metre/100)+4;
 		}
 		else $timeuseCR = 0;
+		///////////////////////////////
+		
+		
+		////////////////////////////
+		// Calculate time stop/////
+		///////////////////////////
+		
 		$time_stop_cr = $time_start_cr;
+		
 		if($timeuseCR!=0)
 		{
 			$time_stop_cr = $time_start_cr + $timeuseCR * 0.0006949;
 		}
-		if($key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd'])
+		
+
+		// end CR ///
+		///////////////////////////////////
+		//prepare CV calculation /////
+		//////////////////////////
+		if($key['req_2cl']||$key['req_3cm']||$key['req_3cs']||$key['req_4cd']||$key['req_3cl']||$key['req_gh']||$key['req_hs']||$key['req_fg'])
 		{
 			//start stop time for CV
 	#		print($key['req_3cm']);
@@ -327,77 +365,90 @@ class Planning extends Controller {
 			elseif($key['req_2cl'])
 				$speed = 60;
 			elseif($key['req_3cl'])
-				$speed = 60;
+				$speed = 50;
 			elseif($key['req_3cm'])
-				$speed = 60;
+				$speed = 20;
 			elseif($key['req_4cd'])
-				$speed = 60;
+				$speed = 90;
+			elseif($key['req_gh'])
+				$speed = 5;
+			elseif($key['req_hs'])
+				$speed = 15;
+			elseif($key['req_fg'])
+				$speed = 5;
 			else
 				$speed = 0;
 			//echo $key['next_process']."". $speed ."<br>";
-			//$time_stop_cv = $time_start_cv;
+			$time_stop_cv = $time_start_cv;
 			if ($speed > 0)
 				$timeuseCV = $rowData->qty / $speed;
 			else
 				$timeuseCV = 0;
 
 			
-
-
+//////////////////
+//calculate CV ///
+/////////////////
 		
 			if($key['req_3cs'])
 			{
-				$time_start_3cs = $time_stop_cr;
-				$time_stop_3cs = $time_start_3cs+ round($timeuseCV+30) * 0.0006949;
+				if($time_stop_3cs>$time_stop_cr)
+					$time_start_3cs = $time_stop_3cs;
+				else
+					$time_start_3cs = $time_stop_cr;
+					
+				$time_stop_3cs = $time_start_3cs+ ($timeuseCV+30) * 0.0006949;
+				$time_start_cv = $time_start_3cs;
 				$time_stop_cv = $time_stop_3cs;
 			}
 			elseif($key['req_2cl'])
 			{
-/*
-				if((double)$time_stop_cr<(double)$time_stop_2cl)
-				{
+				if($time_stop_2cl>$time_stop_cr)
 					$time_start_2cl = $time_stop_2cl;
-//					print $rowData->product_code."--2CL "." $time_stop_cr $time_stop_2cl  $time_start_2cl "." --- $time_stop_2cl<br>";
-				}
 				else
-				{
 					$time_start_2cl = $time_stop_cr;
-//					print $rowData->product_code."--CR"." $time_stop_cr $time_stop_2cl  $time_start_2cl "." --- $time_stop_cr <br>";
-				}
-*/				$time_start_2cl = $time_stop_cr;
+
 				$time_stop_2cl = $time_start_2cl+ round($timeuseCV+30) * 0.0006949;
+				$time_start_cv = $time_start_2cl;
 				$time_stop_cv = $time_stop_2cl;
 			}
 			elseif($key['req_3cl'])
 			{
-				$time_start_3cl = $time_stop_cr;
+				if($time_stop_3cl>$time_stop_cr)
+					$time_start_3cl = $time_stop_3cl;
+				else
+					$time_start_3cl = $time_stop_cr;		
+
 				$time_stop_3cl = $time_start_3cl+ round($timeuseCV+30) * 0.0006949;
+				$time_start_cv = $time_start_3cl;
 				$time_stop_cv = $time_stop_3cl;
 			}
 			elseif($key['req_3cm'])
 			{
-/*				if($time_stop_cr<$time_stop_3cm)
-				{
+				if($time_stop_3cm>$time_stop_cr)
 					$time_start_3cm = $time_stop_3cm;
-					print $rowData->product_code."--3CM "." $time_stop_cr $time_stop_3cm  $time_start_3cm "." --- $time_stop_3cm<br>";
-				}
 				else
-				{
-					$time_start_3cm = $time_stop_cr;
-					print $rowData->product_code."--3CM"." $time_stop_cr $time_stop_3cm  $time_start_3cm "." --- $time_stop_cr <br>";
-				}
-*/				$time_start_3cm = $time_stop_cr;
+					$time_start_3cm = $time_stop_cr;		
+
 				$time_stop_3cm = $time_start_3cm+ round($timeuseCV+30) * 0.0006949;
+				$time_start_cv = $time_start_3cm;
 				$time_stop_cv = $time_stop_3cm;
 			}
 			elseif($key['req_4cd'])
 			{
-				$time_start_4cd = $time_stop_cr;
+				if($time_stop_4cd>$time_stop_cr)
+					$time_start_4cd = $time_stop_4cd;
+				else
+					$time_start_3cs = $time_stop_cr;
+				
 				$time_stop_4cd = $time_start_4cd+ round($timeuseCV+30) * 0.0006949;
+				$time_start_cv = $time_start_4cd;
 				$time_stop_cv = $time_stop_4cd;
 			}
 			else
+			{
 				$time_stop_cv = $time_start_cv;
+			}
 			$time_start_wh = $time_stop_cv;
 		}
 		else{
@@ -405,445 +456,202 @@ class Planning extends Controller {
 			$time_start_cv= NULL;
 			$time_start_wh = $time_stop_cr;
 		}
+////////////end CV//////////////////
+
+
+
+////////////////////////
+///// Start PT /////////
+///////////////////////
+
 		if($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape'])
 		{
-			
-			if($key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd']){
-				$time_start_pt = $time_stop_cv + round(10) * 0.0006949;
+			if($key['req_rd'])
+				$speed = 50;
+			elseif($key['req_ss'])
+				$speed = 5;
+			elseif($key['req_remove'])
+				$speed = 1;
+			elseif($key['req_foam'])
+				$speed = 1;
+			elseif($key['req_tape'])
+				$speed = 1;
+			else
+				$speed = 0;
+				
+
+			if ($speed > 0)
+				$timeusePT = $rowData->qty / $speed;
+			else
+				$timeusePT = 0;
+				
+///////////////////////////////
+/////////calculate PT Time ////
+//////////////////////////////
+
+			if($key['req_2cl']||$key['req_3cm']||$key['req_3cs']||$key['req_4cd']||$key['req_3cl']||$key['req_gh']||$key['req_hs']||$key['req_fg'])
+			{
+				if($key['req_rd'])
+				{
+					
+					if($time_stop_rd>$time_stop_cv)
+						$time_start_rd = $time_stop_rd;
+					else
+						$time_start_rd = $time_stop_cv;
+					
+					$time_stop_rd = $time_start_rd+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_rd;
+					$time_stop_pt = $time_stop_rd;
+				}
+				if($key['req_ss'])
+				{
+					
+					if($time_stop_ss>$time_stop_cv)
+						$time_start_ss = $time_stop_ss;
+					else
+						$time_start_ss = $time_stop_cv;
+					
+					$time_stop_ss = $time_start_ss+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_ss;
+					$time_stop_pt = $time_stop_ss;
+				}
+				if($key['req_remove'])
+				{
+					
+					if($time_stop_remove>$time_stop_cv)
+						$time_start_remove = $time_stop_remove;
+					else
+						$time_start_remove = $time_stop_cv;
+					
+					$time_stop_remove = $time_start_remove+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_remove;
+					$time_stop_pt = $time_stop_remove;
+				}
+				if($key['req_foam'])
+				{
+					
+					if($time_stop_foam>$time_stop_cv)
+						$time_start_foam = $time_stop_foam;
+					else
+						$time_start_foam = $time_stop_cv;
+					
+					$time_stop_foam = $time_start_foam+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_foam;
+					$time_stop_pt = $time_stop_foam;
+				}
+				if($key['req_tape'])
+				{
+					
+					if($time_stop_tape>$time_stop_cv)
+						$time_start_tape = $time_stop_tape;
+					else
+						$time_start_tape = $time_stop_cv;
+					
+					$time_stop_tape = $time_start_tape+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_tape;
+					$time_stop_pt = $time_stop_tape;
+				}
+				
+				
 			}
-			elseif($key['req_cr']){
-				$time_start_pt = $time_stop_cr + round(10) * 0.0006949;
+			elseif($key['req_cr']||!($key['req_2cl']||$key['req_3cm']||$key['req_3cs']||$key['req_4cd']||$key['req_3cl']||$key['req_gh']||$key['req_hs']||$key['req_fg'])){
+				if($key['req_rd'])
+				{
+					
+					if($time_stop_rd>$time_stop_cr)
+						$time_start_rd = $time_stop_rd;
+					else
+						$time_start_rd = $time_stop_cr;
+					
+					$time_stop_rd = $time_start_rd+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_rd;
+					$time_stop_pt = $time_stop_rd;
+				}
+				if($key['req_ss'])
+				{
+					
+					if($time_stop_ss>$time_stop_cr)
+						$time_start_ss = $time_stop_ss;
+					else
+						$time_start_ss = $time_stop_cr;
+					
+					$time_stop_ss = $time_start_ss+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_ss;
+					$time_stop_pt = $time_stop_ss;
+				}
+				if($key['req_remove'])
+				{
+					
+					if($time_stop_remove>$time_stop_cr)
+						$time_start_remove = $time_stop_remove;
+					else
+						$time_start_remove = $time_stop_cr;
+					
+					$time_stop_remove = $time_start_remove+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_remove;
+					$time_stop_pt = $time_stop_remove;
+				}
+				if($key['req_foam'])
+				{
+					
+					if($time_stop_foam>$time_stop_cr)
+						$time_start_foam = $time_stop_foam;
+					else
+						$time_start_foam = $time_stop_cr;
+					
+					$time_stop_foam = $time_start_foam+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_foam;
+					$time_stop_pt = $time_stop_foam;
+				}
+				if($key['req_tape'])
+				{
+					
+					if($time_stop_tape>$time_stop_cr)
+						$time_start_tape = $time_stop_tape;
+					else
+						$time_start_tape = $time_stop_cr;
+					
+					$time_stop_tape = $time_start_tape+ ($timeusePT+30) * 0.0006949;
+					$time_start_pt = $time_start_tape;
+					$time_stop_pt = $time_stop_tape;
+				}
 			}
 			else
+			{
 				$time_start_pt = NULL;
-			$time_stop_pt = $time_start_pt +round(($key['req_rd']+ $key['req_ss']+$key['req_remove']+$key['req_foam']+$key['req_tape'])* 30) * 0.0006949;
-			$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
+				$time_stop_pt = NULL;
+				
+			}
+			
+			//$time_start_wh = $time_stop_pt +round(10) * 0.0006949;
 		}
 		else
 		{
 			$time_start_pt = NULL;
 			$time_stop_pt = NULL;
 		}
- 		log_message('info','product code:'.$rowData->product_code);
- 		log_message('info', 'CR Start :'.$time_start_cr.'CR Stop :'.$time_stop_cr);
+/////////////////////
+// find wh time ///
+//////////////////
+	if($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape'])
+		$time_start_wh = $time_stop_pt;
+	elseif($key['req_2cl']||$key['req_3cm']||$key['req_3cs']||$key['req_4cd']||$key['req_3cl']||$key['req_gh']||$key['req_hs']||$key['req_fg'])
+		$time_start_wh = $time_stop_cv;
+	else
+		$time_start_wh = $time_stop_cr;
 
-		
-		//echo $rowData;
-		//$rowData['time_start_cr'] = $time_start_cr;
-			//print_r($rowData);
-			//print_r($key->row_array(0));
+//////// start to save ////////
+				
+		//$time_start_cv = $time_stop_cr;
+		$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),NULL);
+		$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
 			
 			
-#			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-#			//Save to  status tracking
-#			$this->Planning_model->savetostatustracking($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_cv),$this->formatDate($time_stop_cv),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh));
-
-
-#					echo $key['next_process'];
-
-			
-		if($key['req_3cs'])
-		{
-			$time_stop_3cs = $time_start_3cs+ round($timeuseCV+30) * 0.0006949;
-			
-						//$choosendate,$realDate
-			$tempCRStart = $time_start_cr;
-			$tempCRStop = $time_stop_cr;
-//			echo "print 3cs==".$time_start_3cs."----";
-			log_message('info', 'CR Start (3cs b):'.$time_start_cr.'CR Stop :'.$time_stop_cr);
-			log_message('info', '3CS Start (3cs b):'.$time_start_3cs.'3CS Stop :'.$time_stop_3cs);
-			log_message('info', 'PT Start (3cs b):'.$time_start_pt.'PT Stop :'.$time_stop_pt);
-			log_message('info', 'WH Start (3cs b):'.$time_start_wh);			
-			if((double)$time_start_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_cr-=1;
-				(double)$time_stop_cr-=1;
-			
-			}
-			elseif ((double)$time_stop_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cr-=1;
-			}
-
-			//check cv
-			if((double)$time_start_3cs >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				//(double)$time_start_cv-=1;
-				(double)$time_stop_cv-=1;
-				(double)$time_start_3cs-=1;
-				(double)$time_stop_3cs-=1;
-			
-			}
-			elseif ((double)$time_stop_3cs >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cv-=1;
-				(double)$time_stop_3cs-=1;
-			}
-			//check wh
-			if((double)$time_start_wh >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_wh-=1;
-				//(double)$time_stop_cr-=1;
-			
-			}
-			log_message('info', 'CR Start (3cs a):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', '3CS Start (3cs a):'.$time_start_3cs.'3CS Stop :'.$time_stop_3cs.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (3cs a):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (3cs a):'.$time_start_wh);	
-//			echo $rowData->product_code."req_3cs ".$time_stop_cv." ".$choosendate."<br>";
-			
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cs),$this->formatDate($time_stop_3cs),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cs),$this->formatDate($time_stop_3cs),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-			$time_start_cr = $tempCRStart ;
-			$time_stop_cr= $tempCRStop;
-
-			$time_stop_cv = $time_stop_3cs;
-		}
-		elseif($key['req_2cl'])
-		{
-			if((double)$time_stop_cr<(double)$time_stop_2cl)
-				$time_start_2cl = $time_stop_2cl;
-			else
-				$time_start_2cl = $time_stop_cr;
-			$time_stop_2cl = $time_start_2cl+ round($timeuseCV+30) * 0.0006949;
-			$tempCRStart = $time_start_cr;
-			$tempCRStop = $time_stop_cr;
-			log_message('info', 'CR Start (2cl b):'.$time_start_cr.'CR Stop :'.$time_stop_cr);
-			log_message('info', '2CL Start (2cl b):'.$time_start_2cl.'2CL Stop :'.$time_stop_2cl);
-			log_message('info', 'PT Start (2cl b):'.$time_start_pt.'PT Stop :'.$time_stop_pt);
-			log_message('info', 'WH Start (2cl b):'.$time_start_wh);	
-//			echo "print CV==".$time_stop_cv."----";
-			if((double)$time_start_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_cr-=1;
-				(double)$time_stop_cr-=1;
-			
-			}
-			elseif ((double)$time_stop_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cr-=1;
-			}
-			//check cv
-			if((double)$time_start_2cl >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cv-=1;
-				(double)$time_start_2cl-=1;
-				(double)$time_stop_2cl-=1;
-			
-			}
-			elseif ((double)$time_stop_2cl >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cv-=1;
-				(double)$time_stop_2cl-=1;
-			}
-			//check wh
-			if((double)$time_start_wh >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_wh-=1;
-				//(double)$time_stop_cr-=1;
-			
-			}
-			log_message('info', 'CR Start (2cl a):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', '2CL Start (2cl a):'.$time_start_2cl.'2CL Stop :'.$time_stop_2cl.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (2cl a):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (2cl a):'.$time_start_wh.' choose date:'.$choosendate.' real date:'.$realDate);	
-//			echo $rowData->product_code."req_2cl ".$time_stop_cv." ".$choosendate."<br>";
-			
-			
-			
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_2cl),$this->formatDate($time_stop_2cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_2cl),$this->formatDate($time_stop_2cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-			
-//			$choosendate = $tempDate;
-			$time_start_cr = $tempCRStart ;
-			$time_stop_cr= $tempCRStop;
-			$time_stop_cv = $time_stop_2cl;
-		}
-		elseif($key['req_3cl'])
-		{
-
-			$time_stop_3cl = $time_start_3cl+ round($timeuseCV+30) * 0.0006949;
-			
-						//$choosendate,$realDate
-			$tempCRStart = $time_start_cr;
-			$tempCRStop = $time_stop_cr;
-			log_message('info', 'CR Start (3CL b):'.$time_start_cr.'CR Stop :'.$time_stop_cr);
-			log_message('info', '3CL Start (3CL b):'.$time_start_3cl.'3CL Stop :'.$time_stop_3cl);
-			log_message('info', 'PT Start (3CL b):'.$time_start_pt.'PT Stop :'.$time_stop_pt);
-			log_message('info', 'WH Start(3CL b):'.$time_start_wh);	
-//			echo "print CV==".$time_stop_cv."----";
-			if((double)$time_start_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_cr-=1;
-				(double)$time_stop_cr-=1;
-			
-			}
-			elseif ((double)$time_stop_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cr-=1;
-			}
-			//check cv
-			if((double)$time_start_3cl >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				//(double)$time_start_cv-=1;
-				(double)$time_stop_cv-=1;
-				(double)$time_start_3cl-=1;
-				(double)$time_stop_3cl-=1;
-			
-			}
-			elseif ((double)$time_stop_3cl >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cv-=1;
-				(double)$time_stop_3cl-=1;
-			}
-			//check wh
-			if((double)$time_start_wh >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_wh-=1;
-				//(double)$time_stop_cr-=1;
-			
-			}
-			log_message('info', 'CR Start (3CL a):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', '3CL Start (3CL a):'.$time_start_3cl.'3CL Stop :'.$time_stop_3cl.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (3CL a):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (3CL a):'.$time_start_wh);
-//			echo $rowData->product_code."-3cl".$time_stop_cv." <br>";
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cl),$this->formatDate($time_stop_3cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cl),$this->formatDate($time_stop_3cl),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-
-			$time_start_cr = $tempCRStart ;
-			$time_stop_cr= $tempCRStop;
-			$time_stop_cv = $time_stop_3cl;
-		}
-		elseif($key['req_3cm'])
-		{
-			if((double)$time_stop_cr<(double)$time_stop_3cm)
-				$time_start_3cm = $time_stop_3cm;
-			else
-				$time_start_3cm = $time_stop_cr;
-			$time_stop_3cm = $time_start_3cm+ round($timeuseCV+30) * 0.0006949;
-			
-						//$choosendate,$realDate
-			$tempCRStart = $time_start_cr;
-			$tempCRStop = $time_stop_cr;
-			log_message('info', 'CR Start (3CM b):'.$time_start_cr.'CR Stop :'.$time_stop_cr);
-			log_message('info', '3CM Start (3CM b):'.$time_start_3cm.'3CM Stop :'.$time_stop_3cm);
-			log_message('info', 'PT Start (3CM b):'.$time_start_pt.'PT Stop :'.$time_stop_pt);
-			log_message('info', 'WH Start (3CM b):'.$time_start_wh);
-//			echo "print 3CM==".$time_start_3cm."----";
-			if((double)$time_start_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_cr-=1;
-				(double)$time_stop_cr-=1;
-			
-			}
-			elseif ((double)$time_stop_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cr-=1;
-			}
-			//check cv
-			if((double)$time_start_3cm >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				//(double)$time_start_cv-=1;
-				(double)$time_stop_cv-=1;
-				(double)$time_start_3cm-=1;
-				(double)$time_stop_3cm-=1;
-			
-			}
-			elseif ((double)$time_stop_3cm >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cv-=1;
-				(double)$time_stop_3cm-=1;
-			}
-			//check wh
-			if((double)$time_start_wh >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_wh-=1;
-				//(double)$time_stop_cr-=1;
-			
-			}
-			log_message('info', 'CR Start (3CM a):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', '3CM Start (3CM a):'.$time_start_3cm.'3CM Stop :'.$time_stop_3cm.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (3CM a):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (3CM a):'.$time_start_wh);
-//				echo $rowData->product_code."-3cm ".$time_stop_cr."<br>";
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cm),$this->formatDate($time_stop_3cm),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_3cm),$this->formatDate($time_stop_3cm),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-
-			$time_start_cr = $tempCRStart ;
-			$time_stop_cr= $tempCRStop;
-			$time_stop_cv = $time_stop_3cm;
-		}
-		elseif($key['req_4cd'])
-		{
-	
-			$time_stop_4cd = $time_start_4cd+ round($timeuseCV+30) * 0.0006949;
-			
-			//$choosendate,$realDate
-			$tempCRStart = $time_start_cr;
-			$tempCRStop = $time_stop_cr;
-			log_message('info', 'CR Start (4CD b):'.$time_start_cr.'CR Stop :'.$time_stop_cr);
-			log_message('info', '4CD Start (4CD b):'.$time_start_4cd.'4CD Stop :'.$time_stop_4cd);
-			log_message('info', 'PT Start (4CD b):'.$time_start_pt.'PT Stop :'.$time_stop_pt);
-			log_message('info', 'WH Start (4CD b):'.$time_start_wh);
-//			echo "print wh==".$time_start_wh."----";
-			if((double)$time_start_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_cr-=1;
-				(double)$time_stop_cr-=1;
-			
-			}
-			elseif ((double)$time_stop_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cr-=1;
-			}
-			//check cv
-			if((double)$time_start_4cd >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				//(double)$time_start_cv-=1;
-				(double)$time_stop_cv-=1;
-				(double)$time_start_4cd-=1;
-				(double)$time_stop_4cd-=1;
-			
-			}
-			elseif ((double)$time_stop_4cd >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cv-=1;
-				(double)$time_stop_4cd-=1;
-			}
-			//check wh
-			if((double)$time_start_wh >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_wh-=1;
-				//(double)$time_stop_cr-=1;
-			
-			}
-			log_message('info', 'CR Start (4CD a):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', '4CD Start (4CD a):'.$time_start_4cd.'4CD Stop :'.$time_stop_4cd.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (4CD a):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (4CD a):'.$time_start_wh);
-//			echo $rowData->product_code."-4cd time start wh".$time_start_wh."<br>";
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_4cd),$this->formatDate($time_stop_4cd),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),$this->formatDate($time_start_4cd),$this->formatDate($time_stop_4cd),$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-
-			$time_start_cr = $tempCRStart ;
-			$time_stop_cr= $tempCRStop;
-			$time_stop_cv = $time_stop_4cd;
-		}
-		elseif($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape']){
-			log_message('info', 'CR Start (In PT):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (In PT):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (In PT):'.$time_start_wh.' choose date:'.$choosendate.' real date:'.$realDate);
-//	echo $rowData->product_code."-pt".$time_start_cr."<br>";
-	
-
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-
-		}
-		elseif(!($key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd']))
-		{
-			$tempCRStart = $time_start_cr;
-			$tempCRStop = $time_stop_cr;
-			log_message('info', 'CR Start (Not in CV b):'.$time_start_cr.'CR Stop :'.$time_stop_cr);
-			log_message('info', 'PT Start (Not in CV b):'.$time_start_pt.'PT Stop :'.$time_stop_pt);
-			log_message('info', 'WH Start (Not in CV b):'.$time_start_wh);
-//	echo $rowData->product_code."-not cv ".$time_stop_cr."<br>";
-			
-			if((double)$time_start_cr >=1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_cr-=1;
-				(double)$time_stop_cr-=1;
-			
-			}
-			elseif ((double)$time_stop_cr >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_stop_cr-=1;
-			}
-			if((double)$time_start_wh >= 1)
-			{
-				$realDate = date("Y-m-d",strtotime("+1 day",strtotime($choosendate)));
-				(double)$time_start_wh-=1;
-				//(double)$time_stop_cr-=1;
-			
-			}
-			log_message('info', 'CR Start (Not in CV a):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (Not in CV a):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (Not in CV a):'.$time_start_wh.' choose date:'.$choosendate.' real date:'.$realDate);
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,$this->formatDate($time_start_pt),$this->formatDate($time_stop_pt),$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-			
-			
-			
-			$time_start_cr = $tempCRStart ;
-			$time_stop_cr= $tempCRStop;
-			
-		}
-		elseif(!($key['req_rd']||$key['req_ss']||$key['req_remove']||$key['req_foam']||$key['req_tape']||$key['req_3cs']||$key['req_2cl']||$key['req_3cl']||$key['req_3cm']||$key['req_4cd']))
-		{
-			log_message('info', 'CR Start (Not in CV/PT):'.$time_start_cr.'CR Stop :'.$time_stop_cr.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'PT Start (Not in CV/PT):'.$time_start_pt.'PT Stop :'.$time_stop_pt.' choose date:'.$choosendate.' real date:'.$realDate);
-			log_message('info', 'WH Start (Not in CV/PT):'.$time_start_wh.' choose date:'.$choosendate.' choose date:'.$realDate);
-//	echo $rowData->product_code."-not pt not cv ".$time_start_cr."<br>";
-			$this->Planning_model->savetotalplan($rowData,$choosendate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,NULL,NULL,$this->formatDate($time_start_wh),$key);
-			//Save to  status tracking
-			$this->Planning_model->savetostatustracking($rowData,$choosendate,$realDate,$this->formatDate($time_start_cr),$this->formatDate($time_stop_cr),NULL,NULL,NULL,NULL,$this->formatDate($time_start_wh),$mo_cr,$mo_cv,$mo_pt);
-			
-			
-			$time_start_cr = $tempCRStart ;
-			$time_stop_cr= $tempCRStop;
-		}
-		else
-		
-		$time_stop_cv = $time_stop_cv;
-		if($time_stop_cr<$time_stop_2cl)
-			$time_start_2cl = $time_stop_2cl;
-		else
-			$time_start_2cl = $time_stop_cr;
-		$time_start_3cl = $time_stop_3cl;
-		$time_start_3cm = $time_stop_3cm;
-		$time_start_4cd = $time_stop_4cd;
-		
+		//assign for next value
 		$time_start_cr = $time_stop_cr;
-			log_message('info', '-----------------');
-			
-
-
-/**/		}
+		$time_start_cv = $time_stop_cv;
+		
+/**/	}
 		
 		//save to statusTracking
 		echo "Data Saved as 	".$choosendate." Plan.";

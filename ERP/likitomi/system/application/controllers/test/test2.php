@@ -419,6 +419,7 @@ class Test2 extends Toast
 
 		}
 	}
+
 	function test_3CSTime()
 	{
 	
@@ -439,8 +440,8 @@ class Test2 extends Toast
 		   	$prev = $result->previous_row();
 		   	//print "prev".$prev->plan_cv_end;
 		   	$expect = $prev->plan_cv_end;
-		   	$this->_assert_true($test<$expect);
-		   	if(!$this->_assert_true($test>$expect))
+		   	$this->_assert_true($test>=$expect);
+		   	if(!$this->_assert_true($test>=$expect))
 		   		print "3CSTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
 		   }
 		 //  else
@@ -459,8 +460,6 @@ class Test2 extends Toast
 	$result = $this->Test_model->getMachineTime($date,$machine);
 	for($i=0;$i<$result->num_rows;$i++)
 	{
-		if ($result->num_rows() > 0)
-		{
 		   $row = $result->row_array($i); 
 //			print_r($row);
 //			print "<br>";
@@ -471,23 +470,21 @@ class Test2 extends Toast
 		   	$prev = $result->previous_row();
 		   	//print "prev".$prev->plan_cv_end;
 		   	$expect = $prev->plan_cv_end;
-		   	$this->_assert_true($test>$expect);
-		   	if(!$this->_assert_true($test>$expect))
+		   	$this->_assert_true($test>=$expect);
+		   	if(!$this->_assert_true($test>=$expect))
 		   		print "2CLTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
 		   }
 		//   else
 		//   	print "3CSTime: Current".$test." Previous:Null ".$row['product_id']."<br>";
 
-		}
+		
 
 
 	}
 	}
 	function test_CRTime()
 	{
-	$prev = "";
-	$test = "";
-	$previous ="";
+	
 	$date =date("Y-m-d").' 00:00:00';
 	$result = $this->Test_model->getTime($date);
 	for($i=0;$i<$result->num_rows;$i++)
@@ -495,23 +492,21 @@ class Test2 extends Toast
 		if ($result->num_rows() > 0)
 		{
 		   $row = $result->row_array($i); 
+//			print_r($row);
+//			print "<br>";
+		   //echo "current : ".$row['plan_cv_end']."";
+		   $test = $row['plan_cr_start'];
 		   if($i!=0)
 		   {
-				$prev = $result->row_array($i-1);
-			}
-			//$test = $row['plan_cr_start']." - ".$row['plan_cr_end'];
-		   if($prev != NULL)
-		   {
-			   //$previous = $prev['plan_cr_start']." ".$prev['plan_cr_end'];
-			   $expect = $prev['plan_cr_end'];
-			   $test = $row['plan_cr_start'];
-			   if(!$this->_assert_true($test>=$expect))
-		   		print "CR Machine: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
-			   
-			}
-		//	echo $test." ".$previous."<br/>";
-		//   else
-		//   	print "3CSTime: Current".$test." Previous:Null ".$row['product_id']."<br>";
+		   	$prev = $result->previous_row();
+		   	//print "prev".$prev->plan_cv_end;
+		   	$expect = $prev->plan_cr_end;
+		   	$this->_assert_true($test<=$expect);
+		   	if(!$this->_assert_true($test<=$expect))
+		   		print "CRTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
+		   }
+		 //  else
+		//   	print "3CSTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
 
 		}
 
@@ -538,8 +533,8 @@ class Test2 extends Toast
 		   	$prev = $result->previous_row();
 		   	print "prev".$prev->plan_cv_end;
 		   	$expect = $prev->plan_cv_end;
-		   	$this->_assert_true($test>$expect);
-		   	if(!$this->_assert_true($test>$expect))
+		   	$this->_assert_true($test>=$expect);
+		   	if(!$this->_assert_true($test>=$expect))
 		   		print "3CLTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
 		   }
 		//   else
@@ -570,8 +565,8 @@ class Test2 extends Toast
 		   	$prev = $result->previous_row();
 		   	//print "prev".$prev->plan_cv_end;
 		   	$expect = $prev->plan_cv_end;
-		   	$this->_assert_true($test>$expect);
-		   	if(!$this->_assert_true($test>$expect))
+		   	$this->_assert_true($test>=$expect);
+		   	if(!$this->_assert_true($test>=$expect))
 		   		print "3CMTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
 		   }
 		//   else
@@ -602,8 +597,8 @@ class Test2 extends Toast
 		   	$prev = $result->previous_row();
 		   	//print "prev".$prev->plan_cv_end;
 		   	$expect = $prev->plan_cv_end;
-		   	$this->_assert_true($test>$expect);
-		   	if(!$this->_assert_true($test>$expect))
+		   	$this->_assert_true($test>=$expect);
+		   	if(!$this->_assert_true($test>=$expect))
 		   		print "4CDTime: Current".$test." Previous:".$expect." ".$row['product_id']."<br>";
 		   }
 		//   else
@@ -614,7 +609,9 @@ class Test2 extends Toast
 
 	}
 	}
-
+	
+	
+	
 }
 
 // End of file example_test.php */
