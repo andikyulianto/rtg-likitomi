@@ -63,11 +63,13 @@
 	<th>Speed</th>
 	<th>Mo</th>
 	<th>Sale Order</th>
-	<th>P.Code</th>
+
 	<th>Customer</th>
 	<th>Product Name</th>
 	<th>Next Process</th>
 	<th>Due</th>
+	<th>Sketch</th>
+	<th>Remark</th>
 	</tr></thead>
 	{% for item in items %}
 	<tr id="{{ item.stateCV}}">
@@ -125,12 +127,12 @@
 		{% else %}{% if item.process2 == 'CV' %}
 		    {{ item.process1 }}
 		{% endif %}{% endif %}{% endif %}</td>
-	<td>{% if item.product.rope_color != NULL %}{{item.product.rope_color}}{% endif %}</td>
+	<td>{% if item.product.ink_1 != NULL %}{{item.product.ink_1}} {{item.product.ink_2}} {{item.product.ink_3}} {{item.product.ink_4}}{% endif %}</td>
 	<td>{{item.cv_time_used}}</td>
 	<td>{{item.speed}}</td>
 	<td> {{item.mo_cv_code}}</td>
 	<td>{{item.sale_order_id}}</td>
-	<td>{{item.sale_order.purchase_order_no}}</td>
+	
 	<td>{{item.product.partner.partner_name}}</td>
 	<td>{{item.product.product_name}}</td>
 	<td>
@@ -145,6 +147,24 @@
 		
 		{% endif %}{% endif %}{% endif %}{% endif %}</td>
 	<td>{{item.days_left}}</td>
+	<td>	{% if item.product.sketch != "" %}
+		<a href={{Path}}{{item.product.sketch}}  target='_blank'>{{item.product.product_code}} [M]</a>
+	{% endif %}
+	{% if item.product.sketch_large != "" %}
+		<a href={{Path}}{{item.product.sketch_large}} target='_blank'>{{item.product.product_code}} [L]</a>
+	{% endif %}</td>
+		<td>
+	<!--{% if item.process1 == 'CV' and item.process2 == 'WH' %}
+		    last process
+		{% else %}{% if item.process2 == 'CV' and item.process3 == 'WH' %}
+		   last process
+		{% else %}{% if item.process3 == 'CV' and item.process4 == 'WH' %}
+		    last process
+		{% else %}{% if item.process3 == NULL and item.process1 == NULL and item.process2 == NULL and item.process3 == NULL %}
+		
+		{% endif %}{% endif %}{% endif %}{% endif %}
+	-->
+	</td>
 	</tr>
 	
 	{% endfor %}

@@ -26,6 +26,7 @@
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>Total production</th>
 	<th>Qty. Allowance</th>
 	<th>Doc. ref. in</th>
 
@@ -59,6 +60,7 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
+	<td>{{item.stock}}</td>
 	<td>{{item.product.qty_allowance}}</td>
 	<td>{{item.delivery.doc_ref_in}}</td>
 
@@ -102,6 +104,7 @@
 	<th width="5%"><div class="plan"> OUT </div><div class="actual">OUT</div></th>
 	<th width="5%">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>Total production</th>
 	<th>Qty. Allowance</th>
 	<th>Doc. Ref. in</th>
 	<th>Doc. Ref. out</th>
@@ -135,6 +138,7 @@
 	{% endif %}
 	</div></td>
 	<td>{{item.product.product_code}}</td>
+	<td>{{item.stock}}</td> 
 	<td>{{item.product.qty_allowance}}</td>
 	<td>{{item.delivery.doc_ref_in}}</td>
 	<td>{{item.delivery.doc_ref_out}}</td>
@@ -181,6 +185,7 @@
 	<th width="5%"><div class="plan"> IN </div><div class="actual">IN</div></th>
 	<th width="5%"><div class="plan">Pcs.</div><div class="actual">Pcs.</div></th>
 	<th>Product code</th>
+	<th>Total production</th>
 	<th>Qty. Allowance</th>
 	<th>Doc. Ref. in</th>
 	<th>Doc. Ref. out</th>
@@ -214,6 +219,7 @@
 	{% endif %}
 	</div></th>
 	<td>{{item.product.product_code}}</td>
+	<td>{{item.stock}}</td>
 	<td>{{item.product.qty_allowance}}</td>
 	<td>{{item.delivery.doc_ref_in}}</td>
 	<td>{{item.delivery.doc_ref_out}}</td>

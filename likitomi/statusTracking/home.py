@@ -13,7 +13,7 @@ from django.template import Template, Context
 from statusTracking.views import login_user
 from statusTracking.models import StatusTracking, ProductCatalog, Partners
 from statusTracking.utility import todayDate, currentProcess, currentTimeProcess, positionOfCurrentProcess, returnStartingPoint
-from statusTracking.config import getPCItemNum
+from statusTracking.config import getPCItemNum, ERPPath
 from datetime import date, datetime
 from django.db.models import F
 from django.utils.safestring import mark_safe
@@ -175,7 +175,7 @@ def showPC(user,title):
 	endList = startList+getPCItemNum()
 	items_plan_wh=items_plan_wh[startList:endList]
 	#temp_contents = currentProcess("2CL")
-
+	
 
 
 ############################################
@@ -322,7 +322,7 @@ def workCR(user,title):
 #	global username
 	username = user
 	today = todayDate()
-	
+	Path = ERPPath()
 	employee = Employee(user)
 	eID = employee.id
 	page = "CR"
@@ -353,7 +353,7 @@ def workCV(user,title):
 	employee = Employee(user)
 	eID = employee.id
 	cv = currentTimeProcess("CV")
-
+	Path = ERPPath()
 	#create items for CV
 	if(currentProcess("3CS")=='idle'):
 		cvThreeCS = 'idle'
@@ -394,6 +394,7 @@ def workPT(user,title):
 #	global username
 	username = user
 	page= "PT"
+	Path = ERPPath()
 	today = todayDate()
 	employee = Employee(user)
 	eID = employee.id
@@ -414,6 +415,7 @@ def workWH(user,title):
 	is_enable_rightbutton = True
 #	global username
 	page = "WH"
+	Path = ERPPath()
 	username = user
 	today = todayDate()
 	employee = Employee(user)
