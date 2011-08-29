@@ -81,7 +81,7 @@ class Planning_model extends Model
 		$filterQueryAll = "SELECT * FROM ".$this->tableName.$filterQueryAll;
 				
 		$query = $this->db->query($filterQueryAll);
-		//echo $this->db->last_query();
+		//echo $filterQueryAll;
 		return $query;
 	}
 	
@@ -90,6 +90,14 @@ class Planning_model extends Model
 		$sql = 	"SELECT * FROM ( ".
 					"SELECT * FROM `product_catalog` WHERE product_id = ".$pid.
 					") AS pr LEFT JOIN partners AS pa ON pa.partner_id = pr.partner_id";
+		
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+	function getProductCatalog($product_code)
+	{
+		$sql = 	"SELECT * FROM `product_catalog` WHERE product_code = '".$product_code."'";
+		
 		$query = $this->db->query($sql);
 		return $query->row();
 	}
