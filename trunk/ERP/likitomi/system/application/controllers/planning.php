@@ -94,6 +94,7 @@ class Planning extends Controller {
 			$deliveryList[$cnt]['product_code']	= $delivery->product_code;
                         //echo $delivery->product_code;
 			$partnerproduct = $this->Planning_model->getProduct_Partner($delivery->product_id);
+			$productCatalog = $this->Planning_model->getProductCatalog($delivery->product_code);
 			
 			$deliveryList[$cnt]['product_name'] = $partnerproduct->product_name;
 			$deliveryList[$cnt]['partner_name'] = $partnerproduct->partner_name;
@@ -121,7 +122,8 @@ class Planning extends Controller {
 			$deliveryList[$cnt]['cut']			= $partnerproduct->cut;
 			//echo $partnerproduct->pc_slit;
 			$deliveryList[$cnt]['delivery_date']= $delivery->delivery_date;
-			$deliveryList[$cnt]['qty']			= $delivery->qty/$partnerproduct->pc_slit;
+			//change qty here for cr
+			$deliveryList[$cnt]['qty']			= $delivery->qty*$productCatalog->cr_ratio_2/$productCatalog->cr_ratio_1;
 			$deliveryList[$cnt]['modified_on']	= $delivery->modified_on;
 			$deliveryList[$cnt]['status']		= $delivery->status;
 			$deliveryList[$cnt]['corrugator_date']	= date('Y-m-d');
