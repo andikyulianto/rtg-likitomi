@@ -166,7 +166,7 @@
 		<td rowspan="2"><?=$key->scoreline_d?></td>
 		<td rowspan="2"><?=$key->scoreline_f2?></td>
 		<td rowspan="2"><?=round($trim)?></td>
-		<td rowspan="2"><?=round($metre)?></td>
+		<td rowspan="2"><?=round($metre)/2?></td>
 		<td><?=round($lkg)?></td>
 		<td td rowspan="2" class='blankTbl'></td>
 		<td><?=$key->delivery_date?></td>
@@ -180,13 +180,13 @@
 		<td><?=$key->DF?></td>
 		<td><?=$key->CL?></td>
 		<td><?=$key->CM?></td>
-		<td><?=round($used_df)?></td>
-		<td><?=round($used_cl)?></td>
-		<td><?=round($used_cm)?></td>
+		<td><?=round($used_df)/2?></td>
+		<td><?=round($used_cl)/2?></td>
+		<td><?=round($used_cm)/2?></td>
 		<td><?=round($paper_width)?></td>
 		<td class='blankTbl'></td>
 		<td><?=round($cut2)?></td>
-		<td><?=round($mkg)?></td>
+		<td><?=round($mkg)/2?></td>
 		<td>
 		<?php 
 			if($key->req_2cl)

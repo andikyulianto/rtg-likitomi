@@ -112,11 +112,11 @@
 		<td><?=$key->BM?></td>
 		<td><?=$key->mm?></td>
 		<td class='blankTbl'></td>
-		<td><?=round($used_bl)?></td>
-		<td><?=round($used_bm)?></td>
+		<td><?=round($used_bl)/2?></td>
+		<td><?=round($used_bm)/2?></td>
 		<td bgcolor="AliceBlue">ACTUAL</td>
-		<td bgcolor="AliceBlue"><?=round($used_bl_lkg)?></td>
-		<td bgcolor="AliceBlue"><?=round($used_bm_lkg)?></td>	
+		<td bgcolor="AliceBlue"><?=round($used_bl_lkg)/2?></td>
+		<td bgcolor="AliceBlue"><?=round($used_bm_lkg)/2?></td>	
 		<td>+LOSS</td>
 		<td><?=round($used_bl_mkg)?></td>
 		<td><?=round($used_bm_mkg)?></td>
@@ -135,15 +135,15 @@
 		<td><?=$key->CL?></td>
 		<td><?=$key->CM?></td>
 		<td><?=$key->p_width_inch?></td>
-		<td><?=round($used_df)?></td>
-		<td><?=round($used_cl)?></td>
-		<td><?=round($used_cm)?></td>
-		<td bgcolor="AliceBlue"><?=round($used_df_lkg)?></td>
-		<td bgcolor="AliceBlue"><?=round($used_cl_lkg)?></td>
-		<td bgcolor="AliceBlue"><?=round($used_cm_lkg)?></td>
-		<td><?=round($used_df_mkg)?></td>
-		<td><?=round($used_cl_mkg)?></td>
-		<td><?=round($used_cm_mkg)?></td>
+		<td><?=round($used_df/2)?></td>
+		<td><?=round($used_cl/2)?></td>
+		<td><?=round($used_cm/2)?></td>
+		<td bgcolor="AliceBlue"><?=round($used_df_lkg/2)?></td>
+		<td bgcolor="AliceBlue"><?=round($used_cl_lkg/2)?></td>
+		<td bgcolor="AliceBlue"><?=round($used_cm_lkg/2)?></td>
+		<td><?=round($used_df_mkg/2)?></td>
+		<td><?=round($used_cl_mkg/2)?></td>
+		<td><?=round($used_cm_mkg/2)?></td>
 		<td class='blankTbl'></td>
 		<td><?=round($cut2)?></td>
 		
