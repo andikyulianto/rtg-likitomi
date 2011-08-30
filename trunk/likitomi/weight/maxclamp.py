@@ -5,7 +5,7 @@ from datetime import datetime
 
 import socket
 
-from weight.models import PaperRolldetails, PaperMovement
+from weight.models import PaperRolldetails, PaperMovement, TempWeight
 
 # HOST and PORT settings for RFID reader connection
 HOST = '192.168.2.88' # Likitomi's factory
@@ -199,7 +199,7 @@ def maxclamp(request):
 						size = rtquery.size
 						unit = rtquery.uom
 						initial_weight = rtquery.initial_weight
-						temp_weight = rtquery.temp_weight
+#						temp_weight = rtquery.temp_weight
 						lane = rtquery.lane
 						position = rtquery.position
 						if position == None: position = ''
@@ -209,6 +209,8 @@ def maxclamp(request):
 						else:
 							actual_wt = rtquery.initial_weight
 							undo_btn = ""
+
+		temp_weight = int(TempWeight.objects.order_by('-timestamp')[0].weight)
 
 	if rfid_mode == 'fake': # Fake mode just for running application without weighing indicator
 
@@ -236,7 +238,7 @@ def maxclamp(request):
 			size = rtquery.size
 			unit = rtquery.uom
 			initial_weight = rtquery.initial_weight
-			temp_weight = rtquery.temp_weight
+#			temp_weight = rtquery.temp_weight
 			lane = rtquery.lane
 			position = rtquery.position
 
@@ -245,6 +247,8 @@ def maxclamp(request):
 			else:
 				actual_wt = rtquery.initial_weight
 				undo_btn = ""
+
+		temp_weight = int(TempWeight.objects.order_by('-timestamp')[0].weight)
 
 	return render_to_response('maxclamp.html', locals())
 

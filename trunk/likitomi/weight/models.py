@@ -106,3 +106,15 @@ class TblClamplift(models.Model):
     class Meta:
         """Real table name is 'tbl_clamplift'."""
         db_table = u'tbl_clamplift'
+
+class TempWeight(models.Model):
+    """
+    Stores the current weight on the weighing indicator from the scale which is used as temporary weight of a paper roll.
+
+    """
+    id = models.AutoField(primary_key=True, help_text="Record identifier.")
+    weight = models.FloatField(help_text="The current weight on the weighing indicator from the scale, temporary weight of a paper roll.")
+    timestamp = models.DateTimeField(help_text="Timestamp for recording weight.")
+    class Meta:
+        """Real table name is 'temp_weight'."""
+        db_table = u'temp_weight'

@@ -39,7 +39,7 @@ $(document).ready(function(){
 	var scale_url = $('#scale_url').val();
 	$(window).load(function scale(){
 		$("#scale").load(scale_url);
-		setTimeout(scale, 2000);
+		setTimeout(scale, 1000);
 	});
 });
 </script>
@@ -124,41 +124,41 @@ $(document).ready(function(){
 		</tr>
 	</table></center>
 	<br />
-{% if tagstatus == 'known' %}
-	<center><table>
-		<tr>
-			<td><p class="label">Likitomi Roll ID: </p></td>
-			<td><p class="var">{{ realtag }}</p></td>
-		</tr>
-		<tr>
-			<td><p class="label">Paper Code: </p></td>
-			<td><p id="big" class="var">{{ paper_code }}</p></td>
-		</tr>
-		<tr>
-			<td><p class="label">Size: </p></td>
-			<td><p class="var">{{ size }}</p></td>
-			<td><p class="unit">{{ uom }}</p></td>
-		</tr>
-		<tr>
-			<td><p class="label">Previous Weight: </p></td>
-			<td><p class="var">{{ actual_wt }}</p></td>
-			<td><p class="unit">kgs.</p></td>
-		</tr>
-		{% if used_weight %}<tr>
-			<td><p class="label">Used Weight: </p></td>
-			<td><p class="var">{{ used_weight }}</p></td>
-			<td><p class="unit">kgs.</p></td>
-		</tr>{% endif %}
-	</table></center>
-{% endif %}
+<!--{% if tagstatus == 'known' %}-->
+<!--	<center><table>-->
+<!--		<tr>-->
+<!--			<td><p class="label">Likitomi Roll ID: </p></td>-->
+<!--			<td><p class="var">{{ realtag }}</p></td>-->
+<!--		</tr>-->
+<!--		<tr>-->
+<!--			<td><p class="label">Paper Code: </p></td>-->
+<!--			<td><p id="big" class="var">{{ paper_code }}</p></td>-->
+<!--		</tr>-->
+<!--		<tr>-->
+<!--			<td><p class="label">Size: </p></td>-->
+<!--			<td><p class="var">{{ size }}</p></td>-->
+<!--			<td><p class="unit">{{ uom }}</p></td>-->
+<!--		</tr>-->
+<!--		<tr>-->
+<!--			<td><p class="label">Previous Weight: </p></td>-->
+<!--			<td><p class="var">{{ actual_wt }}</p></td>-->
+<!--			<td><p class="unit">kgs.</p></td>-->
+<!--		</tr>-->
+<!--		{% if used_weight %}<tr>-->
+<!--			<td><p class="label">Used Weight: </p></td>-->
+<!--			<td><p class="var">{{ used_weight }}</p></td>-->
+<!--			<td><p class="unit">kgs.</p></td>-->
+<!--		</tr>{% endif %}-->
+<!--	</table></center>-->
+<!--{% endif %}-->
 
-{% if tagstatus == 'unknown' %}
-	<p align='center'>This tag ID is unknown.</p>
-{% endif %}
+<!--{% if tagstatus == 'unknown' %}-->
+<!--	<p align='center'>This tag ID is unknown.</p>-->
+<!--{% endif %}-->
 
-{% if lasttime %}<p align='center' style='font-size:150%;'>Data received at: {{ lasttime }}</p>{% endif %}
+<!--{% if lasttime %}<p align='center' style='font-size:150%;'>Data received at: {{ lasttime }}</p>{% endif %}-->
 
-{% if socror %}<p align="center">{{ socror }}</p>{% endif %}
+<!--{% if socror %}<p align="center">{{ socror }}</p>{% endif %}-->
 
 </div>
 
