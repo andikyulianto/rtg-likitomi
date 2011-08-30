@@ -1,0 +1,122 @@
+<!-- header-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>{{title}}</title>
+<link href="css/fal_style2.css" rel="stylesheet" type="text/css" />
+<script src="javascript/jquery.js" type="text/javascript"></script>
+<script src="javascript/flash.js" type="text/javascript"></script>
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" rel="Stylesheet" />	
+<script type="text/javascript" src="javascript/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
+<script type="text/javascript" src="javascript/jquery.quicksearch.js"></script>
+<script type="text/javascript" src="javascript/jquery.dataTables.js"></script>
+<!--
+<script type="text/javascript" src="javascript/jquery.tablesorter.pager.js"></script>
+<script type="text/javascript" src="javascript/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="javascript/picnet.table.filter.min.js"></script>
+-->
+
+<script>
+
+/*	$(function() {
+		$( "#filterCriteria" ).buttonset();
+	});
+*/
+	//button of daily 
+
+	$(function() {
+		$( "#tabs" ).tabs();
+	});
+	
+	<!-- NOTE: change by Ppat -->
+	$(document).ready(function () {
+		$("#key_search").quicksearch("table tbody tr", {
+				noResults: '#noresults',
+				stripeRows: ['odd', 'even'],
+				loader: 'span.loading'
+		});
+	});
+	
+	
+$(document).ready(function() {
+	$('#GMTable').dataTable({
+					"bJQueryUI": true,
+					"bAutoWidth": false,
+					"sPaginationType": "full_numbers"/*,
+					"aaSorting": [[ 1, "asc" ]]*/
+				});
+} );
+
+$(document).ready(function() {
+	$('#stockTable').dataTable({
+					"bJQueryUI": true,
+					"bAutoWidth": false,
+					"sPaginationType": "full_numbers"/*,
+					"aaSorting": [[ 1, "asc" ]]*/
+				});
+} );
+</script>
+</head>
+<body>
+{% url statusTracking.home.logout_view as likitomi_url %}
+{% url statusTracking.home.section as home_url %}
+{% url statusTracking.detail.pcdetail as pcdetail_url %}
+{% url statusTracking.detail.showDetail as showdetail_url %}
+<!--PATH SETTINGS END-->
+<div id="wrapper" style="width:100%">
+    <div id="header" >
+    	<!-- start Menu-->
+    	<table width="100%">
+    		<thead id="mainMenu">
+    			<tr>
+    				<th align="left" width="60%">
+					<a id=normalLink href="{{ home_url }}?user={{user}}">Home</a>  
+					{% if page == "GM" %}
+					>> <a id=normalLink  href="{{ showdetail_url }}?user={{user}}&mocode={{mocode}}">
+					{% else %}
+					<a id=normalLink  href="{{ pcdetail_url }}?user={{user}}&page={{page}}">
+					{% endif %}
+					{{page}}</a>
+				</th>
+    				<th align="right" width="10%">
+					<a id="normalLink" href="{{ likitomi_url }}"><img src="images/quit.png" alt="quit" /></a>&nbsp&nbsp
+				</th>
+    			</tr>
+    		</thead>
+    	</table>
+	<!-- End Menu-->
+    </div>
+</div>
+<!--START INCLUDED CONTENT-->
+{% if page != '' %}
+{% block view %}
+view blog
+{% endblock %}
+{% endif %}
+
+<!--END INCLUDED CONTENT-->
+	</div>
+</div>
+</div>
+</div>
+<!-- end content-->
+
+<!-- footer-->
+<div class="clear"></div>
+
+</div> 
+	<div id="footer">
+    <hr/>
+	<br />
+	This application is developed as part of RTG-Budget Joint Industrial Research Project Fiscal Year, 2010-2011<br/>
+	at <a href="http://www.ait.asia" target="_blank" >Asian Institute of Technology</a> for 
+	<a href="http://www.likitomi.co.th/" target="_blank">Likitomi (Thailand) Company Limited</a>. 
+	<div style="margin-top:5px">
+		<a href="http://www.djangoproject.com/" target='_blank'><img src="images/djg.png" title="Django" border="0" /></a>
+	</div>	
+    </div>
+</body>
+</html>
+<!-- endfoot-->
