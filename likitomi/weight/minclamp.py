@@ -210,7 +210,7 @@ def minclamp(request):
 							actual_wt = rtquery.initial_weight
 							undo_btn = ""
 
-		temp_weight = int(TempWeight.obejects.order_by('-timestamp')[0].weight)
+		temp_weight = int(TempWeight.objects.order_by('-timestamp')[0].weight)
 
 	if rfid_mode == 'fake': # Fake mode just for running application without weighing indicator
 
