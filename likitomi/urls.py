@@ -15,7 +15,6 @@ from weight.views import dashboard
 from weight.showplan import showplan, required, detail
 from weight.inventory import inventory
 from weight.minclamp import minclamp, minupdate, minundo, minchangeloc, minassigntag
-from weight.maxclamp import maxclamp, maxupdate, maxundo, maxchangeloc, maxassigntag
 from weight.tagman import tagman, showtaglist, createnew, assigntag, writemore, loctag
 #from weight.longtry import longtry
 
@@ -103,14 +102,6 @@ urlpatterns = patterns('',
 	(r'^minclamp/assigntag/$', minassigntag),
 	(r'^minclamp/assigntag/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 	(r'^minclamp/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^maxclamp/$', maxclamp),
-	(r'^maxclamp/update/$', maxupdate),
-	(r'^maxclamp/undo/$', maxundo),
-	(r'^maxclamp/changeloc/$', maxchangeloc),
-	(r'^maxclamp/changeloc/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^maxclamp/assigntag/$', maxassigntag),
-	(r'^maxclamp/assigntag/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
-	(r'^maxclamp/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),
 
 	(r'^inventory/$', inventory),
 	(r'^inventory/(?P<path>.*)$', 'django.views.static.serve', {'document_root':settings.MEDIA_ROOT}),

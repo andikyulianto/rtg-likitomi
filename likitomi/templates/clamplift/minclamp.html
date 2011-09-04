@@ -14,7 +14,7 @@ border: 0px solid black;
 text-align:center;
 }
 
-p{font-size:100%;}
+//p{font-size:100%;}
 
 .label
 {
@@ -50,9 +50,10 @@ font-weight:bold;
 <script type="text/javascript">
 $(document).ready(function(){
 	var minclamp_url = $('#minclamp_url').val();
+	var clampsta = $('#clampsta').val();
 
 	$(window).load(function clampAll(){
-		$("#clampall").load(minclamp_url);
+		$("#clampall").load(minclamp_url+"?clampsta="+clampsta);
 		setTimeout(clampAll, 3000);
 	});
 
@@ -559,9 +560,10 @@ function otherLoc()
 	<input id="tagidlist" type="hidden" value="{{ tagidlist }}" />
 	<input id="tag2write" type="hidden" value="{{ tag2write }}" />
 	<input id="avaitag" type="hidden" value="{{ avaitag }}" />
+	<input id="clampsta" type="hidden" value="{{ clampsta }}" />
 
 {% if tagstatus == 'known' %}
-	<div id="minic">
+	{% if clampsta = "min" %}<div id="minic">
 		<table style="width:100%;">
 			<tr>
 				<td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td>
@@ -600,31 +602,67 @@ function otherLoc()
 				</td>
 			</tr>
 		</table>
-	</div>
+	</div>{% endif %}
+	{% if clampsta == "max" %}<div id="maxic">
+		<table style="width:100%; font-size:200%;">
+			<tr style="height:80px;"><td><p class="label">ID: </p></td><td><p class="var">{{ realtag }}</p></td></tr>
+			<tr style="height:80px;"><td><p class="label">P.Code: </p></td><td><p class="var" id="big" style="text-align:center;">{{ paper_code }}</p></td></tr>
+			<tr style="height:80px;"><td><p class="label">Size: </p></td><td><p class="var">{{ size }}</p></td><td ><p class="unit">{{ unit }}</p></td></tr>
+			<tr>
+				<td><p class="label">Location:</p></td><td><p class="var">{% if lane != None and position != None %}
+					{% if lane == '0' %}CR{% endif %}
+					{% if lane == '5' %}Scale{% endif %}
+					{% if lane != '0' and lane != '5' %}{{lane}}-{{position}}{% endif %}
+				{% endif %}</p></td>
+				<td style="text-align:center; width:96px; height:80px;" >
+					{% if atlocation == "Stock" %}<a href="javascript:otherLoc()"><img border="0" height="80px" src="images/clamplift/changeloc.png"></a>{% endif %}</td>
+			</tr>
+		</table>
+		<table style="width:100%; font-size:200%;">
+			<tr>
+				<td style="text-align:center; width:70px; height:80px;">
+					{% if atlocation == "Scale" and undo_btn != "" %}<a href="javascript:undoSubmit()"><img border="0" height="80px" src="images/clamplift/undo.png"></a>{% endif %}</td>
+				<td ><p class="label">Weight: </p></td><td ><p class="var">{{ actual_wt }}</p></td>
+				{% if atlocation == "Scale" and actual_wt > temp_weight %}
+				<td style="text-align:center;">>>></td>
+				<td><p class="var">{% if temp_weight != None %}{{ temp_weight }}{% endif %}{% if temp_weight == None %}-{% endif %}</p></td>
+				{% endif %}
+				<td><p class="unit">kgs.</p></td>
+				<td style="text-align:center; width:70px; height:80px;">
+					{% if atlocation == "Scale" and actual_wt > temp_weight and temp_weight != None %}<a href="javascript:submit()"><img border="0" height="80px" src="images/clamplift/update.png"></a>{% endif %}
+				</td>
+				<td style="text-align:center; width:96px; height:80px;">
+					{% if atlocation == "Scale" %}<a href="javascript:weightInput()"><img border="0" height="80px" src="images/clamplift/manual.png"></a>{% endif %}</td>
+			</tr>
+		</table>
+	</div>{% endif %}
 {% endif %}
 
 {% if tagstatus == 'unknown' %}
-	<p class="var">This tag ID is unknown.</p><p class="var">Push <i>"Tag Management"</i> button at the bottom left<br /> to manage tag.</p>
+	<p class="var" {% if clampsta == "max" %}style="font-size:200%;"{% endif %}>This tag ID is unknown.</p><p class="var" {% if clampsta == "max" %}style="font-size:200%;"{% endif %}>Push <i>"Tag Management"</i> button at the bottom left<br /> to manage tag.</p>
 {% endif %}
 
-{% if not tagstatus and not socror %}<br /><p class='var' align="center">No ID tag in field</p>{% endif %}
+{% if not tagstatus and not socror %}<br /><p class='var' align="center" {% if clampsta == "max" %}style="font-size:200%;"{% endif %}>No ID tag in field</p>{% endif %}
 
-{% if socror and not tagstatus %}<br /><p class='var' align="center">{{ socror }}</p>{% endif %}
+{% if socror and not tagstatus %}<br /><p class='var' align="center">{{ socror }} {% if clampsta == "max" %}style="font-size:200%;"{% endif %}</p>{% endif %}
 
 	<form id="frm1" action="{{ minclamp_url }}update/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input type="hidden" value="{{ actual_wt }}" name="actual_wt" />
 		<input id="temp" type="hidden" value="{{ temp_weight }}" name="temp_weight" />
+		<input type="hidden" value="{{ clampsta }}" name="clampsta" />
 	</form>
 
 	<form id="frm2" action="{{ minclamp_url }}undo/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
+		<input type="hidden" value="{{ clampsta }}" name="clampsta" />
 	</form>
 
 	<form id="frm3" action="{{ minclamp_url }}changeloc/" method="get">
 		<input type="hidden" value="{{ realtag }}" name="realtag" />
 		<input id="ilane" type="hidden" value="{{ lane }}" name="lane" />
 		<input id="ipos" type="hidden" value="{{ position }}" name="pos" />
+		<input type="hidden" value="{{ clampsta }}" name="clampsta" />
 	</form>
 
 	<form id="frm4" action="{{ minclamp_url }}changeloc/" method="get">
@@ -649,12 +687,12 @@ function otherLoc()
 		<input id="atag2write" type="hidden" value="" name="atag2write" />
 	</form>
 
-	{% if lasttime %}<div style="position:absolute; bottom:0px; right:5px;"><b class="label" style="font-weight:normal;">Data received at: </b><b class="var">{{ lasttime }}</b></div>{% endif %}
+	{% if lasttime %}<div style="position:absolute; bottom:0px; right:5px; {% if clampsta == 'max' %}font-size:150%;{% endif %}"><b class="label" style="font-weight:normal;">Data received at: </b><b class="var">{{ lasttime }}</b></div>{% endif %}
 
 </div>
 
 	{% url weight.tagman.tagman as tagman_url %}
-	<button id="asstag" style="font-size:80%; position:absolute; bottom:0px;" onclick="top.location.href='{{ tagman_url }}'">Tag Management</button>
+	<button id="asstag" style="font-size:{% if clampsta == 'min' %}80%{% endif %}{% if clampsta == 'max' %}100%{% endif %}; position:absolute; bottom:0px;" onclick="top.location.href='{{ tagman_url }}'">Tag Management</button>
 
 </body>
 </html>
