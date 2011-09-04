@@ -2,6 +2,8 @@
 <head>
 <meta charset="utf-8">
 
+<meta http-equiv="refresh" content="300;url={% url weight.views.dashboard %}" />
+
 <title>Likitomi: Clamplift Apps</title>
 
 <link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.10.custom.css" />
@@ -74,8 +76,7 @@ background-color:white;
 
 <script type="text/javascript" src="javascript/jquery.js"></script>
 <script type="text/javascript" src="javascript/jquery-ui-1.8.11.custom.min.js"></script>
-<script type="text/javascript" src="javascript/ui.selectmenu.js"></script> 
-<script type="text/javascript" src="javascript/jquery.floatobject-1.4.js"></script> 
+<script type="text/javascript" src="javascript/ui.selectmenu.js"></script>
 <link rel="Stylesheet" href="css/ui.selectmenu.css" type="text/css" /> 
 <script type="text/javascript">
 function startTime()
@@ -109,6 +110,7 @@ $(document).ready(function(){
 	var required_url = $('#required_url').val();
 	var detail_url = $('#detail_url').val();
 	var inventory_url = $('#inventory_url').val();
+	var minclamp_url = $('#minclamp_url').val();
 
 	function loadPlan(){
 		var opdate = $("#opdate").val();
@@ -131,6 +133,7 @@ $(document).ready(function(){
 			}
 		}
 	}
+	loadPlan();
 
 	$("#opdate").change(function(){
 		loadPlan();
@@ -256,12 +259,10 @@ $(document).ready(function(){
 	$("#magclamp, #clamplifttab").click(function(){
 		$("#plan, #layout, #search").hide();
 //		$("#clamplift").show().animate({"width":"800px","height":"495px","top":"0px","left":"0px"});
+		$("#minclamp").attr("src",minclamp_url+"?clampsta=max");
 		$("#clamplift").fadeIn().css({"width":"800px","height":"485px","top":"0px","left":"0px"});
 		$("#magclamp").hide();
 		$("#menutab").fadeIn();
-		$("#clampsta").val("maxsta");
-		$("#minclamp").hide();
-		$("#maxclamp").show();
 	});
 
 // SEARCH //
@@ -330,10 +331,8 @@ $(document).ready(function(){
 		$("#mapleft, #mapright").show();
 		$("#map")[0].contentWindow.scrollTo(0,0);
 		// CLAMPLIFT //
+		$("#minclamp").attr("src",minclamp_url+"?clampsta=min");
 		$("#clamplift").css({"width":"398px","height":"188px","top":"405px","left":"0px"});
-		$("#clampsta").val("minsta");
-		$("#minclamp").show();
-		$("#maxclamp").hide();
 		// SEARCH //
 		$("#search").animate({"width":"398px","height":"40px","top":"0px","left":"400px"});
 	});
@@ -349,6 +348,7 @@ $(document).ready(function(){
 <input id='required_url' type='hidden' value='{% url weight.showplan.required %}' />
 <input id='detail_url' type='hidden' value='{% url weight.showplan.detail %}' />
 <input id='inventory_url' type='hidden' value='{% url weight.inventory.inventory %}' />
+<input id='minclamp_url' type='hidden' value='{% url weight.minclamp.minclamp %}' />
 {% url weight.showplan.showplan as showplan_url %}
 {% url weight.inventory.inventory as inventory_url %}
 {% url weight.minclamp.minclamp as minclamp_url %}
@@ -458,9 +458,7 @@ $(document).ready(function(){
 <!--CLAMPLIFT-->
 	<div id="clamplift" class="redbg" style="top:405px; left:0px; width:398px; height:188px;">
 		<div class="redbg" style="top:0px; right:0px;"><button id="magclamp">Clamplift</button></div> <!--Magnifying Button-->
-		<input id="clampsta" value="minsta" type="hidden" />
-		<iframe id="minclamp" src="{{ minclamp_url }}" frameborder="0" style="width:100%; height:100%; margin-height:35px; margin-left:0px;" scrolling="no"></iframe>
-		<iframe id="maxclamp" src="{{ maxclamp_url }}" frameborder="0" style="width:100%; height:100%; margin-height:0px; margin-left:0px;" scrolling="no"></iframe>
+		<iframe id="minclamp" src="{{ minclamp_url }}?clampsta=min" frameborder="0" style="width:100%; height:100%; margin-height:35px; margin-left:0px;" scrolling="no"></iframe>
 	</div>
 
 <!--SEARCH-->

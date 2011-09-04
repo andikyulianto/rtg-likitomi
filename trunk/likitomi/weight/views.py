@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response
+from datetime import date
 
 from weight.models import TblClamplift, PaperRolldetails
 
@@ -34,8 +35,8 @@ def dashboard(request):
 		dstr = str(dquery)[16:][:-4]
 	dsplt = dstr.split('),), (datetime.date(')
 	datelist = list()
-	for date in dsplt:
-		datefrm = date.replace(", ","-")
+	for dat in dsplt:
+		datefrm = dat.replace(", ","-")
 		datelist.append(datefrm)
 
 # Query paper code and size for search menu #
@@ -48,6 +49,8 @@ def dashboard(request):
 	swidthlist = list()
 	for width in swidth:
 		swidthlist.append(width[0])
+
+	opdate = date.today().strftime("%Y-%m-%d")
 
 	return render_to_response('dashboard.html', locals())
 

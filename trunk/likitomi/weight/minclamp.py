@@ -11,7 +11,7 @@ from weight.models import PaperRolldetails, PaperMovement, TempWeight
 HOST = '192.168.2.88' # Likitomi's factory
 PORT = 50007
 
-rfid_mode = 'real' # RFID mode = {'real', 'fake'}
+rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
 
 def minclamp(request):
 	"""
@@ -42,6 +42,9 @@ def minclamp(request):
 	:template:`templates/clamplift/minclamp.html`
 
 	"""
+
+	if 'clampsta' in request.GET and request.GET['clampsta']:
+		clampsta = request.GET['clampsta']
 
 # Query tag ID, paper code, and size for assigning tag
 	tagiddomain = range(1,10000)
@@ -214,11 +217,11 @@ def minclamp(request):
 
 	if rfid_mode == 'fake': # Fake mode just for running application without weighing indicator
 
-		atlocation = 'Scale'
+#		atlocation = 'Scale'
 
-#		atlane = 1
-#		atposition = 33
-#		atlocation = 'Stock'
+		atlane = 1
+		atposition = 33
+		atlocation = 'Stock'
 
 #		tag2write = '112233445566778899AABBCC'
 		tag2write = '300000000000005408090065'
@@ -276,11 +279,14 @@ def minupdate(request):
 	if 'actual_wt' in request.GET and request.GET['actual_wt']:
 		actual_wt = request.GET['actual_wt']
 
+	if 'clampsta' in request.GET and request.GET['clampsta']:
+		clampsta = request.GET['clampsta']
+
 	now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 	p = PaperMovement(roll_id=realtag, before_wt=actual_wt, actual_wt=temp_weight, created_on=now)
 	p.save()
 
-	return HttpResponseRedirect('/django/minclamp/')
+	return HttpResponseRedirect('/django/minclamp/?clampsta='+clampsta)
 
 ### UNDO ###
 def minundo(request):
@@ -300,11 +306,14 @@ def minundo(request):
 	if 'realtag' in request.GET and request.GET['realtag']:
 		realtag = request.GET['realtag']
 
+	if 'clampsta' in request.GET and request.GET['clampsta']:
+		clampsta = request.GET['clampsta']
+
 	if PaperMovement.objects.filter(roll_id=realtag).exists() == True:
 		p = PaperMovement.objects.filter(roll_id=realtag).order_by('-created_on')[0]
 		p.delete()
 
-	return HttpResponseRedirect('/django/minclamp/')
+	return HttpResponseRedirect('/django/minclamp/?clampsta='+clampsta)
 
 ### CHANGE LOC ###
 def minchangeloc(request):
@@ -330,9 +339,12 @@ def minchangeloc(request):
 	if 'pos' in request.GET and request.GET['pos']:
 		ipos = request.GET['pos']
 
+	if 'clampsta' in request.GET and request.GET['clampsta']:
+		clampsta = request.GET['clampsta']
+
 	PaperRolldetails.objects.filter(likitomi_roll_id=realtag).update(lane=ilane, position=ipos)
 
-	return HttpResponseRedirect('/django/minclamp/')
+	return HttpResponseRedirect('/django/minclamp/?clampsta='+clampsta)
 
 
 def minassigntag(request):
