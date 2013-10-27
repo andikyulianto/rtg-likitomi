@@ -230,8 +230,8 @@ def tagman(request):
 		atlocation = 'Stock'
 
 #		tag2write = '112233445566778899AABBCC'
-#		tag2write = '300000000000005408270007'
-#		realtag = tag2write[14:24]
+		tag2write = '300000000000005408270007'
+		realtag = tag2write[14:24]
 
 		lasttime = datetime.now().strftime("%H:%M:%S")
 
