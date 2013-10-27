@@ -11,7 +11,7 @@ from weight.models import PaperRolldetails, PaperMovement, TempWeight
 HOST = '192.168.2.88' # Likitomi's factory
 PORT = 50007
 
-rfid_mode = 'fake' # RFID mode = {'real', 'fake'}
+rfid_mode = 'real' # RFID mode = {'real', 'fake'}
 
 def minclamp(request):
 	"""
