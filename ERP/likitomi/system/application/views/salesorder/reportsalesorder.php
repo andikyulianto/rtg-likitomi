@@ -208,7 +208,7 @@ foreach ($productDelivery->result() as $prod) {
 ?>
   <tr>
     <td><b><?=$cnt?></b></td>
-	<td><b><?=$prod->doc_ref?></b></td>
+	<td><b><?=$prod->doc_ref_in?></b></td>
 	<td><b><?=$prod->delivery_date?></b></td>
     <td><b><?=$prod->product_code?></b></td>
 	<td><b><?=$prod->qty?></b></td>

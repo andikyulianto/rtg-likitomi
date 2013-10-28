@@ -182,6 +182,7 @@ class Papers extends Controller {
 		$data['action'] = "search";
 		$data['searchkeyword'] = $searchkeyword;
 		$data['paper_class'] = $this;
+		$data['code'] = ($this->input->post('paper_code'))?$this->input->post('paper_code'):'';
 		$this->load->view('papers/paperlist',$data);
 	}
 		
