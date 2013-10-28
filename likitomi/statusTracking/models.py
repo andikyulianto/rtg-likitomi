@@ -586,6 +586,7 @@ class StatusTracking(models.Model):
     	case = self.plan_amount/slit
     	cut2 	= case/slit
     	metre	= (self.product.cr_length*cut2)/2000
+	timeuseCR = metre/80
     	if(self.product_auto.flute =="B" or self.product_auto.flute=="C"):
 		timeuseCR = (metre/120)+4
 	if(self.product_auto.flute =="BC") or (self.product_auto.flute=="W"):
