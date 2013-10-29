@@ -1,8 +1,8 @@
 ### pc ###
 item_num= 3
-path ="/django/likitomi"
+path ="/likitomi"
 
-pathERP = "http://localhost/ERP/likitomi/"
+pathERP = "http://localhost/rtg-likitomi/ERP/likitomi/"
 ####################################################
 ## return static setting for showing items for PC ##
 ####################################################
