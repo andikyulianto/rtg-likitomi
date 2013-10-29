@@ -380,9 +380,9 @@ class Products(models.Model):
     bl = models.CharField(max_length=30, db_column='BL', blank=True) # Field name made lowercase.
     cm = models.CharField(max_length=30, db_column='CM', blank=True) # Field name made lowercase.
     cl = models.CharField(max_length=30, db_column='CL', blank=True) # Field name made lowercase.
-    paper_width = models.IntegerField(null=True, blank=True) # Field name made lowercase.
-    blank = models.IntegerField(null=True, blank=True) # Field name made lowercase.
-    length = models.IntegerField(null=True, blank=True) # Field name made lowercase.
+    paper_width = models.IntegerField() # Field name made lowercase.
+    blank = models.IntegerField() # Field name made lowercase.
+    length = models.IntegerField() # Field name made lowercase.
     qty_set = models.IntegerField(null=True, blank=True)
     square_mp_box = models.IntegerField(null=True, blank=True)
     isdeleted = models.IntegerField()

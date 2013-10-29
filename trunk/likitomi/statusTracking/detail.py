@@ -179,7 +179,7 @@ def showDetail(request):
 	actual_time_wh_out = plan.actual_wh_end
 	
 	plan_amount = plan.plan_amount 
-	actual_amount_cr_out = plan.actual_amount_cr * plan.product.cr_ratio_1 / plan.product.cr_ratio_2
+	actual_amount_cr_out = (plan.actual_amount_cr * plan.product.cr_ratio_1) / plan.product.cr_ratio_2
 	actual_amount_cv_in = plan.actual_amount_cv_in
 	actual_amount_cv_out = plan.actual_amount_cv
 	actual_amount_pt_in = plan.actual_amount_pt_in
@@ -200,8 +200,8 @@ def showDetail(request):
 	bl = product.bl
 	cm = product.cm
 	cl = product.cl
-	width = product.width_mm
-	length = product.length_mm
+	width = product.paper_width
+	length = product.length
 	case = plan.plan_amount
 	cut = plan.cut
 	blank = productCat.blank
