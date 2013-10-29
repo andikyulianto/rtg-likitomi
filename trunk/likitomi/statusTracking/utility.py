@@ -161,7 +161,8 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cr_start__year=today.year, plan_cr_start__month=today.month, plan_cr_start__day=today.day).order_by('plan_cr_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -170,7 +171,7 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cr_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -178,7 +179,7 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -186,7 +187,7 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -194,7 +195,7 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -202,7 +203,7 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -210,7 +211,7 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_cv_start__year=today.year, plan_cv_start__month=today.month, plan_cv_start__day=today.day).order_by('plan_cv_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -221,7 +222,7 @@ def positionOfCurrentProcess(machine,product):
 			#contents_text = today_plan
 			for pos, item in enumerate(today_plan):
 				#contents_text = item
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
@@ -229,7 +230,7 @@ def positionOfCurrentProcess(machine,product):
 		try:
 			today_plan = StatusTracking.objects.filter(plan_wh_start__year=today.year, plan_wh_start__month=today.month, plan_wh_start__day=today.day).order_by('plan_wh_start').values_list("product_id")
 			for pos, item in enumerate(today_plan):
-				if str(item)[2:8] == product:
+				if str(item)[3:9] == product:
 					position = pos
 		except IndexError, error:
 			position = -1
