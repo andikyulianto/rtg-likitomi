@@ -322,7 +322,9 @@ class Planning extends Controller {
 			
 			$case 	= $rowData->qty;
 			if(($key['pc_slit'])!=0)
-			$cut2 	= $case/$key['pc_slit'];
+				$cut2 	= $case/$key['pc_slit'];
+			else
+				$cut2 = 1;
 			//echo $key['pc_slit'];
 			$metre	= ($key['cr_length']*$cut2)/1000;
 			$timeuseCR = 0;
